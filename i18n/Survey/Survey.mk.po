@@ -143,7 +143,10 @@ msgid "Survey overview options"
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
@@ -427,7 +430,9 @@ msgid "Invalid survey key."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,8 +452,11 @@ msgid "Survey List"
 msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr "Дали навистина сакате да го избришете ова прашање? Сите поврзани податоци ќе бидат ИЗГУБЕНИ!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr ""
+"Дали навистина сакате да го избришете ова прашање? Сите поврзани податоци ќе "
+"бидат ИЗГУБЕНИ!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this answer?"
@@ -467,27 +475,40 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Сите параметри за објектот на Анкетата во интерфејсот на агентот."
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Количина на денови по праќање на анкетниот e-mail во кој не се пратени ниту една иста анкета на ист корисник. Со одбирање на 0 секогаш ќе бидат пратени анкетни e-mail-ови."
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"Количина на денови по праќање на анкетниот e-mail во кој не се пратени ниту "
+"една иста анкета на ист корисник. Со одбирање на 0 секогаш ќе бидат пратени "
+"анкетни e-mail-ови."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "Стандардна содржина на е-пошта за известување на клиентите за новата анкета."
+msgstr ""
+"Стандардна содржина на е-пошта за известување на клиентите за новата анкета."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
-msgstr "Стандарден испраќач на е-пошта за известување на клиентите за новата анкета."
+msgid ""
+"Default sender for the notification email to customers about new survey."
+msgstr ""
+"Стандарден испраќач на е-пошта за известување на клиентите за новата анкета."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
-msgstr "Стандарден предмет на е-пошта за известување на клиентите за новата анкета."
+msgid ""
+"Default subject for the notification email to customers about new survey."
+msgstr ""
+"Стандарден предмет на е-пошта за известување на клиентите за новата анкета."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "Дефинирање на модул за преглед за да се прикаже мал поглед на анкетата листа."
+msgstr ""
+"Дефинирање на модул за преглед за да се прикаже мал поглед на анкетата листа."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 
 #. SysConfig
@@ -495,20 +516,32 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "Дефинира максимален износ на анкети кои се испратени на клиентите по 30 дена. (0 значи без максимум, сите барања ќе бидат испратени)."
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"Дефинира максимален износ на анкети кои се испратени на клиентите по 30 "
+"дена. (0 значи без максимум, сите барања ќе бидат испратени)."
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Ја дефинира стандардната височина на Richtext прегледот за SurveyZoom елементите."
+msgstr ""
+"Ја дефинира стандардната височина на Richtext прегледот за SurveyZoom "
+"елементите."
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
@@ -519,8 +552,12 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "Дефинира прикажани колони во прегледот на анкети. Оваа опција нема ефект врз позицијата на колоните."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr ""
+"Дефинира прикажани колони во прегледот на анкети. Оваа опција нема ефект врз "
+"позицијата на колоните."
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -535,16 +572,22 @@ msgid "Edit survey questions."
 msgstr ""
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
 msgstr ""
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
-msgstr "Вклучете или исклучете ја проверката на состојбата за испраќање на услуга."
+msgstr ""
+"Вклучете или исклучете ја проверката на состојбата за испраќање на услуга."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the ticket type."
-msgstr "Вклучете или исклучете ја проверката на состојбата за испраќање на типот на тикетот."
+msgstr ""
+"Вклучете или исклучете ја проверката на состојбата за испраќање на типот на "
+"тикетот."
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
@@ -563,7 +606,9 @@ msgid "Frontend module registration for survey zoom in the agent interface."
 msgstr "Регистрација на модул за детално анкетирање во интерфејсот на агентот."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
 msgstr ""
 
 #. SysConfig
@@ -575,32 +620,55 @@ msgid "Limit."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "Параметри за страници (во кој се прикажуваат анкетите) на мала преглед на анкета."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr ""
+"Параметри за страници (во кој се прикажуваат анкетите) на мала преглед на "
+"анкета."
 
 #. SysConfig
 msgid "Public Survey."
 msgstr ""
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "Прикажува линк во менито за уредување на анкети во деталниот поглед во интерфејсот на агентот."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr ""
+"Прикажува линк во менито за уредување на анкети во деталниот поглед во "
+"интерфејсот на агентот."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "Прикажува во менито линкот за уредување на анкетни прашања во детален поглед во интерфејсот на агент."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr ""
+"Прикажува во менито линкот за уредување на анкетни прашања во детален поглед "
+"во интерфејсот на агент."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "Прикажува во менито линкот за враќање во детален поглед во интерфејсот на агент."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr ""
+"Прикажува во менито линкот за враќање во детален поглед во интерфејсот на "
+"агент."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "Прикажува во менито линкот за детален приказ на статиситики во детален поглед во интерфејсот на агент"
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr ""
+"Прикажува во менито линкот за детален приказ на статиситики во детален "
+"поглед во интерфејсот на агент"
 
 #. SysConfig
 msgid "Stats Details"
@@ -635,12 +703,19 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "Анкети нема да биде испратени до конфигурирани е-пошти."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "Идентификатор за анкетата, на пример: Survey#, MySurvey#. Стандардно е Survey#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"Идентификатор за анкетата, на пример: Survey#, MySurvey#. Стандардно е "
+"Survey#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "Модула на Тикет за автоматско праќање на анкетни e-mail барања до клиентите ако тикетот е затворен."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
+msgstr ""
+"Модула на Тикет за автоматско праќање на анкетни e-mail барања до клиентите "
+"ако тикетот е затворен."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
@@ -653,4 +728,3 @@ msgstr ""
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr ""
-

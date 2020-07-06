@@ -143,7 +143,10 @@ msgid "Survey overview options"
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
@@ -427,7 +430,9 @@ msgid "Invalid survey key."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,8 +452,10 @@ msgid "Survey List"
 msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr "Bạn có thật sự muốn xoá câu hỏi này? TẤT CẢ các dữ liệu liên quan sẽ bị MẤT!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr ""
+"Bạn có thật sự muốn xoá câu hỏi này? TẤT CẢ các dữ liệu liên quan sẽ bị MẤT!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this answer?"
@@ -464,22 +471,30 @@ msgstr "Một mô-đun để sửa câu hỏi khảo sát"
 
 #. SysConfig
 msgid "All parameters for the Survey object in the agent interface."
-msgstr "Tất cả các tham số cho đối tượng khảo sát trong giao diện điều hành viên."
+msgstr ""
+"Tất cả các tham số cho đối tượng khảo sát trong giao diện điều hành viên."
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Số ngày sau khi gửi email khảo sát mà trong lúc đó sẽ không có yêu cầu khảo sát nào được gửi đến cùng khách hàng đó. Nhập 0 sẽ luôn gửi email khảo sát."
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"Số ngày sau khi gửi email khảo sát mà trong lúc đó sẽ không có yêu cầu khảo "
+"sát nào được gửi đến cùng khách hàng đó. Nhập 0 sẽ luôn gửi email khảo sát."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
 msgstr "Nội dung ngầm định cho email thông báo tới khách hàng về khảo sát mới."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
-msgstr "Người gửi ngầm định cho email thông báo tới khách hàng về khảo sát mới."
+msgid ""
+"Default sender for the notification email to customers about new survey."
+msgstr ""
+"Người gửi ngầm định cho email thông báo tới khách hàng về khảo sát mới."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
+msgid ""
+"Default subject for the notification email to customers about new survey."
 msgstr "Chủ đề ngầm định cho email thông báo tới khách hàng về khảo sát mới."
 
 #. SysConfig
@@ -487,7 +502,9 @@ msgid "Defines an overview module to show the small view of a survey list."
 msgstr "Định nghĩa một mô-đun tổng quát để hiển thị một danh sách khảo sát."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 
 #. SysConfig
@@ -495,20 +512,31 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "Định nghĩa số khảo sát tối đa mà được gửi đến khách hàng mỗi tháng. (0 nghĩa là không giới hạn, tất cả yêu cầu khảo sát sẽ được gửi)."
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"Định nghĩa số khảo sát tối đa mà được gửi đến khách hàng mỗi tháng. (0 nghĩa "
+"là không giới hạn, tất cả yêu cầu khảo sát sẽ được gửi)."
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Định nghĩa chiều cao ngầm định của khung Richtext cho đối tượng xem khảo sát."
+msgstr ""
+"Định nghĩa chiều cao ngầm định của khung Richtext cho đối tượng xem khảo sát."
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
@@ -519,8 +547,12 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "Định nghĩa số cột hiển thị trong màn hình tổng quát. Tuỳ chọn này không ảnh hưởng đến vị trí của cột."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr ""
+"Định nghĩa số cột hiển thị trong màn hình tổng quát. Tuỳ chọn này không ảnh "
+"hưởng đến vị trí của cột."
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -535,8 +567,14 @@ msgid "Edit survey questions."
 msgstr ""
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "Kích hoạt hoặc giải hoạt màn hình ShowVoteData trong giao diện công cộng để hiển thị dữ liệu của một kết quả khảo sát khi khách hàng cố thử trả lời một bản khảo sát hai lần."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"Kích hoạt hoặc giải hoạt màn hình ShowVoteData trong giao diện công cộng để "
+"hiển thị dữ liệu của một kết quả khảo sát khi khách hàng cố thử trả lời một "
+"bản khảo sát hai lần."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -544,7 +582,8 @@ msgstr "Kích hoạt hoặc giải hoạt gửi kiểm tra điều kiện cho d�
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the ticket type."
-msgstr "Kích hoạt hoặc giải hoạt gửi kiểm tra điều kiện cho loại phiếu yêu cầu."
+msgstr ""
+"Kích hoạt hoặc giải hoạt gửi kiểm tra điều kiện cho loại phiếu yêu cầu."
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
@@ -563,8 +602,12 @@ msgid "Frontend module registration for survey zoom in the agent interface."
 msgstr "Đăng ký mô-đun xem chi tiết khảo sát trong giao diện điều hành viên."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
-msgstr "Đăng ký mô-đun cho đối tượng khảo sát công cộng trong giao diện khảo sát công cộng."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
+msgstr ""
+"Đăng ký mô-đun cho đối tượng khảo sát công cộng trong giao diện khảo sát "
+"công cộng."
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
@@ -575,32 +618,54 @@ msgid "Limit."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "Tham số cho trang (mà hiển thị khảo sát) của danh sách khảo sát tổng quát."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr ""
+"Tham số cho trang (mà hiển thị khảo sát) của danh sách khảo sát tổng quát."
 
 #. SysConfig
 msgid "Public Survey."
 msgstr "Khảo sát công cộng."
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "Hiển thị liên kết trong trình đơn để sửa khảo sát trong khi xem chi tiết khảo sát ở giao diện điều hành viên."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr ""
+"Hiển thị liên kết trong trình đơn để sửa khảo sát trong khi xem chi tiết "
+"khảo sát ở giao diện điều hành viên."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "Hiển thị liên kết trong trình đơn để sửa câu hỏi khảo sát trong khi xem chi tiết khảo sát ở giao diện điều hành viên."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr ""
+"Hiển thị liên kết trong trình đơn để sửa câu hỏi khảo sát trong khi xem chi "
+"tiết khảo sát ở giao diện điều hành viên."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "Hiển thị liên kết trong trình đơn để quay lại trong khi xem chi tiết khảo sát ở giao diện điều hành viên."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr ""
+"Hiển thị liên kết trong trình đơn để quay lại trong khi xem chi tiết khảo "
+"sát ở giao diện điều hành viên."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "Hiển thị liên kết trong trình đơn để xem thống kê chi tiết của khảo sát trong khi xem chi tiết khảo sát ở giao diện điều hành viên."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr ""
+"Hiển thị liên kết trong trình đơn để xem thống kê chi tiết của khảo sát "
+"trong khi xem chi tiết khảo sát ở giao diện điều hành viên."
 
 #. SysConfig
 msgid "Stats Details"
@@ -635,12 +700,19 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "Khảo sát sẽ không được gửi đến địa chỉ email đã thiết lập."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "Định danh cho khảo sát, ví dụ: Khảo sát#, Khảo sát của tôi#. Ngầm định là Khảo sát#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"Định danh cho khảo sát, ví dụ: Khảo sát#, Khảo sát của tôi#. Ngầm định là "
+"Khảo sát#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "Mô-đun bắt sự kiện của phiếu yêu cầu để gửi email yêu cầu tự động đến khách hàng nếu phiếu yêu cầu được đóng."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
+msgstr ""
+"Mô-đun bắt sự kiện của phiếu yêu cầu để gửi email yêu cầu tự động đến khách "
+"hàng nếu phiếu yêu cầu được đóng."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
@@ -653,4 +725,3 @@ msgstr "Bẫy gửi yêu cầu khảo sát bị trễ."
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr ""
-

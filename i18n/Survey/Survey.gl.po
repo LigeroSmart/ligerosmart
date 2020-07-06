@@ -143,7 +143,10 @@ msgid "Survey overview options"
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
@@ -427,7 +430,9 @@ msgid "Invalid survey key."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,8 +452,11 @@ msgid "Survey List"
 msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr "Confirma que desexa eliminar esta pregunta. Hanse PERDER TODOS os datos asociados!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr ""
+"Confirma que desexa eliminar esta pregunta. Hanse PERDER TODOS os datos "
+"asociados!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this answer?"
@@ -467,27 +475,44 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Tódolos parametros para ó obxeto Enquisa na interface de axente."
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Cantidade de días despois de enviar unha enquisa de correo no que non se envían novas peticións de enquisa ao mesmo cliente. Seleccionando 0 enviará sempre o correo de enquisa."
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"Cantidade de días despois de enviar unha enquisa de correo no que non se "
+"envían novas peticións de enquisa ao mesmo cliente. Seleccionando 0 enviará "
+"sempre o correo de enquisa."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "Corpo por defecto para o correo electrónico de notificación a clientes sobre nova enquisa."
+msgstr ""
+"Corpo por defecto para o correo electrónico de notificación a clientes sobre "
+"nova enquisa."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
-msgstr "Remitente por defecto para o correo electrónico de notificación a clientes sobre nova enquisa."
+msgid ""
+"Default sender for the notification email to customers about new survey."
+msgstr ""
+"Remitente por defecto para o correo electrónico de notificación a clientes "
+"sobre nova enquisa."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
-msgstr "Tema por defecto para o correo electrónico de notificación a clientes sobre nova enquisa."
+msgid ""
+"Default subject for the notification email to customers about new survey."
+msgstr ""
+"Tema por defecto para o correo electrónico de notificación a clientes sobre "
+"nova enquisa."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "Define un módulo de vista xeral para mostrar a vista pequena dunha lista de enquisas."
+msgstr ""
+"Define un módulo de vista xeral para mostrar a vista pequena dunha lista de "
+"enquisas."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 
 #. SysConfig
@@ -495,20 +520,32 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "Define a cantidade máxima de enquisas que envíanse aos clientes por 30 días. (0 significa no máximo, tódalas peticións de enquisa serán enviadas)."
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"Define a cantidade máxima de enquisas que envíanse aos clientes por 30 días. "
+"(0 significa no máximo, tódalas peticións de enquisa serán enviadas)."
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Define a altura por defecto para vistas texto enriquecido para elementos de ZoomEnquisa."
+msgstr ""
+"Define a altura por defecto para vistas texto enriquecido para elementos de "
+"ZoomEnquisa."
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
@@ -519,8 +556,12 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "Define as columnas mostradas na visión xeral de enquisa. Esta opción non ten ningún efecto sobre a posición das columnas."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr ""
+"Define as columnas mostradas na visión xeral de enquisa. Esta opción non ten "
+"ningún efecto sobre a posición das columnas."
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -535,8 +576,14 @@ msgid "Edit survey questions."
 msgstr ""
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "Active ou desactive a pantalla MostrarDatosVoto na interface pública para mostrar datos dun resultado de enquisa especifica cando o cliente intenta responder a enquisa por segunda vez."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"Active ou desactive a pantalla MostrarDatosVoto na interface pública para "
+"mostrar datos dun resultado de enquisa especifica cando o cliente intenta "
+"responder a enquisa por segunda vez."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -544,7 +591,8 @@ msgstr "Active ou desactive a condicion de comprobacion enviar para o servizo."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the ticket type."
-msgstr "Active ou desactive a comprobación enviar condición para o tipo de ticket."
+msgstr ""
+"Active ou desactive a comprobación enviar condición para o tipo de ticket."
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
@@ -556,15 +604,19 @@ msgstr "Rexistro módulo frontend para editar enquisa na interface de axente."
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr "Rexistro módulo frontend para estatísticas de enquisa na interface de axente."
+msgstr ""
+"Rexistro módulo frontend para estatísticas de enquisa na interface de axente."
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
 msgstr "Rexistro módulo frontend para zoom de enquisa na interface de axente."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
-msgstr "Rexistro módulo frontend para obxecto EnquisaPublica na área Enquisa pública."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
+msgstr ""
+"Rexistro módulo frontend para obxecto EnquisaPublica na área Enquisa pública."
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
@@ -575,32 +627,55 @@ msgid "Limit."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "Parámetros para as páxinas (nas cales as enquisas son mostradas) da vista xeral pequena da enquisa."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr ""
+"Parámetros para as páxinas (nas cales as enquisas son mostradas) da vista "
+"xeral pequena da enquisa."
 
 #. SysConfig
 msgid "Public Survey."
 msgstr "Enquisa pública."
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "Mostra un enlace no menu para editar unha enquisa na súa vista zoom da interface de axente."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr ""
+"Mostra un enlace no menu para editar unha enquisa na súa vista zoom da "
+"interface de axente."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "Mostra un enlace no menu para editar preguntas de enquisa na súa vista zoom da interface de axente."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr ""
+"Mostra un enlace no menu para editar preguntas de enquisa na súa vista zoom "
+"da interface de axente."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "Mostra un enlace no menu para voltar atrás na vista zoom de enquisa da interface de axente."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr ""
+"Mostra un enlace no menu para voltar atrás na vista zoom de enquisa da "
+"interface de axente."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "Mostra un enlace no menu para facer zoom nos detalles das estatísticas da enquisa na súa vista zoom da interface de axente."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr ""
+"Mostra un enlace no menu para facer zoom nos detalles das estatísticas da "
+"enquisa na súa vista zoom da interface de axente."
 
 #. SysConfig
 msgid "Stats Details"
@@ -632,15 +707,23 @@ msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
-msgstr "Enquisas non serán enviadas aos enderezos de correo electrónico configurados."
+msgstr ""
+"Enquisas non serán enviadas aos enderezos de correo electrónico configurados."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "O identificador para unha enquisa, ex. Enquisa#, MiñaEnquisa#, Por defecto é Enquisa#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"O identificador para unha enquisa, ex. Enquisa#, MiñaEnquisa#, Por defecto é "
+"Enquisa#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "Módulo evento ticket para enviar automaticamente peticións de enquisa de correo electrónico se un ticket é pechado."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
+msgstr ""
+"Módulo evento ticket para enviar automaticamente peticións de enquisa de "
+"correo electrónico se un ticket é pechado."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
@@ -653,4 +736,3 @@ msgstr ""
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr ""
-

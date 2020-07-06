@@ -92,7 +92,9 @@ msgstr "Jawapan diperlukan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "Apabila anda sudah selesai mengubah soalan kaji selidik hanya tutup skrin ini."
+msgstr ""
+"Apabila anda sudah selesai mengubah soalan kaji selidik hanya tutup skrin "
+"ini."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
@@ -143,7 +145,10 @@ msgid "Survey overview options"
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
@@ -427,7 +432,9 @@ msgid "Invalid survey key."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,8 +454,11 @@ msgid "Survey List"
 msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr "Adakah anda benar-benar ingin memadam soalan ini? SEMUA data berkaitan akan HILANG!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr ""
+"Adakah anda benar-benar ingin memadam soalan ini? SEMUA data berkaitan akan "
+"HILANG!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this answer?"
@@ -467,27 +477,44 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Semua parameter bagi objek Ukur dalam antara muka ejen."
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Jumlah hari selepas menghantar mel kaji selidik di mana tiada permintaan kaji selidik baru dihantar kepada pelanggan yang sama. Memilih 0 akan sentiasa menghantar mel kaji selidik."
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"Jumlah hari selepas menghantar mel kaji selidik di mana tiada permintaan "
+"kaji selidik baru dihantar kepada pelanggan yang sama. Memilih 0 akan "
+"sentiasa menghantar mel kaji selidik."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "Default badan untuk pemberitahuan e-mel kepada pelanggan tentang kaji selidik baru."
+msgstr ""
+"Default badan untuk pemberitahuan e-mel kepada pelanggan tentang kaji "
+"selidik baru."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
-msgstr "Penghantar lalai untuk pemberitahuan e-mel kepada pelanggan tentang kaji selidik baru."
+msgid ""
+"Default sender for the notification email to customers about new survey."
+msgstr ""
+"Penghantar lalai untuk pemberitahuan e-mel kepada pelanggan tentang kaji "
+"selidik baru."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
-msgstr "Tertakluk lalai untuk pemberitahuan e-mel kepada pelanggan tentang kaji selidik baru."
+msgid ""
+"Default subject for the notification email to customers about new survey."
+msgstr ""
+"Tertakluk lalai untuk pemberitahuan e-mel kepada pelanggan tentang kaji "
+"selidik baru."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "Mentakrifkan modul gambaran untuk menunjukkan pandangan yang kecil senarai kaji selidik."
+msgstr ""
+"Mentakrifkan modul gambaran untuk menunjukkan pandangan yang kecil senarai "
+"kaji selidik."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 
 #. SysConfig
@@ -495,20 +522,38 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "Mentakrifkan jumlah maksimum kaji selidik yang mendapat dihantar kepada pelanggan setiap 30 hari. (0 bermakna tidak maksimum, semua permintaan kaji selidik akan dihantar)."
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"Mentakrifkan jumlah maksimum kaji selidik yang mendapat dihantar kepada "
+"pelanggan setiap 30 hari. (0 bermakna tidak maksimum, semua permintaan kaji "
+"selidik akan dihantar)."
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr "Mentakrifkan jumlah jam suatu tiket akan ditutup untuk mencetuskan penghantaran suatu kaji selidik, (0 bererti menghantar segera selepas penutupan). Nota: penghantaran kaji selidik tertunda adalah dilakuan oleh OTRS Daemon, pengaktifan sebelumnya tetapan 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend'."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgstr ""
+"Mentakrifkan jumlah jam suatu tiket akan ditutup untuk mencetuskan "
+"penghantaran suatu kaji selidik, (0 bererti menghantar segera selepas "
+"penutupan). Nota: penghantaran kaji selidik tertunda adalah dilakuan oleh "
+"OTRS Daemon, pengaktifan sebelumnya tetapan 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend'."
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Mentakrifkan ketinggian lalai untuk penonton Teks Kaya untuk elemen Zoom Ukur."
+msgstr ""
+"Mentakrifkan ketinggian lalai untuk penonton Teks Kaya untuk elemen Zoom "
+"Ukur."
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
@@ -519,8 +564,12 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "Mentakrifkan ruangan menunjukkan dalam gambaran kajian.Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr ""
+"Mentakrifkan ruangan menunjukkan dalam gambaran kajian.Pilihan ini tidak "
+"mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -535,35 +584,52 @@ msgid "Edit survey questions."
 msgstr ""
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "Dayakan atau nyahdayakan Undi Papar Data skrin dalam antara muka awam untuk menunjukkan data hasil kajian tertentu apabila pelanggan cuba untuk menjawab kaji selidik kali kedua."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"Dayakan atau nyahdayakan Undi Papar Data skrin dalam antara muka awam untuk "
+"menunjukkan data hasil kajian tertentu apabila pelanggan cuba untuk menjawab "
+"kaji selidik kali kedua."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
-msgstr "Membolehkan atau melumpuhkan menghantar semakan keadaan untuk perkhidmatan itu."
+msgstr ""
+"Membolehkan atau melumpuhkan menghantar semakan keadaan untuk perkhidmatan "
+"itu."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the ticket type."
-msgstr "Membolehkan atau melumpuhkan menghantar semakan keadaan untuk jenis tiket."
+msgstr ""
+"Membolehkan atau melumpuhkan menghantar semakan keadaan untuk jenis tiket."
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
-msgstr "Bahagian depan pendaftaran modul untuk menambah kaji selidik dalam antara muka ejen."
+msgstr ""
+"Bahagian depan pendaftaran modul untuk menambah kaji selidik dalam antara "
+"muka ejen."
 
 #. SysConfig
 msgid "Frontend module registration for survey edit in the agent interface."
-msgstr "Bahagian depan pendaftaran modul untuk menyunting kaji selidik dalam antara muka ejen."
+msgstr ""
+"Bahagian depan pendaftaran modul untuk menyunting kaji selidik dalam antara "
+"muka ejen."
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr "Bahagian Depan pendaftaran modul statistik kajian dalam antara muka ejen."
+msgstr ""
+"Bahagian Depan pendaftaran modul statistik kajian dalam antara muka ejen."
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
-msgstr "Frontend pendaftaran modul untuk zoom kaji selidik dalam antara muka ejen."
+msgstr ""
+"Frontend pendaftaran modul untuk zoom kaji selidik dalam antara muka ejen."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
 msgstr "Frontend pendaftaran modul bagi objek Ukur Awam di kawasan Ukur awam."
 
 #. SysConfig
@@ -575,32 +641,55 @@ msgid "Limit."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "Parameter untuk halaman (di mana kaji selidik ditunjukkan) gambaran kajian kecil."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr ""
+"Parameter untuk halaman (di mana kaji selidik ditunjukkan) gambaran kajian "
+"kecil."
 
 #. SysConfig
 msgid "Public Survey."
 msgstr "Penyiasatan awam."
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "Menunjukkan pautan dalam menu untuk menyunting kaji selidik dalam paparan zum antara muka ejen."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr ""
+"Menunjukkan pautan dalam menu untuk menyunting kaji selidik dalam paparan "
+"zum antara muka ejen."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "Menunjukkan pautan dalam menu untuk menyunting soalan kaji selidik dalam paparan zum antara muka ejen."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr ""
+"Menunjukkan pautan dalam menu untuk menyunting soalan kaji selidik dalam "
+"paparan zum antara muka ejen."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "Menunjukkan pautan dalam menu untuk kembali ke paparan zum kaji selidik antara muka ejen."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr ""
+"Menunjukkan pautan dalam menu untuk kembali ke paparan zum kaji selidik "
+"antara muka ejen."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "Menunjukkan pautan dalam menu untuk zum maklumat statistik kaji selidik dalam paparan zum antara muka ejen."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr ""
+"Menunjukkan pautan dalam menu untuk zum maklumat statistik kaji selidik "
+"dalam paparan zum antara muka ejen."
 
 #. SysConfig
 msgid "Stats Details"
@@ -635,12 +724,19 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "Ukur tidak akan dihantar ke alamat e-mel yang dikonfigurasi."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "Pengecam untuk kaji selidik, misalnya Penyiasatan # MySurvey #. Lalai adalah Penyiasatan#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"Pengecam untuk kaji selidik, misalnya Penyiasatan # MySurvey #. Lalai adalah "
+"Penyiasatan#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
+msgstr ""
+"Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji "
+"selidik kepada pelanggan jika tiket ditutup."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
@@ -653,4 +749,3 @@ msgstr "Pencetus menghantar permohonan soal selidik ditangguhkan"
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr ""
-

@@ -40,7 +40,8 @@ msgstr "Condições do cliente"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr "Por favor, escolha uma propriedade do cliente para adicionar uma condição."
+msgstr ""
+"Por favor, escolha uma propriedade do cliente para adicionar uma condição."
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
@@ -92,7 +93,8 @@ msgstr "Resposta Requerida"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "Quando você terminar de editar as questões da pesquisa, apenas feche a tela."
+msgstr ""
+"Quando você terminar de editar as questões da pesquisa, apenas feche a tela."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
@@ -124,7 +126,8 @@ msgstr "Não há respostas salvas para esta questão"
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
-msgstr "Esta pergunta não possui várias respostas, uma área de texto será mostrada"
+msgstr ""
+"Esta pergunta não possui várias respostas, uma área de texto será mostrada"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
@@ -143,8 +146,14 @@ msgid "Survey overview options"
 msgstr "Opções de visão geral da pesquisa"
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
-msgstr "Buscas nos atributos Número, Título, Introdução, Descrição, Enviador de Notificação, Assunto de Notificação e Corpo de Notificação, sobrescrevendo atributos de mesmo nome."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
+msgstr ""
+"Buscas nos atributos Número, Título, Introdução, Descrição, Enviador de "
+"Notificação, Assunto de Notificação e Corpo de Notificação, sobrescrevendo "
+"atributos de mesmo nome."
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
@@ -416,7 +425,8 @@ msgstr "Módulo não habilitado."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "This functionality is not enabled, please contact your administrator."
-msgstr "Esta funcionalidade não está ativa, por favor contate seu administrador."
+msgstr ""
+"Esta funcionalidade não está ativa, por favor contate seu administrador."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Error!"
@@ -427,8 +437,12 @@ msgid "Invalid survey key."
 msgstr "Chave da pesquisa inválida."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
-msgstr "A chave da pesquisa inserida é inválida, se você acessou um link, talvez ele esteja obsoleto ou quebrado."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
+msgstr ""
+"A chave da pesquisa inserida é inválida, se você acessou um link, talvez ele "
+"esteja obsoleto ou quebrado."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote"
@@ -447,8 +461,11 @@ msgid "Survey List"
 msgstr "Lista de enquetes"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr "Você realmente deseja excluir essa questão? TODOS os dados associados serão PERDIDOS!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr ""
+"Você realmente deseja excluir essa questão? TODOS os dados associados serão "
+"PERDIDOS!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this answer?"
@@ -467,44 +484,81 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Todos os parâmetros para a Pesquisa na interface do agente."
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Intervalo de dias após enviar um e-mail de pesquisa dentro do qual novas requisições de pesquisa não serão enviadas para o mesmo cliente. Selecionar 0 irá sempre enviar o e-mail de pesquisa."
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"Intervalo de dias após enviar um e-mail de pesquisa dentro do qual novas "
+"requisições de pesquisa não serão enviadas para o mesmo cliente. Selecionar "
+"0 irá sempre enviar o e-mail de pesquisa."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "Corpo padrão para o e-mail de notificação de clientes sobre nova pesquisa."
+msgstr ""
+"Corpo padrão para o e-mail de notificação de clientes sobre nova pesquisa."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
-msgstr "Remetente padrão para o e-mail de notificação de clientes sobre nova pesquisa."
+msgid ""
+"Default sender for the notification email to customers about new survey."
+msgstr ""
+"Remetente padrão para o e-mail de notificação de clientes sobre nova "
+"pesquisa."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
-msgstr "Assunto padrão para o e-mail de notificação de clientes sobre nova pesquisa."
+msgid ""
+"Default subject for the notification email to customers about new survey."
+msgstr ""
+"Assunto padrão para o e-mail de notificação de clientes sobre nova pesquisa."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "Define o módulo de visão geral para exibir a visão pequena de uma lista de pesquisa."
+msgstr ""
+"Define o módulo de visão geral para exibir a visão pequena de uma lista de "
+"pesquisa."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
-msgstr "Define grupos que têm permissão para alterar o status da pesquisa.  A matriz está vazia por padrão e agentes de todos os grupos podem alterar o status da pesquisa."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
+msgstr ""
+"Define grupos que têm permissão para alterar o status da pesquisa.  A matriz "
+"está vazia por padrão e agentes de todos os grupos podem alterar o status da "
+"pesquisa."
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr "Define se as solicitações de pequisa serão enviadas apenas para clientes reais."
+msgstr ""
+"Define se as solicitações de pequisa serão enviadas apenas para clientes "
+"reais."
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "Define a máxima quantidade de pesquisas que são enviadas para um cliente a cada 30 dias (0 significa que não há máximo; todas as requisições de pesquisa serão enviadas)."
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"Define a máxima quantidade de pesquisas que são enviadas para um cliente a "
+"cada 30 dias (0 significa que não há máximo; todas as requisições de "
+"pesquisa serão enviadas)."
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr "Define a quantidade de horas que um chamado deve estar fechado para envio de uma pesquisa (0 significa enviar imediatamente após fechamento). Nota: um envio tardio de pesquisa é feito pelo OTRS Daemon, sob ativação da configuração  'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' ."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgstr ""
+"Define a quantidade de horas que um chamado deve estar fechado para envio de "
+"uma pesquisa (0 significa enviar imediatamente após fechamento). Nota: um "
+"envio tardio de pesquisa é feito pelo OTRS Daemon, sob ativação da "
+"configuração  'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' ."
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
-msgstr "Define as colunas da lista suspensa para criação de condições de envio (0=> inativo, 1=> ativo)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
+msgstr ""
+"Define as colunas da lista suspensa para criação de condições de envio (0=> "
+"inativo, 1=> ativo)."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -516,11 +570,17 @@ msgstr "Define os grupos (rw) que podem excluir as estatísticas da pesquisa."
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
-msgstr "Define a altura máxima para visualizações do Richtext nos elementos do SurveyZoom."
+msgstr ""
+"Define a altura máxima para visualizações do Richtext nos elementos do "
+"SurveyZoom."
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "Define as colunas exibidas na visão geral de pesquisa. Esta opção não tem efeito sobre a posição das colunas."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr ""
+"Define as colunas exibidas na visão geral de pesquisa. Esta opção não tem "
+"efeito sobre a posição das colunas."
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -535,8 +595,14 @@ msgid "Edit survey questions."
 msgstr "Editar as questões da pesquisa."
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "Habilita ou desabilita a tela ShowVoteData na interface pública para exibir dados do resultado de uma pesquisa específica quando o cliente tenta responder uma pesquisa pela segunda vez."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"Habilita ou desabilita a tela ShowVoteData na interface pública para exibir "
+"dados do resultado de uma pesquisa específica quando o cliente tenta "
+"responder uma pesquisa pela segunda vez."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -548,59 +614,98 @@ msgstr "Ativa ou desativa verificação de condições de tipos para envio."
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
-msgstr "Registro de módulo de interface para adição de pesquisa na interface de atendente."
+msgstr ""
+"Registro de módulo de interface para adição de pesquisa na interface de "
+"atendente."
 
 #. SysConfig
 msgid "Frontend module registration for survey edit in the agent interface."
-msgstr "Registro de módulo de interface para edição de pesquisa na interface de atendente."
+msgstr ""
+"Registro de módulo de interface para edição de pesquisa na interface de "
+"atendente."
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr "Registro de módulo de interface para estatística de pesquisa na interface de atendente."
+msgstr ""
+"Registro de módulo de interface para estatística de pesquisa na interface de "
+"atendente."
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
-msgstr "Registro de módulo de interface para detalhes de pesquisa na interface de atendente."
+msgstr ""
+"Registro de módulo de interface para detalhes de pesquisa na interface de "
+"atendente."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
-msgstr "Registro de módulo de interface para o objeto PublicSurvey na área de pesquisa pública."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
+msgstr ""
+"Registro de módulo de interface para o objeto PublicSurvey na área de "
+"pesquisa pública."
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
-msgstr "Se esta regex for encontrada, nenhuma pesquisa será enviado para o cliente"
+msgstr ""
+"Se esta regex for encontrada, nenhuma pesquisa será enviado para o cliente"
 
 #. SysConfig
 msgid "Limit."
 msgstr "Limite."
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "Parâmetros para as páginas (nas quais as pesquisas são mostradas) da visão geral de pesquisa pequena."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr ""
+"Parâmetros para as páginas (nas quais as pesquisas são mostradas) da visão "
+"geral de pesquisa pequena."
 
 #. SysConfig
 msgid "Public Survey."
 msgstr "Pesquisa Pública"
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
-msgstr "Resultados mais antigos que a quantidade configurada de dias serão excluídos. Nota: exclua resultados feitos pelo Daemon OTRS, ativação prévia da configuração 'Task###SurveyRequestsDelete'."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
+msgstr ""
+"Resultados mais antigos que a quantidade configurada de dias serão "
+"excluídos. Nota: exclua resultados feitos pelo Daemon OTRS, ativação prévia "
+"da configuração 'Task###SurveyRequestsDelete'."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "Exibe um link no menu para editar uma pesquisa em sua visão de detalhes na interface de atendente."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr ""
+"Exibe um link no menu para editar uma pesquisa em sua visão de detalhes na "
+"interface de atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "Exibe um link no menu para editar questões de pesquisa em sua visão de detalhes na interface de atendente."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr ""
+"Exibe um link no menu para editar questões de pesquisa em sua visão de "
+"detalhes na interface de atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "Exibe um link no menu para voltar da visão de detalhes de uma pesquisa na interface de atendente."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr ""
+"Exibe um link no menu para voltar da visão de detalhes de uma pesquisa na "
+"interface de atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "Exibe um link no menu para detalhar as estatísticas da pesquisa em sua visão de detalhes na interface de atendente."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr ""
+"Exibe um link no menu para detalhar as estatísticas da pesquisa em sua visão "
+"de detalhes na interface de atendente."
 
 #. SysConfig
 msgid "Stats Details"
@@ -628,23 +733,33 @@ msgstr "Módulo de Detalhe de Pesquisa."
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr "Limite de pesquisa por página para Visão Geral da pesquisa \"Pequeno\"."
+msgstr ""
+"Limite de pesquisa por página para Visão Geral da pesquisa \"Pequeno\"."
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
-msgstr "As pesquisas não será enviadas para os endereços de e-mail configurados."
+msgstr ""
+"As pesquisas não será enviadas para os endereços de e-mail configurados."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é Pesquisa#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é "
+"Pesquisa#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "Módulo de evento de chamado para enviar requisições de pesquisa via e-mail automaticamente para clientes se um chamado for fechado."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
+msgstr ""
+"Módulo de evento de chamado para enviar requisições de pesquisa via e-mail "
+"automaticamente para clientes se um chamado for fechado."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr "Acionar os resultados da exclusão ( incluindo dados de voto e solicitações)"
+msgstr ""
+"Acionar os resultados da exclusão ( incluindo dados de voto e solicitações)"
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
@@ -653,4 +768,3 @@ msgstr "Disparar o envio de solicitações de pesquisa atrasadas."
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr "Zoom em detalhes de estatísticas."
-

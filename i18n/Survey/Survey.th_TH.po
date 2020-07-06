@@ -143,7 +143,10 @@ msgid "Survey overview options"
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
@@ -427,7 +430,9 @@ msgid "Invalid survey key."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,7 +452,8 @@ msgid "Survey List"
 msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
 msgstr "คุณแน่ใจหรือไม่ที่จะลบคำถามนี้? ข้อมูลที่เกี่ยวข้องทั้งหมดจะหายไป!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
@@ -467,19 +473,25 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "พารามิเตอร์ทั้งหมดสำหรับออบเจกต์ของแบบสอบถามในอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "จํานวนวันหลังจากส่งอีเมล์ในการสอบถามที่ไม่มีการร้องขอการสอบถามครั้งใหม่จะถูกส่งไปยังลูกค้ารายเดียวกัน เลือก 0 เพื่อส่งอีเมล์ในการสอบถามตลอด"
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"จํานวนวันหลังจากส่งอีเมล์ในการสอบถามที่ไม่มีการร้องขอการสอบถามครั้งใหม่จะถูกส่งไปยังลูกค้ารายเดียวกัน "
+"เลือก 0 เพื่อส่งอีเมล์ในการสอบถามตลอด"
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
 msgstr "ค่าเริ่มต้นของส่วนเนื้อเรื่องสำหรับการแจ้งเตือนอีเมล์เกี่ยวกับแบบสอบถามใหม่ถึงลูกค้า"
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
+msgid ""
+"Default sender for the notification email to customers about new survey."
 msgstr "ค่าเริ่มต้นของผู้ส่งสำหรับการแจ้งเตือนอีเมล์เกี่ยวกับแบบสอบถามใหม่ถึงลูกค้า"
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
+msgid ""
+"Default subject for the notification email to customers about new survey."
 msgstr "ค่าเริ่มต้นของเนื้อหาสำหรับการแจ้งเตือนอีเมล์เกี่ยวกับแบบสอบถามใหม่ถึงลูกค้า"
 
 #. SysConfig
@@ -487,7 +499,9 @@ msgid "Defines an overview module to show the small view of a survey list."
 msgstr "กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายชื่อแบบสอบถาม"
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 
 #. SysConfig
@@ -495,15 +509,25 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "กำหนดจำนวนสูงสุดของการสำรวจที่ได้รับการส่งให้กับลูกค้าภายใน 30 วัน (0 หมายถึงไม่มีการกำหนดจำนวนสูงสุด ซึ่งแบบสำรวจที่เรียกขอทั้งหมดจะถูกส่ง)"
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"กำหนดจำนวนสูงสุดของการสำรวจที่ได้รับการส่งให้กับลูกค้าภายใน 30 วัน (0 "
+"หมายถึงไม่มีการกำหนดจำนวนสูงสุด ซึ่งแบบสำรวจที่เรียกขอทั้งหมดจะถูกส่ง)"
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 
 #. SysConfig
@@ -519,7 +543,9 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมของแบบสอบถามตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
@@ -535,8 +561,14 @@ msgid "Edit survey questions."
 msgstr ""
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "เปิดหรือปิดการใช้งานสกรีน ที่แสดงข้อมูลการโหวตในอินเตอร์เฟซสาธารณะเพื่อจะแสดงผลของแบบสอบถาม เมื่อลูกค้าพยายามที่จะตอบแบบสอบถามครั้งที่สอง"
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"เปิดหรือปิดการใช้งานสกรีน "
+"ที่แสดงข้อมูลการโหวตในอินเตอร์เฟซสาธารณะเพื่อจะแสดงผลของแบบสอบถาม "
+"เมื่อลูกค้าพยายามที่จะตอบแบบสอบถามครั้งที่สอง"
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -563,7 +595,9 @@ msgid "Frontend module registration for survey zoom in the agent interface."
 msgstr "การลงทะเบียนโมดูล Frontend สำหรับการซูมแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
 msgstr "การลงทะเบียนโมดูล Frontend สำหรับออบเจกค์แบบสอบถามทั่วไปในพื้นที่สำรวจสาธารณะ"
 
 #. SysConfig
@@ -575,7 +609,9 @@ msgid "Limit."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
 msgstr "พารามิเตอร์สำหรับเพจ (ซึ่งจะแสดงแบบสอบถาม) ของภาพรวมแบบสอบถามขนาดเล็ก"
 
 #. SysConfig
@@ -583,23 +619,34 @@ msgid "Public Survey."
 msgstr "แบบสอบถามสาธารณะ"
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
 msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไขแบบสอบถามในมุมมองการซูมในอินเตอร์เฟซของเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
 msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไขคำถามในแบบสอบถามในมุมมองการซูมในอินเตอร์เฟซของเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
 msgstr "แสดงลิงค์ในเมนูเพื่อย้อนกลับในการซูมของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
 msgstr "แสดงลิงค์ในเมนูเพื่อซูฒไปที่รายละเอียดสถิติของแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
 
 #. SysConfig
@@ -635,11 +682,16 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "จะไม่มีการส่งแบบสอบถามที่อีเมลที่ถูกกำหนดค่า"
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "ตัวบ่งชี้สำหรับแบบสอบถาม, ตัวอย่างเช่น แบบสอบถาม# แบบสอบถามของฉัน#. ค่าเริ่มต้นคือแบบสอบถาม#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"ตัวบ่งชี้สำหรับแบบสอบถาม, ตัวอย่างเช่น แบบสอบถาม# แบบสอบถามของฉัน#. "
+"ค่าเริ่มต้นคือแบบสอบถาม#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
 msgstr "โมดูลตั๋วกิจกรรมที่จะส่งอีเมลแบบสอบถามของการร้องขออัตโนมัติให้ลูกค้าในกรณีที่ตั๋วถูกปิด"
 
 #. SysConfig
@@ -653,4 +705,3 @@ msgstr "การกระตุ้นการส่งการร้องข
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr ""
-

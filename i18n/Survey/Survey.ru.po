@@ -92,7 +92,8 @@ msgstr "Требуются Ответы"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "По окончании редактирования вопросов опроса просто закройте этот экран."
+msgstr ""
+"По окончании редактирования вопросов опроса просто закройте этот экран."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
@@ -124,7 +125,9 @@ msgstr "Не заданы варианты ответов для этого во
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
-msgstr "Этот вопрос не предусматривает несколько ответов, будет показано текстовое/textarea поле."
+msgstr ""
+"Этот вопрос не предусматривает несколько ответов, будет показано текстовое/"
+"textarea поле."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
@@ -143,7 +146,10 @@ msgid "Survey overview options"
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
@@ -427,7 +433,9 @@ msgid "Invalid survey key."
 msgstr "Неверный код опроса"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,8 +455,11 @@ msgid "Survey List"
 msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr "ы действительно хотите удалить этот вопрос?  ВСЕ связанные данные будут ПОТЕРЯНЫ!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr ""
+"ы действительно хотите удалить этот вопрос?  ВСЕ связанные данные будут "
+"ПОТЕРЯНЫ!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this answer?"
@@ -467,27 +478,39 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Все параметры для объекта Опросы в интерфейсе агента."
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Количество дней, после отсылки писем с опросом, в течение которых никакие новые предложения об опросе не посылаются, одному и тому же клиенту. Выбор значения 0 указывает всегда посылать письмо с опросом."
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"Количество дней, после отсылки писем с опросом, в течение которых никакие "
+"новые предложения об опросе не посылаются, одному и тому же клиенту. Выбор "
+"значения 0 указывает всегда посылать письмо с опросом."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "Задает текст письма в почтовом уведомлении, посылаемом клиентам, о новом опросе."
+msgstr ""
+"Задает текст письма в почтовом уведомлении, посылаемом клиентам, о новом "
+"опросе."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
+msgid ""
+"Default sender for the notification email to customers about new survey."
 msgstr "Отправитель по умолчанию для электронной почты в новом опросе."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
+msgid ""
+"Default subject for the notification email to customers about new survey."
 msgstr "Тема по умолчанию для электронной почты в новом опросе."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "Задает модуль просмотра для отображения списка опросов в small формате."
+msgstr ""
+"Задает модуль просмотра для отображения списка опросов в small формате."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 
 #. SysConfig
@@ -495,20 +518,32 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "Задает максимальное количество опросов отсылаемых клиенту за каждые 30 дней. (\"0\" означает, что все запросы опросов будут отсылаться)."
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"Задает максимальное количество опросов отсылаемых клиенту за каждые 30 дней. "
+"(\"0\" означает, что все запросы опросов будут отсылаться)."
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Задает высоту по умолчанию области форматированного текста для элементов опроса при подробном просмотре."
+msgstr ""
+"Задает высоту по умолчанию области форматированного текста для элементов "
+"опроса при подробном просмотре."
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
@@ -519,8 +554,12 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "Задает перечень колонок, отображаемых в обзоре Опросов. Этот параметр не влияет на порядок колонок."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr ""
+"Задает перечень колонок, отображаемых в обзоре Опросов. Этот параметр не "
+"влияет на порядок колонок."
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -535,8 +574,14 @@ msgid "Edit survey questions."
 msgstr "Правка вопросов опроса"
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "Включите или отключить кнопку \"Показать мои ответы\", чтобы показать данные определенного результата опроса, когда клиент попытается ответить на опрос во второй раз."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"Включите или отключить кнопку \"Показать мои ответы\", чтобы показать данные "
+"определенного результата опроса, когда клиент попытается ответить на опрос "
+"во второй раз."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -548,23 +593,33 @@ msgstr "Включить или отключить проверку услови
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
-msgstr "Frontend module registration для добавления опроса в интерфейса агента."
+msgstr ""
+"Frontend module registration для добавления опроса в интерфейса агента."
 
 #. SysConfig
 msgid "Frontend module registration for survey edit in the agent interface."
-msgstr "Frontend module registration для редактирования опроса в интерфейса агента."
+msgstr ""
+"Frontend module registration для редактирования опроса в интерфейса агента."
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr "Frontend module registration для модуля отчетности об опросе в интерфейса агента."
+msgstr ""
+"Frontend module registration для модуля отчетности об опросе в интерфейса "
+"агента."
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
-msgstr "Frontend module registration для подробного просмотра опроса в интерфейса агента."
+msgstr ""
+"Frontend module registration для подробного просмотра опроса в интерфейса "
+"агента."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
-msgstr "Frontend module registration для объекта Публичного опроса в разделе публичных опросов."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
+msgstr ""
+"Frontend module registration для объекта Публичного опроса в разделе "
+"публичных опросов."
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
@@ -575,32 +630,55 @@ msgid "Limit."
 msgstr "Ограничение."
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "Параметры страницы (на которой отображаются опросы) при обзоре опросов в small формате."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr ""
+"Параметры страницы (на которой отображаются опросы) при обзоре опросов в "
+"small формате."
 
 #. SysConfig
 msgid "Public Survey."
 msgstr "Общедоступный опрос."
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "Показывает пункт меню, позволяющий редактировать опрос при его подробном просмотре в интерфейсе агента."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr ""
+"Показывает пункт меню, позволяющий редактировать опрос при его подробном "
+"просмотре в интерфейсе агента."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "Показывает пункт меню, позволяющий редактировать вопросы опроса при его подробном просмотре в интерфейсе агента."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr ""
+"Показывает пункт меню, позволяющий редактировать вопросы опроса при его "
+"подробном просмотре в интерфейсе агента."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "Показывает пункт меню, позволяющий вернуться назад при просмотре опроса в интерфейсе агента."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr ""
+"Показывает пункт меню, позволяющий вернуться назад при просмотре опроса в "
+"интерфейсе агента."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "Показывает пункт меню, позволяющий увидеть подробности отчета об опросе при его детальном просмотре в интерфейсе агента."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr ""
+"Показывает пункт меню, позволяющий увидеть подробности отчета об опросе при "
+"его детальном просмотре в интерфейсе агента."
 
 #. SysConfig
 msgid "Stats Details"
@@ -616,7 +694,8 @@ msgstr "Модуль редактирования опроса."
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"
-msgstr "Количество записей, отображаемых при просмотре опросов в \"Small\" формате"
+msgstr ""
+"Количество записей, отображаемых при просмотре опросов в \"Small\" формате"
 
 #. SysConfig
 msgid "Survey Stats Module."
@@ -635,12 +714,19 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "Опросы не будут отправляться на указанные почтовые адреса."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "Обозначение для идентификации опроса, например, Опрос№, Survey#, MySurvey#. По умолчанию Survey#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"Обозначение для идентификации опроса, например, Опрос№, Survey#, MySurvey#. "
+"По умолчанию Survey#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "Модуль управления событием для заявки, автоматически отправляющий письмо клиенту с опросом, при закрытии заявки."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
+msgstr ""
+"Модуль управления событием для заявки, автоматически отправляющий письмо "
+"клиенту с опросом, при закрытии заявки."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
@@ -653,4 +739,3 @@ msgstr "Триггер отправки задержанных запросов 
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr ""
-

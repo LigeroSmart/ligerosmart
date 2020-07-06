@@ -148,7 +148,10 @@ msgid "Survey overview options"
 msgstr "Enquête overzichtopties"
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 "Zoekt in de attributen Nummer, Titel, Inleiding, Beschrijving, "
 "NotificationSender, NotificationSubject en NotificationBody, waarbij andere "
@@ -436,7 +439,9 @@ msgid "Invalid survey key."
 msgstr "Ongeldige enquêtesleutel."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 "De ingevoegde enquêtesleutel is ongeldig. Als u een link hebt gevolgd, is "
 "deze mogelijk verouderd of defect."
@@ -458,7 +463,8 @@ msgid "Survey List"
 msgstr "Enquête lijst"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
 msgstr ""
 "Wil je deze vraag echt verwijderen? ALLE bijbehorende gegevens gaan VERLOREN!"
 
@@ -479,7 +485,9 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Alle parameters voor het enquête-object in de agentinterface."
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
 msgstr ""
 "Aantal dagen na verzending van een enquêtemail waarin geen nieuwe "
 "enquêteaanvragen naar dezelfde klant worden verzonden. Door 0 te selecteren "
@@ -490,12 +498,14 @@ msgid "Default body for the notification email to customers about new survey."
 msgstr "Standaardtekst voor de e-mailmelding aan klanten over nieuwe enquête."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
+msgid ""
+"Default sender for the notification email to customers about new survey."
 msgstr ""
 "Standaardafzender voor de e-mailmelding aan klanten over nieuwe enquête."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
+msgid ""
+"Default subject for the notification email to customers about new survey."
 msgstr ""
 "Standaardonderwerp voor de e-mailmelding aan klanten over nieuwe enquête."
 
@@ -506,7 +516,9 @@ msgstr ""
 "overzichtslijst weer te geven."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 "Definieert groepen die toestemming hebben om de enquêtestatus te wijzigen. "
 "Array is standaard leeg en agenten uit alle groepen kunnen de enquêtestatus "
@@ -514,25 +526,34 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr "Bepaalt of enquêteverzoeken alleen naar echte klanten worden verzonden."
+msgstr ""
+"Bepaalt of enquêteverzoeken alleen naar echte klanten worden verzonden."
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
 msgstr ""
 "Bepaalt het maximale aantal enquêtes dat per 30 dagen naar een klant wordt "
 "verzonden. (0 betekent geen maximum, alle enquêteaanvragen worden verzonden)."
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 "Bepaalt het aantal uren dat een ticket moet zijn gesloten om een enquête te "
 "verzenden (0 betekent verzenden direct na sluiting). Opmerking: het "
 "vertraagd verzenden van enquêtes wordt gedaan door de OTRS Daemon, "
-"voorafgaande activering van de instelling "
-"'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend'."
+"voorafgaande activering van de instelling 'Daemon::SchedulerCronTaskManager::"
+"Task###SurveyRequestsSend'."
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 "Definieert de kolommen voor de vervolgkeuzelijst voor het bouwen van "
 "verzendvoorwaarden (0 => inactief, 1 => actief)."
@@ -554,7 +575,9 @@ msgstr ""
 "elementen."
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
 msgstr ""
 "Definieert de weergegeven kolommen in het overzicht van de enquête. Deze "
 "optie heeft geen effect op de positie van de kolommen."
@@ -572,7 +595,10 @@ msgid "Edit survey questions."
 msgstr "Bewerk enquêtevragen."
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
 msgstr ""
 "Schakel het ShowVoteData-scherm in de openbare interface in of uit om "
 "gegevens van een specifiek enquêteresultaat te tonen wanneer de klant een "
@@ -606,7 +632,9 @@ msgid "Frontend module registration for survey zoom in the agent interface."
 msgstr "Frontend module registratie voor enquêtezoom in de agentinterface."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
 msgstr ""
 "Frontend module registratie voor het PublicSurvey-object in het openbare "
 "enquêtegebied."
@@ -620,7 +648,9 @@ msgid "Limit."
 msgstr "Beperk."
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
 msgstr ""
 "Parameters voor de pagina's (waarin de enquêtes worden getoond) van het "
 "kleine enquête overzicht."
@@ -630,32 +660,43 @@ msgid "Public Survey."
 msgstr "Openbare enquête."
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 "Resultaten ouder dan het geconfigureerde aantal dagen worden verwijderd. "
 "Opmerking: resultaten verwijderen wordt gedaan door de OTRS Daemon, "
 "voorafgaande activering van de instelling 'Taak###SurveyRequestsDelete'."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
 msgstr ""
 "Toont een link in het menu om een enquête te bewerken in de zoomweergave van "
 "de agentinterface."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
 msgstr ""
 "Toont een link in het menu om enquêtevragen te bewerken in de zoomweergave "
 "van de agentinterface."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
 msgstr ""
 "Toont een link in het menu om terug te gaan naar de enquêtezoomweergave van "
 "de agentinterface."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
 msgstr ""
 "Toont een link in het menu om in de zoomweergave van de agentinterface in te "
 "zoomen op de details van de enquêtestatistieken."
@@ -693,20 +734,24 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "Enquêtes worden niet verzonden naar de geconfigureerde e-mailadressen."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
 msgstr ""
 "De identificatie voor een enquête, b.v. Enquête#, MijnEnquête#. De "
 "standaardwaarde is Enquête#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
 msgstr ""
 "Ticket gebeurtenismodule om klanten automatisch enquêtemailverzoeken te "
 "sturen als een ticket is gesloten."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr "Resultaten verwijderen activeren (inclusief stemgegevens en verzoeken)."
+msgstr ""
+"Resultaten verwijderen activeren (inclusief stemgegevens en verzoeken)."
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

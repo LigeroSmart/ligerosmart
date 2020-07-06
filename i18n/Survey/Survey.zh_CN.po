@@ -143,8 +143,13 @@ msgid "Survey overview options"
 msgstr "调查概览选项"
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
-msgstr "在编号、标题、简介、描述、通知发件人、通知标题和通知正文属性中搜索，覆盖其他具有相同名称的属性。"
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
+msgstr ""
+"在编号、标题、简介、描述、通知发件人、通知标题和通知正文属性中搜索，覆盖其他"
+"具有相同名称的属性。"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
@@ -427,7 +432,9 @@ msgid "Invalid survey key."
 msgstr "无效的调查键。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr "插入的调查键无效，如果你是通过链接打开，可能链接失效或中断。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,7 +454,8 @@ msgid "Survey List"
 msgstr "调查列表"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
 msgstr "您真的要删除这个问题吗？所有相关数据都将丢失！"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
@@ -467,19 +475,25 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "服务人员界面调查对象的所有参数。"
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "发送调查邮件后的天数，在此期间不会给同一客户发送新的调查请求。选择 “0” 将总是发送调查邮件。"
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"发送调查邮件后的天数，在此期间不会给同一客户发送新的调查请求。选择 “0” 将总是"
+"发送调查邮件。"
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
 msgstr "发送给客户的新调查通知邮件的默认正文。"
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
+msgid ""
+"Default sender for the notification email to customers about new survey."
 msgstr "发送给客户的新调查通知邮件的默认发件人。"
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
+msgid ""
+"Default subject for the notification email to customers about new survey."
 msgstr "发送给客户的新调查通知邮件的默认主题。"
 
 #. SysConfig
@@ -487,23 +501,40 @@ msgid "Defines an overview module to show the small view of a survey list."
 msgstr "定义一个显示调查列表简洁视图的概览模块。"
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
-msgstr "定义有权更改调查状态的组。 默认情况下，数组为空，所有组的服务器人员都可以更改调查状态。"
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
+msgstr ""
+"定义有权更改调查状态的组。 默认情况下，数组为空，所有组的服务器人员都可以更改"
+"调查状态。"
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
 msgstr "定义调查请求是否只发送给真实客户。"
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "定义每30天发送给一个客户的最大调查数（ 0 代表没有最大数限制，将发送所有的调查请求）。"
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"定义每30天发送给一个客户的最大调查数（ 0 代表没有最大数限制，将发送所有的调查"
+"请求）。"
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr "定义一个工单关闭后触发发送一个调查的小时数（ 0 代表在工单关闭后立即发送调查请求）。注意：延迟发送的调查由OTRS守护程序（即先前激活的设置'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend'）完成。"
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgstr ""
+"定义一个工单关闭后触发发送一个调查的小时数（ 0 代表在工单关闭后立即发送调查请"
+"求）。注意：延迟发送的调查由OTRS守护程序（即先前激活的设置'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend'）完成。"
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr "定义建立发送条件的下拉列表的列（0 => 不激活，1 => 激活）。"
 
 #. SysConfig
@@ -519,7 +550,9 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr "定义调查详情窗口富文本查看视图的默认高度。"
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
 msgstr "定义调查概览中显示的字段。这个选项不会影响字段的位置。"
 
 #. SysConfig
@@ -535,8 +568,13 @@ msgid "Edit survey questions."
 msgstr "编辑调查问题。"
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "在公共界面启用或禁用显示投票数据窗口（当客户试图再次回答一个调查时显示指定调查结果的数据）。"
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"在公共界面启用或禁用显示投票数据窗口（当客户试图再次回答一个调查时显示指定调"
+"查结果的数据）。"
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -563,7 +601,9 @@ msgid "Frontend module registration for survey zoom in the agent interface."
 msgstr "服务人员界面调查详情的前端模块注册。"
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
 msgstr "服务人员界面公共调查的前端模块注册。"
 
 #. SysConfig
@@ -575,7 +615,9 @@ msgid "Limit."
 msgstr "限制。"
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
 msgstr "调查概览简洁模式显示调查的页面参数。"
 
 #. SysConfig
@@ -583,23 +625,36 @@ msgid "Public Survey."
 msgstr "公共调查。"
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
-msgstr "超过配置的天数的调查结果将被删除。 注意：删除调查结果由先前激活的 'Task###SurveyRequestsDelete' 设置的OTRS守护程序完成。"
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
+msgstr ""
+"超过配置的天数的调查结果将被删除。 注意：删除调查结果由先前激活的 "
+"'Task###SurveyRequestsDelete' 设置的OTRS守护程序完成。"
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
 msgstr "在服务人员界面调查详情窗口，在菜单中显示一个编辑调查的链接。"
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
 msgstr "在服务人员界面调查详情窗口，在菜单中显示一个编辑调查问题的链接。"
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
 msgstr "在服务人员界面调查详情窗口，在菜单中显示一个返回的链接。"
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
 msgstr "在服务人员界面调查统计窗口，在菜单中显示一个调查统计详情的链接。"
 
 #. SysConfig
@@ -635,11 +690,14 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "调查不会发送给配置的邮件地址。"
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
 msgstr "调查的标识符，例如：Survey#、MySurvey#。默认为Survey#。"
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
 msgstr "如果一个工单已关闭就自动发送调查请求邮件给客户的工单事件模块。"
 
 #. SysConfig
@@ -653,4 +711,3 @@ msgstr "触发器发送延迟的调查请求。"
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr "进入调查统计详情。"
-

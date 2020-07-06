@@ -143,7 +143,10 @@ msgid "Survey overview options"
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
-msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
 msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
@@ -427,7 +430,9 @@ msgid "Invalid survey key."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -447,7 +452,8 @@ msgid "Survey List"
 msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid "Do you really want to delete this question? ALL associated data will be LOST!"
+msgid ""
+"Do you really want to delete this question? ALL associated data will be LOST!"
 msgstr "Je unataka kufuta hili swali? Data zote zita POTEA!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
@@ -467,27 +473,40 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Parameta zote za vitu vya savei katika kiolesura cha wakala"
 
 #. SysConfig
-msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Idadi ya siku baada ya kutuma barua pepe ya tafiti ambapo hakuna maombi mapya ya tafiti kutumwa kwa mteja huyo. Kuchagua 0 daima kutatuma barua pepe ya savei"
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+"Idadi ya siku baada ya kutuma barua pepe ya tafiti ambapo hakuna maombi "
+"mapya ya tafiti kutumwa kwa mteja huyo. Kuchagua 0 daima kutatuma barua pepe "
+"ya savei"
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "Chaguo-msingi la kiini cha barua pepe ya taarifa kwa wateja kuhusu savei mpya."
+msgstr ""
+"Chaguo-msingi la kiini cha barua pepe ya taarifa kwa wateja kuhusu savei "
+"mpya."
 
 #. SysConfig
-msgid "Default sender for the notification email to customers about new survey."
+msgid ""
+"Default sender for the notification email to customers about new survey."
 msgstr "Chaguo-msingi la mtumaji wa barua pepe ya taarifa kuhusu savei mpya."
 
 #. SysConfig
-msgid "Default subject for the notification email to customers about new survey."
-msgstr "Chaguo-msingi la somo la barua pepe ya taarifa kwa wateja kuhusu savei mpya."
+msgid ""
+"Default subject for the notification email to customers about new survey."
+msgstr ""
+"Chaguo-msingi la somo la barua pepe ya taarifa kwa wateja kuhusu savei mpya."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "Inafafanua mapitio ya moduli kuonyesha muonekano mdogo wa orodha ya savei."
+msgstr ""
+"Inafafanua mapitio ya moduli kuonyesha muonekano mdogo wa orodha ya savei."
 
 #. SysConfig
-msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
 msgstr ""
 
 #. SysConfig
@@ -495,20 +514,32 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
-msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "Inafafanua kikomo cha juu cha idadi ya savei zinazotumwa kwa mteja kwa siku 30. (0 inamaanisha hakuna kikomo, savei zote zitatumwa). "
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. "
+"( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+"Inafafanua kikomo cha juu cha idadi ya savei zinazotumwa kwa mteja kwa siku "
+"30. (0 inamaanisha hakuna kikomo, savei zote zitatumwa). "
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending "
+"of a survey, ( 0 means send immediately after close ). Note: delayed survey "
+"sending is done by the OTRS Daemon, prior activation of 'Daemon::"
+"SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 => "
+"inactive, 1 => active)."
 msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Inafafanua chaguo-msingi la urefu wa muonekano wa Richtext kwa elementi za UtafitiKuzwa."
+msgstr ""
+"Inafafanua chaguo-msingi la urefu wa muonekano wa Richtext kwa elementi za "
+"UtafitiKuzwa."
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
@@ -519,8 +550,12 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "Inafafanua safu iliyoonyeshwa kwenye mapitio ya utafiti. Hili chaguo halina athari kwa nafasi ya safu. "
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr ""
+"Inafafanua safu iliyoonyeshwa kwenye mapitio ya utafiti. Hili chaguo halina "
+"athari kwa nafasi ya safu. "
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -535,8 +570,14 @@ msgid "Edit survey questions."
 msgstr ""
 
 #. SysConfig
-msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "Wezesha au Usiwezeshe skrini ya OneshaKuraData kwa kiolesura cha umma ili kuonyesha data za utafiti fulani maalumu pale mteja anapojaribu kujibu utafiti kwa mara ya pili."
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr ""
+"Wezesha au Usiwezeshe skrini ya OneshaKuraData kwa kiolesura cha umma ili "
+"kuonyesha data za utafiti fulani maalumu pale mteja anapojaribu kujibu "
+"utafiti kwa mara ya pili."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -548,23 +589,34 @@ msgstr "Wezesha au Usiwezeshe kuchagua hali ya kutuma kwa aina ya tiketi. "
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
-msgstr "Moduli ya Frontend ya kusajili ili kuongeza  utafiti katika kiolesura cha wakala."
+msgstr ""
+"Moduli ya Frontend ya kusajili ili kuongeza  utafiti katika kiolesura cha "
+"wakala."
 
 #. SysConfig
 msgid "Frontend module registration for survey edit in the agent interface."
-msgstr "Moduli ya Frontend ya kusajili ili kuhariri utafiti katika kiolesura cha wakala."
+msgstr ""
+"Moduli ya Frontend ya kusajili ili kuhariri utafiti katika kiolesura cha "
+"wakala."
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr "Moduli ya Frontend ya kusajili takwimu za utafiti katika kiolesura cha wakala."
+msgstr ""
+"Moduli ya Frontend ya kusajili takwimu za utafiti katika kiolesura cha "
+"wakala."
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
-msgstr "Moduli ya Frontend ya kusajili utafiti kuza katika kiolesura cha wakala."
+msgstr ""
+"Moduli ya Frontend ya kusajili utafiti kuza katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
-msgstr "Moduli ya Frontend ya kusajili kwa ajili ya UtafitiUmma katika eneo la utafiti wa umma."
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
+msgstr ""
+"Moduli ya Frontend ya kusajili kwa ajili ya UtafitiUmma katika eneo la "
+"utafiti wa umma."
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
@@ -575,32 +627,55 @@ msgid "Limit."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "Parameta kwa ajili ya kurasa (ambazo ndani yake utafiti umeonyeshwa) za mapitio ya utafiti mdogo. "
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr ""
+"Parameta kwa ajili ya kurasa (ambazo ndani yake utafiti umeonyeshwa) za "
+"mapitio ya utafiti mdogo. "
 
 #. SysConfig
 msgid "Public Survey."
 msgstr "Savei ya umma"
 
 #. SysConfig
-msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "Inaonyesha kiungo katika menyu ili kuhariri utafiti katika muonekano uliokuzwa wa kiolesura cha wakala."
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr ""
+"Inaonyesha kiungo katika menyu ili kuhariri utafiti katika muonekano "
+"uliokuzwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "Inaonyesha kiungo katika menyu ili kuhariri maswali ya utafiti katika muonekano uliokuzwa wa kiolesura cha wakala."
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr ""
+"Inaonyesha kiungo katika menyu ili kuhariri maswali ya utafiti katika "
+"muonekano uliokuzwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "Inaonyesha kiungo katika menyu ili kurudi katika muonekano uliokuzwa wa kiolesura cha wakala."
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr ""
+"Inaonyesha kiungo katika menyu ili kurudi katika muonekano uliokuzwa wa "
+"kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "Inaonyesha kiungo katika menyu ili kukuza maelezo ya takwimu za utafiti katika muonekano uliokuzwa wa kiolesura cha wakala."
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr ""
+"Inaonyesha kiungo katika menyu ili kukuza maelezo ya takwimu za utafiti "
+"katika muonekano uliokuzwa wa kiolesura cha wakala."
 
 #. SysConfig
 msgid "Stats Details"
@@ -635,12 +710,19 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "Savei hazitatumwa kwa barua pepe zilizowekwa."
 
 #. SysConfig
-msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "Kitambulisho cha utafiti, mf. Utafiti#, Utafiti wangu#. Chaguo-msingi ni Utafiti#."
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+"Kitambulisho cha utafiti, mf. Utafiti#, Utafiti wangu#. Chaguo-msingi ni "
+"Utafiti#."
 
 #. SysConfig
-msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "Moduli ya tukio la tiketi kwa ajili ya kutuma barua pepe za maombi ya tafiti moja kwa moja kwa wateja kama tiketi imefungwa."
+msgid ""
+"Ticket event module to send automatically survey email requests to customers "
+"if a ticket is closed."
+msgstr ""
+"Moduli ya tukio la tiketi kwa ajili ya kutuma barua pepe za maombi ya tafiti "
+"moja kwa moja kwa wateja kama tiketi imefungwa."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
@@ -653,4 +735,3 @@ msgstr ""
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr ""
-
