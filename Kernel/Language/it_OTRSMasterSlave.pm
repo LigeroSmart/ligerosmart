@@ -29,7 +29,7 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = 'Ticket schiavi non impostati';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
-    $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'Master'} = 'Primario';
     $Self->{Translation}->{'Slave of %s%s%s'} = 'Schiavo di %s%s%s';
     $Self->{Translation}->{'Master Ticket'} = 'Ticket maestro';
 
