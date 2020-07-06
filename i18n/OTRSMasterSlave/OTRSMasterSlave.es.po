@@ -59,8 +59,12 @@ msgid "All slave tickets"
 msgstr "Todos los Tickets esclavos"
 
 #. SysConfig
-msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Permite añadir notas en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Permite añadir notas en la pantalla de ticket Maestro-Esclavo en la vista "
+"detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
 msgid "Change the MasterSlave state of the ticket."
@@ -71,64 +75,128 @@ msgid "Defines dynamic field name for master ticket feature."
 msgstr "Define el nombre del campo dinámico para la función de ticket maestro."
 
 #. SysConfig
-msgid "Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr "Define el bloqueo requerido in la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente (si el ticket no ha sido bloqueado aun, el ticket se bloquea y el agente actual se convertirá automáticamente en el dueño del mismo)."
+msgid ""
+"Defines if a ticket lock is required in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface (if the ticket isn't locked yet, the "
+"ticket gets locked and the current agent will be set automatically as its "
+"owner)."
+msgstr ""
+"Define el bloqueo requerido in la pantalla de ticket Maestro-Esclavo en la "
+"vista detallada de dicho ticket en la interfaz del agente (si el ticket no "
+"ha sido bloqueado aun, el ticket se bloquea y el agente actual se convertirá "
+"automáticamente en el dueño del mismo)."
 
 #. SysConfig
 msgid "Defines if the MasterSlave note is visible for the customer by default."
-msgstr "Define si la nota MaestroEsclavo es visible para el cliente por defecto."
+msgstr ""
+"Define si la nota MaestroEsclavo es visible para el cliente por defecto."
 
 #. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Define el siguiente estado del ticket después de añadir una nota, en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Define el siguiente estado del ticket después de añadir una nota, en la "
+"pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en "
+"la interfaz del agente."
 
 #. SysConfig
-msgid "Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Define la prioridad por defecto en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Defines the default ticket priority in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Define la prioridad por defecto en la pantalla de ticket Maestro-Esclavo en "
+"la vista detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
-msgid "Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Define el comentario del historial para la acción de la pantalla del ticket Maestro-Esclavo, que es usado para el historial del ticket en la interfaz del agente."
+msgid ""
+"Defines the history comment for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Define el comentario del historial para la acción de la pantalla del ticket "
+"Maestro-Esclavo, que es usado para el historial del ticket en la interfaz "
+"del agente."
 
 #. SysConfig
-msgid "Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Define el tipo de historial para la acción de la pantalla del ticket Maestro-Esclavo, que es usado para el historial del ticket en la interfaz del agente."
+msgid ""
+"Defines the history type for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Define el tipo de historial para la acción de la pantalla del ticket Maestro-"
+"Esclavo, que es usado para el historial del ticket en la interfaz del agente."
 
 #. SysConfig
-msgid "Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Define el siguiente estado después de añadir una nota, en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Defines the next state of a ticket after adding a note, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Define el siguiente estado después de añadir una nota, en la pantalla de "
+"ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz "
+"del agente."
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
 msgstr "Activa la parte Maestro-Esclavo avanzada de la función."
 
 #. SysConfig
-msgid "Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode."
-msgstr "Activa la función de que los tickets esclavos siguen el ticket maestro a un nuevo maestro en el modo Maestro-Esclavo avanzado."
+msgid ""
+"Enables the feature that slave tickets follow the master ticket to a new "
+"master in the advanced MasterSlave mode."
+msgstr ""
+"Activa la función de que los tickets esclavos siguen el ticket maestro a un "
+"nuevo maestro en el modo Maestro-Esclavo avanzado."
 
 #. SysConfig
-msgid "Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode."
-msgstr "Activa la función que cambie el estado Maestro-Esclavo de un ticket en el modo Maestro-Esclavo avanzado."
+msgid ""
+"Enables the feature to change the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
+msgstr ""
+"Activa la función que cambie el estado Maestro-Esclavo de un ticket en el "
+"modo Maestro-Esclavo avanzado."
 
 #. SysConfig
-msgid "Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets."
-msgstr "Habilita la característica para reenviar artículos desde el tipo 'reenviar' de un ticket maestro a los clientes de los tickets esclavos. Por defecto (deshabilitado) no reenviará artículos del tipo 'reenviar' a los tickets esclavos."
+msgid ""
+"Enables the feature to forward articles from type 'forward' of a master "
+"ticket to the customers of the slave tickets. By default (disabled) it will "
+"not forward articles from type 'forward' to the slave tickets."
+msgstr ""
+"Habilita la característica para reenviar artículos desde el tipo 'reenviar' "
+"de un ticket maestro a los clientes de los tickets esclavos. Por defecto "
+"(deshabilitado) no reenviará artículos del tipo 'reenviar' a los tickets "
+"esclavos."
 
 #. SysConfig
-msgid "Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode."
-msgstr "Permite que la característica para mantener el enlace padre-hijo después del cambio de estado MaestroEsclavo en el modo avanzado MaestroEsclavo."
+msgid ""
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+"Permite que la característica para mantener el enlace padre-hijo después del "
+"cambio de estado MaestroEsclavo en el modo avanzado MaestroEsclavo."
 
 #. SysConfig
-msgid "Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode."
-msgstr "Habilita la característica para mantener el enlace padre-hijo después de desactivar el estado MaestroEsclavo en el avanzado de MaestroEsclavo."
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave "
+"state in the advanced MasterSlave mode."
+msgstr ""
+"Habilita la característica para mantener el enlace padre-hijo después de "
+"desactivar el estado MaestroEsclavo en el avanzado de MaestroEsclavo."
 
 #. SysConfig
-msgid "Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode."
-msgstr "Habilita la característica para desactivar el estado de MaestroEsclado de un ticket en el modo avanzado de MaestroEsclavo."
+msgid ""
+"Enables the feature to unset the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
+msgstr ""
+"Habilita la característica para desactivar el estado de MaestroEsclado de un "
+"ticket en el modo avanzado de MaestroEsclavo."
 
 #. SysConfig
-msgid "If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Si una nota es añadida por un agente, fija el estado del ticket en en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"If a note is added by an agent, sets the state of the ticket in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Si una nota es añadida por un agente, fija el estado del ticket en en la "
+"pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en "
+"la interfaz del agente."
 
 #. SysConfig
 msgid "Master / Slave"
@@ -147,86 +215,172 @@ msgid "MasterSlave module for Ticket Bulk feature."
 msgstr "Módulo Esclavo Maestro para mayor características de entradas."
 
 #. SysConfig
-msgid "Parameters for the dashboard backend of the master tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Parámetros de el dashboard backend de la vista de los tickets maestros de la interfaz del agente. \"Limite\" es el numero de entradas a mostrar por defecto. \"Grupo\" es usado para restringir el acceso a el plugin (E.J. Grupo: admin;grupo1;grupo2;). \"Defecto\" determina si el plugin es activado por defecto ó si el usuario necesita activarlo manualmente. \"CacheTTLLocal\" es hora cache en minutos para el plugin."
+msgid ""
+"Parameters for the dashboard backend of the master tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Parámetros de el dashboard backend de la vista de los tickets maestros de la "
+"interfaz del agente. \"Limite\" es el numero de entradas a mostrar por "
+"defecto. \"Grupo\" es usado para restringir el acceso a el plugin (E.J. "
+"Grupo: admin;grupo1;grupo2;). \"Defecto\" determina si el plugin es activado "
+"por defecto ó si el usuario necesita activarlo manualmente. \"CacheTTLLocal"
+"\" es hora cache en minutos para el plugin."
 
 #. SysConfig
-msgid "Parameters for the dashboard backend of the slave tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Parametros del backend del panel principal de la vista del ticket esclavo del interface del agente. \"Limite\" es el número de entrada mostradas por defecto. \"Grupo\"es usado para restringir el acceso al plugin (Ejm. Grupo: admin;group1;group2;). \"Defecto\" determina si el plugin es habilitado por defecto o si el usuario necesita habilitarlo manualmente. \"CacheTTLLocal\" es el tiempo de cache en minutos para el plugin"
+msgid ""
+"Parameters for the dashboard backend of the slave tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Parametros del backend del panel principal de la vista del ticket esclavo "
+"del interface del agente. \"Limite\" es el número de entrada mostradas por "
+"defecto. \"Grupo\"es usado para restringir el acceso al plugin (Ejm. Grupo: "
+"admin;group1;group2;). \"Defecto\" determina si el plugin es habilitado por "
+"defecto o si el usuario necesita habilitarlo manualmente. \"CacheTTLLocal\" "
+"es el tiempo de cache en minutos para el plugin"
 
 #. SysConfig
 msgid "Registration of the ticket event module."
 msgstr "Registro del módulo de evento de tickets."
 
 #. SysConfig
-msgid "Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Permisos requeridos para usar la pantalla Maestro-Esclavo de un ticket, en la vista detallada de dicho ticket de la interfaz del agente."
+msgid ""
+"Required permissions to use the ticket MasterSlave screen of a zoomed ticket "
+"in the agent interface."
+msgstr ""
+"Permisos requeridos para usar la pantalla Maestro-Esclavo de un ticket, en "
+"la vista detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
 msgid "Sets if Master / Slave field must be selected by the agent."
 msgstr "Establece si el agente debe seleccionar el campo Maestro / Esclavo."
 
 #. SysConfig
-msgid "Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Fija el texto del cuerpo por defecto de las notas añadidas en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Sets the default body text for notes added in the ticket MasterSlave screen "
+"of a zoomed ticket in the agent interface."
+msgstr ""
+"Fija el texto del cuerpo por defecto de las notas añadidas en la pantalla "
+"Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del "
+"agente."
 
 #. SysConfig
-msgid "Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Fija el asunto por defecto de las notas añadidas en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Sets the default subject for notes added in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Fija el asunto por defecto de las notas añadidas en la pantalla Maestro-"
+"Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
-msgid "Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Fija el agente responsable de un ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Sets the responsible agent of the ticket in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Fija el agente responsable de un ticket en la pantalla Maestro-Esclavo en la "
+"vista detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
-msgid "Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
-msgstr "Fija el servicio de un ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente (Ticket::Service require ser activado)."
+msgid ""
+"Sets the service in the ticket MasterSlave screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+"Fija el servicio de un ticket en la pantalla Maestro-Esclavo en la vista "
+"detallada de dicho ticket en la interfaz del agente (Ticket::Service require "
+"ser activado)."
 
 #. SysConfig
-msgid "Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Fija el dueño de un ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
+msgid ""
+"Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Fija el dueño de un ticket en la pantalla Maestro-Esclavo en la vista "
+"detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
-msgid "Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
-msgstr "Fija el tipo de ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente (Ticket::Type require ser activado)."
+msgid ""
+"Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Fija el tipo de ticket en la pantalla Maestro-Esclavo en la vista detallada "
+"de dicho ticket en la interfaz del agente (Ticket::Type require ser "
+"activado)."
 
 #. SysConfig
-msgid "Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface."
-msgstr "Muestra un enlace en el menú para cambiar el estatus Maestro-Esclavo de un ticket, en la vista detallada de dicho ticket de la interfaz del agente."
+msgid ""
+"Shows a link in the menu to change the MasterSlave status of a ticket in the "
+"ticket zoom view of the agent interface."
+msgstr ""
+"Muestra un enlace en el menú para cambiar el estatus Maestro-Esclavo de un "
+"ticket, en la vista detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
-msgid "Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Muestra una lista de todos los agentes involucrados con este ticket, en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente."
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Muestra una lista de todos los agentes involucrados con este ticket, en la "
+"pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la "
+"interfaz del agente."
 
 #. SysConfig
-msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Muestra una lista de todos los posibles agentes (todos los agentes con permisos \"nota\" en la fila/ticket) para determinar quién deberá ser informado acerca de esta nota, en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente."
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Muestra una lista de todos los posibles agentes (todos los agentes con "
+"permisos \"nota\" en la fila/ticket) para determinar quién deberá ser "
+"informado acerca de esta nota, en la pantalla Maestro-Esclavo en la vista "
+"detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
-msgid "Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Muestra las opciones de prioridad de ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente."
+msgid ""
+"Shows the ticket priority options in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Muestra las opciones de prioridad de ticket en la pantalla Maestro-Esclavo "
+"en la vista detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
-msgid "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Muestra el campo título del ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente."
+msgid ""
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Muestra el campo título del ticket en la pantalla Maestro-Esclavo en la "
+"vista detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
 msgid "Slave Tickets"
 msgstr "Tickets esclavo"
 
 #. SysConfig
-msgid "Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket."
+msgid ""
+"Specifies the different article communication channels where the real name "
+"from Master ticket will be replaced with the one in the Slave ticket."
 msgstr ""
 
 #. SysConfig
-msgid "This module activates Master/Slave field in new email and phone ticket screens."
-msgstr "Este módulo activa el campo Maestro-Esclavo en la pantalla de un nuevo ticket de email o de teléfono."
+msgid ""
+"This module activates Master/Slave field in new email and phone ticket "
+"screens."
+msgstr ""
+"Este módulo activa el campo Maestro-Esclavo en la pantalla de un nuevo "
+"ticket de email o de teléfono."
 
 #. SysConfig
-msgid "This setting is deprecated and will be removed in further versions of OTRSMasterSlave."
+msgid ""
+"This setting is deprecated and will be removed in further versions of "
+"OTRSMasterSlave."
 msgstr ""
 
 #. SysConfig
 msgid "Ticket MasterSlave."
 msgstr "Ticket Maestro-Esclavo."
-

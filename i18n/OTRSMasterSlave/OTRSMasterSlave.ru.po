@@ -59,8 +59,11 @@ msgid "All slave tickets"
 msgstr "Все ведомые заявки"
 
 #. SysConfig
-msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Позволяет добавить сообщение на экране MasterSlave в интерфейсе агента."
+msgid ""
+"Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Позволяет добавить сообщение на экране MasterSlave в интерфейсе агента."
 
 #. SysConfig
 msgid "Change the MasterSlave state of the ticket."
@@ -71,64 +74,121 @@ msgid "Defines dynamic field name for master ticket feature."
 msgstr "Задает имя динамического поля для функции главной заявки."
 
 #. SysConfig
-msgid "Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr "Требуется ли блокировка заявки при применении опции MasterSlave в интерфейсе агента (если заявка еще не заблокирована, она блокируется и текущий агент становится ее Владельцем)."
+msgid ""
+"Defines if a ticket lock is required in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface (if the ticket isn't locked yet, the "
+"ticket gets locked and the current agent will be set automatically as its "
+"owner)."
+msgstr ""
+"Требуется ли блокировка заявки при применении опции MasterSlave в интерфейсе "
+"агента (если заявка еще не заблокирована, она блокируется и текущий агент "
+"становится ее Владельцем)."
 
 #. SysConfig
 msgid "Defines if the MasterSlave note is visible for the customer by default."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Задает следующее состояние по умолчанию для заявки после добавления заметки на экране MasterSlave заявки при ее просмотре в интерфейсе агента."
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Задает следующее состояние по умолчанию для заявки после добавления заметки "
+"на экране MasterSlave заявки при ее просмотре в интерфейсе агента."
 
 #. SysConfig
-msgid "Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Задает умалчиваемый приоритет заявки на экране MasterSlave при просмотре заявки в интерфейсе агента."
+msgid ""
+"Defines the default ticket priority in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Задает умалчиваемый приоритет заявки на экране MasterSlave при просмотре "
+"заявки в интерфейсе агента."
 
 #. SysConfig
-msgid "Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Задает текст комментария в записи истории при вызове MasterSlave экрана , в интерфейсе агента."
+msgid ""
+"Defines the history comment for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Задает текст комментария в записи истории при вызове MasterSlave экрана , в "
+"интерфейсе агента."
 
 #. SysConfig
-msgid "Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Задает тип записи истории при вызове MasterSlave экрана , в интерфейсе агента."
+msgid ""
+"Defines the history type for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Задает тип записи истории при вызове MasterSlave экрана , в интерфейсе "
+"агента."
 
 #. SysConfig
-msgid "Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Задает следующее состояние для заявки после добавления заметки на экране MasterSlave заявки при ее просмотре в интерфейсе агента."
+msgid ""
+"Defines the next state of a ticket after adding a note, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Задает следующее состояние для заявки после добавления заметки на экране "
+"MasterSlave заявки при ее просмотре в интерфейсе агента."
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
 msgstr "Включает расширенные возможности для MasterSlave."
 
 #. SysConfig
-msgid "Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode."
-msgstr "Включает возможность передачи ведомых заявок главной заявки к новой главной в расширенном режиме MasterSlave ."
+msgid ""
+"Enables the feature that slave tickets follow the master ticket to a new "
+"master in the advanced MasterSlave mode."
+msgstr ""
+"Включает возможность передачи ведомых заявок главной заявки к новой главной "
+"в расширенном режиме MasterSlave ."
 
 #. SysConfig
-msgid "Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode."
-msgstr "Включает возможность изменения состояния MasterSlave заявки в расширенном режиме."
+msgid ""
+"Enables the feature to change the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
+msgstr ""
+"Включает возможность изменения состояния MasterSlave заявки в расширенном "
+"режиме."
 
 #. SysConfig
-msgid "Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets."
-msgstr "Включает возможность пересылки сообщений/заметок при пересылке главной заявки  клиентам ведомых заявок. По умолчанию (выключено) в ведомые заявки ничего не пересылается."
+msgid ""
+"Enables the feature to forward articles from type 'forward' of a master "
+"ticket to the customers of the slave tickets. By default (disabled) it will "
+"not forward articles from type 'forward' to the slave tickets."
+msgstr ""
+"Включает возможность пересылки сообщений/заметок при пересылке главной "
+"заявки  клиентам ведомых заявок. По умолчанию (выключено) в ведомые заявки "
+"ничего не пересылается."
 
 #. SysConfig
-msgid "Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode."
-msgstr "Включает возможность сохранить связь родитель-потомок для заявок, после изменения признака MasterSlave в расширенном режиме MasterSlave."
+msgid ""
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+"Включает возможность сохранить связь родитель-потомок для заявок, после "
+"изменения признака MasterSlave в расширенном режиме MasterSlave."
 
 #. SysConfig
-msgid "Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode."
-msgstr "Включает возможность сохранить связь родитель-потомок для заявок, после снятия признака MasterSlave в расширенном режиме MasterSlave."
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave "
+"state in the advanced MasterSlave mode."
+msgstr ""
+"Включает возможность сохранить связь родитель-потомок для заявок, после "
+"снятия признака MasterSlave в расширенном режиме MasterSlave."
 
 #. SysConfig
-msgid "Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode."
-msgstr "Задает возможность сбросить установленное состояние MasterSlave заявки в расширенном режиме."
+msgid ""
+"Enables the feature to unset the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
+msgstr ""
+"Задает возможность сбросить установленное состояние MasterSlave заявки в "
+"расширенном режиме."
 
 #. SysConfig
-msgid "If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Если сообщение/заметка добавлена агентом, задает состояние заявки на экране MasterSlave  в интерфейсе агента."
+msgid ""
+"If a note is added by an agent, sets the state of the ticket in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Если сообщение/заметка добавлена агентом, задает состояние заявки на экране "
+"MasterSlave  в интерфейсе агента."
 
 #. SysConfig
 msgid "Master / Slave"
@@ -147,67 +207,136 @@ msgid "MasterSlave module for Ticket Bulk feature."
 msgstr "MasterSlave модуль для функции Массовое действие."
 
 #. SysConfig
-msgid "Parameters for the dashboard backend of the master tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Параметры для раздела Дайджеста с информацией о master заявках в интерфейсе агента. \"Group\" используется для ограничения доступа к разделу (например, Group: admin;group1;group2;). \"Default\" - задает, будет ли раздел доступен по умолчанию или агент должен активировать его вручную. \"CacheTTLLocal\" - время обновления кэша в минутах для этого раздела."
+msgid ""
+"Parameters for the dashboard backend of the master tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Параметры для раздела Дайджеста с информацией о master заявках в интерфейсе "
+"агента. \"Group\" используется для ограничения доступа к разделу (например, "
+"Group: admin;group1;group2;). \"Default\" - задает, будет ли раздел доступен "
+"по умолчанию или агент должен активировать его вручную. \"CacheTTLLocal\" - "
+"время обновления кэша в минутах для этого раздела."
 
 #. SysConfig
-msgid "Parameters for the dashboard backend of the slave tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Параметры для раздела Дайджеста с информацией о slave заявках в интерфейсе агента. \"Group\" используется для ограничения доступа к разделу (например, Group: admin;group1;group2;). \"Default\" - задает, будет ли раздел доступен по умолчанию или агент должен активировать его вручную. \"CacheTTLLocal\" - время обновления кэша в минутах для этого раздела."
+msgid ""
+"Parameters for the dashboard backend of the slave tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Параметры для раздела Дайджеста с информацией о slave заявках в интерфейсе "
+"агента. \"Group\" используется для ограничения доступа к разделу (например, "
+"Group: admin;group1;group2;). \"Default\" - задает, будет ли раздел доступен "
+"по умолчанию или агент должен активировать его вручную. \"CacheTTLLocal\" - "
+"время обновления кэша в минутах для этого раздела."
 
 #. SysConfig
 msgid "Registration of the ticket event module."
 msgstr "Регистрация модуля обработки событий заявки."
 
 #. SysConfig
-msgid "Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Права, требуемые для использования функции MasterSlave заявок в интерфейсе агента."
+msgid ""
+"Required permissions to use the ticket MasterSlave screen of a zoomed ticket "
+"in the agent interface."
+msgstr ""
+"Права, требуемые для использования функции MasterSlave заявок в интерфейсе "
+"агента."
 
 #. SysConfig
 msgid "Sets if Master / Slave field must be selected by the agent."
 msgstr ""
 
 #. SysConfig
-msgid "Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Устанавливает текст сообщения по умолчанию при добавлении сообщения на экране MasterSlave заявки в интерфейсе агента."
+msgid ""
+"Sets the default body text for notes added in the ticket MasterSlave screen "
+"of a zoomed ticket in the agent interface."
+msgstr ""
+"Устанавливает текст сообщения по умолчанию при добавлении сообщения на "
+"экране MasterSlave заявки в интерфейсе агента."
 
 #. SysConfig
-msgid "Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Устанавливает тему сообщения по умолчанию при добавлении сообщения на экране MasterSlave заявки в интерфейсе агента."
+msgid ""
+"Sets the default subject for notes added in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Устанавливает тему сообщения по умолчанию при добавлении сообщения на экране "
+"MasterSlave заявки в интерфейсе агента."
 
 #. SysConfig
-msgid "Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Задает Ответственного за заявку на экране MasterSlave заявки в интерфейсе агента."
+msgid ""
+"Sets the responsible agent of the ticket in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Задает Ответственного за заявку на экране MasterSlave заявки в интерфейсе "
+"агента."
 
 #. SysConfig
-msgid "Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
-msgstr "Задает сервис для заявки на экране MasterSlave заявки в интерфейсе агента. (Параметр Ticket::Service должен быть включен)."
+msgid ""
+"Sets the service in the ticket MasterSlave screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+"Задает сервис для заявки на экране MasterSlave заявки в интерфейсе агента. "
+"(Параметр Ticket::Service должен быть включен)."
 
 #. SysConfig
-msgid "Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Задает Владельца заявки на экране MasterSlave заявки в интерфейсе агента."
+msgid ""
+"Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Задает Владельца заявки на экране MasterSlave заявки в интерфейсе агента."
 
 #. SysConfig
-msgid "Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
-msgstr "Задает тип заявки на экране MasterSlave заявки в интерфейсе агента. (Параметр Ticket::Service должен быть включен)."
+msgid ""
+"Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Задает тип заявки на экране MasterSlave заявки в интерфейсе агента. "
+"(Параметр Ticket::Service должен быть включен)."
 
 #. SysConfig
-msgid "Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface."
-msgstr "Задает ссылку в меню для изменения MasterSlave статуса  на экране просмотра заявки в интерфейсе агента."
+msgid ""
+"Shows a link in the menu to change the MasterSlave status of a ticket in the "
+"ticket zoom view of the agent interface."
+msgstr ""
+"Задает ссылку в меню для изменения MasterSlave статуса  на экране просмотра "
+"заявки в интерфейсе агента."
 
 #. SysConfig
-msgid "Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Показывает список всех привлекаемых агентов по этой заявке на экране MasterSlave заявки в интерфейсе агента. "
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Показывает список всех привлекаемых агентов по этой заявке на экране "
+"MasterSlave заявки в интерфейсе агента. "
 
 #. SysConfig
-msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Показывает список всех доступных агентов (всех агентов с правами note для очереди/заявки), чтобы задать кого нужно информировать об этой заметке на экране MasterSlave заявки в интерфейсе агента. "
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Показывает список всех доступных агентов (всех агентов с правами note для "
+"очереди/заявки), чтобы задать кого нужно информировать об этой заметке на "
+"экране MasterSlave заявки в интерфейсе агента. "
 
 #. SysConfig
-msgid "Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Дает возможность изменить приоритет на экране MasterSlave заявки в интерфейсе агента. "
+msgid ""
+"Shows the ticket priority options in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Дает возможность изменить приоритет на экране MasterSlave заявки в "
+"интерфейсе агента. "
 
 #. SysConfig
-msgid "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgid ""
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -215,18 +344,25 @@ msgid "Slave Tickets"
 msgstr "Ведомые заявки"
 
 #. SysConfig
-msgid "Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket."
+msgid ""
+"Specifies the different article communication channels where the real name "
+"from Master ticket will be replaced with the one in the Slave ticket."
 msgstr ""
 
 #. SysConfig
-msgid "This module activates Master/Slave field in new email and phone ticket screens."
-msgstr "Этот модуль включает возможность выбора master/slave опции на экране создания заявки, на основе телефонного звонка или письма клиента агентом."
+msgid ""
+"This module activates Master/Slave field in new email and phone ticket "
+"screens."
+msgstr ""
+"Этот модуль включает возможность выбора master/slave опции на экране "
+"создания заявки, на основе телефонного звонка или письма клиента агентом."
 
 #. SysConfig
-msgid "This setting is deprecated and will be removed in further versions of OTRSMasterSlave."
+msgid ""
+"This setting is deprecated and will be removed in further versions of "
+"OTRSMasterSlave."
 msgstr ""
 
 #. SysConfig
 msgid "Ticket MasterSlave."
 msgstr "Заявка MasterSlave"
-

@@ -59,8 +59,12 @@ msgid "All slave tickets"
 msgstr ""
 
 #. SysConfig
-msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Ruhusu kuongeza vidokezi katika skrini ya MkuuMtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Ruhusu kuongeza vidokezi katika skrini ya MkuuMtumwa ya tiketi iliyokuzwa "
+"katika kiolesura cha wakala."
 
 #. SysConfig
 msgid "Change the MasterSlave state of the ticket."
@@ -71,64 +75,110 @@ msgid "Defines dynamic field name for master ticket feature."
 msgstr ""
 
 #. SysConfig
-msgid "Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr "Fafanua kama kufunga kwa tiketi kunahitajika katika skrini ya tiketi ya  mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala (kama tiketi haijafungwa bado, tiketi zipatwe kufungwa na wakala wa sasa atafanywa automatiki kuwa mmiliki wake)."
+msgid ""
+"Defines if a ticket lock is required in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface (if the ticket isn't locked yet, the "
+"ticket gets locked and the current agent will be set automatically as its "
+"owner)."
+msgstr ""
+"Fafanua kama kufunga kwa tiketi kunahitajika katika skrini ya tiketi ya  "
+"mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala (kama tiketi "
+"haijafungwa bado, tiketi zipatwe kufungwa na wakala wa sasa atafanywa "
+"automatiki kuwa mmiliki wake)."
 
 #. SysConfig
 msgid "Defines if the MasterSlave note is visible for the customer by default."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inafafanua chaguo-msingi la hali iyajo ya tiketi baada ya kuongeza kidokezo, katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Inafafanua chaguo-msingi la hali iyajo ya tiketi baada ya kuongeza kidokezo, "
+"katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura "
+"cha wakala."
 
 #. SysConfig
-msgid "Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inafafanua kipaumbele chaguo-msingi cha tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Defines the default ticket priority in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Inafafanua kipaumbele chaguo-msingi cha tiketi katika skrini ya mkuumtumwa "
+"ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Inafafanua historia ya maoni kwa kitendo cha skrini ya tiketi mkuumtumwa, ambayo inatumika na historia ya tiketi ya kiolesura cha wakala."
+msgid ""
+"Defines the history comment for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Inafafanua historia ya maoni kwa kitendo cha skrini ya tiketi mkuumtumwa, "
+"ambayo inatumika na historia ya tiketi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Fafanua aina ya historia kwa kitendo cha skrini ya mkuumtumwa cha tiketi, ambacho kinatumika na historia ya tiketi katika kiolesura cha wakala."
+msgid ""
+"Defines the history type for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Fafanua aina ya historia kwa kitendo cha skrini ya mkuumtumwa cha tiketi, "
+"ambacho kinatumika na historia ya tiketi katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Fafanua hali inayofuata ya tiketi baada ya kuongeza kidokezo, katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Defines the next state of a ticket after adding a note, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Fafanua hali inayofuata ya tiketi baada ya kuongeza kidokezo, katika skrini "
+"ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode."
+msgid ""
+"Enables the feature that slave tickets follow the master ticket to a new "
+"master in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode."
+msgid ""
+"Enables the feature to change the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets."
+msgid ""
+"Enables the feature to forward articles from type 'forward' of a master "
+"ticket to the customers of the slave tickets. By default (disabled) it will "
+"not forward articles from type 'forward' to the slave tickets."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode."
+msgid ""
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode."
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave "
+"state in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode."
+msgid ""
+"Enables the feature to unset the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid "If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"If a note is added by an agent, sets the state of the ticket in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya "
+"mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
 msgid "Master / Slave"
@@ -147,67 +197,143 @@ msgid "MasterSlave module for Ticket Bulk feature."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the dashboard backend of the master tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Parameta kwa backend ya dasibodi ya mapitio ya tiketi kuu ya kiolesura cha wakala. ''Kikomo'' ni namba ya vipengee halisi vinavyoonyeshwa kwa mchaguo-halisi. ''Kikundi'' kinatumika kuzuia kufikia kuchomeka (mfano Kikundi:Utawala;kikundi cha 1;kikundi cha 2;). ''Chaguo-msingi'' inahakiki kama mchomeko umewezeshwa kwa mchaguo-msingi au kama mtumizi anahitaji kuwezesha kwa mkono. ''HifadhimudaTTLKiambo'' ni muda wa hifadhi muda katika dakika kwa mchomeko."
+msgid ""
+"Parameters for the dashboard backend of the master tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Parameta kwa backend ya dasibodi ya mapitio ya tiketi kuu ya kiolesura cha "
+"wakala. ''Kikomo'' ni namba ya vipengee halisi vinavyoonyeshwa kwa mchaguo-"
+"halisi. ''Kikundi'' kinatumika kuzuia kufikia kuchomeka (mfano Kikundi:"
+"Utawala;kikundi cha 1;kikundi cha 2;). ''Chaguo-msingi'' inahakiki kama "
+"mchomeko umewezeshwa kwa mchaguo-msingi au kama mtumizi anahitaji kuwezesha "
+"kwa mkono. ''HifadhimudaTTLKiambo'' ni muda wa hifadhi muda katika dakika "
+"kwa mchomeko."
 
 #. SysConfig
-msgid "Parameters for the dashboard backend of the slave tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Parameta kwa backend ya dasibodi ya mapitio ya tiketi tumwa ya kiolesura cha wakala. ''Kikomo'' ni namba ya vipengee halisi vinavyoonyeshwa kwa mchaguo-halisi. ''Kikundi'' kinatumika kuzuia kufikia kuchomeka (mfano Kikundi:Utawala;kikundi cha 1;kikundi cha 2;). ''Chaguo-msingi'' inahakiki kama mchomeko umewezeshwa kwa mchaguo-msingi au kama mtumizi anahitaji kuwezesha kwa mkono. ''HifadhimudaTTLKiambo'' ni muda wa hifadhi muda katika dakika kwa mchomeko."
+msgid ""
+"Parameters for the dashboard backend of the slave tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Parameta kwa backend ya dasibodi ya mapitio ya tiketi tumwa ya kiolesura cha "
+"wakala. ''Kikomo'' ni namba ya vipengee halisi vinavyoonyeshwa kwa mchaguo-"
+"halisi. ''Kikundi'' kinatumika kuzuia kufikia kuchomeka (mfano Kikundi:"
+"Utawala;kikundi cha 1;kikundi cha 2;). ''Chaguo-msingi'' inahakiki kama "
+"mchomeko umewezeshwa kwa mchaguo-msingi au kama mtumizi anahitaji kuwezesha "
+"kwa mkono. ''HifadhimudaTTLKiambo'' ni muda wa hifadhi muda katika dakika "
+"kwa mchomeko."
 
 #. SysConfig
 msgid "Registration of the ticket event module."
 msgstr "Usajili wa kipimo cha tukio la tiketi."
 
 #. SysConfig
-msgid "Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inahitaji ruhusa kutumia skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kioesura cha wakala."
+msgid ""
+"Required permissions to use the ticket MasterSlave screen of a zoomed ticket "
+"in the agent interface."
+msgstr ""
+"Inahitaji ruhusa kutumia skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa "
+"katika kioesura cha wakala."
 
 #. SysConfig
 msgid "Sets if Master / Slave field must be selected by the agent."
 msgstr ""
 
 #. SysConfig
-msgid "Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inaweka matini kiini kilichoongezwa cha chaguo-msingi katika skrini ya mkuumtuwa ya tiketi katika tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Sets the default body text for notes added in the ticket MasterSlave screen "
+"of a zoomed ticket in the agent interface."
+msgstr ""
+"Inaweka matini kiini kilichoongezwa cha chaguo-msingi katika skrini ya "
+"mkuumtuwa ya tiketi katika tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inaweka somo la chaguo-msingi kwa kipengele kilichoongezwa katika skrini ya mkuumtuwa ya tiketi katika tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Sets the default subject for notes added in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Inaweka somo la chaguo-msingi kwa kipengele kilichoongezwa katika skrini ya "
+"mkuumtuwa ya tiketi katika tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inaweka wakala ambaye anahusika na tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katikat kiolesura cha wakala."
+msgid ""
+"Sets the responsible agent of the ticket in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Inaweka wakala ambaye anahusika na tiketi katika skrini ya mkuumtumwa ya "
+"tiketi ya tiketi iliyokuzwa katikat kiolesura cha wakala."
 
 #. SysConfig
-msgid "Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
-msgstr "Inaweka huduma katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala (Tiketi::Huduma inayohitaji kuamilishwa)."
+msgid ""
+"Sets the service in the ticket MasterSlave screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+"Inaweka huduma katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa "
+"katika kiolesura cha wakala (Tiketi::Huduma inayohitaji kuamilishwa)."
 
 #. SysConfig
-msgid "Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inaweka mmiliki wa tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Inaweka mmiliki wa tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi "
+"iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
-msgstr "Inaweka aina ya tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala (tiketi:: aina inayoitaji kuamilishwa)."
+msgid ""
+"Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Inaweka aina ya tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi "
+"iliyokuzwa katika kiolesura cha wakala (tiketi:: aina inayoitaji "
+"kuamilishwa)."
 
 #. SysConfig
-msgid "Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface."
-msgstr "Inaonyesha kiungo katika menyu cha kubadilisha hadhi ya mkuumtumwa ya tiketi katika mandhari iliyokuzwa ya tiketi ya kiolesura cha wakala."
+msgid ""
+"Shows a link in the menu to change the MasterSlave status of a ticket in the "
+"ticket zoom view of the agent interface."
+msgstr ""
+"Inaonyesha kiungo katika menyu cha kubadilisha hadhi ya mkuumtumwa ya tiketi "
+"katika mandhari iliyokuzwa ya tiketi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inaonyesha orodha ya mawakala wote wanaohusika na tiketi hii, katika skrini ya tiketi mkuu/mtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Inaonyesha orodha ya mawakala wote wanaohusika na tiketi hii, katika skrini "
+"ya tiketi mkuu/mtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inaonyesha orodha ya wakala wote wanaoweza (mawakala wote wenye kidokezo cha ruhusa ya tiketi/foleni) kutambua nani ataarifiwe kuhusu kidokezo hiki, katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura chwa wakala."
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Inaonyesha orodha ya wakala wote wanaoweza (mawakala wote wenye kidokezo cha "
+"ruhusa ya tiketi/foleni) kutambua nani ataarifiwe kuhusu kidokezo hiki, "
+"katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura "
+"chwa wakala."
 
 #. SysConfig
-msgid "Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Inaonyesha machaguo ya kipaumbele ya tiketi katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala."
+msgid ""
+"Shows the ticket priority options in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Inaonyesha machaguo ya kipaumbele ya tiketi katika skrini ya tiketi "
+"mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgid ""
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -215,18 +341,23 @@ msgid "Slave Tickets"
 msgstr ""
 
 #. SysConfig
-msgid "Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket."
+msgid ""
+"Specifies the different article communication channels where the real name "
+"from Master ticket will be replaced with the one in the Slave ticket."
 msgstr ""
 
 #. SysConfig
-msgid "This module activates Master/Slave field in new email and phone ticket screens."
+msgid ""
+"This module activates Master/Slave field in new email and phone ticket "
+"screens."
 msgstr ""
 
 #. SysConfig
-msgid "This setting is deprecated and will be removed in further versions of OTRSMasterSlave."
+msgid ""
+"This setting is deprecated and will be removed in further versions of "
+"OTRSMasterSlave."
 msgstr ""
 
 #. SysConfig
 msgid "Ticket MasterSlave."
 msgstr ""
-
