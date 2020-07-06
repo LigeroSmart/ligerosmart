@@ -279,11 +279,15 @@ msgid "Go to reporting overview"
 msgstr "进入报告概览"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
 msgstr "当前仅显示项目中的激活用户。如要调整显示属性，请更新设置："
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
 msgstr "当前显示所有的工时管理用户。如要调整显示属性，请更新设置："
 
 #. Template: AgentTimeAccountingSetting
@@ -307,7 +311,8 @@ msgid "Edit Project Settings"
 msgstr "编辑项目设置"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
+msgid ""
+"There is already a project with this name. Please, choose a different one."
 msgstr "已存在同名的项目，请选择不同的名字。"
 
 #. Template: AgentTimeAccountingSetting
@@ -379,11 +384,14 @@ msgid "Allow time accounting skipping"
 msgstr "允许跳过工时管理"
 
 #. Template: AgentTimeAccountingSetting
-msgid "If this option is selected, time accounting is effectively optional for the user."
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
 msgstr "如果选择此选项，则工时管理对用户来说实际上是可选的。"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There will be no warnings about missing entries and no entry enforcement."
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
 msgstr "没有关于缺少条目的警告，也没有进入强制执行的警告。"
 
 #. Template: AgentTimeAccountingSetting
@@ -483,8 +491,11 @@ msgid "Can't delete Working Units!"
 msgstr "无法删除工作单位！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
-msgstr "这个日期不受限制，但是你还没有插入这一天，所以你获得了一个（！）机会来插入"
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"这个日期不受限制，但是你还没有插入这一天，所以你获得了一个（！）机会来插入"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -507,11 +518,14 @@ msgid "Entered date was invalid! Date was changed to today."
 msgstr "输入时间无效！日期改为当前日期。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "No time period configured, or the specified date is outside of the defined time periods."
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
 msgstr "没有配置时间段，或指定的日期不在定义的时间段内。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please contact the time accounting administrator to update your time periods!"
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
 msgstr "请联系工时管理员更新您的时间段！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -623,7 +637,9 @@ msgid "Confirm insert"
 msgstr "确认插入"
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
 msgstr "服务人员界面通知模块，显示用户不完整的工作日数据。"
 
 #. SysConfig
@@ -671,11 +687,16 @@ msgid "Default status for new users."
 msgstr "新用户的默认状态。"
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
-msgstr "指定备注必填的项目。如果RegExp匹配项目，你也需要添加备注。RegExp使用smx参数。"
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"指定备注必填的项目。如果RegExp匹配项目，你也需要添加备注。RegExp使用smx参数。"
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
+msgid ""
+"Determines if the statistics module may generate time accounting information."
 msgstr "确定统计模块是否要生成工时管理信息。"
 
 #. SysConfig
@@ -691,31 +712,51 @@ msgid "For how many days ago you can insert working units."
 msgstr "你可以插入多久以前的工作数据。"
 
 #. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
 msgstr "如果启用，则仅显示在选定项目中有工时数据的用户。"
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
 msgstr "如果启用，则编辑视图中的下拉列表元素将会修改为自动完成字段。"
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
-msgstr "如果启用，则可以使用之前项目的过滤器（用于替代最后和全部项目列表）。仅在TimeAccounting::EnableAutoCompletion启用时，可以启用该参数。"
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"如果启用，则可以使用之前项目的过滤器（用于替代最后和全部项目列表）。仅在"
+"TimeAccounting::EnableAutoCompletion启用时，可以启用该参数。"
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr "如果启用，则如果存在之前的项目，则之前项目过滤器将被默认激活。仅在EnableAutoCompletion和TimeAccounting::UseFilter启用时，可以启用该参数。"
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"如果启用，则如果存在之前的项目，则之前项目过滤器将被默认激活。仅在"
+"EnableAutoCompletion和TimeAccounting::UseFilter启用时，可以启用该参数。"
 
 #. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
 msgstr "如果启用，则用户可以一次在多个日期中输入“休假”，“病假”，\"加班调休\"。"
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr "工作数据添加后允许的最大工日。"
 
 #. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
 msgstr "没有工作数据记录的工作日的最大数量（如果超过，则会显示警告）。"
 
 #. SysConfig
@@ -727,12 +768,22 @@ msgid "Project time reporting."
 msgstr "项目工时报告。"
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
-msgstr "选定项目的限制活动清单使用的正则表达式。键包含了项目（Projects）的正则表达式，值包含了活动（Action）的正则表达式。"
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"选定项目的限制活动清单使用的正则表达式。键包含了项目（Projects）的正则表达"
+"式，值包含了活动（Action）的正则表达式。"
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
-msgstr "用户组的限制项目清单使用的正则表达式。Key包含了项目（Projects）的正则表达式，Content包含了逗号分隔的组清单。"
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"用户组的限制项目清单使用的正则表达式。Key包含了项目（Projects）的正则表达式，"
+"Content包含了逗号分隔的组清单。"
 
 #. SysConfig
 msgid "Specifies if working hours can be inserted without start and end times."
@@ -743,7 +794,9 @@ msgid "This module forces inserts in TimeAccounting."
 msgstr "本模块功能插入到工时管理中。"
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
 msgstr "如有有太多不完整的工日，该通知模块会发出告警。"
 
 #. SysConfig
@@ -775,6 +828,9 @@ msgid "Time accounting."
 msgstr "工时管理。"
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
-msgstr "在一些活动减少工作小时数的时候使用（如：只花费了一半的差旅时间，则Key=>差旅；Content=>50）。"
-
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"在一些活动减少工作小时数的时候使用（如：只花费了一半的差旅时间，则Key=>差旅；"
+"Content=>50）。"

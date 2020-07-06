@@ -84,7 +84,8 @@ msgstr "Негативна времена нису дозвољена."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. Start time matches another interval."
-msgstr "Понављање сати није дозвољено. Време почетка се поклапа са другим интервалом."
+msgstr ""
+"Понављање сати није дозвољено. Време почетка се поклапа са другим интервалом."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
@@ -104,7 +105,9 @@ msgstr "Време завршетка мора бити након почетк�
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. End time matches another interval."
-msgstr "Понављање сати није дозвољено. Време завршетка се поклапа са другим интервалом."
+msgstr ""
+"Понављање сати није дозвољено. Време завршетка се поклапа са другим "
+"интервалом."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! A day has only 24 hours."
@@ -279,12 +282,20 @@ msgid "Go to reporting overview"
 msgstr "Иди на преглед извештавања"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
-msgstr "Тренутно су приказани само активни корисници у овом пројекту. За промену оваквог понашања, молимо Вас ажурирајте подешавања:"
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"Тренутно су приказани само активни корисници у овом пројекту. За промену "
+"оваквог понашања, молимо Вас ажурирајте подешавања:"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
-msgstr "Тренутно су приказани сви корисници обрачуна времена. За промену оваквог понашања, молимо ажурирајте подешавања:"
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"Тренутно су приказани сви корисници обрачуна времена. За промену оваквог "
+"понашања, молимо ажурирајте подешавања:"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
@@ -307,7 +318,8 @@ msgid "Edit Project Settings"
 msgstr "Измени подешавања Пројекта"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
+msgid ""
+"There is already a project with this name. Please, choose a different one."
 msgstr "Већ постоји пројекат са тим именом. Молимо вас, изаберите неко друго."
 
 #. Template: AgentTimeAccountingSetting
@@ -379,12 +391,18 @@ msgid "Allow time accounting skipping"
 msgstr "Дозволи прескакање обрачунавања времена"
 
 #. Template: AgentTimeAccountingSetting
-msgid "If this option is selected, time accounting is effectively optional for the user."
-msgstr "Уколико је укључено, обрачунавање времена ће бити опционо за корисника."
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+"Уколико је укључено, обрачунавање времена ће бити опционо за корисника."
 
 #. Template: AgentTimeAccountingSetting
-msgid "There will be no warnings about missing entries and no entry enforcement."
-msgstr "Упозорења о недостатку обрачуна времена и контрола приступа ће бити суспендовани."
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+"Упозорења о недостатку обрачуна времена и контрола приступа ће бити "
+"суспендовани."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
@@ -483,8 +501,12 @@ msgid "Can't delete Working Units!"
 msgstr "Радне јединице се не могу обрисати!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
-msgstr "Овај датум је изван граница али га нисте још увек унели, па имате још једну(!) шансу за унос"
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"Овај датум је изван граница али га нисте још увек унели, па имате још "
+"једну(!) шансу за унос"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -507,12 +529,19 @@ msgid "Entered date was invalid! Date was changed to today."
 msgstr "Унети датум је неважећи! Датум је промењен на данашњи."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "No time period configured, or the specified date is outside of the defined time periods."
-msgstr "Није конфигурисан временски период или је наведени датум ван дефинисаних временских периода."
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+"Није конфигурисан временски период или је наведени датум ван дефинисаних "
+"временских периода."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please contact the time accounting administrator to update your time periods!"
-msgstr "Молимо да контактирате администратора обрачуна времена за ажурирање временских периода!"
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
+msgstr ""
+"Молимо да контактирате администратора обрачуна времена за ажурирање "
+"временских периода!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -623,8 +652,12 @@ msgid "Confirm insert"
 msgstr "Потврди унос"
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
-msgstr "Модул за обавештавање у интерфејсу оператера који приказује број некомплетних радних дана за корисника."
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"Модул за обавештавање у интерфејсу оператера који приказује број "
+"некомплетних радних дана за корисника."
 
 #. SysConfig
 msgid "Default name for new actions."
@@ -671,12 +704,20 @@ msgid "Default status for new users."
 msgstr "Подразумевани статус нових корисника."
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
-msgstr "Одређује пројекте за које је напомена обавезна. Ако се RegExp поклопи на пројекту, морате текође унети напомену. RegExp користи smx параметар."
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"Одређује пројекте за које је напомена обавезна. Ако се RegExp поклопи на "
+"пројекту, морате текође унети напомену. RegExp користи smx параметар."
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
-msgstr "Одређује да ли статистички модул може генерисати информације о обрачуну времена."
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+"Одређује да ли статистички модул може генерисати информације о обрачуну "
+"времена."
 
 #. SysConfig
 msgid "Edit time accounting settings."
@@ -691,32 +732,62 @@ msgid "For how many days ago you can insert working units."
 msgstr "За колико дана уназад можете унети радне јединице."
 
 #. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
-msgstr "Ако је активирано, приказани су само корисници који су додали радно време у изабрани пројекат."
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"Ако је активирано, приказани су само корисници који су додали радно време у "
+"изабрани пројекат."
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
-msgstr "Ако је активирано, падајући елементи на екрану за измену се мењају у модернизована самодовршавајућа поља."
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+"Ако је активирано, падајући елементи на екрану за измену се мењају у "
+"модернизована самодовршавајућа поља."
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
-msgstr "Ако је активирано, филтер претходних пројеката се може користити уместо две листе пројеката (последњи и сви). Може се користити само ако је TimeAccounting::EnableAutoCompletion активирано."
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"Ако је активирано, филтер претходних пројеката се може користити уместо две "
+"листе пројеката (последњи и сви). Може се користити само ако је "
+"TimeAccounting::EnableAutoCompletion активирано."
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr "Ако је активирано, филтер претходних пројеката је подразумевано активан ако има пројеката од пре. Може се користити само ако је EnableAutoCompletion и TimeAccounting::UseFilter активирано."
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"Ако је активирано, филтер претходних пројеката је подразумевано активан ако "
+"има пројеката од пре. Може се користити само ако је EnableAutoCompletion и "
+"TimeAccounting::UseFilter активирано."
 
 #. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
-msgstr "Ако је активирано, кориснику је дозвољено да унесе \"на одмору\", \"на боловању\" и \"на слободним данима\" на више датума одједном."
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"Ако је активирано, кориснику је дозвољено да унесе \"на одмору\", \"на "
+"боловању\" и \"на слободним данима\" на више датума одједном."
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr "Максимални број радних дана после ког треба додати радне јединице."
 
 #. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
-msgstr "Максимални број радних дана без уноса радних јединица после ког ће бити приказано упозорење."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+"Максимални број радних дана без уноса радних јединица после ког ће бити "
+"приказано упозорење."
 
 #. SysConfig
 msgid "Overview."
@@ -727,24 +798,41 @@ msgid "Project time reporting."
 msgstr "Извештавање о времену пројекта."
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
-msgstr "Регуларни изрази за ограничавање листе акција према изабраним пројектима. Кључ садржи регуларни израз за пројект(е), у садржају је регуларни израз за акцију(е)."
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"Регуларни изрази за ограничавање листе акција према изабраним пројектима. "
+"Кључ садржи регуларни израз за пројект(е), у садржају је регуларни израз за "
+"акцију(е)."
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
-msgstr "Регуларни изрази за ограничавање листе акција према изабраним корисничким групама. Кључ садржи регуларни израз за пројект(е), у садржају је регуларни израз за групе."
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"Регуларни изрази за ограничавање листе акција према изабраним корисничким "
+"групама. Кључ садржи регуларни израз за пројект(е), у садржају је регуларни "
+"израз за групе."
 
 #. SysConfig
 msgid "Specifies if working hours can be inserted without start and end times."
-msgstr "Одређује да ли радни сати могу да се унесу без времена почетка и завршетка."
+msgstr ""
+"Одређује да ли радни сати могу да се унесу без времена почетка и завршетка."
 
 #. SysConfig
 msgid "This module forces inserts in TimeAccounting."
 msgstr "Овај модул намеће унос у обрачун времена."
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
-msgstr "Овај модул за обавештавање даје упозорење ако има превише некомплетних радних дана."
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"Овај модул за обавештавање даје упозорење ако има превише некомплетних "
+"радних дана."
 
 #. SysConfig
 msgid "Time Accounting"
@@ -775,6 +863,9 @@ msgid "Time accounting."
 msgstr "Обрачунавање времена."
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
-msgstr "За употребу ако неке акције смањују радне сате (на пример, ако се плаћа само пола времена путовања Кључ => путовање; Садржај => 50)."
-
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"За употребу ако неке акције смањују радне сате (на пример, ако се плаћа само "
+"пола времена путовања Кључ => путовање; Садржај => 50)."

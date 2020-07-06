@@ -88,7 +88,8 @@ msgstr "繰り返された時間は許可されません。開始時刻は別の
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
-msgstr "不正なフォーマットです! 時間の入力はHH:MMのフォーマットに従ってください"
+msgstr ""
+"不正なフォーマットです! 時間の入力はHH:MMのフォーマットに従ってください"
 
 #. Template: AgentTimeAccountingEdit
 msgid "24:00 is only permitted as end time."
@@ -279,12 +280,20 @@ msgid "Go to reporting overview"
 msgstr "報告の概要に移動する"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
-msgstr "本プロジェクトのアクティブユーザーのみ表示しています、変更するには設定を更新してください。"
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"本プロジェクトのアクティブユーザーのみ表示しています、変更するには設定を更新"
+"してください。"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
-msgstr "すべてのタイムアカウントユーザーを表示しています、変更するには設定を更新してください。"
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"すべてのタイムアカウントユーザーを表示しています、変更するには設定を更新して"
+"ください。"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
@@ -307,7 +316,8 @@ msgid "Edit Project Settings"
 msgstr "プロジェクトの編集"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
+msgid ""
+"There is already a project with this name. Please, choose a different one."
 msgstr "同名のプロジェクトが存在します。名称を変更してください。"
 
 #. Template: AgentTimeAccountingSetting
@@ -379,12 +389,19 @@ msgid "Allow time accounting skipping"
 msgstr "タイムアカウンティングのスキップを許可する"
 
 #. Template: AgentTimeAccountingSetting
-msgid "If this option is selected, time accounting is effectively optional for the user."
-msgstr "このオプションが選択されると、ユーザーに対するタイムアカウンティングがオプション項目扱いとなります。"
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+"このオプションが選択されると、ユーザーに対するタイムアカウンティングがオプ"
+"ション項目扱いとなります。"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There will be no warnings about missing entries and no entry enforcement."
-msgstr "未入力のエントリに対する警告や、エントリへの入力を強制する表示はなくなります。"
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+"未入力のエントリに対する警告や、エントリへの入力を強制する表示はなくなりま"
+"す。"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
@@ -483,8 +500,12 @@ msgid "Can't delete Working Units!"
 msgstr "工数を削除できません！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
-msgstr "入力された日付は期間外ですので、挿入する事はできませんでした。もう一度(!)日付を入力してください。"
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"入力された日付は期間外ですので、挿入する事はできませんでした。もう一度(!)日付"
+"を入力してください。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -507,11 +528,16 @@ msgid "Entered date was invalid! Date was changed to today."
 msgstr "入力された日付は不正です ! 日付は本日に変更されました"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "No time period configured, or the specified date is outside of the defined time periods."
-msgstr "指定された期間が設定されていないか、または指定された日付が定義された期間外です。"
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+"指定された期間が設定されていないか、または指定された日付が定義された期間外で"
+"す。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please contact the time accounting administrator to update your time periods!"
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
 msgstr "勤怠管理担当者に連絡して期間を更新してください！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -623,8 +649,12 @@ msgid "Confirm insert"
 msgstr "挿入の確認"
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
-msgstr "ユーザの不完全な稼働日数をカウントし通知するエージェント・インターフェイスです。"
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"ユーザの不完全な稼働日数をカウントし通知するエージェント・インターフェイスで"
+"す。"
 
 #. SysConfig
 msgid "Default name for new actions."
@@ -671,11 +701,18 @@ msgid "Default status for new users."
 msgstr "新規ユーザに対するデフォルトのステータス"
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
-msgstr "「注釈」エントリーを必要とする項目を定義します。 もしプロジェクト名がここで設定した正規表現にマッチする場合、「注釈｝は必須項目となります。※正規表現にはSMXパラメータを使います。"
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"「注釈」エントリーを必要とする項目を定義します。 もしプロジェクト名がここで設"
+"定した正規表現にマッチする場合、「注釈｝は必須項目となります。※正規表現には"
+"SMXパラメータを使います。"
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
+msgid ""
+"Determines if the statistics module may generate time accounting information."
 msgstr "統計モジュールがタイムアカウンティング情報を生成するか選択してください"
 
 #. SysConfig
@@ -691,31 +728,59 @@ msgid "For how many days ago you can insert working units."
 msgstr "何日前からワーキング・ユニットの新規登録が可能であるかの設定です。"
 
 #. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
-msgstr "有効時には、該当のプロジェクトに稼働時間を投入しているユーザーのみ表示されます"
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"有効時には、該当のプロジェクトに稼働時間を投入しているユーザーのみ表示されま"
+"す"
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
-msgstr "有効時には、編集画面のドロップダウンエレメントは自動フィールドに置き換えられます。"
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+"有効時には、編集画面のドロップダウンエレメントは自動フィールドに置き換えられ"
+"ます。"
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
-msgstr "有効時には以前のプロジェクトフィルターを選択することが可能です(通常は前回およびすべて)。この項目は TimeAccounting::EnableAutoCompletion が有効になっている時のみ利用可能"
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"有効時には以前のプロジェクトフィルターを選択することが可能です(通常は前回およ"
+"びすべて)。この項目は TimeAccounting::EnableAutoCompletion が有効になっている"
+"時のみ利用可能"
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr "有効時には「以前のプロジェクト」が存在する時は、以前のプロジェクトフィルターがデフォルト値になります。この項目は TimeAccounting::UseFilter が有効になっている時のみ利用可能"
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"有効時には「以前のプロジェクト」が存在する時は、以前のプロジェクトフィルター"
+"がデフォルト値になります。この項目は TimeAccounting::UseFilter が有効になって"
+"いる時のみ利用可能"
 
 #. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
-msgstr "有効にすれば一回の編集で、複数の日に渡り「休暇」「病欠」「代休」が選択できます"
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"有効にすれば一回の編集で、複数の日に渡り「休暇」「病欠」「代休」が選択できま"
+"す"
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr "1つ以上のワーキング・ユニットを設定すべき最大の稼働日数。"
 
 #. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
 msgstr "警告が表示されることなくエントリ出来る、営業日の最大日数。"
 
 #. SysConfig
@@ -727,24 +792,41 @@ msgid "Project time reporting."
 msgstr "プロジェクト別時間会計レポート"
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
-msgstr "プロジェクトによって行動リストを絞り込むための正規表現。「鍵」ではプロジェクトに対する正規表現を、「内容」では`行動`に対する正規表現を指定する。"
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"プロジェクトによって行動リストを絞り込むための正規表現。「鍵」ではプロジェク"
+"トに対する正規表現を、「内容」では`行動`に対する正規表現を指定する。"
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
-msgstr "ユーザグループによってプロジェクトリストを絞り込むための正規表現。「鍵」ではプロジェクトに対する正規表現を、「内容」ではカンマ区切りのユーザリストを指定する。"
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"ユーザグループによってプロジェクトリストを絞り込むための正規表現。「鍵」では"
+"プロジェクトに対する正規表現を、「内容」ではカンマ区切りのユーザリストを指定"
+"する。"
 
 #. SysConfig
 msgid "Specifies if working hours can be inserted without start and end times."
-msgstr "業務時間を「開始時間」と「終了時間」の指定ナシで新規登録できるかどうか指定する。"
+msgstr ""
+"業務時間を「開始時間」と「終了時間」の指定ナシで新規登録できるかどうか指定す"
+"る。"
 
 #. SysConfig
 msgid "This module forces inserts in TimeAccounting."
 msgstr "TimeAccountingモジュールと同等の項目が設定必須となります。"
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
-msgstr "あまりにも多くの不完全な稼働日がある場合、この通知モジュールは警告を与えます。"
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"あまりにも多くの不完全な稼働日がある場合、この通知モジュールは警告を与えま"
+"す。"
 
 #. SysConfig
 msgid "Time Accounting"
@@ -775,6 +857,10 @@ msgid "Time accounting."
 msgstr "時間会計"
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
-msgstr "業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」に`journey`、「内容」に`50`と設定)"
-
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、"
+"この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」"
+"に`journey`、「内容」に`50`と設定)"

@@ -84,7 +84,8 @@ msgstr "Waktu negatif tidak dibenarkan."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. Start time matches another interval."
-msgstr "Pengulangan jam adalah tidak dibenarkan. Masa mula padan dengan selang lain."
+msgstr ""
+"Pengulangan jam adalah tidak dibenarkan. Masa mula padan dengan selang lain."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
@@ -104,7 +105,8 @@ msgstr "Masa tamat mesti selepas masa mula."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. End time matches another interval."
-msgstr "Pengulangan jam adalah tidak dibenarkan. Masa akhir padan dengan selang lain."
+msgstr ""
+"Pengulangan jam adalah tidak dibenarkan. Masa akhir padan dengan selang lain."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! A day has only 24 hours."
@@ -279,12 +281,20 @@ msgid "Go to reporting overview"
 msgstr "Pergi ke tinjauan melaporkan"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
-msgstr "Pada masa ini hanya pengguna aktif dalam projek ini akan ditunjukkan. Untuk mengubah sifat ini, sila kemas kini tetapan:"
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"Pada masa ini hanya pengguna aktif dalam projek ini akan ditunjukkan. Untuk "
+"mengubah sifat ini, sila kemas kini tetapan:"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
-msgstr "Pada masa ini kesemua pengguna perakaunan masa ditunjukkan. Untuk mengubah tingkah laku ini, sila kemas kini tetapan:"
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"Pada masa ini kesemua pengguna perakaunan masa ditunjukkan. Untuk mengubah "
+"tingkah laku ini, sila kemas kini tetapan:"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
@@ -307,7 +317,8 @@ msgid "Edit Project Settings"
 msgstr "Sunting tetapan projek"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
+msgid ""
+"There is already a project with this name. Please, choose a different one."
 msgstr "Sudah ada projek dengan nama ini. Sila pilih yang lain."
 
 #. Template: AgentTimeAccountingSetting
@@ -379,11 +390,14 @@ msgid "Allow time accounting skipping"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "If this option is selected, time accounting is effectively optional for the user."
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "There will be no warnings about missing entries and no entry enforcement."
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
@@ -483,8 +497,12 @@ msgid "Can't delete Working Units!"
 msgstr "Tidak boleh membuang Unit Kerja!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
-msgstr "Tarikh ini telah terlebih had, tetapi anda masih belum memasukkan hari ini lagi, jadi anda mendapat satu(!) peluang untuk masukkan"
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"Tarikh ini telah terlebih had, tetapi anda masih belum memasukkan hari ini "
+"lagi, jadi anda mendapat satu(!) peluang untuk masukkan"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -504,14 +522,18 @@ msgstr "Berjaya dimasukkan penyertaan untuk beberapa tarikh!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Entered date was invalid! Date was changed to today."
-msgstr "Tarikh yang dimasukkan tidak sah! Tarikh telah ditukar kepada hari ini."
+msgstr ""
+"Tarikh yang dimasukkan tidak sah! Tarikh telah ditukar kepada hari ini."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "No time period configured, or the specified date is outside of the defined time periods."
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please contact the time accounting administrator to update your time periods!"
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -623,8 +645,12 @@ msgid "Confirm insert"
 msgstr "Sahkan kemasukan"
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
-msgstr "Modul pemberitahuan antara muka ejen untuk melihat bilangan hari bekerja yang tidak lengkap untuk pengguna."
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"Modul pemberitahuan antara muka ejen untuk melihat bilangan hari bekerja "
+"yang tidak lengkap untuk pengguna."
 
 #. SysConfig
 msgid "Default name for new actions."
@@ -671,12 +697,20 @@ msgid "Default status for new users."
 msgstr "Tetapan lalai untuk pengguna baharu."
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
-msgstr "Mentakrifkan projek-projek yang mana komen diperlukan. Jika UngkapanBiasa padan dalam projek ini, anda perlu memasukkan komen juga. UngkapanBiasa menggunakan parameter smx."
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"Mentakrifkan projek-projek yang mana komen diperlukan. Jika UngkapanBiasa "
+"padan dalam projek ini, anda perlu memasukkan komen juga. UngkapanBiasa "
+"menggunakan parameter smx."
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
-msgstr "Menentukan jika modul statistik boleh menjana masa maklumat perakaunan."
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+"Menentukan jika modul statistik boleh menjana masa maklumat perakaunan."
 
 #. SysConfig
 msgid "Edit time accounting settings."
@@ -691,32 +725,63 @@ msgid "For how many days ago you can insert working units."
 msgstr "Untuk berapa hari yang lalu, anda boleh memasukkan unit kerja."
 
 #. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
-msgstr "Jika dibolehkan, hanya pengguna yang telah ditambah masa kerja untuk projek yang dipilih akan ditunjukkan."
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"Jika dibolehkan, hanya pengguna yang telah ditambah masa kerja untuk projek "
+"yang dipilih akan ditunjukkan."
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
-msgstr "Jika dibolehkan, unsur-unsur kotak pilihan dalam skrin sunting ditukar kepada bidang penyiapan secara automatik moden."
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+"Jika dibolehkan, unsur-unsur kotak pilihan dalam skrin sunting ditukar "
+"kepada bidang penyiapan secara automatik moden."
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
-msgstr "Jika diaktifkan, penapis bagi projek-projek sebelum boleh digunakan selain dua senarai projek-projek (terakhir dan semuanya). Ia boleh digunakan hanya jika TimeAccounting::EnableAutoCompletion didayakan."
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"Jika diaktifkan, penapis bagi projek-projek sebelum boleh digunakan selain "
+"dua senarai projek-projek (terakhir dan semuanya). Ia boleh digunakan hanya "
+"jika TimeAccounting::EnableAutoCompletion didayakan."
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr "Jika diaktifkan, penapis bagi projek-projek sebelum adalah aktif secara lalai sekiranya terdapat projek lepas. Ia boleh digunakan hanya jika EnableAutoCompletion dan TimeAccounting::UseFilter didayakan."
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"Jika diaktifkan, penapis bagi projek-projek sebelum adalah aktif secara "
+"lalai sekiranya terdapat projek lepas. Ia boleh digunakan hanya jika "
+"EnableAutoCompletion dan TimeAccounting::UseFilter didayakan."
 
 #. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
-msgstr "Jika dibolehkan, pengguna dibenarkan untuk memasuki \"sedang cuti rehat \", \"sedang cuti sakit \" dan \"sedang cuti lebih masa\" pada beberapa tarikh sekaligus."
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"Jika dibolehkan, pengguna dibenarkan untuk memasuki \"sedang cuti rehat \", "
+"\"sedang cuti sakit \" dan \"sedang cuti lebih masa\" pada beberapa tarikh "
+"sekaligus."
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr "Bilangan maksimum hari bekerja selepas unit kerja perlu dimasukkan."
 
 #. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
-msgstr "Bilangan maksimum hari bekerja tanpa kemasukan unit bekerja selepas di mana amaran akan ditunjukkan."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+"Bilangan maksimum hari bekerja tanpa kemasukan unit bekerja selepas di mana "
+"amaran akan ditunjukkan."
 
 #. SysConfig
 msgid "Overview."
@@ -727,24 +792,42 @@ msgid "Project time reporting."
 msgstr "melaporkan masa projek"
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
-msgstr "Ungkapan biasa untuk mengekang senarai tindakan mengikut projek yang dipilih. Kunci mengandungi ungkapan biasa untuk projek (projek-projek), kandungan mengandungi ungkapan biasa untuk tindakan (tindakan-tindakan)."
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"Ungkapan biasa untuk mengekang senarai tindakan mengikut projek yang "
+"dipilih. Kunci mengandungi ungkapan biasa untuk projek (projek-projek), "
+"kandungan mengandungi ungkapan biasa untuk tindakan (tindakan-tindakan)."
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
-msgstr "Ungkapan biasa untuk mengekang senarai projek mengikut kumpulan pengguna. Kunci mengandungi ungkapan biasa untuk projek (projek-projek), kandungan mengandungi koma senarai kumpulan dipisahkan."
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"Ungkapan biasa untuk mengekang senarai projek mengikut kumpulan pengguna. "
+"Kunci mengandungi ungkapan biasa untuk projek (projek-projek), kandungan "
+"mengandungi koma senarai kumpulan dipisahkan."
 
 #. SysConfig
 msgid "Specifies if working hours can be inserted without start and end times."
-msgstr "Menentukan jika waktu bekerja boleh dimasukkan tanpa permulaan dan akhir masa."
+msgstr ""
+"Menentukan jika waktu bekerja boleh dimasukkan tanpa permulaan dan akhir "
+"masa."
 
 #. SysConfig
 msgid "This module forces inserts in TimeAccounting."
 msgstr "Modul ini memaksa kemasukan dalam PerakaunanSemasa."
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
-msgstr "Modul pemberitahuan ini memberi amaran jika terdapat terlalu banyak hari bekerja tidak lengkap."
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"Modul pemberitahuan ini memberi amaran jika terdapat terlalu banyak hari "
+"bekerja tidak lengkap."
 
 #. SysConfig
 msgid "Time Accounting"
@@ -775,6 +858,10 @@ msgid "Time accounting."
 msgstr "Perakaunan semasa."
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
-msgstr "Untuk digunakan jika beberapa tindakan mengurangkan waktu kerja (contohnya, jika hanya separuh daripada masa perjalanan dibayar Kunci => perjalanan; Kandungan = > 50)."
-
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"Untuk digunakan jika beberapa tindakan mengurangkan waktu kerja (contohnya, "
+"jika hanya separuh daripada masa perjalanan dibayar Kunci => perjalanan; "
+"Kandungan = > 50)."

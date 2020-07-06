@@ -84,7 +84,8 @@ msgstr "Muda hasi hauruhusiwi."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. Start time matches another interval."
-msgstr "Muda uliojirudia hauruhusiwi. Muda wa kuanza unafanana na muda mwingine."
+msgstr ""
+"Muda uliojirudia hauruhusiwi. Muda wa kuanza unafanana na muda mwingine."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
@@ -104,7 +105,8 @@ msgstr "Muda wa kumaliza lazima uwe baada ya muda wa kuanza."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. End time matches another interval."
-msgstr "Masaa yaliyojirudia hayaruhusiwi. Muda wa kumaliza unafanana muda mwingine."
+msgstr ""
+"Masaa yaliyojirudia hayaruhusiwi. Muda wa kumaliza unafanana muda mwingine."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! A day has only 24 hours."
@@ -279,12 +281,20 @@ msgid "Go to reporting overview"
 msgstr "Nenda kwenye mapitio ya uarifu"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
-msgstr "Kwa sasa watumiaji amilifu tu katika mradi huu wataonyeshwa. Kubadilisha tabia hii, tafadhali sasisha mpangalio."
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"Kwa sasa watumiaji amilifu tu katika mradi huu wataonyeshwa. Kubadilisha "
+"tabia hii, tafadhali sasisha mpangalio."
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
-msgstr "Kwa sasa watumiaji wote wa muda uliohesabika wataonyeshwa. Kubadilisha tabia hii, tafadhali sasisha mpangalio."
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"Kwa sasa watumiaji wote wa muda uliohesabika wataonyeshwa. Kubadilisha tabia "
+"hii, tafadhali sasisha mpangalio."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
@@ -307,7 +317,8 @@ msgid "Edit Project Settings"
 msgstr "Hariri mipangilio ya mradi"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
+msgid ""
+"There is already a project with this name. Please, choose a different one."
 msgstr "Tayari kuna mradi wenye hili jina. Tafadhali, chagua jengine."
 
 #. Template: AgentTimeAccountingSetting
@@ -379,11 +390,14 @@ msgid "Allow time accounting skipping"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "If this option is selected, time accounting is effectively optional for the user."
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "There will be no warnings about missing entries and no entry enforcement."
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
@@ -483,7 +497,9 @@ msgid "Can't delete Working Units!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -507,11 +523,14 @@ msgid "Entered date was invalid! Date was changed to today."
 msgstr "Ingizo la tarehe ni batili! Tarehe imebadilishwa leo."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "No time period configured, or the specified date is outside of the defined time periods."
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please contact the time accounting administrator to update your time periods!"
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -623,8 +642,12 @@ msgid "Confirm insert"
 msgstr "Hakiki ingizo"
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
-msgstr "Moduli ya taarifa kwa kiolesura cha wakala kuona idadi ya siku za kazi za mtumiaji zisizo kamili."
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"Moduli ya taarifa kwa kiolesura cha wakala kuona idadi ya siku za kazi za "
+"mtumiaji zisizo kamili."
 
 #. SysConfig
 msgid "Default name for new actions."
@@ -671,12 +694,20 @@ msgid "Default status for new users."
 msgstr "Hali ya chaguo-msingi kwa watumiaji wapya."
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
-msgstr "Inafafanua miradi ambayo maoni yanahitajika. Kama RegExp inafanana katika mradi, unatakiwa kuweka maoni pia. RegExp inatumia parameta ya smx"
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"Inafafanua miradi ambayo maoni yanahitajika. Kama RegExp inafanana katika "
+"mradi, unatakiwa kuweka maoni pia. RegExp inatumia parameta ya smx"
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
-msgstr "Inahakiki kama moduli ya takwimu inaweza kutengeneza taarifa ya uhasibu wa muda."
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+"Inahakiki kama moduli ya takwimu inaweza kutengeneza taarifa ya uhasibu wa "
+"muda."
 
 #. SysConfig
 msgid "Edit time accounting settings."
@@ -691,32 +722,55 @@ msgid "For how many days ago you can insert working units."
 msgstr "Kwa siku ngapi zilizopita unaweza kuingiza vitengo vya kazi."
 
 #. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
-msgstr "Kama imewezeshwa, watumiaji walioweka muda wa kazi kwa mradi uliochaguliwa ndio wataonyeshwa"
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"Kama imewezeshwa, watumiaji walioweka muda wa kazi kwa mradi uliochaguliwa "
+"ndio wataonyeshwa"
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
-msgstr "Kama imewezeshwa, mtumiaji anaruhusiwa kuingiza \"kwenye likizo\", \"kwenye likizo ya wagonjwa\", \"kwenye likizo ya siku za nyongeza\" kwa tarehe zaidi ya moja kwa mkupuo."
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"Kama imewezeshwa, mtumiaji anaruhusiwa kuingiza \"kwenye likizo\", \"kwenye "
+"likizo ya wagonjwa\", \"kwenye likizo ya siku za nyongeza\" kwa tarehe zaidi "
+"ya moja kwa mkupuo."
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr "Kima cha juu cha siku za kazi baada ya vitengo vya kazi kuingizwa."
 
 #. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
-msgstr "Kima cha juu cha siku za kazi bila ya vitengo vya kazi kuingizwa ambavyo  onyo litaonyeshwa."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+"Kima cha juu cha siku za kazi bila ya vitengo vya kazi kuingizwa ambavyo  "
+"onyo litaonyeshwa."
 
 #. SysConfig
 msgid "Overview."
@@ -727,24 +781,42 @@ msgid "Project time reporting."
 msgstr ""
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
-msgstr "Maneno ya kawaida yanayo kwamisha orodha ya vitendo kwa mradi uliochaguliwa. Ufunguo una maneno ya kawaida ya mradi (miradi), maudhui yana maneno ya kawaida ya kitendo (vitendo). "
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"Maneno ya kawaida yanayo kwamisha orodha ya vitendo kwa mradi uliochaguliwa. "
+"Ufunguo una maneno ya kawaida ya mradi (miradi), maudhui yana maneno ya "
+"kawaida ya kitendo (vitendo). "
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
-msgstr "Maneno ya kawaida ya kuzuia orodha ya mradi kuendana na makundi ya watumiaji. Ufunguo una maneno ya kawaida ya mradi (miradi), maudhui yana makundi yaliyogawanywa kwa alama ya mkato."
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"Maneno ya kawaida ya kuzuia orodha ya mradi kuendana na makundi ya "
+"watumiaji. Ufunguo una maneno ya kawaida ya mradi (miradi), maudhui yana "
+"makundi yaliyogawanywa kwa alama ya mkato."
 
 #. SysConfig
 msgid "Specifies if working hours can be inserted without start and end times."
-msgstr "Inabainisha kama masaa ya kazi yanaweza kuingizwa bila ya muda wa kuanza na kumaliza."
+msgstr ""
+"Inabainisha kama masaa ya kazi yanaweza kuingizwa bila ya muda wa kuanza na "
+"kumaliza."
 
 #. SysConfig
 msgid "This module forces inserts in TimeAccounting."
 msgstr "Hii moduli inaingiza Uhasibu wa Muda"
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
-msgstr "Hii moduli ya taarifa inatoa onyo endapo kuna siku nyingi za kazi ambazo hazijakamilika."
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"Hii moduli ya taarifa inatoa onyo endapo kuna siku nyingi za kazi ambazo "
+"hazijakamilika."
 
 #. SysConfig
 msgid "Time Accounting"
@@ -775,6 +847,9 @@ msgid "Time accounting."
 msgstr "Uhasibu wa muda"
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
-msgstr "Itatumika kama baadhi ya vitendo vitapunguza muda wa kazi (mfano, kama nusu ya muda wa kusafiri umelipwa Ufonguo=> kusafiri; maudhui=> 50)."
-
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"Itatumika kama baadhi ya vitendo vitapunguza muda wa kazi (mfano, kama nusu "
+"ya muda wa kusafiri umelipwa Ufonguo=> kusafiri; maudhui=> 50)."
