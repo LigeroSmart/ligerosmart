@@ -27,7 +27,7 @@ sub Data {
     $Self->{Translation}->{'Select all days'} = 'Seleziona tutti i giorni';
     $Self->{Translation}->{'Mass entry'} = 'Inserimento massivo';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
-        'Per favore seleziona il motivo della tua assenza per i giorni selezionati.';
+        'Per favore seleziona il motivo della tua assenza per i giorni selezionati';
     $Self->{Translation}->{'On vacation'} = 'Ferie';
     $Self->{Translation}->{'On sick leave'} = 'Assente per malattia';
     $Self->{Translation}->{'On overtime leave'} = 'Assente per recupero';
@@ -97,12 +97,12 @@ sub Data {
     $Self->{Translation}->{'Project report'} = 'Riassunto progetto';
     $Self->{Translation}->{'Go to reporting overview'} = 'Vai al riepilogo di reportistica';
     $Self->{Translation}->{'Currently only active users in this project are shown. To change this behavior, please update setting:'} =
-        'Vengono mostrati solo gli utenti attivi di questo progetto. Per cambiare questo comportaento aggiornare il parametro: ';
+        'Vengono mostrati solo gli utenti attivi di questo progetto. Per cambiare questo comportaento aggiornare il parametro:';
     $Self->{Translation}->{'Currently all time accounting users are shown. To change this behavior, please update setting:'} =
         'Vengono mostrati tutti gli utenti per la rendicontazione tempo. Per cambiare questo comportamento aggiornare il parametro:';
 
     # Template: AgentTimeAccountingSetting
-    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificare le configurazioni di gestione del tempo del progetto.';
+    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificare le configurazioni di gestione del tempo del progetto';
     $Self->{Translation}->{'Add project'} = 'Aggiungere progetto';
     $Self->{Translation}->{'Go to settings overview'} = 'Vai al riepilogo impostazioni';
     $Self->{Translation}->{'Add Project'} = 'Aggiungere progetto';
@@ -126,7 +126,7 @@ sub Data {
     $Self->{Translation}->{'User is allowed to create projects'} = 'L\'Utente può creare progetti';
     $Self->{Translation}->{'Allow project creation'} = 'Consentire la creazione del progetto';
     $Self->{Translation}->{'User is allowed to skip time accounting'} = 'L\'utente è autorizzato a saltare la contabilità del tempo';
-    $Self->{Translation}->{'Allow time accounting skipping'} = 'Consenti il ​​salto della contabilità del tempo';
+    $Self->{Translation}->{'Allow time accounting skipping'} = 'Consenti il salto della contabilità del tempo';
     $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
         'Se questa opzione è selezionata, la contabilità temporale è effettivamente facoltativa per l\'utente.';
     $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
@@ -149,7 +149,7 @@ sub Data {
 
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'Visualizzare registro orario';
-    $Self->{Translation}->{'View of '} = 'Visualizzazione di  ';
+    $Self->{Translation}->{'View of '} = 'Visualizzazione di ';
     $Self->{Translation}->{'Previous day'} = 'Giorno precedente';
     $Self->{Translation}->{'Next day'} = 'Giorno successivo';
     $Self->{Translation}->{'No data found for this day.'} = 'Nessun dato trovato per questo giorno.';
@@ -160,7 +160,7 @@ sub Data {
     $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Non puoi salvare le impostazioni, perchè un giorno ha solo 24 ore!';
     $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Non puoi cancellare le unità lavorative!';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        'Questa Data è fuori limite massimo, ma non hai ancora ancora inserito questo giorno, quindi hai ancora una (!) possibilità di inserirne uno.';
+        'Questa Data è fuori limite massimo, ma non hai ancora ancora inserito questo giorno, quindi hai ancora una (!) possibilità di inserirne uno';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Giorni lavorativi incompleti';
     $Self->{Translation}->{'Successful insert!'} = 'Inserimento avvenuto con successo!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Si è verificato un errore nell\'inserimento di date multiple!';
@@ -176,7 +176,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
     $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'RapportoProgetto: ProjectID necessario';
     $Self->{Translation}->{'Reporting Project'} = 'Compilando il rapporto del progetto';
-    $Self->{Translation}->{'Reporting'} = 'Reportistica';
+    $Self->{Translation}->{'Reporting'} = 'Segnalazione';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'Impossibile aggiornare le impostazioni utente!';
@@ -190,7 +190,7 @@ sub Data {
     $Self->{Translation}->{'Setting'} = 'Impostazione';
     $Self->{Translation}->{'User updated!'} = 'Utente aggiornato!';
     $Self->{Translation}->{'User added!'} = 'Utente inserito!';
-    $Self->{Translation}->{'Add a user to time accounting...'} = 'Aggiungi un utente per la contabilizzazione temporale';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'Aggiungi un utente per la contabilizzazione temporale...';
     $Self->{Translation}->{'New User'} = 'Nuovo utente';
     $Self->{Translation}->{'Period Status'} = 'Stato di periodo';
 
@@ -214,7 +214,7 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
-        'Modulo di notifica dell\'interfaccia agente per vedere il numero di giorni lavorativi incompleti per l\'utente';
+        'Modulo di notifica dell\'interfaccia agente per vedere il numero di giorni lavorativi incompleti per l\'utente.';
     $Self->{Translation}->{'Default name for new actions.'} = 'Nome predefinito per le nuove azioni.';
     $Self->{Translation}->{'Default name for new projects.'} = 'Nome predefinito per i nuovi progetti.';
     $Self->{Translation}->{'Default setting for date end.'} = 'Valore predefinito per la data di fine.';
@@ -231,7 +231,7 @@ sub Data {
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Determina se il modulo statistiche può generare informazioni di rendicontazione temporale.';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Modifica le impostazioni della rendicontazione temporale.';
-    $Self->{Translation}->{'Edit time record.'} = 'Modifica registro orario';
+    $Self->{Translation}->{'Edit time record.'} = 'Modifica registro orario.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Numero massimo di giorni nel passato in cui è possibile inserire le unità di lavoro.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Se abilitato, mostra solo gli utenti che hanno aggiunto voci di tempo lavoro al progetto selezionato.';
