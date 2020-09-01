@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2019-06-25 12:26+0000\n"
+"POT-Creation-Date: 2020-01-24 14:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,16 +91,24 @@ msgid "Additional ITSM ticket fields."
 msgstr ""
 
 #. SysConfig
-msgid "Allows adding notes in the additional ITSM field screen of the agent interface."
-msgstr "Ruhusu kuongeza vidokezo katika skrini ya uga nyongeza ya ITSM ya kiolesura cha wakala."
+msgid ""
+"Allows adding notes in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Ruhusu kuongeza vidokezo katika skrini ya uga nyongeza ya ITSM ya kiolesura "
+"cha wakala."
 
 #. SysConfig
 msgid "Allows adding notes in the decision screen of the agent interface."
-msgstr "Ruhusu kuongeza vidokezo katika skrini ya maamuzi ya kiolesura cha wakala."
+msgstr ""
+"Ruhusu kuongeza vidokezo katika skrini ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Allows defining new types for ticket (if ticket type feature is enabled)."
-msgstr "Inaruhusu kufafanua aina mpya kwa ajili ya tiketi (Kama kipengele cha aina ya tiketi kimewezeshwa )."
+msgid ""
+"Allows defining new types for ticket (if ticket type feature is enabled)."
+msgstr ""
+"Inaruhusu kufafanua aina mpya kwa ajili ya tiketi (Kama kipengele cha aina "
+"ya tiketi kimewezeshwa )."
 
 #. SysConfig
 msgid "Change the ITSM fields!"
@@ -111,75 +119,149 @@ msgid "Decision"
 msgstr "Uamuzi"
 
 #. SysConfig
-msgid "Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr "Inafafanua kama kufungwa kwa tiketi kunatakiwa katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala (kama tiketi haijafungwa bado, tiketi inafungwa na wakala wa sasa atawekwa otomatiki kama mmiliki wake)."
+msgid ""
+"Defines if a ticket lock is required in the additional ITSM field screen of "
+"the agent interface (if the ticket isn't locked yet, the ticket gets locked "
+"and the current agent will be set automatically as its owner)."
+msgstr ""
+"Inafafanua kama kufungwa kwa tiketi kunatakiwa katika skrini ya uga wa ITSM "
+"ulioongezwa wa kiolesura cha wakala (kama tiketi haijafungwa bado, tiketi "
+"inafungwa na wakala wa sasa atawekwa otomatiki kama mmiliki wake)."
 
 #. SysConfig
-msgid "Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr "Inafafanua kama kufungwa kwa tiketi kunatakiwa katika skrini ya maamuzi ya kiolesura cha wakala (kama tiketi haijafungwa bado, tiketi inafungwa na wakala wa sasa atawekwa otomatiki kama mmiliki wake)."
+msgid ""
+"Defines if a ticket lock is required in the decision screen of the agent "
+"interface (if the ticket isn't locked yet, the ticket gets locked and the "
+"current agent will be set automatically as its owner)."
+msgstr ""
+"Inafafanua kama kufungwa kwa tiketi kunatakiwa katika skrini ya maamuzi ya "
+"kiolesura cha wakala (kama tiketi haijafungwa bado, tiketi inafungwa na "
+"wakala wa sasa atawekwa otomatiki kama mmiliki wake)."
 
 #. SysConfig
-msgid "Defines if the service incident state should be shown during service selection in the agent interface."
-msgstr "Inafafanua  kama hali ya tukio ya huduma ionyeshwe wakati wa chaguo la huduma katika kiolesura cha wakala."
+msgid ""
+"Defines if the service incident state should be shown during service "
+"selection in the agent interface."
+msgstr ""
+"Inafafanua  kama hali ya tukio ya huduma ionyeshwe wakati wa chaguo la "
+"huduma katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default body of a note in the additional ITSM field screen of the agent interface."
-msgstr "Inafafanua kiini cha chaguo-msingi cha kidokezo katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
+msgid ""
+"Defines the default body of a note in the additional ITSM field screen of "
+"the agent interface."
+msgstr ""
+"Inafafanua kiini cha chaguo-msingi cha kidokezo katika skrini ya uga wa ITSM "
+"ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default body of a note in the decision screen of the agent interface."
-msgstr "Inafafanua kiini cha chaguo-msingi cha kidokezo katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Defines the default body of a note in the decision screen of the agent "
+"interface."
+msgstr ""
+"Inafafanua kiini cha chaguo-msingi cha kidokezo katika skrini ya maamuzi ya "
+"kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface."
-msgstr "Inafafanua hali nayofuata ya chaguo-msingi baada ya kuongeza kidokezo, katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"additional ITSM field screen of the agent interface."
+msgstr ""
+"Inafafanua hali nayofuata ya chaguo-msingi baada ya kuongeza kidokezo, "
+"katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the decision screen of the agent interface."
-msgstr "Inafafanua hali inayofuata chaguo-msingi ya tiketi baada ya kuongeza kidokezo, katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"decision screen of the agent interface."
+msgstr ""
+"Inafafanua hali inayofuata chaguo-msingi ya tiketi baada ya kuongeza "
+"kidokezo, katika skrini ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default subject of a note in the additional ITSM field screen of the agent interface."
-msgstr "Inafafanua somo chaguo-msingi la kidokezo katika skrini ya uga wa ITSM uliiongezwa wa kiolesura cha wakala."
+msgid ""
+"Defines the default subject of a note in the additional ITSM field screen of "
+"the agent interface."
+msgstr ""
+"Inafafanua somo chaguo-msingi la kidokezo katika skrini ya uga wa ITSM "
+"uliiongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default subject of a note in the decision screen of the agent interface."
-msgstr "Inafafanua somo chaguo-msingi la kidokezo katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Defines the default subject of a note in the decision screen of the agent "
+"interface."
+msgstr ""
+"Inafafanua somo chaguo-msingi la kidokezo katika skrini ya maamuzi ya "
+"kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default ticket priority in the additional ITSM field screen of the agent interface."
-msgstr "Inafafanua kipaumbele cha tiketi chaguo msingi katika skrini ya uga wa ITSM uliiongezwa wa kiolesura cha wakala."
+msgid ""
+"Defines the default ticket priority in the additional ITSM field screen of "
+"the agent interface."
+msgstr ""
+"Inafafanua kipaumbele cha tiketi chaguo msingi katika skrini ya uga wa ITSM "
+"uliiongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the default ticket priority in the decision screen of the agent interface."
-msgstr "Inafafanua kipaumbele cha tiketi chaguo msingi katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Defines the default ticket priority in the decision screen of the agent "
+"interface."
+msgstr ""
+"Inafafanua kipaumbele cha tiketi chaguo msingi katika skrini ya maamuzi ya "
+"kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the history comment for the additional ITSM field screen action, which gets used for ticket history."
-msgstr "Inaelezea maoni ya historia kwa ajili ya kitendo cha skrini ya uga wa ITSM ulioongezwa, ambacho kinatumika kwa ajili ya historia ya tiketi."
+msgid ""
+"Defines the history comment for the additional ITSM field screen action, "
+"which gets used for ticket history."
+msgstr ""
+"Inaelezea maoni ya historia kwa ajili ya kitendo cha skrini ya uga wa ITSM "
+"ulioongezwa, ambacho kinatumika kwa ajili ya historia ya tiketi."
 
 #. SysConfig
-msgid "Defines the history comment for the decision screen action, which gets used for ticket history."
-msgstr "Inaelezea maoni ya historia kwa aijili ya kitendo cha skrini ya maamuzi, ambacho kinatumika kwa ajili ya historia ya tiketi."
+msgid ""
+"Defines the history comment for the decision screen action, which gets used "
+"for ticket history."
+msgstr ""
+"Inaelezea maoni ya historia kwa aijili ya kitendo cha skrini ya maamuzi, "
+"ambacho kinatumika kwa ajili ya historia ya tiketi."
 
 #. SysConfig
-msgid "Defines the history type for the additional ITSM field screen action, which gets used for ticket history."
-msgstr "Inaelezea aina ya historia kwa ajili ya kitendo cha skrini ya uga wa ITSM ulioongezwa , ambacho kinatumika kwa ajili ya historia ya tiketi."
+msgid ""
+"Defines the history type for the additional ITSM field screen action, which "
+"gets used for ticket history."
+msgstr ""
+"Inaelezea aina ya historia kwa ajili ya kitendo cha skrini ya uga wa ITSM "
+"ulioongezwa , ambacho kinatumika kwa ajili ya historia ya tiketi."
 
 #. SysConfig
-msgid "Defines the history type for the decision screen action, which gets used for ticket history."
-msgstr "Inaelezea aina ya historia kwa ajili ya kitendo cha skrini ya maamuzi, ambacho kinatumika kwa ajili ya historia ya tiketi."
+msgid ""
+"Defines the history type for the decision screen action, which gets used for "
+"ticket history."
+msgstr ""
+"Inaelezea aina ya historia kwa ajili ya kitendo cha skrini ya maamuzi, "
+"ambacho kinatumika kwa ajili ya historia ya tiketi."
 
 #. SysConfig
-msgid "Defines the next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface."
-msgstr "Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya uga wa ITSM uliongezwa wa kiolesura cha wakala."
+msgid ""
+"Defines the next state of a ticket after adding a note, in the additional "
+"ITSM field screen of the agent interface."
+msgstr ""
+"Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini "
+"ya uga wa ITSM uliongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Defines the next state of a ticket after adding a note, in the decision screen of the agent interface."
-msgstr "Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Defines the next state of a ticket after adding a note, in the decision "
+"screen of the agent interface."
+msgstr ""
+"Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini "
+"ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Dynamic fields shown in the additional ITSM field screen of the agent interface."
+msgid ""
+"Dynamic fields shown in the additional ITSM field screen of the agent "
+"interface."
 msgstr ""
 
 #. SysConfig
@@ -191,122 +273,220 @@ msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate."
-msgstr "Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa kiwango cha ufumbuzi cha ngazi ya kwanza ya tiketi ya ITSM."
+msgid ""
+"Enables the stats module to generate statistics about the average of ITSM "
+"ticket first level solution rate."
+msgstr ""
+"Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa kiwango cha "
+"ufumbuzi cha ngazi ya kwanza ya tiketi ya ITSM."
 
 #. SysConfig
-msgid "Enables the stats module to generate statistics about the average of ITSM ticket solution."
-msgstr "Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa ufumbuzi wa tiketi ya ITSM"
+msgid ""
+"Enables the stats module to generate statistics about the average of ITSM "
+"ticket solution."
+msgstr ""
+"Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa ufumbuzi wa "
+"tiketi ya ITSM"
 
 #. SysConfig
-msgid "If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface."
-msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
+msgid ""
+"If a note is added by an agent, sets the state of a ticket in the additional "
+"ITSM field screen of the agent interface."
+msgstr ""
+"Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya "
+"uga wa ITSM ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface."
-msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"If a note is added by an agent, sets the state of a ticket in the decision "
+"screen of the agent interface."
+msgstr ""
+"Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya "
+"maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Modifies the display order of the dynamic field ITSMImpact and other things."
+msgid ""
+"Modifies the display order of the dynamic field ITSMImpact and other things."
 msgstr ""
 
 #. SysConfig
-msgid "Module to dynamically show the service incident state and to calculate the priority."
+msgid ""
+"Module to dynamically show the service incident state and to calculate the "
+"priority."
 msgstr ""
 
 #. SysConfig
-msgid "Required permissions to use the additional ITSM field screen in the agent interface."
-msgstr "Inahitaji ruhusa kutumia skrini ya uga wa ITSM uliiongezwa katika kiolesura cha wakala."
+msgid ""
+"Required permissions to use the additional ITSM field screen in the agent "
+"interface."
+msgstr ""
+"Inahitaji ruhusa kutumia skrini ya uga wa ITSM uliiongezwa katika kiolesura "
+"cha wakala."
 
 #. SysConfig
 msgid "Required permissions to use the decision screen in the agent interface."
-msgstr "Inahitaji ruhusa kutumia skrini ya maamuzi katika kiolesura cha wakala."
+msgstr ""
+"Inahitaji ruhusa kutumia skrini ya maamuzi katika kiolesura cha wakala."
 
 #. SysConfig
 msgid "Service Incident State and Priority Calculation"
 msgstr ""
 
 #. SysConfig
-msgid "Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated)."
-msgstr "Inawekwa katika huduma katika skrini ya uga wa ITSM uliiongezwa katika kioelesura cha wakala (Tiketi:: Huduma inahitaji kuamilishwa)."
+msgid ""
+"Sets the service in the additional ITSM field screen of the agent interface "
+"(Ticket::Service needs to be activated)."
+msgstr ""
+"Inawekwa katika huduma katika skrini ya uga wa ITSM uliiongezwa katika "
+"kioelesura cha wakala (Tiketi:: Huduma inahitaji kuamilishwa)."
 
 #. SysConfig
-msgid "Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated)."
-msgstr "Inaweka huduma katika skrini ya maamuzi ya kioleusura cha wakala (Tiketi:: Huduma inahitaji kuamilishwa)."
+msgid ""
+"Sets the service in the decision screen of the agent interface (Ticket::"
+"Service needs to be activated)."
+msgstr ""
+"Inaweka huduma katika skrini ya maamuzi ya kioleusura cha wakala (Tiketi:: "
+"Huduma inahitaji kuamilishwa)."
 
 #. SysConfig
-msgid "Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
-msgstr "Inaweka huduma katika skrini ya kipaumbele cha tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala. (Tiketi:: Aina inahitaji kuamilishwa)."
+msgid ""
+"Sets the service in the ticket priority screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+"Inaweka huduma katika skrini ya kipaumbele cha tiketi ya tiketi iliyokuzwa "
+"katika kiolesura cha wakala. (Tiketi:: Aina inahitaji kuamilishwa)."
 
 #. SysConfig
-msgid "Sets the ticket owner in the additional ITSM field screen of the agent interface."
-msgstr "Inaweka mmiliki wa tiketi katika skrini ya uga wa ITSM iliyoongezwa ya kiolesura cha wakala."
+msgid ""
+"Sets the ticket owner in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Inaweka mmiliki wa tiketi katika skrini ya uga wa ITSM iliyoongezwa ya "
+"kiolesura cha wakala."
 
 #. SysConfig
 msgid "Sets the ticket owner in the decision screen of the agent interface."
-msgstr "Inaweka mmiliki wa tikwti katika skrini ya maamuzi ya kiolesura cha wakala."
+msgstr ""
+"Inaweka mmiliki wa tikwti katika skrini ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Sets the ticket responsible in the additional ITSM field screen of the agent interface."
-msgstr "Inaweka tiketi inayohusika katika skrini ya uga wa ITSM ulioongezwa  wa kiolesura cha wakala."
+msgid ""
+"Sets the ticket responsible in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Inaweka tiketi inayohusika katika skrini ya uga wa ITSM ulioongezwa  wa "
+"kiolesura cha wakala."
 
 #. SysConfig
-msgid "Sets the ticket responsible in the decision screen of the agent interface."
-msgstr "Inaweka tiketi inayohusika katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Sets the ticket responsible in the decision screen of the agent interface."
+msgstr ""
+"Inaweka tiketi inayohusika katika skrini ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Sets the ticket type in the additional ITSM field screen of the agent interface (Ticket::Type needs to be activated)."
-msgstr "Inaweka aina ya tiketi katika skrini ya uga wa ITSM ulioongezwa katika kiolesura cha wakala (Tiketi::Aina inayohitaji kuamilishwa)."
+msgid ""
+"Sets the ticket type in the additional ITSM field screen of the agent "
+"interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Inaweka aina ya tiketi katika skrini ya uga wa ITSM ulioongezwa katika "
+"kiolesura cha wakala (Tiketi::Aina inayohitaji kuamilishwa)."
 
 #. SysConfig
-msgid "Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated)."
-msgstr "Inaweka aina ya tiketi katika skrini ya maamuzi ya kiolesura cha wakala (Tiketi:: Aina inayohitaji kuamilishwa )."
+msgid ""
+"Sets the ticket type in the decision screen of the agent interface (Ticket::"
+"Type needs to be activated)."
+msgstr ""
+"Inaweka aina ya tiketi katika skrini ya maamuzi ya kiolesura cha wakala "
+"(Tiketi:: Aina inayohitaji kuamilishwa )."
 
 #. SysConfig
-msgid "Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
-msgstr "Inaweka aina ya tiketi katika skrini ya kipaumbele cha tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala (Tiketi:: aina inahitaji kuamilishwa)."
+msgid ""
+"Sets the ticket type in the ticket priority screen of a zoomed ticket in the "
+"agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Inaweka aina ya tiketi katika skrini ya kipaumbele cha tiketi ya tiketi "
+"iliyokuzwa katika kiolesura cha wakala (Tiketi:: aina inahitaji kuamilishwa)."
 
 #. SysConfig
-msgid "Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface."
-msgstr "Inaonyesha kiungo katika menyu cha kubadilisha maamuzi ya tiketi katika mandhari yake iliyokuzwa ya kiolesura cha wakala."
+msgid ""
+"Shows a link in the menu to change the decision of a ticket in its zoom view "
+"of the agent interface."
+msgstr ""
+"Inaonyesha kiungo katika menyu cha kubadilisha maamuzi ya tiketi katika "
+"mandhari yake iliyokuzwa ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface."
-msgstr "Inaonyesha kiungo katika menyu cha kurekebisha uga za ITSM zilizoongezwa katika mandhari ya iliyokuzwa ya tiketi ya kiolesura cha wakala."
+msgid ""
+"Shows a link in the menu to modify additional ITSM fields in the ticket zoom "
+"view of the agent interface."
+msgstr ""
+"Inaonyesha kiungo katika menyu cha kurekebisha uga za ITSM zilizoongezwa "
+"katika mandhari ya iliyokuzwa ya tiketi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a list of all the involved agents on this ticket, in the additional ITSM field screen of the agent interface."
-msgstr "Inaonyesha orodha ya mawakala wote waliohusika katika tiketi hii, katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the additional "
+"ITSM field screen of the agent interface."
+msgstr ""
+"Inaonyesha orodha ya mawakala wote waliohusika katika tiketi hii, katika "
+"skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a list of all the involved agents on this ticket, in the decision screen of the agent interface."
-msgstr "Inaonyesha orodha ya mawakala wote waliohusika katika tiketi hii, katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the decision "
+"screen of the agent interface."
+msgstr ""
+"Inaonyesha orodha ya mawakala wote waliohusika katika tiketi hii, katika "
+"skrini ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the additional ITSM field screen of the agent interface."
-msgstr "Inaonyesha orodha ya mawakala wote( Mawakala wote wenye kidokezo cha ruhusa katika foleni/tiketi) wanaoweza kugundua nani ataarifiwe kuhusu kidokezo hiki, katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the additional ITSM field screen of the agent interface."
+msgstr ""
+"Inaonyesha orodha ya mawakala wote( Mawakala wote wenye kidokezo cha ruhusa "
+"katika foleni/tiketi) wanaoweza kugundua nani ataarifiwe kuhusu kidokezo "
+"hiki, katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the decision screen of the agent interface."
-msgstr "Inaonyesha orodha ya mawakala wote( Mawakala wote wenye kidokezo cha ruhusa katika foleni/tiketi) wanaoweza kugundua nani ataarifiwe kuhusu kidokezo hiki, katika skrini ya maamuzi ya kiolesura cha wakala."
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the decision screen of the agent interface."
+msgstr ""
+"Inaonyesha orodha ya mawakala wote( Mawakala wote wenye kidokezo cha ruhusa "
+"katika foleni/tiketi) wanaoweza kugundua nani ataarifiwe kuhusu kidokezo "
+"hiki, katika skrini ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows the ticket priority options in the additional ITSM field screen of the agent interface."
-msgstr "Inaonyesha michaguo yenye kipaumbele ya tiketi katika skrini uga wa ITSM ulioongezwa wa kiolesura cha wakala."
+msgid ""
+"Shows the ticket priority options in the additional ITSM field screen of the "
+"agent interface."
+msgstr ""
+"Inaonyesha michaguo yenye kipaumbele ya tiketi katika skrini uga wa ITSM "
+"ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid "Shows the ticket priority options in the decision screen of the agent interface."
+msgid ""
+"Shows the ticket priority options in the decision screen of the agent "
+"interface."
 msgstr "Inaoyesha "
 
 #. SysConfig
-msgid "Shows the title fields in the additional ITSM field screen of the agent interface."
-msgstr "Inyesha uga za kichwa cha habari katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
+msgid ""
+"Shows the title fields in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Inyesha uga za kichwa cha habari katika skrini ya uga wa ITSM ulioongezwa wa "
+"kiolesura cha wakala."
 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
-msgstr "Inyesha uga wa kichwa cha habari katika skrini ya maamzi ya kiolesura cha wakala."
+msgstr ""
+"Inyesha uga wa kichwa cha habari katika skrini ya maamzi ya kiolesura cha "
+"wakala."
 
 #. SysConfig
 msgid "Ticket decision."
 msgstr ""
-
