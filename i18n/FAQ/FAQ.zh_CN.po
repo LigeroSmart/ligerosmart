@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-03-13 18:43+0000\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
 "PO-Revision-Date: 2020-01-30 12:51+0000\n"
 "Last-Translator: Huimin Wang <whuim@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.app.otrs.com/projects/"
@@ -721,15 +721,15 @@ msgstr "最常用的文章"
 msgid "Content Type"
 msgstr "内容类型"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "internal"
 msgstr "内部"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "external"
 msgstr "外部"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "public"
 msgstr "公开"
 

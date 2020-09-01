@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-03-13 18:43+0000\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
 "PO-Revision-Date: 2020-01-25 23:27+0000\n"
 "Last-Translator: Marc De Mena Tomé <mdemena@gmail.com>\n"
 "Language-Team: Spanish <https://translate.app.otrs.com/projects/otrs-6/faq/"
@@ -741,15 +741,15 @@ msgstr "Top 10 de los artículos de las FAQ"
 msgid "Content Type"
 msgstr "Tipo de contenido"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "internal"
 msgstr "interno"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "external"
 msgstr "externo"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "public"
 msgstr "público"
 

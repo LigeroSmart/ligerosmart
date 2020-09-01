@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-03-13 18:43+0000\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
 "PO-Revision-Date: 2019-10-31 23:03+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/"
@@ -718,15 +718,15 @@ msgstr "Topp 10 OSS"
 msgid "Content Type"
 msgstr ""
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "internal"
 msgstr "intern"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "external"
 msgstr "ekstern"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "public"
 msgstr "offentlig"
 

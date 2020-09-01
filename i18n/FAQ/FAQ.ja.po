@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-03-13 18:43+0000\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
 "PO-Revision-Date: 2020-02-22 12:18+0000\n"
 "Last-Translator: HISATOSHI OONISHI <hisatoshi.onishi@gmail.com>\n"
 "Language-Team: Japanese <https://translate.app.otrs.com/projects/otrs-6/faq/"
@@ -724,15 +724,15 @@ msgstr "Top 10 FAQ項目"
 msgid "Content Type"
 msgstr "コンテンツタイプ"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "internal"
 msgstr "内部向"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "external"
 msgstr "外部向"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "public"
 msgstr "公開"
 

@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-03-13 18:43+0000\n"
-"PO-Revision-Date: 2020-05-06 09:01+0000\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
+"PO-Revision-Date: 2020-09-01 14:46+0000\n"
 "Last-Translator: Nick van der Burg <nmp.vanderburg@gmail.com>\n"
-"Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/faq/nl/"
-">\n"
+"Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/faq/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11.3\n"
+"X-Generator: Weblate 4.1.1\n"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -727,15 +727,15 @@ msgstr "Top 10 FAQ-artikelen"
 msgid "Content Type"
 msgstr "Inhoudstype"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "internal"
 msgstr "intern"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "external"
 msgstr "extern"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "public"
 msgstr "openbaar"
 
@@ -1387,48 +1387,62 @@ msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "customer interface."
 msgstr ""
+"Module om een HTML OpenSearch-profiel te genereren voor korte FAQ-"
+"zoekopdrachten in de klantinterface."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
 msgstr ""
+"Module om HTML OpenSearch-profiel te genereren voor korte FAQ-zoekopdrachten "
+"in de openbare interface."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
 msgstr ""
+"Module om html OpenSearch-profiel te genereren voor korte FAQ-zoekopdrachten."
 
 #. SysConfig
 msgid "New FAQ Article."
-msgstr ""
+msgstr "Nieuw FAQ-artikel."
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr ""
+"Nieuwe FAQ-artikelen hebben goedkeuring nodig voordat ze worden gepubliceerd."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
 msgstr ""
+"Aantal FAQ-artikelen dat moet worden weergegeven in de FAQ-verkenner van de "
+"klantinterface."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the public "
 "interface."
 msgstr ""
+"Aantal FAQ-artikelen dat moet worden weergegeven in de FAQ-verkenner van de "
+"openbare interface."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the customer interface."
 msgstr ""
+"Aantal FAQ-artikelen dat op elke pagina van een zoekresultaat in de "
+"klantinterface moet worden weergegeven."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the public interface."
 msgstr ""
+"Aantal FAQ-artikelen dat op elke pagina van een zoekresultaat in de openbare "
+"interface moet worden weergegeven."
 
 #. SysConfig
 msgid "Number of shown items in last changes."

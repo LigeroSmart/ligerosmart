@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-03-13 18:43+0000\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
 "PO-Revision-Date: 2020-06-09 23:49+0000\n"
 "Last-Translator: ANT <velmyshanovnyi@gmail.com>\n"
 "Language-Team: Ukrainian <https://translate.app.otrs.com/projects/otrs-6/faq/"
@@ -725,15 +725,15 @@ msgstr "Топ 10 статтей"
 msgid "Content Type"
 msgstr ""
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "internal"
 msgstr "внутрішній"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "external"
 msgstr "зовнiшнє"
 
-#. Database XML Definition: FAQ.sopm
+#. Database XML / SOPM Definition: FAQ.sopm
 msgid "public"
 msgstr "публічне"
 
