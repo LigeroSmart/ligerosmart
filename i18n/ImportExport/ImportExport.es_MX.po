@@ -23,7 +23,9 @@ msgid "Create a template to import and export object information."
 msgstr "Crear una plantilla para importar y exportar información de objetos."
 
 #. Template: AdminImportExport
-msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
 msgstr ""
 
 #. Template: AdminImportExport
@@ -144,11 +146,15 @@ msgstr "¡Se necesita 'TemplateID'!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr "Ha ocurrido un error. ¡Imposible de Importar¡ Revise las trazas del sistema para obtener los detalles."
+msgstr ""
+"Ha ocurrido un error. ¡Imposible de Importar¡ Revise las trazas del sistema "
+"para obtener los detalles."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr "Ha ocurrido un error. ¡Imposible de Exportar¡ Revise las trazas del sistema para obtener los detalles."
+msgstr ""
+"Ha ocurrido un error. ¡Imposible de Exportar¡ Revise las trazas del sistema "
+"para obtener los detalles."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
@@ -223,7 +229,9 @@ msgid "Deleting template..."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
-msgid "There was an error deleting the template. Please check the logs for more information."
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
@@ -232,7 +240,9 @@ msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Formato del módulo administrativo de registro para el módulo de importación/exportación."
+msgstr ""
+"Formato del módulo administrativo de registro para el módulo de importación/"
+"exportación."
 
 #. SysConfig
 msgid "Import and export object information."
@@ -241,4 +251,3 @@ msgstr "Importar y exportar información de un objeto."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Importar/Exportar"
-

@@ -23,7 +23,9 @@ msgid "Create a template to import and export object information."
 msgstr "Tengeneza kiolezo kuleta na kuhamisha taarifa za kipengee"
 
 #. Template: AdminImportExport
-msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
 msgstr ""
 
 #. Template: AdminImportExport
@@ -223,7 +225,9 @@ msgid "Deleting template..."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
-msgid "There was an error deleting the template. Please check the logs for more information."
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
@@ -232,7 +236,9 @@ msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Umbiza usajili wa moduli wa mazingira ya nyuma kwa ajili ya moduli ya kuleta/kuhamisha"
+msgstr ""
+"Umbiza usajili wa moduli wa mazingira ya nyuma kwa ajili ya moduli ya kuleta/"
+"kuhamisha"
 
 #. SysConfig
 msgid "Import and export object information."
@@ -241,4 +247,3 @@ msgstr "Leta na hamisha taarifa za kipengee"
 #. SysConfig
 msgid "Import/Export"
 msgstr "Leta/Hamisha"
-

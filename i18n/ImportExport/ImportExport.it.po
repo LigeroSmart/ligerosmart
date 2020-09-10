@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
 "POT-Creation-Date: 2020-01-24 10:41+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-06-11 17:01+0000\n"
+"Last-Translator: Nic Cord <cordioli.nicola@gmail.com>\n"
+"Language-Team: Italian <https://translate.app.otrs.com/projects/otrs-6/"
+"import-export/it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.0.4\n"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -20,11 +23,17 @@ msgstr "Aggiungi modello"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
-msgstr "Crea un template per importare ed esportare le informazioni degli oggetti."
+msgstr ""
+"Crea un template per importare ed esportare le informazioni degli oggetti."
 
 #. Template: AdminImportExport
-msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
-msgstr "Per utilizzare questo modulo, è necessario installare ITSMConfigurationManagement o qualsiasi altro pacchetto che fornisce back-end per gli oggetti da importare ed esportare."
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
+msgstr ""
+"Per utilizzare questo modulo, è necessario installare "
+"ITSMConfigurationManagement o qualsiasi altro pacchetto che fornisce back-"
+"end per gli oggetti da importare ed esportare."
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -36,7 +45,7 @@ msgstr "Inizia Esportazione"
 
 #. Template: AdminImportExport
 msgid "Delete this template"
-msgstr ""
+msgstr "Cancella questo modello"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
@@ -76,7 +85,7 @@ msgstr "Nessun elemento mappa trovato."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
-msgstr "Aggiungi un elemento di mappatura."
+msgstr "Aggiungi un elemento di mappatura"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
@@ -144,11 +153,15 @@ msgstr "Necessario TemplateID!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr "Errore riscontrato. Impossibile importare! Leggi i Syslog per ulteriori dettagli."
+msgstr ""
+"Errore riscontrato. Impossibile importare! Leggi i Syslog per ulteriori "
+"dettagli."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr "Errore riscontrato. Impossibile esportare! Leggi i Syslog per ulteriori dettagli."
+msgstr ""
+"Errore riscontrato. Impossibile esportare! Leggi i Syslog per ulteriori "
+"dettagli."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
@@ -223,8 +236,12 @@ msgid "Deleting template..."
 msgstr "Eliminazione modello in corso ..."
 
 #. JS File: ITSM.Admin.ImportExport
-msgid "There was an error deleting the template. Please check the logs for more information."
-msgstr "Si è verificato un errore durante l'eliminazione del modello. Si prega di controllare i registri per ulteriori informazioni."
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
+msgstr ""
+"Si è verificato un errore durante l'eliminazione del modello. Si prega di "
+"controllare i registri per ulteriori informazioni."
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "Template was deleted successfully."
@@ -232,7 +249,9 @@ msgstr "Il modello è stato eliminato correttamente."
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Registrazione del modulo di backend del formato per il modulo di importazione/esportazione."
+msgstr ""
+"Registrazione del modulo di backend del formato per il modulo di "
+"importazione/esportazione."
 
 #. SysConfig
 msgid "Import and export object information."
@@ -241,4 +260,3 @@ msgstr "Importa ed esporta le informazioni sull'oggetto."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Importare/Esportare"
-

@@ -23,7 +23,9 @@ msgid "Create a template to import and export object information."
 msgstr "Utwórz szablon do importu i eksportu danych obiektów."
 
 #. Template: AdminImportExport
-msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
 msgstr ""
 
 #. Template: AdminImportExport
@@ -223,7 +225,9 @@ msgid "Deleting template..."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
-msgid "There was an error deleting the template. Please check the logs for more information."
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
@@ -241,4 +245,3 @@ msgstr "Importuj i eksportuj informacje obiektów."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Import/eksport"
-

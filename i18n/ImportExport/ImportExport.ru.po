@@ -2,13 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
 "POT-Creation-Date: 2020-01-24 10:41+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-02-27 08:19+0000\n"
+"Last-Translator: Yuri Myasoedov <myasoedovys@gmail.com>\n"
+"Language-Team: Russian <https://translate.app.otrs.com/projects/otrs-6/"
+"import-export/ru/>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -23,7 +27,9 @@ msgid "Create a template to import and export object information."
 msgstr "Создайте шаблон для импорта и экспорта информации объектов"
 
 #. Template: AdminImportExport
-msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
 msgstr ""
 
 #. Template: AdminImportExport
@@ -36,11 +42,11 @@ msgstr "Начать экспорт"
 
 #. Template: AdminImportExport
 msgid "Delete this template"
-msgstr ""
+msgstr "Удалить этот шаблон"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr "Шаг 1 из 5 - Редактировать общую информацию"
+msgstr "Шаг 1 из 5 — изменить общую информацию"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -56,11 +62,11 @@ msgstr "Формат обязателен!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr "Шаг 2 из 5 - Редактировать информацию об объекте"
+msgstr "Шаг 2 из 5 — изменить информацию об объекте"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5 - Edit format information"
-msgstr "Шаг 3 из 5 - Редактировать формат информации"
+msgstr "Шаг 3 из 5 — изменить формат информации"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -68,11 +74,11 @@ msgstr "обязателен!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr "Шаг 4 из 5 - Редактировать информацию сопоставления"
+msgstr "Шаг 4 из 5 — изменить информацию о сопоставлении"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "Нет элементов сопоставления."
+msgstr "Элементы для сопоставления не найдены."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
@@ -80,7 +86,7 @@ msgstr "Добавьте элемент сопоставления"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr "Шаг 5 из 5 - Редактировать информацию поиска"
+msgstr "Шаг 5 из 5 — изменить информацию поиска"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -120,7 +126,7 @@ msgstr "Ok"
 
 #. Template: AdminImportExport
 msgid "Do you really want to delete this template item?"
-msgstr ""
+msgstr "Действительно удалть этот шаблон?"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -223,7 +229,9 @@ msgid "Deleting template..."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
-msgid "There was an error deleting the template. Please check the logs for more information."
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
 msgstr ""
 
 #. JS File: ITSM.Admin.ImportExport
@@ -241,4 +249,3 @@ msgstr "Импорт и экспорт информации об объекта�
 #. SysConfig
 msgid "Import/Export"
 msgstr "Импорт/Экспорт"
-

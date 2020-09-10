@@ -20,11 +20,18 @@ msgstr "Vorlage hinzufügen"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
-msgstr "Erstellen einer Vorlage zum Importieren und Exportieren von Objektinformationen."
+msgstr ""
+"Erstellen einer Vorlage zum Importieren und Exportieren von "
+"Objektinformationen."
 
 #. Template: AdminImportExport
-msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
-msgstr "Damit Sie dieses Modul nutzen können, müssen Sie das Paket ITSM Configuration Management oder jedes andere Paket installieren, das ein Backend für zu exportierende und importierende Objekte bereitstellt."
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
+msgstr ""
+"Damit Sie dieses Modul nutzen können, müssen Sie das Paket ITSM "
+"Configuration Management oder jedes andere Paket installieren, das ein "
+"Backend für zu exportierende und importierende Objekte bereitstellt."
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -144,11 +151,13 @@ msgstr "Die ID der Vorlage wird benötigt!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr "Fehler aufgetreten. Importieren unmöglich! Für Details siehe Systemprotokoll."
+msgstr ""
+"Fehler aufgetreten. Importieren unmöglich! Für Details siehe Systemprotokoll."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr "Fehler aufgetreten. Exportieren unmöglich! Für Details siehe Systemprotokoll."
+msgstr ""
+"Fehler aufgetreten. Exportieren unmöglich! Für Details siehe Systemprotokoll."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
@@ -223,8 +232,12 @@ msgid "Deleting template..."
 msgstr "Lösche Vorlage..."
 
 #. JS File: ITSM.Admin.ImportExport
-msgid "There was an error deleting the template. Please check the logs for more information."
-msgstr "Beim Löschen der Vorlage ist ein Fehler aufgetreten. Bitte schauen Sie im Systemprotokoll für mehr Informationen."
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
+msgstr ""
+"Beim Löschen der Vorlage ist ein Fehler aufgetreten. Bitte schauen Sie im "
+"Systemprotokoll für mehr Informationen."
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "Template was deleted successfully."
@@ -241,4 +254,3 @@ msgstr "Importieren und Exportieren von Objekt-Informationen."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Import/Export"
-

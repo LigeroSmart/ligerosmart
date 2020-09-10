@@ -23,8 +23,13 @@ msgid "Create a template to import and export object information."
 msgstr "オブジェクトのインポート・エクスポート用のテンプレートを作成する"
 
 #. Template: AdminImportExport
-msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
-msgstr "このモジュールを利用するには、 ITSMConfigurationManagement か、オブジェクトのインポートおよびエクスポートの機能を提供するパッケージをインストールする必要があります。"
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
+msgstr ""
+"このモジュールを利用するには、 ITSMConfigurationManagement か、オブジェクトの"
+"インポートおよびエクスポートの機能を提供するパッケージをインストールする必要"
+"があります。"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -144,11 +149,15 @@ msgstr "テンプレートIDの入力が必要です！"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr "インポートが出来ません（エラーが発生しました。詳細はシステムログをご確認ください）！"
+msgstr ""
+"インポートが出来ません（エラーが発生しました。詳細はシステムログをご確認くだ"
+"さい）！"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr "エクスポートが出来ません（エラーが発生しました。詳細はシステムログをご確認ください）！"
+msgstr ""
+"エクスポートが出来ません（エラーが発生しました。詳細はシステムログをご確認く"
+"ださい）！"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
@@ -223,8 +232,11 @@ msgid "Deleting template..."
 msgstr "テンプレートを削除中…"
 
 #. JS File: ITSM.Admin.ImportExport
-msgid "There was an error deleting the template. Please check the logs for more information."
-msgstr "テンプレートの削除中にエラーが発生しました。詳細はログを確認してください。"
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
+msgstr ""
+"テンプレートの削除中にエラーが発生しました。詳細はログを確認してください。"
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "Template was deleted successfully."
@@ -241,4 +253,3 @@ msgstr "オブジェクト情報のインポート・エクスポート"
 #. SysConfig
 msgid "Import/Export"
 msgstr "インポート/エクスポート"
-
