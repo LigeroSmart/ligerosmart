@@ -39,7 +39,7 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'วันที่การตัดสินใจ';
     $Self->{Translation}->{'Due Date'} = 'วันที่กำหนด';
 
-    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    # Database XML / SOPM Definition: ITSMIncidentProblemManagement.sopm
     $Self->{Translation}->{'closed with workaround'} = 'ปิดด้วยวิธีแก้ปัญหา';
 
     # SysConfig
