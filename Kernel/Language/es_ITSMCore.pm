@@ -47,19 +47,19 @@ sub Data {
     $Self->{Translation}->{'Calendar Default'} = 'Calendario por omisión';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
-    $Self->{Translation}->{'operational'} = '';
-    $Self->{Translation}->{'warning'} = '';
-    $Self->{Translation}->{'incident'} = '';
+    $Self->{Translation}->{'operational'} = 'operacional';
+    $Self->{Translation}->{'warning'} = 'advertencia';
+    $Self->{Translation}->{'incident'} = 'incidente';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
-    $Self->{Translation}->{'No ServiceID is given!'} = '¡No se proporcionó el  \'ServiceID\'!';
+    $Self->{Translation}->{'No ServiceID is given!'} = '¡No se proporcionó el \'ServiceID\'!';
     $Self->{Translation}->{'ServiceID %s not found in database!'} = '¡El \'ServiceID\' %s no se encontró en la base de datos!';
     $Self->{Translation}->{'Current Incident State'} = 'Estado del Incidente Actual';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
     $Self->{Translation}->{'Incident State'} = 'Estado del Incidente';
 
-    # Database XML Definition: ITSMCore.sopm
+    # Database XML / SOPM Definition: ITSMCore.sopm
     $Self->{Translation}->{'Operational'} = 'Operacional';
     $Self->{Translation}->{'Incident'} = 'Incidente';
     $Self->{Translation}->{'End User Service'} = 'Servicio de Usuario final';
