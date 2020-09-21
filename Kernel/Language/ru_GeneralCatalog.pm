@@ -20,10 +20,10 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Управление Общим каталогом';
-    $Self->{Translation}->{'Items in Class'} = '';
-    $Self->{Translation}->{'Edit Item'} = '';
-    $Self->{Translation}->{'Add Class'} = '';
-    $Self->{Translation}->{'Add Item'} = '';
+    $Self->{Translation}->{'Items in Class'} = 'Элементы в классе';
+    $Self->{Translation}->{'Edit Item'} = 'Изменить элемент';
+    $Self->{Translation}->{'Add Class'} = 'Добавить класс';
+    $Self->{Translation}->{'Add Item'} = 'Добавить элемент';
     $Self->{Translation}->{'Add Catalog Item'} = 'Добавление элемента каталога';
     $Self->{Translation}->{'Add Catalog Class'} = 'Добавление класса каталога';
     $Self->{Translation}->{'Catalog Class'} = 'Класс каталога';
