@@ -94,9 +94,9 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = 'Storico di %s%s';
-    $Self->{Translation}->{'History Content'} = '';
+    $Self->{Translation}->{'History Content'} = 'Contenuto dello storico';
     $Self->{Translation}->{'Workorder'} = 'Ordine di lavoro';
-    $Self->{Translation}->{'Createtime'} = '';
+    $Self->{Translation}->{'Createtime'} = 'Istante di creazione';
     $Self->{Translation}->{'Show details'} = 'Mostra i dettagli';
     $Self->{Translation}->{'Show workorder'} = 'Mostrare ordine di lavoro';
 
@@ -122,7 +122,7 @@ sub Data {
     $Self->{Translation}->{'Current CAB'} = 'CAB corrente';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
+    $Self->{Translation}->{'Context Settings'} = 'Impostazioni di contesto';
     $Self->{Translation}->{'Changes per page'} = 'Modifiche per pagina';
 
     # Template: AgentITSMChangeOverviewSmall
@@ -175,10 +175,10 @@ sub Data {
     $Self->{Translation}->{'Change Initiator(s)'} = 'Cambia iniziatore(i)';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Ultima modifica';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'Last changed by'} = 'Ultima modifica effettuata da';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
-    $Self->{Translation}->{'Download Attachment'} = '';
+        'Per aprire i collegamenti nei seguenti blocchi descrizione, potrebbe essere necessario premere Ctrl o Cmd o Shift mentre si clicca sul collegamento (a seconda del browser e del Sistema Operativo).';
+    $Self->{Translation}->{'Download Attachment'} = 'Scarica Allegato';
 
     # Template: AgentITSMTemplateEditCAB
     $Self->{Translation}->{'Edit CAB Template'} = 'Modifica modello CAB';
@@ -453,7 +453,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
     $Self->{Translation}->{'Need config option %s!'} = '';
     $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Nessuna opzione di configurazione trovata per la vista "%s"!';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
@@ -526,7 +526,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
     $Self->{Translation}->{'Group ITSMChangeManager'} = '';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'richiesto';
     $Self->{Translation}->{'pending approval'} = 'in attesa di approvazione';
     $Self->{Translation}->{'rejected'} = 'rifiutato';
@@ -574,7 +574,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this condition?'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
@@ -641,7 +641,7 @@ sub Data {
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Definisce l\'azione con cui il bottone dei settaggi è disponibile in un oggetto widget collegato (LinkObject::ViewMode = "complex"). Notare che queste Actions devono essere registrate nei seguenti file JS e CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = '';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
