@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2020-01-24 11:46+0000\n"
-"PO-Revision-Date: 2019-04-09 13:30+0000\n"
-"Last-Translator: Balázs Úr\n"
-"Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
+"PO-Revision-Date: 2020-09-21 14:13+0000\n"
+"Last-Translator: Balázs Úr <balazs.ur@otrs.com>\n"
+"Language-Team: Hungarian <https://translate.otrs.com/projects/otrs-6/"
+"itsm-change-management/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.2.2\n"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category ↔ Impact ↔ Priority"
@@ -433,7 +435,7 @@ msgstr "ITSM változás hatás"
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
-msgstr "Kategória módosítása"
+msgstr "Változáskategória"
 
 #. Template: AgentITSMChangeSearch
 msgid "(before/after)"
@@ -493,7 +495,7 @@ msgstr "CAB"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed"
-msgstr "Utoljára módosítva"
+msgstr "Utolsó módosítás"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed by"
@@ -505,9 +507,9 @@ msgid ""
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
 msgstr ""
-"A következő leírásblokkokban lévő hivatkozások megnyitásához lehet, hogy meg "
-"kell nyomnia a Ctrl vagy a Cmd vagy a Shift billentyűt, miközben a "
-"hivatkozásra kattint (a böngészőjétől és az operációs rendszerétől függően)."
+"A következő leírási blokkokban lévő hivatkozások megnyitásához lehetséges, "
+"hogy le kell nyomnia a Ctrl vagy Cmd vagy Shift billentyűt, miközben a "
+"hivatkozásra kattint (a böngészőjétől és operációs rendszerétől függően)."
 
 #. Template: AgentITSMChangeZoom
 msgid "Download Attachment"
@@ -576,7 +578,7 @@ msgstr "Módosította"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change Time"
-msgstr "Változtatás ideje"
+msgstr "Változás ideje"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to %s%s"
