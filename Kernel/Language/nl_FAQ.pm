@@ -458,21 +458,21 @@ sub Data {
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         'Maximale grootte van de titels in een FAQ-artikel dat in het FAQ-journaal in de agentinterface moet worden weergegeven.';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
-        '';
+        'Module om een HTML OpenSearch-profiel te genereren voor korte FAQ-zoekopdrachten in de klantinterface.';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
-        '';
+        'Module om HTML OpenSearch-profiel te genereren voor korte FAQ-zoekopdrachten in de openbare interface.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
-        '';
-    $Self->{Translation}->{'New FAQ Article.'} = '';
-    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '';
+        'Module om html OpenSearch-profiel te genereren voor korte FAQ-zoekopdrachten.';
+    $Self->{Translation}->{'New FAQ Article.'} = 'Nieuw FAQ-artikel.';
+    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Nieuwe FAQ-artikelen hebben goedkeuring nodig voordat ze worden gepubliceerd.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
-        '';
+        'Aantal FAQ-artikelen dat moet worden weergegeven in de FAQ-verkenner van de klantinterface.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
-        '';
+        'Aantal FAQ-artikelen dat moet worden weergegeven in de FAQ-verkenner van de openbare interface.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the customer interface.'} =
-        '';
+        'Aantal FAQ-artikelen dat op elke pagina van een zoekresultaat in de klantinterface moet worden weergegeven.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} =
-        '';
+        'Aantal FAQ-artikelen dat op elke pagina van een zoekresultaat in de openbare interface moet worden weergegeven.';
     $Self->{Translation}->{'Number of shown items in last changes.'} = '';
     $Self->{Translation}->{'Number of shown items in last created.'} = '';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '';
