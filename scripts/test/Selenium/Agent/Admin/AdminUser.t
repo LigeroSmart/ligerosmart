@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 4514f95f747be368c3dc9a9452ff9aa66506648d - scripts/test/Selenium/Agent/Admin/AdminUser.t
+# $origin: otrs - 523a918656e9bb2b56c7417e28403fc9d79046e8 - scripts/test/Selenium/Agent/Admin/AdminUser.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -359,6 +359,10 @@ $Selenium->RunTest(
                     );
                 }
             }
+
+            $Selenium->find_element( "#Search", 'css' )->clear();
+            $Selenium->find_element( "#Search", 'css' )->send_keys($TestUserLogin);
+            $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
 
             if ( $Test eq 'ChangeUserLogin' ) {
                 $Selenium->WaitFor(
