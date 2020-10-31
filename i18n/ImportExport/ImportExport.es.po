@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
 "POT-Creation-Date: 2020-01-24 10:41+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-10-31 17:49+0000\n"
+"Last-Translator: Henry Culajay <hculajay.umg@gmail.com>\n"
+"Language-Team: Spanish <https://translate.otrs.com/projects/otrs-6/"
+"import-export/es/>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.2.2\n"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -117,8 +120,9 @@ msgid "Last processed line number of import file"
 msgstr "Último número de línea procesada del archivo a importar"
 
 #. Template: AdminImportExport
+#, fuzzy
 msgid "Ok"
-msgstr "Aceptar"
+msgstr "Ok"
 
 #. Template: AdminImportExport
 msgid "Do you really want to delete this template item?"
