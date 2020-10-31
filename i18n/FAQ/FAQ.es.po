@@ -14,16 +14,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2020-07-06 13:00+0000\n"
-"PO-Revision-Date: 2020-01-25 23:27+0000\n"
-"Last-Translator: Marc De Mena Tomé <mdemena@gmail.com>\n"
-"Language-Team: Spanish <https://translate.app.otrs.com/projects/otrs-6/faq/"
-"es/>\n"
+"PO-Revision-Date: 2020-10-31 17:49+0000\n"
+"Last-Translator: Henry Culajay <hculajay.umg@gmail.com>\n"
+"Language-Team: Spanish <https://translate.otrs.com/projects/otrs-6/faq/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.2.2\n"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -229,8 +228,9 @@ msgid "Approved"
 msgstr "Aprobado"
 
 #. Template: AgentFAQSearch
+#, fuzzy
 msgid "Last changed by"
-msgstr "Ultimo cambio por"
+msgstr "Último cambio por"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
@@ -322,8 +322,9 @@ msgstr ""
 "No se encontró ningún voto. Sea el primero en valorar este artículo FAQ"
 
 #. Template: AgentFAQZoom
+#, fuzzy
 msgid "Download Attachment"
-msgstr "Descargar Archivo adjunto"
+msgstr "Descargar Adjunto"
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -331,9 +332,9 @@ msgid ""
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
 msgstr ""
-"Para abrir links en los siguientes bloques de descripción, podria necesitar "
+"Para abrir links en los siguientes bloques de descripción, podría necesitar "
 "presionar la teclas Ctrl, Cmd o Shift mientras presiona el link (depende del "
-"browser y el SO)"
+"browser y el SO)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -754,8 +755,9 @@ msgid "public"
 msgstr "público"
 
 #. JS File: FAQ.Agent.ConfirmationDialog
+#, fuzzy
 msgid "Ok"
-msgstr "Aceptar"
+msgstr "Ok"
 
 #. SysConfig
 msgid ""
