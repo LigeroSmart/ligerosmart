@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ITSMCore\n"
 "POT-Creation-Date: 2020-01-24 12:24+0000\n"
-"PO-Revision-Date: 2020-01-25 23:27+0000\n"
-"Last-Translator: Marc De Mena Tomé <mdemena@gmail.com>\n"
-"Language-Team: Spanish <https://translate.app.otrs.com/projects/otrs-6/"
-"itsm-core/es/>\n"
+"PO-Revision-Date: 2020-10-31 17:40+0000\n"
+"Last-Translator: Henry Culajay <hculajay.umg@gmail.com>\n"
+"Language-Team: Spanish <https://translate.otrs.com/projects/otrs-6/itsm-core/"
+"es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.2.2\n"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
@@ -23,7 +23,7 @@ msgstr "Administrar el resultado de la combinación de prioridad Criticidad ↔ 
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
-msgstr "Asignación de Priodidad"
+msgstr "Asignación prioritaria"
 
 #. Template: AdminSLA
 msgid "Minimum Time Between Incidents"
@@ -42,6 +42,7 @@ msgid "Last changed"
 msgstr "Último cambio"
 
 #. Template: AgentITSMSLAZoom
+#, fuzzy
 msgid "Last changed by"
 msgstr "Último cambio por"
 
@@ -191,7 +192,12 @@ msgstr "Conectado a"
 
 #. SysConfig
 msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr "Define las Acciones donde el botón de configuraciones esta disponible en el \"widget\" de objetos vinculados (LinkObject::ViewMode = \"complex\"). Por favor note que dichas Acciones deben tener registrados los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+"Definir acciones donde está disponible un botón de configuración en el "
+"widget de objetos vinculados (LinkObject::ViewMode = \"complex\"). Tenga en "
+"cuenta que estas acciones deben haber registrado los siguientes archivos JS "
+"y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, "
+"Core.UI.Table.Sort.js, Core.Agent.TableFilters.js y Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
