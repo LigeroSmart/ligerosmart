@@ -43,7 +43,7 @@ sub Data {
     $Self->{Translation}->{'closed with workaround'} = 'закрыто с обходным решением';
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = 'Добавить решение';
+    $Self->{Translation}->{'Add a decision!'} = 'Добавить решение!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Дополнительные ITSM поля';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Дополнительные ITSM поля заявки.';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
@@ -52,7 +52,7 @@ sub Data {
         'Разрешает добавить заметку на экране Решение в интерфейсе агента';
     $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
         'Позволяет определить новые Типы для заявок (если включено использование Типа).';
-    $Self->{Translation}->{'Change the ITSM fields!'} = 'Изменить ITSM поля';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'Изменить ITSM поля!';
     $Self->{Translation}->{'Decision'} = 'Решение';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Определяет необходимость блокировки заявки на экране Дополнительные ITSM поля в интерфейсе агента (если заявка еще не блокирована, она блокируется и текущий агент автоматически назначается ее владельцем';
