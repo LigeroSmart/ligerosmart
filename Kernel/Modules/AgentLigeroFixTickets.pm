@@ -72,16 +72,6 @@ sub Run {
 
 	if ( $Self->{Subaction} eq 'GetCounter' ) {
 
-    
-
-    
-
-    use Data::Dumper;
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
-        Priority => 'error',
-        Message  => " CHEGOU AQUI ".Dumper(\%TicketSearch),
-    );
-
     if(!$Ticket{ServiceID}){
       return $LayoutObject->Attachment(
           ContentType => 'application/json; charset=utf8',
