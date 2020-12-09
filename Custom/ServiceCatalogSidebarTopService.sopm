@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ServiceCatalogSidebarTopService</Name>
+    <Version>6.0.4</Version>
+    <Vendor>Complemento [Ligero]</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">
+    	Add information in the service catalog sidebar that display top service most used 
+	</Description>
+    <IntroInstall Lang="en" Title="Installation Information" Type="post">
+    </IntroInstall>    
+    <Framework>6.0.x</Framework>
+    <PackageRequired Version="6.x.x">LigeroPortal</PackageRequired>
+    <Filelist>
+        <File Location="Custom/ServiceCatalogSidebarTopService.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/ServiceCatalogSidebarTopService.xml" Permission="643"></File>
+        <File Location="Kernel/Output/HTML/Ligero/ServiceCatalog/SidebarWidget/TopService.pm" Permission="644"></File>
+	    <File Location="Kernel/Modules/CustomerTopService.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/Ligero/ServiceCatalog/Sidebar/TopService.tt" Permission="644"></File>
+	    <File Location="Kernel/Language/pt_BR_LigeroTopService.pm" Permission="644"></File>
+    </Filelist>
+</otrs_package>

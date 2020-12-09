@@ -1,0 +1,32 @@
+<div class="CompWidgetContainer" style="width:[% Data.Width %]%; height:100% !important ">
+    <div class="CompWidgetBorder">
+        <table class="DataTable" id="user">
+            <thead>
+                <tr>
+[% RenderBlockStart("Theader") %]
+                    <th> [%Data.Theader %]</th>
+[% RenderBlockEnd("Theader") %]
+                </tr>
+            </thead>
+            <tbody>
+[% RenderBlockStart("TrItem") %]   
+                <tr>
+                    <td>[%Data.FullName %]</td>
+                    <td>[%Data.Day %]</td>
+                    <td>[%Data.Month %]</td>
+                </tr>
+[% RenderBlockEnd("TrItem") %]
+                <tr>
+[% RenderBlockStart("TrTotal") %] 
+                    <td style='text-align:right;'>[%Data.Total %]</td>
+                    <td>[%Data.TotalDay %]</td>
+                    <td>[%Data.TotalMonth %]</td>
+
+[% RenderBlockEnd("TrTotal") %]  	
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

@@ -1,0 +1,220 @@
+# --
+# AgentTicketActionCommon.tt - provides common HTML form for several masks
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("Properties") %]
+
+<form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="compose" id="Compose" class="Validate PreventMultipleSubmits">
+    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+    <input type="hidden" name="Subaction" value="Store"/>
+    <input type="hidden" name="TicketID" value="[% Data.TicketID | html %]"/>
+    <input type="hidden" name="ArticleID" value="[% Data.ArticleID | html %]"/>
+    <input type="hidden" name="Expand" id="Expand" value=""/>
+    <input type="hidden" name="FormID" value="[% Data.FormID | html %]"/>
+
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>
+
+                [% Translate("Edit") | html %]
+
+                : [% Data.TicketNumber %] - [% Data.Title | truncate(60) | html %]
+            </h1>
+
+[% RenderBlockStart("TicketBack") %]
+            <p>
+                <a class="CancelClosePopup" href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | html %];ArticleID=[% Data.ArticleID | html %];">[% Translate("Cancel & close") | html %]</a>
+            </p>
+[% RenderBlockEnd("TicketBack") %]
+[% RenderBlockStart("PropertiesLock") %]
+            <p>
+                [% Translate("The ticket has been locked") | html %].
+                <a class="UndoClosePopup" href="[% Env("Baselink") %]Action=AgentTicketLock;Subaction=Unlock;TicketID=[% Data.TicketID %];[% Env("ChallengeTokenParam") | html %]">
+                    [% Translate("Undo & close window") | html %]
+                </a>
+            </p>
+[% RenderBlockEnd("PropertiesLock") %]
+
+        </div>
+        <div class="Content">
+
+            <fieldset class="TableLike FixedLabel">
+
+[% RenderBlockStart("Note") %]
+[% RenderBlockStart("InformAgent") %]
+                <label for="InformUserID">[% Translate("Inform Agent") | html %]: ([% Translate("Optional") | html %])</label>
+                <div class="Field">
+                    [% Data.OptionStrg %]
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("InformAgent") %]
+
+[% RenderBlockStart("InvolvedAgent") %]
+                <label for="InvolvedUserID">[% Translate("Inform involved Agents") | html %]:</label>
+                <div class="Field">
+                    [% Data.InvolvedAgentStrg %]
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("InvolvedAgent") %]
+
+                <label class="Mandatory" for="Subject"><span class="Marker">*</span>[% Translate("Subject") | html %]:</label>
+                <div class="Field">
+                    <input type="text" id="Subject" name="Subject" value="[% Data.Subject | html %]" class="W75pc Validate_Required [% Data.SubjectInvalid %]"/>
+                    <div id="SubjectError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                    <div id="SubjectServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                </div>
+                <div class="Clear"></div>
+
+[% RenderBlockStart("TicketOptions") %]
+                <label>[% Translate("Options") | html %]:</label>
+                <div class="Field">
+
+<!-- OutputFilterHook_TicketOptionsBegin -->
+
+[% RenderBlockStart("SpellCheck") %]
+                    <a href="#" id="OptionSpellCheck">[ [% Translate("Spell check") | html %] ]</a>
+[% RenderBlockEnd("SpellCheck") %]
+
+<!-- OutputFilterHook_TicketOptionsEnd -->
+
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("TicketOptions") %]
+
+<!-- OutputFilterHook_NoTicketOptionsFallback -->
+
+                <label class="Mandatory" for="RichText"><span class="Marker">*</span>[% Translate("Text") | html %]:</label>
+                <div class="RichTextField">
+
+[% RenderBlockStart("RichText") %]
+[% InsertTemplate("RichTextEditor.tt") %]
+[% RenderBlockEnd("RichText") %]
+
+                    <textarea id="RichText" class="RichText Validate_Required [% Data.BodyInvalid %]" name="Body" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Body | html %]</textarea>
+                    <div id="RichTextError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                    <div id="RichTextServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                </div>
+                <div class="Clear"></div>
+
+                <label>[% Translate("Attachment") | html %]:</label>
+                <div class="Field">
+                    <ul>
+[% RenderBlockStart("Attachment") %]
+                        <li>
+                            [% Data.Filename | html %] ([% Data.Filesize | html %])
+                            <button type="button" id="AttachmentDeleteButton[% Data.FileID | html %]" name="AttachmentDeleteButton[% Data.FileID | html %]" value="[% Translate("Delete") | html %]" class="SpacingLeft">[% Translate("Delete") | html %]</button>
+                            <input type="hidden" id="AttachmentDelete[% Data.FileID | html %]" name="AttachmentDelete[% Data.FileID | html %]" />
+                    </p>
+                    <div class="Clear"></div>
+
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#AttachmentDeleteButton[% Data.FileID | html %]').bind('click', function () {
+        var $Form = $('#AttachmentDeleteButton[% Data.FileID | html %]').closest('form');
+        $('#AttachmentDelete[% Data.FileID | html %]').val(1);
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.trigger('submit');
+    });
+//]]></script>
+[% END %]
+                        </li>
+
+[% RenderBlockEnd("Attachment") %]
+                        <li>
+
+                            <input name="FileUpload" id="FileUpload" type="file" size="40"/>
+                            <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
+                        </li>
+                    </ul>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#FileUpload').bind('change', function (Event) {
+        var $Form = $('#FileUpload').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.find('#AttachmentUpload').val('1').end().submit();
+
+    });
+//]]></script>
+[% END %]
+                </div>
+                <div class="Clear"></div>
+
+				<label for="IsVisibleForCustomer">[% Translate("Is visible for customer") | html %]:</label>
+				<div class="Field">
+					<input type="checkbox" name="IsVisibleForCustomer" id="IsVisibleForCustomer"
+						[% IF Data.IsVisibleForCustomer %]checked="checked" [% END %]/>
+				</div>
+				<div class="Clear"></div>
+
+
+[% RenderBlockEnd("Note") %]
+
+
+[% RenderBlockStart("DynamicField") %]
+                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+                    [% Data.Label %]
+                    <div class="Field">
+                        [% Data.Field %]
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+[% RenderBlockEnd("DynamicField") %]
+
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#[% RenderBlockStart("DynamicField_Field1") %]
+#                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+#                    [% Data.Label %]
+#                    <div class="Field">
+#                        [% Data.Field %]
+#                    </div>
+#                    <div class="Clear"></div>
+#                </div>
+#[% RenderBlockEnd("DynamicField_Field1") %]
+#[% RenderBlockStart("DynamicField_Field2") %]
+#                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+#                    [% Data.Label %]
+#                    <div class="Field">
+#                        [% Data.Field %]
+#                    </div>
+#                    <div class="Clear"></div>
+#                </div>
+#[% RenderBlockEnd("DynamicField_Field2") %]
+
+<!--[% RenderBlockStart("TimeUnitsLabel") %]-->
+<!--                <label for="TimeUnits">[% Translate("Time units") | html %][% Translate(Config("Ticket::Frontend::TimeUnits")) | html %]:</label>-->
+<!--[% RenderBlockEnd("TimeUnitsLabel") %]-->
+<!--[% RenderBlockStart("TimeUnitsLabelMandatory") %]-->
+<!--                <label class="Mandatory" for="TimeUnits"><span class="Marker">*</span>[% Translate("Time units") | html %][% Translate(Config("Ticket::Frontend::TimeUnits")) | html %]:</label>-->
+<!--[% RenderBlockEnd("TimeUnitsLabelMandatory") %]-->
+<!--[% RenderBlockStart("TimeUnits") %]-->
+<!--                <div class="Field">-->
+<!--                    <input type="text" name="TimeUnits" id="TimeUnits" value="[% Data.TimeUnits | html %]" class="Validate_TimeUnits [% Data.TimeUnitsRequired | html %] [% Data.TimeUnitsInvalid | html %]"/>-->
+<!--                    <div id="TimeUnitsError" class="TooltipErrorMessage"><p>[% Translate("Invalid time!") | html %]</p></div>-->
+<!--                    <div id="TimeUnitsServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>-->
+<!--                </div>-->
+<!--                <div class="Clear"></div>-->
+<!--[% RenderBlockEnd("TimeUnits") %]-->
+
+            </fieldset>
+        </div>
+        <div class="Footer">
+            <button class="Primary" id="submitRichText" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">[% Translate("Submit") | html %]</button>
+        </div>
+    </div>
+</form>
+[% RenderBlockEnd("Properties") %]
+
+#Layers
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.TicketAction.Init();
+//]]></script>
+[% END %]

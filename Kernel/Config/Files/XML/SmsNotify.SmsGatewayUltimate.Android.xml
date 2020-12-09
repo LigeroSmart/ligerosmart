@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="SmsNotify::Gateway###SmsGatewayUltimate-01" Required="0" Valid="1">
+        <Description Translatable="1">SMS Gateway Ultimate is an Android free application that turns your phone in a HTTP Sms gateway, using your phone plan to send SMS messages</Description>
+        <Navigation>SmsNotify::Gateways</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="protocol">http</Item>
+                <Item Key="user">yourusername</Item>
+                <Item Key="password">yourpassword</Item>
+                <Item Key="Host">yourphone_ip_or_host</Item>
+                <Item Key="Port">321321</Item>
+                <Item Key="Name">SMS Gateway Ultimate (Android App) (Unsupported by Complemento Subscription. Use at your own risk)</Item>
+                <Item Key="Module">Kernel::System::Ticket::Event::NotificationEvent::Transport::SmsNotifyGateways::SmsGatewayUltimate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

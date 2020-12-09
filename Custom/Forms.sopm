@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_package version="1.0">
+    <Name>Forms</Name>
+    <Version>6.0.21</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Create forms per service using Dynamic Fields</Description>
+    <Description Lang="pt_BR">Crie formulários usando Campos Dinâmicos para cada Serviço</Description>
+    <IntroInstall Type="post" Lang="en" Title="Attention!">Try on a test system before uploading an production server. Tested on OTRS 3.1, 3.2 and 5.0</IntroInstall>
+    <Filelist>
+	<File Permission="644" Location="Kernel/Config/Files/XML/Forms.xml"></File>        
+	<File Permission="644" Location="Kernel/Config/Files/XML/Service.Forms.xml"></File> 
+	<File Permission="644" Location="Kernel/Modules/DynamicFieldByService.pm"></File> 
+	<File Permission="644" Location="Kernel/Modules/ServiceForms.pm"></File> 
+	<File Permission="644" Location="Kernel/Language/pt_BR_Forms.pm"></File> 
+	<File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.DynamicFieldByService.js"></File>
+	<File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.DynamicFieldByService.js"></File>
+	<File Permission="644" Location="Kernel/Output/HTML/OutputFilterDynamicFieldByService.pm"></File>
+	<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/DynamicFieldByService.tt"></File>
+ 	<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ShowDynamicFieldByService.tt"></File>
+	<File Permission="644" Location="Custom/Forms.sopm"></File>
+	<File Permission="644" Location="Kernel/System/DynamicFieldByService.pm"></File>
+	<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminServiceFormsJS.tt"></File>
+	<File Permission="644" Location="Kernel/Output/HTML/ServicePreferences/ServiceForms.pm"></File>
+	<File Permission="644" Location="Kernel/System/Ticket/Event/HiddenDynamicFields.pm"></File> 
+     </Filelist>
+    <DatabaseInstall Type="post">
+	<TableCreate Name="dfs" Type="post">
+	   	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        <Column Name="name" 		Required="true" Size="100" Type="VARCHAR"></Column>
+     	<Column Name="comments" 	Required="true" Size="255" Type="VARCHAR"></Column>
+		<Column Name="valid_id"	 	Required="true" Type="INTEGER"></Column>
+     	<Column Name="content_type" Required="true" Size="255" Type="VARCHAR"></Column>
+     	<Column Name="create_time" 	Required="true" Type="DATE"></Column>
+        <Column Name="create_by" 	Required="true" Type="INTEGER"></Column>
+        <Column Name="change_time" 	Required="true" Type="DATE"></Column>
+        <Column Name="change_by" 	Required="true" Type="INTEGER"></Column>
+     	<Column Name="subject"   	Required="false" Size="255" Type="VARCHAR"></Column>
+     	<Column Name="body"			Required="false" Type="TEXT"> </Column>	
+   		<Column Name="type_id" 		Required="false" Size="3" Type="VARCHAR"></Column>
+     	<Column Name="workflow_id" 	Required="true" Type="INTEGER"></Column>
+     	<Column Name="frontend" 	Required="true" Size="255" Type="VARCHAR"></Column>
+	    <Column Name="config" 		Required="true" Size="255" Type="longblob"></Column>
+               <Unique>
+                     <UniqueColumn Name="name">      </UniqueColumn>
+                </Unique>
+                <ForeignKey ForeignTable="users">
+                	<Reference Foreign="id" Local="create_by">      </Reference>
+                        <Reference Foreign="id" Local="change_by">      </Reference>
+                </ForeignKey>
+        </TableCreate>
+
+    </DatabaseInstall>
+	<DatabaseReinstall Type="post">	
+		<TableCreate Name="dfs" Type="post">
+	   	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        <Column Name="name" 		Required="true" Size="100" Type="VARCHAR"></Column>
+     	<Column Name="comments" 	Required="true" Size="255" Type="VARCHAR"></Column>
+		<Column Name="valid_id"	 	Required="true" Type="INTEGER"></Column>
+     	<Column Name="content_type" Required="true" Size="255" Type="VARCHAR"></Column>
+     	<Column Name="create_time" 	Required="true" Type="DATE"></Column>
+        <Column Name="create_by" 	Required="true" Type="INTEGER"></Column>
+        <Column Name="change_time" 	Required="true" Type="DATE"></Column>
+        <Column Name="change_by" 	Required="true" Type="INTEGER"></Column>
+     	<Column Name="subject"   	Required="false" Size="255" Type="VARCHAR"></Column>
+     	<Column Name="body"			Required="false" Type="TEXT"> </Column>	
+   		<Column Name="type_id" 		Required="false" Size="3" Type="VARCHAR"></Column>
+     	<Column Name="workflow_id" 	Required="true" Type="INTEGER"></Column>
+     	<Column Name="frontend" 	Required="true" Size="255" Type="VARCHAR"></Column>
+	    <Column Name="config" 		Required="true" Size="255" Type="longblob"></Column>
+               <Unique>
+                     <UniqueColumn Name="name">      </UniqueColumn>
+                </Unique>
+                <ForeignKey ForeignTable="users">
+                	<Reference Foreign="id" Local="create_by">      </Reference>
+                        <Reference Foreign="id" Local="change_by">      </Reference>
+                </ForeignKey>
+        </TableCreate>
+	</DatabaseReinstall>
+ 	<DatabaseUpgrade Type="post">
+		<TableAlter Name="dfs" Type="post">
+			<ColumnChange NameOld="type_id" NameNew="type_id" Required="false" Size="3" Type="VARCHAR"></ColumnChange>
+        </TableAlter>
+    </DatabaseUpgrade>
+
+</otrs_package>

@@ -1,0 +1,48 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Allocation List, based on Tablelike lists
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection     Allocation List
+ */
+ul.AllocationList {
+    min-height: 25px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+ul.AllocationList li {
+    padding: 2px 5px;
+    cursor: move;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 60px;
+}
+
+ul.AllocationList li span.Functions {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    min-width: 40px;
+}
+
+ul.AllocationList li span.Functions a.Icon {
+    margin-left: 0px !important;
+}
+
+
+
+}/* end @media */

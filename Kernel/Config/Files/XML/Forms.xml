@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Frontend::Output::FilterElementPost###DynamicFieldByService" Required="0" Valid="1">
+        <Description Translatable="1">Loader the module in the currents interfaces.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::OutputFilterDynamicFieldByService</Item>
+<!--                <Item Key="Debug">0</Item>-->
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketPhone">1</Item>
+			<Item Key="AgentTicketEmail">1</Item>
+			<Item Key="CustomerTicketMessage">1</Item> 
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="AgentDynamicFieldByService::NameBeforeField" Required="1" Valid="1">
+        <Description Translatable="1">Name of the field that action will occurs before  .</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+		<Item ValueType="String">fieldset div:last</Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerDynamicFieldByService::NameBeforeField" Required="1" Valid="1">
+        <Description Translatable="1">In this field  is possible define where new field will be show .</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+		<Item ValueType="String">.RichTextHolder</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###DynamicFieldByService" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title">Forms</Item>
+                    <Item Key="NavBarName">Admin</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::DynamicFieldByService###002-DynamicFieldByService" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.Agent.Admin.ProcessManagement.css</Item>
+                        <Item>Core.AllocationList.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.Admin.DynamicFieldByService.js</Item>
+                        <Item>Core.UI.AllocationList.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###DynamicFieldByService###002-DynamicFieldByService" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::NavigationModule###DynamicFieldByService" Required="0" Valid="1">
+        <Description Translatable="1">Admin area navigation for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::AdminOverview</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Group">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="GroupRo">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
+                <Item Key="Name" Translatable="1">Forms</Item>
+                <Item Key="Block">Ticket</Item>
+                <Item Key="Description" Translatable="1">Create your Forms and manage them in this interface.</Item>
+                <Item Key="IconBig">fa-tasks</Item>
+                <Item Key="IconSmall"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="CustomerFrontend::Module###DynamicFieldByService" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title">Article Template</Item>
+                    <Item Key="NavBarName">Admin</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###DynamicFieldByService###002-DynamicFieldByService" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::NavigationModule###DynamicFieldByService" Required="0" Valid="1">
+        <Description Translatable="1">Admin area navigation for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::AdminOverview</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Group">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="GroupRo">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
+                <Item Key="Name" Translatable="1">Customer Article Template</Item>
+                <Item Key="Block">Ticket</Item>
+                <Item Key="Description" Translatable="1">Create and manage Forms.</Item>
+                <Item Key="IconBig"></Item>
+                <Item Key="IconSmall"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketEmail###010-Forms" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.DynamicFieldByService.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>	
+    <Setting Name="Loader::Module::AgentTicketPhone###010-Forms" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.DynamicFieldByService.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>	
+    <Setting Name="Loader::Module::CustomerTicketMessage###010-Forms" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.DynamicFieldByService.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###HiddenDynamicFields" Required="0" Valid="1">
+        <Description Translatable="1">Event module registration.</Description>
+        <Navigation>Core::Forms</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::HiddenDynamicFields</Item>
+                <Item Key="Transaction">1</Item>
+                <Item Key="Event">TicketCreate|TicketServiceUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>	
+</otrs_config>

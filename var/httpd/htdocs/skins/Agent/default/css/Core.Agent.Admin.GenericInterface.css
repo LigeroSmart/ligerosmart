@@ -1,0 +1,147 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Application
+ * @subsection  GenericInterface
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsubsection     AdminGenericInterfaceDebugger
+ */
+
+#DeleteDialog {
+    min-width: 420px;
+}
+
+/**
+ * @note    Highlight error entries
+ */
+
+.AdminGenericInterfaceDebugger .DebugLevel_error {
+    color: #ff505e;
+}
+
+/**
+ * @subsubsection     AdminGenericInterfaceWebservice
+ */
+
+span.WarningDialog {
+    display: block;
+    width: 22px;
+    height: 35px;
+    float: left;
+}
+
+.GenericInterfaceSpacing {
+    margin-left: 13px;
+}
+
+ /**
+ * @subsubsection     AdminGenericInterfaceMapping
+ */
+.KeyTemplateHeader input{
+    margin-left: 13px;
+    margin-right: 13px;
+}
+
+.ValueTemplateRow input{
+    margin-left: 13px;
+    margin-right: 13px;
+}
+
+.ValueDefault{
+    margin-left: 13px;
+    margin-right: 13px;
+}
+
+/**
+ * @subsubsection     General
+ */
+
+.GenericInterfaceDialog {
+
+/**
+ * under certain circumstances "min-width" does not work on opera 11
+ * as a workaround "width" is used, this workaround also works on IE7
+ */
+    width: 420px;
+}
+
+.ListContainer {
+    max-height: 120px;
+    overflow-y: auto !important;
+}
+
+.ConfigCode {
+    padding: 10px;
+}
+
+.SpacingTopMini {
+    margin-top: 5px;
+}
+
+/**
+ * @subsubsection     Invoker Event conditions
+ */
+
+.Fields {
+    margin-top: 15px;
+}
+
+#EventForm .WidgetSimple .WidgetSimple {
+    margin-top: 10px;
+}
+
+#EventForm .WidgetSimple .WidgetSimple + .WidgetSimple {
+    margin-top: -5px;
+}
+
+#EventForm .WidgetSimple .WidgetSimple .WidgetSimple {
+    margin-bottom: 0px;
+}
+
+#EventForm #PresentConditionsContainer > label,
+#EventForm #PresentConditionsContainer p {
+    width: auto;
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 10px;
+}
+
+#EventForm #ConditionAdd {
+    margin-left: 10px;
+    margin-top: -5px;
+}
+
+#EventForm .Condition > fieldset > label {
+    width: auto;
+    display: inline-block;
+    margin: 0px 5px 0px 10px;
+}
+
+#EventForm fieldset + fieldset {
+    margin-top: 7px;
+}
+
+#EventForm .FieldWidget label {
+    margin: 0px 3px 0px 5px;
+}
+
+#EventForm #ConfigParams input {
+    width: 40%;
+}
+
+#EventForm #ConfigParams input + label {
+    margin-left: 5px;
+}
+
+}/* end @media */

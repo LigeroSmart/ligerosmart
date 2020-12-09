@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="ServicePreferences###Z4002-TicketQueue" Required="0" Valid="1">
+        <Description Translatable="1">Queue</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Queue</Item>
+                <Item Key="Label" Translatable="1">Queue</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">TicketQueue</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z4003-TicketQueueExpression" Required="0" Valid="1">
+        <Description Translatable="1">Expression</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Expression</Item>
+                <Item Key="Desc" Translatable="1">Ex: Sites::&lt;OTRS_TICKET_DynamicField_Site&gt;</Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="PrefKey">TicketQueueExpression</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###ServiceTicketQueue" Required="0" Valid="1">
+        <Description Translatable="1">Event module registration.</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::ServiceTicketQueue</Item>
+                <Item Key="Transaction">1</Item>
+                <Item Key="Event">TicketCreate|TicketServiceUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

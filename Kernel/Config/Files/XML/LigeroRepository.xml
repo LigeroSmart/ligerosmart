@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="LigeroSubscription" Required="0" Valid="0">
+        <Description Translatable="1">Define private addon repos.</Description>
+        <Navigation>Ligero::Subscription</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="API-CUSTOMER">LIGERO XYZ</Item>
+                <Item Key="API-KEY">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <!--Setting Name="LigeroSubscriptionAffiliate" Required="0" Valid="0">
+        <Description Translatable="1">Type your Affiliate Code of Ligero's Affiliate Program and start making extra money! Check more on http://ligero.online/affiliate</Description>
+        <Navigation>Enterprise::Subscription::AffiliateProgram</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting-->
+    <Setting Name="Frontend::Output::FilterElementPost###LigeroRepository" Required="1" Valid="1">
+        <Description Translatable="1">This configuration registers a Output post-filter to extend package verification.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::LigeroRepository</Item>
+                <Item Key="Templates">
+                    <Hash>
+						<Item Key="AdminNavigationBar">1</Item>
+						<Item Key="AdminPackageManager">1</Item>
+                        <Item Key="Admin">1</Item>
+                        <Item Key="Error">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreApplicationModule###AdminLigeroRepository" Required="0" Valid="1" ConfigLevel="300">
+        <Description Translatable="1">Defines Ligero Repository as default repository for admin.</Description>
+        <Navigation>Frontend::Agent</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::AdminLigeroRepository</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AdminLigeroSubscription" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">This module is part of the admin area of OTRS.</Item>
+                    <Item Key="Title" Translatable="1">Ligero Subscription</Item>
+                    <Item Key="NavBarName">Admin</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminLigeroSubscription###002-Ligero" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AdminLigeroSubscription###002-Ligero" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::NavigationModule###AdminLigeroSubscription" Required="0" Valid="1">
+        <Description Translatable="1">Admin area navigation for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::AdminOverview</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Group">
+                    <Array>
+                        <Item>admin</Item>
+                    </Array>
+                </Item>
+                <Item Key="GroupRo">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
+                <Item Key="Name" Translatable="1">Ligero Subscription</Item>
+                <Item Key="Block">System</Item>
+                <Item Key="Description" Translatable="1">Set Up your Ligero Subscription User and API Key.</Item>
+                <Item Key="IconBig"></Item>
+                <Item Key="IconSmall"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+</otrs_config>

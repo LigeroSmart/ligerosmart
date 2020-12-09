@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>ServiceDynamicField</Name>
+    <Version>6.0.1</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog Date="2017-09-19 15:13:00" Version="5.0.0">First Release</ChangeLog>
+    <Description Lang="en">Allows you to create Dynamic Fields for Service</Description>
+    <Description Lang="pt_BR">Permite a criação de campos dinâmicos para Serviços.</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="Custom/ServiceDynamicField.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/ServiceDynamicField.xml" Permission="644"></File>
+        <File Location="Kernel/System/DynamicField/ObjectType/Service.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/ServicePreferences/DynamicField.pm" Permission="644"></File>
+    </Filelist>
+</otrs_package>

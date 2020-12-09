@@ -1,0 +1,49 @@
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+function editArticle(){
+
+	var ticketID = [% Data.TicketID %];
+
+	$('a[name^="Article"]').each(function(){
+		var article=$(this);
+		var articleID=$(this).attr('name');
+		articleID=articleID.replace('Article','');
+		if( article.next().children("div.ItemActions").children("ul.Actions") > 0) {
+			article.next().children("div.ItemActions").children("ul.Actions").each(function(){
+			
+				var editText='<li class="EditArticle" ><a href="/otrs/index.pl?Action=AgentTicketArticleEdit;TicketID='+ticketID+';ArticleID='+articleID+'" class="AsPopup PopupType_TicketAction controlEditButton" title="Editar">Editar</a></li>'
+				var  html = editText;
+				if(!$(this).find("li:first").hasClass("EditArticle")){
+
+			
+					$(this).find("li:first").before(html);
+				}
+
+			});
+		}else{
+
+			article.next().find("div.ItemActions").children("ul.Actions").each(function(){
+			
+				var editText='<li class="EditArticle" ><a href="/otrs/index.pl?Action=AgentTicketArticleEdit;TicketID='+ticketID+';ArticleID='+articleID+'" class="AsPopup PopupType_TicketAction controlEditButton" title="Editar">Editar</a></li>'
+				var  html = editText;
+				if(!$(this).find("li:first").hasClass("EditArticle")){
+
+			
+					$(this).find("li:first").before(html);
+				}
+
+			});
+
+		}
+	});
+	
+}
+$("[id^=Row]").click(function(){
+	setTimeout(function(){
+		editArticle();
+	},2000);
+});
+editArticle();
+
+//]]></script>
+[% END %]

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>DynamicFieldTextMask</Name>
+    <Version>6.0.4</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>https://complemento.net.br</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Dynamic Field with masking input options</Description>
+    <Filelist>
+		<File Permission="644" Location="Custom/DynamicFieldTextMask.sopm"></File>
+		<File Permission="644" Location="Kernel/Config/Files/XML/DynamicFieldTextMask.xml"></File>
+		<File Permission="644" Location="Kernel/Modules/AdminDynamicFieldTextMask.pm"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldTextMask.tt"></File>
+		<File Permission="644" Location="Kernel/System/DynamicField/Driver/TextMask.pm"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-mask/inputmask.binding.min.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-mask/jquery.inputmask.bundle.min.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-mask/phone-codes/phone-be.min.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-mask/phone-codes/phone-nl.min.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-mask/phone-codes/phone-ru.min.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-mask/phone-codes/phone-uk.min.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-mask/phone-codes/phone.min.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/Complemento.InputMaskDelayed.js"></File>
+    </Filelist>
+</otrs_package>
+
+

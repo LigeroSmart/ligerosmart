@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_package version="1.1">
+    <Name>OLA</Name>
+    <Version>6.0.8</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">This AddOn allows you to control the Operational Level Agreement among your Queues and Process Activities</Description>
+    <Framework>6.0.x</Framework>
+    <IntroInstall Type="post" Lang="en" Title="Welcome!">This AddOn allows you to control the Operational Level Agreement among your Queues and Process Activities</IntroInstall>
+	<CodeInstall Type="post">
+    	my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+    </CodeInstall>
+	<CodeUpgrade Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+    </CodeUpgrade>
+	<CodeUninstall Type="pre">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUninstall();
+    </CodeUninstall>
+    <Filelist>
+		<File Location="bin/otrs.RebuildOLAEscalationIndex.pl" Permission="644"></File>
+		<File Location="Custom/OLA.sopm" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/Complemento.OLA.xml" Permission="644"></File>
+		<File Location="Kernel/Language/pt_BR_OLA.pm" Permission="644"></File>
+		<File Location="Kernel/Output/HTML/Complemento/OLA.pm" Permission="644"></File>
+		<File Location="Kernel/Output/HTML/Complemento/OLAAgentTicketZoom.pm" Permission="644"></File>
+		<File Location="Kernel/Output/HTML/Templates/Standard/OutputFilter.Complemento.OLA.tt" Permission="644"></File>
+		<File Location="Kernel/Output/HTML/Templates/Standard/OutputFilter.Complemento.OLAAgentTicketZoom.tt" Permission="644"></File>
+		<File Location="Kernel/System/OLA.pm" Permission="644"></File>
+		<File Location="Kernel/System/Console/Command/Maint/Ticket/OLACheck.pm" Permission="644"></File>
+		<File Location="Kernel/System/DynamicField/Driver/OlaDiff.pm" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/OLA.pm" Permission="644"></File>
+		<File Location="var/cron/ola.dist" Permission="644"></File>
+		<File Location="var/httpd/htdocs/js/Complemento.OLA.js" Permission="644"></File>
+		<File Location="var/httpd/htdocs/skins/Agent/default/css/Complemento.OLA.css" Permission="644"></File>
+		<File Location="var/httpd/htdocs/skins/Agent/default/css/Complemento.OLAZoom.css" Permission="644"></File>
+		<File Location="var/packagesetup/OLA.pm" Permission="644"></File>
+    </Filelist>
+    <DatabaseInstall>
+        <TableAlter Name="sla_preferences">
+            <ColumnChange NameNew="preferences_value" NameOld="preferences_value" Required="true" Size="8000" Type="VARCHAR" />
+        </TableAlter>
+    </DatabaseInstall>
+</otrs_package>

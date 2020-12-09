@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="SmsNotify::Gateway###ClickatellHTTP-01" Required="0" Valid="1">
+        <Description Translatable="1">Clickatell is a Gateway used to send SMS. Change SendInISO88591 to 1 if you use latin accetuated chars</Description>
+        <Navigation>SmsNotify::Gateways</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="user"></Item>
+                <Item Key="password"></Item>
+                <Item Key="api_id"></Item>
+                <Item Key="URL">http://api.clickatell.com/http/sendmsg</Item>
+                <Item Key="Name">Clickatell HTTP Api</Item>
+                <Item Key="Module">Kernel::System::Ticket::Event::NotificationEvent::Transport::SmsNotifyGateways::Clickatell</Item>
+                <Item Key="SendInISO88591">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+</otrs_config>

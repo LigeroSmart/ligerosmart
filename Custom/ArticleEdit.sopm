@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ArticleEdit</Name>
+    <Version>6.0.2</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Article Edit</Description>
+    <Filelist>
+        <File Permission="644" Location="Custom/ArticleEdit.sopm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/OutputFilterArticleEdit.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ShowArticleEditOption.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketArticleEdit.tt"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/AgentTicketArticleEdit.xml"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketArticleEdit.pm"></File>
+    </Filelist>
+</otrs_package>

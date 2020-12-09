@@ -1,0 +1,153 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+[% RenderBlockStart("Stats") %]
+<div class="LayoutPopup ARIARoleMain">
+    <div class="Header">
+        <h1>[% Translate("Stats Overview of") | html %] : [% Translate(Config("Survey::Hook")) | html %][% Data.SurveyNumber %] - [% Data.Title %] </h1>
+        <p>
+            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
+        </p>
+    </div>
+    <div class="Content">
+
+        <div class="Header">
+            <h2></h2>
+        </div>
+        <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+            <div class="Header">
+                <h2>[% Translate("Requests Table") | html %]</h2>
+            </div>
+        <form action="[% Env("CGIHandle") %]" method="post">
+            <input type="hidden" name="Action" value="[% Env("Action") %]" />
+            <input type="hidden" name="Subaction" value="StatsView" />
+            <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
+            <div class="Content">
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            [% IF Data.ShowDelete == 1 %]
+                            <th class="Checkbox Center">
+                                <input class="Checkbox" type="checkbox" id="SelectAllRequests" name="SelectAllRequests" title="[% Translate("Select all requests") | html %]" autocomplete="off" />
+                            </th>
+                            [% END %]
+                            <th>
+                                [% Translate("Details") | html %]
+                            </th>
+                            <th>
+                                [% Translate("Send Time") | html %]
+                            </th>
+                            <th>
+                                [% Translate("Vote Time") | html %]
+                            </th>
+                            <th>
+                                [% Translate("Ticket") | html %]
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("StatsVote") %]
+                        <tr>
+                            [% IF Data.ShowDelete == 1 %]
+                            <td class="Checkbox NonTextContent Center">
+                                <input class="Checkbox" type="checkbox" name="RequestDeleteIdentifier" title="[% Translate("Select this request") | html %]" value="[% Data.RequestID | html %]"  autocomplete="off" />
+                            </td>
+                            [% END %]
+                            <td class="Center">
+                                <a class="SeeDetails AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=StatsDetail;SurveyID=[% Data.SurveyID | uri %];RequestID=[% Data.RequestID | uri %];TicketNumber=[% Data.TicketNumber | uri %]">
+                                    <i class="fa fa-search-plus"></i>
+                                    <span>[% Translate("See Details") | html %]</span>
+                                </a>
+                            </td>
+                            <td>
+                                [% Data.SendTime | Localize("TimeLong") %]
+                            </td>
+                            <td>
+                                [% Data.VoteTime | Localize("TimeLong") %]
+                            </td>
+                            <td>
+                                <a class="LinkZoomView AsBlock" href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %]">
+                                    [% Data.TicketNumber | html %]
+                                </a>
+                            </td>
+                        </tr>
+[% RenderBlockEnd("StatsVote") %]
+                    </tbody>
+                </table>
+            [% IF Data.ShowDelete == 1 %]
+            <div class="SpacingTopSmall">
+                <button class="Primary CallForAction" type="submit" title="[% Translate("Delete stats") | html %]"><span>[% Translate("Delete stats") | html %]</span></button>
+            </div>
+            <input type="hidden" name="SubmitDelete" value="[% Translate("Delete") | html %]" />
+            [% END %]
+        </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="Footer">
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close this window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close this window") | html %]</span></button>
+    </div>
+</div>
+
+[% RenderBlockEnd("Stats") %]
+
+[% RenderBlockStart("StatsDetail") %]
+<div class="LayoutPopup ARIARoleMain">
+    <div class="Header">
+        <h1>[% Translate("Survey Stat Details") | html %] : [% Config("Ticket::Hook") %][% Config("Ticket::HookDivider") %][% Data.TicketNumber %] : [% Config("Survey::Hook") %][% Data.SurveyNumber %] - [% Data.Title %] :  </h1>
+        <p>
+            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
+            [% Translate("or") | html %]
+            <a class="HistoryBack" href="[% Env("Baselink") %]Action=[% Env("Action") %];SurveyID=[% Data.SurveyID | uri %]">[% Translate("go back to stats overview") | html %]</a>
+        </p>
+    </div>
+    <div class="Content">
+
+        <div class="Header">
+            <h2></h2>
+        </div>
+        <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+            <div class="Header">
+                <h2>[% Translate("Details") | html %]</h2>
+[% RenderBlockStart("NavArrows") %]
+                <div class="Navigation">
+                    <span [% IF !Data.Prev %]class="Disabled"[% END %][% IF !Data.Next %]style="margin-right: 17px;"[% END %] class="SurveyArrow SurveyArrowLeft" title="[% Translate("Previous vote") | html %]">
+                        <a href="[% Env("Baselink") %]Action=AgentSurveyStats;Subaction=StatsDetail;SurveyID=[% Data.SurveyID | uri %];RequestID=[% Data.Prev | uri %];TicketNumber=[% Data.PrevTicketNumber | uri %]"><i class="fa fa-caret-left"></i></a>
+                    </span>
+                    <span [% IF !Data.Next %]class="Disabled"[% END %] class="SurveyArrow SurveyArrowRight" title="[% Translate("Next vote") | html %]">
+                        <a href="[% Env("Baselink") %]Action=AgentSurveyStats;Subaction=StatsDetail;SurveyID=[% Data.SurveyID | uri %];RequestID=[% Data.Next | uri %];TicketNumber=[% Data.NextTicketNumber | uri %]"><i class="fa fa-caret-right"></i></a>
+                    </span>
+                </div>
+[% RenderBlockEnd("NavArrows") %]
+            </div>
+            <div class="Content">
+                <fieldset class="TableLike FixedLabel">
+[% RenderBlockStart("StatsDetailQuestion") %]
+                    <label class="[% Data.Class %]">[% Data.RequiredText | html %][% Data.Question | html %]:</label>
+[% RenderBlockStart("StatsDetailAnswer") %]
+                    <div class="Field [% Data.Class %]">
+                        [% Data.Answer %]
+                    </div>
+                    <div class="Clear"></div>
+[% RenderBlockEnd("StatsDetailAnswer") %]
+                    <div class="Clear"></div>
+[% RenderBlockEnd("StatsDetailQuestion") %]
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="Footer">
+        <form action="[% Env("CGIHandle") %]" method="post">
+            <input type="hidden" name="Action" value="[% Env("Action") %]" />
+            <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
+            <button type="submit" class="Primary CallForAction" value="[% Translate("Go back") | html %]"><span><i class="fa fa-caret-left"></i> [% Translate("Go back") | html %]</span></button>
+        </form>
+    </div>
+</div>
+[% RenderBlockEnd("StatsDetail") %]

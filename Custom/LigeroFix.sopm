@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroFix</Name>
+    <Version>6.0.7</Version>
+    <Framework>6.x.x</Framework>
+    <Vendor>LigeroSmart</Vendor>
+    <PackageRequired Version="6.x.x">JQuery-UI-Full</PackageRequired>
+    <URL>http://www.ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Ligero Smart Agent assistent for problem solving</Description>
+    <Filelist>
+        <File Permission="644" Location="Custom/LigeroFix.sopm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/LigeroFix.xml"></File>
+        <File Permission="644" Location="Kernel/Language/pt_BR_LigeroFix.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OutputFilterLigeroFix.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/OutputFilterLigeroFix.pm"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/LigeroFix.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/LigeroFix.css"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentLigeroFixCompanyCIs.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentLigeroFixRecentIncidents.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentLigeroFixSimilarSolved.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentLigeroFixSuggestedSolutions.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentLigeroFixUserCIs.pm"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentLigeroFixTickets.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ModalAgentLigeroFixSuggestedSolutions.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ModalAgentLigeroFixTickets.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ModalAgentLigeroFixUserCIs.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ModalAgentLigeroFixCompanyCIs.tt"></File>
+    </Filelist>
+</otrs_package>

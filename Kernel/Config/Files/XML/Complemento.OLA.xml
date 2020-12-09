@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+	<Setting Name="SLAPreferences###OLA_Queues" Required="1" Valid="1">
+        <Description Translatable="1">OLA definition for Queues</Description>
+        <Navigation>Core::SLA</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::SLAPreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">OLA for Queues</Item>
+                <Item Key="Desc" Translatable="1">OLA for Queues</Item>
+                <Item Key="Block">TextArea</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">OLA_Queues</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###Complemento.OLA" Required="0" Valid="1">
+        <Description Translatable="1">Output filter for OLA Module.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Complemento::OLA</Item>
+<!--                <Item Key="Debug">0</Item>-->
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AdminSLA">1</Item>
+			
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminSLA###003-OLA" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Complemento.OLA.js</Item>
+                    </Array>
+                </Item>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Complemento.OLA.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketZoom###003-OLA" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Complemento.OLAZoom.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###Complemento.OLA.AgentTicketZoom" Required="0" Valid="1">
+        <Description Translatable="1">Output filter for OLA Module on AgentTicketZoom.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Complemento::OLAAgentTicketZoom</Item>
+<!--                <Item Key="Debug">0</Item>-->
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketZoom">1</Item>
+			
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###992-OLA" Required="1" Valid="1">
+        <Description Translatable="1">Updates the ticket OLA Information.</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::OLA</Item>
+                <Item Key="Event">TicketSLAUpdate|TicketQueueUpdate|TicketStateUpdate|TicketCreate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DynamicFields::Driver###OlaDiff" Required="0" Valid="1">
+        <Description Translatable="1">DynamicField backend registration.</Description>
+        <Navigation>Core::DynamicFields::DriverRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="DisplayName" Translatable="1">Ola Diff</Item>
+                <Item Key="Module">Kernel::System::DynamicField::Driver::OlaDiff</Item>
+                <Item Key="ConfigDialog">AdminDynamicFieldText</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Daemon::SchedulerCronTaskManager::Task###OLACheck" Required="0" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Checks OLA for opened ticket.</Description>
+        <Navigation>Daemon::SchedulerCronTaskManager::Task</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="TaskName">OLACheck</Item>
+                <Item Key="Schedule">*/15 * * * *</Item> <!-- default: every minute -->
+                <Item Key="Module">Kernel::System::Console::Command::Maint::Ticket::OLACheck</Item>
+                <Item Key="Function">Execute</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+                <Item Key="Params">
+                    <Array>
+                        <Item>--children</Item>
+                        <Item>4</Item>
+                        <Item>--open-tickets-only</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

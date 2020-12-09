@@ -1,0 +1,37 @@
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+	$(function() {
+		$("#ArticleTable tbody tr td.No .ArticleID").each(function(){
+			var ArticleID = $(this).val();
+			var RowAdd =  $(this);
+			var Data = {
+			Action: 'CustomFields',
+			Subaction: 'CustomFieldsAjax',
+			ArticleID:	ArticleID
+		};
+		Data[Core.Config.Get('SessionName')] = Core.Config.Get('SessionID');
+        Data[Core.Config.Get('CustomerPanelSessionName')] = Core.Config.Get('SessionID');
+
+		$.ajax({
+			type: 'Post',
+			url: Core.Config.Get('CGIHandle'),
+			dataType: 'html',
+			data: Data,
+			success:function(Response){
+					RowAdd.parent().parent().append(Response);
+		 $("#ArticleTable").trigger('updateAll');
+					Core.UI.Table.Sort.Init($('#ArticleTable'));
+			}
+		});	
+		});
+	});	
+
+//]]></script>
+[% END %]
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+//	Core.UI.Table.Sort.Init($('#ArticleTable'));
+//]]></script>
+[% END %]
+

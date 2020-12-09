@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>DynamicSurvey</Name>
+    <Version>6.0.1</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Complemento [Enterprise]</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Receive notifications when the customer is not happy with your team. Make easy dashboards and reports with all Survey replies. Search for tickets by survey answers.</Description>
+    <Filelist>
+        <File Permission="644" Location="Custom/DynamicSurvey.sopm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/LigeroSurveyVotesToDynamicFields.xml"></File>
+        <File Permission="644" Location="Custom/Kernel/Modules/PublicSurvey.pm"></File>
+        <File Permission="644" Location="Custom/Kernel/System/Survey/Request.pm"></File>
+    </Filelist>
+</otrs_package>

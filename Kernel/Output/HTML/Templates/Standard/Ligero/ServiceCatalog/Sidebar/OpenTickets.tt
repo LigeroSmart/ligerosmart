@@ -1,0 +1,14 @@
+<div class="WidgetOpenTickets">
+
+<div class="WidgetTitle">[% Translate("Open Tickets") %]</div>
+
+<ul class="OpenTickets">
+[% RenderBlockStart("OpenTicket") %]
+<li>
+	<a href="[% Env("Baselink") %]Action=CustomerTicketZoom;TicketNumber=[% Data.TicketNumber %]">[% Data.Title %]</a><br>
+	<span class="ChangedTime">[% Translate("Last Change") %] [% Data.Changed | Localize("TimeShort") %]</span>
+</li>
+[% RenderBlockEnd("OpenTicket") %]
+</ul>
+
+</div>

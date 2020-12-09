@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>UpdateParentProcessValidation</Name>
+    <Version>6.0.2</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <Description Lang="en">Add article to parent ticket when closing a child. Add also transition validation module to Process Management</Description>
+    <Filelist>
+        <File Permission="644" Location="Custom/UpdateParentProcessValidation.sopm"/>
+        <File Permission="644" Location="Kernel/Config/Files/XML/UpdateParentProcessValidation.xml"/>
+        <File Permission="644" Location="Kernel/Language/pt_BR_UpdateParentProcessValidation.pm"/>
+        <File Permission="644" Location="Kernel/System/ProcessManagement/TransitionValidation/CheckIfAllChildrenAreClosed.pm"/>
+        <File Permission="644" Location="Kernel/System/Ticket/Event/InformClosedChildToParent.pm"/>
+    </Filelist>
+    <IntroInstall Type="post" Lang="en" Title="Thank you!">
+        Update Parent and Process Validation
+    </IntroInstall>
+</otrs_package>

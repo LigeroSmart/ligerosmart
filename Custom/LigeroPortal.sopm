@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroPortal</Name>
+    <Version>6.1.1</Version>
+    <Framework>6.0.x</Framework>
+    <PackageRequired Version="6.x.x">LigeroDfAttachment</PackageRequired>
+    <PackageRequired Version="6.x.x">ServiceDynamicField</PackageRequired>
+	<PackageRequired Version="6.x.x">MarkJS</PackageRequired>
+	<PackageRequired Version="6.x.x">LigeroSmart</PackageRequired>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Ligero Service Catalog</Description>
+    <Filelist>
+		<File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/FAQWasThisArticleHelpful.pm"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/VerifyOpenTickets.pm"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQWasThisArticleHelpful.tt"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerServiceCatalog.tt"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerServiceCatalogResult.tt"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/LigeroAdminService.tt"></File>
+		<File Permission="644" Location="Custom/LigeroPortal.sopm"></File>
+		<File Permission="644" Location="Kernel/Config/Files/XML/LigeroPortal.xml"></File>
+		<File Permission="644" Location="Kernel/System/Console/Command/Maint/Ligero/Elasticsearch/PortalFaqIndexRebuild.pm"></File>
+		<File Permission="644" Location="Kernel/System/Console/Command/Maint/Ligero/Elasticsearch/PortalServiceIndexRebuild.pm"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Ligero/LigeroServiceCatalogAdminService.pm"></File>
+		<File Permission="644" Location="Kernel/Language/pt_BR_LigeroPortal.pm"></File>
+		<File Permission="644" Location="var/packagesetup/LigeroPortal.pm"></File>
+		<File Permission="644" Location="Kernel/Modules/CustomerServiceCatalog.pm"></File>
+		<File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/spectrum/spectrum.css"></File>
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Customer.ServiceCatalog.css"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/Customer.ServiceCatalogSearch.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/thirdparty/spectrum/spectrum.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-BlackItalic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-BoldCondensedItalic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-BoldItalic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-CondensedItalic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Italic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Light.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Medium.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-ThinItalic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Black.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-BoldCondensed.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Bold.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Condensed.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-LightItalic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-MediumItalic.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Regular.ttf"></File> 
+		<File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/Roboto-Thin.ttf"></File> 
+		<File Permission="644" Location="Kernel/System/ServiceDF.pm"></File> 
+		<File Permission="644" Location="Kernel/Output/HTML/ServicePreferences/Process.pm"></File> 
+		<File Permission="644" Location="Kernel/System/Ticket/Event/ServiceProcess.pm"></File> 
+		<File Permission="644" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldMultiselect.tt"></File>
+		<File Permission="644" Location="Custom/Kernel/System/TemplateGenerator.pm"></File>
+		<File Location="Kernel/System/ProcessManagement/TransitionAction/CalculateDf.pm" Permission="644"></File>
+    </Filelist>
+	<CodeInstall Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+    </CodeInstall>
+	<CodeUpgrade Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+    </CodeUpgrade>
+
+</otrs_package>
+

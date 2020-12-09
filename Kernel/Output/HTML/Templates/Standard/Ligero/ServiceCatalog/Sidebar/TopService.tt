@@ -1,0 +1,71 @@
+<style>
+	.TopHitsService{
+		font-size:11pt !important;
+	}
+	.TopHitsService li span {
+		font-size:10pt !important;
+	}
+	ul.TopHitsService a:visited {
+	    color: #2873ad;
+	}
+	ul.TopHitsService a:hover {
+	    font-weight: bolder;
+	}
+	ul.TopHitsService a:link {
+	    color: #2873ad;
+	    font-size: 14pt;
+	}
+</style>
+<div class="WidgetTopService" style="display:none;padding-top:30px;border-top:1px solid #ccc">
+
+<div id="TopServicesWidget" style="display:none;" class="WidgetTitle">[% Translate("Top Services") %]</div>
+<ul class="TopHitsService">
+[% RenderBlockStart("Alert") %]
+[% RenderBlockEnd("Alert") %]
+</ul>
+
+</div>
+[% RenderBlockStart("JSAJAX") %] 
+<input type="hidden" value="[% Data.DisplayTopNumber %]" id="DisplayTopNumber">
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+	//AJAX para buscar 
+	var CategoryTitle = $('.CategoryTitle').not('.ServiceFooter .CategoryTitle').first().text();
+	var DisplayItems = $("#DisplayTopNumber").val();
+	var Data = {
+		Action: "CustomerTopService",
+		Subaction: "AjaxTopService",
+		CategoryTitle: CategoryTitle,
+   };
+   $.ajax({
+		type: "Post",
+		url: Core.Config.Get("CGIHanle"),
+		data: Data,
+		dataType: "json",
+		success: function(Response){
+			var Agg = Response.Servico;
+			if(Agg.length > 0)
+				$("#TopServicesWidget ,.WidgetTopService").show();
+
+			var CategoryName = $('.CategoryTitle').not('.ServiceFooter .CategoryTitle').first().text();
+			var re = new RegExp(".*"+RegExp.escape(CategoryName)+"::");
+			re.escape = function(text) {
+			    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+			}
+			if(DisplayItems > Agg.length)
+				DisplayItems =  Agg.length;	
+			for(var i =0; i<DisplayItems; i++){
+				var ServiceName = Agg[i].name;
+				if(CategoryName)
+					ServiceName = ServiceName.replace(re," ");
+		        $(".TopHitsService").append("<li> <a href='[% Env("Baselink") %]Action=CustomerTicketMessage;ServiceID="+Agg[i].id +"'>"+ ServiceName + "</a> </br><span class='BackgroundType'  style='background-color: "+Agg[i].backColor +"'> "+ Agg[i].LayoutTypeDescription +"</span> </li>");
+			} 
+		}
+	});
+	RegExp.escape = function(str) {
+	  return String(str).replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+	};
+//]]></script>
+
+[% END %]
+[% RenderBlockEnd("JSAJAX") %] 

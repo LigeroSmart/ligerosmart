@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="PreApplicationModule###ServiceForms" Required="1" Valid="1" ConfigLevel="300">
+        <Description Translatable="1">Defines a useful module to load specific user options or to display news.</Description>
+        <Navigation>Frontend::Agent</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::ServiceForms</Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerPanelPreApplicationModule###ServiceForms" Required="1" Valid="1">
+        <Description Translatable="1">This module and its PreRun() function will be executed, if defined, for every request. This module is useful to check some user options or to display news about new applications.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::ServiceForms</Item>
+        </Value>
+    </Setting>
+       <Setting Name="ServicePreferences###FormsAssociation" Required="1" Valid="1">
+        <Description Translatable="1">Parameters of the example service attribute Comment2.</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::ServiceForms</Item>
+                <Item Key="Label" Translatable="1">Custom Form for this Service</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">Forms</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+</otrs_config>

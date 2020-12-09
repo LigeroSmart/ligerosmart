@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Ticket::Frontend::Overview###Kanban" Required="0" Valid="0">
+        <Description Translatable="1">NOT IMPLEMENTED YET - Allows having a Kanban view of your tickets.</Description>
+        <Navigation>Frontend::Agent::TicketOverview</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketOverview::Kanban</Item>
+                <Item Key="Name" Translatable="1">Kanban</Item>
+                <Item Key="NameShort">K</Item>
+                <Item Key="ModulePriority">400</Item>
+                <Item Key="CustomerInfo">1</Item>
+                <Item Key="TicketActionsPerTicket">0</Item>
+                <Item Key="OverviewMenuModules">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard###UseGravatar" Required="1" Valid="1">
+        <Description Translatable="1">Show avatar from Gravatar web site.</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard###UseCustomerCompanyName" Required="1" Valid="1">
+        <Description Translatable="1">Translate CustomerID to Customer Company Name.</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###0" Required="1" Valid="1">
+        <Description Translatable="1">States on Kanboard.You can define a limit for warning with |</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###1" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###2" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###3" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###4" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###5" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###6" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###7" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###8" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###9" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###10" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###11" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###12" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###13" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###14" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###15" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###16" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###17" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###18" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###19" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###20" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfig###21" Required="0" Valid="0">
+        <Description Translatable="1">States on Kanboard.</Description>
+        <Navigation>Kanboard::QueuesConfig::Deprecated</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new</Item>
+                <Item Key="1">open|3</Item>
+                <Item Key="2">closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+   <Setting Name="Kanboard::TypesAlias" Required="0" Valid="1">
+        <Description Translatable="1">Alias for Types show in  Kanboard. Key =  Type name and  Value = Alias</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Incident">Inc</Item>
+                <Item Key="Problem">Prb</Item>
+                <Item Key="Unclassified">Ucl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+    <Setting Name="Frontend::ToolBarModule###1.1-Ticket::AgentTicketQueueKanban" Required="0" Valid="1">
+        <Description Translatable="1">Toolbar Item for a shortcut.</Description>
+        <Navigation>Frontend::Agent::ToolBar</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::Link</Item>
+                <Item Key="Name">Kanban view</Item>
+                <Item Key="Link">Action=AgentTicketQueueKanban</Item>
+                <Item Key="Action">AgentTicketQueueKanban</Item>
+                <Item Key="AccessKey">q</Item>
+                <Item Key="CssClass">QueueView</Item>
+                <Item Key="Icon">fa fa-random</Item>
+                <Item Key="Priority">1010011</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketQueueKanban" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Kanban View of Tickets</Item>
+                    <Item Key="Title">KanbanView</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketQueueKanban###002-Kanboard" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.AgentTicketQueue.css</Item>
+                        <Item>Core.AllocationList.css</Item>
+                        <Item>thirdparty/kanboard/app.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.UI.AllocationList.js</Item>
+                        <Item>Core.Agent.TableFilters.js</Item>
+                        <Item>thirdparty/kanboard/jquery-ui-1.10.4.custom.min.js</Item>
+                        <Item>thirdparty/kanboard/jquery.ui.touch-punch.min.js</Item>
+                        <Item>thirdparty/kanboard/chosen.jquery.min.js</Item>
+                        <Item>thirdparty/kanboard/app.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketQueueKanban###002-Kanboard" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Overview of Tickets in Kanban</Item>
+                        <Item Key="Name" Translatable="1">Kanban View</Item>
+                        <Item Key="Link">Action=AgentTicketQueueKanban</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Ticket</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">o</Item>
+                        <Item Key="Prio">1001</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard###RefreshPage" Required="1" Valid="1">
+        <Description Translatable="1">Enable Reload page.</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard###AdditionalClass" Required="1" Valid="1">
+        <Description Translatable="1">You can define Additional CSS Classes for Customization purposes. Ex: Custom01</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+        	<Item ValueType="String"></Item>
+		</Value>
+		
+    </Setting>
+    <Setting Name="Kanboard###RefreshPageMinutes" Required="1" Valid="1">
+        <Description Translatable="1">Define the minutes to refresh the page.</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+        	<Item ValueType="String" ValueRegex="^\d+$">1</Item>
+		</Value>
+		
+    </Setting>
+    <Setting Name="Kanboard###OwnerPrefix" Required="1" Valid="1">
+        <Description Translatable="1">Define prefix for Owner.</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+        	<Item ValueType="String">O</Item>
+		</Value>
+    </Setting>
+    <Setting Name="Kanboard###ResponsiblePrefix" Required="1" Valid="1">
+        <Description Translatable="1">Define prefix for Responsible.</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+        	<Item ValueType="String">R</Item>
+		</Value>
+    </Setting>
+    <Setting Name="Kanboard###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the KanbanView. Key is the Dynamic Field. In the Content field, you can set 1 for showing or 0 to not show</Description>
+        <Navigation>Kanboard::Settings</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ITSMDueDate">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A0Queue" Required="0" Valid="1">
+        <Description Translatable="1">Queue Filter.</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">Queues</Item>
+                <Item Key="TicketKey">Queue</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Queues</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###AxDynamicField1" Required="0" Valid="0">
+        <Description Translatable="1">Filter for list or combo dynamic fields. Split Default values with ; or ,</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">DynamicField_Field1</Item>
+                <Item Key="TicketKey">DynamicField_FieldNameX</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">My Own Field</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">DynamicField</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A3Escalation" Required="0" Valid="1">
+        <Description Translatable="1">Escalation Filter.</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Multiple">0</Item>
+                <Item Key="Label">Escalation</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">Escalation</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A4Owner" Required="0" Valid="1">
+        <Description Translatable="1">Owner Filter.</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Agent</Item>
+                <Item Key="FilterKey">OwnerIDs</Item>
+                <Item Key="TicketKey">OwnerID</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">Agent</Item>
+                <Item Key="Multiple">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A1Service" Required="0" Valid="1">
+        <Description Translatable="1">State Filter. Split Default values with ; or ,</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">Services</Item>
+                <Item Key="TicketKey">Service</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Service</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A9Company" Required="0" Valid="1">
+        <Description Translatable="1">State Filter. Split Default values with ; or ,</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">CustomerID</Item>
+                <Item Key="TicketKey">CustomerID</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Company</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A2Type" Required="0" Valid="1">
+        <Description Translatable="1">State Filter. Split Default values with ; or ,</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">Types</Item>
+                <Item Key="TicketKey">Type</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Type</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###ZDynamicFieldEstado" Required="0" Valid="0">
+        <Description Translatable="1">Filter for list or combo dynamic fields. Split Default values with ; or ,</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">DynamicField_estado</Item>
+                <Item Key="TicketKey">DynamicField_estado</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">UF</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">DynamicField</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###ZMasterSlave" Required="0" Valid="0">
+        <Description Translatable="1">Filter for list or combo dynamic fields. Split Default values with ; or ,</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">DynamicField_MasterSlave</Item>
+                <Item Key="TicketKey">DynamicField_MasterSlave</Item>
+                <Item Key="Multiple">0</Item>
+                <Item Key="Label">Master</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">DynamicField</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A5Responsible" Required="0" Valid="1">
+        <Description Translatable="1">Responsible Filter.</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Responsible</Item>
+                <Item Key="FilterKey">ResponsibleIDs</Item>
+                <Item Key="TicketKey">ResponsibleID</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">Responsible</Item>
+                <Item Key="Multiple">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketQueueKanbanFilters###A6Lock" Required="0" Valid="1">
+        <Description Translatable="1">Lock Filter.</Description>
+        <Navigation>Kanban::Frontend::Agent::Ticket::ViewQueueKanbanFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Lock</Item>
+                <Item Key="FilterKey">Locks</Item>
+                <Item Key="TicketKey">Lock</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">Lock</Item>
+                <Item Key="Multiple">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Kanboard::QueuesConfigStates" Required="0" Valid="1">
+        <Description Translatable="1">States on Kanboard by queue separeted by comma. The Key represents the queue id. You can define a limit for warning with |</Description>
+        <Navigation>Kanban::Kanboard::QueuesConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0">new,open|3,closed successful</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

@@ -1,0 +1,29 @@
+<div class="CompWidgetContainerZabbix" style="width:[% Data.Width %]%">
+    <div class="CompWidgetBorder">
+
+<div style="width:100%; padding:0px; text-align:center; font-size: 14px;color:#3E576F;
+margin-left:auto;margin-right:auto">[% Translate(Data.Title) | html %]
+[% RenderBlockStart("GraphTime") %]
+[% Data.GraphTime | Localize("TimeShort") %]
+[% RenderBlockEnd("GraphTime") %]
+</div>
+
+[% RenderBlockStart("GraphPNG") %]
+<div style="max-width:100%; padding:0px; 
+    margin-left:auto;margin-right:auto;color:#333">
+<img src="data:image/png;base64,[% Data.GraphPNG %]" width="100%" />
+</div>
+[% RenderBlockEnd("GraphPNG") %]
+
+
+[% RenderBlockStart("GraphPNGNotFound") %]
+<div style="width:90%; padding:10px; font-size: 18px; background-color:[% Data.Bgcolor %];height:20px;border-top:1px solid #C0C0C0;
+    margin-left:auto;margin-right:auto;color:#333">
+NOT FOUND
+</div>
+[% RenderBlockEnd("GraphPNGNotFound") %]
+
+    </div>
+</div>
+
+

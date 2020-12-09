@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ServiceTicketType</Name>
+    <Version>6.0.1</Version>
+    <Vendor>Ligero [Community]</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">
+    	Defines de Ticket Type based on the Service
+        Check the manual at the end of the AddOn's page at the Intro Install section.
+	</Description>
+    <IntroInstall Lang="en" Title="Installation Information" Type="post">
+    AddOn Manual:
+    &lt;br/&gt;
+    &lt;ul&gt;
+	    &lt;li&gt;
+			&lt;a target="_blank" href="https://docs.google.com/document/d/13_MX5pHS2RVYKldg3lUjX-44LKBKAdv6nsSnYd5VhhE"&gt;Portuguese&lt;/a&gt;
+	    &lt;/li&gt;
+    &lt;/ul&gt;
+    </IntroInstall>    
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="Custom/ServiceTicketType.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/ServiceTicketType.xml" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/ServicePreferences/Type.pm" Permission="644"></File>
+        <File Location="Kernel/System/Ticket/Event/ServiceTicketType.pm" Permission="644"></File>
+    </Filelist>
+</otrs_package>

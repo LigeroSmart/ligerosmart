@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+	<Setting Name="Ticket::EventModulePost###221-AccountedTime" Required="1" Valid="1">
+        <Description Translatable="1">Register Accounted Time for Complemento's Accounted Time Fields.</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::AccountedTime</Item>
+                <Item Key="Event">ArticleDynamicFieldUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+	<Setting Name="Ticket::EventModulePost###223-StoreAccountedTimeDF" Required="1" Valid="1">
+        <Description Translatable="1">Register Accounted Time for Complemento's Accounted Time Fields.</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::StoreAccountedTimeDF</Item>
+                <Item Key="Event">TicketAccountTime</Item>
+            </Hash>
+        </Value>
+    </Setting>
+<!--
+	<Setting Name="Frontend::CustomerUser::Item###2-AccountedTime" Required="0" Valid="1">
+        <Description Translatable="1">Exibe o tempo total utilizado no mês pelo cliente.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+		<Value>
+                <Hash>
+                    <Item Key="Module">Kernel::Output::HTML::ComplementoAccountedTime</Item>
+					<Item Key="CSSClass">AccountedTimeWdg</Item>
+					<Item Key="AccountedTime">1</Item>
+					<Item Key="AccountedTimeText">Tempo utilizado no mês</Item>
+					<Item Key="AccountedTimeOut">0</Item>
+					<Item Key="AccountedTimeOutText">Hora não-comercial</Item>
+					<Item Key="TimeIntervalOne_1">18</Item>
+					<Item Key="TimeIntervalOne_2">24</Item>
+					<Item Key="TimeIntervalTwo_1">0</Item>
+					<Item Key="TimeIntervalTwo_2">7</Item>
+                </Hash>
+		</Value>
+	</Setting>
+-->
+	<Setting Name="CustomerFrontend::Module###CustomerReports" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Reports</Item>
+                    <Item Key="Title" Translatable="1">Reports</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###CustomerReports###002-Complemento" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+ <Setting Name="CustomerFrontend::Module###CustomerReports" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Reports</Item>
+                    <Item Key="NavBarName">Reports</Item>
+                    <Item Key="Title">Reports</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###CustomerReports###002-Complemento" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Reports</Item>
+                        <Item Key="Name" Translatable="1">Reports</Item>
+                        <Item Key="Link">Action=CustomerReports;Subaction=MyTickets</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Reports</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">r</Item>
+                        <Item Key="Prio">500</Item>
+                    </Hash>
+                </Item>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Visao geral</Item>
+                        <Item Key="Name" Translatable="1">Visao geral</Item>
+                        <Item Key="Link">Action=CustomerReports;Subaction=MyTickets</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Reports</Item>
+                        <Item Key="Type">Submenu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">v</Item>
+                        <Item Key="Prio">520</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+     <Setting Name="Frontend::Module###CustomFields" Required="0" Valid="1">
+         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+         <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+         <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                     <Item Key="Description">CustomFields</Item>
+                     <Item Key="Title">CustomFields</Item>
+                     <Item Key="NavBarName">CustomFields</Item>
+                 </Hash>
+            </Item>
+        </Value>
+     </Setting>
+    <Setting Name="Frontend::Navigation###CustomFields###002-Complemento" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###CustomFields" Required="0" Valid="1">
+        <Description Translatable="1">Loader the module in the currents interfaces.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::OutputFilterCustomFields::OutputFilterCustomFields</Item>
+<!--                <Item Key="Debug">0</Item>-->
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketZoom">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::DynamicObjectRegistration###TicketCustomerIDSumTime" Required="0" Valid="1">
+        <Description Translatable="1">Lista chamados com filtro adicional para trazer apenas os reabertos.</Description>
+        <Navigation>Core::Stats</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::TicketCustomerIDSumTime</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###968-AccountedTime" Required="0" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Core.AccountedTime.Validate.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###969-AccountedTimeOneDay" Required="0" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Core.AccountedTime.ValidateOneDay.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldStartID" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the start of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::CompanyQuotaField" Required="0" Valid="1">
+        <Description Translatable="1">Customer Company Field used to store contract quota in hours.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="">CustomerCompanyComment</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldEndID" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the end of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">21</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldAccredit" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the Accredit hours of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldSolutionTimeDestinationDate" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which will recieve the value from SolutionTimeDestinationDate Accredit hours of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::GraphTitle" Required="0" Valid="1">
+        <Description Translatable="1">Set title for the graph in Customer Interface.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="">Horas utilizadas no mês</Item>
+			</Value>
+    </Setting>
+	    <Setting Name="Ticket::Complemento::AccountedTime::QtdeMonth" Required="0" Valid="1">
+        <Description Translatable="1">Set Month to show in the interface.</Description>
+        <Navigation>Configuration</Navigation>
+                        <Value>
+                                <Item ValueType="String" ValueRegex="^\d+$">11</Item>
+                        </Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::CustomerCountHours" Required="0" Valid="1">
+        <Description Translatable="1">Field used to defined Company hired hours. Ex: CustomerCompanyComment</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="">CustomerCompanyComment</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::UnderContractTicketTypes" Required="1" Valid="1">
+        <Description Translatable="1">Ticket Types which will discount time from customer quota.</Description>
+        <Navigation>Configuration</Navigation>
+        <Value>
+            <Array>
+                <Item>ServiceRequest</Item>
+                <Item>RfC</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursStart" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the start of the work hours.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursEnd" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the end of the work task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">21</Item>
+			</Value>
+    </Setting>
+</otrs_config>

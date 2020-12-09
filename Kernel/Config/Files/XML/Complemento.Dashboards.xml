@@ -1,0 +1,1030 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="DashboardBackend###0501-Complemento1" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###0502-Complemento2" Required="0" Valid="0">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+    <Setting Name="DashboardBackend###0503-Complemento3" Required="0" Valid="0">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+
+    <Setting Name="DashboardBackend###0504-Complemento4" Required="0" Valid="0">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+    <Setting Name="DashboardBackend###0505-Complemento5" Required="0" Valid="0">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+
+    <Setting Name="DashboardBackend###0506-Complemento6" Required="0" Valid="0">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+    <Setting Name="DashboardBackend###0507-Complemento7" Required="0" Valid="0">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+
+    <Setting Name="DashboardBackend###0508-Complemento8" Required="0" Valid="0">
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>GraphicalDashboards</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
+                <Item Key="Widgets">2</Item>
+                <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Mostram Graficos especiais</Item>
+                <Item Key="CacheTTLLocal">2</Item>
+                <Item Key="CacheTTLLocalAddRandom">0</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Widget 1">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 2">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 3">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Widget 4">
+                    <Hash>
+                        <Item Key="1-Title">Open Tickets</Item>
+                        <Item Key="2-WidgetType">Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie</Item>
+                        <Item Key="3-Filter"></Item>
+                        <Item Key="4-WidgetOptions"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###001-ComplementoOverview" Required="0" Valid="1">
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>OverviewBars</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
+                <Item Key="Title">Tickets Overview</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="ConfigKey">ComplementoDashboardsOverview1</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Overview of the current tickets in the system</Item>
+                <Item Key="CacheTTLLocal">1</Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###002-ComplementoOverview" Required="0" Valid="0">
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>OverviewBars</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
+                <Item Key="Title">Another Overview Bar</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="ConfigKey">ComplementoDashboardsOverview2</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Overview of the current tickets in the system</Item>
+                <Item Key="CacheTTLLocal">1</Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###003-ComplementoOverview" Required="0" Valid="0">
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>OverviewBars</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
+                <Item Key="Title">Another Overview Bar</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="ConfigKey">ComplementoDashboardsOverview3</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Overview of the current tickets in the system</Item>
+                <Item Key="CacheTTLLocal">1</Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###004-ComplementoOverview" Required="0" Valid="0">
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>OverviewBars</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
+                <Item Key="Title">Another Overview Bar</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="ConfigKey">ComplementoDashboardsOverview4</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Description">Overview of the current tickets in the system</Item>
+                <Item Key="CacheTTLLocal">1</Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ComplementoDashboardsOverview1###001-Expired" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-1</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme">resumeAlert</Item>
+                <Item Key="Label">Expired</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Escalated</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview1###002-Open" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-1</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Open</Item>
+                <Item Key="Filter">StateTypeIDs=2;StateTypeIDs=1</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview1###003-Pending" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-1</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Pending</Item>
+                <Item Key="Filter">StateTypeIDs=4;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview1###004-ExpiresToday" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-1</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Expires Today</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Today</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview1###005-Unlocked" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-1</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Unlocked</Item>
+                <Item Key="Filter">StateTypeIDs=1;StateTypeIDs=2;StateTypeIDs=4;StateTypeIDs=5;LockIDs=1;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+
+
+    <Setting Name="ComplementoDashboardsOverview2###001-Expired" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme">resumeAlert</Item>
+                <Item Key="Label">Expired</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Escalated</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview2###002-Open" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Open</Item>
+                <Item Key="Filter">StateTypeIDs=2;StateTypeIDs=1</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview2###003-Pending" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Pending</Item>
+                <Item Key="Filter">StateTypeIDs=4;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview2###004-ExpiresToday" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Expires Today</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Today</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview2###005-Unlocked" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Unlocked</Item>
+                <Item Key="Filter">StateTypeIDs=1;StateTypeIDs=2;StateTypeIDs=4;StateTypeIDs=5;LockIDs=1;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+
+    <Setting Name="ComplementoDashboardsOverview3###001-Expired" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-3</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme">resumeAlert</Item>
+                <Item Key="Label">Expired</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Escalated</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview3###002-Open" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-3</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Open</Item>
+                <Item Key="Filter">StateTypeIDs=2;StateTypeIDs=1</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview3###003-Pending" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-3</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Pending</Item>
+                <Item Key="Filter">StateTypeIDs=4;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview3###004-ExpiresToday" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-3</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Expires Today</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Today</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview3###005-Unlocked" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-3</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Unlocked</Item>
+                <Item Key="Filter">StateTypeIDs=1;StateTypeIDs=2;StateTypeIDs=4;StateTypeIDs=5;LockIDs=1;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview4###001-Expired" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-4</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme">resumeAlert</Item>
+                <Item Key="Label">Expired</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Escalated</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview4###002-Open" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-4</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Open</Item>
+                <Item Key="Filter">StateTypeIDs=2;StateTypeIDs=1</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview4###003-Pending" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-4</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Pending</Item>
+                <Item Key="Filter">StateTypeIDs=4;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview4###004-ExpiresToday" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-4</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Expires Today</Item>
+                <Item Key="Filter"></Item>
+                <Item Key="Filter_Expired">Today</Item>
+                <Item Key="URL">Action=AgentTicketEscalationView</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboardsOverview4###005-Unlocked" Required="0" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>OverviewBars::Itens::Bar-4
+        </Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Theme"></Item>
+                <Item Key="Label">Unlocked</Item>
+                <Item Key="Filter">StateTypeIDs=1;StateTypeIDs=2;StateTypeIDs=4;StateTypeIDs=5;LockIDs=1;</Item>
+                <Item Key="Filter_Expired"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonCSS###010-ComplementoDashboards" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Complemento.Dashboards.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterConfigDashboards" Required="0" Valid="1">
+        <Description Translatable="1">Dashboards helper scripts</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::OutputFilterConfigDashboards</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AdminSystemConfiguration">1</Item>
+                        <Item Key="AdminSystemConfigurationView">1</Item>
+			<Item Key="AdminSystemConfigurationGroup">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_Filter_Expired_Options" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="">None</Item>
+                <Item Key="Escalated">Escalated - Tickets already escalated</Item>
+                <Item Key="Today">Today - Tickets that will escalate today</Item>
+                <Item Key="Tomorrow">Tomorrow - Tickets that will escalate tomorrow</Item>
+                <Item Key="Next week">Next week - Tickets that will escalate next week</Item>
+                <Item Key="Solution Escalated">Solution Escalated - Tickets already escalated Solution Time</Item>
+                <Item Key="Solution Today">Solution Today - Tickets that will escalate today Solution Time</Item>
+                <Item Key="Solution Tomorrow">Solution Tomorrow - Tickets that will escalate tomorrow Solution Time</Item>
+                <Item Key="Solution Next week">Solution Next week - Tickets that will escalate next week Solution Time</Item>
+                <Item Key="Response Escalated">Response Escalated - Tickets already escalated Response Time</Item>
+                <Item Key="Response Today">Response Today - Tickets that will escalate today Response Time</Item>
+                <Item Key="Response Tomorrow">Response Tomorrow - Tickets that will escalate tomorrow Response Time</Item>
+                <Item Key="Response Next week">Response Next week - Tickets that will escalate next week Response Time</Item>
+                <Item Key="Update Escalated">Update Escalated - Tickets already escalated Update Time</Item>
+                <Item Key="Update Today">Update Today - Tickets that will escalate today Update Time</Item>
+                <Item Key="Update Tomorrow">Update Tomorrow - Tickets that will escalate tomorrow Update Time</Item>
+                <Item Key="Update Next week">Update Next week - Tickets that will escalate next week Update Time</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_Theme_Options" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="">None</Item>
+                <Item Key="resumeSmall">resumeSmall - Small font</Item>
+                <Item Key="resumeAlert">resumeAlert - A Class that changes the font color to red</Item>
+                <Item Key="resumeSmallAlert">resumeSmallAlert - A Class that changes the font color to red with small font</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_2-WidgetType_Options" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoCustomerAccountedTimeThisMonth">Accounted Time by CustomerID this Month</Item>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie">Queue Pie</Item>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoOpenByOwner">Open by Owner</Item>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoStackedColumnXY">Stacked Column - Free X and Y Axis</Item>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoMonthlyTickets">Monthly Tickets</Item>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoSLAByQueue">SLA by Queue</Item>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoTodayResponsibles">Today Ticket Responsibles</Item>
+                 <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoZabbixGraph">Zabbix Graph</Item>
+                <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoAgentHours">Hours set by each agent</Item>
+          <Item Key="Kernel::Output::HTML::Ligero::DashboardComplementoPieDrilldown">Pie Drilldown</Item>
+            </Hash>
+             </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonCSS###3337-tagEditor" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/jQuery-tagEditor/jquery.tag-editor.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###3337-tagEditor" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/jQuery-tagEditor/jquery.caret.min.js</Item>
+                <Item>thirdparty/jQuery-tagEditor/jquery.tag-editor.min.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###4444-CpDashboards" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/Complemento/Complemento.Dashboards.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoQueuePie" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Gradient Colors (Gradient=1)</Item>
+                <Item>Break Line on Queue Names (BreakLine=1)</Item>
+                <Item>Don't show parent queues name (CutQueueName=1)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoCustomerAccountedTimeThisMonth" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Months Back (MonthsBack=1)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoOpenByOwner" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Inverted order (reverse=1)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoMonthlyTickets" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Number of days to show (Days=X)</Item>
+                <Item>Subtitle (Subtitle=Bla bla bla change it)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoAgentHours" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Number of days to show (Days=X)</Item>
+                <Item>Subtitle (Subtitle=Bla bla bla change it)</Item>
+                <Item>AgentBlackList (AgentBlackList=1,2,3,4)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoSLAByQueue" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Define queue Goals using QueueID:Goal (QueuesGoal=1:80,2:90,X:Y)</Item>
+                <Item>Consider also tickets without defined SLA (AllTickets=1)</Item>
+                <Item>Escalation Key. Use SolutionDiffInMin or FirstResponseDiffInMin (EscalationKey=SolutionDiffInMin)</Item>
+                <Item>Standard Queue Goal (DefaultGoal=75)</Item>
+		<Item>Start Date (TicketCloseTimeNewerDate=2016-03-01) </Item>
+		<Item>End Date (TicketCloseTimeOlderDate=2017-03-01)   </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoTodayResponsibles" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Inverted order (reverse=1)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoStackedColumnXY" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Type as category (xAxis=Type)</Item>
+                <Item>Queue as category (xAxis=Queue)</Item>
+                <Item>Priority as category (xAxis=Priority)</Item>
+                <Item>Owner as category (xAxis=Owner)</Item>
+                <Item>Service as category (xAxis=Service)</Item>
+                <Item>SLA as category (xAxis=SLA)</Item>
+                <Item>CustomerID as category (xAxis=CustomerID)</Item>
+                <Item>CustomerUserID as category (xAxis=CustomerUserID)</Item>
+                <Item>State as category (xAxis=State)</Item>
+                <Item>Some DynamicField as category (xAxis=DynamicField_Field1)</Item>
+                <Item>Type as subdivision (yAxis=Type)</Item>
+                <Item>Queue as subdivision (yAxis=Queue)</Item>
+                <Item>Priority as subdivision (yAxis=Priority)</Item>
+                <Item>Owner as subdivision (yAxis=Owner)</Item>
+                <Item>Service as subdivision (yAxis=Service)</Item>
+                <Item>SLA as subdivision (yAxis=SLA)</Item>
+                <Item>CustomerID as subdivision (yAxis=CustomerID)</Item>
+                <Item>CustomerUserID as subdivision (yAxis=CustomerUserID)</Item>
+                <Item>State as subdivision (yAxis=State)</Item>
+                <Item>Some DynamicField as subdivision (yAxis=DynamicField_Field1)</Item>
+                <Item>Enable the usage of DynamicFields as y or x Axis, it can'reduce system performance (DynamicFields=1)</Item>
+                <Item>Limit xAxis (xLimit=10)</Item>
+                <Item>Show only last part of name cutting on :: (CutName=1)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoPieDrilldown" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Overview Dashboard config</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Gradient Pie (Gradient=1)</Item>
+                <Item>Type as category (xAxis=Type)</Item>
+                <Item>Queue as category (xAxis=Queue)</Item>
+                <Item>Priority as category (xAxis=Priority)</Item>
+                <Item>Owner as category (xAxis=Owner)</Item>
+                <Item>Service as category (xAxis=Service)</Item>
+                <Item>SLA as category (xAxis=SLA)</Item>
+                <Item>CustomerID as category (xAxis=CustomerID)</Item>
+                <Item>CustomerUserID as category (xAxis=CustomerUserID)</Item>
+                <Item>State as category (xAxis=State)</Item>
+                <Item>Some DynamicField as category (xAxis=DynamicField_Field1)</Item>
+                <Item>Drill down on Type(yAxis=Type)</Item>
+                <Item>Drill down on Queue(yAxis=Queue)</Item>
+                <Item>Drill down on Priority(yAxis=Priority)</Item>
+                <Item>Drill down on Owner(yAxis=Owner)</Item>
+                <Item>Drill down on Service(yAxis=Service)</Item>
+                <Item>Drill down on SLA(yAxis=SLA)</Item>
+                <Item>Drill down on CustomerID(yAxis=CustomerID)</Item>
+                <Item>Drill down on CustomerUserID(yAxis=CustomerUserID)</Item>
+                <Item>Drill down on State(yAxis=State)</Item>
+                <Item>Drill down on Some DynamicField(yAxis=DynamicField_Field1)</Item>
+                <Item>Enable the usage of DynamicFields as y or x Axis, it can'reduce system performance (DynamicFields=1)</Item>
+                <Item>Show Legends (Legend=1)</Item>
+                <Item>Translate Values (Translate=1)</Item>
+                <Item>Show Percentage (ShowPercentage=1)</Item>
+                <Item>Show only last part of name cutting on :: (CutName=1)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_WidgetOptions###Kernel::Output::HTML::Ligero::DashboardComplementoZabbixGraph" Required="1" Valid="1">
+        <Description Translatable="1">Complemento Zabbix Graph</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Zabbix Server URL (Url=http://zabbixhost/zabbix)</Item>
+                <Item>Zabbix Username (Name=myusername)</Item>
+                <Item>Zabbix Password (Password=xxxxxxxx)</Item>
+                <Item>GraphID (Graphid=xxxxxxxx)</Item>
+                <Item>Width (Width=xxxxxxxx)</Item>
+                <Item>Height (Height=xxxxxxxx)</Item>
+                <Item>Period in Seconds (Period=999)</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ComplementoDashboards_ExtraFilters" Required="1" Valid="1">
+        <Description Translatable="1">Ligero Dashboards Extra Filters</Description>
+        <Navigation>Z_DASHBOARDS_GENERAL_CONFIGS_DONT_CHANGE</Navigation>
+        <Value>
+            <Array>
+                <Item>Created within the last (TicketCreateTimeNewerMinutes=1440)</Item>
+                <Item>Created before the (TicketCreateTimeOlderMinutes=1440)</Item>
+                <Item>Dynamic Field X (DynamicField_FieldX_Equals=1440)</Item>
+                <Item>Tickets Closed in the Current Month (ClosedThisMonth)</Item>
+                <Item>Only show Tickets of the user which is seeing the dashboard (MyTickets=1)</Item>
+                <Item>Only show Tickets of user custom queues (MyQueues=1)</Item>
+            </Array>
+        </Value>
+    </Setting>
+   <Setting Name="Daemon::SchedulerCronTaskManager::Task###CreateZabbixDashBoardGraph" Required="0" Valid="1">
+        <Description Translatable="1">Delete expired cache from core modules.</Description>
+        <Navigation>Daemon::SchedulerCronTaskManager::Task</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="TaskName">ZabbixGraphCreate</Item>
+                <Item Key="Schedule">*/30 * * * *</Item>
+                <Item Key="Module">Kernel::System::Console::Command::Maint::Ligero::GenerateZabbixGraph</Item>
+                <Item Key="Function">Run</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+		<Item Key="Params">
+                    <Array>
+			      <Item>force-pid</Item>
+                        <Item>1</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+</otrs_config>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterLigeroFix" Required="0" Valid="1">
+        <Description Translatable="1">Show Ligero Fix Suggested Solutions.</Description>
+        <Navigation>Z_OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::OutputFilterLigeroFix</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketZoom">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+   <Setting Name="LigeroFix::ShowDiv" Required="0" Valid="1">
+        <Description Translatable="1">Enable or Disable the main wiki widget on AgentTicketZoom screen</Description>
+        <Navigation>Main::Widget</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroFix::Modules###001-SugestedSolutions" Required="0" Valid="1">
+        <Description Translatable="1">Suggested Solutions Ligero Fix Module. In the ContentTemplate you can use any HTML tag and any information from FAQ. To use a information from FAQ use tags as &lt;FAQ_*&gt; where * must be change for a FAQ field. Exmple: &lt;FAQ_Field2&gt;</Description>
+        <Navigation>LigeroFix::Modules</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Suggested Solutions</Item>
+                <Item Key="BackgroundFontAwesomeIcon">fa-wrench</Item>
+                <Item Key="BackgroundColor">#48b0f7</Item>
+                <Item Key="Module">AgentLigeroFixSuggestedSolutions</Item>
+                <Item Key="DescriptionField">Field6</Item>
+                <Item Key="ContentTemplate">&lt;h1&gt;Symptoms&lt;/h1&gt;&lt;br/&gt;&lt;FAQ_Field1&gt;&lt;br/&gt;&lt;h1&gt;Problem&lt;/h1&gt;&lt;br/&gt;&lt;FAQ_Field2&gt;&lt;br/&gt;&lt;h1&gt;Solution&lt;/h1&gt;&lt;br/&gt;&lt;FAQ_Field3&gt;</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentLigeroFixSuggestedSolutions" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">AgentLigeroFixSuggestedSolutions</Item>
+                    <Item Key="Title">AgentLigeroFixSuggestedSolutions</Item>
+                    <Item Key="NavBarName">AgentLigeroFixSuggestedSolutions</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroFix::Modules###011-UserCIs" Required="0" Valid="1">
+        <Description Translatable="1">User CIs Ligero Fix Module. In the DescriptionTemplate you can use any information from CI. To use a information from CI use tags as &lt;CI_*&gt; where * must be change for a CI field. Exmple: &lt;CI_Description&gt;</Description>
+        <Navigation>LigeroFix::Modules</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">User CIs</Item>
+                <Item Key="BackgroundFontAwesomeIcon">fa-user-md</Item>
+                <Item Key="BackgroundColor">#10cfbd</Item>
+                <Item Key="Module">AgentLigeroFixUserCIs</Item>
+                <Item Key="DescriptionTemplate">Description: &lt;CI_Description&gt; Customer: &lt;CI_Owner&gt;</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentLigeroFixUserCIs" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">AgentLigeroFixUserCIs</Item>
+                    <Item Key="Title">AgentLigeroFixUserCIs</Item>
+                    <Item Key="NavBarName">AgentLigeroFixUserCIs</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroFix::Modules###021-CompanyCIs" Required="0" Valid="1">
+        <Description Translatable="1">Company CIs Ligero Fix Module. In the DescriptionTemplate you can use any information from CI. To use a information from CI use tags as &lt;CI_*&gt; where * must be change for a CI field. Exmple: &lt;CI_Description&gt;</Description>
+        <Navigation>LigeroFix::Modules</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Customer CIs</Item>
+                <Item Key="BackgroundFontAwesomeIcon">fa-sitemap</Item>
+                <Item Key="BackgroundColor">#eeb660</Item>
+                <Item Key="Module">AgentLigeroFixCompanyCIs</Item>
+                <Item Key="DescriptionTemplate">Description: &lt;CI_Description&gt; Customer: &lt;CI_Owner&gt;</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentLigeroFixCompanyCIs" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">AgentLigeroFixCompanyCIs</Item>
+                    <Item Key="Title">AgentLigeroFixCompanyCIs</Item>
+                    <Item Key="NavBarName">AgentLigeroFixCompanyCIs</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroFix::Modules###031-Tickets" Required="0" Valid="1">
+        <Description Translatable="1">Tickets Ligero Fix Module. In the DescriptionTemplate you can use any information from Ticket. To use a information from Ticket use tags as &lt;OTRS_Ticket_*&gt; where * must be change for a Ticket field. Exmple: &lt;OTRS_Ticket_Title&gt;</Description>
+        <Navigation>LigeroFix::Modules</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Problems</Item>
+                <Item Key="BackgroundFontAwesomeIcon">fa-exclamation</Item>
+                <Item Key="BackgroundColor">#f55753</Item>
+                <Item Key="Module">AgentLigeroFixTickets</Item>
+                <Item Key="Filters">Types=Problem;ServiceIDs=&lt;OTRS_Ticket_ServiceID&gt;;OrderBy=Down;SortBy=Age</Item>
+                <Item Key="TitleField">TicketNumber</Item>
+                <Item Key="DescriptionTemplate">&lt;OTRS_Ticket_Title&gt; - Age: &lt;OTRS_Ticket_Age&gt;</Item>
+                <Item Key="ContentTemplate">&lt;OTRS_Ticket_Title&gt; - Age: &lt;OTRS_Ticket_Age&gt;</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentLigeroFixTickets" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">AgentLigeroFixTickets</Item>
+                    <Item Key="Title">AgentLigeroFixTickets</Item>
+                    <Item Key="NavBarName">AgentLigeroFixTickets</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroFix::Modules###041-RecentIncidents" Required="0" Valid="0">
+        <Description Translatable="1">Recent Incidents Ligero Fix Module</Description>
+        <Navigation>LigeroFix::Modules</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Recent Incidents</Item>
+                <Item Key="BackgroundFontAwesomeIcon">fa-exclamation</Item>
+                <Item Key="BackgroundColor">#f55753</Item>
+                <Item Key="Module">AgentLigeroFixRecentIncidents</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentLigeroFixRecentIncidents" Required="0" Valid="0">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">AgentLigeroFixRecentIncidents</Item>
+                    <Item Key="Title">AgentLigeroFixRecentIncidents</Item>
+                    <Item Key="NavBarName">AgentLigeroFixRecentIncidents</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroFix::Modules###051-SimilarSolved" Required="0" Valid="0">
+        <Description Translatable="1">Similar Solved Ligero Fix Module</Description>
+        <Navigation>LigeroFix::Modules</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Similar Solved</Item>
+                <Item Key="BackgroundFontAwesomeIcon">fa-check</Item>
+                <Item Key="BackgroundColor">#0ebaaa</Item>
+                <Item Key="Module">AgentLigeroFixSimilarSolved</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentLigeroFixSimilarSolved" Required="0" Valid="0">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">AgentLigeroFixSimilarSolved</Item>
+                    <Item Key="Title">AgentLigeroFixSimilarSolved</Item>
+                    <Item Key="NavBarName">AgentLigeroFixSimilarSolved</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonCSS###334-LigeroFix" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>LigeroFix.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###334-LigeroFix" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>LigeroFix.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+ </otrs_config>
