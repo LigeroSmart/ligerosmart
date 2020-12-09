@@ -75,12 +75,6 @@ sub Run {
 
     my $Quantity =  keys %LinkKeyList;
 
-    #use Data::Dumper;
-    #$Kernel::OM->Get('Kernel::System::Log')->Log(
-    #    Priority => 'error',
-    #    Message  => " CHEGOU AQUI ".Dumper($size),
-    #);
-
     my $CounterJson = $LayoutObject->JSONEncode(
         Data => {
           Quantity => $Quantity
