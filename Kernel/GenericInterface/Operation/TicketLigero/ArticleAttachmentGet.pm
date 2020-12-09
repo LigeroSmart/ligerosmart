@@ -75,7 +75,7 @@ sub Run {
         ErrorMessage => "GeneralCatalogGetValues: Authorization failing!",
     ) if !$UserID;
 
-    for my $Needed (qw( ArticleID FileID )) {
+    for my $Needed (qw( TicketID ArticleID FileID )) {
         if ( !$Param{Data}->{$Needed} ) {
 
             return $Self->ReturnError(
@@ -85,7 +85,10 @@ sub Run {
         }
     }
 
-    my %Attachment = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleAttachment(
+    my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+    my $ArticleBackendObject = $ArticleObject->BackendForArticle( TicketID => $Param{Data}->{TicketID}, ArticleID => $Param{Data}->{ArticleID} );
+
+    my %Attachment = $ArticleBackendObject->ArticleAttachment(
         ArticleID => $Param{Data}->{ArticleID},
         FileID    => $Param{Data}->{FileID},                 # as returned by ArticleAttachmentIndex
         UserID    => $UserID,

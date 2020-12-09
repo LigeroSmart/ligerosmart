@@ -211,4 +211,11 @@
             </Hash>
         </Value>
     </Setting>	
+    <Setting Name="Ligero::Forms::ClearFormIfEmptyConfig" Required="1" Valid="1">
+        <Description Translatable="1">If 1, clear previous fields when the selected service has no form configured.</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+		<Item ValueType="String">0</Item>
+        </Value>
+    </Setting>
 </otrs_config>

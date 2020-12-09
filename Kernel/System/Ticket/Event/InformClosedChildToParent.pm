@@ -99,11 +99,11 @@ sub Run {
 
             # create article for the parent
             my $ChildTicketNumber = $TicketHook.$TicketHookDivider.$Ticket{TicketNumber};
-            my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
+            my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Phone' );
             $ParentArticleID = $ArticleBackendObject->ArticleCreate(
                 TicketID       => $TicketID,
                 SenderType     => 'system',
-                IsVisibleForCustomer => 0,
+                ArticleTypeID  => 11,   # note-report
                 Subject        => $LayoutObject->{LanguageObject}->Translate(
                     'Child ticket closed: %s',
                     $ChildTicketNumber

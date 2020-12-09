@@ -8,8 +8,8 @@ use utf8;
 sub Load {
     my ($File, $Self) = @_;
 
-# Created: 2020-12-04 19:32:51 (root@localhost)
-# Changed: 2020-12-04 19:32:51 (root@localhost)
+# Created: 2020-12-09 21:09:50 (root@localhost)
+# Changed: 2020-12-09 21:09:50 (root@localhost)
 # Comment: Checks if Ticket is Classified
 $Self->{TicketAcl}->{'A0001 - SmartClassification Check'} = {
   'Possible' => {},

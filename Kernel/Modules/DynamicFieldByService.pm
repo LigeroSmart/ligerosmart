@@ -1933,12 +1933,18 @@ sub _OutputActivityDialog {
 		);
 		
 	if($Kernel::OM->Get('Kernel::Config')->Get('AgentDynamicFieldByService::NameBeforeField')){
-		%JsonReturn = ('AgentFieldConfig' => $Kernel::OM->Get('Kernel::Config')->Get('AgentDynamicFieldByService::NameBeforeField') );	
+		%JsonReturn = (
+			'AgentFieldConfig'       => $Kernel::OM->Get('Kernel::Config')->Get('AgentDynamicFieldByService::NameBeforeField'),
+			'ClearFormIfEmptyConfig' => $Kernel::OM->Get('Kernel::Config')->Get('Ligero::Forms::ClearFormIfEmptyConfig')
+		);	
 		$AgentJsonFieldConfig = "@%@%@".encode_json \%JsonReturn if(%JsonReturn);
 
 	}	
 	if($Kernel::OM->Get('Kernel::Config')->Get('CustomerDynamicFieldByService::NameBeforeField')){
-		%JsonReturn = ('CustomerFieldConfig' => $Kernel::OM->Get('Kernel::Config')->Get('CustomerDynamicFieldByService::NameBeforeField') );	
+		%JsonReturn = (
+			'CustomerFieldConfig' => $Kernel::OM->Get('Kernel::Config')->Get('CustomerDynamicFieldByService::NameBeforeField'),
+			'ClearFormIfEmptyConfig' => $Kernel::OM->Get('Kernel::Config')->Get('Ligero::Forms::ClearFormIfEmptyConfig')
+		);	
 		$CustomerJsonFieldConfig = "@%@%@".encode_json \%JsonReturn if(%JsonReturn);
 
 	}	
