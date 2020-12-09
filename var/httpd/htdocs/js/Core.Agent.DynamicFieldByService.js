@@ -11,6 +11,7 @@ Core.Agent.DynamicFieldByServicePreLoad = {};
 Core.Agent.DynamicFieldByServiceLastFocus = null;
 Core.Agent.DynamicFieldByServiceLastChangedElement = null;
 Core.Agent.DynamicFieldByServiceLastKey = null;
+Core.Agent.ClearFormIfEmptyConfig = null;
 Core.Agent.checkLigeroForms;
 Core.Agent.DynamicFieldByService = (function (TargetNS) {
 
@@ -79,7 +80,8 @@ Core.Agent.DynamicFieldByService = (function (TargetNS) {
 						function (Response) {
 							// No data? bye bye
 							if (Response == 0) {
-								cleanOldLigeroFormFields();
+								if (Core.Agent.ClearFormIfEmptyConfig == 1)
+									cleanOldLigeroFormFields();
 								Core.UI.InputFields.Deactivate();
 								Core.UI.InputFields.Activate();
 								return;
@@ -146,6 +148,9 @@ Core.Agent.DynamicFieldByService = (function (TargetNS) {
 										} else if ($('#' + key).length > 0) {
 											reloadFields += "" + key + ",";
 											$('#' + key).val(val);
+										}
+										if (key === 'ClearFormIfEmptyConfig' && Core.Agent.ClearFormIfEmptyConfig === null) {
+											Core.Agent.ClearFormIfEmptyConfig = parseInt(val);
 										}
 										if (key === "CustomerFieldConfig") {
 											CustomerFieldConfigInsert = "" + val + "";
@@ -327,7 +332,8 @@ Core.Agent.DynamicFieldByService = (function (TargetNS) {
 				var $that = $(this);
 				$that.parents('.Row').remove();
 			}).addClass('RemoveDFS');
-			window.CKEDITOR.instances['RichText'].setData('');
+			if (Core.Agent.ClearFormIfEmptyConfig == 1)
+				window.CKEDITOR.instances['RichText'].setData('');
 		};
 
 		// Store last focused field
