@@ -1,0 +1,147 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<form action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate">
+    <input type="hidden" name="Action" value="[% Env("Action") %]" />
+    <input type="hidden" name="Subaction" value="Save" />
+    <input type="hidden" name="ChangeID" value="[% Data.ChangeID | html %]" />
+    <input type="hidden" name="Submit" value="" />
+    <input type="hidden" name="AddCABTemplate" value="" />
+    <input type="hidden" name="NewTemplate" value="" />
+    <input type="hidden" name="AddCABMember" value="" />
+    <input type="hidden" name="DeleteCABMember" value="" />
+
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1 title="[% Translate("Edit Involved Persons of %s%s", Config("ITSMChange::Hook"), Data.ChangeNumber) | html %] &ndash; [% Data.ChangeTitle | html %]">
+                [% Translate("Edit Involved Persons of %s%s", Config("ITSMChange::Hook"), Data.ChangeNumber) | html %] &ndash; [% Data.ChangeTitle | truncate(70) | html %]
+            </h1>
+
+            <p>
+                <a href="#" class="CancelClosePopup">[% Translate("Cancel & close") | html %]</a>
+            </p>
+        </div>
+
+        <div class="Content SpacingBottom">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Involved Persons") | html %]</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabel">
+                        <label class="Mandatory" for="ChangeManager"><span class="Marker">*</span> [% Translate("ChangeManager") | html %]: </label>
+                        <div class="Field">
+                            <input id="ChangeManager" name="ChangeManager" type="text" value="[% Data.ChangeManager | html %]" class="W75pc Validate_Required [% Data.ChangeManagerError %] UserSearch" data-autocompletegroups="itsm-change-manager" />
+                            <input id="ChangeManagerSelected" name="ChangeManagerSelected" type="hidden" value="[% Data.ChangeManagerID | html %]" />
+
+                            <div id="ChangeManagerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            <div id="ChangeManagerServerError" class="TooltipErrorMessage"><p>[% Translate("User invalid.") | html %]</p></div>
+
+                        </div>
+
+                        <label class="Mandatory" for="ChangeBuilder"><span class="Marker">*</span> [% Translate("ChangeBuilder") | html %]: </label>
+                        <div class="Field">
+                            <input id="ChangeBuilder" name="ChangeBuilder" type="text" value="[% Data.ChangeBuilder | html %]" class="W75pc Validate_Required [% Data.ChangeBuilderError %] UserSearch" data-autocompletegroups="itsm-change-builder" />
+                            <input id="ChangeBuilderSelected" type="hidden" name="ChangeBuilderSelected" value="[% Data.ChangeBuilderID | html %]" />
+
+                            <div id="ChangeBuilderError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            <div id="ChangeBuilderServerError" class="TooltipErrorMessage"><p>[% Translate("User invalid.") | html %]</p></div>
+
+                        </div>
+                        <button class="Primary CallForAction" accesskey="g" name="SubmitButton" id="SubmitButton" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">
+                            <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
+                        </button>
+                    </fieldset>
+
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Change Advisory Board") | html %]</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabel">
+
+[% RenderBlockStart("CABTemplate") %]
+                        <label for="TemplateID"> [% Translate("CAB Template") | html %]: </label>
+                        <div class="Field">
+                            [% Data.CABTemplateStrg %]
+                            <button class="CallForAction" type="submit" name="AddCABTemplateButton" id="AddCABTemplateButton" value="[% Translate("Apply Template") | html %]"><span>[% Translate("Apply Template") | html %]</span></button>
+[% RenderBlockStart("NewTemplateButton") %]
+                            <button class="CallForAction" type="submit" name="NewTemplateButton" id="NewTemplateButton" value="[% Translate("NewTemplate") | html %]"><span>[% Translate("Save this CAB as template") | html %]</span></button>
+[% RenderBlockEnd("NewTemplateButton") %]
+                        </div>
+[% RenderBlockEnd("CABTemplate") %]
+
+                        <label for="NewCABMember"> [% Translate("Add to CAB") | html %]: </label>
+                        <div class="Field">
+                            <input id="NewCABMember" name="NewCABMember" type="text"   value="[% Data.NewCABMember | html %]" class="W75pc CABMemberSearch [% Data.NewCABMemberError %]" />
+                            <input id="NewCABMemberSelected" name="NewCABMemberSelected" type="hidden" value="[% Data.NewCABMemberID | html %]" />
+                            <input id="NewCABMemberType" name="NewCABMemberType" type="hidden" value="[% Data.CABMemberType | html %]" />
+
+                            <div id="NewCABMemberServerError" class="TooltipErrorMessage"><p>[% Translate("User invalid.") | html %]</p></div>
+
+                            <button class="CallForAction" type="submit" id="AddCABMemberButton" name="AddCABMemberButton" value="[% Translate("Add") | html %]"><span>[% Translate("Add") | html %]</span></button>
+                        </div>
+
+                        <div id="UserServerError" class="TooltipErrorMessage">
+                            <p>[% Translate("Invalid User") | html %]</p>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Current CAB") | html %]:</h2>
+                </div>
+                <div class="Content">
+[% RenderBlockStart("CABMemberTable") %]
+                    <table class="DataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    [% Translate("Type") | html %]
+                                </th>
+                                <th>
+                                    [% Translate("Login") | html %]
+                                </th>
+                                <th class="Center Last">
+                                    [% Translate("Delete") | html %]
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+[% RenderBlockStart("CABMemberRow") %]
+                            <tr>
+                                <td>
+                                    [% Translate(Data.UserType) | html %]
+                                </td>
+                                <td title="[% Data.UserFullname | html %]">
+                                    [% Data.UserFullname | html %]
+                                </td>
+                                <td class="Center Last">
+                                    <a href="#" id="[% Data.InternalUserType %]-[% Data.UserID | html %]" title="[% Translate("Delete") | html %]" class="TrashCan DeleteCABMember">
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                        </i>
+                                    </a>
+                                </td>
+                            </tr>
+[% RenderBlockEnd("CABMemberRow") %]
+                        </tbody>
+                    </table>
+[% RenderBlockEnd("CABMemberTable") %]
+                </div>
+            </div>
+        </div>
+        <div class="Footer"></div>
+    </div>
+</form>

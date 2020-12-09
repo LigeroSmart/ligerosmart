@@ -1,0 +1,112 @@
+# --
+# Copyright (C) 2011-2016 Complemento - Liberdade e Tecnologia http://www.complemento.net.br
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+[% RenderBlockStart("Style") %]
+<style type="text/css">
+a#TranslationDescriptionToggle {
+	cursor: pointer; cursor: hand;
+}
+
+.LigeroServiceCatalogContainer {
+	display: table-cell;
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.LigeroServiceCatalogDiv {
+	display:table-cell;
+}
+
+.LigeroServiceCatalogImg {
+    max-width: 235px;
+    max-height: 185px;
+    margin-bottom: 0px;
+}
+#.LigeroServiceLabel {
+#    position:absolute;
+#    width: 100%;
+#    top: 190px;
+#    font-size: 18px;
+#    color: #fff;
+#    left: 0;
+#    right: 0;
+#    margin-left: auto;
+#    margin-right: auto;
+#}
+</style>
+[% RenderBlockEnd("Style") %]
+
+[% RenderBlockStart("JavaScript") %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+# Adiciona atributo enctype no formulario que permite o upload do arquivos de imagem
+$('.Content form').attr("enctype","multipart/form-data");
+
+# Adiciona cor no div da imagem 
+if($('#ServiceImageBackground').val() != ''){
+    $('.LigeroServiceCatalogContainer').css('backgroundColor', '#' + $('#ServiceImageBackground').val());
+}
+
+<!--# Adiciona label do serviço na caixa de previsualização-->
+<!--$('.LigeroServiceCatalogContainer').append('<div class="LigeroServiceLabel" id="LigeroServiceLabel">'+$('#Name').val()+'</div>');-->
+<!--# Altera label de acordo com nome do serviço-->
+<!--$("#Name").change(-->
+<!--    function(e){-->
+<!--        $('#LigeroServiceLabel').text($(this).val());-->
+<!--    })-->
+<!--$("#Name").keyup(-->
+<!--    function(e){-->
+<!--        $('#LigeroServiceLabel').text($(this).val());-->
+<!--    })-->
+$('#ServiceImageBackground').change(
+    function(e){
+	    $('.LigeroServiceCatalogContainer').css('backgroundColor',  $(this).val());
+    }
+);
+$('#ServiceImageBackground').on('load',
+    function(e){
+	    $('.LigeroServiceCatalogContainer').css('backgroundColor',  $(this).val());
+    }
+);
+
+$('#ServiceImageBackground').spectrum({
+    showPaletteOnly: true,
+    showPalette:true,
+    hideAfterPaletteSelect:true,
+	allowEmpty:true,
+    showButtons: true,
+    palette: [
+        [
+[% RenderBlockStart("Palette") %]
+        '[% Data.Color %]',
+[% RenderBlockEnd("Palette") %]
+        ],
+    ]
+});
+
+$(function(){$('.LigeroServiceCatalogContainer').css('backgroundColor',  $('#ServiceImageBackground').val());})
+
+function toogleDescriptionTranslastions(DefaultLanguage){
+	$('textarea[id^="DynamicField_ServiceDescriptionXX"][id!="DynamicField_ServiceDescriptionXX'+DefaultLanguage+'"]').parent().prev().fadeToggle();
+	$('textarea[id^="DynamicField_ServiceDescriptionXX"][id!="DynamicField_ServiceDescriptionXX'+DefaultLanguage+'"]').parent().fadeToggle();	
+}
+$(function(){
+	toogleDescriptionTranslastions("[% Data.DefaultLanguage %]");
+
+	$('#DynamicField_ServiceDescriptionXX[% Data.DefaultLanguage %]').parent().prev().hide();
+	$('#DynamicField_ServiceDescriptionXX[% Data.DefaultLanguage %]').parent().hide();
+	
+	$('textarea[id^="DynamicField_ServiceDescriptionXX"]').first().parent().prev().before( "<div class='Field'><a id='TranslationDescriptionToggle'>Service Description Translations</a></div><div class='Clear'></div>" );
+	$('#TranslationDescriptionToggle').click(function(){toogleDescriptionTranslastions("[% Data.DefaultLanguage %]");});
+})
+
+
+
+//]]></script>
+[% END %]
+[% RenderBlockEnd("JavaScript") %]

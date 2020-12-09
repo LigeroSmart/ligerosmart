@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="LigeroServiceCatalog::SidebarWidget###001-ServiceStatus" Required="0" Valid="1">
+        <Description Translatable="1">Shows service status on sidebar.</Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::ServiceCatalog::SidebarWidget::ServiceStatus</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GeneralCatalogPreferences###DeploymentStatesIcon" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the deployment states icon in the preferences view of the agent interface.</Description>
+        <Navigation>Core::GeneralCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferences::Generic</Item>
+                <Item Key="Class">ITSM::ConfigItem::DeploymentState</Item>
+                <Item Key="Label" Translatable="1">Deployment State Icon</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Data"></Item>
+                <Item Key="PrefKey">Icon</Item>
+                <Item Key="Block">Input</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

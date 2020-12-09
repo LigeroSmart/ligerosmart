@@ -1,0 +1,46 @@
+---
+Debugger:
+  DebugThreshold: debug
+  TestMode: '0'
+Description: 'FAQ Connector REST Sample'
+FrameworkVersion: 6.0.x git
+Provider:
+  Operation:
+    LanguageList:
+      Description: List all availables languages
+      Type: FAQ::LanguageList
+    PublicCategoryList:
+      Description: List all public FAQ categories (with tree information)
+      Type: FAQ::PublicCategoryList
+    PublicFAQGet:
+      Description: Retrieve public FAQ entries
+      Type: FAQ::PublicFAQGet
+    PublicFAQSearch:
+      Description: Search for public FAQs
+      Type: FAQ::PublicFAQSearch
+  Transport:
+    Config:
+      KeepAlive: ''
+      MaxLength: '10000000'
+      RouteOperationMapping:
+        LanguageList:
+          RequestMethod:
+          - GET
+          Route: /LanguageList
+        PublicCategoryList:
+          RequestMethod:
+          - GET
+          Route: /PublicCategoryList
+        PublicFAQGet:
+          RequestMethod:
+          - GET
+          Route: /PublicFAQGet
+        PublicFAQSearch:
+          RequestMethod:
+          - POST
+          Route: /PublicFAQSearch
+    Type: HTTP::REST
+RemoteSystem: ''
+Requester:
+  Transport:
+    Type: ''

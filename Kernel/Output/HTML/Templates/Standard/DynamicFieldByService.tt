@@ -1,0 +1,396 @@
+# --
+# AdminAutoTicket.tt - provides HTML form for AdminAutoTicket
+# --
+# $Id: AdminAutoTicket.dtl,v 1.37 2012/03/01 12:50:13 mg Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("Overview") %]
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>[% Translate("Manage Dynamic Fields by Service") | html %]</h1>
+[% RenderBlockStart("ActionListView") %]
+    <div class="SidebarColumn">
+[% RenderBlockStart("ActionList") %]
+        <div class="WidgetSimple">
+            <div class="Header"><h2>[% Translate("Actions") | html %]</h2></div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionOverview") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionOverview") %]
+[% RenderBlockStart("ActionAdd") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction Plus"><span>[% Translate("Add Form") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionAdd") %]
+                </ul>
+            </div>
+        </div>
+[% RenderBlockStart("Filter") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2><label for="Filter">[% Translate("Filter") | html %]</label></h2>
+            </div>
+            <div class="Content">
+                <input type="text" id="Filter" class="W50pc" name="Filter" value="" title="[% Translate("Filter") | html %]" />
+            </div>
+        </div>
+[% RenderBlockEnd("Filter") %]
+[% RenderBlockEnd("ActionList") %]
+
+    </div>
+[% RenderBlockEnd("ActionListView") %]
+    <div class="ContentColumn">
+
+[% RenderBlockStart("OverviewResult") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("List") | html %]</h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable" id="DynamicFieldsByServiveIDS">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Name") | html %]</th>
+#                            <th>[% Translate("Attachments") | html %]</th>
+                            <th>[% Translate("Comment") | html %]</th>
+                            <th>[% Translate("Validity") | html %]</th>
+                            <th>[% Translate("Changed") | html %]</th>
+                            <th>[% Translate("Created") | html %]</th>
+                            <th>[% Translate("Subject") | html %]</th>
+                            <th>[% Translate("Body") | html %]</th>
+                            <th>[% Translate("Type") | html %]</th>
+                            <th>[% Translate("frontend") | html %]</th>
+                            <th>[% Translate("Delete") | html %]</th>
+                            <th>[% Translate("Copy") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="FilterMessage Hidden">
+                            <td colspan="7">[% Translate("No matches found.") | html %]</td>
+                        </tr>
+[% RenderBlockStart("NoDataFoundMsg") %]
+                        <tr>
+                            <td colspan="7">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("NoDataFoundMsg") %]
+[% RenderBlockStart("OverviewResultRow") %]
+                        <tr>
+                            <td>
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;ID=[% Data.ID | uri %]">[% Data.Name | html %]</a>
+                            </td>
+#                            <td>[% Data.Attachments | html %]</td>
+                            <td title="[% Data.Comments | html %]">[% Data.Comments | truncate(26) | html %]</td>
+                            <td>[% Translate(Data.Valid) | html %]</td>
+                            <td>[% Data.ChangeTime | Localize("TimeShort") %]</td>
+                            <td>[% Data.CreateTime | Localize("TimeShort") %]</td>
+			                <td title="[% Data.Subject | html %]">[% Data.Subject | truncate(26) | html %]</td>
+			                <td title="[% Data.Body | html %]">[% Data.Body | truncate(26) | html %]</td>
+			                <td title="[% Data.Type | html %]">[% Data.Type | truncate(26) | html %]</td>
+			                <td title="[% Data.Frontend | html %]">[% Data.Frontend | truncate(26) | html %]</td>
+                            <td class="Center">
+                                <a class="TrashCan DFSDelete" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Delete;ID=[% Data.ID | uri %];[% Env("ChallengeTokenParam") | html %]" title="[% Translate("Delete this entry") | html %]"><i class="fa fa-trash-o"></i>
+
+                                    [% Translate("Delete this entry") | html %]
+                                </a>
+                            </td>
+                            <td class="Center">
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Copy;ID=[% Data.ID | uri %]" title="[% Translate("Copy this entry") | html %]">
+
+                                    [% Translate("COPY") | html %]
+                                </a>
+                            </td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultRow") %]
+                    </tbody>
+                </table>
+            </div>
+        </div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.UI.Table.InitTableFilter($('#Filter'), $('#DynamicFieldsByServiveIDS'));
+//]]></script>
+[% END %]
+[% RenderBlockEnd("OverviewResult") %]
+[% RenderBlockStart("OverviewUpdate") %]
+
+[% RenderBlockStart("RichText") %]
+[% InsertTemplate("RichTextEditor.tt") %]
+[% RenderBlockEnd("RichText") %]
+
+        <div class="WidgetSimple">
+            <div class="Header">
+[% RenderBlockStart("HeaderAdd") %]
+                <h2>[% Translate("Add Form") | html %]</h2>
+[% RenderBlockEnd("HeaderAdd") %]
+[% RenderBlockStart("HeaderEdit") %]
+                <h2>[% Translate("Edit Form") | html %]</h2>
+[% RenderBlockEnd("HeaderEdit") %]
+            </div>
+            <div class="Content">
+                <form  id='DynamicFieldByServiceForm' action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="[% Data.Action | uri %]Action"/>
+                    <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+		    <input type="hidden" name="Fields" value=""/>
+        	    <input type="hidden" name="FieldDetails" value=""/>
+                    <input type="hidden" name="PopupRedirect" value="" id="PopupRedirect"/>
+	            <input type="hidden" name="PopupRedirectAction" value="" id="PopupRedirectAction"/>
+         	    <input type="hidden" name="PopupRedirectSubaction" value="" id="PopupRedirectSubaction"/>
+                    <input type="hidden" name="PopupRedirectID" value="" id="PopupRedirectID"/>
+                    <input type="hidden" name="PopupRedirectEntityID" value="" id="PopupRedirectEntityID"/>
+                    <input type="hidden" name="ViewMode" value="[% Data.ViewMode %]" id="ViewMode"/>
+
+                    <fieldset class="TableLike">
+                        <label class="Mandatory" for="Name"><span class="Marker">*</span> [% Translate("Name") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Name" id="Name" value="[% Data.Name | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>
+                            <div id="NameError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="NameServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Comments">[% Translate("Comments") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Comments" id="Comments" value="[% Data.Comments | html %]" class="W50pc [% Data.TitleInvalid | html %]" maxlength="200"/>
+                        </div>
+                        <div class="Clear"></div>
+			 <label class="Mandatory" for="Frontend"> <span class="Marker">*</span> [% Translate("Available in") | html %]:</label>
+                            <div class="Field">
+                                [% Data.InterfaceSelection %]
+                            </div>
+                            <div class="Clear"></div>
+
+                        <label class="Mandatory" for="ServiceID"><span class="Marker">*</span> [% Translate("Service") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ServiceOption %]
+                        </div>
+						<div id="ServiceIDError" class="TooltipErrorMessage">
+							<p>[% Translate("This field is required.") | html %]</p>
+						</div>
+						<div id="ServiceIDServerError" class="TooltipErrorMessage">
+							<p>[% Translate("This field is required.") | html %]</p>
+						</div>
+
+                        <div class="Clear"></div>
+
+                        <label for="TypeID"> [% Translate("Ticket Type") | html %]:</label>
+                        <div class="Field">
+                            [% Data.TypeOption %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="HideArticle">[% Translate("Hide Article on Customer Interface (if true, provide a default Subject and Body bellow)") | html %]:</label>
+
+                        <div class="Field">
+                            <input type="checkbox" id="HideArticle" name="HideArticle" title="Hide Article" [% IF Data.HideArticle %]checked="checked"[% END %] value="1">
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="" for="Subject">[% Translate("Subject") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Subject" id="Subject" value="[% Data.Subject | html %]" class="W50pc" maxlength="200"/>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="RichText">[% Translate("Body") | html %]:</label>
+                        <div class="RichTextField">
+                            <textarea id="RichText" class="RichText" rows="10" cols="60" name="Message">[% Data.Body | html %]</textarea>
+                        </div>
+                        <div class="Clear"></div>
+
+
+
+#                        <label for="IDs">[% Translate("Attachments") | html %]:</label>
+#                        <div class="Field">
+#                            [% Data.AttachmentOption %]
+#                        </div>
+#                        <div class="Clear"></div>
+
+
+               <div class="WidgetSimple Expanded">
+                    <div class="Header">
+                        <div class="WidgetAction Toggle">
+                            <a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
+                        </div>
+                        <h2>[% Translate("Fields") | html %]</h2>
+                    </div>
+                    <div class="Content LayoutGrid">
+                        <div class="Size1of1 SpacingBottom">
+                            <p>
+                                [% Translate("You can assign Fields to this Activity Dialog by dragging the elements with the mouse from the left list to the right list.") | html %]
+                                [% Translate("Ordering the elements within the list is also possible by drag 'n' drop.") | html %]
+                            </p>
+                        </div>
+                        <div class="Size1of2">
+                            <input type="text" id="FilterAvailableFields" class="W75pc" name="FilterAvailableFields" value="" title="[% Translate("Filter available fields") | html %]" placeholder="[% Translate("Filter available fields") | html %]..." />
+                            <ul class="Tablelike W90pc SpacingTop">
+                                <li class="Header">
+                                    [% Translate("Available Fields") | html %]
+                                </li>
+                            </ul>
+                            <ul class="AllocationList Tablelike W90pc" id="AvailableFields">
+[% RenderBlockStart("AvailableFieldRow") %]
+                                <li title="Name: [% Data.FieldnameTranslated | html %]" data-id="[% Data.Field | html %]" data-config="">
+                                    [% Data.FieldnameTranslated | html %]
+                                    <span class="Functions ShowOnAssignedList">
+                                        <a href="#" data-id="[% Data.Field | html %]" data-entity="[% Data.Field | html %]" class="FieldDetailsOverlay Icon" title="[% Translate("Edit") | html %]">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </span>
+                                </li>
+[% RenderBlockEnd("AvailableFieldRow") %]
+                            </ul>
+                        </div>
+                        <div class="Size1of2">
+                            <ul class="Tablelike W90pc">
+                                <li class="Header">
+                                    [% Translate("Assigned Fields") | html %]
+                                </li>
+                            </ul>
+                            <ul class="AllocationList Tablelike W90pc" id="AssignedFields">
+[% RenderBlockStart("AssignedFieldRow") %]
+                                <li data-id="[% Data.Field | html %]" data-entity="[% Data.Field | html %]" data-config='[% Data.FieldConfig %]' title="Name: [% Translate(Data.Field) | html %]">
+                                    [% Translate(Data.Field) | html %]
+                                    <span class="Functions ShowOnAssignedList">
+                                        <a href="#" data-id="[% Data.Field | html %]" data-entity="[% Data.Field | html %]" class="FieldDetailsOverlay Icon" title="[% Translate("Edit") | html %]">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </span>
+                                </li>
+[% RenderBlockEnd("AssignedFieldRow") %]
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                        <label class="Mandatory" for="ValidID"><span class="Marker">*</span> [% Translate("Validity") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ValidOption %]
+                            <div id="ValidIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="ValidIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+
+
+                        <div class="Field">
+                            <button class="Primary" type="submit" value="[% Translate("Submit") | html %]">[% Translate("Submit") | html %]</button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=DynamicFieldByService">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+                        
+                        
+                        
+                        
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewUpdate") %]
+    </div>
+    <div class="Clear"></div>
+</div>
+[% RenderBlockEnd("Overview") %]
+[% RenderBlockStart("Options") %]
+
+<div id="Dialogs" class="Hidden">
+    <div id="FieldDetails">
+        <div style="width: 500px;">
+            <h2>[% Translate("Edit Details for Field") | html %] "<span id="DialogFieldName"></span>"</h2>
+            <fieldset class="TableLike">
+                <label for="DescShort">[% Translate("Description (short)") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="DescShort" id="DescShort" value="" class="W50pc" maxlength="70"/>
+                </div>
+                <div class="Clear"></div>
+
+                <label for="DescLong">[% Translate("Description (long)") | html %]:</label>
+                <div class="Field">
+                    <textarea name="DescLong" id="DescLong" class="W50pc"></textarea>
+                </div>
+                <div class="Clear"></div>
+
+                <label for="DefaultValue">[% Translate("Default value") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="DefaultValue" id="DefaultValue" value="" class="W50pc" />
+                </div>
+                <div class="Clear"></div>
+            </fieldset>
+
+            <div id="ArticleTypeContainer" class='Hidden'>
+                <fieldset class="TableLike">
+                    <label for="ArticleType">[% Translate("ArticleType") | html %]:</label>
+                    <div class="Field">
+                        [% Data.ArticleTypeSelection %]
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+            </div>
+
+            <fieldset class="TableLike">
+                <label for="Display">[% Translate("Display") | html %]:</label>
+                <div class="Field">
+                    [% Data.DisplaySelection %]
+                </div>
+                <div class="Clear"></div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+[% RenderBlockEnd("Options") %]
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+//Core.Agent.Admin.ProcessManagement.InitActivityDialogEdit();
+Core.Agent.Admin.AddDynamicFieldByService.InitActivityDialogEdit();        
+//Localizations
+//Core.Agent.Admin.ProcessManagement.Localization = {
+Core.Agent.Admin.AddDynamicFieldByService.Localization = {
+        CancelMsg: "[% Translate("Cancel") | html %]",
+        SaveMsg: "[% Translate("Save") | html %]",
+        DialogTitle: "[% Translate("Edit Field Details") | html %]",
+        WrongArticleTypeMsg: "[% Translate("Customer interface does not support internal article types.") | html %]"
+};
+//]]></script>
+[% END %]
+
+
+[% RenderBlockStart("PopUpClose") %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+
+Core.UI.Popup.ExecuteInParentWindow(function(WindowObject) {
+
+  var $SelectObj = $('#Forms',WindowObject.document);
+  $SelectObj.find('option')
+    .remove()
+    .end()
+    .append('[% Data.Options %]');
+
+  WindowObject.Core.UI.InputFields.Deactivate();
+  WindowObject.Core.UI.InputFields.Activate();
+  
+  Core.UI.Popup.ClosePopup();
+
+});
+
+//]]></script>
+[% END %]
+[% RenderBlockEnd("PopUpClose") %]

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroSkins</Name>
+    <Version>6.0.8</Version>
+    <Vendor>Ligero [Community]</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Skins for Ligero frontend</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/css/Core.Default.css" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/img/ligerologo.png" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/css/Core.Control.css" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/css/Core.Default.css" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/css/Core.Login.css" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/css/Core.Responsive.css" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/css/Customer.ServiceCatalog.css" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/img/bg.jpg" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/img/ligerologo.png" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/img/loginlogo_default.png" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/img/icons/product.ico" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/img/icons/apple-touch-icon.png" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/img/ligero-verify-small.png" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/img/otrs-verify.png" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/ligero/img/otrs-verify-small.png" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Customer/ligero/fonts/Roboto-Light.ttf" Permission="644"></File>
+        <File Location="var/httpd/htdocs/js/icones.js" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/LigeroSkins.xml" Permission="644"></File>
+        <File Location="Custom/LigeroSkins.sopm" Permission="644"></File>
+    </Filelist>
+</otrs_package>

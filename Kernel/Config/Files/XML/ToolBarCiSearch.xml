@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="Frontend::ToolBarModule###15-Ticket::CiSearch" Required="0" Valid="1">
+        <Description Translatable="1">Agent interface module to access Ci Search via Toolbar.</Description>
+        <Navigation>Frontend::Agent::ToolBar</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::ToolBarCiSearch</Item>
+                <Item Key="Description">Ci Search</Item>
+                <Item Key="Name">Ci-Search</Item>
+                <Item Key="Size">10</Item>
+                <Item Key="Priority">1990030</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ToolBarCiSearch::Classes" Required="0" Valid="1">
+        <Description Translatable="1">Define which Classes will be available. Keys are the Class Name, Content will be the ID for the Class</Description>
+        <Navigation>Frontend::Agent::ToolBarModule::CiSearch</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Computer">32</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ToolBarCiSearch::Options" Required="0" Valid="1">
+        <Description Translatable="1">Options for CiSearch ToolBar Module.</Description>
+        <Navigation>Frontend::Agent::ToolBarModule::CiSearch</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Hint">Search for CIs</Item>
+                <Item Key="DefaultClassID">32</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###100-Complemento" Required="1" Valid="1">
+        <Description Translatable="1">Complemento ThirdParty JS.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/complemento-texthint.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonCSS###001-Complemento" Required="1" Valid="1">
+        <Description Translatable="1">CSS For Complemento Packages.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/complemento-toolbarcisearch.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+
+</otrs_config>

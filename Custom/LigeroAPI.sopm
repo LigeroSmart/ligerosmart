@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroAPI</Name>
+    <Version>6.1.6</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">OTRS API enhancements for use in Ligero applications.</Description>
+    <Description Lang="pt_BR">Melhorias API OTRS para uso em aplicações Ligero.</Description>
+    <IntroInstall Type="post" Lang="en" Title="Attention!">OTRS API enhancements for use in Ligero applications.</IntroInstall>
+    <Filelist>
+        <File Permission="644" Location="Custom/LigeroAPI.sopm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/GenericInterfaceLigero.xml"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/SessionLigero/Common.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/SessionLigero/SessionCreate.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/TicketLigero/TicketSearch.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/TicketLigero/QueueSearch.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/TicketLigero/StateSearch.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/TicketLigero/PrioritySearch.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/TicketLigero/TypeSearch.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/TicketLigero/ArticleAttachmentGet.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/GeneralCatalogLigero/GeneralCatalogGetValues.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/MiscLigero/LinkObject.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/MiscLigero/SurveySearch.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/MiscLigero/SurveyVote.pm"></File>
+        <File Location="Kernel/GenericInterface/Operation/Admin/Generic.pm" Permission="644"></File>
+        <File Permission="644" Location="Kernel/System/LigeroAPI.pm"></File>
+        <File Permission="644" Location="Kernel/System/Survey/RequestExtend.pm"></File>
+        <File Permission="644" Location="var/packagesetup/LigeroAPI.pm"></File>
+    </Filelist>
+    <CodeInstall Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+    </CodeInstall>
+	<CodeUpgrade Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+    </CodeUpgrade>
+</otrs_package>

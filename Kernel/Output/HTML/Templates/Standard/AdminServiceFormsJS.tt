@@ -1,0 +1,23 @@
+# --
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('a.AsPopup').bind('click', function () {
+    var Matches,
+        PopupType = 'TicketAction';
+
+    Matches = $(this).attr('class').match(/PopupType_(\w+)/);
+    if (Matches) {
+        PopupType = Matches[1];
+    }
+
+    Core.UI.Popup.OpenPopup($(this).attr('href'), PopupType);
+    
+    return false;
+});
+//]]></script>
+[% END %]

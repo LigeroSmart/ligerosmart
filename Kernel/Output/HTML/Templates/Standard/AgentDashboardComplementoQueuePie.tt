@@ -1,0 +1,110 @@
+<div class="CompWidgetContainer" style="width:[% Data.Width %]%">
+    <div class="CompWidgetBorder">
+        <div id="[% Data.Container %]" class="CompWidget">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+if ( ! window.deferAfterjQueryLoaded ) {
+    window.deferAfterjQueryLoaded = [];
+}
+
+window.deferAfterjQueryLoaded.push(function() {
+
+        var chart;
+       	// Radialize the colors
+       	var HighchartsNormal;
+       	if('[% Data.Gradient %]' == '1'){
+        	HighchartsNormal=Highcharts.getOptions().colors;
+		    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+		        return {
+		            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+		            stops: [
+		                [0, color],
+		                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+		            ]
+		        };
+		    });
+        }
+        chart = new Highcharts.Chart({
+            credits: {
+                enabled: false
+            },
+            chart: {
+                events: {
+                    // fix for the bug:http://bit.ly/1SQUVmg
+                    redraw: function () {
+                        $('.highcharts-data-labels > div').each(function() {
+                            $(this).css('visibility','inherit');
+                        });
+                    }
+                },
+            
+                type: 'pie',            
+                renderTo: '[% Data.Container %]',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                borderColor: '#CCC',
+                borderWidth: 1,
+                borderRadius: 0,
+            },
+            title: {
+                text: '[% Translate(Data.Title) | html %] ([% Data.Total %])',
+
+            },
+            tooltip: {
+        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+            	percentageDecimals: 1
+            },
+
+
+            plotOptions: {
+                pie: {
+        
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+//                    showInLegend: [% Data.Legend %],
+                    size: '65%',
+                    dataLabels: {
+                        enabled: true,
+                        padding: 5,
+                        color: '#333',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return ''+ this.point.name.replace(/\|\|break\|\|/g,"</br>") +' <a href="[% Env("Baselink") %]'+ this.point.id +'">'+ this.y +'</a>';
+                        },
+                        style: {
+        	                fontFamily: 'Arial, "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, sans-serif', // default font
+        	                fontSize: '15px',
+        	                textDecoration:'none',
+                            fontWeight: 'normal',
+
+                        },
+                        useHTML: true,
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Chamados',
+                data: [
+[% RenderBlockStart("Series") %]
+                    {
+                        name:'[% Data.QueueName | html %]',
+                           y:[% Data.Count | html %],
+                          id:'[% Data.URL | html %]',
+                    },
+[% RenderBlockEnd("Series") %]
+                ]
+            }]
+        });
+       	if('[% Data.Gradient %]' == '1'){
+    	    Highcharts.getOptions().colors=HighchartsNormal;
+        }
+
+});
+
+		</script>
+

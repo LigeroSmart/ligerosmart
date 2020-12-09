@@ -1,0 +1,10 @@
+<div class="WidgetFixNow">
+
+<div class="WidgetTitle">[% Translate("Fix Now!") %]</div>
+<ul class="Alerts">
+[% RenderBlockStart("Alert") %]
+<li><a href="[% Env("Baselink") %]Action=CustomerFAQZoom;ItemID=[% Data.ID %]">[% Data.Title %]</a></li>
+[% RenderBlockEnd("Alert") %]
+</ul>
+
+</div>

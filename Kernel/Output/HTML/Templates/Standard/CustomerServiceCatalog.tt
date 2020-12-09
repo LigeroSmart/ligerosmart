@@ -1,0 +1,269 @@
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<div id="MainBox" class="TicketZoom ARIARoleMain">
+<input type="hidden" id="StartHit" value='0'>
+#Inserir a barra lateral
+	<div id="ZoomSidebar">
+[% RenderBlockStart("SidebarWidget") %]
+	<div class="SidebarWidget">
+	 [% Data.WidgetContent %]
+	</div>
+[% RenderBlockEnd("SidebarWidget") %]
+	</div>
+# Fim da Barra Lateral
+
+<div class="Content">
+
+[% RenderBlockStart("FirstLvl") %]
+<input id="LigeroServiceSearch" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
+
+[% RenderBlockEnd("FirstLvl") %]
+		<ul class="breadcrumb">
+[% RenderBlockStart("BreadcrumbStart") %]
+			<li><a href="[% Env("Baselink") %]Action=CustomerServiceCatalog"> [% Translate("Start") | html %]</a></li>
+[% RenderBlockEnd("BreadcrumbStart") %]
+
+<!--[% RenderBlockStart("BreadcrumbStartEmpty") %]		-->
+<!--			<li><a href="#">&nbsp;</a></li>-->
+<!--[% RenderBlockEnd("BreadcrumbStartEmpty") %]-->
+
+[% RenderBlockStart("BreadcrumbServices") %]
+<li><span><i class="fa fa-arrow-right" aria-hidden="true"></i></span></li>
+<li><a href="[%Data.BreadcrumbLink | html %]">[%Data.BreadcrumbTitle | html %] </a></li>
+
+[% RenderBlockEnd("BreadcrumbServices") %]
+		</ul>
+[% RenderBlockStart("CategorySearch") %]
+<input id="LigeroServiceSearchMark" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
+[% RenderBlockEnd("CategorySearch") %]
+
+[% RenderBlockStart("CategoryTitle") %]
+	<h1 class="CategoryTitle">[% Data.CategoryTitle %]</h1>
+	<h1 class="CategoryTitle" style="margin-top: -30px;font-weight: normal;font-size: 13pt;line-height: 13pt;color: black;">[% Data.CategoryDescription %]</h1>
+[% RenderBlockEnd("CategoryTitle") %]
+
+[% RenderBlockStart("CategoryFaqDesc") %]
+	<h2 class="CategoryFaqDescTitle">[% Data.FaqTitle %]</h1>
+	<div class="CategoryFaqDescText">[% Data.FaqDescription %]</div>
+[% RenderBlockEnd("CategoryFaqDesc") %]
+
+	<div id="ServiceCatalog">
+	    <div id="ServiceCatalogItens">
+		[% RenderBlockStart("NeedMessage") %]
+		<h2 class="NeedMessage">[% Translate("What do you need?") | html %]</h2>
+		[% RenderBlockEnd("NeedMessage") %]
+
+		[% RenderBlockStart("LayoutActivity") %]
+		<div class="Need">
+		  <a target="_self"  href="[% Env("Baselink") %]Action=CustomerServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
+		  [%Data.LayoutServiceName | html %]
+		  </a>
+		<br/><span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
+		</div> 
+		[% RenderBlockEnd("LayoutActivity") %]
+
+		[% RenderBlockStart("LayoutActivityUrl") %]
+		<div class="Need">
+		  <a target="[% Data.UrlTarget | html %]"  href="[% Data.Url | html %]">
+		  [%Data.LayoutServiceName | html %]
+		  </a>
+		<br/><span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
+		</div> 
+		[% RenderBlockEnd("LayoutActivityUrl") %]
+
+		[% RenderBlockStart("LayoutServiceArticle") %]
+		<div class="Need">
+		  <a target="_self"  href="[% Data.LayoutServiceLink| html %]">
+		  [%Data.LayoutServiceName | html %]
+		  </a>
+		<br/><span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
+		</div> 
+		[% RenderBlockEnd("LayoutServiceArticle") %]
+
+		<div id="NewLine"></div>
+
+		[% RenderBlockStart("MoreServices") %]
+		<h2 class="MoreServices">[% Translate("More Services:") | html %]</h2>
+		[% RenderBlockEnd("<MoreServices>") %]
+
+
+		[% RenderBlockStart("LayoutCategory") %]
+		[% SWITCH Data.ShowAsCategory %]
+		[% CASE [ '0','1' ] %]
+		<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=CustomerServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
+		<div class="Category" style="background-color:[% Data.Color %]">
+			<div class="img">
+			    <img src="[%Data.LayoutServiceLink | html %]" >
+		    </div>
+			<div class="desc">
+				<div>[%Data.LayoutServiceName | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% CASE '2' %]
+		<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=CustomerServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
+		<div class="Category primary" style="background-color:[% Data.Color %]">
+			<div class="desc" style="top: 0px;" >
+				<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName | html %]</div>
+			</div>
+			<div class="img">
+				<img style="top: 60px;" src="[%Data.LayoutServiceLink | html %]" >
+			</div>
+			<div class="desc" style="bottom: -20px;">
+				<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% CASE '3' %]
+		<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=CustomerServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
+		<div class="Category secondary" style="background-color: transparent; border: 2px solid #2e91dd;">
+			<div>
+				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";><img src="[%Data.LayoutServiceLink | html %]" ></div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+			</div>
+			<div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% CASE '4' %]
+		<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=CustomerServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
+		<div class="Category tertiary" style="background-color: transparent; border: 2px solid #2e91dd;">
+			<div>
+				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";></div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+			</div>
+			<div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% END %]
+		[% RenderBlockEnd("LayoutCategory") %]
+
+		[% RenderBlockStart("LayoutCategoryUrl") %]
+		[% SWITCH Data.ShowAsCategory %]
+		[% CASE [ '0','1' ] %]
+		<a target="[% Data.UrlTarget | html %]" class="CategoryLink"  href="[% Data.Url | html %]">
+		<div class="Category" style="background-color:[% Data.Color %]">
+			<div class="img">
+			    <img src="[%Data.LayoutServiceLink | html %]" >
+		    </div>
+			<div class="desc">
+				<div>[%Data.LayoutServiceName | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% CASE '2' %]
+		<a target="[% Data.UrlTarget | html %]" class="CategoryLink"  href="[% Data.Url | html %]">
+		<div class="Category primary" style="background-color:[% Data.Color %]">
+			<div class="desc" style="top: 0px;" >
+				<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName | html %]</div>
+			</div>
+			<div class="img">
+				<img style="top: 60px;" src="[%Data.LayoutServiceLink | html %]" >
+			</div>
+			<div class="desc" style="bottom: -20px;">
+				<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% CASE '3' %]
+		<a target="[% Data.UrlTarget | html %]" class="CategoryLink"  href="[% Data.Url | html %]">
+		<div class="Category secondary" style="background-color: transparent; border: 2px solid #2e91dd;">
+			<div>
+				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";><img src="[%Data.LayoutServiceLink | html %]" ></div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+			</div>
+			<div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% CASE '4' %]
+		<a target="_self" class="CategoryLink"  href="[% Data.Url | html %]">
+		<div class="Category tertiary" style="background-color: transparent; border: 2px solid #2e91dd;">
+			<div>
+				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";></div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+			</div>
+			<div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+			</div>
+		</div>
+		</a>
+		[% END %]
+		[% RenderBlockEnd("LayoutCategoryUrl") %]
+
+		<div id="NotFoundResult" style="display:none"> [% Translate("No results found") %] </div>
+
+	</div> <!--ServiceCatalogItens-->
+
+	<div id="ServiceCatalogResults">
+	
+	</div>
+	
+    </div> <!--ServiceCatalog-->
+
+    <div class="ARIARoleContentinfo ServiceFooter">
+        [% IF Data.ServiceFooter %]
+            <div class="Clear"></div> 
+            <br>
+            <br>
+	    <h1 class="CategoryTitle" style="margin-top: -30px;font-weight: normal;font-size: 13pt;line-height: 13pt;color: black;">[% Translate("Quick Access") | html %]</h1>
+        [% END %]
+        [% RenderBlockStart("ServiceFooter") %]
+            [% IF Data.ServiceType == '1' %]
+                [% IF Data.Layout == 'LayoutActivity' %]
+                    <a href="[% Env("Baselink") %]Action=CustomerServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]" class="CategoryLink">
+                [% ELSIF Data.Layout == 'LayoutActivityUrl' %]
+                    <a target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]" class="CategoryLink">
+                [% ELSIF Data.Layout == 'LayoutCategory' %]
+                    <a href="[% Env("Baselink") %]Action=CustomerServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]" class="CategoryLink">
+                [% ELSIF Data.Layout == 'LayoutCategoryUrl' %]
+                    <a target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]" class="CategoryLink">
+                [% END %]
+                <div class="Category" style="background-color:[% Data.Color %]">
+                        <div class="img">
+                            <img src="[%Data.LayoutServiceLink | html %]" >
+                    </div>
+                        <div class="desc">
+                                <div>[%Data.LayoutServiceName | html %]</div>
+                        </div>
+                </div>
+                </a>
+            [% END %]
+        [% END %]
+    </div>
+
+  </div>
+
+
+  
+    
+</div>
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">
+$( window ).on('load',function() {
+  // Run code
+  Core.App.Responsive.Init();
+});
+
+</script>
+[% END %]
+
+<style>
+# [% RenderBlockStart("LayoutStyle") %]
+#	[%Data.LayoutClassStyle | html %] 
+#	
+# [% RenderBlockEnd("LayoutStyle") %]
+
+[% RenderBlockStart("LayoutStyleCategoryShadow") %]
+	[%Data.LayoutClassStyleCategory | html %]        
+[% RenderBlockEnd("LayoutStyleCategoryShadow") %]   	
+
+ </style>

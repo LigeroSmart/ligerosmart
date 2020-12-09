@@ -1,0 +1,39 @@
+# --
+# Copyright (C) 2011-2016 Complemento - Liberdade e Tecnologia http://www.complemento.net.br
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+[% RenderBlockStart("Style") %]
+<style type="text/css">
+	#TranslationToggle {
+		cursor: pointer; cursor: hand;
+	}
+</style>
+[% RenderBlockEnd("Style") %]
+
+[% RenderBlockStart("JavaScript") %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+function toogleNameTranslastions(DefaultLanguage){
+	$('input[id^="name_"][id!="name_'+DefaultLanguage+'"]').parent().prev().fadeToggle();
+	$('input[id^="name_"][id!="name_'+DefaultLanguage+'"]').parent().fadeToggle();	
+}
+
+$(function(){
+
+	toogleNameTranslastions("[% Data.DefaultLanguage %]");
+
+	$('#name_[% Data.DefaultLanguage %]').parent().prev().hide();
+	$('#name_[% Data.DefaultLanguage %]').parent().hide();
+	
+	$('input[id^="name_"]').first().parent().prev().before( "<div class='Field'><a id='TranslationToggle'>Service Name Translations</a></div><div class='Clear'></div>" );
+	$('#TranslationToggle').click(function(){toogleNameTranslastions("[% Data.DefaultLanguage %]");});
+})
+
+
+
+//]]></script>
+[% END %]
+[% RenderBlockEnd("JavaScript") %]

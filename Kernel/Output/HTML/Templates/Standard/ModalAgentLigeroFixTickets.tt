@@ -1,0 +1,56 @@
+[% RenderBlockStart("TicketCardContent") %]
+<div id="LigeroFixModalHolder">
+    <div id="LigeroFixModalList" class="LigeroFixModalContent">
+[% RenderBlockStart("TicketCard") %]
+      <div id="ticketDesc[% Data.ID %]" class="Need">
+        <a href="#" onclick="loadContent([% Data.ID %]);">
+            [% Data.Title | html %]
+        </a>
+        <br>
+            <span>[% Data.Description %]</span>
+    </div>
+    <div id="ticketContent[% Data.ID %]" style="display:none;">
+      [% Data.Content %]
+    </div>
+    <script>
+    console.log("ENTROU AQUI", $("#ticketContent[% Data.FirstTicket %]").html());
+      $("#LigeroFixModalZoomContent").html(
+        $("#ticketContent[% Data.FirstTicket %]").html()
+      );
+      $(".Need").attr("class","Need");
+      $("#ticketDesc[% Data.FirstTicket %]").attr("class","Need SelectedFix");
+      $("#ticketSeletectedID").val([% Data.FirstTicket %]);
+    </script>
+[% RenderBlockEnd("TicketCard") %]
+
+
+    </div>
+    <div id="LigeroFixModalZoom" class="LigeroFixModalContent">
+      <input type="hidden" id="ticketSeletectedID"/>
+        <div id="LigeroFixModalZoomActions">
+            <button value="Link to the Ticket" onclick="LigeroFix.LinkToTheTicket('AgentLigeroFixTickets', $('#ticketSeletectedID').val())">[% Translate("Link to the ticket") %]</button>
+            <button value="View" onclick="openTicketNewTab();">[% Translate("Open in a new tab") %]</button>
+        </div>
+        <div id="LigeroFixModalZoomContent"></div>
+
+
+    </div>
+</div>
+[% RenderBlockEnd("TicketCardContent") %]
+
+<script>
+  function loadContent(ticketID){
+    $("#LigeroFixModalZoomContent").html(
+      $("#ticketContent"+ticketID).html()
+    );
+    $(".Need").attr("class","Need");
+    $("#ticketDesc"+ticketID).attr("class","Need SelectedFix");
+    $("#ticketSeletectedID").val(ticketID);
+  }
+
+  function openTicketNewTab(){
+    var win = window.open(Core.Config.Get('CGIHandle')+"?Action=AgentTicketZoom;TicketID="+$("#ticketSeletectedID").val(), '_blank');
+    win.focus();
+    LigeroFix.CloseModal();
+  }
+</script>

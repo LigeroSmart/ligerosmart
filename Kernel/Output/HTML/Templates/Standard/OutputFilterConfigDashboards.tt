@@ -1,0 +1,165 @@
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+
+/**
+ * Array que irá conter os blocks de configuração sendo editados no momento
+ */
+var beingEdited = [];
+
+/**
+ * Função que fica monitorando a existência de um determinado
+ * seletor no código e dispara o callback especificado
+ * com o block de elementos que casaram com o seletor
+ *
+ * @param string selector
+ * @param function cb
+ * @return void
+ */
+function waitEdition( selector, cb ) {
+    var poller1 = setInterval(function(){
+        var jObject = $(selector);
+        if(!jObject || jObject.length < 1){
+            beingEdited = [];
+            return;
+        }
+        cb(jObject)
+    },1000);
+}
+
+var WidgetOptions = {
+[% RenderBlockStart("WidgetOptionKey") %]
+    '[% Data.WidgetOptionKey %]': [
+[% RenderBlockStart("WidgetOptionValue") %]
+        '[% Translate(Data.WidgetOptionValue) %]',
+[% RenderBlockEnd("WidgetOptionValue") %]
+        ],
+[% RenderBlockEnd("WidgetOptionKey") %]
+};
+
+function applyFormElements( elRoot ) {
+
+[% RenderBlockStart("Parameter") %]
+$(elRoot).find(".Key[value='[% Data.Parameter %]']").next('div').children('input').each(
+function(){
+    var tval1='###'+$(this).parent().parent().parent().parent().parent().children('input').attr('value')+'_Hash###2-WidgetType';
+    if ('[% Data.Parameter %]' === 'Filter_Expired' || '[% Data.Parameter %]' === 'Theme')
+       tval1='###[% Data.Parameter %]';
+    var tName=$(this).attr('name');
+    var tName1=$(this).attr('name')+'_Hash';
+    var tVal=$(this).val();
+
+
+    var newSelect = $(     '<select name="'+tName+'" id="'+tName1+tval1+'" class="">' +
+[% RenderBlockStart("Option") %]
+          '<option value="[% Data.key %]">[% Data.content %]</option>' +
+[% RenderBlockEnd("Option") %]
+        '</select>').val(tVal).css('display','table-cell');
+    $(this).replaceWith(newSelect);
+    newSelect.next('button').remove();
+    newSelect.after('</br>');
+  }
+);
+[% RenderBlockEnd("Parameter") %]
+
+// FILTROS OVERVIEW BAR
+$(elRoot).find(".Key[value='3-Filter'],.Key[value='Filter']").next('div').children('input').each(
+    function(){
+        $(this).tagEditor({
+            autocomplete: { delay: 0, position: { collision: 'flip' }, 
+            source: [
+[% RenderBlockStart("Filter") %]
+                '[% Translate(Data.Type) | html %] [% Data.Name | html %] ([% Data.Key | html %]=[% Data.Value | html %])', 
+[% RenderBlockEnd("Filter") %]
+                ]},
+            forceLowercase: false,
+            delimiter:';',
+            placeholder: '[% Translate('Filters...') %]',
+            beforeTagSave: function(field, editor, tags, tag, val) {
+                val = val.substring(val.indexOf('(')+1, val.indexOf(')'));
+                return val;
+            },
+        });
+	}
+);
+
+
+
+// ATRIBUTOS WIDGETS
+$(elRoot).find(".Key[value='2-WidgetType']").next('div').children('select').each(function(){
+    var valor = $(this).val();
+    $(this).parent().parent().parent().children('div').children(".Key[value='4-WidgetOptions']").next('div').children('input').tagEditor({
+            autocomplete: { 
+                delay: 0,
+                position: { collision: 'flip' },  
+                source: WidgetOptions[valor],
+                minLength: 0,
+            },
+            forceLowercase: false,
+            delimiter:';',
+            placeholder: '[% Translate('Widget Options. Enter space to see all possible') %]',
+            beforeTagSave: function(field, editor, tags, tag, val) {
+                val = val.substring(val.indexOf('(')+1, val.indexOf(')'));
+                return val;
+            },
+        });
+});
+$(elRoot).find(".Key[value='2-WidgetType']").next('div').children('select').change(function(){
+    var valor = $(this).val();
+    $(this).parent().parent().parent().children('div').children(".Key[value='4-WidgetOptions']").next('div').children('input').val('').tagEditor('destroy').tagEditor({
+            autocomplete: { delay: 0, position: { collision: 'flip' }, 
+            source: WidgetOptions[valor] },
+            forceLowercase: false,
+            delimiter:';',
+            placeholder: '[% Translate('Widget Options. Enter space to see all possible') %]',
+            beforeTagSave: function(field, editor, tags, tag, val) {
+                val = val.substring(val.indexOf('(')+1, val.indexOf(')'));
+                return val;
+            },
+        });
+});
+
+/**
+ * Faz os ajustes de CSS necessários
+ */
+$(elRoot).find('.tag-editor').each(function() {
+	$(this).width('100%');
+	$(this).width( $(this).width()-30 );
+});
+
+}
+
+/**
+ * Aguarda entrar em modo de edição para aplicar os efeitos
+ * no block específico
+ */
+waitEdition('div.IsLockedByMe', function(block) {
+	var foundBlocks = [];
+	$(block).each(function() {
+		var cp = this;
+		var id = $(this).attr('id');
+		foundBlocks.push(id);
+		if ($.inArray(id,beingEdited) == -1) {
+			var checkOverlay = function(root) {
+				setTimeout(function() {
+					var overlay = $(root).find('.Overlay');
+					if (overlay.length)
+						checkOverlay(root);
+					else
+						applyFormElements(root);
+				}, 1000);
+			}
+			checkOverlay(cp);
+		}
+	});
+	beingEdited = foundBlocks;
+});
+
+/**
+ * Ajusta o CSS do input do autocomplete
+ */
+setInterval( function() {
+	$('.ui-autocomplete-input').css('border','0');
+}, 100);
+
+//]]></script>
+[% END %]

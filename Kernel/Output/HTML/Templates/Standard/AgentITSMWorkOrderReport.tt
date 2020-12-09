@@ -1,0 +1,135 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+# TODO. Add validation for the actual start and end times in the client side.
+<form action="[% Env("CGIHandle") %]" method="post" name="compose" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+    <input type="hidden" name="Subaction" value="Save"/>
+    <input type="hidden" name="WorkOrderID" value="[% Data.WorkOrderID | html %]"/>
+    <input type="hidden" name="FormID" value="[% Data.FormID | html %]"/>
+
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>[% Translate("Edit Report of %s%s-%s", Config("ITSMWorkOrder::Hook"), Data.ChangeNumber, Data.WorkOrderNumber) | html %] &ndash; [% Data.WorkOrderTitle | truncate(60) | html %]</h1>
+            <p>
+                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
+            </p>
+        </div>
+        <div class="Content">
+            <fieldset class="TableLike FixedLabel">
+                <label class="Mandatory" for="RichText"><span class="Marker">*</span> [% Translate("Report") | html %]:</label>
+                <div class="RichTextField Field">
+
+                    <textarea id="RichText" class="RichText Validate_Required [% Data.ReportInvalid %]" name="Report" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Report | html %]</textarea>
+                    <div id="RichTextError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                    <div id="RichTextServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                </div>
+                <div class="Clear"></div>
+
+[% RenderBlockStart("State") %]
+                <label for="WorkOrderStateID">[% Translate("State") | html %]:</label>
+                <div class="Field">
+                    [% Data.StateSelect %]
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("State") %]
+
+[% RenderBlockStart("DynamicField") %]
+                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+                    [% Data.Label %]
+                    <div class="Field">
+                        [% Data.Field %]
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+[% RenderBlockEnd("DynamicField") %]
+
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#[% RenderBlockStart("DynamicField_Field1") %]
+#                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+#                    [% Data.Label %]
+#                    <div class="Field">
+#                        [% Data.Field %]
+#                    </div>
+#                    <div class="Clear"></div>
+#                </div>
+#[% RenderBlockEnd("DynamicField_Field1") %]
+#[% RenderBlockStart("DynamicField_Field2") %]
+#                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+#                    [% Data.Label %]
+#                    <div class="Field">
+#                        [% Data.Field %]
+#                    </div>
+#                    <div class="Clear"></div>
+#                </div>
+#[% RenderBlockEnd("DynamicField_Field2") %]
+
+[% RenderBlockStart("ActualStartTime") %]
+                <label>[% Translate("Actual Start Time") | html %]:</label>
+                <div class="Field">
+                    [% Data.ActualStartTimeSelectionString %]
+                    <div id="ActualStartTimeDayError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+                    <div id="ActualStartTimeHourError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+[% RenderBlockStart("ActualStartTimeGenericServerError") %]
+                    <div id="ActualStartTimeDayServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+                    <div id="ActualStartTimeHourServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+[% RenderBlockEnd("ActualStartTimeGenericServerError") %]
+[% RenderBlockStart("ActualStartTimeBeforeThanEndTimeServerError") %]
+                    <div id="ActualStartTimeDayServerError" class="TooltipErrorMessage"><p>[% Translate("The actual start time must be before the actual end time!") | html %]</p></div>
+                    <div id="ActualStartTimeHourServerError" class="TooltipErrorMessage"><p>[% Translate("The actual start time must be before the actual end time!") | html %]</p></div>
+[% RenderBlockEnd("ActualStartTimeBeforeThanEndTimeServerError") %]
+[% RenderBlockStart("ActualStartTimeSetServerError") %]
+                    <div id="ActualStartTimeDayServerError" class="TooltipErrorMessage"><p>[% Translate("The actual start time must be set, when the actual end time is set!") | html %]</p></div>
+                    <div id="ActualStartTimeHourServerError" class="TooltipErrorMessage"><p>[% Translate("The actual start time must be set, when the actual end time is set!") | html %]</p></div>
+[% RenderBlockEnd("ActualStartTimeSetServerError") %]
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("ActualStartTime") %]
+
+[% RenderBlockStart("ActualEndTime") %]
+                <label>[% Translate("Actual End Time") | html %]:</label>
+                <div class="Field">
+                    [% Data.ActualEndTimeSelectionString %]
+                    <div id="ActualEndTimeDayError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                    <div id="ActualEndTimeHourError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                    <div id="ActualEndTimeDayServerError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                    <div id="ActualEndTimeHourServerError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("ActualEndTime") %]
+
+[% RenderBlockStart("ShowAccountedTime") %]
+                <label for="AccountedTime">[% Translate("Accounted Time") | html %]:</label>
+                <div class="Field">
+                    <input type="text" id="AccountedTime" name="AccountedTime" value="[% Data.AccountedTime | html %]" class="25pc Validate [% Data.AccountedTimeInvalid | html %]" maxlength="11"/>
+                    <div id="AccountedTimeError" class="TooltipErrorMessage" ><p>[% Translate("Invalid format.") | html %]</p></div>
+                    <div id="AccountedTimeServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid format.") | html %]</p></div>
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("ShowAccountedTime") %]
+
+[% RenderBlockStart("AttachmentUpload") %]
+                <label>[% Translate("Attachment") | html %]:</label>
+                <div class="Field">
+                    [% INCLUDE "FormElements/AttachmentList.tt" %]
+                </div>
+                <div class="Clear"></div>
+[% RenderBlockEnd("AttachmentUpload") %]
+
+                <div class="Field SpacingTop">
+                    <button class="Primary CallForAction" id="SubmitWorkOrderEditReport" accesskey="g" name="WorkOrderEdit" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">
+                        <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
+                    </button>
+                </div>
+
+            </fieldset>
+        </div>
+    </div>
+</form>

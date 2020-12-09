@@ -1,0 +1,80 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Application
+ * @subsection  Preferences
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsubsection     General
+ */
+
+.Preferences .WidgetSimple.Setting.IsLockedByMe {
+    border-left: 0px;
+}
+.Preferences .WidgetSimple.Setting.IsLockedByMe.IsModified {
+    border-left: 5px solid #999;
+}
+
+.DataTable.NotificationList {
+    width: 98%;
+}
+
+.Preferences .WidgetSimple.Setting.IsLockedByMe .Content .SettingUpdateBox {
+    width: 48px;
+    display: block !important;
+}
+
+.Preferences .WidgetSimple.Setting.ReadOnly .Content .SettingUpdateBox {
+    width: 48px;
+    display: block !important;
+}
+
+.WidgetSimple.Setting.ReadOnly .Content .SettingUpdateBox button {
+    margin-top: 7px;
+}
+
+.Preferences .WidgetSimple.Setting.IsLockedByMe .Content .SettingUpdateBox button.Cancel {
+    display: none;
+}
+
+.WidgetSimple.Setting .SettingWrapper > fieldset {
+    padding-right: 30px;
+}
+
+fieldset.TableLike > .Field.NoMargin {
+    margin-left: 0px;
+}
+
+.WidgetSimple .WidgetMessage.Top {
+	margin-top: 0px !important;
+	margin-bottom: 0px;
+}
+
+.PreferenceAvatar img {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 45px;
+    height: 45px;
+}
+
+#ToggleView.Grid .fa:last-child {
+    display: none !important;
+}
+
+#ToggleView.List .fa:first-child {
+    display: none !important;
+}
+
+} /* end @media*/

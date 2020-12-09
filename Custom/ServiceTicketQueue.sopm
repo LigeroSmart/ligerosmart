@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ServiceTicketQueue</Name>
+    <Version>6.0.1</Version>
+    <Vendor>Ligero [Community]</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Moves Ticket to a specific queue based on Ticket Service.
+        Check the manual at the end of the AddOn's page at the Intro Install section.
+    </Description>
+    <Framework>6.0.x</Framework>
+    <IntroInstall Lang="en" Title="Installation Information" Type="post">
+    AddOn Manuals:
+    &lt;br/&gt;
+    &lt;ul&gt;
+	    &lt;li&gt;
+			&lt;a target="_blank" href="https://docs.google.com/document/d/1fjrJZZQ5MnF7Pn4_UosOMM6pmxELXnghkCldbBjHD6I"&gt;Portuguese&lt;/a&gt;
+	    &lt;/li&gt;
+    &lt;/ul&gt;
+    </IntroInstall>    
+    <Filelist>
+        <File Location="Custom/ServiceTicketQueue.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/ServiceTicketQueue.xml" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/ServicePreferences/Queue.pm" Permission="644"></File>
+        <File Location="Kernel/System/Ticket/Event/ServiceTicketQueue.pm" Permission="644"></File>
+    </Filelist>
+</otrs_package>

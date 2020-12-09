@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>AccountedTime</Name>
+    <Version>6.0.7</Version>
+    <PackageRequired Version="6.x.x">HighCharts</PackageRequired>
+    <Vendor>Ligero Community</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog Date="2017-09-19 15:13:00" Version="5.2.6">Register accounted time in Dynamic Fields for easy report generation.
+                Register Accounted Time in minutes on time_accounting table for better compatibility with OTRS original system.
+                Removed OLD calulated SQL time calculation. Now we use the same TicketAccountedTimeGet OTRS function.
+                Created a Console Command to recalculate all tickets AccountedTime and store the values on Dynamic Fields.
+                Created a package installer that should created some dynamic fields (AccountedTimeInMin and AccountedTime)</ChangeLog>
+    <ChangeLog Date="2017-03-09 15:13:00" Version="5.1.6">Fix pagination in CustomerReport interface </ChangeLog>
+    <ChangeLog Date="2017-02-20 09:50:00" Version="5.1.4">Changed AddOn mame from ComplementoAccountedTime to AccountedTime. Changed Vendor name to Complemento [Free]. Changed sopm location to /opt/otrs</ChangeLog>
+    <ChangeLog Date="2013-08-19 09:50:00" Version="0.8">First Release</ChangeLog>
+    <Description Lang="en">AccountedTimeComplemento</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="Custom/AccountedTime.sopm" Permission="644"></File>
+    	<File Location="Custom/Kernel/Modules/CustomerTicketSearch.pm" Permission="644"></File>
+    	<File Location="Custom/Kernel/Output/HTML/Templates/Standard/CustomerTicketSearchResultShort.tt" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/Complemento.AccountedTime.xml" Permission="644"></File>
+    	<File Location="Kernel/Language/pt_BR_AccountedTime.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/CustomerReports.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/CustomFields.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/ComplementoAccountedTime.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/OutputFilterCustomFields/OutputFilterCustomFields.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/CustomerReports.tt" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/ShowCustomFields.tt" Permission="644"></File>
+        <File Location="Kernel/System/AccountedTime.pm" Permission="644"></File>
+        <File Location="Kernel/System/Console/Command/Maint/AccountedTime/CalculateAllTickets.pm" Permission="644"></File>
+        <File Location="Kernel/System/Ticket/Event/AccountedTime.pm" Permission="644"></File>
+        <File Location="Kernel/System/Ticket/Event/StoreAccountedTimeDF.pm" Permission="644"></File>
+        <File Location="Kernel/System/CustomerCompany/DBAccountedTime.pm" Permission="644"></File>
+    	<File Location="var/httpd/htdocs/js/Core.AccountedTime.Validate.js" Permission="644"></File>
+    	<File Location="var/httpd/htdocs/js/Core.AccountedTime.ValidateOneDay.js" Permission="644"></File>
+        <File Location="var/packagesetup/AccountedTime.pm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/Complemento.CustomAccountedTime.xml" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/ComplementoAccountedTime.pm" Permission="644"></File>
+        <File Location="Kernel/System/Ticket/CustomAccountedTimeGet.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/CustomerReports.tt" Permission="644"></File>
+        <File Location="Kernel/System/Stats/Dynamic/TicketCustomerIDSumTime.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/ComplementoWorkHours.pm" Permission="644"></File>
+    </Filelist>
+    <CodeInstall Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+    </CodeInstall>
+	<CodeUpgrade Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+    </CodeUpgrade>
+</otrs_package>

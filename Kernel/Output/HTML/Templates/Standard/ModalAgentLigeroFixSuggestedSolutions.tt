@@ -1,0 +1,78 @@
+[% RenderBlockStart("FaqCardContent") %]
+<div id="LigeroFixModalHolder">
+    <div id="LigeroFixModalList" class="LigeroFixModalContent">
+[% RenderBlockStart("FaqCard") %]
+      <div id="faqDesc[% Data.ID %]" class="Need">
+        <a href="#" onclick="loadContent([% Data.ID %]);">
+            [% Data.Title | html %]
+        </a>
+        <br>
+            <span>[% Data.Description %]</span>
+    </div>
+    <div id="faqContent[% Data.ID %]" style="display:none;">
+[% RenderBlockStart("AttachmentHeader") %]
+                <div class="WidgetSimple">
+                    <div class="Header">
+                        <h2>[% Translate("Attachments") | html %]:</h2>
+                        <div class="Clear"></div>
+                    </div>
+                    <div class="ArticleFAQContent">
+                        <div class="message">
+
+[% RenderBlockStart("AttachmentRow") %]
+                            <span class="DownloadAttachment" title="[% Translate("Download Attachment") | html %]">
+                                <a href="[% Env("Baselink") %]Action=AgentFAQZoom;Subaction=DownloadAttachment;ItemID=[% Data.ItemID | uri %];FileID=[% Data.FileID | uri %]">
+                                    [% Data.Filename | html %]
+                                </a>
+                                , [% Data.Filesize | html %]
+                            </span>
+                            <br/>
+[% RenderBlockEnd("AttachmentRow") %]
+
+                        </div>
+                    </div>
+                </div>
+[% RenderBlockEnd("AttachmentHeader") %]
+      [% Data.Content %]
+    </div>
+    <script>
+      $("#LigeroFixModalZoomContent").html(
+        $("#faqContent[% Data.FirstFaq %]").html()
+      );
+      $(".Need").attr("class","Need");
+      $("#faqDesc[% Data.FirstFaq %]").attr("class","Need SelectedFix");
+      $("#faqSeletectedID").val([% Data.FirstFaq %]);
+    </script>
+[% RenderBlockEnd("FaqCard") %]
+
+
+    </div>
+    <div id="LigeroFixModalZoom" class="LigeroFixModalContent">
+      <input type="hidden" id="faqSeletectedID"/>
+        <div id="LigeroFixModalZoomActions">
+            <button value="Link to the Ticket" onclick="LigeroFix.LinkToTheTicket('AgentLigeroFixSuggestedSolutions', $('#faqSeletectedID').val())">[% Translate("Link to the ticket") %]</button>
+            <button value="View" onclick="openFaqNewTab();">[% Translate("Open in a new tab") %]</button>
+        </div>
+        <div id="LigeroFixModalZoomContent"></div>
+
+
+    </div>
+</div>
+[% RenderBlockEnd("FaqCardContent") %]
+
+<script>
+  function loadContent(faqID){
+    $("#LigeroFixModalZoomContent").html(
+      $("#faqContent"+faqID).html()
+    );
+    $(".Need").attr("class","Need");
+    $("#faqDesc"+faqID).attr("class","Need SelectedFix");
+    $("#faqSeletectedID").val(faqID);
+  }
+
+  function openFaqNewTab(){
+    var win = window.open(Core.Config.Get('CGIHandle')+"?Action=AgentFAQZoom;ItemID="+$("#faqSeletectedID").val(), '_blank');
+    win.focus();
+    LigeroFix.CloseModal();
+  }
+</script>

@@ -1,0 +1,971 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Ligero Smart 2019"
+ * @section     Default Settings
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Fonts
+ */
+
+body {
+    font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    text-align: left;
+    position: relative;
+	background: #eff1f7;
+}
+
+.RTL {
+    text-align: right;
+    /* this will inherit to all elemtents because of reset.css */
+    direction: rtl;
+}
+
+#ViewModeSwitch {
+    margin: 5px 0px;
+}
+
+#AjaxErrorDialog {
+    display: none;
+}
+
+#AjaxErrorDialogInner {
+    width: 550px;
+    text-align: center;
+}
+
+#AjaxErrorDialogInner .Icon {
+    text-align: center;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 0px auto 10px auto;
+    line-height: 30px;
+    border-radius: 50px;
+    background: #f92;
+    color: #fff;
+    transition: background 2s ease;
+    float: none;
+}
+
+#AjaxErrorDialogInner .Icon + p {
+    margin: 0px auto 5px auto;
+    width: 90%;
+}
+
+#AjaxErrorDialogInner .Icon i {
+    font-size: 18px;
+    vertical-align: middle;
+    margin-top: -3px;
+}
+
+#AjaxErrorDialogInner .CommunicationError .Icon {
+    background: #b8384e;
+}
+
+#AjaxErrorDialogInner .Icon.Green {
+    background: green;
+}
+
+#AjaxErrorDialogInner .FullErrorMessage {
+    color: red;
+    margin: 5px 0px;
+}
+
+
+/**
+ * @subsection  Default
+ */
+a {
+    color: #36427b;
+    text-decoration: none;
+}
+a:hover, a:focus {
+    color: #00a5d4;
+}
+
+
+/**
+ * @subsection  Header
+ */
+ #Header {
+    height: 65px;
+    padding: 10px 0 12px;
+    background: #492d77;
+	background-size: 50%;
+    border-bottom:35px solid #eff1f7;
+    position: relative;
+
+}
+
+/**
+ * @subsection  Logo
+ */
+#Logo {
+	top: 12px !important;
+    right: 0px !important;
+    width: 250px !important;
+    height: 70px !important;
+    background: url(../img/ligerologo.png) no-repeat !important;
+    position: absolute;
+}
+
+.RTL #Logo {
+    right: auto;
+    left: 38px;
+}
+
+
+/**
+ * @subsection  Toolbar
+ */
+#ToolBar {
+    left: 20px;
+    top: 10px;
+    position: absolute;
+}
+
+#ToolBar:last-child {
+    margin-left: 0px;
+}
+
+.RTL #ToolBar {
+    float: right;
+}
+
+#ToolBar li {
+    width: 24px;
+    height: 34px;
+    margin: 0 5px;
+    float: left;
+    position: relative;
+}
+
+.RTL #ToolBar li {
+    float: right;
+}
+
+#ToolBar li.Extended {
+    width: auto;
+}
+
+#ToolBar li.Extended form * {
+    float: left;
+}
+
+#ToolBar li.Extended form select {
+    margin-top: 1px;
+}
+
+#ToolBar a {
+    height: 20px;
+    width: 24px;
+    text-indent: -9999px;
+    position: relative;
+    display: block;
+}
+
+#ToolBar a i {
+    display: block !important;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: normal !important;
+    padding: 0;
+    text-align: center;
+    text-indent: 0;
+    text-shadow: none;
+    width: 24px;
+    position: relative;
+    top: -9px;
+	color: #FFF !important;
+}
+
+#ToolBar a i:hover {
+	color: #888 !important;
+}
+
+#ToolBar a i.icon-small {
+    font-size: 12px !important;
+    position: absolute;
+    right: -7px;
+    text-align: center;
+    top: -3px;
+    width: 15px;
+    display: none !important;
+	color: #D1D3D4;
+}
+
+#ToolBar .New .icon-small.icon-show-new {
+    display: block !important;
+}
+
+#ToolBar .Reached .icon-small.icon-show-reached {
+    display: block !important;
+}
+
+#ToolBar a span.Counter {
+    bottom: -14px;
+    color: #36427b;
+    display: block;
+    font-size: 11px;
+    left: 50%;
+    margin-left: -12px;
+    position: absolute;
+    text-align: center;
+    text-indent: 0 !important;
+    width: 24px;
+}
+
+
+#ToolBar .Extended input[type="text"] {
+
+    padding: 4px 7px 5px 22px;
+    background: #fff;
+    border: 1px solid #790000;
+    box-shadow: none;
+    position: relative;
+    top: -1px;
+    margin-right: -5px;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    transition: all ease 0.3s;
+
+}
+
+/**
+ * @subsection      Navigation Level-0
+ */
+
+#NavigationContainer {
+    position: absolute;
+    top: 54px;
+    left: 18px !important;
+    z-index: 20;
+    width: 98%;
+    height: 65px;
+    overflow: hidden;
+	border-radius: 3px;
+	padding: 0px 0px 30px
+}
+
+#NavigationContainer #Navigation {
+    left: 0px;
+    position: absolute;
+    border: 1px solid #492d77;
+    border-radius: 3px;
+}
+
+.RTL #NavigationContainer {
+    left: auto;
+    right: 10px;
+}
+
+#NavigationContainer > a {
+    background: #eb132b;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 13px;
+    height: 34px;
+    line-height: 28px;
+    position: absolute;
+    text-align: center;
+    width: 20px;
+    z-index: 100;
+}
+
+#NavigationContainer > a.NavigationBarNavigateRight {
+    right: 0px;
+}
+
+#NavigationContainer > a.NavigationBarNavigateLeft {
+    left: 0px;
+}
+
+#NavigationContainer > a:hover {
+    padding-top: 1px;
+    padding-left: 1px;
+    width: 19px;
+    height: 33px;
+}
+
+#NavigationContainer > a i {
+    margin-top: 10px;
+    display: block;
+}
+
+#NavigationContainer > .fa-check {
+    position: absolute;
+    font-size: 15px;
+    top: 8px;
+    color: #777;
+    display: none;
+}
+#Navigation > li {
+    float: left;
+    position: relative;
+    background: #FFF;
+    margin-right: 0px;
+    border-bottom: none;
+}
+
+#Navigation > li > a {
+    display: block;
+    height: 30px;
+    padding: 30px 15px 0px 15px;
+    font-size: 15px;
+    line-height: 30px;
+    color: #492d77;
+}
+
+#Navigation > li > a:hover, a:active{
+	color: #CCC;
+}
+
+#Navigation > li > a#GlobalSearchNav {
+    padding-right: 21px;
+}
+
+#Navigation > li > a#GlobalSearchNav i {
+    font-size: 26px;
+    margin-top: 1px;
+}
+
+.RTL #Navigation > li > a {
+    padding: 4px 4px 3px 15px;
+}
+
+.RTL #Navigation > li > a#GlobalSearchNav {
+    padding-right: 4px;
+    padding-left: 26px;
+}
+
+#Navigation > li:hover {
+    cursor: pointer;
+    border-color: #888;
+}
+
+#Navigation > li:hover > a,
+#Navigation > li:active > a {
+	color: #888;
+}
+
+#Navigation > .Selected {
+    border-color: none;
+    z-index: 90;
+}
+
+#Navigation > .Selected > a {
+    color: #ff8900;
+	font-weight: bolder;
+	
+}
+
+/**
+ * @subsection      Search icon
+ */
+#Navigation .Search {
+    width: 26px;
+}
+
+#Navigation a i {
+    top: 5px;
+    left: 15px;
+    font-size: 25px;
+    position: absolute;
+}
+
+/**
+ * @subsection      Navigation Second level
+ */
+
+#Navigation > li > ul {
+    display: none;
+}
+
+#Navigation > .Active > ul {
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    display: block;
+    min-width: 240px;
+    z-index: 99;
+    background: #36427b;
+	border-radius: 2px 2px 2px;
+}
+
+.RTL #Navigation > .Active > ul {
+    left: auto;
+    right: -9px;
+}
+
+#Navigation > .Active > ul > li {
+    font-size: 12px;
+    line-height: 11px;
+    margin-top: -1px;
+    position: relative;
+}
+
+#Navigation > .Active > ul > li:hover {
+    background: #FFF;
+	border-radius: 2px 2px 2px;
+}
+
+#Navigation > .Active > ul > li:hover > a {
+    color: #000000;
+}
+
+#Navigation > .Active > ul > li > a {
+    display: block;
+    position: relative;
+    color: #FFF;
+    padding: 10px 10px 10px 10px;
+    border-bottom: none;
+}
+
+#Navigation > .Active > ul > li:last-child > a {
+    border-bottom: none;
+}
+.iconemenu{
+	width:60%;
+	text-align:center;
+	margin:auto
+}
+.MessageBox.Error {
+    background: #F25C5C;
+    border-radius: 2px 2px;
+}
+
+.MessageBox {
+    margin: 5px 17px 6px 18px;
+    background: #F7AE40;
+    position: relative;
+    z-index: 1;
+    border-radius: 2px 2px;
+}
+
+/**
+ * Main box H1
+ */
+ 
+.MainBox > h1 {
+    margin: 0;
+    padding: 14px 0 12px 3px;
+    position: relative;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.OverviewBox > h1 {
+    margin: 10px 10px;
+    padding: 8px 11px 7px;
+    position: relative;
+}
+
+/**
+ * @subsection  Widget and Table
+ */
+ 
+.WidgetSimple {
+    margin-bottom: 15px;
+    background: #FFF;
+    border: #492d77 solid 1px;
+	border-radius: 3px 3px;
+	margin-left: 10px;
+	
+}
+
+.WidgetSimple > .Content {
+    padding: 8px 8px 8px 15px;
+    overflow: auto;
+    min-height: 0%;
+}
+
+.WidgetSimple .WidgetSimple {
+    background: #ffffff;
+    border: 1px solid #492d77;
+    margin: 10px 10px;
+}
+
+.WidgetSimple > .Header, .WidgetSimple.Collapsed.AnimationRunning > .Header {
+    padding: 2px 5px 2px 5px;
+    position: relative;
+    background-color: rgba(204,154,129,0);
+    border-bottom: #492d77 solid 1px;
+}
+.WidgetSimple > .Header, .WidgetSimple.Collapsed.AnimationRunning > .Header {
+    padding: 2px 5px 2px 5px;
+    position: relative;
+    background-color: rgba(204,154,129,0);
+}	
+.WidgetSimple > .Header h2, .WidgetSimple > .Header h3 {
+    padding: 5px 5px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.375rem;
+    color: #492d77;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+.WidgetAction.Toggle i {
+    font-size: 17px;
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    color: #492d77 !important;
+}
+
+.DataTable {
+    width: 100%;
+    background-color: #FFF;
+    border: none;
+    clear: both;
+    border-collapse: separate;
+}
+.DataTable thead th {
+    padding: 4px 10px 3px;
+    color: #492d77;
+    font-size: 18px;
+    text-transform: none;
+    background: #fff;
+    border-bottom: 1px solid #492d77;
+    border-right: none;
+    vertical-align: bottom;
+    white-space: nowrap;
+}
+.DataTable tr:nth-child(even) td {
+    background-color: #FFF;
+}
+.DataTable tbody tr:hover td, .TableSmall tbody tr:hover td, .DataTable tbody tr:active td.Clickable, .TableSmall tbody tr:active td.Clickable {
+    background: #492d77;
+    border-radius: 2px 2px;
+}
+.DataTable tr:hover, .TableSmall tr:hover {
+    color: #FFF;
+}
+.DataTable tr:hover td a {
+    color: #FFF;
+}
+.DataTable thead th a {
+    background-image: none;
+    color: #492d77;
+    font-size: 12px;
+    height: 12px;
+    line-height: 12px;
+    display: block;
+}
+.Tab.Actions li a {
+    padding: 5px 5px 8px 2px;
+    color: #492d77;
+}
+.Actions li {
+    line-height: 18px;
+    font-size: 14px;
+    display: inline-block;
+    z-index: 19;
+}
+.CallForAction span, .cke_dialog_footer_buttons td a.cke_dialog_ui_button span {
+    min-height: 12px;
+    padding: 3px 7px 6px;
+    line-height: 14px;
+    vertical-align: middle;
+    color: #492d77;
+    font-size: 14px;
+    border: none;
+    border-bottom: none;
+    display: block;
+    text-shadow: 0 1px 0 #FFF;
+    cursor: pointer;
+    position: relative;
+}
+.CallForAction, .cke_dialog_footer_buttons a.cke_dialog_ui_button {
+    padding: 5px;
+    background: #ffffff;
+    border-radius: 2px 2px;
+    border: 1px solid #492d77;
+    display: inline-block;
+    cursor: pointer;
+    transition: all ease-in 0.2s;
+}
+.SettingsWidget label:hover {
+    background-color: #ffffff00;
+    border-radius: 2px 2px;
+    color: #000;
+    border: 1px solid #492d77;
+    padding: 1px 1px 1px 24px;
+}
+.LayoutFixedSidebar.SidebarFirst > .SidebarColumn {
+    width: 300px;
+    float: left;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.LayoutFixedSidebar.SidebarLast > .SidebarColumn {
+    width: 300px;
+    float: right;
+    /* margin-left: 16px; */
+    margin: 0;
+}
+
+input[type=text], input[type=password], input[type=email], textarea, select[multiple=multiple] {
+    border: 1px solid #492d77;
+    border-top-color: #492d77;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #FFF;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 3px;
+}
+div.InputField_Selection div.Text {
+    background: none;
+    padding: 2px 4px;
+}
+
+.Actions li:first-child {
+    margin-left: 0;
+    padding-left: 0px;
+}
+
+
+
+/**
+ * @subsection  View Queue, states, scalation, controls
+  */
+  
+  
+ .OverviewControl {
+    background-color: #eff1f7;
+	padding-left: 10px;
+}
+
+.QueueOverview {
+    font-size: 12px;
+    margin: 0 16px 0px 18px !important;
+    padding: 0 0 4px 0;
+    color: gray;
+}
+  
+.ControlRow {
+    position: relative;
+    overflow: hidden;
+    min-height: 24px;
+    background-color: #fff;
+	margin-bottom: 5px;
+    border: 1px solid #492d77;
+    border-radius: 3px;
+}
+
+.ControlRow li.Active, .ControlRow li.Active:hover, .ControlRow li.Active:active {
+    background: #492d77;
+    padding-left: 2px;
+}
+
+.ActionRow {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+	border-radius: 3px;
+}
+
+.OverviewZoom .Active a, .OverviewZoom .Active a:hover {
+    background: #492d77;
+    color: #fff;
+}
+
+#OverviewBody {
+    margin: 10px 15px 8px 17px;
+    border-left: 1px solid #DDD;
+    border-right: 1px solid #DDD;
+}
+
+.TableSmall {
+    width: 100%;
+    font-size: 12px;
+    color: #492d77;
+    border: 1px solid #492d77;
+    /* border-bottom: 1px solid #492d77; */
+    background: #fff;
+    border-radius: 3px;
+}
+
+.TableSmall thead th {
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #492d77;
+    vertical-align: bottom;
+    background: #ffffff;
+}
+
+.TableSmall tr:hover td a, .TableSmall tr.Active td a {
+    color: #ff5c22;
+}
+
+.OverviewMedium li {
+    position: relative;
+    border: 1px solid #492d77 !important;
+    min-height: 105px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    /* border-left: 1px solid #492d77; */
+    /* border-right: 1px solid #492d77; */
+}
+
+.OverviewLarge li {
+    position: relative;
+    border: 1px solid #492d77 !important;
+    min-height: 105px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    /* border-left: 1px solid #492d77; */
+    /* border-right: 1px solid #492d77; */
+}
+.OverviewLarge li:hover div.Content, .OverviewLarge li:hover,
+.OverviewMedium li:hover div.Content, .OverviewMedium li:hover {
+    border-left-color: #492d77 !important;
+}
+
+.OverviewLarge li ul.InlineActions li a,
+.OverviewMedium li ul.InlineActions li a {
+    color: #492d77;
+}
+
+.OverviewLarge li ul.InlineActions,
+.OverviewMedium li ul.InlineActions {
+    position: absolute;
+    top: -35px;
+    right: 3px;
+    height: 35px;
+    background-color: #fff;
+	border-radius: 3px;
+    margin-right: 0px;
+    padding-left: 5px;
+    cursor: auto;
+    transition: all ease-in 0.2s;
+}
+
+.Actions li:after {
+    content: none;
+    
+}
+
+.OverviewLarge .Preview > ul {
+    margin: 0 5px 2px;
+    background-color: #FFF;
+    border: none;
+}
+
+.OverviewLarge .Preview li.Active h3 {
+    background: #ffffff;
+    border-color: #ffffff;
+}
+.OverviewLarge .Preview h3 {
+    margin: 0;
+    font-size: 12px;
+    background: #fff3ef;
+    border: 1px solid #E1E1E1;
+}
+
+.OverviewLarge .Content.ShowInlineActions {
+    padding-top: 35px;
+}
+/**
+ * @subsection Ticket
+ */
+ 
+.Cluster ul ul li a:hover {
+    border-color: #492d77 !important;
+    background: #fff !important;
+    border-radius: 2px 2px;
+}
+.Actions li a, .Actions li span {
+    padding: 5px 2px 5px;
+    color: #492d77;
+    display: inline-block;
+    border-bottom: 2px solid #ff000000;
+}
+.ControlRow .Icons a.Active {
+    background: #492d77;
+    border-radius: 2px 2px;
+}
+.ControlRow .Icons a:hover {
+    background-color: #FFF;
+    border-radius: 2px 2px;
+    border: #492d77 solid 1px;
+}
+#ArticleItems > div > div.WidgetSimple {
+    margin-bottom: 4px !important;
+    border-bottom: 1px solid #492d77 !important;
+}
+	
+#ArticleItems .WidgetSimple .Header {
+    overflow: hidden;
+    border-radius: 3px 3px;
+}
+#ArticleItems > div > div > div.Header > h2 {
+    padding: 7px 3px 7px 3px !important;
+    color: #492d77 !important;
+    white-space: normal;
+    font-size: 15px;
+}
+
+.ArticleMailContentHTMLWrapper iframe {
+    -moz-transition: height 300ms ease;
+    -webkit-transition: height 300ms ease;
+    -o-transition: height 300ms ease;
+    transition: height 300ms ease;   
+}
+/*
+* Agent article types
+*/
+#ArticleItems > div > div.WidgetSimple{
+	margin-bottom: 5px !important;
+}
+
+.UseArticleColors .system-email-external > td,
+.UseArticleColors .system-email-external .Header {
+    background: #FFF !important;
+	border-left: 12px solid #ffffd1;
+}
+
+.UseArticleColors .agent-phone > td,
+.UseArticleColors .agent-phone .Header {
+    background: #FFF !important;
+	border-left: 12px solid #d1e8d1;
+}
+.UseArticleColors .agent-email-external > td,
+.UseArticleColors .agent-email-external .Header {
+    background: #FFF !important;
+	border-left: 12px solid #7f9c47;
+}
+.UseArticleColors .agent-email-internal > td,
+.UseArticleColors .agent-email-internal .Header {
+    background: #FFF !important;
+    border-left: 12px solid #ffd1d1;
+}
+
+.UseArticleColors .agent-note-external > td,
+.UseArticleColors .agent-note-external .Header {
+    background: #FFF !important;
+    border-left: 12px solid #d1d1d1;
+}
+.UseArticleColors .agent-note-internal > td,
+.UseArticleColors .agent-note-internal .Header {
+    background: #FFF !important;
+    border-left: 12px solid #C45B6F;
+}
+
+.Actions li a:hover, .Actions li span:hover, .OverviewZoom a:hover {
+    border-color: #492d77;
+}
+/*
+* Customer artcle types
+*/
+.UseArticleColors .customer-phone > td,
+.UseArticleColors .customer-phone .Header {
+	background: #FFF !important;
+	border-left: 12px solid #649a64;
+}
+
+.UseArticleColors .customer-webrequest > td,
+.UseArticleColors .customer-webrequest .Header {
+	background: #FFF !important;
+    border-left: 12px solid #65a4b7;	
+}
+
+.UseArticleColors .customer-email-external > td,
+.UseArticleColors .customer-email-external .Header,
+.UseArticleColors .customer-note-external > td,
+.UseArticleColors .customer-note-external .Heade {
+	background: #FFF !important;
+    border-left: 12px solid #657DB7;
+}
+.MessageBrowser {
+    margin: 5px 0;
+    padding: 0px;
+    border: 1px solid #492d77;
+    border-radius: 2px;
+    position: relative;
+	border-radius: 3px;
+}
+.MessageBrowser p {
+    padding: 5px 25px 5px 25px;
+    background-color: #fff;
+    font-size: 11px;
+    text-align: center;
+}
+.LightRow.Bottom {
+    background: #ffffff;
+    border-bottom: 1px solid #492d77;
+}
+.ArticleMailContent iframe {
+    background: #fff;
+    border: 1px solid #492d77;
+	border-radius: 3px;
+}
+/**
+ * @subsection  FAQ
+ */
+
+.BreadCrumb {
+    list-style-type: none;
+    margin: 0px 0px 15px 0px;
+    padding: 10px;
+    background: #eff1f7;
+    position: relative;
+    padding-left: 0px;
+    padding-right: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.BreadCrumb li:before {
+    left: -4px;
+    border-color: rgba(238,238,238,0);
+    border-left-color: #eff1f7;
+    z-index: 2;
+}
+
+.FAQ #OverviewBody {
+    margin: 5px 0 20px 10px;
+}
+
+fieldset.TableLike.FixedLabel > label, fieldset.TableLike.FixedLabel > .Row > label {
+    width: auto;
+}
+ 
+/**
+ * Admin
+ */
+ 
+  #Row1 .WidgetSimple {
+    min-height: 304px;
+    border: 1px solid #492d77;
+}
+ 
+ #Row2 .WidgetSimple {
+    min-height: 304px;
+    border: 1px solid #492d77;
+}
+
+.Admin .Size1of2 h4 {
+    margin: 0 2px 0 0;
+    padding: 5px 5px 4px;
+    color: #ff8900 !important;
+    border: 1px solid transparent;
+    border-bottom: none;
+}
+
+/**
+ * End file
+ */
+}
+
