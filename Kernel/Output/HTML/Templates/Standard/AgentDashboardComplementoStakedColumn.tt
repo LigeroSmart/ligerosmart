@@ -1,0 +1,126 @@
+<div class="CompWidgetContainer" style="width:[% Data.Width %]%">
+    <div class="CompWidgetBorder">
+        <div id="[% Data.Container %]" class="CompWidget">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+if ( ! window.deferAfterjQueryLoaded ) {
+    window.deferAfterjQueryLoaded = [];
+}
+window.deferAfterjQueryLoaded.push(function() {
+    var chart;
+        chart = new Highcharts.Chart({
+            credits: {
+                enabled: false
+            },
+            chart: {
+                renderTo: '[% Data.Container %]',
+                type: 'column',
+                borderColor: '#CCC',
+                borderWidth: 1,
+                borderRadius: 0,
+            },
+            title: {
+                text: '[% Translate(Data.Title) | html %]'
+            },
+            xAxis: {
+                categories: [
+[% RenderBlockStart("category") %]
+                    '[% Translate(Data.Category) | html %]',
+[% RenderBlockEnd("category") %]
+
+                        ],
+
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '[% Translate("Tickets") | html %]'
+                },
+                stackLabels: {
+//                   Mostra o total acima da coluna
+                    enabled: true,
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray',
+      	                fontFamily: 'Arial, "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, sans-serif', // default font
+       	                fontSize: '20px'
+
+                    }
+                }
+            },
+            legend: {
+                align: 'center',
+//#                x: -100,
+                verticalAlign: 'bottom',
+//#                y: 20,
+                floating: false,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
+                borderColor: '#CCC',
+                borderWidth: 1,
+                shadow: false,
+
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y +'<br/>'+
+                        'Total: '+ this.point.stackTotal;
+                }
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true,
+                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                        style: {
+        	                fontFamily: 'Arial, "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, sans-serif', // default font
+        	                fontSize: '16px'
+                        },
+                        align: 'center',
+                        formatter: function(){
+                            if (this.y >39){
+                                    return this.y;
+                            }
+                                
+                        },
+                        verticalAlign: 'middle',
+                    },
+                    
+                },
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                location.href = "?"+this.options.url;
+  //                              alert(this.options.url);
+                            }
+                        }
+                    }
+                }
+            },
+            series: [
+[% RenderBlockStart("Series") %]
+            {
+                name: '[% Translate(Data.Serie) | html %]',
+                data: [
+[% RenderBlockStart("SerieValue") %]
+                {
+                    y: [% Data.SerieValue %],
+                    url: '[% Data.SerieUrl %]'
+                },
+[% RenderBlockEnd("SerieValue") %]
+                ],
+            },
+[% RenderBlockEnd("Series") %]
+            ],
+        });
+});
+    
+
+		</script>
+

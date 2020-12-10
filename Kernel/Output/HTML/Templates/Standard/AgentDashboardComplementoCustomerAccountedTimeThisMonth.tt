@@ -1,0 +1,83 @@
+<style type="text/css">
+.AccountedThisMonthCenter {
+    text-align: center;
+}
+.AccountedThisMonthRight {
+    text-align: right;
+}
+
+div.AccountedThisMonthDiv{
+    display: grid;
+    max-height: 289px !important;
+    position: relative;
+    overflow: auto;
+}
+
+table.AccountedThisMonthTable{
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.AccountedThisMonthTable thead
+{
+    width: 100% !important;
+
+}
+
+table.AccountedThisMonthTable tbody 
+{
+    width: 100% !important;
+    overflow: auto;
+
+
+}
+
+</style>
+<div class="CompWidgetContainer" style="width:[% Data.Width %]%; height:100% !important;  ">
+    <div class="CompWidgetBorder AccountedThisMonthDiv" style="">
+[% RenderBlockStart("Title") %] 
+        <div style="width:100%;
+                    text-align:center;
+                    font-size:10pt; 
+                    display:block;
+                    padding: 4px 0px 4px 0px;
+                    color:#444;
+                    background-color:#eee;
+                    margin-right:5px;
+                    border-bottom: 1px solid #CCC;">
+            [% Translate(Data.Title) %]</div>
+[% RenderBlockEnd("Title") %] 
+        <table class="AccountedThisMonthTable"  style="">
+            <thead>
+                <tr>
+                        <th class=""> [% Translate("Contract") %]</th>
+                        <th class="AccountedThisMonthCenter"> [% Translate("Quota") %]</th>
+                        <th class="AccountedThisMonthCenter"> [% Translate("Consumed") %]</th>
+                        <th class="AccountedThisMonthCenter"> [% Translate("Used") %]</th>
+                        <th class="AccountedThisMonthCenter"> [% Translate("Overbalance") %]</th>
+                </tr>
+            </thead>
+            <tbody style="max-height: 290px;">
+                [% RenderBlockStart("TrItem") %]   
+                 <tr>
+                    <td>[%Data.FullName %] </td>
+                    <td class="AccountedThisMonthCenter">[%Data.Quota %] </td>
+                    <td class="AccountedThisMonthCenter">[%Data.Month    %] </td>
+                    <td class="AccountedThisMonthCenter">[%Data.Percentual %]%</td>
+                    <td class="AccountedThisMonthCenter">[%Data.Overbalance %] </td>
+                </tr>
+                [% RenderBlockEnd("TrItem") %]
+                <tr>
+                [% RenderBlockStart("TrTotal") %] 
+                    <td class="AccountedThisMonthRight">[%Data.Total %] </td>
+                    <td class="AccountedThisMonthCenter">[%Data.TotalQuota %] </td>
+                    <td class="AccountedThisMonthCenter">[%Data.TotalMonth %] </td>
+                    <td class="AccountedThisMonthCenter">&nbsp; </td>
+                    <td class="AccountedThisMonthCenter">[%Data.TotalOverbalance %] </td>
+                [% RenderBlockEnd("TrTotal") %]  	
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

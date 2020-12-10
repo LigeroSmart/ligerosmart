@@ -1,0 +1,88 @@
+<div class="CompWidgetContainer" style="width:[% Data.Width %]%">
+    <div class="CompWidgetBorder">
+        <div id="[% Data.Container %]" class="CompWidget">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+if ( ! window.deferAfterjQueryLoaded ) {
+    window.deferAfterjQueryLoaded = [];
+}
+window.deferAfterjQueryLoaded.push(function() {
+
+        var chart;
+        Highcharts.setOptions({
+            lang: {
+//                noData:'[% Translate("No tickets here yet!") | html %]',-->
+            }
+        });
+        chart = new Highcharts.Chart({
+            credits: {
+                enabled: false
+            },
+            chart: {
+                renderTo: '[% Data.Container %]',
+                polar: true,
+                type: 'line',
+            },
+            title: {
+                text: '[% Translate(Data.Title) | html %]',
+                
+            },
+	        yAxis: {
+	            gridLineInterpolation: 'polygon',
+	            lineWidth: 0,
+	            min: 0,
+                endOnTick: false,
+	        },
+	        xAxis: {
+	            categories: [
+[% RenderBlockStart("SeriesName") %]
+                            '[% Data.QueueName | html %]',
+[% RenderBlockEnd("SeriesName") %]
+	            ],
+	            tickmarkPlacement: 'on',
+	            lineWidth: 0
+	        },
+            pane: {
+                size: '80%',
+            },
+            
+	    tooltip: {
+	    	shared: true,
+	        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}%</b><br/>'
+	    },
+	    
+	    legend: {
+	        align: 'right',
+	        verticalAlign: 'top',
+	        y: 70,
+	        layout: 'vertical'
+	    },
+        series: [
+            {
+                    name:'SLA - Realizado',
+                    color:'red',
+                    data: [
+[% RenderBlockStart("Series") %]
+                        [% Data.Count | html %],
+[% RenderBlockEnd("Series") %]
+                    ],
+                    pointPlacement: 'on',
+            },
+            {
+                    name:'SLA - Planejado',
+                    data: [
+[% RenderBlockStart("SeriesGoal") %]
+                        [% Data.Goal | html %],
+[% RenderBlockEnd("SeriesGoal") %]
+                    ],
+                    pointPlacement: 'on',
+            },
+        ],
+
+    });
+});
+</script>
+

@@ -1,0 +1,57 @@
+[% RenderBlockStart("CurrentQueue") %] 
+<div class="WidgetSimple [% Data.Class_collapsed %]">
+    <div class="Header">
+	    <div class="WidgetAction Toggle">
+		<a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
+	    </div>
+	    <h2>[% Translate("Running Queue OLA") | html %]</h2>
+    </div>
+    <div class="Content OlaWidget runningOla">
+[% RenderBlockStart("CurrentQueueOLA") %]
+	<div class="alert [% Data.Class %]">
+	    <div class="OlaTitle">
+		<div class="divIcon">
+		    <i class="fa fa-play-circle"></i>
+		</div>
+		<div class="text-top">[% Data.Name %]</div>
+	    </div>
+	    <div class="DiffTime" >
+		[% Translate(Data.Expired) | html %] [% Data.Diff | Localize('TimeShort') %]
+	    </div>
+	    <div class="DueTime">
+		[% Translate("Due Date") %]: [% Data.Destination | Localize("TimeShort") %]
+	    </div>
+	</div>
+[% RenderBlockEnd("CurrentQueueOLA") %]
+    </div>
+</div>
+[% RenderBlockEnd("CurrentQueue") %] 
+
+[% RenderBlockStart("OtherQueue") %]
+<div class="WidgetSimple [% Data.Class_collapsed %]">
+    <div class="Header">
+	<div class="WidgetAction Toggle">
+	    <a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
+	</div>
+	<h2>[% Translate("Stopped Queues OLA") | html %]</h2>
+    </div>
+    <div class="Content OlaWidget">
+[% RenderBlockStart("OtherQueueOLA") %]
+	<div class="stoppedOla alert [% Data.Class %]" title="[% Translate("Due Date")   %]: [% Data.Destination | Localize("TimeShort") %]">	
+	    <div class="OlaTitle">
+		<div class="divIcon">
+		    <i class="fa fa-pause"></i>
+		</div>
+		<div class="text-top">[% Data.Name %]</div>
+	    </div>
+	    <div class="DiffTime">
+		    [% Translate(Data.Expired) | html %]:  [% Data.Diff | Localize('TimeShort') %] 
+	    </div>
+	</div>	
+[% RenderBlockEnd("OtherQueueOLA") %]
+    </div>
+</div>
+
+
+[% RenderBlockEnd("OtherQueue") %] 
+

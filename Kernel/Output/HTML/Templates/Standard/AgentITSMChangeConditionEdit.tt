@@ -1,0 +1,225 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" id="NewCondition" name="NewCondition" class="Validate">
+    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+    <input type="hidden" name="Subaction" value="Save"/>
+    <input type="hidden" name="ChangeID" value="[% Data.ChangeID | html %]"/>
+    <input type="hidden" name="ConditionID" value="[% Data.ConditionID | html %]"/>
+    <input type="hidden" name="DeleteExpressionID" id="DeleteExpressionID" value=""/>
+    <input type="hidden" name="DeleteActionID" id="DeleteActionID" value=""/>
+    <input type="hidden" name="AddExpression" autocomplete="off" id="AddExpression" value=""/>
+    <input type="hidden" name="AddAction" autocomplete="off" id="AddAction" value=""/>
+    <input type="hidden" name="Save" autocomplete="off" id="Save" value=""/>
+
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>
+                [% Translate("Edit Condition") | html %]: [% Config("ITSMChange::Hook") %]: [% Data.ChangeNumber | html %] [% Data.ChangeTitle | truncate(70) | html %]
+            </h1>
+            <p>
+                <a href="[% Env("Baselink") %]Action=AgentITSMChangeCondition;ChangeID=[% Data.ChangeID | uri %]">[% Translate("Back") | html %]</a>
+                [% Translate("or") | html %]
+                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
+            </p>
+        </div>
+        <div class="Content">
+            <div class="WidgetSimple">
+
+                <div class="Header">
+                    <h2>[% Translate("Condition") | html %]</h2>
+                </div>
+
+                <div class="Content">
+
+                    <fieldset class="TableLike FixedLabel">
+
+                        <label class="Mandatory" for="Name"><span class="Marker">* </span>[% Translate("Name") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="Name" name="Name" value="[% Data.Name | html %]" class="W50pc Validate_Required [% Data.InvalidName | html %] [% Data.DuplicateName | html %]" maxlength="250" />
+                            <div id="NameError" class="TooltipErrorMessage" ><p>[% Translate("Need a valid name.") | html %]</p></div>
+[% RenderBlockStart("InvalidName") %]
+                            <div id="NameServerError" class="TooltipErrorMessage"><p>[% Translate("A valid name is needed.") | html %]</p></div>
+[% RenderBlockEnd("InvalidName") %]
+[% RenderBlockStart("DuplicateName") %]
+                            <div id="NameServerError" class="TooltipErrorMessage"><p>[% Translate("Duplicate name:") | html %] '[% Data.Name | html %]'. [% Translate("This name is already used by another condition.") | html %]</p></div>
+[% RenderBlockEnd("DuplicateName") %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label>[% Translate("Matching") | html %]:</label>
+                        <div class="Field">
+                            <input name="ExpressionConjunction" type="radio" value="any" [% Data.anyselected %] title="[% Translate("Any expression (OR)") | html %]"/> [% Translate("Any expression (OR)") | html %]
+                            <input name="ExpressionConjunction" type="radio" value="all" [% Data.allselected %] title="[% Translate("All expressions (AND)") | html %]"/> [% Translate("All expressions (AND)") | html %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="ValidID">[% Translate("Validity") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ValidOptionString %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label  for="Comment">[% Translate("Comment") | html %]:</label>
+                        <div class="Field">
+                            <textarea id="Comment" name="Comment" class="W50pc" rows="5" cols="60" maxlength="250">[% Data.Comment | html %]</textarea>
+                        </div>
+                        <div class="Clear"></div>
+
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+
+                <div class="Header">
+                    <h2>[% Translate("Expressions") | html %]</h2>
+                </div>
+
+                <div class="Content">
+                    <table class="DataTable DataTableNoHighlight">
+                        <thead>
+                            <tr>
+                                <th class="W15pc">[% Translate("Object") | html %]</th>
+                                <th class="W20pc">[% Translate("Selector") | html %]</th>
+                                <th class="W20pc">[% Translate("Attribute") | html %]</th>
+                                <th class="W20pc">[% Translate("Operator") | html %]</th>
+                                <th class="W20pc">[% Translate("Value") | html %]</th>
+                                <th class="W5pc">[% Translate("Delete") | html %]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+[% RenderBlockStart("ExpressionOverviewRow") %]
+                            <tr>
+[% RenderBlockStart("ExpressionOverviewRowElementObject") %]
+                                <td>[% Data.ObjectOptionString %]</td>
+[% RenderBlockEnd("ExpressionOverviewRowElementObject") %]
+
+[% RenderBlockStart("ExpressionOverviewRowElementSelector") %]
+                                <td>[% Data.SelectorOptionString %]</td>
+[% RenderBlockEnd("ExpressionOverviewRowElementSelector") %]
+
+[% RenderBlockStart("ExpressionOverviewRowElementAttribute") %]
+                                <td>[% Data.AttributeOptionString %]</td>
+[% RenderBlockEnd("ExpressionOverviewRowElementAttribute") %]
+[% RenderBlockStart("ExpressionOverviewRowElementOperator") %]
+                                <td>[% Data.OperatorOptionString %]</td>
+[% RenderBlockEnd("ExpressionOverviewRowElementOperator") %]
+                                <td>
+                                    <div id="ExpressionID-[% Data.ExpressionID | html %]-CompareValue-Div">
+[% RenderBlockStart("ExpressionOverviewRowElementCompareValueText") %]
+                                        <input type="text" id="ExpressionID-[% Data.ExpressionID | html %]-CompareValue" name="ExpressionID-[% Data.ExpressionID | html %]-CompareValue" value="[% Data.CompareValue | html %]" class="W100pc" maxlength="250" />
+[% RenderBlockEnd("ExpressionOverviewRowElementCompareValueText") %]
+[% RenderBlockStart("ExpressionOverviewRowElementCompareValueSelection") %]
+                                        [% Data.ValueOptionString %]
+[% RenderBlockEnd("ExpressionOverviewRowElementCompareValueSelection") %]
+                                    </div>
+                                </td>
+                                <td class="Center">
+                                    <a href="#" class="DeleteExpression" id="DeleteExpressionID-[% Data.ExpressionID | uri %]" title="[% Translate("Delete Expression") | html %]">
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete Expression") | html %]</span>
+                                        </i>
+                                    </a>
+                                </td>
+                            </tr>
+[% RenderBlockEnd("ExpressionOverviewRow") %]
+
+[% RenderBlockStart("ExpressionOverviewRowNoData") %]
+                            <tr>
+                                <td colspan="7">
+                                    [% Translate("No Expressions found.") | html %]
+                                </td>
+                            </tr>
+[% RenderBlockEnd("ExpressionOverviewRowNoData") %]
+                        </tbody>
+                    </table>
+                    <div class="Clear"></div>
+
+                    <div class="W100pc Right SpacingTopSmall">
+                        <button type="submit" title="[% Translate("Add new expression") | html %]" value="[% Translate("Add new expression") | html %]" name="AddExpressionButton" id="AddExpressionButton" class="CallForAction Plus"><span>[% Translate("Add new expression") | html %]</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Actions") | html %]</h2>
+                </div>
+                <div class="Content">
+                    <table class="DataTable DataTableNoHighlight">
+                        <thead>
+                            <tr>
+                                <th class="W15pc">[% Translate("Object") | html %]</th>
+                                <th class="W20pc">[% Translate("Selector") | html %]</th>
+                                <th class="W20pc">[% Translate("Attribute") | html %]</th>
+                                <th class="W20pc">[% Translate("Operator") | html %]</th>
+                                <th class="W20pc">[% Translate("Value") | html %]</th>
+                                <th class="W5pc">[% Translate("Delete") | html %]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+[% RenderBlockStart("ActionOverviewRow") %]
+                            <tr>
+[% RenderBlockStart("ActionOverviewRowElementObject") %]
+                                <td>[% Data.ObjectOptionString %]</td>
+[% RenderBlockEnd("ActionOverviewRowElementObject") %]
+[% RenderBlockStart("ActionOverviewRowElementSelector") %]
+                                <td>[% Data.SelectorOptionString %]</td>
+[% RenderBlockEnd("ActionOverviewRowElementSelector") %]
+[% RenderBlockStart("ActionOverviewRowElementAttribute") %]
+                                <td>[% Data.AttributeOptionString %]</td>
+[% RenderBlockEnd("ActionOverviewRowElementAttribute") %]
+[% RenderBlockStart("ActionOverviewRowElementOperator") %]
+                                <td>[% Data.OperatorOptionString %]</td>
+[% RenderBlockEnd("ActionOverviewRowElementOperator") %]
+                                <td>
+                                    <div id="ActionID-[% Data.ActionID | html %]-ActionValue-Div">
+[% RenderBlockStart("ActionOverviewRowElementActionValueText") %]
+                                        <input type="text" id="ActionID-[% Data.ActionID | html %]-ActionValue" name="ActionID-[% Data.ActionID | html %]-ActionValue" value="[% Data.ActionValue | html %]" class="W100pc" maxlength="250" />
+[% RenderBlockEnd("ActionOverviewRowElementActionValueText") %]
+[% RenderBlockStart("ActionOverviewRowElementActionValueSelection") %]
+                                        [% Data.ValueOptionString %]
+[% RenderBlockEnd("ActionOverviewRowElementActionValueSelection") %]
+                                    </div>
+                                </td>
+                                <td class="Center">
+                                    <a href="#" class="DeleteAction" id="DeleteActionID-[% Data.ActionID | uri %]" title="[% Translate("Delete Action") | html %]">
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete Action") | html %]</span>
+                                        </i>
+                                    </a>
+                                </td>
+                            </tr>
+[% RenderBlockEnd("ActionOverviewRow") %]
+
+[% RenderBlockStart("ActionOverviewRowNoData") %]
+                            <tr>
+                                <td colspan="7">
+                                    [% Translate("No Actions found.") | html %]
+                                </td>
+                            </tr>
+[% RenderBlockEnd("ActionOverviewRowNoData") %]
+                        </tbody>
+                    </table>
+                    <div class="Clear"></div>
+
+                    <div class="W100pc Right SpacingTopSmall">
+                        <button type="submit" title="[% Translate("Add new action") | html %]" value="[% Translate("Add new action") | html %]" name="AddActionButton" id="AddActionButton" class="CallForAction Plus"><span>[% Translate("Add new action") | html %]</span></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="Footer">
+            <button class="Primary CallForAction" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" name="SaveButton" id="SaveButton" value="[% Translate("Submit") | html %]">
+                <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,113 @@
+  <div class="WidgetSimple">
+	  <div class="Header">
+        	  <h2>[% Translate(Data.FieldTypeName) | html %] [% Translate("Operational Level Agreement (O.L.A.) Configuration") | html %]</h2>
+          </div>
+          <div class="Content">
+	          <fieldset class="TableLike">
+        	           
+
+	<div class="Field ValueInsert" style="margin-left: 20px;">
+        	<input type="hidden" name="ValueCounter" value="0" id="ValueCounter" class="ValueCounter" />
+                <div class="ValueTemplate Hidden">
+
+                	<label class="Mandatory" for="Queue"><span class="Marker">*</span>:[% Translate("Queue") | html %]</label>
+                        	[% Data.Queue %]
+	                 <div id="QueueError" class="TooltipErrorMessage"><p>Este campo é obrigatório.</p></div>
+                         <div id="QueueServerError" class="TooltipErrorMessage"><p></p></div>
+                        <label class="Mandatory" for="TimeValue"><span class="Marker">*</span>[% Translate("Solution time") | html %] ([% Translate("minutes") | html %]):</label>
+                        <input name="TimeValue_" id="TimeValue" class="W50px Validate_Number" type="text" maxlength="10" value=""/>
+ 	                <div id="TimeValueError" class="TooltipErrorMessage"><p>Este campo é obrigatório.</p></div>
+                        <div id="TimeValueServerError" class="TooltipErrorMessage"><p>Este campo é obrigatório.</p></div>
+			<label for="UpdateNotify">[% Translate("Notify by") | html %]</label> [% Data.UpdateNotifyOptionStrg %]
+      <label for="Calendar">[% Translate("Calendar") | html %]</label> [% Data.CalendarOptionStrg %]
+                        <a href="#" id="RemoveValue_" class="RemoveButton ValueRemove"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">Remover Valor</span></a>
+                        <div class="SpacingTopMini" ></div>
+
+                        </div>
+                        <input type="hidden" name="DeletedValue" value="_DynamicFields_DeletedString_Dont_Use_It_String_Please" id="DeletedValue" class="DeletedValue" />
+                        </div>
+                        <div class="Clear"></div>   
+                        <label for="AddValue">[% Translate("Add O.L.A.") | html %]:</label>
+                        <div class="Field">
+                            <a href="#" id="AddValue" class="AddButton"><i class="fa fa-plus-square-o"></i><span class="InvisibleText">[% Translate("Add Value") | html %]</span></a>
+                        </div>
+                        <div class="Clear"></div>
+
+
+
+                    </fieldset>
+                </div>
+            </div>
+
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('.ShowWarning').bind('change keyup', function (Event) {
+    $('p.Warning').removeClass('Hidden');
+});
+
+//bind click function to add button
+$('#AddValue').bind('click', function () {
+    Complemento.OLA.AddValue(
+        $(this).closest('fieldset').find('.ValueInsert')
+    );
+	SearchForDuplicity();	
+    return false;
+});
+
+//bind click function to remove button
+$('.ValueRemove').bind('click', function () {
+    Complemento.OLA.RemoveValue($(this).attr('id'));
+    return false;
+});
+
+$(":submit").click(function(e) {
+	e.preventDefault();
+	if($(".RemoveButton").length > 1){
+		var olaQueues = new Object();
+		$('.ValueRow').each(function(){
+			var ola = new Object();
+			ola['Time']   = $('input[id^=TimeValue_]',$(this)).val();
+			ola['Notify'] = $('[id^=UpdateNotify_]',$(this)).val();
+      ola['Calendar'] = $('[id^=Calendar_]',$(this)).val();
+			olaQueues[$('[id^=Queue_]',$(this)).val()] = ola;
+		})
+		$("#OLA_Queues").val(JSON.stringify(olaQueues));
+	}else{
+		$("#OLA_Queues").val("");
+	}
+		$("form").submit();	
+
+});
+
+if($("#OLA_Queues").val()){
+	Complemento.OLA.RecreateFields($("#OLA_Queues"));
+}
+//Função para ler todas a filas e informar quais estão sendo usadas
+function SearchForDuplicity(){
+	$("[id^=Queue_]").bind("change",function(){
+		var QueueObject  = $(this);
+		var valueSelected = $(this).val();
+		var IDSelected =  $(this).attr("id");
+		$("[id^=Queue_]").each(function(){
+			if($(this).attr("id") == IDSelected)
+				return true;	
+			if($("option:selected",this).val() == valueSelected)
+	        Core.UI.Dialog.ShowAlert(
+				"[% Translate("Duplicate Queue") | html %]",
+	            "[% Translate("There is an OLA already defined for this queue, please choose a different one.") | html %]",
+	            function () {
+	                Core.UI.Dialog.CloseDialog($('.Alert'));
+					$(QueueObject).val('');
+	                return false;
+    	        }
+	        );
+	
+
+		});
+	});
+}
+SearchForDuplicity();
+
+//]]></script>
+[% END %]

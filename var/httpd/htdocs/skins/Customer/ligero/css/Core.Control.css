@@ -1,0 +1,470 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Customer Frontend
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     OTRS Framework - Skin "Default"
+ * @section     Customer
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Navigation
+ */
+#Navigation {
+    height: 40px;
+    width: 100%;
+    position: relative;
+    background: #f6f6f6;
+    clear: both;
+/*    margin-top: 20px; */
+    padding: 0px !important;
+    font-size: 11pt;
+}
+
+#Navigation > ul {
+    float: left;
+	margin-left: 22px;
+}
+
+.RTL #Navigation > ul {
+    float: right;
+}
+
+#Navigation > ul > li > ul {
+    position: absolute;
+    top: 39px;
+    left: 0px;
+    display: none;
+    border-top: 0px;
+}
+
+.RTL #Navigation > ul > li > ul {
+    right: 1px;
+}
+
+#Navigation > ul > li:hover ul,
+#Navigation > ul > li a:focus + ul,
+#Navigation > ul > li ul.Expanded {
+    display: block;
+    z-index: 1000;
+}
+
+#Navigation .Individual {
+    float: right;
+}
+
+.RTL #Navigation .Individual {
+    float: left;
+}
+
+#Navigation > ul > li {
+    float: left;
+    position: relative;
+    border-right: 1px solid #FFF;
+}
+
+#Navigation > ul > li:last-child {
+    border-right: 0px;
+	margin-right: 22px;
+}
+
+.RTL #Navigation > ul > li {
+    float: right;
+    margin: -1px -2px 0 0;
+}
+
+#Navigation > ul > li > a {
+    color: #111;
+    font-size: 16px;
+    display: block;
+    outline: none;
+    padding: 13px;
+}
+
+#Navigation > ul > li.Selected > a:after {
+    content: "";
+}
+
+#Navigation > ul > li:last-child > a:after {
+    display: none;
+}
+
+#Navigation > ul > li > ul a {
+    color: #FFF;
+    font-size: 14px;
+    padding: 9px 14px;
+    white-space: nowrap;
+    display: block;
+    background-color: #34508e;
+    border-top: #34508e;
+}
+
+#Navigation > ul > li > ul li:last-child {
+    border-bottom: 1px solid #aaa;
+}
+
+#Navigation > ul > li > ul a:hover,
+#Navigation > ul > li > ul a:focus,
+#Navigation > ul > li > ul a.SubSelected {
+    background-color: #FFF;
+	color: #000;
+	
+	-webkit-transition: background-color 0.4s; /* Safari 3.1 to 6.0 */
+    transition: background-color 0.4s;
+}
+
+.RTL #Navigation li:first-child a,
+#Navigation li::last-child a {
+    background-image: none;
+}
+
+.RTL #Navigation > ul > li > ul {
+    min-width: 120px;
+}
+
+.RTL #Navigation > ul > li > ul a {
+    padding: 4px 6px 4px 15px;
+    white-space: normal;
+}
+
+#Navigation li:active {
+    background: #949494;
+}
+
+#Navigation .Selected + li {
+    margin-left: -1px;
+}
+
+#Navigation .Selected + li a {
+    padding-left: 10px;
+}
+
+#Navigation .Selected,
+#Navigation .Selected:active,
+#Navigation > ul > li:hover {
+    background: #34508e;
+
+	
+	-webkit-transition: background 0.6s; /* Safari 3.1 to 6.0 */
+    transition: background 0.6s;
+}
+
+#Navigation .Selected > a,
+#Navigation > ul > li:hover > a {
+    color: #FFF;
+    background: none;
+}
+
+/**
+ * @subsection  Action Row / MessageBox (Notification)
+ */
+
+.MessageBox,
+.ActionRow {
+    font-size: 11px;
+    background: #4c4c4c;
+	color: #FFF;
+    border-top: 1px solid #F0F2F2;
+    border-bottom: 1px solid #B8BBBB;
+    overflow: hidden;
+    text-shadow: 0 1px 0 #4c4c4c;
+    clear: both;
+	padding: 5px 5px;
+}
+#MainBox.TicketView {
+    margin: 13px;
+    border: #34508e 1px solid !important;
+    border-radius: 3px;
+}
+
+#MainBox.TicketView .ActionRow {
+    border-top: 0px;
+}
+
+.Content .MessageBox {
+    border: none !important;
+	
+}
+.MessageBox, .ActionRow {
+    font-size: 11px;
+    background: #34508e;
+    color: #FFF;
+    border-top: none;
+    border-bottom: none;
+    overflow: hidden;
+    text-shadow: none;
+    clear: both;
+    padding: 5px 5px;
+}
+
+.MessageBox.Notice {
+    background: #F7AE40;
+    border: 0px;
+}
+
+.MessageBox.Error {
+    background: #F25C5C;
+}
+
+.MessageBox.Success {
+    background: #95C47D;
+}
+
+.RTL .MessageBox p {
+    padding: 1px 20px 1px 0;
+}
+
+.MessageBox p {
+    text-shadow: none;
+    color: #000;
+    margin: 5px 7px;
+    padding: 1px 0 1px 5px;
+}
+
+.MessageBox a {
+    display: none;
+}
+
+.MessageHeader {
+    padding: 5px 8px 3px;
+    color: #6A6A6A;
+    background-color: #fff;
+    border: 1px solid #34508e;
+    position: relative;
+    border-radius: 3px;
+}
+
+.Overview thead a {
+    padding: 6px 13px 4px 8px;
+    height: 15px;
+    color: #444;
+    font-size: 11px;
+    text-transform: uppercase;
+    display: block;
+    text-shadow: 0 1px 0 #EEE;
+    position: relative;
+    white-space: nowrap;
+}
+.Overview thead {
+    background: #f6f6f6;
+    display: table-header-group;
+}
+.Overview thead .SortAscending a, .Overview thead .SortDescending a {
+    color: #222;
+    font-weight: 600;
+    text-align: left;
+    background: #b6c9ff;
+    text-shadow: none;
+    padding-right: 20px;
+}
+
+.Overview thead th {
+    color: #34508e;
+    font-size: 11px;
+    text-transform: uppercase;
+    background: none;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    vertical-align: bottom;
+    white-space: nowrap;
+}
+
+.Title div {
+    height: 14px;
+    color: #34508e;
+    overflow: hidden;
+    white-space: normal;
+}
+
+
+.Tabs .Selected {
+    font-weight: bold;
+    color: #FFF !important;
+}
+
+#MainBox.TicketView .ActionRow {
+    background: #34508e !important;
+}
+
+#BottomActionRow {
+    padding: 5px 9px 6px 9px;
+    background: #eee;
+    border: 0px;
+}
+
+
+.BreadCrumb {
+    list-style-type: none;
+    margin: 15px 0px;
+    padding: 10px;
+    background: #34508e;
+    position: relative;
+    padding-left: 0px;
+    padding-right: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.BreadCrumb a {
+    color: #fff !important;
+    padding: 0px 2px;
+}
+
+
+.BreadCrumb li {
+    display: inline-block;
+    margin: 0px 2px 0px 2px;
+    padding-left: 35px;
+    color: #fff;
+    position: relative;
+    max-width: 200px;
+    white-space: normal;
+    vertical-align: middle;
+}
+
+.TicketView #BottomActionRow,
+.RTL .TicketView #BottomActionRow {
+    padding: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+
+#BottomActionRow span {
+    padding: 0 5px;
+}
+
+.RTL #BottomActionRow span {
+    padding-left: 0;
+    padding-right: 5px;
+}
+
+.Filter {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.Filter a {
+    padding: 5px;
+    text-shadow: 0 1px 0 #4c4c4c;
+    display: block;
+}
+
+.Filter a:after {
+    content: "|";
+    display: inline-block;
+    font-weight: normal;
+    color: #777;
+    padding-left: 5px;
+    margin-right: -3px;
+}
+
+.Filter li:last-child a:after {
+    display: none;
+}
+
+.RTL .Filter a {
+    background-position: left;
+}
+
+.Tabs {
+    padding: 5px 9px;
+    float: left;
+}
+
+.RTL .Tabs {
+    float: right;
+}
+
+.Tabs li {
+    float: left;
+}
+
+.RTL .Tabs li {
+    float: right;
+}
+
+.Tabs a {
+    color: #FFF;
+}
+
+.Tabs a:hover {
+    color: #C1C1C1;
+}
+
+.Tabs .Selected {
+    font-weight: bold;
+    color: #FFF;
+}
+
+.Pagination {
+    float: right;
+}
+
+.RTL .Pagination {
+    float: left;
+}
+
+.Pagination a {
+    padding-left: 3px;
+    background: none;
+    text-shadow: none;
+}
+
+.ActionRow li:last-child a,
+.Filter li:last-child a {
+    background: none;
+}
+
+.RTL .ActionRow li:last-child a {
+    padding-right: 3px;
+    padding-left: 0;
+}
+
+.Sortable .ActionRow {
+    border-bottom: none;
+}
+
+.Sortable #BottomActionRow {
+    padding-bottom: 0;
+    border-bottom: 1px solid #B8BBBB;
+}
+
+/**
+ * @subsection  SerachTerms
+ */
+
+.SearchTerms {
+    padding: 4px 7px;
+}
+
+.SearchTerms h2 {
+    margin: 0;
+    color: #222;
+    font-size: 15px;
+    display: inline;
+    text-shadow: 0 1px 0 #EEE;
+}
+
+.SearchTerms span {
+    padding: 1px 8px 0;
+    margin: 0 3px;
+    color: #666;
+    background: #FFF;
+    border: 1px solid #BBB;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 1px 2px #DDD inset, 0 1px 0 #E8E8E8;
+    box-shadow: 0 1px 2px #DDD inset, 0 1px 0 #E8E8E8;
+}
+
+.SearchTerms span a {
+    font-size: 13px;
+    vertical-align: bottom;
+}
+
+} /* end @media */

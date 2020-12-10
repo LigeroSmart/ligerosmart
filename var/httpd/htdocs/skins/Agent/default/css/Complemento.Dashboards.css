@@ -1,0 +1,81 @@
+.CompWidgetContainer {
+    float:left;
+    display:block;
+    height: 290px;
+    background: white;
+}
+.CompWidgetContainerZabbix {
+    float:left;
+    display:block;
+    background: #F0F0F0;
+}
+
+.CompWidgetBorder {
+    border: 1px solid #ddd;
+}
+
+.CompWidget {
+    display:block;
+    height: 290px;
+}
+
+.resumeLabel {
+    display: block;
+    padding: 4px 4px 4px 4px;
+    text-align:center;
+}
+
+.DataTable tr:hover td a {
+}
+.resumeValue {
+    display: block;
+    font-size:26pt;
+    padding: 4px 4px 4px 4px;
+    margin-bottom: 5px;
+    text-align:center;
+}
+
+.DataTable tr:hover td .resumeValue a,
+.resumeValue a,
+.TableSmall tr:hover .resumeLabel,
+.CompOverviewTable:hover .resumeLabel {
+    color: #000 !important;
+}
+.resumeAlert,
+.resumeAlert a,
+.CompOverviewTable:hover .resumeAlert,
+.CompOverviewTable:hover .resumeAlert.resumeValue a,
+.CompOverviewTable:hover .resumeAlert a {
+    color: #AA0000 !important;
+}
+
+
+.resumeSmallAlert,
+.resumeSmallAlert a,
+.CompOverviewTable:hover .resumeSmallAlert,
+.CompOverviewTable:hover .resumeSmallAlert.resumeValue a,
+.CompOverviewTable:hover .resumeSmallAlert a {
+    color: #AA0000 !important;
+}
+.CompOverviewTable .resumeSmallAlert.resumeValue a{
+    font-size: 16pt !important;
+}
+    
+.CompOverviewTable .resumeSmall.resumeValue a{
+    font-size: 16pt !important;
+}
+    
+
+
+.CompOverviewTable {
+    background-color: #F5F5F5;
+    border: 0px;
+    overflow-x: scroll;
+}
+
+.CompOverviewTable td {
+    border: 0px !important;
+}
+.CompOverviewTable:hover, .CompOverviewTable:hover * {
+    background-color: #F5F5F5 !important;
+}

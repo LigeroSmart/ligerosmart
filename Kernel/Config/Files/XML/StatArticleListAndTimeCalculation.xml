@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Stats::ArticleListAndTimeCalculation::ColumnOrder" Required="0" Valid="1">
+        <Description Translatable="1">Fields Order. You can define which fields will be shown and in which order for all stats (separated by blank space). ex: "Number Service TicketNumber". This overrides the individual stat configuration</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::DynamicObjectRegistration###ArticleListAndTimeCalculation" Required="0" Valid="1">
+        <Description Translatable="1">Estatísticas de tempo dos chamados, baseado em artigos.</Description>
+        <Navigation>Core::Stats</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::ArticleListAndTimeCalculation</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation###AtendIniID" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Field ID of the task start time. It cannot be blank. Leave 999 if you don't use it.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">999</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation###AtendFimID" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Field ID of the task end time. It cannot be blank. Leave 999 if you don't use it</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">999</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldName###Field1" Required="0" Valid="0">
+        <Description Translatable="1">Calcula 1.5 o valor de hora fora do horario comercial.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+               <Item ValueType="String">My Field 1</Item>                
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldCode###Field1" Required="0" Valid="0">
+        <Description Translatable="1">Calcula 1.5 o valor de hora fora do horario comercial.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+my $i = '5';
+$ResumeRow[$i]=$Article{Minutes}*$i;
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldName###Field2" Required="0" Valid="0">
+        <Description Translatable="1">Calcula 1.5 o valor de hora fora do horario comercial.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+               <Item ValueType="String">My Field 2</Item>                
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldCode###Field2" Required="0" Valid="0">
+        <Description Translatable="1">Calcula 1.5 o valor de hora fora do horario comercial.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+$ResumeRow[$i]=$Article{Minutes}*9;
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldName###Field3" Required="0" Valid="0">
+        <Description Translatable="1">Campo Adicional.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+               <Item ValueType="String">My Field 3</Item>                
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldCode###Field3" Required="0" Valid="0">
+        <Description Translatable="1">.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+$ResumeRow[$i]=$Article{DynamicField_hsaida};
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldName###Field4" Required="0" Valid="0">
+        <Description Translatable="1">Campo Adicional.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+               <Item ValueType="String">My Field 4</Item>                
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldCode###Field4" Required="0" Valid="0">
+        <Description Translatable="1">.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+$ResumeRow[$i]=$Article{DynamicField_hsaida};
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldName###Field5" Required="0" Valid="0">
+        <Description Translatable="1">Campo Adicional.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+               <Item ValueType="String">My Field 5</Item>                
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldCode###Field5" Required="0" Valid="0">
+        <Description Translatable="1">.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+$ResumeRow[$i]=$Article{DynamicField_hsaida};
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldName###Field6" Required="0" Valid="0">
+        <Description Translatable="1">Campo Adicional.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+               <Item ValueType="String">My Field 6</Item>                
+        </Value>
+    </Setting>
+    <Setting Name="Stats::ArticleListAndTimeCalculation::AdditionalFieldCode###Field6" Required="0" Valid="0">
+        <Description Translatable="1">.</Description>
+        <Navigation>Stats::ArticleListAndTimeCalculation::AdditionalFields</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+$ResumeRow[$i]=$Article{DynamicField_hsaida};
+            </Item>
+        </Value>
+    </Setting>
+
+</otrs_config>

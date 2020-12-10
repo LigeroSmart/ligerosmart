@@ -1,0 +1,179 @@
+[% RenderBlockStart("event_result") %]
+	<input type="hidden" id="eventResult" value="[% Data %]">
+	<input type="hidden" id="errorMove" value="[% Translate("Could not move this ticket.") %]">
+	<input type="hidden" id="errorPriority" value="[% Translate("Unable to change priority of this ticket.") %]">
+[% RenderBlockEnd("event_result") %]
+<div class="WidgetSimple QueueOverview">
+    <div class="Content" id="mainFilter">
+		[% RenderBlockStart("kanban_filters") %]
+		<form name="kanban_filters" id="kanban_filters" action="[% Data.BaseLink %]" method="post">
+				<input type="hidden" name="Action" value="AgentTicketQueueKanban">
+				<input type="hidden" name="View" value="[% Data.View %]">
+				<input type="hidden" name="Filter" value="[% Data.Filter %]">
+				<input type="hidden" name="SortBy" value="[% Data.SortBy %]">
+				<input type="hidden" name="OrderBy" value="[% Data.OrderBy %]">
+				<input type="hidden" name="NotFirstRun" value="1">
+				<input type="hidden" name="Session" value="[% Data.SessionID %]">
+				<input type="hidden" name="OTRSAgentInterface" value="[% Data.SessionID %]">
+				<input type="hidden" name="[% Data.SessionName %]" value="[% Data.SessionID %]">
+
+ 					[% RenderBlockStart("kanban_filter") %]
+						<div class="KanbanFilter">
+
+ 							<label for="AnswerRequired"> [% Data.FilterLabel | html %]</label>
+							<div class="Field">
+								[% Data.Filter %]
+							</div>
+						</div>	
+
+ 					[% RenderBlockEnd("kanban_filter") %]
+
+ 			</form>
+		[% RenderBlockEnd("kanban_filters") %]
+    </div>
+    <div class="Clear"></div>
+</div>
+
+[% RenderBlockStart("queue_kanban") %]
+<div class="loading" style="display:none;">Loading&#8230;</div>
+<div id="main">
+  <table id="board" class="[% Data.AdditionalClass %]" data-project-id="[% Data.QueueID %]" data-time="0" data-check-interval="0" data-csrf-token="0">
+	<tbody>
+		<tr>
+[% RenderBlockStart("column_header") %]
+    		<th width="200px">
+				<div class="board-add-icon">
+#				<!--a href="?controller=task&amp;action=create&amp;project_id=1&amp;column_id='.$State.'" title="Adicionar uma nova tarefa">+</a-->
+				</div>
+				[% Translate(Data.State) | html %]
+				 <span title="Task count" class="task-count">
+						(<span id="task-number-column-[% Data.State %]">[% Data.CountTickets %]</span>)
+				
+[% RenderBlockStart("last_tickets") %]
+				- [% Translate("In the last 24 hours") | html %]
+[% RenderBlockEnd("last_tickets") %]
+				</span>
+			</th>
+[% RenderBlockEnd("column_header") %]
+		</tr>
+		<tr>
+[% RenderBlockStart("column_content") %]
+			<td id="column-[% Data.State %]" class="column  
+								ui-sortable [% Data.warning %] " 
+								data-column-id="[% Data.State %]" 
+								data-task-limit="[% Data.Limit %]">
+[% RenderBlockStart("task") %]
+			<div class="task-board draggable-item task-[% Data.PriorityID %] task-board-recent" 
+				data-task-id="[% Data.TicketID %]" data-owner-id="[% Data.OwnerID %]" data-category-id="0" data-due-date="0" 
+				title="">
+[% RenderBlockStart("gravatar") %]
+				<div class="gravatar"><img src="[% Data.grav_url %]" /></div>
+[% RenderBlockEnd("gravatar") %]
+				<a class="task-board-id" target="_blank" href="?Action=AgentTicketZoom&amp;TicketID=[% Data.TicketID %];[% Data.SessionName %]" title="">
+[% RenderBlockStart("TypesAlias") %]				
+				[[% Data.TypesAlias %]]
+[% RenderBlockEnd("TypesAlias") %]
+				 [% Data.TicketNumber %]
+				</a>
+				<!--span class="task-board-user">
+						
+				</span-->
+				<span class="task-board-user">
+					<br/>
+					<a class="OwnerResponsiblePrefixLink AsPopup PopupType_TicketAction" href="?Action=AgentTicketOwner&amp;TicketID=[% Data.TicketID %];[% Data.SessionName %]" 
+					title="">
+						<span class="OwnerResponsiblePrefix">[% Data.OwnerPrefix | html %]:</span>
+						[% Data.Name %]
+					</a> &emsp;
+[% RenderBlockStart("taskResponsible") %]
+					<a class="OwnerResponsiblePrefixLink AsPopup PopupType_TicketAction" href="?Action=AgentTicketResponsible&amp;TicketID=[% Data.TicketID %];[% Data.SessionName %]" 
+					title="">
+					<span class="OwnerResponsiblePrefix">[% Data.ResponsiblePrefix | html %]:</span>
+					[% Data.ResponsibleName %]</a>
+[% RenderBlockEnd("taskResponsible") %]
+				</span>
+				<div class="task-board-title" style="font-size:1em;">
+					<a  target="_blank" href="?Action=AgentTicketZoom&amp;TicketID=[% Data.TicketID %];[% Data.SessionName %]" title="">[% Data.Title | truncate(40) %]</a>
+				</div>
+
+				<div class="task-board-customer" style="font-size:1em;">
+					<a class="AsPopup PopupType_TicketAction" href="?Action=AgentTicketCustomer&amp;TicketID=[% Data.TicketID %];[% Data.SessionName %]" 
+					title="">[% Data.CustomerUserID %] - [% Data.CustomerName %]</a>
+				</div>
+
+
+				<div class="c">
+[% RenderBlockStart("pending") %]
+				<p class="pendingtime [% Data.PendingUntilClass %]">
+							[% Translate("Pending till") | html %]:
+							[% Data.UntilTimeHuman | Localize("TimeShort") %]
+							([% Data.PendingUntil %])
+				</p>
+[% RenderBlockEnd("pending") %]
+				</div>
+[% RenderBlockStart("DynamicField") %]
+				<div class="task-dynamicfield task-board-details [% Data.DynamicFieldClass %]">
+					[% Data.Label %]: [% Data.Value %]
+				</div>
+[% RenderBlockEnd("DynamicField") %]
+				<div class="task-board-footer [% Data.EscalationClass %]">
+					[% Data.EscalationText %]
+					<div class="task-board-icons">
+						<span class="hide">
+
+							<a target="_blank" href="?Action=AgentTicketZoom&amp;TicketID=[% Data.TicketID %];[% Data.SessionName %]" title="">
+							<i class="icon fa fa-eye"></i>
+							</a>&nbsp;&nbsp;
+
+							<a class="AsPopup PopupType_TicketAction" 
+							href="?Action=AgentTicketFreeText&amp;TicketID=[% Data.TicketID %];[% Data.SessionName %]" title="">
+							<i class="icon fa fa-edit"></i>
+							</a>&nbsp;&nbsp;
+							
+#  Priority UP
+[% RenderBlockStart("priorityUp") %]
+							<a href="#" class="prioButton" data-next-priority="[% Data.NextPriority %]" 
+							data-ticket-id="[% Data.TicketID %]" data-queue-id="[% Data.QueueID %]">
+							<i class="icon fa fa-arrow-up"></i>
+							</a>
+[% RenderBlockEnd("priorityUp") %]
+[% RenderBlockStart("priorityDown") %]
+# Priority Down							
+							<a href="#" class="prioButton" data-next-priority="[% Data.NextPriority %]" 
+							data-ticket-id="[% Data.TicketID %]" data-queue-id="[% Data.QueueID %]">
+							<i class="icon fa fa-arrow-down"></i>
+							</a>
+[% RenderBlockEnd("priorityDown") %]
+
+					    </span>
+					</div>
+				</div>
+				</div>    	
+
+[% RenderBlockEnd("task") %]
+			</td>
+[% RenderBlockEnd("column_content") %]
+		</tr>
+	</tbody>
+  </table>
+</div>
+[% RenderBlockEnd("queue_kanban") %]
+
+[% RenderBlockStart("refresh_page") %]
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+	setTimeout(function(){ Kanboard.Board.Filter(); }, [%Data.Minutes | html %]);
+//]]></script>
+[% END %]
+[% RenderBlockEnd("refresh_page") %]
+
+<!--dtl:multiselect-->
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('.ui-multiselect-close').click(function(e){
+    $('#filters').submit();
+});
+//]]></script>
+[% END %]
+<!--dtl:multiselect-->

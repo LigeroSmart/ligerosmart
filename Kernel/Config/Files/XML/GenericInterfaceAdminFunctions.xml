@@ -1,0 +1,22 @@
+<otrs_config version="2.0" init="Application">
+    <Setting Name="GenericInterface::Operation::Module###Admin::Generic" Required="0" Valid="1">
+        <Description Translatable="1">Generic object for commun administration operations.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">Generic</Item>
+                <Item Key="Controller">Admin</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Groups" Required="0" Valid="1">
+        <Description Translatable="1">Choose the groups that will have permission to access the API.</Description>
+        <Navigation>GenericInterface::Operation::Permission</Navigation>
+        <Value>
+            <Array>
+                <Item>admin</Item>
+            </Array>
+        </Value>
+    </Setting>
+</otrs_config>

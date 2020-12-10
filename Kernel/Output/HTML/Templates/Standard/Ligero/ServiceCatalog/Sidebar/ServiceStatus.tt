@@ -1,0 +1,13 @@
+<div class="WidgetOpenTickets">
+
+<div class="WidgetTitle">[% Translate("Service Status") %]</div>
+
+<ul class="ServiceStatus">
+[% RenderBlockStart("Service") %]
+<li>
+    <span class="ChangedTime"><i class="fa [% Data.Icon %]" style="color:#[% Data.Color %]" alt="[% Translate(Data.DelpState) %]" title="[% Translate(Data.DelpState) %]"></i> [% Data.Name %]</span>
+</li>
+[% RenderBlockEnd("Service") %]
+</ul>
+
+</div>

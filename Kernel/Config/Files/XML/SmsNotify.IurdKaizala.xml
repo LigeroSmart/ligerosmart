@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="SmsNotify::Gateway###IurdKaizala-01" Required="0" Valid="1">
+        <Description Translatable="1">Iurd Kaizala Gateway.</Description>
+        <Navigation>SmsNotify::Gateways</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="user">OTRS</Item>
+                <Item Key="password">W3siZW5hYmxlZCI6dHJ1ZSwid</Item>
+                <Item Key="Sender">OTRS</Item>
+                <Item Key="URL">https://prod-87.westus.logic.azure.com:443/workflows/47a115fce7754138b44ce00fc4f13e93/triggers/manual/paths/invoke?api-version=2016-06-01&amp;sp=%2Ftriggers%2Fmanual%2Frun&amp;sv=1.0&amp;sig=CmR4vvvIh-EpiIT89U6zlmwF9ExtqhULH1hgVzdMnFM</Item>
+                <Item Key="Name">IurdKaizala</Item>
+                <Item Key="Module">Kernel::System::Ticket::Event::NotificationEvent::Transport::SmsNotifyGateways::IurdKaizala</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+</otrs_config>

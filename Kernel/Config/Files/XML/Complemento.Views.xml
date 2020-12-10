@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewQueue###DefaultColumns" Required="0" Valid="1">
+        <Description Translatable="1">Columns that can be filtered in the queue view of the agent interface. Note: Only Ticket attributes and Dynamic Fields (DynamicField_NameX) are allowed.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoView</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Available</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled by default</Item>
+                </DefaultItem>
+                <Item Key="Age" SelectedID="2"></Item>
+                <Item Key="Changed" SelectedID="1"></Item>
+                <Item Key="CustomerID" SelectedID="2"></Item>
+                <Item Key="CustomerName" SelectedID="1"></Item>
+                <Item Key="CustomerUserID" SelectedID="1"></Item>
+                <Item Key="EscalationResponseTime" SelectedID="1"></Item>
+                <Item Key="EscalationSolutionTime" SelectedID="1"></Item>
+                <Item Key="EscalationTime" SelectedID="1"></Item>
+                <Item Key="EscalationUpdateTime" SelectedID="1"></Item>
+                <Item Key="TicketNumber" SelectedID="2"></Item>
+                <Item Key="Lock" SelectedID="2"></Item>
+                <Item Key="Owner" SelectedID="2"></Item>
+                <Item Key="PendingTime" SelectedID="1"></Item>
+                <Item Key="Queue" SelectedID="2"></Item>
+                <Item Key="Responsible" SelectedID="1"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Service" SelectedID="1"></Item>
+                <Item Key="State" SelectedID="2"></Item>
+                <Item Key="SLA" SelectedID="1"></Item>
+                <Item Key="Title" SelectedID="2"></Item>
+                <Item Key="Type" SelectedID="1"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoView###ViewAllPossibleTickets" Required="1" Valid="1">
+        <Description Translatable="1">Shows all both ro and rw queues in the queue view.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoView</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoView###ViewAll" Required="1" Valid="1">
+        <Description Translatable="1">Shows all both ro and rw queues in the queue view even if the user does not have access to it.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoView</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoView###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default sort criteria for all queues displayed in the queue view, after sort by priority is done.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoView</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Age">
+                <Item ValueType="Option" Value="Age">Age</Item>
+                <Item ValueType="Option" Value="Ticket">Ticket</Item>
+                <Item ValueType="Option" Value="Subject">Subject</Item>
+                <Item ValueType="Option" Value="Queue">Queue</Item>
+                <Item ValueType="Option" Value="TicketEscalation">TicketEscalation</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoView###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default sort order for all queues in the queue view, after priority sort.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoView</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Up">
+                <Item ValueType="Option" Value="Down">Down</Item>
+                <Item ValueType="Option" Value="Up">Up</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::ToolBarModule###1-Ticket::AgentTicketComplementoView" Required="0" Valid="1">
+        <Description Translatable="1">Toolbar Item for a shortcut.</Description>
+        <Navigation>Frontend::Agent::ToolBar</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::Link</Item>
+                <Item Key="Name">Complemento View</Item>
+                <Item Key="Link">Action=AgentTicketComplementoView</Item>
+                <Item Key="Action">AgentTicketComplementoView</Item>
+                <Item Key="AccessKey">q</Item>
+                <Item Key="CssClass">ComplementoView</Item>
+                <Item Key="Icon">fa fa-filter</Item>
+                <Item Key="Priority">1010015</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketComplementoView" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Overview of all tickets</Item>
+                    <Item Key="Title">Complemento View</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketComplementoView###003-Complemento" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>thirdparty/jquery.multiselect/jquery.multiselect.css</Item>
+                        <Item>thirdparty/jquery.multiselect/jquery.multiselect.filter.css</Item>
+                        <Item>Core.AllocationList.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>thirdparty/jquery.multiselect/jquery.multiselect.filter.js</Item>
+                        <Item>thirdparty/jquery.multiselect/jquery.multiselect.js</Item>
+                        <Item>Core.UI.AllocationList.js</Item>
+                        <Item>Core.Agent.TableFilters.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketComplementoView###003-Complemento" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Overview Tickets with Filter Capabilities</Item>
+                        <Item Key="Name" Translatable="1">Complemento View</Item>
+                        <Item Key="Link">Action=AgentTicketComplementoView</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Ticket</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">e</Item>
+                        <Item Key="Prio">149</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+     <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###A0Queue" Required="0" Valid="1">
+        <Description Translatable="1">Queue Filter.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">Queues</Item>
+                <Item Key="TicketKey">Queue</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Queues</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###A1State" Required="0" Valid="1">
+        <Description Translatable="1">State Filter. Split Default values with ; or ,</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">States</Item>
+                <Item Key="TicketKey">State</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">State</Item>
+                <Item Key="Default">open</Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###AxDynamicField1" Required="0" Valid="0">
+        <Description Translatable="1">Filter for list or combo dynamic fields. Split Default values with ; or ,</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">DynamicField_Field1</Item>
+                <Item Key="TicketKey">DynamicField_FieldNameX</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">My Own Field</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">DynamicField</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###A3Escalation" Required="0" Valid="1">
+        <Description Translatable="1">Escalation Filter.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Multiple">0</Item>
+                <Item Key="Label">Escalation</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">Escalation</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###A4Owner" Required="0" Valid="1">
+        <Description Translatable="1">Owner Filter.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Label">Agent</Item>
+                <Item Key="FilterKey">OwnerIDs</Item>
+                <Item Key="TicketKey">OwnerID</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">Agent</Item>
+                <Item Key="Multiple">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonCSS###211-ComplementoView" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Complemento.View.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###A1Service" Required="0" Valid="1">
+        <Description Translatable="1">State Filter. Split Default values with ; or ,</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">Services</Item>
+                <Item Key="TicketKey">Service</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Service</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###A9Company" Required="0" Valid="1">
+        <Description Translatable="1">State Filter. Split Default values with ; or ,</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">CustomerID</Item>
+                <Item Key="TicketKey">CustomerID</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Company</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###A2Type" Required="0" Valid="1">
+        <Description Translatable="1">State Filter. Split Default values with ; or ,</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">Types</Item>
+                <Item Key="TicketKey">Type</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">Type</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">TicketAttribute</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###ZDynamicFieldEstado" Required="0" Valid="0">
+        <Description Translatable="1">Filter for list or combo dynamic fields. Split Default values with ; or ,</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">DynamicField_estado</Item>
+                <Item Key="TicketKey">DynamicField_estado</Item>
+                <Item Key="Multiple">1</Item>
+                <Item Key="Label">UF</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">DynamicField</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketComplementoViewFilters###ZMasterSlave" Required="0" Valid="0">
+        <Description Translatable="1">Filter for list or combo dynamic fields. Split Default values with ; or ,</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewComplementoViewFilters</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FilterKey">DynamicField_MasterSlave</Item>
+                <Item Key="TicketKey">DynamicField_MasterSlave</Item>
+                <Item Key="Multiple">0</Item>
+                <Item Key="Label">Master</Item>
+                <Item Key="Default"></Item>
+                <Item Key="Type">DynamicField</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

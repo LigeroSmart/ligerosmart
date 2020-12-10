@@ -1,0 +1,44 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Application
+ * @subsection  Daemon start information
+ */
+
+@media screen,projection,tv,handheld {
+
+.DaemonInfoContent .InfoParagraph {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.DaemonInfoContent .Strong {
+    font-weight: bold;
+}
+
+.DaemonInfoContent ul {
+    list-style-type: disc;
+    margin-left: 16px;
+}
+
+.DaemonInfoContent li {
+    padding-bottom: 6px;
+}
+
+.DaemonInfoContent legend {
+    border-bottom: 1px solid #ccc;
+    color: #333333;
+    display: block;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+}
