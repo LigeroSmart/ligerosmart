@@ -1,0 +1,174 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<div class="MainBox ARIARoleMain">
+[% RenderBlockStart("Message") %]
+    [% Data.Body %]
+[% RenderBlockEnd("Message") %]
+
+    <div class="W33pc SpacingTop SpacingBottom CenterBox">
+        <noscript>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2 class="Center">[% Translate("JavaScript not available") | html %]</h2>
+            </div>
+            <div class="Content">
+                <p class="SpacingTop Center">
+                    [% Translate("In order to experience this software, you'll need to enable JavaScript in your browser.") | html %]
+                </p>
+            </div>
+        </div>
+        </noscript>
+    </div>
+
+[% RenderBlockStart("Steps") %]
+    <div class="Center">
+        <ul id="ProgressBar" class="ProgressBarElements[% Data.Steps | html %] SpacingTop SpacingBottom">
+[% RenderBlockStart("StepLicense") %]
+            <li class="First [% Data.Highlight | html %] [% Data.Active | html %]">
+                <span>
+                    <a href="#">[% Translate("Step %s", Data.Step) | html %]<span>[% Translate("License") | html %]</span></a>
+                </span>
+            </li>
+[% RenderBlockEnd("StepLicense") %]
+[% RenderBlockStart("StepDatabase") %]
+            <li class="[% Data.Highlight | html %] [% Data.Active | html %]">
+                <span>
+                    <a href="#">[% Translate("Step %s", Data.Step) | html %]<span>[% Translate("Database Settings") | html %]</span></a>
+                </span>
+            </li>
+[% RenderBlockEnd("StepDatabase") %]
+[% RenderBlockStart("StepGeneral") %]
+            <li class="[% Data.Highlight | html %] [% Data.Active | html %]">
+                <span>
+                    <a href="#">[% Translate("Step %s", Data.Step) | html %]<span>[% Translate("General Specifications and Mail Settings") | html %]</span></a>
+                </span>
+            </li>
+[% RenderBlockEnd("StepGeneral") %]
+[% RenderBlockStart("StepFinish") %]
+            <li class="Last [% Data.Highlight | html %] [% Data.Active | html %]">
+                <span>
+                    <a href="#">[% Translate("Step %s", Data.Step) | html %]<span>[% Translate("Finish") | html %]</span></a>
+                </span>
+            </li>
+[% RenderBlockEnd("StepFinish") %]
+        </ul>
+    </div>
+[% RenderBlockEnd("Steps") %]
+
+[% RenderBlockStart("Intro") %]
+    <div class="W950px SpacingTop SpacingBottom CenterBox">
+        <div class="WidgetSimple SpacingTop" id="WebInstallerBox">
+            <div class="Header">
+                <h2>[% Translate("Welcome to %s", Config("ProductName")) | html %]</h2>
+            </div>
+            <div class="LayoutGrid Content">
+                <div class="Size1of2">
+                    <h4>[% Translate("Germany") | html %]</h4>
+                    <p>OTRS AG</p>
+                    <p>Zimmersmühlenweg 11</p>
+                    <p>61440 Oberursel</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+4961726819880">+49 (0) 6172 681988 0</a></p>
+                </div>
+                <div class="Size1of2">
+                    <h4>[% Translate("United States") | html %]</h4>
+                    <p>OTRS Inc.</p>
+                    <p>19925 Stevens Creek Blvd.</p>
+                    <p>Cupertino, CA 95014-2358</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+16692011411">+1 669 2011 411</a></p>
+                </div>
+            </div>
+            <div class="Clear"></div>
+            <div class="LayoutGrid Content">
+                <div class="Size1of2">
+                    <h4>[% Translate("Germany") | html %]</h4>
+                    <p>OTRS AG</p>
+                    <p>Bahnhofplatz 1a</p>
+                    <p>94315 Straubing</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+4961726819880">+49 (0) 6172 681988 0</a></p>
+                </div>
+                <div class="Size1of2">
+                    <h4>[% Translate("Mexico") | html %]</h4>
+                    <p>OTRS S.A. de C.V.</p>
+                    <p>Av. Insurgentes Sur 863, Piso 7 Of 01, Col. Nápoles</p>
+                    <p>03810 Mexico, D.F.</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+525511689664">+52 55 1168 9664</a></p>
+                </div>
+            </div>
+            <div class="Clear"></div>
+            <div class="LayoutGrid Content">
+                <div class="Size1of2">
+                    <h4>[% Translate("Hungary") | html %]</h4>
+                    <p>OTRS Magyarország Kft.</p>
+                    <p>Kálmán Imre utca 1.</p>
+                    <p>1054 Budapest</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+3614088333">+36 1 408 8333</a></p>
+                </div>
+                <div class="Size1of2">
+                    <h4>[% Translate("Brazil") | html %]</h4>
+                    <p>OTRS Do Brasil Soluções Ltda.</p>
+                    <p>Av. Paulista, 37 – 4º Andar – Bela Vista</p>
+                    <p>CEP: 01311-902, São Paulo / SP</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+551141308205">+55 11 41308205</a></p>
+                </div>
+            </div>
+            <div class="Clear"></div>
+            <div class="LayoutGrid Content">
+                <div class="Size1of2">
+                    <h4>[% Translate("Singapore") | html %]</h4>
+                    <p>OTRS ASIA Pte. Ltd.</p>
+                    <p>Asia Square Tower 2, 12 Marina View, #11-01</p>
+                    <p>Singapore 018961</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+6531636274">+65 3163 6274</a></p>
+                </div>
+                <div class="Size1of2">
+                    <h4>[% Translate("Hong Kong") | html %]</h4>
+                    <p>OTRS Asia Ltd.</p>
+                    <p>Unit 701 The Workstation, 43 Lyndhurst Terrace</p>
+                    <p>Central Hong Kong</p>
+                    <p>[% Translate("Phone") | html %]: <a href="tel:+85258035820">+852 5803 5820</a></p>
+                </div>
+            </div>
+            <div class="Clear"></div>
+            <div class="LayoutGrid Content">
+                <p>[% Translate("Web site") | html %]: <a href="http://otrs.com" target="_blank">www.otrs.com</a></p>
+                <p>[% Translate("Email") | html %]: <a href="mailto:otrsteam@otrs.com">otrsteam@otrs.com</a></p>
+            </div>
+            <div class="Clear"></div>
+        </div>
+        <div id="InstallerContinueWithJS" class="SpacingBottom Right">
+            <form action="[% Env("CGIHandle") %]" method="post" class="PreventMultipleSubmits">
+                <input type="hidden" name="Action" value="Installer">
+                <input type="hidden" name="Subaction" value="License">
+                <button class="Primary CallForAction" type="submit"><span>[% Translate("Next") | html %]</span></button>
+            </form>
+        </div>
+    </div>
+[% RenderBlockEnd("Intro") %]
+
+[% InsertTemplate("InstallerLicense.tt") %]
+
+[% InsertTemplate("InstallerDBStart.tt") %]
+
+[% InsertTemplate("InstallerDBmysql.tt") %]
+
+[% InsertTemplate("InstallerDBmssql.tt") %]
+
+[% InsertTemplate("InstallerDBoracle.tt") %]
+
+[% InsertTemplate("InstallerDBpostgresql.tt") %]
+
+[% InsertTemplate("InstallerDBResult.tt") %]
+
+[% InsertTemplate("InstallerSystem.tt") %]
+
+[% InsertTemplate("InstallerConfigureMail.tt") %]
+
+[% InsertTemplate("InstallerFinish.tt") %]
+
+</div>

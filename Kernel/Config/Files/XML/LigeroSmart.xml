@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="LigeroSmart###Nodes" Required="0" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Elasticsearch Nodes</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Array></Array>
+        </Value>
+    </Setting>
+	<Setting Name="LigeroSmart::LigeroSearch" Required="1" Valid="1" ConfigLevel="100">>
+        <Description Translatable="1">Ligero Smart Search.</Description>
+        <Navigation>Core::Search::Templates</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="MaxResults">9999</Item>
+                <Item Key="MinScore">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="QueuePreferences###Z4001-QueueLanguage" Required="0" Valid="1">
+        <Description Translatable="1">Language</Description>
+        <Navigation>Core::Queue</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::QueuePreferences::Language</Item>
+                <Item Key="Label" Translatable="1">Ligero Language</Item>
+                <Item Key="Desc" Translatable="1">Language used for Queue indexation on Ligero</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">Language</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroSmart::Index" Required="1" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Index Prefix.</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Item ValueType="String">companyname</Item>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Invoker::Module###LigeroSmart::LigeroSmartIndexer" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the invoker layer.</Description>
+        <Navigation>GenericInterface::Invoker::Module</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">LigeroSmartIndexer</Item>
+                <Item Key="Controller">LigeroSmart</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceInvokerDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroSmart::LigeroSearch::Indexer###SendAttachmentsToES" Required="1" Valid="1">
+        <Description Translatable="1">Index also attachments.</Description>
+        <Navigation>GenericInterface::Invoker::Module</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Yes">
+                <Item ValueType="Option" Value="No" Translatable="1">No</Item>
+                <Item ValueType="Option" Value="Yes" Translatable="1">Yes</Item>
+            </Item>
+        </Value>
+    </Setting>
+<Setting Name="LigeroSmart::FullTextSearch###InlineQueryTemplate" Required="1" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Full Search Template.</Description>
+        <Navigation>Core::Search::Templates</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+{
+		    "bool": {
+		        "should": [
+		            {
+		                "prefix": {
+		                    "_all": {
+		                        "value":"{{Query}}",
+		                        "boost": 10
+		                    }
+		                }
+		            },
+		            {
+		                "match": {
+		                    "_all": {
+		                        "query":"{{Query}}"
+		                    }
+		                }
+		            }
+		        ]
+		    }
+}
+			</Item>
+		</Value>
+	</Setting>
+    <Setting Name="GenericInterface::Operation::Module###LigeroSmart::Search" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">Search</Item>
+                <Item Key="Controller">LigeroSmart</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ </otrs_config>

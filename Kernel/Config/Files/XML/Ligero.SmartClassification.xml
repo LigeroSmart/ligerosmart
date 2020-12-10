@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="LigeroSmartClassification::SearchTemplate" Required="1" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Query template for Elasticsearch tunning</Description>
+        <Navigation>Core::Search::Templates</Navigation>
+        <Value>
+		 <Item ValueType="Textarea">
+{
+    "bool": {
+        "must_not": [
+           {
+               "match": {
+                  "Ticket.Type": "{{UnclassifiedType}}"
+               }
+           }
+        ], 
+        "must": [
+           {
+               "exists": { "field": "Ticket.SLA" }
+           },
+           {
+               "exists": { "field": "Ticket.Service" }
+           },
+           {
+               "match": {
+                    "Ticket.Queue.raw": "{{Queue}}"
+                }
+           }
+        ], 
+        "should": [
+            {
+                "prefix": {
+                    "Ticket.Title": {
+                        "value":"{{Query}}",
+                        "boost": 20
+                    }
+                }
+            },
+            {
+                "match": {
+                    "Ticket.Title": {
+                        "query":"{{Query}}",
+                        "boost": 10
+                    }
+                }
+            },
+            {
+                "query_string" : {
+                    "default_field" : "_all",
+                    "query" : "{{QueryFuzzy}}",
+                    "fuzziness":1,
+                    "default_operator":"or"
+                }
+            }
+
+        ]
+    }
+}
+		</Item>
+        </Value>
+    </Setting>
+     <Setting Name="Frontend::Output::FilterElementPost###050-OutputFilterLigeroSmartClassification" Required="0" Valid="1">
+        <Description Translatable="1">Alerts Agent about not classified tickets and suggest smart classification based on ticket content and past tickets.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::LigeroTicketWidget</Item>
+                <Item Key="Action">AgentTicketLigeroSmartClassification</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketZoom">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###WhenNotClassified" Required="1" Valid="1">
+        <Description Translatable="1">Wheter to expand or collapse Smart Classification Widget when ticket is not classified</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Expanded">
+                <Item ValueType="Option" Value="Expanded" Translatable="1">Expand</Item>
+                <Item ValueType="Option" Value="Collapsed" Translatable="1">Collapse</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###WhenClassified" Required="1" Valid="1">
+        <Description Translatable="1">Wheter to expand or collapse Smart Classification Widget when ticket is classified</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Hide">
+                <Item ValueType="Option" Value="Expanded" Translatable="1">Expand</Item>
+                <Item ValueType="Option" Value="Collapsed" Translatable="1">Collapse</Item>
+                <Item ValueType="Option" Value="Hide" Translatable="1">Hide</Item>
+            </Item>
+        </Value>
+    </Setting>
+     <Setting Name="Frontend::Module###AgentTicketLigeroSmartClassification" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Ticket FreeText</Item>
+                    <Item Key="Title">Free Fields</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketLigeroSmartClassification###002-Ligero" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketLigeroSmartClassification###002-Ligero" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+ 
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required permissions to use the ticket free text screen in the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="" Translatable="1">rw</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###SmartClassification" Required="0" Valid="1">
+        <Description Translatable="1">WARNING: YOU NEED LIGERO SMART INSTALLED AND CONFIGURED, OTHERWISE YOU HAVE AN ERRO ON YOUR SYSTEM. Enables Smart Classification based on queue history for type, service and SLA.</Description>
+        <Navigation>SmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###RequiredLock" Required="0" Valid="1">
+        <Description Translatable="1">Defines if a ticket lock is required in the ticket free text screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###TicketType" Required="0" Valid="1">
+        <Description Translatable="1">Sets the ticket type in the ticket free text screen of the agent interface (Ticket::Type needs to be activated).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Service" Required="0" Valid="1">
+        <Description Translatable="1">Sets the service in the ticket free text screen of the agent interface (Ticket::Service needs to be activated).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###ServiceMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if service must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###SLAMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if SLA must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Queue" Required="0" Valid="1">
+        <Description Translatable="1">Sets the queue in the ticket free text screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Owner" Required="0" Valid="1">
+        <Description Translatable="1">Sets the ticket owner in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###OwnerMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if ticket owner must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Responsible" Required="0" Valid="1">
+        <Description Translatable="1">Sets the responsible agent of the ticket in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###State" Required="0" Valid="1">
+        <Description Translatable="1">If a note is added by an agent, sets the state of a ticket in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###StateType" Required="1" Valid="1">
+        <Description Translatable="1">Defines the next state of a ticket after adding a note, in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Array>
+                <Item>open</Item>
+                <Item>closed</Item>
+                <Item>pending reminder</Item>
+                <Item>pending auto</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###StateDefault" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default next state of a ticket after adding a note, in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">open</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Note" Required="0" Valid="1">
+        <Description Translatable="1">Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###NoteMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Subject" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default subject of a note in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Body" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default body of a note in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Textarea"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###InvolvedAgent" Required="1" Valid="1">
+        <Description Translatable="1">Shows a list of all the involved agents on this ticket, in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###InformAgent" Required="1" Valid="1">
+        <Description Translatable="1">Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###ArticleTypeDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default type of the note in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">note-internal</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###ArticleTypes" Required="0" Valid="1">
+        <Description Translatable="1">Specifies the available note types for this ticket mask. If the option is deselected, ArticleTypeDefault is used and the option is removed from the mask.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="note-internal">1</Item>
+                <Item Key="note-external">1</Item>
+                <Item Key="note-report">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Priority" Required="1" Valid="1">
+        <Description Translatable="1">Shows the ticket priority options in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###PriorityDefault" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default ticket priority in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="Priority" ValueRegex="">3 normal</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###Title" Required="0" Valid="1">
+        <Description Translatable="1">Shows the title fields in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###HistoryType" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history type for the ticket free text screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">AddNote</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###HistoryComment" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history comment for the ticket free text screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">%%FreeText</Item>
+        </Value>
+    </Setting>
+     <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###RichTextWidth" Required="0" Valid="1">
+        <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">620</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketLigeroSmartClassification###RichTextHeight" Required="0" Valid="1">
+        <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewLigeroSmartClassification</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">100</Item>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroSmartClassification::SearchOptions" Required="1" Valid="1">
+        <Description Translatable="1">Ligero Smart Search.</Description>
+        <Navigation>SmartClassification</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="UnclassifiedType">default</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+</otrs_config>

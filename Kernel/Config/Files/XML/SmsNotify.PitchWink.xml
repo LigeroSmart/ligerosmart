@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="SmsNotify::Gateway###PitchWink-01" Required="0" Valid="1">
+        <Description Translatable="1">PitchWink SMS Gateway</Description>
+        <Navigation>SmsNotify::Gateways</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Credencial"></Item>
+                <Item Key="Principal_User"></Item>
+                <Item Key="Aux_User"></Item>
+                <Item Key="Token"></Item>
+                <Item Key="Send_Project">S</Item>
+                <Item Key="URL">https://www.pw-api.com/sms/v_3_00/smspush/enviasms.aspx</Item>
+                <Item Key="Name">PitchWink</Item>
+				<Item Key="Module">Kernel::System::Ticket::Event::NotificationEvent::Transport::SmsNotifyGateways::PitchWink</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

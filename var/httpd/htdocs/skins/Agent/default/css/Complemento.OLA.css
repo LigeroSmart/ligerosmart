@@ -1,0 +1,4 @@
+/* Apenas desabilitamos a caixa com JSON. Também removemos o label e a description com Jquery no CSS do AddOn */
+#OLA_Queues {
+    display: none;
+}

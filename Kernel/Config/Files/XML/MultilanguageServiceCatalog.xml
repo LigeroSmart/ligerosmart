@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="PreApplicationModule###AgentLanguageEnv" Required="1" Valid="1" ConfigLevel="300">
+        <Description Translatable="1">Helper for Agent Language.</Description>
+        <Navigation>Frontend::Agent</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::DefaultLanguageEnv</Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerPanelPreApplicationModule###CustomerLanguageEnv" Required="1" Valid="1">
+        <Description Translatable="1">This module and its PreRun() function will be executed, if defined, for every request. This module is useful to check some user options or to display news about new applications.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::DefaultLanguageEnv</Item>
+        </Value>
+    </Setting>
+     <Setting Name="Frontend::Output::FilterElementPost###OutputFilterLigeroMultilanguageServiceCatalog" Required="0" Valid="1">
+        <Description Translatable="1">Multilanguage Service Catalog.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::LigeroMultilanguageServiceCatalog</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AdminService">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_ar_SA" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Arabic (Saudi Arabia)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Arabic (Saudi Arabia)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_ar_SA</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_bg" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Bulgarian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Bulgarian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_bg</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_ca" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Catalan</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Catalan</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_ca</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_cs" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Czech</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Czech</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_cs</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_da" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Danish</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Danish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_da</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_de" Required="1" Valid="1">
+        <Description Translatable="1">Service Name German</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">German</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_de</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_en" Required="1" Valid="1">
+        <Description Translatable="1">Service Name English (United States)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">English (United States)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_en</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_en_CA" Required="1" Valid="1">
+        <Description Translatable="1">Service Name English (Canada)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">English (Canada)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_en_CA</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_en_GB" Required="1" Valid="1">
+        <Description Translatable="1">Service Name English (United Kingdom)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">English (United Kingdom)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_en_GB</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_es" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Spanish</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Spanish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_es</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_es_CO" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Spanish (Colombia)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Spanish (Colombia)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_es_CO</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_es_MX" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Spanish (Mexico)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Spanish (Mexico)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_es_MX</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_et" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Estonian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Estonian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_et</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_el" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Greek</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Greek</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_el</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_fa" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Persian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Persian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_fa</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_fi" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Finnish</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Finnish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_fi</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_fr" Required="1" Valid="1">
+        <Description Translatable="1">Service Name French</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">French</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_fr</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_fr_CA" Required="1" Valid="1">
+        <Description Translatable="1">Service Name French (Canada)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">French (Canada)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_fr_CA</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_gl" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Galician</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Galician</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_gl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_he" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Hebrew</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Hebrew</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_he</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_hi" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Hindi</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Hindi</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_hi</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_hr" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Croatian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Croatian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_hr</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_hu" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Hungarian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Hungarian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_hu</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_id" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Indonesian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Indonesian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_id</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_it" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Italian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Italian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_it</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_ja" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Japanese</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Japanese</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_ja</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_lt" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Lithuanian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Lithuanian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_lt</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_lv" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Latvian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Latvian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_lv</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_ms" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Malay</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Malay</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_ms</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_nl" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Nederlands</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Nederlands</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_nl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_nb_NO" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Norwegian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Norwegian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_nb_NO</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_pt_BR" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Portuguese (Brasil)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Portuguese (Brasil)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_pt_BR</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_pt" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Portuguese</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Portuguese</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_pt</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_pl" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Polish</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Polish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_pl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_ru" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Russian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Russian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_ru</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_sl" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Slovenian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Slovenian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_sl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_sr_Latn" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Serbian Latin</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Serbian Latin</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_sr_Latn</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_sr_Cyrl" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Serbian Cyrillic</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Serbian Cyrillic</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_sr_Cyrl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_sk_SK" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Slovak</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Slovak</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_sk_SK</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_sv" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Swedish</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Swedish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_sv</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_sw" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Swahili</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Swahili</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_sw</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_th_TH" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Thai</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Thai</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_th_TH</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_tr" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Turkish</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Turkish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_tr</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_uk" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Ukrainian</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Ukrainian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_uk</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_vi_VN" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Vietnam</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Vietnam</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_vi_VN</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_zh_CN" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Chinese (Simplified)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Chinese (Simplified)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_zh_CN</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###name_zh_TW" Required="1" Valid="1">
+        <Description Translatable="1">Service Name Chinese (Traditional)</Description>
+        <Navigation>MultilanguageServiceCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Chinese (Traditional)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Cols">50</Item>
+                <Item Key="Rows">5</Item>
+                <Item Key="PrefKey">name_zh_TW</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

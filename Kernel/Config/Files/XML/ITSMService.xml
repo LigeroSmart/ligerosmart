@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="Frontend::Module###AgentITSMService" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the AgentITSMService object in the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>itsm-service</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                            <Item>itsm-service</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">ITSM Service Overview.</Item>
+                    <Item Key="NavBarName">Service</Item>
+                    <Item Key="Title" Translatable="1">Service</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentITSMService###003-ITSMService" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>ITSM.Agent.Service.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentITSMService###003-ITSMService" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>itsm-service</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-service</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Service-Area</Item>
+                        <Item Key="Name">Services</Item>
+                        <Item Key="Link">Action=AgentITSMService</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Service</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block">ItemArea</Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">3100</Item>
+                    </Hash>
+                </Item>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>itsm-service</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-service</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Service Overview</Item>
+                        <Item Key="Name">Service</Item>
+                        <Item Key="Link">Action=AgentITSMService</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Service</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">100</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentITSMSLA" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the AgentITSMSLA object in the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                            <Item>itsm-service</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">ITSM SLA Overview.</Item>
+                    <Item Key="NavBarName">Service</Item>
+                    <Item Key="Title" Translatable="1">SLA</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentITSMSLA###003-ITSMService" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>ITSM.Agent.SLA.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentITSMSLA###003-ITSMService" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-service</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">SLA Overview</Item>
+                        <Item Key="Name">SLA</Item>
+                        <Item Key="Link">Action=AgentITSMSLA</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Service</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">200</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentITSMServiceZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the AgentITSMServiceZoom object in the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                            <Item>itsm-service</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Service Zoom.</Item>
+                    <Item Key="Title" Translatable="1">Zoom</Item>
+                    <Item Key="NavBarName">Service</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentITSMServiceZoom###003-ITSMService" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.AllocationList.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.UI.AllocationList.js</Item>
+                        <Item>Core.UI.Table.Sort.js</Item>
+                        <Item>Core.Agent.TableFilters.js</Item>
+                        <Item>Core.Agent.LinkObject.js</Item>
+                        <Item>ITSM.Agent.ServiceZoom.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentITSMServicePrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the AgentITSMServicePrint object in the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                            <Item>itsm-service</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Service Print.</Item>
+                    <Item Key="Title" Translatable="1">Print</Item>
+                    <Item Key="NavBarName">Service</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentITSMSLAZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the AgentITSMSLAZoom object in the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                            <Item>itsm-service</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">SLA Zoom.</Item>
+                    <Item Key="Title" Translatable="1">Zoom</Item>
+                    <Item Key="NavBarName">Service</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentITSMSLAZoom###003-ITSMService" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>ITSM.Agent.SLAZoom.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentITSMSLAPrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the AgentITSMSLAPrint object in the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                            <Item>itsm-service</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">SLA Print.</Item>
+                    <Item Key="Title" Translatable="1">Print</Item>
+                    <Item Key="NavBarName">Service</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMService::Frontend::MenuModule###000-Back" Required="0" Valid="1">
+        <Description Translatable="1">Module to show the Back menu item in service menu.</Description>
+        <Navigation>Frontend::Agent::ITSMService::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Generic</Item>
+                <Item Key="Name">Back</Item>
+                <Item Key="Target">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
+                <Item Key="Action"></Item>
+                <Item Key="Link">Action=AgentITSMService</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMService::Frontend::MenuModule###100-Print" Required="0" Valid="1">
+        <Description Translatable="1">Module to show the Print menu item in service menu.</Description>
+        <Navigation>Frontend::Agent::ITSMService::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Generic</Item>
+                <Item Key="Name">Print</Item>
+                <Item Key="Description" Translatable="1">Print</Item>
+                <Item Key="Action">AgentITSMServicePrint</Item>
+                <Item Key="Link">Action=AgentITSMServicePrint;ServiceID=[% Data.ServiceID | html %]</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMService::Frontend::MenuModule###200-Link" Required="0" Valid="1">
+        <Description Translatable="1">Module to show the Link menu item in service menu.</Description>
+        <Navigation>Frontend::Agent::ITSMService::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Link</Item>
+                <Item Key="Name">Link</Item>
+                <Item Key="Target">PopUp</Item>
+                <Item Key="Description" Translatable="1">Link</Item>
+                <Item Key="Action">AgentITSMService</Item>
+                <Item Key="Link">Action=AgentLinkObject;SourceObject=Service;SourceKey=[% Data.ServiceID | html %]</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMSLA::Frontend::MenuModule###000-Back" Required="0" Valid="1">
+        <Description Translatable="1">Module to show the Back menu item in SLA menu.</Description>
+        <Navigation>Frontend::Agent::ITSMSLA::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenu::Generic</Item>
+                <Item Key="Name">Back</Item>
+                <Item Key="Target">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
+                <Item Key="Action"></Item>
+                <Item Key="Link">Action=AgentITSMSLA</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMSLA::Frontend::MenuModule###100-Print" Required="0" Valid="1">
+        <Description Translatable="1">Module to show the Print menu item in SLA menu.</Description>
+        <Navigation>Frontend::Agent::ITSMSLA::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenu::Generic</Item>
+                <Item Key="Name">Print</Item>
+                <Item Key="Description" Translatable="1">Print</Item>
+                <Item Key="Action">AgentITSMSLAPrint</Item>
+                <Item Key="Link">Action=AgentITSMSLAPrint;SLAID=[% Data.SLAID | html %]</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::ComplexTable::SettingsVisibility###Service" Required="0" Valid="1">
+        <Description Translatable="1">Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.</Description>
+        <Navigation>Frontend::Agent::LinkObject</Navigation>
+        <Value>
+            <Array>
+                <Item>AgentITSMServiceZoom</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::ComplexTable###Service" Required="0" Valid="1">
+        <Description Translatable="1">Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.</Description>
+        <Navigation>Frontend::Agent::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::LinkObject::Service.pm</Item>
+                <Item Key="DefaultColumns">
+                    <Hash>
+                        <Item Key="Comment">1</Item>
+                        <Item Key="Type">2</Item>
+                        <Item Key="Criticality">2</Item>
+                        <Item Key="CurInciState">2</Item>
+                        <Item Key="CreateTime">1</Item>
+                        <Item Key="ChangeTime">1</Item>
+                    </Hash>
+                </Item>
+                <Item Key="Priority">
+                    <Hash>
+                        <Item Key="Comment">110</Item>
+                        <Item Key="Type">120</Item>
+                        <Item Key="Criticality">130</Item>
+                        <Item Key="CurInciState">140</Item>
+                        <Item Key="CreateTime">150</Item>
+                        <Item Key="ChangeTime">160</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

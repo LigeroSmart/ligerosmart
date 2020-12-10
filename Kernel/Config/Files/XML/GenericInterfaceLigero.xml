@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="GenericInterface::Operation::Module###SessionLigero::SessionCreate" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">SessionCreate</Item>
+                <Item Key="Controller">SessionLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###TicketLigero::TicketSearch" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">TicketGet</Item>
+                <Item Key="Controller">TicketLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###TicketLigero::PrioritySearch" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">PrioritySearch</Item>
+                <Item Key="Controller">TicketLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###TicketLigero::QueueSearch" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">QueueSearch</Item>
+                <Item Key="Controller">TicketLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###TicketLigero::StateSearch" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">StateSearch</Item>
+                <Item Key="Controller">TicketLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###TicketLigero::TypeSearch" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">TypeSearch</Item>
+                <Item Key="Controller">TicketLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###TicketLigero::ArticleAttachmentGet" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">ArticleAttachmentGet</Item>
+                <Item Key="Controller">TicketLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###GeneralCatalogLigero::GeneralCatalogGetValues" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">GeneralCatalogGetValues</Item>
+                <Item Key="Controller">GeneralCatalogLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###MiscLigero::LinkObject" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">LinkObject</Item>
+                <Item Key="Controller">MiscLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###MiscLigero::SurveySearch" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">SurveySearch</Item>
+                <Item Key="Controller">MiscLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###MiscLigero::SurveyVote" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">SurveyVote</Item>
+                <Item Key="Controller">MiscLigero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###Admin::Generic" Required="0" Valid="1">
+        <Description Translatable="1">Generic object for commun administration operations.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">Generic</Item>
+                <Item Key="Controller">Admin</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Groups" Required="0" Valid="1">
+        <Description Translatable="1">Choose the groups that will have permission to access the API.</Description>
+        <Navigation>GenericInterface::Operation::Permission</Navigation>
+        <Value>
+            <Array>
+                <Item>admin</Item>
+            </Array>
+        </Value>
+    </Setting>
+</otrs_config>

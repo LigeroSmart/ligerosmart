@@ -1,0 +1,96 @@
+<div class="CompWidgetContainer" style="width:[% Data.Width %]%">
+    <div class="CompWidgetBorder">
+        <div id="[% Data.Container %]" class="CompWidget">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+if ( ! window.deferAfterjQueryLoaded ) {
+    window.deferAfterjQueryLoaded = [];
+}
+window.deferAfterjQueryLoaded.push(function() {
+
+
+        var chart;
+        chart = new Highcharts.Chart({
+            credits: {
+                enabled: false
+            },
+            chart: {
+                renderTo: '[% Data.Container %]',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25,
+            },
+            plotOptions: {
+                series: {
+<!--                    pointInterval: 0.5,-->
+                }
+            },
+            title: {
+                text: '[% Translate(Data.Title) | html %]',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '[% Data.Subtitle %]',
+                x: -20
+            },
+            xAxis: {
+                categories: [
+[% RenderBlockStart("DayMonth") %]
+                          '[% Data.Category %]',
+[% RenderBlockEnd("DayMonth") %]
+                    ]
+            },
+            yAxis: {
+                title: {
+                    text: '[% Translate("Tickets") | html %]'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y;
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [
+            {
+                name: '[% Translate("Created") | html %]',
+                data: [
+[% RenderBlockStart("CreatedTickets") %]
+{
+                          y:[% Data.Count | html %],
+                        dia:'Hoje',
+},
+[% RenderBlockEnd("CreatedTickets") %]
+                    ]
+            }, 
+            {
+                name: '[% Translate("Closed") | html %]',
+                data: [
+[% RenderBlockStart("Closed") %]
+                          [% Data.Count | html %],
+[% RenderBlockEnd("Closed") %]
+                     ]
+            },
+            ]
+        });
+
+    
+});
+</script>
+

@@ -1,0 +1,2784 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
+        <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
+        <Navigation>Frontend::Agent</Navigation>
+        <Value>
+            <Array>
+                <Item>internal</Item>
+                <Item>external</Item>
+                <Item>public</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Customer::StateTypes" Required="1" Valid="1">
+        <Description Translatable="1">List of state types which can be used in the customer interface.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Array>
+                <Item>external</Item>
+                <Item>public</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Public::StateTypes" Required="1" Valid="1">
+        <Description Translatable="1">List of state types which can be used in the public interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Array>
+                <Item>public</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
+        <Description Translatable="1">Default category name.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="String">FAQ</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Default::RootCategoryComment" Required="1" Valid="1">
+        <Description Translatable="1">Default category name.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="String">default comment</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Voting::Rates" Required="1" Valid="1">
+        <Description Translatable="1">Rates for voting. Key must be in percent.</Description>
+        <Navigation>Core::FAQ::Item::Voting</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="100">5</Item>
+                <Item Key="75">4</Item>
+                <Item Key="50">3</Item>
+                <Item Key="25">2</Item>
+                <Item Key="0">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Voting::Show" Required="1" Valid="1">
+        <Description Translatable="1">Show voting in defined interfaces.</Description>
+        <Navigation>Core::FAQ::Item::Voting</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::Path::Show" Required="1" Valid="1">
+        <Description Translatable="1">Show FAQ path yes/no.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::ItemList::VotingResultDecimalPlaces" Required="1" Valid="1">
+        <Description Translatable="1">Decimal places of the voting result.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">2</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::ItemList::VotingResultColors" Required="1" Valid="1">
+        <Description Translatable="1">CSS color for the voting result.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="30">red</Item>
+                <Item Key="70">orange</Item>
+                <Item Key="100">green</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
+        <Description Translatable="1">Interfaces where the quick search should be shown.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="public" Translatable="1">public (public)</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::LastChange::Show" Required="1" Valid="1">
+        <Description Translatable="1">Show last change items in defined interfaces.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
+                <Item Key="public" Translatable="1">public (public)</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::LastChange::ShowSubCategoryItems" Required="1" Valid="1">
+        <Description Translatable="1">Show items of subcategories.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::LastChange::Limit" Required="1" Valid="1">
+        <Description Translatable="1">Number of shown items in last changes.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">3</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::LastCreate::Show" Required="1" Valid="1">
+        <Description Translatable="1">Show last created items in defined interfaces.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
+                <Item Key="public" Translatable="1">public (public)</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::LastCreate::ShowSubCategoryItems" Required="1" Valid="1">
+        <Description Translatable="1">Show items of subcategories.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::LastCreate::Limit" Required="1" Valid="1">
+        <Description Translatable="1">Number of shown items in last created.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">3</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::Top10::Show" Required="1" Valid="1">
+        <Description Translatable="1">Show top 10 items in defined interfaces.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
+                <Item Key="public" Translatable="1">public (public)</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::Top10::Limit" Required="1" Valid="1">
+        <Description Translatable="1">Number of shown items in the top 10 feature.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">10</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Explorer::Top10::ShowSubCategoryItems" Required="1" Valid="1">
+        <Description Translatable="1">Show items of subcategories.</Description>
+        <Navigation>Core::FAQ::Explorer</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::FAQHook" Required="1" Valid="1">
+        <Description Translatable="1">The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="String">FAQ#</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TitleSize" Required="1" Valid="1">
+        <Description Translatable="1">Default maximum size of the titles in a FAQ article to be shown.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Default::State" Required="1" Valid="1">
+        <Description Translatable="1">Default state for FAQ entry.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="internal (agent)">
+                <Item ValueType="Option" Value="internal (agent)" Translatable="1">internal (agent)</Item>
+                <Item ValueType="Option" Value="external (customer)" Translatable="1">external (customer)</Item>
+                <Item ValueType="Option" Value="public (all)" Translatable="1">public (all)</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalRequired" Required="1" Valid="1">
+        <Description Translatable="1">New FAQ articles need approval before they get published.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalGroup" Required="1" Valid="1">
+        <Description Translatable="1">Group for the approval of FAQ articles.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="String">users</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalQueue" Required="1" Valid="1">
+        <Description Translatable="1">Queue for the approval of FAQ articles.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="String">FAQ_Approval</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalTicketSubject" Required="1" Valid="1">
+        <Description Translatable="1">Ticket subject for approval of FAQ article.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="String">FAQ approval required for FAQ# &lt;OTRS_FAQ_NUMBER&gt;</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalTicketBody" Required="1" Valid="1">
+        <Description Translatable="1">Ticket body for approval of FAQ article.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="Textarea">Hi,
+
+a new FAQ article needs your approval before it can be published.
+
+  FAQ#   : &lt;OTRS_FAQ_NUMBER&gt;
+  Title  : &lt;OTRS_FAQ_TITLE&gt;
+  Author : &lt;OTRS_FAQ_AUTHOR&gt;
+  State  : &lt;OTRS_FAQ_STATE&gt;
+
+If you want to do this, click on this link:
+
+&lt;OTRS_CONFIG_HttpType&gt;://&lt;OTRS_CONFIG_FQDN&gt;/&lt;OTRS_CONFIG_ScriptAlias&gt;index.pl?Action=AgentFAQEdit;ItemID=&lt;OTRS_FAQ_ITEMID&gt;
+
+Your OTRS Notification Master
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalTicketPriority" Required="1" Valid="1">
+        <Description Translatable="1">Default priority of tickets for the approval of FAQ articles.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="Priority" ValueRegex="">3 normal</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalTicketDefaultState" Required="1" Valid="1">
+        <Description Translatable="1">Default state of tickets for the approval of FAQ articles.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">new</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::ApprovalTicketType" Required="1" Valid="1">
+        <Description Translatable="1">Default type of tickets for the approval of FAQ articles.</Description>
+        <Navigation>Core::FAQ::Approval</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="Type">Unclassified</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Field1" Required="1" Valid="1">
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
+        <Navigation>Core::FAQ::Item</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Show">public</Item>
+                <Item Key="Caption" Translatable="1">Symptom</Item>
+                <Item Key="Prio">100</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Field2" Required="1" Valid="1">
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
+        <Navigation>Core::FAQ::Item</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Show">public</Item>
+                <Item Key="Caption" Translatable="1">Problem</Item>
+                <Item Key="Prio">200</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Field3" Required="1" Valid="1">
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
+        <Navigation>Core::FAQ::Item</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Show">public</Item>
+                <Item Key="Caption" Translatable="1">Solution</Item>
+                <Item Key="Prio">300</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Field4" Required="1" Valid="1">
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
+        <Navigation>Core::FAQ::Item</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Show"></Item>
+                <Item Key="Caption" Translatable="1">Field4</Item>
+                <Item Key="Prio">400</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Field5" Required="1" Valid="1">
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
+        <Navigation>Core::FAQ::Item</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Show"></Item>
+                <Item Key="Caption" Translatable="1">Field5</Item>
+                <Item Key="Prio">500</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::Field6" Required="1" Valid="1">
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
+        <Navigation>Core::FAQ::Item</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Show">internal</Item>
+                <Item Key="Caption" Translatable="1">Comment</Item>
+                <Item Key="Prio">600</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::PossibleLink###8301" Required="0" Valid="1">
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Object1">FAQ</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">Normal</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::PossibleLink###8302" Required="0" Valid="1">
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Object1">FAQ</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">ParentChild</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::PossibleLink###8303" Required="0" Valid="1">
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Object1">FAQ</Item>
+                <Item Key="Object2">Ticket</Item>
+                <Item Key="Type">Normal</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::PossibleLink###8304" Required="0" Valid="1">
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Object1">FAQ</Item>
+                <Item Key="Object2">Ticket</Item>
+                <Item Key="Type">ParentChild</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQExplorer" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQExplorer###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Agent.Detail.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentFAQExplorer###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">FAQ Area</Item>
+                        <Item Key="Name" Translatable="1">FAQ</Item>
+                        <Item Key="Link">Action=AgentFAQExplorer</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block">ItemArea</Item>
+                        <Item Key="AccessKey">f</Item>
+                        <Item Key="Prio">350</Item>
+                    </Hash>
+                </Item>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">FAQ Explorer</Item>
+                        <Item Key="Name" Translatable="1">Explorer</Item>
+                        <Item Key="Link">Action=AgentFAQExplorer</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">x</Item>
+                        <Item Key="Prio">910</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerFAQExplorer" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Customer FAQ.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                    <Item Key="Title"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::CustomerFAQExplorer###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Customer.Detail.css</Item>
+                        <Item>FAQ.Customer.Default.css</Item>
+                        <Item>FAQ.Widget.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Customer.FAQZoom.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###CustomerFAQExplorer###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">FAQ</Item>
+                        <Item Key="Name" Translatable="1">FAQ</Item>
+                        <Item Key="Link">Action=CustomerFAQExplorer</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">700</Item>
+                    </Hash>
+                </Item>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">FAQ Explorer</Item>
+                        <Item Key="Name" Translatable="1">FAQ Explorer</Item>
+                        <Item Key="Link">Action=CustomerFAQExplorer</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type">Submenu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">x</Item>
+                        <Item Key="Prio">710</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQExplorer###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,8}$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQExplorer###SearchPageShown" Required="1" Valid="1">
+        <Description Translatable="1">Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">40</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQExplorer###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="FAQID">
+                <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
+                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
+                <Item ValueType="Option" Value="State" Translatable="1">State</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQExplorer###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.</Description>
+        <Navigation>Frontend::Customer::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Down">
+                <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
+                <Item ValueType="Option" Value="Up" Translatable="1">Up</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQExplorer###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::CommonParam###Action" Required="1" Valid="1">
+        <Description Translatable="1">Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String">PublicFAQExplorer</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Module###PublicFAQExplorer" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Public FAQ.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                    <Item Key="Title"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::PublicFAQExplorer###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Customer.Detail.css</Item>
+                        <Item>FAQ.Customer.Default.css</Item>
+                        <Item>FAQ.Widget.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Customer.FAQZoom.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Navigation###PublicFAQExplorer###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">FAQ Area</Item>
+                        <Item Key="Name" Translatable="1">FAQ</Item>
+                        <Item Key="Link">Action=PublicFAQExplorer</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar"></Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">x</Item>
+                        <Item Key="Prio">400</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQExplorer###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,8}$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQExplorer###SearchPageShown" Required="1" Valid="1">
+        <Description Translatable="1">Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">40</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQExplorer###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="FAQID">
+                <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
+                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
+                <Item ValueType="Option" Value="State" Translatable="1">State</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQExplorer###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.</Description>
+        <Navigation>Frontend::Public::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Down">
+                <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
+                <Item ValueType="Option" Value="Up" Translatable="1">Up</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQExplorer###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Module###PublicFAQRSS" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Public FAQ.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::PublicFAQRSS###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Item::HTML" Required="1" Valid="1">
+        <Description Translatable="1">Show FAQ Article with HTML.</Description>
+        <Navigation>Core::FAQ::Item</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::HeaderMetaModule###3-FAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">Module to generate html OpenSearch profile for short FAQ search.</Description>
+        <Navigation>Frontend::Agent</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::HeaderMeta::AgentFAQSearch</Item>
+                <Item Key="Action">AgentFAQSearch</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::HeaderMetaModule###3-FAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::HeaderMeta::CustomerFAQSearch</Item>
+                <Item Key="Action">CustomerFAQSearch</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::HeaderMetaModule###3-FAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">Module to generate HTML OpenSearch profile for short FAQ search in the public interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::HeaderMeta::PublicFAQSearch</Item>
+                <Item Key="Action">PublicFAQSearch</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQ</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketClose">1</Item>
+                        <Item Key="AgentTicketCompose">1</Item>
+                        <Item Key="AgentTicketEmail">1</Item>
+                        <Item Key="AgentTicketEmailOutbound">1</Item>
+                        <Item Key="AgentTicketForward">1</Item>
+                        <Item Key="AgentTicketFreeText">1</Item>
+                        <Item Key="AgentTicketNote">1</Item>
+                        <Item Key="AgentTicketOwner">1</Item>
+                        <Item Key="AgentTicketPending">1</Item>
+                        <Item Key="AgentTicketPhone">1</Item>
+                        <Item Key="AgentTicketPriority">1</Item>
+                        <Item Key="AgentTicketResponsible">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::OutputFilterTextAutoLink###FAQ" Required="0" Valid="0">
+        <Description Translatable="1">A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="RegExp">
+                    <Array>
+                        <Item>(FAQ)[#\s]*?1(\d{4})</Item>
+                    </Array>
+                </Item>
+                <Item Key="URL1">
+                    <Hash>
+                        <Item Key="Description" Translatable="1">FAQ</Item>
+                        <Item Key="URL">/otrs/index.pl?Action=AgentFAQZoom;ItemID=&lt;MATCH2&gt;</Item>
+                        <Item Key="Image">/otrs-web/skins/Agent/default/img/help-small.png</Item>
+                        <Item Key="Target">_blank</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQAdd" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQAdd###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Agent.Detail.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentFAQAdd###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">New FAQ Article.</Item>
+                        <Item Key="Name" Translatable="1">New</Item>
+                        <Item Key="Link">Action=AgentFAQAdd</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">b</Item>
+                        <Item Key="Prio">920</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQEdit" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Edit.</Item>
+                    <Item Key="Title" Translatable="1">Edit</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQEdit###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Agent.Detail.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQLanguage" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQLanguage###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.ConfirmationDialog.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentFAQLanguage###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>admin</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Language Management.</Item>
+                        <Item Key="Name" Translatable="1">Language Management</Item>
+                        <Item Key="Link">Action=AgentFAQLanguage</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">l</Item>
+                        <Item Key="Prio">940</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQCategory" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQCategory###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.ConfirmationDialog.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentFAQCategory###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>admin</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Category Management.</Item>
+                        <Item Key="Name" Translatable="1">Category Management</Item>
+                        <Item Key="Link">Action=AgentFAQCategory</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">g</Item>
+                        <Item Key="Prio">950</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQSearch###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentFAQSearch###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Search FAQ.</Item>
+                        <Item Key="Name" Translatable="1">Search</Item>
+                        <Item Key="Link">Action=AgentFAQSearch</Item>
+                        <Item Key="LinkOption">onclick="Core.Agent.Search.OpenSearchDialog('AgentFAQSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">z</Item>
+                        <Item Key="Prio">960</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQSearchSmall" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Search FAQ Small.</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentFAQSearchSmall###002-FAQ" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Search###FAQ" Required="0" Valid="1">
+        <Description Translatable="1">FAQ search backend router of the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu::Search</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="^(?:Agent|Admin)FAQ">Action=AgentFAQSearch;Subaction=AJAX</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::Overview###Small" Required="0" Valid="1">
+        <Description Translatable="1">Defines an overview module to show the small view of a FAQ list.</Description>
+        <Navigation>Frontend::Agent::FAQOverview</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQOverview::Small</Item>
+                <Item Key="Name" Translatable="1">Small</Item>
+                <Item Key="NameShort" Translatable="1">S</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###ShowColumns" Required="1" Valid="1">
+        <Description Translatable="1">Defines the shown columns in the FAQ search. This option has no effect on the position of the column.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Title">1</Item>
+                <Item Key="Category">1</Item>
+                <Item Key="Language">1</Item>
+                <Item Key="State">1</Item>
+                <Item Key="Valid">1</Item>
+                <Item Key="Changed">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="FAQID">
+                <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
+                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
+                <Item ValueType="Option" Value="State" Translatable="1">State</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Down">
+                <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
+                <Item ValueType="Option" Value="Up" Translatable="1">Up</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,8}$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQExplorer###ShowColumns" Required="1" Valid="1">
+        <Description Translatable="1">Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.</Description>
+        <Navigation>Frontend::Agent::View::FAQExplorer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Title">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Language">1</Item>
+                <Item Key="State">1</Item>
+                <Item Key="Valid">1</Item>
+                <Item Key="Changed">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQExplorer###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="FAQID">
+                <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
+                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
+                <Item ValueType="Option" Value="State" Translatable="1">State</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQExplorer###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.</Description>
+        <Navigation>Frontend::Agent::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Down">
+                <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
+                <Item ValueType="Option" Value="Up" Translatable="1">Up</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQExplorer###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,8}$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQExplorer###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQExplorer###ShowInvalidFAQItems" Required="1" Valid="1">
+        <Description Translatable="1">Show invalid items in the FAQ Explorer result of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQExplorer</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###FAQOverviewSmallPageShown" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
+                <Item Key="PreferenceGroup">Miscellaneous</Item>
+                <Item Key="Label" Translatable="1">FAQ Overview "Small" Limit</Item>
+                <Item Key="Desc" Translatable="1">Select how many items should be shown in Overview "Small" by default.</Item>
+                <Item Key="Data">
+                    <Hash>
+                        <Item Key="10">10</Item>
+                        <Item Key="15">15</Item>
+                        <Item Key="20">20</Item>
+                        <Item Key="25">25</Item>
+                        <Item Key="30">30</Item>
+                        <Item Key="35">35</Item>
+                    </Hash>
+                </Item>
+                <Item Key="DataSelected">25</Item>
+                <Item Key="PrefKey">UserFAQOverviewSmallPageShown</Item>
+                <Item Key="Prio">8000</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQZoom###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Agent.Detail.css</Item>
+                        <Item>Core.AllocationList.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.ConfirmationDialog.js</Item>
+                        <Item>FAQ.Agent.TicketCompose.js</Item>
+                        <Item>FAQ.Agent.FAQZoom.js</Item>
+                        <Item>Core.UI.AllocationList.js</Item>
+                        <Item>Core.UI.Table.Sort.js</Item>
+                        <Item>Core.Agent.TableFilters.js</Item>
+                        <Item>Core.Agent.LinkObject.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+   <Setting Name="Frontend::Module###AgentFAQRichText" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ AJAX Responder for Richtext.</Item>
+                    <Item Key="Title" Translatable="1">FAQ AJAX Responder</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::MenuModule###000-Back" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to go back in the FAQ zoom view of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
+                <Item Key="Name">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
+                <Item Key="Action"></Item>
+                <Item Key="Link">[% Env("LastScreenOverview") %]</Item>
+                <Item Key="Target">Back</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::MenuModule###010-Edit" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to edit a FAQ in the its zoom view of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
+                <Item Key="Name">Edit</Item>
+                <Item Key="Description" Translatable="1">Edit this FAQ</Item>
+                <Item Key="Action">AgentFAQEdit</Item>
+                <Item Key="Link">Action=AgentFAQEdit;ItemID=[% Data.ItemID | html %];ScreenType=Popup</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::MenuModule###020-History" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
+                <Item Key="Name">History</Item>
+                <Item Key="Description" Translatable="1">History of this FAQ</Item>
+                <Item Key="Action">AgentFAQHistory</Item>
+                <Item Key="Link">Action=AgentFAQHistory;ItemID=[% Data.ItemID | html %]</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::MenuModule###030-Print" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
+                <Item Key="Name">Print</Item>
+                <Item Key="Description" Translatable="1">Print this FAQ</Item>
+                <Item Key="Action">AgentFAQPrint</Item>
+                <Item Key="Link">Action=AgentFAQPrint;ItemID=[% Data.ItemID | html %]</Item>
+                <Item Key="LinkParam">target="print_FAQ"</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::MenuModule###040-Link" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
+                <Item Key="Name">Link</Item>
+                <Item Key="Description" Translatable="1">Link another object to this FAQ item</Item>
+                <Item Key="Action">AgentLinkObject</Item>
+                <Item Key="Link">Action=AgentLinkObject;SourceObject=FAQ;SourceKey=[% Data.ItemID | html %]</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::MenuModule###050-Delete" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Delete</Item>
+                <Item Key="Name">Delete</Item>
+                <Item Key="Description" Translatable="1">Delete this FAQ</Item>
+                <Item Key="Action">AgentFAQDelete</Item>
+                <Item Key="Link">Action=AgentFAQDelete;ItemID=[% Data.ItemID | html %]</Item>
+                <Item Key="Target">ConfirmationDialog</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerFAQZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Title"></Item>
+                    <Item Key="Description" Translatable="1">Customer FAQ Zoom.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::CustomerFAQZoom###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Customer.Detail.css</Item>
+                        <Item>FAQ.Customer.Default.css</Item>
+                        <Item>FAQ.FAQZoom.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Customer.FAQZoom.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerFAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Customer FAQ search.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                    <Item Key="Title" Translatable="1">Search FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::CustomerFAQSearch###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###CustomerFAQSearch###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Search</Item>
+                        <Item Key="Name" Translatable="1">Search</Item>
+                        <Item Key="Link">Action=CustomerFAQSearch</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type">Submenu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">f</Item>
+                        <Item Key="Prio">780</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQSearch###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,8}$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQSearch###SearchPageShown" Required="1" Valid="1">
+        <Description Translatable="1">Number of FAQ articles to be displayed on each page of a search result in the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">40</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQSearch###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="FAQID">
+                <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
+                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
+                <Item ValueType="Option" Value="State" Translatable="1">State</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQSearch###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.</Description>
+        <Navigation>Frontend::Customer::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Down">
+                <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
+                <Item ValueType="Option" Value="Up" Translatable="1">Up</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQPrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Print.</Item>
+                    <Item Key="Title" Translatable="1">Print</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerFAQPrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Title"></Item>
+                    <Item Key="Description" Translatable="1">Customer FAQ Print.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Module###PublicFAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Public FAQ search.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                    <Item Key="Title" Translatable="1">Search FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::PublicFAQSearch###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Customer.Default.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Navigation###PublicFAQSearch###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">FAQ Area</Item>
+                        <Item Key="Name" Translatable="1">Search FAQ</Item>
+                        <Item Key="Link">Action=PublicFAQSearch</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar"></Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">600</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQSearch###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,8}$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQSearch###SearchPageShown" Required="1" Valid="1">
+        <Description Translatable="1">Number of FAQ articles to be displayed on each page of a search result in the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">40</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQSearch###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="FAQID">
+                <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
+                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
+                <Item ValueType="Option" Value="State" Translatable="1">State</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQSearch###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.</Description>
+        <Navigation>Frontend::Public::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Down">
+                <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
+                <Item ValueType="Option" Value="Up" Translatable="1">Up</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Module###PublicFAQZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Title"></Item>
+                    <Item Key="Description" Translatable="1">Public FAQ Zoom.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::PublicFAQZoom###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.Customer.Default.css</Item>
+                        <Item>FAQ.Customer.Detail.css</Item>
+                        <Item>FAQ.FAQZoom.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Customer.FAQZoom.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Module###PublicFAQ" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Title"></Item>
+                    <Item Key="Description" Translatable="1">Public FAQ Zoom.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Module###PublicFAQPrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Title"></Item>
+                    <Item Key="Description" Translatable="1">Public FAQ Print.</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQJournal" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
+                    <Item Key="Title" Translatable="1">FAQ</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentFAQJournal###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentFAQJournal###002-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">FAQ Journal</Item>
+                        <Item Key="Name" Translatable="1">Journal</Item>
+                        <Item Key="Link">Action=AgentFAQJournal</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">FAQ</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">j</Item>
+                        <Item Key="Prio">930</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQJournal###ShowColumns" Required="1" Valid="1">
+        <Description Translatable="1">Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.</Description>
+        <Navigation>Frontend::Agent::View::FAQJournal</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Title">1</Item>
+                <Item Key="Category">1</Item>
+                <Item Key="Valid">1</Item>
+                <Item Key="Name">1</Item>
+                <Item Key="Time">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQJournal###JournalLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQJournal</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,8}$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQJournal###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQJournal</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###FAQJournalOverviewSmallPageShown" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
+                <Item Key="PreferenceGroup">Miscellaneous</Item>
+                <Item Key="Label" Translatable="1">FAQ Journal Overview "Small" Limit</Item>
+                <Item Key="Desc" Translatable="1">Select how many items should be shown in Journal Overview "Small" by default.</Item>
+                <Item Key="Data">
+                    <Hash>
+                        <Item Key="10">10</Item>
+                        <Item Key="15">15</Item>
+                        <Item Key="20">20</Item>
+                        <Item Key="25">25</Item>
+                        <Item Key="30">30</Item>
+                        <Item Key="35">35</Item>
+                    </Hash>
+                </Item>
+                <Item Key="DataSelected">25</Item>
+                <Item Key="PrefKey">UserFAQJournalOverviewSmallPageShown</Item>
+                <Item Key="Prio">8000</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::JournalOverview###Small" Required="0" Valid="1">
+        <Description Translatable="1">Defines an overview module to show the small view of a FAQ journal.</Description>
+        <Navigation>Frontend::Agent::FAQJournalOverview</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQJournalOverview::Small</Item>
+                <Item Key="Name" Translatable="1">Small</Item>
+                <Item Key="NameShort" Translatable="1">S</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQHistory" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ History.</Item>
+                    <Item Key="Title" Translatable="1">History</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentFAQDelete" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">FAQ Delete.</Item>
+                    <Item Key="Title" Translatable="1">Delete</Item>
+                    <Item Key="NavBarName">FAQ</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TicketCompose###InsertMethod" Required="1" Valid="1">
+        <Description Translatable="1">Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.</Description>
+        <Navigation>Core::FAQ::TicketCompose</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Full">
+                <Item ValueType="Option" Value="Full" Translatable="1">Full FAQ</Item>
+                <Item ValueType="Option" Value="Text" Translatable="1">Text Only</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TicketCompose###IncludeInternal" Required="1" Valid="1">
+        <Description Translatable="1">Include internal fields on a FAQ based Ticket.</Description>
+        <Navigation>Core::FAQ::TicketCompose</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TicketCompose###ShowFieldNames" Required="1" Valid="1">
+        <Description Translatable="1">Include the name of each field in a FAQ based Ticket.</Description>
+        <Navigation>Core::FAQ::TicketCompose</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TicketCompose###ShowInsertTextButton" Required="1" Valid="1">
+        <Description Translatable="1">Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.</Description>
+        <Navigation>Core::FAQ::TicketCompose</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TicketCompose###ShowInsertLinkButton" Required="1" Valid="1">
+        <Description Translatable="1">Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
+        <Navigation>Core::FAQ::TicketCompose</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TicketCompose###ShowInsertTextAndLinkButton" Required="1" Valid="1">
+        <Description Translatable="1">Show "Insert FAQ Text &amp; Link" / "Insert Full FAQ &amp; Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
+        <Navigation>Core::FAQ::TicketCompose</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::TicketCompose###UpdateArticleSubject" Required="1" Valid="1">
+        <Description Translatable="1">Define if the FAQ title should be concatenated to article subject.</Description>
+        <Navigation>Core::FAQ::TicketCompose</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::MultiLanguage" Required="1" Valid="1">
+        <Description Translatable="1">Enable multiple languages on FAQ module.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Default::Language" Required="0" Valid="0">
+        <Description Translatable="1">Default language for FAQ articles on single language mode.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="String">en</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonCSS###200-FAQ" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base::Loader</Navigation>
+        <Value>
+            <Array>
+                <Item>FAQ.Agent.Default.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###200-FAQ" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base::Loader</Navigation>
+        <Value>
+            <Array>
+                <Item>FAQ.Agent.TicketCompose.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::CustomerTicketMessage###003-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.RelatedArticles.css</Item>
+                        <Item>FAQ.Customer.Default.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Voting" Required="1" Valid="1">
+        <Description Translatable="1">Enable voting mechanism on FAQ module.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::CacheTTL" Required="1" Valid="1">
+        <Description Translatable="1">Cache Time To Leave for FAQ items.</Description>
+        <Navigation>Core::FAQ</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">172800</Item> <!-- default 172,800 (60 * 60 * 24 * 2) -->
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###0398-FAQ-LastChange" Required="0" Valid="1">
+        <Description Translatable="1">Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.</Description>
+        <Navigation>Frontend::Agent::View::Dashboard</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Dashboard::FAQ</Item>
+                <Item Key="Title" Translatable="1">Latest updated FAQ articles</Item>
+                <Item Key="Description"></Item>
+                <Item Key="Type">LastChange</Item>
+                <Item Key="Block">ContentSmall</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Default">1</Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###0399-FAQ-LastCreate" Required="0" Valid="1">
+        <Description Translatable="1">Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.</Description>
+        <Navigation>Frontend::Agent::View::Dashboard</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Dashboard::FAQ</Item>
+                <Item Key="Title" Translatable="1">Latest created FAQ articles</Item>
+                <Item Key="Description"></Item>
+                <Item Key="Type">LastCreate</Item>
+                <Item Key="Block">ContentSmall</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Default">1</Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###FAQ::LanguageList" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">LanguageList</Item>
+                <Item Key="Controller">FAQ</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###FAQ::PublicCategoryList" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">PublicCategoryList</Item>
+                <Item Key="Controller">FAQ</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###FAQ::PublicFAQGet" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">PublicFAQGet</Item>
+                <Item Key="Controller">FAQ</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###FAQ::PublicFAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">PublicFAQSearch</Item>
+                <Item Key="Controller">FAQ</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentHTMLFieldHeightDefault" Required="1" Valid="1">
+        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,4}$">100</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentHTMLFieldHeightMax" Required="1" Valid="1">
+        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,5}$">2500</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerHTMLFieldHeightDefault" Required="1" Valid="1">
+        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</Description>
+        <Navigation>Frontend::Customer::View::FAQZoom</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,4}$">100</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerHTMLFieldHeightMax" Required="1" Valid="1">
+        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</Description>
+        <Navigation>Frontend::Customer::View::FAQZoom</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,5}$">2500</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQAdd###RichTextWidth" Required="0" Valid="1">
+        <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::FAQAdd</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">620</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQAdd###RichTextHeight" Required="0" Valid="1">
+        <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::FAQAdd</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">320</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQEdit###RichTextWidth" Required="0" Valid="1">
+        <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::FAQEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">620</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQEdit###RichTextHeight" Required="0" Valid="1">
+        <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::FAQEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">320</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::ToolBarModule###90-FAQ::AgentFAQAdd" Required="0" Valid="0">
+        <Description Translatable="1">Toolbar Item for a shortcut.</Description>
+        <Navigation>Frontend::Agent::ToolBar</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::Link</Item>
+                <Item Key="Name" Translatable="1">Add FAQ article</Item>
+                <Item Key="Link">Action=AgentFAQAdd</Item>
+                <Item Key="Action">AgentFAQAdd</Item>
+                <Item Key="AccessKey"></Item>
+                <Item Key="CssClass">FAQ</Item>
+                <Item Key="Icon">fa fa-question</Item>
+                <Item Key="Priority">1020090</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DynamicFields::ObjectType###FAQ" Required="0" Valid="1">
+        <Description Translatable="1">DynamicField object registration.</Description>
+        <Navigation>Core::DynamicFields::ObjectTypeRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="DisplayName" Translatable="1">FAQ</Item>
+                <Item Key="Module">Kernel::System::DynamicField::ObjectType::FAQ</Item>
+                <Item Key="Prio">200</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::OverviewSmall###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ small format overview screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::FAQOverview</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQAdd###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ add screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQAdd</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQEdit###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ edit screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQEdit</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQZoom</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQZoom</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQZoom</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQPrint</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQPrint</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQPrint</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and shown by default</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQSearch###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQSearch</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and shown by default</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQOverview###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ overview screen of the customer interface.</Description>
+        <Navigation>Frontend::Customer::FAQOverview</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
+        <Navigation>Frontend::Customer::View::FAQSearch</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQSearch###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQSearch</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and shown by default</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQOverview###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ overview screen of the public interface.</Description>
+        <Navigation>Frontend::Public::FAQOverview</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
+        <Navigation>Frontend::Public::View::FAQSearch</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###Fulltext" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###Number" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###Title" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###Keyword" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###LanguageIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###CategoryIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###ValidIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###StateIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###VoteSearchType" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###RateSearchType" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###ApprovedSearch" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###CreatedUserIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###LastChangedUserIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimePoint" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimeSlot" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimePoint" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimeSlot" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::AgentFAQSearch###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQSearch###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::PublicFAQSearch###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.</Description>
+        <Navigation>Frontend::Public::View::FAQSearch</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]{1,3}$">50</Item>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::ComplexTable::SettingsVisibility###FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.</Description>
+        <Navigation>Frontend::Agent::LinkObject</Navigation>
+        <Value>
+            <Array>
+                <Item>AgentFAQZoom</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::ComplexTable###FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.</Description>
+        <Navigation>Frontend::Agent::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::LinkObject::FAQ.pm</Item>
+                <Item Key="DefaultColumns">
+                    <Hash>
+                        <DefaultItem ValueType="Select">
+                            <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                            <Item ValueType="Option" Value="1" Translatable="1">1 - Available</Item>
+                            <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled by default</Item>
+                        </DefaultItem>
+                        <Item Key="FAQNumber" SelectedID="2"></Item>
+                        <Item Key="Title" SelectedID="2"></Item>
+                        <Item Key="State" SelectedID="2"></Item>
+                        <Item Key="Created" SelectedID="2"></Item>
+                        <Item Key="CategoryName" SelectedID="1"></Item>
+                        <Item Key="Language" SelectedID="1"></Item>
+                        <Item Key="Approved" SelectedID="1"></Item>
+                        <Item Key="ContentType" SelectedID="1"></Item>
+                        <Item Key="Changed" SelectedID="1"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="Priority">
+                    <Hash>
+                        <Item Key="FAQNumber">100</Item>
+                        <Item Key="Title">110</Item>
+                        <Item Key="State">120</Item>
+                        <Item Key="Created">130</Item>
+                        <Item Key="CategoryName">140</Item>
+                        <Item Key="Language">150</Item>
+                        <Item Key="Approved">160</Item>
+                        <Item Key="ContentType">170</Item>
+                        <Item Key="Changed">180</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Customer::RelatedArticles::Enabled" Required="1" Valid="1">
+        <Description Translatable="1">Enable the related article feature for the customer frontend.</Description>
+        <Navigation>Core::FAQ::RelatedArticles</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterPostFAQCustomerRelatedArticles" Required="0" Valid="1">
+        <Description Translatable="1">Output filter to add Java-script to CustomerTicketMessage screen.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQCustomerRelatedArticles</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="CustomerTicketMessage">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerFAQRelatedArticles" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Customer FAQ Related Articles.</Item>
+                    <Item Key="Title" Translatable="1">Customer FAQ Related Articles</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::KeywordArticeList::SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Limit for the search to build the keyword FAQ article list.</Description>
+        <Navigation>Core::FAQ::RelatedArticles</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">5000</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled" Required="0" Valid="0">
+        <Description Translatable="1">List of queue names for which the related article feature is enabled.</Description>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
+        <Value>
+            <Array>
+                <Item>Raw</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages" Required="0" Valid="1">
+        <Description Translatable="1">The default languages for the related FAQ articles.</Description>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
+        <Value>
+            <Array>
+                <Item>en</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit" Required="1" Valid="1">
+        <Description Translatable="1">Output limit for the related FAQ articles.</Description>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">10</Item>
+        </Value>
+    </Setting>
+    <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible" Required="0" Valid="1">
+        <Description Translatable="1">Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactivate the output).</Description>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">4</Item>
+        </Value>
+    </Setting>
+</otrs_config>

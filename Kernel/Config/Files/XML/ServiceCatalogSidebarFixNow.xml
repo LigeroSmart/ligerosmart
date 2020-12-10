@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="LinkObject::Type###FixNow" Required="1" Valid="1">
+        <Description Translatable="1">This setting defines the link type 'FixNow'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="SourceName" Translatable="1">Fix Now!</Item>
+                <Item Key="TargetName" Translatable="1">Fix Now!</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::PossibleLink###0001FixNow" Required="0" Valid="1">
+        <Description Translatable="1">Fix Now.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Object1">Service</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">FixNow</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroServiceCatalog::SidebarWidget###001-FixNow" Required="0" Valid="1">
+        <Description Translatable="1">Shows Helpful articles on ServiceCatalog sidebar.</Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::ServiceCatalog::SidebarWidget::FixNow</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

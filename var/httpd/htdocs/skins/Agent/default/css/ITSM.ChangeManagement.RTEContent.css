@@ -1,0 +1,64 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     ITSM default
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Tables, lists
+ */
+
+.RTEContent, .RTEContent * {
+    line-height: 130% !important;
+    font-size: 12px;
+    font-family: Arial,Helvetica,Tahoma,Verdana,Sans-Serif;
+}
+
+.RTEContent table {
+    border: 1px outset #222;
+    border-collapse: separate;
+    border-spacing: 1px;
+}
+
+.RTEContent table td, .RTEContent table th {
+    border: 1px inset #000;
+    padding: 1px;
+    vertical-align: middle;
+}
+
+.RTEContent table th {
+    font-weight: bold;
+    background-color: #ddd;
+}
+
+.RTEContent p {
+    margin: 10px 0px;
+}
+
+.RTEContent ul {
+    list-style-type: disc;
+    margin: 10px 0px;
+    padding-left: 45px;
+}
+
+.RTEContent ol {
+    list-style-type: decimal;
+    margin: 10px 0px;
+    padding-left: 45px;
+}
+
+.RTEContent strong, .RTEContent em  {
+    font-size: inherit !important;
+}
+
+
+} /* end @media */

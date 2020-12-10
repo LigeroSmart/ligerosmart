@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Ticket::EventModulePost###99-InformClosedChildToParent" Required="0" Valid="1">
+        <Description Translatable="1">Ticket event module to send automatically notification to parent.</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::InformClosedChildToParent</Item>
+                <Item Key="Event">(TicketCreate|ArticleCreate|TicketStateUpdate)</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

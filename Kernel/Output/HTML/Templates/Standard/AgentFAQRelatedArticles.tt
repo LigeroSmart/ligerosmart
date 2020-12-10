@@ -1,0 +1,50 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+        [% IF Data.RelatedFAQArticleList.size %]
+
+            <table class="DataTable FixedLayout">
+                <tbody>
+                [% FOREACH FAQArticle IN Data.RelatedFAQArticleList %]
+                    <tr>
+                        <td class="FAQTitle">
+                            <a href="[% Env("Baselink") %]Action=AgentFAQZoom;ItemID=[% FAQArticle.ItemID | uri %]" target="_blank" title="[% FAQArticle.Title | html %] ([% FAQArticle.CategoryName | html %])">
+                                [% FAQArticle.Title | html %]
+                             </a>
+                        </td>
+                        <td class="FAQVotes">
+                            [% IF FAQArticle.Votes %]
+                                <span title="[% FAQArticle.StarCounter | html %] [% Translate("out of 5") | html %]">
+                                    <span class="RateStar">
+                                        [% FILTER repeat(FAQArticle.StarCounter) %]
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        [% END %]
+                                        [% FILTER repeat(5 - FAQArticle.StarCounter) %]
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        [% END %]
+                                    </span>
+                                </span>
+                            [% ELSE %]
+                                <span class="RateStar">
+                                    [% FILTER repeat(5) %]
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    [% END %]
+                                </span>
+                            [% END %]
+                        </td>
+                        <td class="FAQCategorie">
+                            [% FAQArticle.CategoryName | html %]
+                        </td>
+                        <td class="FAQDate">
+                            [% FAQArticle.Changed | Localize("Date") %]
+                        </td>
+                    </tr>
+                [% END %]
+                </tbody>
+            </table>
+
+        [% END %]

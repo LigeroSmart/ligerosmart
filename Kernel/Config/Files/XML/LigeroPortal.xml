@@ -1,0 +1,1440 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterFAQWasThisArticleHelpful" Required="0" Valid="1">
+        <Description Translatable="1">Output filter to add "Was this article helpful" at the end of FAQ Articles.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQWasThisArticleHelpful</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="CustomerFAQZoom">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterVerifyOpenTickets" Required="0" Valid="1">
+        <Description Translatable="1">Output filter to add "Was this article helpful" at the end of FAQ Articles.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::VerifyOpenTickets</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="CustomerTicketMessage">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="WasThisArticleHelpful###Enabled" Required="1" Valid="1">
+        <Description Translatable="1">Select if you want to show buttons or links on Was this article helpful</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="disabled">
+                <Item ValueType="Option" Value="disabled" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="buttons" Translatable="1">Buttons</Item>
+                <Item ValueType="Option" Value="links" Translatable="1">Links</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="WasThisArticleHelpful###OptionsWhenBrowsing" Required="1" Valid="1">
+        <Description Translatable="1">Configure here the link of each option when user reach FAQ Article browsing the service catalog. Please specify the order using "0:", "1:" on key field</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0:Yes">?Action=CustomerServiceCatalog;Subaction=SelfAnswered;Service=_Service_;ServiceID=_ServiceID_;FAQID=_FAQID_</Item>
+                <Item Key="1:I need more help...">?Action=CustomerTicketMessage;ServiceID=_ServiceID_</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="WasThisArticleHelpful###OptionsWhenSearching" Required="0" Valid="1">
+        <Description Translatable="1">Configure here the link of each option when user reach FAQ Article using search box or on FAQ navigation</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="0:Yes">?Action=CustomerServiceCatalog;Subaction=SelfAnswered;Service=_Service_;ServiceID=_ServiceID_;FAQID=_FAQID_</Item>
+                <Item Key="1:No">?Action=CustomerServiceCatalog</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="WasThisArticleHelpful###SelfAnsweredTicketAttributes" Required="0" Valid="1">
+        <Description Translatable="1">Configure here Attributes for Self Answered tickets creation. You can use these tags _CustomerUser_, _CustomerID_, _FAQTitle_, _FAQID_, _Service_, _ServiceID_. You can send and use also _CustomParam0_ to _CustomParam9_</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Title">Self Answered Ticket with FAQ "_FAQTitle_"</Item>
+                <Item Key="Queue">Raw</Item>
+                <Item Key="ServiceID">_ServiceID_</Item>
+                <Item Key="Lock">unlock</Item>
+                <Item Key="OwnerID">1</Item>
+                <Item Key="UserID">1</Item>
+                <Item Key="State">closed successful</Item>
+                <Item Key="Priority">1 very low</Item>
+                <Item Key="CustomerUser">_CustomerUser_</Item>
+                <Item Key="CustomerID">_CustomerID_</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="WasThisArticleHelpful###SelfAnsweredTicketDynamicFields" Required="0" Valid="1">
+        <Description Translatable="1">Configure here the DynamicFields we should set after ticket creation. You can use these tags _CustomerUser_, _CustomerID_, _FAQTitle_, _FAQID_, _Service_, _ServiceID_. You can send and use also _CustomParam0_ to _CustomParam9_</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="FAQTitle">_FAQTitle_</Item>
+                <Item Key="FAQID">_FAQID_</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="WasThisArticleHelpful###SelfAnsweredArticle" Required="0" Valid="1">
+        <Description Translatable="1">Configure here Attributes for Self Answered tickets first article creation. You can use these tags _CustomerUser_, _CustomerID_, _FAQID, _FAQTitle_, _Service_, _ServiceID_. You can send and use also _CustomParam0_ to _CustomParam9_</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Subject">Self Answered Ticket with FAQ "_FAQTitle_"</Item>
+                <Item Key="SenderType">customer</Item>
+                <Item Key="ArticleType">webrequest</Item>
+                <Item Key="IsVisibleForCustomer">1</Item>
+                <Item Key="From">_CustomerUser_</Item>
+                <Item Key="MimeType">text/html</Item>
+                <Item Key="Charset">UTF-8</Item>
+                <Item Key="HistoryType">NewTicket</Item>
+                <Item Key="HistoryComment">Self Answered Ticket</Item>
+                <Item Key="Body">Self Answered Ticket with FAQ "_FAQTitle_"</Item>
+                <Item Key="UserID">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServiceCatalog###ServiceArticleDescriptionField" Required="1" Valid="1">
+        <Description Translatable="1">FAQ Article Field to be used as Description for Service Articles</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Item ValueType="String">Field1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="WasThisArticleHelpful###WasThisArticleHelpfulText" Required="1" Valid="1">
+        <Description Translatable="1">Text for "Was This Article Helpful Text" FAQ articles footer</Description>
+        <Navigation>WasThisArticleHelpful</Navigation>
+        <Value>
+            <Item ValueType="String">Was this article helpful?</Item>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::Type###ServiceArticle" Required="1" Valid="1">
+        <Description Translatable="1">This setting defines the link type 'Service Article'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="SourceName" Translatable="1">Service Article</Item>
+                <Item Key="TargetName" Translatable="1">Service Article</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::PossibleLink###001ServiceArticle" Required="0" Valid="1">
+        <Description Translatable="1">Service Article</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Object1">Service</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">ServiceArticle</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::Type###ServiceDescriptionArticle" Required="1" Valid="1">
+        <Description Translatable="1">This setting defines the link type 'Service Description Article'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="SourceName" Translatable="1">Service Description Article</Item>
+                <Item Key="TargetName" Translatable="1">Service Description Article</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LinkObject::PossibleLink###001ServiceDescriptionArticle" Required="0" Valid="1">
+        <Description Translatable="1">Service Description Article</Description>
+        <Navigation>Core::LinkObject</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Object1">Service</Item>
+                <Item Key="Object2">FAQ</Item>
+                <Item Key="Type">ServiceDescriptionArticle</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServiceCatalog###DefaultServiceID" Required="1" Valid="1">
+        <Description Translatable="1">Open direct this Service</Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Item ValueType="String"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="ServiceCatalog###TypeColors" Required="0" Valid="1">
+        <Description Translatable="1">Color for Types</Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Hash>
+            	<Item Key="FAQ Article">#a5ce90</Item>
+            	<Item Key="Request Support - Urgent">#E30031</Item>
+            	<Item Key="Request Support">#e86e6e</Item>
+            	<Item Key="Service Request">#81b0ff</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServiceCatalog###TypeLabels" Required="0" Valid="1">
+        <Description Translatable="1">Label for Types</Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Hash>
+            	<Item Key="1">Service Request</Item>
+            	<Item Key="2">Request Support</Item>
+            	<Item Key="3">Request Support - Urgent</Item>
+            	<Item Key="4">Service Request</Item>
+            	<Item Key="5">Request Support</Item>
+            	<Item Key="6">Request Support</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5001-ServiceImage" Required="0" Valid="1">
+        <Description Translatable="1">ServiceImage.</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Image</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceImage</Item>
+                <Item Key="PrefKey">DynamicField_ServiceImage</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5001-ServiceImageBackground" Required="1" Valid="1">
+        <Description Translatable="1">Service Background Color.</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Image Background</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="PrefKey">ServiceImageBackground</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5002-ServiceDescription" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Description</Item>
+                <Item Key="Desc" Translatable="1">Service Description - It's shown on customer interface</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescription</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescription</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z6002-ServiceDescription_ar_SA" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Arabic (Saudi Arabia)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXarXXSA</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXarXXSA</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_bg" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Bulgarian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXbg</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXbg</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_ca" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Catalan</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXca</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXca</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_cs" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Czech</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXcs</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXcs</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_da" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Danish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXda</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXda</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_de" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">German</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXde</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXde</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_en" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">English (United States)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXen</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXen</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_en_CA" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">English (Canada)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXenXXCA</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXenXXCA</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_en_GB" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">English (United Kingdom)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXenXXGB</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXenXXGB</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_es" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Spanish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXes</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXes</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_es_CO" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Spanish (Colombia)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXesXXCO</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXesXXCO</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_es_MX" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Spanish (Mexico)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXesXXMX</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXesXXMX</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_et" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Estonian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXet</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXet</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_el" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Greek</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXel</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXel</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_fa" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Persian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXfa</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXfa</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_fi" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Finnish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXfi</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXfi</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_fr" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">French</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXfr</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXfr</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_fr_CA" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">French (Canada)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXfrXXCA</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXfrXXCA</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_gl" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Galician</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXgl</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXgl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_he" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Hebrew</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXhe</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXhe</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_hi" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Hindi</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXhi</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXhi</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_hr" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Croatian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXhr</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXhr</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_hu" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Hungarian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXhu</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXhu</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_id" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Indonesian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXid</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXid</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_it" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Italian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXit</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXit</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_ja" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Japanese</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXja</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXja</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_lt" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Lithuanian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXlt</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXlt</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_lv" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Latvian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXlv</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXlv</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_ms" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Malay</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXms</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXms</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_nl" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Nederlands</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXnl</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXnl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_nb_NO" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Norwegian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXnbXXNO</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXnbXXNO</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_pt_BR" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Portuguese (Brasil)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXptXXBR</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXptXXBR</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_pt" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Portuguese</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXpt</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXpt</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_pl" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Polish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXpl</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXpl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_ru" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Russian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXru</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXru</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_sl" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Slovenian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXsl</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXsl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_sr_Latn" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Serbian Latin</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXsrXXLatn</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXsrXXLatn</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_sr_Cyrl" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Serbian Cyrillic</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXsrXXCyrl</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXsrXXCyrl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_sk_SK" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Slovak</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXskXXSK</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXskXXSK</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_sv" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Swedish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXsv</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXsv</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_sw" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Swahili</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXsw</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXsw</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_th_TH" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Thai</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXthXXTH</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXthXXTH</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_tr" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Turkish</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXtr</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXtr</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_uk" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Ukrainian</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXuk</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXuk</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_vi_VN" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Vietnam</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXviXXVN</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXviXXVN</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_zh_CN" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Chinese (Simplified)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXzhXXCN</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXzhXXCN</Item>
+            </Hash>
+        </Value>
+    </Setting>
+     <Setting Name="ServicePreferences###Z6002-ServiceDescription_zh_TW" Required="1" Valid="1">
+        <Description Translatable="1">Description</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Chinese (Traditional)</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceDescriptionXXzhXXTW</Item>
+                <Item Key="PrefKey">DynamicField_ServiceDescriptionXXzhXXTW</Item>
+            </Hash>
+        </Value>
+    </Setting>
+ 
+
+    <Setting Name="ServicePreferences###Z5000-ServiceLabelColor" Required="0" Valid="0">
+        <Description Translatable="1">Service Label Color.</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Generic</Item>
+                <Item Key="Label" Translatable="1">Label Color</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="PrefKey">ServiceLabelColor</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###122-LigeroColorPicker" Required="1" Valid="1">
+        <Description Translatable="1">Color Picker.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/spectrum/spectrum.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    
+    <Setting Name="Loader::Agent::CommonCSS###122-LigeroColorPicker" Required="1" Valid="1">
+        <Description Translatable="1">Color Picker.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/spectrum/spectrum.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    
+    <Setting Name="ServicePreferences###Field1" Required="0" Valid="0">
+        <Description Translatable="1">Field 1</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 1</Item>
+                <Item Key="Desc" Translatable="1">Service Field 1</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField1</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    
+    <Setting Name="ServicePreferences###Field2" Required="0" Valid="0">
+        <Description Translatable="1">Field 2</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 2</Item>
+                <Item Key="Desc" Translatable="1">Service Field 2</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField2</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField2</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field3" Required="0" Valid="0">
+        <Description Translatable="1">Field 3</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 3</Item>
+                <Item Key="Desc" Translatable="1">Service Field 3</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField3</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField3</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field4" Required="0" Valid="0">
+        <Description Translatable="1">Field 4</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 4</Item>
+                <Item Key="Desc" Translatable="1">Service Field 4</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField4</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField4</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field5" Required="0" Valid="0">
+        <Description Translatable="1">Field 5</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 5</Item>
+                <Item Key="Desc" Translatable="1">Service Field 5</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField5</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField5</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field6" Required="0" Valid="0">
+        <Description Translatable="1">Field 6</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 6</Item>
+                <Item Key="Desc" Translatable="1">Service Field 6</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField6</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField6</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field7" Required="0" Valid="0">
+        <Description Translatable="1">Field 7</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 7</Item>
+                <Item Key="Desc" Translatable="1">Service Field 7</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField7</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField7</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field8" Required="0" Valid="0">
+        <Description Translatable="1">Field 8</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 8</Item>
+                <Item Key="Desc" Translatable="1">Service Field 8</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField8</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField8</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field9" Required="0" Valid="0">
+        <Description Translatable="1">Field 9</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 9</Item>
+                <Item Key="Desc" Translatable="1">Service Field 9</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField9</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField9</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Field10" Required="0" Valid="0">
+        <Description Translatable="1">Field 10</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Field 10</Item>
+                <Item Key="Desc" Translatable="1">Service Field 10</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceField10</Item>
+                <Item Key="PrefKey">DynamicField_ServiceField10</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterLigeroServiceCatalogAdminService" Required="0" Valid="1">
+        <Description Translatable="1">Add DynamicField treatment on Admin Service screen.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::LigeroServiceCatalogAdminService</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AdminService">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerServiceCatalog" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Customer Service Catalog</Item>
+                    <Item Key="NavBarName">New Ticket</Item>
+                    <Item Key="Title">New Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::CustomerServiceCatalog###002-LigeroServiceCatalog" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Customer.ServiceCatalog.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Customer.ServiceCatalogSearch.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###CustomerServiceCatalog###002-LigeroServiceCatalog" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Create new Ticket</Item>
+                        <Item Key="Name" Translatable="1">New Ticket</Item>
+                        <Item Key="Link">Action=CustomerServiceCatalog</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">New Ticket</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">n</Item>
+                        <Item Key="Prio">100</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroServiceCatalog::AdminService###Palette" Required="1" Valid="1">
+        <Description Translatable="1">Color Picker Pallete</Description>
+        <Navigation>LigeroServiceCatalog::AdminService</Navigation>
+        <Value>
+            <Array>
+                <Item>#567dd2</Item>
+                <Item>#4b83d5</Item>
+                <Item>#4287d8</Item>
+                <Item>#3a8bda</Item>
+                <Item>#2e91dd</Item>
+                <Item>#836fff</Item>
+                <Item>#00FF7F</Item>
+                <Item>#32CD32</Item>
+                <Item>#808000</Item>
+                <Item>#DAA520</Item>
+                <Item>#BC8F8F</Item>
+                <Item>#F5DEB3</Item>
+                <Item>#FA8072</Item>
+                <Item>#FF0000</Item>
+                <Item>#FFA500</Item>
+                <Item>#FFD700</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="ServiceCatalog###CategoryCssOnMousehover" Required="1" Valid="1">
+        <Description Translatable="1">Set CSS in Category when mouse hover.Fill this field with  CSS Code. </Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+		 <Item ValueType="Textarea">
+			-moz-box-shadow: 0 0 8px rgba(0,0,0,0.5);
+			-webkit-box-shadow: 0 0 8px rgba(0,0,0,0.5);
+			box-shadow: 0 0 8px rgba(0,0,0,0.5);
+		</Item>
+        </Value>
+    </Setting>
+     <Setting Name="ServiceCatalog###InlineQueryTemplate" Required="1" Valid="1"  ConfigLevel="100">
+        <Description Translatable="1">Query template for Elasticsearch tunning</Description>
+        <Navigation>Core::Search::Templates</Navigation>
+        <Value>
+		 <Item ValueType="Textarea">
+{
+    "function_score": {
+        "query": {
+            "bool": {
+                "must": [
+                    {
+                        "bool": {
+                            "should": [
+                                {
+                                    "bool": {
+                                        "must_not": [
+                                            {
+                                                "match": {
+                                                    "Object": "Service"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "bool": {
+                                        "filter": [
+                                            {
+                                                "match": {
+                                                    "Object": "Service"
+                                                }
+                                            },
+                                            {
+                                                "terms": {
+                                                    "ObjectID": [
+                                                        "{{#ServiceIDs}}",
+"{{.}}",
+"{{/ServiceIDs}}"
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "match": {
+                            "SearchBody": {
+                                "fuzziness": "1",
+                                "minimum_should_match": "2 &lt; 2 3 &lt; 3 4 &lt; 4 5 &lt; 80%",
+                                "query": "{{pesquisa}}"
+                            }
+                        }
+                    }
+                ],
+                "should": [
+                    {
+                        "match": {
+                            "Keywords": {
+                                "boost": 1,
+                                "query": "{{pesquisa}}"
+                            }
+                        }
+                    },
+                    {
+                        "match_phrase": {
+                            "Title": {
+                                "boost": 1,
+                                "query": "{{pesquisa}}",
+                                "slop": 3
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+		</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Daemon::SchedulerCronTaskManager::Task###ReindexFaq" Required="0" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Reindex all FAQ Articles.</Description>
+        <Navigation>Daemon::SchedulerCronTaskManager::Task</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="TaskName">ReindexFaq</Item>
+                <Item Key="Schedule">03 */2 * * *</Item> <!-- default: 2 hours -->
+                <Item Key="Module">Kernel::System::Console::Command::Maint::Ligero::Elasticsearch::PortalFaqIndexRebuild</Item>
+                <Item Key="Function">Execute</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+                <Item Key="Params">
+                    <Array>
+                        <Item>--attachments</Item>
+                        <Item>--DefaultLanguage</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    
+    <Setting Name="Daemon::SchedulerCronTaskManager::Task###ServiceReindex" Required="0" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Reindex all FAQ Articles.</Description>
+        <Navigation>Daemon::SchedulerCronTaskManager::Task</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="TaskName">ServiceReindex</Item>
+                <Item Key="Schedule">02 */2 * * *</Item> <!-- default: 2 hours -->
+                <Item Key="Module">Kernel::System::Console::Command::Maint::Ligero::Elasticsearch::PortalServiceIndexRebuild</Item>
+                <Item Key="Function">Execute</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+                <Item Key="Params">
+                    <Array>
+                        <Item>--DefaultLanguage</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServiceCatalog::CharLimiteSizeDescription" Required="1" Valid="1">
+        <Description Translatable="1">Define limit character to description of service </Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">200</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ServiceCatalog::SplitFirstLvl" Required="1" Valid="1">
+        <Description Translatable="1">If this option is set to 'Yes', first lvl will be not showed. If this option is set to 'No', first lv will be showed.</Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5003-ShowAsCategory" Required="1" Valid="1">
+        <Description Translatable="1">Exibir como</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Exibir como</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ShowAsCategory</Item>
+                <Item Key="PrefKey">DynamicField_ShowAsCategory</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5007-JustOneTicket" Required="1" Valid="1">
+        <Description Translatable="1">Serviço</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Somente um chamado aberto por vez por usuário</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">JustOneTicket</Item>
+                <Item Key="PrefKey">DynamicField_JustOneTicket</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5008-TicketExceededAlert" Required="1" Valid="1">
+        <Description Translatable="1">Serviço</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Mensagem para limite excedido</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">TicketExceededAlert</Item>
+                <Item Key="PrefKey">DynamicField_TicketExceededAlert</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5003-ServiceType" Required="1" Valid="1">
+        <Description Translatable="1">Serviço</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Acesso Rápido</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ServiceType</Item>
+                <Item Key="PrefKey">DynamicField_ServiceType</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5004-ForwardToUrl" Required="1" Valid="1">
+        <Description Translatable="1">Encaminhar para a URL</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Encaminhar para a URL</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">ForwardToUrl</Item>
+                <Item Key="PrefKey">DynamicField_ForwardToUrl</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5005-UrlTarget" Required="1" Valid="1">
+        <Description Translatable="1">Destino da Url</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Destino da Url</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">UrlTarget</Item>
+                <Item Key="PrefKey">DynamicField_UrlTarget</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5006-Process" Required="1" Valid="1">
+        <Description Translatable="1">Processo</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Process</Item>
+                <Item Key="Label" Translatable="1">Processo</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">Process</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###ServiceProcess" Required="0" Valid="1">
+        <Description Translatable="1">Event module registration.</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::ServiceProcess</Item>
+                <Item Key="Transaction">1</Item>
+                <Item Key="Event">TicketCreate|TicketServiceUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

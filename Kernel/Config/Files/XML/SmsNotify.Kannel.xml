@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="SmsNotify::Gateway###Kannel-01" Required="0" Valid="1">
+        <Description Translatable="1">Kannel is a Open Source SMS Gateway</Description>
+        <Navigation>SmsNotify::Gateways</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="user"></Item>
+                <Item Key="password"></Item>
+                <Item Key="SenderID"></Item>
+                <Item Key="URL"></Item>
+                <Item Key="Name">Kannel SMS Gateway</Item>
+                <Item Key="Encoding">utf8</Item>
+                <Item Key="Module">Kernel::System::Ticket::Event::NotificationEvent::Transport::SmsNotifyGateways::Kannel</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

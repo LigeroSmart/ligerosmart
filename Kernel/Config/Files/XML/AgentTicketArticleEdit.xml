@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterArticleEdit" Required="0" Valid="1">
+        <Description Translatable="1">Article Edit.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::OutputFilterArticleEdit</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketZoom">1</Item>
+			
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required permissions to use the ticket free text screen in the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">rw</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###RequiredLock" Required="0" Valid="1">
+        <Description Translatable="1">Defines if a ticket lock is required in the ticket free text screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###Note" Required="0" Valid="1">
+        <Description Translatable="1">Allows adding notes in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###InvolvedAgent" Required="0" Valid="0">
+        <Description Translatable="1">Shows a list of all the involved agents on this ticket, in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###InformAgent" Required="0" Valid="0">
+        <Description Translatable="1">Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###ArticleTypeDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default type of the note in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">note-internal</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###ArticleTypes" Required="0" Valid="1">
+        <Description Translatable="1">Specifies the available note types for this ticket mask. If the option is deselected, ArticleTypeDefault is used and the option is removed from the mask.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="note-internal">1</Item>
+                <Item Key="note-external">1</Item>
+                <Item Key="note-report">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###HistoryType" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history type for the ticket free text screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">UpdateNote</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###HistoryComment" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history comment for the ticket free text screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">%%ArticleEdit</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketArticleEdit" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Ticket FreeText</Item>
+                    <Item Key="Title">Free Fields</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketArticleEdit###002-AgentTicketArticleEdit" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketArticleEdit###002-AgentTicketArticleEdit" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket free text screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###RichTextWidth" Required="0" Valid="1">
+        <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">620</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketArticleEdit###RichTextHeight" Required="0" Valid="1">
+        <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::Ticket::ViewArticleEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">100</Item>
+        </Value>
+    </Setting>
+</otrs_config>
