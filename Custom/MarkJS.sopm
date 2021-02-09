@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>MarkJS</Name>
+    <Version>6.0.1</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Complemento [Free]</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Clean OTRS View Zoom</Description>
+    <Filelist>
+	    <File Permission="644" Location="Kernel/Config/Files/XML/MarkJS.xml"></File>
+        <File Permission="644" Location="Custom/MarkJS.sopm"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/mark.js/jquery.mark.min.js"></File>
+    </Filelist>
+</otrs_package>

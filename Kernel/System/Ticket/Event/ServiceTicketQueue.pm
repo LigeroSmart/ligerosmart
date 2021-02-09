@@ -99,6 +99,14 @@ sub Run {
                     Value              => $Ticket{"DynamicField_$DynamicFieldName"},
                 );
 
+                if ( $DynamicFieldConfig->{'FieldType'} eq 'ITSMConfigItemReference' ) {
+                    my $arr = $Kernel::OM->Get('Kernel::System::ITSMConfigItem')->VersionZoomList(
+                        ConfigItemID => $DisplayValueStrg->{Value}
+                    );
+                    my $obj = pop @{ $arr };
+                    $DisplayValueStrg->{Value} = $obj->{Name};
+                }
+
                 $Preferences{TicketQueueExpression}
                     =~ s{<OTRS_TICKET_$TicketAttribute>}{$DisplayValueStrg->{Value} // ''}ige;
 

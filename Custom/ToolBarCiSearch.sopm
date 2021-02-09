@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>ToolBarCiSearch</Name>
+    <Version>6.0.0</Version>
+    <Vendor>Complemento - Liberdade e Tecnologia</Vendor>
+    <URL>http://www.complemento.net.br</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">This package add a new input text on the toolbar that allows you to search CIs by their names. It dons't need to modify your templates :)</Description>
+    <Description Lang="pt_BR">Este pacote adiciona um novo campo de texto na barra de ferramentas do OTRS permitindo que você pesquise CIs por nome. Não é necessário modificar seus arquivos de template.</Description>
+    <Framework>6.0.x</Framework>
+    <IntroInstall Lang="en" Title="Tutorial" Type="pre">Don't use this package without testing exautivily on a devel server.</IntroInstall>
+    <IntroInstall Lang="pt_BR" Title="Tutorial" Type="pre">Teste este pacote num servidor de desenvolvimento antes de instalar no ambiente de produção.</IntroInstall>
+    <PackageRequired Version="4.0.x">ITSMConfigurationManagement</PackageRequired>
+    <BuildDate>2012-06-04 11:35:41</BuildDate>
+    <BuildHost>localhost</BuildHost>
+    <Filelist>
+        <File Location="Custom/ToolBarCiSearch.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/ToolBarCiSearch.xml" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/ToolBar/ToolBarCiSearch.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/AgentToolBarCiSearch.tt" Permission="644"></File>
+        <File Location="var/httpd/htdocs/js/thirdparty/complemento-texthint.js" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/complemento-toolbarcisearch.css" Permission="644"></File>
+    </Filelist>
+</otrs_package>

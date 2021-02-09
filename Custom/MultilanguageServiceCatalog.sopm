@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>MultilanguageServiceCatalog</Name>
+    <Version>6.0.1</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, May 2017</License>
+    <Description Lang="en">Translate your Services for other languages easily</Description>
+    <Description Lang="pt_BR">Traduza seus serviços para outros idiomas com facilidade</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+      <File Location="Custom/Kernel/System/Service.pm" Permission="644"></File>
+      <File Location="Custom/MultilanguageServiceCatalog.sopm" Permission="644"></File>
+      <File Location="Kernel/Config/Files/XML/MultilanguageServiceCatalog.xml" Permission="644"></File>
+      <File Location="Kernel/Modules/DefaultLanguageEnv.pm" Permission="644"></File>
+      <File Location="Kernel/Output/HTML/Ligero/LigeroMultilanguageServiceCatalog.pm" Permission="644"></File>
+      <File Location="Kernel/Output/HTML/Templates/Standard/LigeroAdminMultilanguageServiceCatalog.tt" Permission="644"></File>
+      <File Location="bin/lang.pl" Permission="644"></File>
+    </Filelist>
+</otrs_package>
