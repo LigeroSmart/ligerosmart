@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>AutoTicket</Name>
+    <Version>6.0.3</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <Description Lang="en">This package allows you to schedule automatic creation of tickets</Description>
+    <Description Lang="pt_BR">Este módule permite agendar a criação automática de tickets</Description>
+    <Framework>6.0.x</Framework>
+    <IntroInstall Lang="en" Title="Tutorial" Type="pre">        &lt;br/&gt;&lt;h1&gt;&lt;strong&gt;READ IT!!&lt;/strong&gt;&lt;/h1&gt;&lt;br/&gt;
+	&lt;br/&gt;
+	Requirementes: Install Date::Pcalc on your server before continuing
+	&lt;br/&gt;
+	Thanks for purchasing this package. You must agree with it's license available on our web site before continuing. 
+        &lt;br/&gt;
+        &lt;br/&gt;
+        &lt;strong&gt;Basicaly, you are not allowed to resell or distribute this package and you must have a license to use it.&lt;/strong&gt;&lt;br/&gt;
+        &lt;br/&gt;Please run bin/Cron.sh restart [otrs] to complete the installation
+        &lt;br/&gt;Requires Switch perl module. Check if you have that or install using CPAN or distribution package manager (apt or yum)
+        &lt;br/&gt;EX: sudo apt-get install libswitch-perl
+        &lt;br/&gt;
+    </IntroInstall>
+    <IntroInstall Lang="pt_BR" Title="Tutorial" Type="pre">        &lt;br/&gt;&lt;h1&gt;&lt;strong&gt;LEIA ANTES DE PROSSEGUIR!!&lt;/strong&gt;&lt;/h1&gt;&lt;br/&gt;
+	&lt;br/&gt;
+	Requirementes: Install Date::Pcalc on your server before continuing
+	&lt;br/&gt;
+	Obrigado por adquirir este pacote. Você precisa concordar com os termos da licença de uso do mesmo antes de prosseguir.
+        &lt;br/&gt;
+        &lt;br/&gt;
+        &lt;strong&gt;Basicamente, não é permitido revender ou distribuir este pacote e você deve ter uma licença para poder utilizá-lo&lt;/strong&gt;&lt;br/&gt;
+        &lt;br/&gt;Por favor, rode o comando bin/Cron.sh restart [otrs] para completar a instação.
+        &lt;br/&gt;Requer o módulo perl "Switch". Verifique se está instalado, ou instale usando o perl MCPAN ou gerenciador de pacotes de sua distro.
+        &lt;br/&gt;EX: sudo apt-get install libswitch-perl
+        &lt;br/&gt;
+    </IntroInstall>
+    <Filelist>
+		<File Location="Kernel/Config/Files/XML/AutoTicket.xml" Permission="644"></File>
+		<File Location="Kernel/Output/HTML/Templates/Standard/AdminAutoTicket.tt" Permission="644"></File>
+		<File Location="Kernel/System/Daemon/DaemonModules/SchedulerTaskWorker/AutoTicket.pm" Permission="644"></File>
+		<File Location="Kernel/System/Console/Command/Maint/AutoTicket/AutoTicketCron.pm" Permission="644"></File>
+		<File Location="Kernel/System/AutoTicket.pm" Permission="644"></File>
+		<File Location="Kernel/Modules/AdminAutoTicket.pm" Permission="644"></File>
+		<File Location="Custom/AutoTicket.sopm" Permission="644"></File>
+		<File Location="Kernel/Language/pt_BR_AutoTicket.pm" Permission="644"></File>
+		<File Location="var/httpd/htdocs/js/Core.Agent.AutoTicket.js" Permission="644"></File>
+    </Filelist>
+    <DatabaseInstall>
+        <TableCreate  Name="autoticket">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+            <Column Name="type_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="service_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="sla_id" Required="false" Type="INTEGER"></Column>
+            <Column Name="queue_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_state_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_priority_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_title" Size="255" Type="VARCHAR"></Column>
+            <Column Name="ticket_message" Size="20000" Type="VARCHAR"></Column>
+            <Column Name="article_type_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_customer_user" Size="255" Type="VARCHAR"></Column>
+            <Column Name="ticket_customer_id" Size="255" Type="VARCHAR"></Column>
+            <Column Name="no_agent_notify" Type="SMALLINT"></Column>
+            <Column Name="nwd" Required="true" Type="SMALLINT"></Column>
+            <Column Name="weekday" Size="20" Type="VARCHAR"></Column>
+            <Column Name="monthday" Size="200" Type="VARCHAR"></Column>
+            <Column Name="months" Size="30" Type="VARCHAR"></Column>
+            <Column Name="hour" Required="true" Type="SMALLINT"></Column>
+            <Column Name="minutes" Required="true" Type="SMALLINT"></Column>
+            <Column Name="comments" Size="255" Type="VARCHAR"></Column>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"></Column>
+            <Column Name="create_time" Required="true" Type="DATE"></Column>
+            <Column Name="create_by" Required="true" Type="INTEGER"></Column>
+            <Column Name="change_time" Required="true" Type="DATE"></Column>
+            <Column Name="change_by" Required="true" Type="INTEGER"></Column>
+            <Unique Name="autoticket_name">
+                    <UniqueColumn Name="name"></UniqueColumn>
+			</Unique>
+        </TableCreate>
+        <TableCreate  Name="autoticket_dynamic_field_value">
+            <Column Name="autoticket_id" Required="true" Type="SMALLINT"></Column>
+            <Column Name="dynamic_field" Size="200" Type="VARCHAR"></Column>
+            <Column Name="value" Size="20000" Type="VARCHAR"></Column>
+        </TableCreate>
+    </DatabaseInstall>
+</otrs_package>

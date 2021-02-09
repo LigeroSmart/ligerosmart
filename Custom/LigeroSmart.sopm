@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroSmart</Name>
+    <Version>6.1.8</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>https://www.ligerosmart.com/</URL>
+	<PackageRequired Version="6.x.x">MultilanguageServiceCatalog</PackageRequired>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Ligero Smart integrates OTRS with Elasticsearch, giving to OTRS the power of Big Data tools. This package includes System/LigeroSmart.pm which provides Search::Elasticsearch functions to Index, Search and Delete documents on Elasticsearch. Includes also a GenericInterface Invoker that sends data to Elasticsearch evertime a Ticket is changed. It includes also ElasticsearchFullTicketIndexRebuild, a console script that is intend to be used once LigeroSmart is installed, in order to make a initial index of all tickets in the system.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/XML/LigeroSmart.xml"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/LigeroSmart.Vuetify.xml"></File>
+        <File Permission="644" Location="Kernel/System/LigeroSmart.pm"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Invoker/LigeroSmart/LigeroSmartIndexer.pm"></File>
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/Ligero/Elasticsearch/TicketIndexRebuild.pm"></File>
+        <File Permission="644" Location="var/packagesetup/LigeroSmart.pm"></File>
+        <File Permission="644" Location="Custom/LigeroSmart.sopm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/QueuePreferences/Language.pm"></File>
+		<File Permission="644" Location="Kernel/System/Console/Command/Admin/Ligero/Elasticsearch/MappingInstall.pm"></File>
+        <File Permission="644" Location="Kernel/System/Console/Command/Admin/Ligero/Elasticsearch/Reindex.pm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/LigeroSmartMappings.xml"></File>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/LigeroSmart/Search.pm"></File>
+        <File Permission="644" Location="Custom/Kernel/System/Stats/Dynamic/TicketList.pm"></File>
+        <File Permission="644" Location="Custom/Kernel/System/Ticket.pm"></File>
+        <File Permission="644" Location="Custom/Kernel/System/LinkObject.pm"></File>
+        <File Permission="644" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminService.tt"></File>
+        <File Permission="644" Location="Kernel/System/GenericAgent/DynamicFieldFromServicePreference.pm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/ZZZZDeactiveCmdOutput.pm"></File>
+        <File Permission="644" Location="Kernel/System/Vue.pm"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/vuetify/vue.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/vuetify/vuetify.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/vuetify/vuetify.js.map"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/vuetify/css/vuetify-iso.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/fonts/materialdesignicons-webfont.ttf"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/fonts/materialdesignicons-webfont.woff"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/fonts/materialdesignicons-webfont.woff2"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/vuetify/css/vuetify-iso.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/materialdesignicons-webfont.ttf"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/materialdesignicons-webfont.woff"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/fonts/materialdesignicons-webfont.woff2"></File>
+    </Filelist>
+	<CodeInstall Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+    </CodeInstall>
+	<CodeUpgrade Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+    </CodeUpgrade>
+    <DatabaseInstall>
+        <TableAlter Name="ticket_history">
+            <IndexCreate Name="ligero_history_state_date">
+                <IndexColumn Name="ticket_id"/>
+                <IndexColumn Name="state_id"/>
+                <IndexColumn Name="create_time"/>
+                <IndexColumn Name="history_type_id"/>
+            </IndexCreate>
+        </TableAlter>
+    </DatabaseInstall>
+    <DatabaseUpgrade>
+        <TableAlter Name="ticket_history">
+            <IndexCreate Name="ligero_history_state_date">
+                <IndexColumn Name="ticket_id"/>
+                <IndexColumn Name="state_id"/>
+                <IndexColumn Name="create_time"/>
+                <IndexColumn Name="history_type_id"/>
+            </IndexCreate>
+        </TableAlter>
+    </DatabaseUpgrade>
+</otrs_package>

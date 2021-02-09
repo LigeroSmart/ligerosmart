@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>LigeroEasyConnector</Name>
+    <Version>6.1.4</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Web Service that allows you to integrate your system with another Ligero, OTRS or many other softwares</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="Custom/LigeroEasyConnector.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/LigeroEasyConnector.xml" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Invoker/Ligero/LigeroEasyConnector.pm" Permission="644"></File>
+        <File Location="Custom/Kernel/GenericInterface/Requester.pm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Operation/Ligero/LigeroEasyConnector.pm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Mapping/LigeroEasyConnector.pm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Mapping/XSLTLigero.pm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Invoker/Ligero/ArticleSend.pm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Invoker/Ligero/RemoteQueueUpdate.pm" Permission="644"></File>
+        <File Location="Kernel/System/ProcessManagement/TransitionAction/InvokeWebService.pm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Transport/LigeroEasyConnector/REST.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/AdminGenericInterfaceTransportLigeroEasyConnectorREST.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/AdminGenericInterfaceTransportLigeroEasyConnectorREST.tt" Permission="644"></File>
+        <File Location="Kernel/Modules/AdminGenericInterfaceInvokerLigero.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/AdminGenericInterfaceTransportLigeroEasyConnectorREST.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/AdminGenericInterfaceInvokerLigero.tt" Permission="644"></File>
+        <File Location="Kernel/System/GenericAgent/LigeroEasyConnector.pm" Permission="644"></File>
+        <File Location="Kernel/System/GenericAgent/OtrsIntegrationArticleCreate.pm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/LigeroEasyConnectorCommon.pm" Permission="644"></File>
+    </Filelist>
+</otrs_package>

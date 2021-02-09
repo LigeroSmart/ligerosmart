@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ServiceCatalogSidebarFixNow</Name>
+    <Version>6.0.3</Version>
+    <Vendor>Complemento - Liberdade e Tecnologia</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">
+    	Add information in the service catalog sidebar that helps the user to find faqs to help fix the incident
+
+	</Description>
+    <IntroInstall Lang="en" Title="Installation Information" Type="post">
+    </IntroInstall>    
+    <Framework>6.0.x</Framework>
+    <PackageRequired Version="6.x.x">LigeroPortal</PackageRequired>
+    <PackageRequired Version="6.x.x">FAQ</PackageRequired>
+    <Filelist>
+        <File Location="Custom/ServiceCatalogSidebarFixNow.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/ServiceCatalogSidebarFixNow.xml" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Ligero/ServiceCatalog/SidebarWidget/FixNow.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/Ligero/ServiceCatalog/Sidebar/FixNow.tt" Permission="644"></File>
+    </Filelist>
+</otrs_package>
