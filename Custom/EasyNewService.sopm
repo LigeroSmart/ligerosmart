@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>EasyNewService</Name>
+    <Version>6.0.0</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Allows you to create a new service selecting the SLAs in the same screen and setting it to the Default Customer</Description>
+    <Filelist>
+        <File Permission="644" Location="Custom/EasyNewService.sopm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/EasyNewService.xml"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/ServicePreferences/DefaultService.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/ServicePreferences/SLA.pm"></File>
+    </Filelist>
+</otrs_package>

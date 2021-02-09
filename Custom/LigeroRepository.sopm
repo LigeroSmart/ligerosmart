@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>LigeroRepository</Name>
+    <Version>6.0.1</Version>
+    <Vendor>Ligero [Community]</Vendor>
+    <URL>http://ligero.online/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Free Opensource Community and Enterprise Add Ons by Ligero</Description>
+    <Description Lang="pt_BR">AddOns Ligero gratuítos e Enterprise</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="Custom/LigeroRepository.sopm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/FilterElementPost/LigeroRepository.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/AdminLigeroRepository.pm" Permission="644"></File>
+        <File Location="var/httpd/htdocs/skins/Agent/default/img/ligero-verify-small.png" Permission="644"></File>
+        <File Location="var/packagesetup/LigeroRepository.pm" Permission="644"></File>
+        <File Location="var/packagesetup/LigeroRepositoryRequiredPackages/Znuny4OTRS-Repo.opm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/LigeroRepository.xml" Permission="644"></File>
+        <File Location="Kernel/Config/Files/ZZZZZLigeroRepository.pm" Permission="644"></File>
+        <File Location="Kernel/Language/pt_BR_LigeroRepository.pm" Permission="644"></File>
+    </Filelist>
+    <CodeInstall Type="post"><![CDATA[
+
+            # create the package name
+            my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+            $Kernel::OM->Get($CodeModule)->CodeInstall();
+
+        ]]></CodeInstall>
+        <CodeUpgrade Type="post"><![CDATA[
+
+            # create the package name
+            my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+            # discard internally stored object, so that the next access to object creates them newly
+            $Kernel::OM->ObjectsDiscard(
+                Objects            => [$CodeModule],
+                ForcePackageReload => 1,
+            );
+
+            $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+
+        ]]></CodeUpgrade>
+        <CodeUninstall Type="pre"><![CDATA[
+
+            # create the package name
+            my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+            $Kernel::OM->Get($CodeModule)->CodeUninstall();
+
+        ]]></CodeUninstall>
+</otrs_package>

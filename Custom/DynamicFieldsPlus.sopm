@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_package version="1.0">
+    <Name>DynamicFieldsPlus</Name>
+    <Version>6.0.4</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Create a simple form to allocate the dynamic fields in the system areas</Description>
+    <Description Lang="pt_BR">Cria uma forma simples de alocar os campos dinâmicos as áreas do sistema</Description>
+    <IntroInstall Type="post" Lang="en" Title="Attention!">Try on a test system before uploading an production server. Tested on OTRS 6.0</IntroInstall>
+    <Filelist>
+      <File Permission="644" Location="Custom/DynamicFieldsPlus.sopm"></File>
+      <File Permission="644" Location="Kernel/Config/Files/XML/DynamicFieldsPlus.xml"></File>
+      <File Permission="644" Location="Kernel/Modules/DynamicFieldsPlus.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Ligero/DynamicFieldsPlus.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OutputFilter.Ligero.DynamicFieldsPlus.tt"></File>
+      <File Permission="644" Location="Kernel/Language/pt_BR_DynamicFieldsPlus.pm"></File>
+    </Filelist>
+</otrs_package>
