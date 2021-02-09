@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroEnterprise</Name>
+    <Version>6.0.3</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Ligero Enterprise features.</Description>
+    <IntroInstall Type="post" Lang="en" Title="Ligero Enterprise">Special features for Ligero Smart.</IntroInstall>
+    <Filelist>
+        <File Permission="644" Location="Custom/LigeroEnterprise.sopm"></File>
+        <File Permission="644" Location="Kernel/System/GenericAgent/WebServiceTrigger.pm"></File>
+        <File Permission="644" Location="Kernel/System/ProcessManagement/TransitionAction/ForceTransitionCheck.pm"></File>
+    </Filelist>
+</otrs_package>

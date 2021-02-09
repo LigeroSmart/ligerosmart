@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>ArticleListAndTimeCalculation</Name>
+    <Version>6.0.1</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog Date="2016-12-01 11:50:00" Version="5.0.2">Add Column RegisteredBy, that brings the agent which registered the article. some other small bug fixes</ChangeLog>
+    <Description Lang="en">This addons adds a new dynamic object on OTRS stats called ArticleListAndTimeCalculation, 
+    			that allows new reports which can list articles and it's DynamicFields.
+    			Other main feature is the time calculation based on two article dynamic fields that can
+    			be created by the administrator and set on the addon configuration, where you can 
+    			calculate the number of minutes worked inside and outside the calendar. It also can bring
+    			additional calculated fields, where you can for example, multiple the number of minutes worked
+    			outside the calendar by 1.5.</Description>
+    <Framework>6.0.x</Framework>
+    <Framework>6.0.x</Framework>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="Kernel/System/Stats/Dynamic/ArticleListAndTimeCalculation.pm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/StatArticleListAndTimeCalculation.xml" Permission="644"></File>
+        <File Location="Custom/ArticleListAndTimeCalculation.sopm" Permission="644"></File>
+    </Filelist>
+</otrs_package>
