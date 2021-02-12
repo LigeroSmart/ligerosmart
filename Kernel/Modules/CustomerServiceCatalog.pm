@@ -548,10 +548,7 @@ sub _GetServicesSP {
 	# COMPLEMENTO
 	my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
 	# EO COMPLEMENTO
-$Kernel::OM->Get('Kernel::System::Log')->Log(
-        Priority => 'error',
-        Message  => "CHEGOU AQUI  sdsds",
-    );
+
 	if(!$CustomerID){
 			my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
 					User => $Param{CustomerUserID},
@@ -661,6 +658,8 @@ sub _MaskNew {
 		   ServiceID => $ServiceID,
 		   UserID    => 1,
 		);
+
+      $Datas{Icons} = $ServicePreferences{Icons};
 
 		#$Param{ServiceID} = $ServiceObject->ServiceLookup(
 		#								Name => $Param{KeyPrimary},

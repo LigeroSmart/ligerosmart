@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroToro</Name>
+    <Version>6.0.5</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Ligero Service Catalog</Description>
+    <Filelist>
+		  <File Permission="644" Location="Custom/LigeroToro.sopm"></File>
+		  <File Permission="644" Location="Kernel/System/ProcessManagement/TransitionAction/CreateUserHistoryFile.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerDataExport.tt"></File>
+      <File Permission="644" Location="Kernel/System/LigeroToro.pm"></File>
+      <File Permission="644" Location="Kernel/Language/pt_BR_LigeroToro.pm"></File>
+      <File Permission="644" Location="var/processes/examples/LGPDRelatorioDadosPessoais.yml"></File>
+      <File Permission="644" Location="var/processes/examples/LGPDRelatorioDadosPessoais_pre.pm"></File>
+      <File Permission="644" Location="var/processes/examples/LGPDRelatorioDadosPessoais_post.pm"></File>
+    </Filelist>
+</otrs_package>

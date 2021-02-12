@@ -171,6 +171,13 @@
             <Item ValueType="String"></Item>
         </Value>
     </Setting>
+    <Setting Name="ServiceCatalog###DefaultServiceIcon" Required="1" Valid="1">
+        <Description Translatable="1">Define a default service icon</Description>
+        <Navigation>Frontend::Customer::ViewCatalog</Navigation>
+        <Value>
+            <Item ValueType="String">fas fa-cog</Item>
+        </Value>
+    </Setting>
     <Setting Name="ServiceCatalog###TypeColors" Required="0" Valid="1">
         <Description Translatable="1">Color for Types</Description>
         <Navigation>Frontend::Customer::ViewCatalog</Navigation>
@@ -197,7 +204,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###Z5001-ServiceImage" Required="0" Valid="1">
+    <Setting Name="ServicePreferences###Z5002-ServiceImage" Required="0" Valid="1">
         <Description Translatable="1">ServiceImage.</Description>
         <Navigation>Core::Service</Navigation>
         <Value>
@@ -211,7 +218,20 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###Z5001-ServiceImageBackground" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###Z5001-ServiceIcon" Required="0" Valid="1">
+        <Description Translatable="1">ServiceIcon</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Icons</Item>
+                <Item Key="Label" Translatable="1">Icons</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">Icons</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###Z5003-ServiceImageBackground" Required="1" Valid="1">
         <Description Translatable="1">Service Background Color.</Description>
         <Navigation>Core::Service</Navigation>
         <Value>
@@ -224,7 +244,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###Z5002-ServiceDescription" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###Z5004-ServiceDescription" Required="1" Valid="1">
         <Description Translatable="1">Description</Description>
         <Navigation>Core::Service</Navigation>
         <Value>
@@ -927,6 +947,26 @@
         <Value>
             <Array>
                 <Item>thirdparty/spectrum/spectrum.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+
+    <Setting Name="Loader::Agent::CommonJS###122-LigeroIconPicker" Required="1" Valid="1">
+        <Description Translatable="1">Icon Picker.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Ligero.IconPicker.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    
+    <Setting Name="Loader::Agent::CommonCSS###122-LigeroIconPicker" Required="1" Valid="1">
+        <Description Translatable="1">Icon Picker.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Ligero.IconPicker.css</Item>
             </Array>
         </Value>
     </Setting>
