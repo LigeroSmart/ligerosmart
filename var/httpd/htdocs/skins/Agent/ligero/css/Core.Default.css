@@ -175,9 +175,9 @@ a:hover, a:focus {
 
 #ToolBar a i {
     display: block !important;
-    font-size: 18px;
+    font-size: 16px;
     font-style: normal;
-    font-weight: normal !important;
+    font-weight: 900 !important;
     padding: 0;
     text-align: center;
     text-indent: 0;
@@ -213,7 +213,7 @@ a:hover, a:focus {
 
 #ToolBar a span.Counter {
     bottom: -14px;
-    color: #36427b;
+    color: #ffffff;
     display: block;
     font-size: 11px;
     left: 50%;
