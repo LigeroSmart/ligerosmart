@@ -1,0 +1,249 @@
+---
+Activities:
+  Activity-35815777cbf1b457000d9e36d8048d9d:
+    ActivityDialogs:
+    - ActivityDialog-ae1e6d56a5063990fc2dd444abb47184
+    - ActivityDialog-a4fbeea72bacbea92b80195bdf68d027
+    ChangeTime: 2021-01-07 16:38:37
+    Config:
+      ActivityDialog:
+        '1': ActivityDialog-ae1e6d56a5063990fc2dd444abb47184
+        '2': ActivityDialog-a4fbeea72bacbea92b80195bdf68d027
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: Activity-35815777cbf1b457000d9e36d8048d9d
+    ID: '3'
+    Name: LGPD - Solicitação dos Dados Pessoais
+  Activity-b38687f1841b700983e83fd27308ec87:
+    ActivityDialogs: []
+    ChangeTime: 2021-01-07 16:38:37
+    Config: {}
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: Activity-b38687f1841b700983e83fd27308ec87
+    ID: '4'
+    Name: Fim do Atendimento
+  Activity-d671422f99082cba4a21b2a3db6b8b8f:
+    ActivityDialogs: []
+    ChangeTime: 2021-01-07 16:38:37
+    Config: {}
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: Activity-d671422f99082cba4a21b2a3db6b8b8f
+    ID: '5'
+    Name: LGPD - Relatório de Dados Pessoais Enviados
+ActivityDialogs:
+  ActivityDialog-a4fbeea72bacbea92b80195bdf68d027:
+    ChangeTime: 2021-01-07 16:38:37
+    Config:
+      DescriptionLong: Ao confirmar a titularidade do solicitante, o sistema irá gerar
+        um relatório contendo os dados pessoais do mesmo e irá anexar em um novo artigo
+        visível para o cliente.
+      DescriptionShort: Confirmação de Titularidade
+      FieldOrder:
+      - DynamicField_LGPDStatusEnvioDadosPessoais
+      - Article
+      Fields:
+        Article:
+          Config:
+            CommunicationChannel: Internal
+            IsVisibleForCustomer: '0'
+            TimeUnits: '0'
+          DefaultValue: ''
+          DescriptionLong: ''
+          DescriptionShort: ''
+          Display: '2'
+        DynamicField_LGPDStatusEnvioDadosPessoais:
+          DefaultValue: ''
+          DescriptionLong: ''
+          DescriptionShort: ''
+          Display: '2'
+      Interface:
+      - AgentInterface
+      Permission: rw
+      RequiredLock: '1'
+      SubmitAdviceText: ''
+      SubmitButtonText: ''
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: ActivityDialog-a4fbeea72bacbea92b80195bdf68d027
+    ID: '3'
+    Name: LGPD - Confirmar Titularidade do Solicitante
+  ActivityDialog-ae1e6d56a5063990fc2dd444abb47184:
+    ChangeTime: 2021-01-07 16:38:37
+    Config:
+      DescriptionLong: ''
+      DescriptionShort: Solicita o relatório de dados pessoais do LigeroSmart
+      FieldOrder:
+      - CustomerID
+      - Article
+      - Queue
+      Fields:
+        Article:
+          Config:
+            CommunicationChannel: Internal
+            IsVisibleForCustomer: '1'
+            TimeUnits: '0'
+          DefaultValue: ''
+          DescriptionLong: ''
+          DescriptionShort: ''
+          Display: '2'
+        CustomerID:
+          DefaultValue: ''
+          DescriptionLong: ''
+          DescriptionShort: ''
+          Display: '2'
+        Queue:
+          DefaultValue: DPO
+          DescriptionLong: ''
+          DescriptionShort: ''
+          Display: '0'
+      Interface:
+      - AgentInterface
+      - CustomerInterface
+      Permission: ''
+      RequiredLock: '0'
+      SubmitAdviceText: ''
+      SubmitButtonText: ''
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: ActivityDialog-ae1e6d56a5063990fc2dd444abb47184
+    ID: '4'
+    Name: LGPD - Solicitar relatório de dados pessoais
+Process:
+  Activities:
+  - Activity-35815777cbf1b457000d9e36d8048d9d
+  - Activity-b38687f1841b700983e83fd27308ec87
+  - Activity-d671422f99082cba4a21b2a3db6b8b8f
+  ChangeTime: 2021-01-07 16:46:59
+  Config:
+    Description: Envia ao solicitante todos os dados associados a ele que estão armazenados
+      no sistema.
+    Path:
+      Activity-35815777cbf1b457000d9e36d8048d9d:
+        Transition-294fb79105806c1a03440c6d3dc9e189:
+          ActivityEntityID: Activity-b38687f1841b700983e83fd27308ec87
+          TransitionAction:
+          - TransitionAction-ff8d5794cc0b61af579c7ee365cc3a5d
+        Transition-38cb8d6bd522e383d248fad2cdec97e2:
+          ActivityEntityID: Activity-d671422f99082cba4a21b2a3db6b8b8f
+          TransitionAction:
+          - TransitionAction-2f1b4b0cdda45e130032d96e4ac1699e
+          - TransitionAction-c9857abf02c39f93e1e935906d23d560
+      Activity-b38687f1841b700983e83fd27308ec87: {}
+      Activity-d671422f99082cba4a21b2a3db6b8b8f: {}
+    StartActivity: Activity-35815777cbf1b457000d9e36d8048d9d
+    StartActivityDialog: ActivityDialog-ae1e6d56a5063990fc2dd444abb47184
+  CreateTime: 2021-01-07 16:38:37
+  EntityID: Process-7fd871180190f27d27e052349029a4f4
+  ID: '2'
+  Layout:
+    Activity-35815777cbf1b457000d9e36d8048d9d:
+      left: '276'
+      top: '124'
+    Activity-b38687f1841b700983e83fd27308ec87:
+      left: 563
+      top: 313
+    Activity-d671422f99082cba4a21b2a3db6b8b8f:
+      left: 840
+      top: 15
+  Name: LGPD - Solicitação de dados pessoais
+  State: Active
+  StateEntityID: S1
+  TransitionActions:
+  - TransitionAction-ff8d5794cc0b61af579c7ee365cc3a5d
+  - TransitionAction-2f1b4b0cdda45e130032d96e4ac1699e
+  - TransitionAction-c9857abf02c39f93e1e935906d23d560
+  Transitions:
+  - Transition-294fb79105806c1a03440c6d3dc9e189
+  - Transition-38cb8d6bd522e383d248fad2cdec97e2
+TransitionActions:
+  TransitionAction-2f1b4b0cdda45e130032d96e4ac1699e:
+    ChangeTime: 2021-01-07 16:45:52
+    Config:
+      Config:
+        ArticleContent: User Data File Information
+        CompanyDataTemplate: <table> <tr> <th>[% Translate("Company City") %]</th>
+          <td>[% Data.UserData.CustomerCompanyCity | html %]</td> <th>[% Translate("Company
+          Name") %]</th> <td>[% Data.UserData.CustomerCompanyName | html %]</td> </tr>
+          <tr> <th>[% Translate("Company Country") %]</th> <td>[% Data.UserData.CustomerCompanyCountry
+          | html %]</td> <th>[% Translate("Company URL") %]</th> <td>[% Data.UserData.CustomerCompanyURL
+          | html %]</td> </tr> <tr> <th>[% Translate("Company Zip Code") %]</th> <td>[%
+          Data.UserData.CustomerCompanyZip | html %]</td> <th>[% Translate("Company
+          Street") %]</th> <td>[% Data.UserData.CustomerCompanyStreet | html %]</td>
+          </tr> </table>
+        ShowUser: '1'
+        TicketTableContentTemplate: <tr> <td>[% Data.TicketNumber | html %]</td> <td>[%
+          Data.Title | html %]</td> <td>[% Data.Changed | html %]</td> </tr>
+        TicketTableHeaderTemplate: <tr> <th style="width:200px;">[% Translate("Ticket
+          Number") %]</th> <th>[% Translate("Title") %]</th> <th style="width:200px;">[%
+          Translate("Changed") %]</th> </tr>
+        UserDataTemplate: <table> <tr> <th>[% Translate("User Login") %]</th> <td>[%
+          Data.UserData.UserLogin | html %]</td> <th>[% Translate("User Full Name")
+          %]</th> <td>[% Data.UserData.UserFullname | html %]</td> </tr> <tr> <th>[%
+          Translate("User First Name") %]</th> <td>[% Data.UserData.UserFirstname
+          | html %]</td> <th>[% Translate("User Last Name") %]</th> <td>[% Data.UserData.UserLastname
+          | html %]</td> </tr> <tr> <th>[% Translate("User Zip Code") %]</th> <td>[%
+          Data.UserData.UserZip | html %]</td> <th>[% Translate("User Country") %]</th>
+          <td>[% Data.UserData.UserCountry | html %]</td> </tr> <tr> <th>[% Translate("User
+          City") %]</th> <td>[% Data.UserData.UserCity | html %]</td> <th>[% Translate("User
+          Language") %]</th> <td>[% Data.UserData.UserLanguage | html %]</td> </tr>
+          <tr> <th>[% Translate("User Mobile") %]</th> <td>[% Data.UserData.UserMobile
+          | html %]</td> <th>[% Translate("User Phone") %]</th> <td>[% Data.UserData.UserPhone
+          | html %]</td> </tr> <tr> <th>[% Translate("User E-mail") %]</th> <td>[%
+          Data.UserData.UserEmail | html %]</td> <th>[% Translate("User Fax") %]</th>
+          <td>[% Data.UserData.UserFax | html %]</td> </tr> <tr> <th>[% Translate("User
+          Title") %]</th> <td>[% Data.UserData.UserTitle | html %]</td> <th>[% Translate("User
+          Customer ID") %]</th> <td>[% Data.UserData.UserCustomerID | html %]</td>
+          </tr> </table>
+      Module: Kernel::System::ProcessManagement::TransitionAction::CreateUserHistoryFile
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: TransitionAction-2f1b4b0cdda45e130032d96e4ac1699e
+    ID: '2'
+    Name: LGPD - Gerar Relatório de Dados Pessoais
+  TransitionAction-c9857abf02c39f93e1e935906d23d560:
+    ChangeTime: 2021-01-07 16:38:37
+    Config:
+      Config:
+        State: closed successful
+      Module: Kernel::System::ProcessManagement::TransitionAction::TicketStateSet
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: TransitionAction-c9857abf02c39f93e1e935906d23d560
+    ID: '3'
+    Name: Encerrar chamado com sucesso
+  TransitionAction-ff8d5794cc0b61af579c7ee365cc3a5d:
+    ChangeTime: 2021-01-07 16:38:37
+    Config:
+      Config:
+        State: closed unsuccessful
+      Module: Kernel::System::ProcessManagement::TransitionAction::TicketStateSet
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: TransitionAction-ff8d5794cc0b61af579c7ee365cc3a5d
+    ID: '4'
+    Name: Encerrar chamado sem sucesso
+Transitions:
+  Transition-294fb79105806c1a03440c6d3dc9e189:
+    ChangeTime: 2021-01-07 16:38:37
+    Config:
+      Condition:
+        '1':
+          Fields:
+            DynamicField_LGPDStatusEnvioDadosPessoais:
+              Match: Titularidade Não Reconhecida
+              Type: String
+          Type: and
+      ConditionLinking: and
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: Transition-294fb79105806c1a03440c6d3dc9e189
+    ID: '2'
+    Name: LGPD - Titular não reconhecido
+  Transition-38cb8d6bd522e383d248fad2cdec97e2:
+    ChangeTime: 2021-01-07 16:38:37
+    Config:
+      Condition:
+        '1':
+          Fields:
+            DynamicField_LGPDStatusEnvioDadosPessoais:
+              Match: Titularidade Confirmada
+              Type: String
+          Type: and
+      ConditionLinking: and
+    CreateTime: 2021-01-07 16:38:37
+    EntityID: Transition-38cb8d6bd522e383d248fad2cdec97e2
+    ID: '3'
+    Name: LGPD - Titularidade Confirmada

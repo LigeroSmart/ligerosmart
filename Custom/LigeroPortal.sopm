@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>LigeroPortal</Name>
-    <Version>6.1.1</Version>
+    <Version>6.1.4</Version>
     <Framework>6.0.x</Framework>
     <PackageRequired Version="6.x.x">LigeroDfAttachment</PackageRequired>
     <PackageRequired Version="6.x.x">ServiceDynamicField</PackageRequired>
@@ -52,6 +52,25 @@
 		<File Permission="644" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldMultiselect.tt"></File>
 		<File Permission="644" Location="Custom/Kernel/System/TemplateGenerator.pm"></File>
 		<File Location="Kernel/System/ProcessManagement/TransitionAction/CalculateDf.pm" Permission="644"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/css/font-awesome.min.css"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-brands-400.eot"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-brands-400.svg"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-brands-400.ttf"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-brands-400.woff"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-brands-400.woff2"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-regular-400.eot"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-regular-400.svg"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-regular-400.ttf"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-regular-400.woff"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-regular-400.woff2"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-solid-900.eot"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-solid-900.svg"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-solid-900.ttf"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-solid-900.woff"></File>
+    <File Permission="644" Location="var/httpd/htdocs/common/webfonts/fa-solid-900.woff2"></File>
+    <File Permission="644" Location="Kernel/Output/HTML/ServicePreferences/Icons.pm"></File>
+    <File Permission="644" Location="var/httpd/htdocs/js/Ligero.IconPicker.js"></File>
+    <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Ligero.IconPicker.css"></File>
     </Filelist>
 	<CodeInstall Type="post">
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
