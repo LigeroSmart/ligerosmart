@@ -22,7 +22,7 @@ sub Load {
         $Login = $EnterpriseRepository->{'API-CUSTOMER'}.':'.$EnterpriseRepository->{'API-KEY'}.'@';
     }
 
-    my $RepositoryURL = "https://".$Login."addons.ligerosmart.com/AddOns/6.0";
+    my $RepositoryURL = "https://".$Login."addons.ligerosmart.com/6.0";
 
     # Remove old repositories
     REPOSITORY:
