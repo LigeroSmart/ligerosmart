@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 SUFFIX=$1
 FILE_LOG=/opt/otrs/var/log/nytprof-${SUFFIX}.out
 REPORT_DIR=/opt/otrs/var/httpd/htdocs/profiles
