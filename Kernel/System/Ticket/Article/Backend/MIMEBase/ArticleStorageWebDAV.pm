@@ -6,6 +6,9 @@
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
+# check
+# perl -e 'use Kernel::System::Ticket::Article::Backend::MIMEBase::ArticleStorageWebDAV;'
+
 package Kernel::System::Ticket::Article::Backend::MIMEBase::ArticleStorageWebDAV;
 
 use strict;
@@ -74,6 +77,7 @@ sub new {
                     );
                     die "Can't write $ArticleDir! Check WebDAV path $ArticleDir";
                 }
+                $WebDAVObject->cwd( $Param{Path} );
             }
         }
     }
@@ -280,6 +284,17 @@ sub ArticleWriteAttachment {
     # define path
     $Param{Path} = '/' . $ContentPath . '/' . $Param{ArticleID};
 
+    if( !$WebDAVObject->cwd( $Param{Path} ) ) {
+        if ( !$WebDAVObject->mkcol( $Param{Path} ) ) {    ## no critic
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Can't create $Param{Path}: $!",
+            );
+            return;
+        }
+        $WebDAVObject->cwd( $Param{Path} );
+    }
+
     # get main object
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
 
@@ -319,10 +334,12 @@ sub ArticleWriteAttachment {
             );
             return;
         }
+        $WebDAVObject->cwd( $Param{Path} );
     }
 
-    # create temp file to write Email
+    # create temp file 
     my $tmpContentType = File::Temp->new();
+
     # write article to fs
     my $SuccessTmp = $MainObject->FileWrite(
         Filename   => $tmpContentType->filename,
@@ -336,6 +353,7 @@ sub ArticleWriteAttachment {
         -local => $tmpContentType->filename, 
         -url => "$Param{Filename}.content_type"
     );
+
     return if !$SuccessContentType;
     
     close $tmpContentType;
@@ -472,7 +490,38 @@ sub ArticleAttachmentIndexRaw {
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
 
     my $WebDAVResource = $WebDAVObject->propfind( $Path );
-    my @List = (); # TODO: use WebDAV resource 
+
+    my @List = ();
+
+    # my $d = $WebDAVObject->lock( $Path );
+
+    # my $rl_obj = $d->get_lockedresourcelist();
+
+    my %hash = $WebDAVResource->get_resourcelist();
+
+    die($hash);
+
+
+    
+    # foreach my $resource ( $rl_obj->get_resources() ) {
+    #     my @locks = $resource->get_locks(-owned=>1);
+    #     foreach my $lock ( @locks ) { 
+    #     use Data::Dumper;
+    #     die($Path, Dumper($resource));
+    #     print $resource->get_uri . "\n";
+    #     print $lock->as_string . "\n";
+    #     }
+    #     ## Unlock them?
+    #     $resource->unlock;
+    # }
+    # use Data::Dumper;
+    # die(Dumper($WebDAVResource->get_resourcelist()));
+    # foreach my $resource ( $WebDAVResource->get_resources() ) {
+    #     # push( @List, $resource->get_property('test') );
+    #     use Data::Dumper;
+    #     die($Path, Dumper($resource{uri}));
+    # }
+ 
     FILENAME:
     for my $Filename ( sort @List ) {
         my $FileSizeRaw = -s $Filename;
@@ -608,7 +657,7 @@ sub ArticleAttachment {
     # get main object
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
 
-    my $Path = "$Self->{ArticleDataDir}/$ContentPath/$Param{ArticleID}";
+    my $Path = "/$ContentPath/$Param{ArticleID}";
 
     my $WebDAVResource = $WebDAVObject->propfind( $Path );
 
@@ -736,14 +785,14 @@ sub WebDAVObject {
 
     my $WebDAVObject = HTTP::DAV->new();
     
+    $WebDAVObject->DebugLevel( 0 );
+
     $WebDAVObject->credentials(
         -user  => "alice",
         -pass  => "secret1234", 
         -url   => "http://webdav/",
         -realm => "WebDAV"
     );
-
-    $WebDAVObject->DebugLevel( 3 );
 
     $WebDAVObject->open("http://webdav/");
 
