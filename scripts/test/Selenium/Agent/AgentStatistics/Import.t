@@ -1,6 +1,8 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
+# $origin: otrs - a11807157a285a38d30c490c9ea69e9074ca1166 - scripts/test/Selenium/Agent/AgentStatistics/Import.t
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -57,6 +59,12 @@ $Selenium->RunTest(
 
             my $ServiceID = $ServiceObject->ServiceAdd(
                 %{$Service},
+# ---
+# ITSMCore
+# ---
+                TypeID      => 1,
+                Criticality => '3 normal',
+# ---
                 ValidID => 1,
                 UserID  => 1,
             );
@@ -87,6 +95,11 @@ $Selenium->RunTest(
 
             my $SLAID = $SLAObject->SLAAdd(
                 %{$SLA},
+# ---
+# ITSMCore
+# ---
+                TypeID => 1,
+# ---
                 ValidID => 1,
                 UserID  => 1,
             );

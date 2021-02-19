@@ -34,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Associated Services'} = 'Связанные сервисы';
 
     # Template: AgentITSMServiceZoom
-    $Self->{Translation}->{'Service Information'} = 'Информация о Сервисе';
+    $Self->{Translation}->{'Service Information'} = 'Информация о сервисе';
     $Self->{Translation}->{'Current incident state'} = 'Текущее состояние инцидента';
     $Self->{Translation}->{'Associated SLAs'} = 'Связанные SLA';
 
@@ -59,7 +59,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
     $Self->{Translation}->{'Incident State'} = 'Состояние инцидента';
 
-    # Database XML Definition: ITSMCore.sopm
+    # Database XML / SOPM Definition: ITSMCore.sopm
     $Self->{Translation}->{'Operational'} = 'В эксплуатации';
     $Self->{Translation}->{'Incident'} = 'Инцидент';
     $Self->{Translation}->{'End User Service'} = 'Конечный сервис пользователя';
@@ -183,7 +183,7 @@ sub Data {
         'Определяет тип связи \'Includes\'. Если исходное имя и имя цели имеют одинаковое значение, результирующая связь - ненаправленная, иначе это направленная связь';
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Определяет тип связи \'RelevantTo\'. Если исходное имя и имя цели имеют одинаковое значение, результирующая связь - ненаправленная, иначе это направленная связь';
-    $Self->{Translation}->{'Width of ITSM textareas.'} = 'Ширина ITSM поля типа textarea';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = 'Ширина ITSM поля типа textarea.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

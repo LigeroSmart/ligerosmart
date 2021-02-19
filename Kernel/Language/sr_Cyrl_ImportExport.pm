@@ -23,7 +23,7 @@ sub Data {
         'За коришћење овог модула, морате инсталирати ITSMConfigurationManagement или неки други пакет који обезбеђује позадинске модуле за ентитете увоза и извоза.';
     $Self->{Translation}->{'Start Import'} = 'Почни увоз';
     $Self->{Translation}->{'Start Export'} = 'Почни извоз';
-    $Self->{Translation}->{'Delete this template'} = '';
+    $Self->{Translation}->{'Delete this template'} = 'Обриши овај шаблон';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Корак 1 од 5 - Уреди заједничке информације';
     $Self->{Translation}->{'Name is required!'} = 'Име је обавезно!';
     $Self->{Translation}->{'Object is required!'} = 'Објект је обавезан!';

@@ -526,7 +526,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
     $Self->{Translation}->{'Group ITSMChangeManager'} = '';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'ร้องขอ';
     $Self->{Translation}->{'pending approval'} = 'การอนุมัติที่ค้างอยู่';
     $Self->{Translation}->{'rejected'} = 'ถูกปฏิเสธ';

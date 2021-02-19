@@ -16,10 +16,10 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentFAQAdd
-    $Self->{Translation}->{'Add FAQ Article'} = 'Додати артикул довідника';
+    $Self->{Translation}->{'Add FAQ Article'} = 'Додати статтю довідника';
     $Self->{Translation}->{'Keywords'} = 'Ключові слова';
-    $Self->{Translation}->{'A category is required.'} = 'Категорія обов\'язкова';
-    $Self->{Translation}->{'Approval'} = 'Погодження';
+    $Self->{Translation}->{'A category is required.'} = 'Категорія обов\'язкова.';
+    $Self->{Translation}->{'Approval'} = 'Погоджено';
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Менеджер категорії FAQ';
@@ -279,7 +279,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = '';
 
-    # Database XML Definition: FAQ.sopm
+    # Database XML / SOPM Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'внутрішній';
     $Self->{Translation}->{'external'} = 'зовнiшнє';
     $Self->{Translation}->{'public'} = 'публічне';

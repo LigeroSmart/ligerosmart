@@ -19,7 +19,7 @@ sub Data {
     $Self->{Translation}->{'Category ↔ Impact ↔ Priority'} = 'Categorie ↔ Impact ↔ Prioriteit';
     $Self->{Translation}->{'Manage the priority result of combinating Category ↔ Impact.'} =
         'Beheer de prioriteit op basis van de Categorie ↔ Impact combinatie.';
-    $Self->{Translation}->{'Priority allocation'} = 'Prioriteit-toewijzing';
+    $Self->{Translation}->{'Priority allocation'} = 'Prioriteitstoewijzing';
 
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM Change Management notificiatie beheer';
@@ -33,7 +33,7 @@ sub Data {
     $Self->{Translation}->{'Select a catalog class!'} = 'Selecteer een catalogus-klasse';
     $Self->{Translation}->{'A catalog class is required!'} = 'Een catalogus-klasse is verplicht.';
     $Self->{Translation}->{'Add a state transition'} = 'Nieuwe statusovergang toevoegen';
-    $Self->{Translation}->{'Catalog Class'} = 'Catalogus-klasse';
+    $Self->{Translation}->{'Catalog Class'} = 'Catalogusklasse';
     $Self->{Translation}->{'Object Name'} = 'Object-naam';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Overzicht van statusovergangen voor';
     $Self->{Translation}->{'Delete this state transition'} = '';
@@ -94,9 +94,9 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = 'Geschiedenis van %s%s';
-    $Self->{Translation}->{'History Content'} = 'Inhoud';
+    $Self->{Translation}->{'History Content'} = 'Geschiedenisinhoud';
     $Self->{Translation}->{'Workorder'} = 'Work Order';
-    $Self->{Translation}->{'Createtime'} = 'Aangemaakt op';
+    $Self->{Translation}->{'Createtime'} = 'Maak tijd';
     $Self->{Translation}->{'Show details'} = 'Toon details';
     $Self->{Translation}->{'Show workorder'} = 'Toon Work Order';
 
@@ -122,7 +122,7 @@ sub Data {
     $Self->{Translation}->{'Current CAB'} = 'Actueel CAB';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'Context Instellingen';
+    $Self->{Translation}->{'Context Settings'} = 'Contextinstellingen';
     $Self->{Translation}->{'Changes per page'} = 'Changes per pagina';
 
     # Template: AgentITSMChangeOverviewSmall
@@ -174,11 +174,11 @@ sub Data {
     $Self->{Translation}->{'Accounted Time'} = '';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Change initiator(s)';
     $Self->{Translation}->{'CAB'} = 'CAB';
-    $Self->{Translation}->{'Last changed'} = 'Laatst aangepast op';
-    $Self->{Translation}->{'Last changed by'} = 'Laatst aangepast door';
+    $Self->{Translation}->{'Last changed'} = 'Laatst gewijzigd';
+    $Self->{Translation}->{'Last changed by'} = 'Laatst gewijzigd door';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        'Om de links in de omschrijvingen te openen, is het mogelijk dat u Ctrl of Cmd of Shift moet indrukken terwijl u op de link klikt (afhankelijk van uw browser en besturingssysteem).';
-    $Self->{Translation}->{'Download Attachment'} = 'Download bijlage';
+        'Om links in de volgende beschrijvingsblokken te openen, moet je mogelijk op Ctrl of Cmd of Shift drukken terwijl je op de link klikt (afhankelijk van je browser en besturingssysteem).';
+    $Self->{Translation}->{'Download Attachment'} = 'Bijlage downloaden';
 
     # Template: AgentITSMTemplateEditCAB
     $Self->{Translation}->{'Edit CAB Template'} = '';
@@ -281,7 +281,7 @@ sub Data {
     $Self->{Translation}->{'Could not delete ConditionID %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'No %s is given!'} = 'Er wordt geen %s gegeven!';
     $Self->{Translation}->{'Could not create new condition!'} = '';
     $Self->{Translation}->{'Could not update ConditionID %s!'} = '';
     $Self->{Translation}->{'Could not update ExpressionID %s!'} = '';
@@ -453,7 +453,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
     $Self->{Translation}->{'Need config option %s!'} = '';
     $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Geen configuratieoptie gevonden voor de weergave "%s"!';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
@@ -526,7 +526,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
     $Self->{Translation}->{'Group ITSMChangeManager'} = '';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'Aangevraagd';
     $Self->{Translation}->{'pending approval'} = 'Wacht op goedkeuring';
     $Self->{Translation}->{'rejected'} = 'Afgewezen';
@@ -574,7 +574,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this condition?'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
-    $Self->{Translation}->{'Ok'} = 'OK';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
@@ -641,7 +641,7 @@ sub Data {
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Definieer acties waarbij een instellingenknop beschikbaar is in de widget voor gekoppelde objecten (LinkObject::ViewMode = "complex"). Houd er rekening mee dat deze acties de volgende JS- en CSS-bestanden moeten hebben geregistreerd: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js en Core.Agent .LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = '';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';

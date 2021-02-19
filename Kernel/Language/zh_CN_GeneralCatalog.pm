@@ -20,7 +20,7 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = '目录管理';
-    $Self->{Translation}->{'Items in Class'} = '以下条目属于类：';
+    $Self->{Translation}->{'Items in Class'} = '以下条目属于类';
     $Self->{Translation}->{'Edit Item'} = '编辑条目';
     $Self->{Translation}->{'Add Class'} = '添加类';
     $Self->{Translation}->{'Add Item'} = '添加条目';
@@ -34,7 +34,7 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = '注释2';
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '创建和管理目录';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = '创建和管理目录。';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '定义通用目录注释2。';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '定义JS颜色选择器的路径URL。';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =

@@ -59,7 +59,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
     $Self->{Translation}->{'Incident State'} = 'Incidentläge';
 
-    # Database XML Definition: ITSMCore.sopm
+    # Database XML / SOPM Definition: ITSMCore.sopm
     $Self->{Translation}->{'Operational'} = 'Operationell';
     $Self->{Translation}->{'Incident'} = 'Incident';
     $Self->{Translation}->{'End User Service'} = 'Tjänst för slutkunder';

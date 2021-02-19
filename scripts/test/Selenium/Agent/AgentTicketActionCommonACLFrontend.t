@@ -1,6 +1,8 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
+# $origin: otrs - 2befc326148d97d4ecce398bdea289580cd18792 - scripts/test/Selenium/Agent/AgentTicketActionCommonACLFrontend.t
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -121,6 +123,12 @@ $Selenium->RunTest(
             my $ServiceID = $ServiceObject->ServiceAdd(
                 Name    => $Name,
                 ValidID => 1,
+# ---
+# ITSMCore
+# ---
+                TypeID      => 1,
+                Criticality => '3 normal',
+# ---
                 UserID  => 1,
             );
             $Self->True(
@@ -148,6 +156,11 @@ $Selenium->RunTest(
                 ServiceIDs => \@ServiceIDs,
                 Name       => $Name,
                 ValidID    => 1,
+# ---
+# ITSMCore
+# ---
+                TypeID     => 1,
+# ---
                 UserID     => 1,
             );
             $Self->True(
@@ -364,6 +377,17 @@ $Selenium->RunTest(
 
         # Delete test services.
         for my $ServiceID (@ServiceIDs) {
+# ---
+# ITSMCore
+# ---
+            $Success = $DBObject->Do(
+                SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
+            );
+            $Self->True(
+                $Success,
+                "Service preferences ID $ServiceID is deleted.",
+            );
+# ---
             $Success = $DBObject->Do(
                 SQL  => "DELETE FROM service WHERE id = ?",
                 Bind => [ \$ServiceID ],

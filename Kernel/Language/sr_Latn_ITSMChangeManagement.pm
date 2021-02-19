@@ -33,7 +33,7 @@ sub Data {
     $Self->{Translation}->{'Select a catalog class!'} = 'Izbor klase kataloga!';
     $Self->{Translation}->{'A catalog class is required!'} = 'Klasa kataloga je obavezna!';
     $Self->{Translation}->{'Add a state transition'} = 'Dodaj tranziciju statusa';
-    $Self->{Translation}->{'Catalog Class'} = 'Klasa';
+    $Self->{Translation}->{'Catalog Class'} = 'Klasa kataloga';
     $Self->{Translation}->{'Object Name'} = 'Naziv objekta';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Pregled preko tranzicije statusa za';
     $Self->{Translation}->{'Delete this state transition'} = 'Obriši ovu tranziciju statusa';
@@ -526,7 +526,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = 'Grupa ITSMChangeBuilder';
     $Self->{Translation}->{'Group ITSMChangeManager'} = 'Grupa ITSMChangeManager';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'zahtevano';
     $Self->{Translation}->{'pending approval'} = 'odobrenje na čekanju';
     $Self->{Translation}->{'rejected'} = 'odbijeno';

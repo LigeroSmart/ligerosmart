@@ -30,7 +30,7 @@ sub Data {
 
     # Template: AdminITSMStateMachine
     $Self->{Translation}->{'Admin State Machine'} = '管理状态模式转换';
-    $Self->{Translation}->{'Select a catalog class!'} = '选择目录类';
+    $Self->{Translation}->{'Select a catalog class!'} = '选择一个目录类！';
     $Self->{Translation}->{'A catalog class is required!'} = '目录类是必需的！';
     $Self->{Translation}->{'Add a state transition'} = '添加一个状态转换';
     $Self->{Translation}->{'Catalog Class'} = '目录类';
@@ -41,7 +41,7 @@ sub Data {
     $Self->{Translation}->{'Please select a state!'} = '请选择一个状态！';
     $Self->{Translation}->{'Please select a next state!'} = '请选择一个\'下一状态\'！';
     $Self->{Translation}->{'Edit a state transition for'} = '编辑状态转换';
-    $Self->{Translation}->{'Do you really want to delete the state transition'} = '您真的想要删除这个状态转换吗?';
+    $Self->{Translation}->{'Do you really want to delete the state transition'} = '您真的想要删除这个状态转换';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = '创建变更';
@@ -83,7 +83,7 @@ sub Data {
     $Self->{Translation}->{'No Expressions found.'} = '没有找到表达式。';
     $Self->{Translation}->{'Add new expression'} = '添加新的表达式';
     $Self->{Translation}->{'Delete Action'} = '删除操作';
-    $Self->{Translation}->{'No Actions found.'} = '没有找到操作';
+    $Self->{Translation}->{'No Actions found.'} = '没有找到操作。';
     $Self->{Translation}->{'Add new action'} = '添加新的操作';
 
     # Template: AgentITSMChangeDelete
@@ -174,7 +174,7 @@ sub Data {
     $Self->{Translation}->{'Accounted Time'} = '所用工时';
     $Self->{Translation}->{'Change Initiator(s)'} = '变更发起人';
     $Self->{Translation}->{'CAB'} = 'CAB';
-    $Self->{Translation}->{'Last changed'} = '上次修改于';
+    $Self->{Translation}->{'Last changed'} = '最后修改';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift 键 （取决于您的浏览器和操作系统 ）。';
@@ -526,8 +526,8 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = 'ITSM变更创建人组';
     $Self->{Translation}->{'Group ITSMChangeManager'} = 'ITSM变更经理组';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
-    $Self->{Translation}->{'requested'} = '请求的';
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = '已请求';
     $Self->{Translation}->{'pending approval'} = '待审批';
     $Self->{Translation}->{'rejected'} = '被拒绝';
     $Self->{Translation}->{'approved'} = '通过审批';
@@ -537,8 +537,8 @@ sub Data {
     $Self->{Translation}->{'failed'} = '失败';
     $Self->{Translation}->{'canceled'} = '取消';
     $Self->{Translation}->{'retracted'} = '撤回';
-    $Self->{Translation}->{'created'} = '创建于';
-    $Self->{Translation}->{'accepted'} = '接受';
+    $Self->{Translation}->{'created'} = '已创建';
+    $Self->{Translation}->{'accepted'} = '已接受';
     $Self->{Translation}->{'ready'} = '就绪';
     $Self->{Translation}->{'approval'} = '审批';
     $Self->{Translation}->{'workorder'} = '工作指令';
@@ -588,7 +588,7 @@ sub Data {
     $Self->{Translation}->{'Add a change from template.'} = '从模板添加一个变更。';
     $Self->{Translation}->{'Add a change.'} = '添加一个变更。';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '从模板添加变更的工作指令。';
-    $Self->{Translation}->{'Add a workorder to the change.'} = '添加变更的工作指令';
+    $Self->{Translation}->{'Add a workorder to the change.'} = '添加变更的工作指令。';
     $Self->{Translation}->{'Add from template'} = '从模板添加';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = '管理CIP矩阵。';
     $Self->{Translation}->{'Admin of the state machine.'} = '管理状态模式转换。';
@@ -606,10 +606,10 @@ sub Data {
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
         '变更管理的缓存时间（单位：分钟）。默认：5天（7200分钟）。';
     $Self->{Translation}->{'Change CAB Templates'} = '变更CAB模板';
-    $Self->{Translation}->{'Change History.'} = '变更历史';
+    $Self->{Translation}->{'Change History.'} = '变更历史。';
     $Self->{Translation}->{'Change Involved Persons.'} = '变更涉及的人员。';
     $Self->{Translation}->{'Change Overview "Small" Limit'} = '变更概览简洁模式限制';
-    $Self->{Translation}->{'Change Overview.'} = '变更概览';
+    $Self->{Translation}->{'Change Overview.'} = '变更概览。';
     $Self->{Translation}->{'Change Print.'} = '打印变更。';
     $Self->{Translation}->{'Change Schedule'} = '变更计划';
     $Self->{Translation}->{'Change Schedule.'} = '变更计划表。';
@@ -622,7 +622,7 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '更换变更涉及的相关人员。';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '变更概览简洁模式每页变更数限制。';
     $Self->{Translation}->{'Change number'} = '变更编号';
-    $Self->{Translation}->{'Change search backend router of the agent interface.'} = '服务人员界面变更搜索后端路由';
+    $Self->{Translation}->{'Change search backend router of the agent interface.'} = '服务人员界面变更搜索后端路由。';
     $Self->{Translation}->{'Change state'} = '变更状态';
     $Self->{Translation}->{'Change time'} = '变更时间';
     $Self->{Translation}->{'Change title'} = '变更标题';
@@ -851,7 +851,7 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change.'} = '编辑变更条件。';
     $Self->{Translation}->{'Edit the workorder.'} = '编辑工作指令。';
     $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
-        '启用最小的变更计数器大小（如果ITSMChange::NumberGenerator 变更编号生成器选择为“日期”）';
+        '启用最小的变更计数器大小（如果ITSMChange::NumberGenerator 变更编号生成器选择为“日期”）。';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '转发变更的计划表。已批准变更的概览。';
     $Self->{Translation}->{'History Zoom'} = '历史详情';
@@ -863,7 +863,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '变更PIR（实施后评审）概览。';
     $Self->{Translation}->{'ITSM Change notification rules'} = '变更通知规则';
     $Self->{Translation}->{'ITSM Changes'} = '变更';
-    $Self->{Translation}->{'ITSM MyCAB Overview.'} = '我的CAB概览';
+    $Self->{Translation}->{'ITSM MyCAB Overview.'} = '我的CAB概览。';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = '我的变更概览。';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '我的工作指令概览。';
     $Self->{Translation}->{'ITSM Template Delete.'} = '删除模板。';

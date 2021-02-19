@@ -1,6 +1,8 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
+# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -164,6 +166,27 @@
 [% RenderBlockEnd("SolutionTime") %]
                             </td>
                         </tr>
+# ---
+# ITSMIncidentProblemManagement
+# ---
+[% IF Data.ITSMIncidentProblemManagement %]
+                        <tr>
+                            <td>
+                                <label>[% Translate("Criticality") | html %]</label>
+                                <div title="[% Data.Criticality | html %]">[% Translate(Data.Criticality) | html %]</div>
+                            </td>
+                            <td>
+                                <label>[% Translate("Impact") | html %]</label>
+                                <div title="[% Data.Impact | html %]">[% Translate(Data.Impact) | html %]</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>[% Translate("Priority") | html %]</label><div title="[% Translate(Data.Priority) | html %]">[% Translate(Data.Priority) | html %]</div>
+                            </td>
+                        </tr>
+[% END %]
+# ---
 
 [% RenderBlockStart("DynamicFieldTableRow") %]
                         <tr class="[% Data.Class %]">

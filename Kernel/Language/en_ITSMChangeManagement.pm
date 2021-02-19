@@ -6,7 +6,7 @@
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
-package Kernel::Language::en_GB_ITSMChangeManagement;
+package Kernel::Language::en_ITSMChangeManagement;
 
 use strict;
 use warnings;
@@ -94,9 +94,7 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = '';
-    $Self->{Translation}->{'History Content'} = '';
     $Self->{Translation}->{'Workorder'} = 'Workorder';
-    $Self->{Translation}->{'Createtime'} = '';
     $Self->{Translation}->{'Show details'} = 'Show details';
     $Self->{Translation}->{'Show workorder'} = 'Show workorder';
 
@@ -122,7 +120,6 @@ sub Data {
     $Self->{Translation}->{'Current CAB'} = 'Current CAB';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
     $Self->{Translation}->{'Changes per page'} = 'Changes per page';
 
     # Template: AgentITSMChangeOverviewSmall
@@ -175,10 +172,6 @@ sub Data {
     $Self->{Translation}->{'Change Initiator(s)'} = 'Change Initiator(s)';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Last changed';
-    $Self->{Translation}->{'Last changed by'} = '';
-    $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
-    $Self->{Translation}->{'Download Attachment'} = '';
 
     # Template: AgentITSMTemplateEditCAB
     $Self->{Translation}->{'Edit CAB Template'} = 'Edit CAB Template';
@@ -281,7 +274,6 @@ sub Data {
     $Self->{Translation}->{'Could not delete ConditionID %s!'} = 'Could not delete ConditionID %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-    $Self->{Translation}->{'No %s is given!'} = '';
     $Self->{Translation}->{'Could not create new condition!'} = 'Could not create new condition!';
     $Self->{Translation}->{'Could not update ConditionID %s!'} = 'Could not update ConditionID %s!';
     $Self->{Translation}->{'Could not update ExpressionID %s!'} = 'Could not update ExpressionID %s!';
@@ -450,10 +442,16 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = 'The workorder "%s" could not be serialized.';
 
+    # Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMChange.pm
+    $Self->{Translation}->{'ITSM Change Attachment'} = '';
+
+    # Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMWorkOrder.pm
+    $Self->{Translation}->{'ITSM Work Order'} = '';
+    $Self->{Translation}->{'ITSM Work Order Attachment'} = '';
+
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
     $Self->{Translation}->{'Need config option %s!'} = '';
     $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
@@ -464,6 +462,12 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'My Work Orders';
+
+    # Perl Module: Kernel/System/DocumentSearch/Driver/ITSMChange.pm
+    $Self->{Translation}->{'ITSM Changes'} = 'Changes';
+
+    # Perl Module: Kernel/System/DocumentSearch/Driver/ITSMWorkOrder.pm
+    $Self->{Translation}->{'ITSM Work Orders'} = '';
 
     # Perl Module: Kernel/System/ITSMChange/History.pm
     $Self->{Translation}->{'%s: %s'} = '';
@@ -526,7 +530,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
     $Self->{Translation}->{'Group ITSMChangeManager'} = '';
 
-    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
+    # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'Requested';
     $Self->{Translation}->{'pending approval'} = 'Pending Approval';
     $Self->{Translation}->{'rejected'} = 'Rejected';
@@ -573,9 +577,6 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this action?'} = '';
     $Self->{Translation}->{'Do you really want to delete this condition?'} = '';
 
-    # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
-    $Self->{Translation}->{'Ok'} = '';
-
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.';
@@ -612,7 +613,6 @@ sub Data {
     $Self->{Translation}->{'Change Overview.'} = 'Change Overview.';
     $Self->{Translation}->{'Change Print.'} = 'Change Print.';
     $Self->{Translation}->{'Change Schedule'} = 'Change Schedule';
-    $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = 'Change Zoom.';
@@ -622,7 +622,6 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change number'} = '';
-    $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Change state'} = '';
     $Self->{Translation}->{'Change time'} = '';
     $Self->{Translation}->{'Change title'} = '';
@@ -640,8 +639,6 @@ sub Data {
     $Self->{Translation}->{'Create and manage change notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.';
-    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Define the signals for each workorder state.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
@@ -664,16 +661,14 @@ sub Data {
     $Self->{Translation}->{'Defines if the change state can be set in the change edit screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Defines if the planned effort should be shown.';
-    $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = '';
-    $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
+    $Self->{Translation}->{'Defines if the requested date could be printed by customer.'} = '';
+    $Self->{Translation}->{'Defines if the requested date could be searched by customer.'} =
         '';
-    $Self->{Translation}->{'Defines if the requested date should be set by customer.'} = '';
+    $Self->{Translation}->{'Defines if the requested date could be set by customer.'} = '';
     $Self->{Translation}->{'Defines if the requested date should be shown by customer.'} = 'Defines if the requested date should be shown by customer.';
     $Self->{Translation}->{'Defines if the workorder state should be shown.'} = 'Defines if the workorder state should be shown.';
     $Self->{Translation}->{'Defines if the workorder title should be shown.'} = 'Defines if the workorder title should be shown.';
     $Self->{Translation}->{'Defines shown graph attributes.'} = 'Defines shown graph attributes.';
-    $Self->{Translation}->{'Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed.'} =
-        '';
     $Self->{Translation}->{'Defines the change states that will be allowed to delete.'} = 'Defines the change states that will be allowed to delete.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change PSA overview.'} =
         'Defines the change states that will be used as filters in the Change PSA overview.';
@@ -687,8 +682,6 @@ sub Data {
         'Defines the change states that will be used as filters in the change manager overview.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change overview.'} =
         'Defines the change states that will be used as filters in the change overview.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the customer change schedule overview.'} =
-        '';
     $Self->{Translation}->{'Defines the default change title for a dummy change which is needed to edit a workorder template.'} =
         'Defines the default change title for a dummy change which is needed to edit a workorder template.';
     $Self->{Translation}->{'Defines the default sort criteria in the change PSA overview.'} =
@@ -706,8 +699,6 @@ sub Data {
         'Defines the default sort criteria of the changes in the MyWorkorders overview.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} =
         'Defines the default sort criteria of the changes in the PIR overview.';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} =
-        '';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} =
         'Defines the default sort criteria of the changes in the template overview.';
     $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Defines the default sort order in the MyCAB overview.';
@@ -721,8 +712,6 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort order in the change overview.'} = 'Defines the default sort order in the change overview.';
     $Self->{Translation}->{'Defines the default sort order in the change schedule overview.'} =
         'Defines the default sort order in the change schedule overview.';
-    $Self->{Translation}->{'Defines the default sort order in the customer change schedule overview.'} =
-        '';
     $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Defines the default sort order in the template overview.';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Defines the default value for the category of a change.';
     $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Defines the default value for the impact of a change.';
@@ -796,8 +785,6 @@ sub Data {
         'Defines the shown columns in the change overview. This option has no effect on the position of the column.';
     $Self->{Translation}->{'Defines the shown columns in the change search. This option has no effect on the position of the column.'} =
         'Defines the shown columns in the change search. This option has no effect on the position of the column.';
-    $Self->{Translation}->{'Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column.'} =
-        '';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
         'Defines the shown columns in the template overview. This option has no effect on the position of the column.';
     $Self->{Translation}->{'Defines the signals for each ITSM change state.'} = '';
@@ -862,7 +849,6 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Notifications'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = 'ITSM Change PIR Overview.';
     $Self->{Translation}->{'ITSM Change notification rules'} = 'ITSM Change notification rules';
-    $Self->{Translation}->{'ITSM Changes'} = 'Changes';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = 'ITSM MyCAB Overview.';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = 'ITSM MyChanges Overview.';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = 'ITSM MyWorkorders Overview.';
@@ -877,6 +863,8 @@ sub Data {
     $Self->{Translation}->{'ITSM event module that matches conditions and executes actions.'} =
         'ITSM event module that matches conditions and executes actions.';
     $Self->{Translation}->{'ITSM event module that sends notifications.'} = 'ITSM event module that sends notifications.';
+    $Self->{Translation}->{'ITSM event module that updates the ITSMChange index.'} = '';
+    $Self->{Translation}->{'ITSM event module that updates the ITSMWorkOrder index.'} = '';
     $Self->{Translation}->{'ITSM event module that updates the history of changes.'} = 'ITSM event module that updates the history of changes.';
     $Self->{Translation}->{'ITSM event module that updates the history of conditions.'} = 'ITSM event module that updates the history of conditions.';
     $Self->{Translation}->{'ITSM event module that updates the history of workorders.'} = 'ITSM event module that updates the history of workorders.';
@@ -887,6 +875,8 @@ sub Data {
     $Self->{Translation}->{'ITSMWorkOrder'} = 'Workorder';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).';
+    $Self->{Translation}->{'It controls availability for ITSMChange search driver.'} = '';
+    $Self->{Translation}->{'It controls availability for ITSMWorkOrder search driver.'} = '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
     $Self->{Translation}->{'Link another object to the workorder.'} = '';
     $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
@@ -982,7 +972,6 @@ sub Data {
         'Run task to check if specific times have been reached in changes and workorders.';
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
-    $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Screen after creating a workorder';
     $Self->{Translation}->{'Search Changes'} = 'Search Changes';
     $Self->{Translation}->{'Search Changes.'} = 'Search Changes.';
@@ -1013,13 +1002,13 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.';
-    $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu to access the conditions of a change in the zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu to access the history of a change in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu to access the history of a change in the zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu to access the history of a workorder in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu to access the history of a workorder in the zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to add a workorder in the change zoom view of the agent interface.'} =
         'Shows a link in the menu to add a workorder in the change zoom view of the agent interface.';
@@ -1027,17 +1016,17 @@ sub Data {
         'Shows a link in the menu to delete a change in its zoom view of the agent interface.';
     $Self->{Translation}->{'Shows a link in the menu to delete a workorder in its zoom view of the agent interface.'} =
         'Shows a link in the menu to delete a workorder in its zoom view of the agent interface.';
-    $Self->{Translation}->{'Shows a link in the menu to edit a change in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu to edit a change in the zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu to edit a workorder in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu to edit a workorder in the zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to go back in the change zoom view of the agent interface.'} =
         'Shows a link in the menu to go back in the change zoom view of the agent interface.';
     $Self->{Translation}->{'Shows a link in the menu to go back in the workorder zoom view of the agent interface.'} =
         'Shows a link in the menu to go back in the workorder zoom view of the agent interface.';
-    $Self->{Translation}->{'Shows a link in the menu to print a change in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu to print a change in the zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu to print a workorder in the its zoom view of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu to print a workorder in the zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.';

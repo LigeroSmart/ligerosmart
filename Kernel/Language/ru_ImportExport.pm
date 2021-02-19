@@ -23,18 +23,18 @@ sub Data {
         '';
     $Self->{Translation}->{'Start Import'} = 'Начать импорт';
     $Self->{Translation}->{'Start Export'} = 'Начать экспорт';
-    $Self->{Translation}->{'Delete this template'} = '';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Шаг 1 из 5 - Редактировать общую информацию';
+    $Self->{Translation}->{'Delete this template'} = 'Удалить этот шаблон';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Шаг 1 из 5 — изменить общую информацию';
     $Self->{Translation}->{'Name is required!'} = 'Требуется имя!';
     $Self->{Translation}->{'Object is required!'} = 'Объект обязателен!';
     $Self->{Translation}->{'Format is required!'} = 'Формат обязателен!';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Шаг 2 из 5 - Редактировать информацию об объекте';
-    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = 'Шаг 3 из 5 - Редактировать формат информации';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Шаг 2 из 5 — изменить информацию об объекте';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = 'Шаг 3 из 5 — изменить формат информации';
     $Self->{Translation}->{'is required!'} = 'обязателен!';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Шаг 4 из 5 - Редактировать информацию сопоставления';
-    $Self->{Translation}->{'No map elements found.'} = 'Нет элементов сопоставления.';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Шаг 4 из 5 — изменить информацию о сопоставлении';
+    $Self->{Translation}->{'No map elements found.'} = 'Элементы для сопоставления не найдены.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Добавьте элемент сопоставления';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Шаг 5 из 5 - Редактировать информацию поиска';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Шаг 5 из 5 — изменить информацию поиска';
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничить экспорт поиском';
     $Self->{Translation}->{'Import information'} = 'Информация об импорте';
     $Self->{Translation}->{'Source File'} = 'Исходный файл';
@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Дублирующие имена';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Номер последней обработанной строки импортируемого файла';
     $Self->{Translation}->{'Ok'} = 'Ok';
-    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = 'Действительно удалть этот шаблон?';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = 'Объект не найден!';

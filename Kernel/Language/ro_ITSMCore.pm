@@ -19,7 +19,7 @@ sub Data {
     $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = '';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
         '';
-    $Self->{Translation}->{'Priority allocation'} = '';
+    $Self->{Translation}->{'Priority allocation'} = 'Alocare prioritate';
 
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = '';
@@ -31,7 +31,7 @@ sub Data {
     $Self->{Translation}->{'SLA Information'} = '';
     $Self->{Translation}->{'Last changed'} = '';
     $Self->{Translation}->{'Last changed by'} = '';
-    $Self->{Translation}->{'Associated Services'} = '';
+    $Self->{Translation}->{'Associated Services'} = 'Servicii asociate';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '';
@@ -48,7 +48,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
     $Self->{Translation}->{'operational'} = '';
-    $Self->{Translation}->{'warning'} = '';
+    $Self->{Translation}->{'warning'} = 'avertizare';
     $Self->{Translation}->{'incident'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
@@ -59,8 +59,8 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
     $Self->{Translation}->{'Incident State'} = '';
 
-    # Database XML Definition: ITSMCore.sopm
-    $Self->{Translation}->{'Operational'} = '';
+    # Database XML / SOPM Definition: ITSMCore.sopm
+    $Self->{Translation}->{'Operational'} = 'operațional';
     $Self->{Translation}->{'Incident'} = '';
     $Self->{Translation}->{'End User Service'} = '';
     $Self->{Translation}->{'Front End'} = '';

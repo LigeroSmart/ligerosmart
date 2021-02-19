@@ -26,17 +26,17 @@ sub Data {
     $Self->{Translation}->{'Add Item'} = 'Dodaj stavku';
     $Self->{Translation}->{'Add Catalog Item'} = 'Dodavanje stavke u katalog';
     $Self->{Translation}->{'Add Catalog Class'} = 'Dodavanje klase u katalog';
-    $Self->{Translation}->{'Catalog Class'} = 'Katalog klasa';
+    $Self->{Translation}->{'Catalog Class'} = 'Klasa kataloga';
     $Self->{Translation}->{'Edit Catalog Item'} = 'Uredi stavku kataloga';
 
     # JS File: ITSM.GeneralCatalog
-    $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = '';
+    $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = 'Status incidenta upozorenja ne može se postaviti na nevažeći.';
 
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = 'Komentar 2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Kreiranje i upravljanje opštim katalogom.';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Definiše komentar 2 u opštem katalogu.';
-    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Definiše URL putanju za JS Color Picker.';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Definiše URL putanju za JS birač boje.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Registracija pristupnog modula za AdminGeneralCatalog u interfejsu administratora.';
     $Self->{Translation}->{'General Catalog'} = 'Opšti katalog';

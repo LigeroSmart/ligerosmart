@@ -19,7 +19,7 @@ sub Data {
     $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Criticidad ↔ Impacto ↔ Prioridad';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
         'Administrar el resultado de la combinación de prioridad Criticidad ↔ Impacto.';
-    $Self->{Translation}->{'Priority allocation'} = 'Asignación de Priodidad';
+    $Self->{Translation}->{'Priority allocation'} = 'Asignación prioritaria';
 
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Tiempo Mínimo Entre Incidentes';
@@ -47,19 +47,19 @@ sub Data {
     $Self->{Translation}->{'Calendar Default'} = 'Calendario por omisión';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
-    $Self->{Translation}->{'operational'} = '';
-    $Self->{Translation}->{'warning'} = '';
-    $Self->{Translation}->{'incident'} = '';
+    $Self->{Translation}->{'operational'} = 'operacional';
+    $Self->{Translation}->{'warning'} = 'advertencia';
+    $Self->{Translation}->{'incident'} = 'incidente';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
-    $Self->{Translation}->{'No ServiceID is given!'} = '¡No se proporcionó el  \'ServiceID\'!';
+    $Self->{Translation}->{'No ServiceID is given!'} = '¡No se proporcionó el \'ServiceID\'!';
     $Self->{Translation}->{'ServiceID %s not found in database!'} = '¡El \'ServiceID\' %s no se encontró en la base de datos!';
     $Self->{Translation}->{'Current Incident State'} = 'Estado del Incidente Actual';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
     $Self->{Translation}->{'Incident State'} = 'Estado del Incidente';
 
-    # Database XML Definition: ITSMCore.sopm
+    # Database XML / SOPM Definition: ITSMCore.sopm
     $Self->{Translation}->{'Operational'} = 'Operacional';
     $Self->{Translation}->{'Incident'} = 'Incidente';
     $Self->{Translation}->{'End User Service'} = 'Servicio de Usuario final';
@@ -84,7 +84,7 @@ sub Data {
     $Self->{Translation}->{'Both'} = 'Ambos';
     $Self->{Translation}->{'Connected to'} = 'Conectado a';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        'Define las Acciones donde el botón de configuraciones esta disponible en el "widget" de objetos vinculados (LinkObject::ViewMode = "complex"). Por favor note que dichas Acciones deben tener registrados los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.';
+        'Definir acciones donde está disponible un botón de configuración en el widget de objetos vinculados (LinkObject::ViewMode = "complex"). Tenga en cuenta que estas acciones deben haber registrado los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js y Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Define cuales columnas se muestran en el \'widget\' de Servicios vinculados (LinkObject::ViewMode = "complex"). Nota: Solo atributos de Servicio do permitidos para las Columnas por omisión. Configuraciones posibles: 0 = Deshabitado,  1 = Disponible, 2 = Habilitado por omisión.';
     $Self->{Translation}->{'Depends on'} = 'Depende de';

@@ -23,7 +23,7 @@ sub Data {
         'Per utilizzare questo modulo, è necessario installare ITSMConfigurationManagement o qualsiasi altro pacchetto che fornisce back-end per gli oggetti da importare ed esportare.';
     $Self->{Translation}->{'Start Import'} = 'Inizia Importazione';
     $Self->{Translation}->{'Start Export'} = 'Inizia Esportazione';
-    $Self->{Translation}->{'Delete this template'} = '';
+    $Self->{Translation}->{'Delete this template'} = 'Cancella questo modello';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Step 1 di 5 - Modifica informazioni comuni';
     $Self->{Translation}->{'Name is required!'} = 'Il nome è obbligatorio!';
     $Self->{Translation}->{'Object is required!'} = 'L\'oggetto è obbligatorio!';
@@ -33,7 +33,7 @@ sub Data {
     $Self->{Translation}->{'is required!'} = 'è obbligatorio!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Step 4 di 5 - Modifica informazioni mappatura';
     $Self->{Translation}->{'No map elements found.'} = 'Nessun elemento mappa trovato.';
-    $Self->{Translation}->{'Add Mapping Element'} = 'Aggiungi un elemento di mappatura.';
+    $Self->{Translation}->{'Add Mapping Element'} = 'Aggiungi un elemento di mappatura';
     $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Step 5 di 5 - Modifica informazioni di ricerca';
     $Self->{Translation}->{'Restrict export per search'} = 'Restringere esportazione per ricerca';
     $Self->{Translation}->{'Import information'} = 'Importare informazione';

@@ -30,7 +30,7 @@ sub Data {
     $Self->{Translation}->{'Edit Catalog Item'} = 'Editar Elemento del Catálogo';
 
     # JS File: ITSM.GeneralCatalog
-    $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = '';
+    $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = 'El estado de incidente Atención no puede ser inválido.';
 
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = 'Comentario 2';
@@ -44,7 +44,7 @@ sub Data {
         'Parámetros para el ejemplo comentario 2 de los atributos del catálogo general.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Parámetros para los permisos de ejemplo de los atributos del catálogo general.';
-    $Self->{Translation}->{'Permission Group'} = '';
+    $Self->{Translation}->{'Permission Group'} = 'Grupo de permisos';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

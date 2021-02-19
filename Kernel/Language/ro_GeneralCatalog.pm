@@ -21,9 +21,9 @@ sub Data {
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = '';
     $Self->{Translation}->{'Items in Class'} = '';
-    $Self->{Translation}->{'Edit Item'} = '';
+    $Self->{Translation}->{'Edit Item'} = 'Editare element';
     $Self->{Translation}->{'Add Class'} = '';
-    $Self->{Translation}->{'Add Item'} = '';
+    $Self->{Translation}->{'Add Item'} = 'Adaugă element';
     $Self->{Translation}->{'Add Catalog Item'} = 'Adauga articol in catalog';
     $Self->{Translation}->{'Add Catalog Class'} = '';
     $Self->{Translation}->{'Catalog Class'} = '';
