@@ -21,7 +21,7 @@ our @ObjectDependencies = (
 sub Configure {
     my ( $Self, %Param ) = @_;
 
-    $Self->Description('Reinstall an OTRS package.');
+    $Self->Description('Reinstall an LigeroSmart package.');
     $Self->AddOption(
         Name        => 'force',
         Description => 'Force package reinstallation even if validation fails.',
@@ -31,7 +31,7 @@ sub Configure {
     $Self->AddArgument(
         Name => 'location',
         Description =>
-            "Specify a file path, a remote repository (http://ftp.otrs.org/pub/otrs/packages/:Package-1.0.0.opm) or just any online repository (online:Package).",
+            "Specify a file path, a remote repository (http://ftp.ligerosmart.org/pub/otrs/packages/:Package-1.0.0.opm) or just any online repository (online:Package).",
         Required   => 1,
         ValueRegex => qr/.*/smx,
     );
