@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Output/HTML/TicketOverview/Preview.pm
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -42,16 +40,6 @@ sub new {
 
     # get UserID param
     $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
-# ---
-# ITSMIncidentProblemManagement
-# ---
-
-    # Check if ITSMIncidentProblemManagement is used.
-    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
-    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
-        $Self->{ITSMIncidentProblemManagement} = 1;
-    }
-# ---
 
     return $Self;
 }
@@ -374,20 +362,8 @@ sub _Show {
 
     my %Ticket = $TicketObject->TicketGet(
         TicketID      => $Param{TicketID},
-# ---
-# ITSMIncidentProblemManagement
-# ---
-#        DynamicFields => 0,
-        DynamicFields => 1,
-# ---
+        DynamicFields => 0,
     );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    # set criticality and impact
-    $Ticket{Criticality} = $Ticket{DynamicField_ITSMCriticality} || '-';
-    $Ticket{Impact}      = $Ticket{DynamicField_ITSMImpact}      || '-';
-# ---
 
     # Get configured number of last articles.
     my @Articles = $ArticleObject->ArticleList(
@@ -602,12 +578,6 @@ sub _Show {
         Name => 'DocumentContent',
         Data => {
             %Param,
-# ---
-# ITSMIncidentProblemManagement
-# ---
-            %Ticket,
-            ITSMIncidentProblemManagement => $Self->{ITSMIncidentProblemManagement},
-# ---
             %Article,
             Class             => 'ArticleCount' . $ArticleCount,
             AdditionalClasses => $AdditionalClasses,

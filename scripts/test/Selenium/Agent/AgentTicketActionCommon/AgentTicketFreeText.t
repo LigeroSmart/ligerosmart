@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/AgentTicketFreeText.t
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -107,37 +105,11 @@ $Selenium->RunTest(
             $QueueID,
             "QueueID $QueueID is created",
         );
-# ---
-# ITSMCore
-# ---
-
-# Get the list of service types from general catalog.
-my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::Service::Type',
-);
-
-# Build a lookup hash.
-my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
-
-# Get the list of sla types from general catalog.
-my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::SLA::Type',
-);
-
-# Build a lookup hash.
-my %SLATypeName2ID = reverse %{ $SLATypeList };
-# ---
 
         # Create test service.
         my $ServiceName = 'Service' . $RandomID;
         my $ServiceID   = $ServiceObject->ServiceAdd(
             Name    => $ServiceName,
-# ---
-# ITSMCore
-# ---
-            TypeID      => $ServiceTypeName2ID{Training},
-            Criticality => '3 normal',
-# ---
             ValidID => 1,
             UserID  => 1,
         );
@@ -159,11 +131,6 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
         my $SLAID   = $SLAObject->SLAAdd(
             ServiceIDs => [$ServiceID],
             Name       => $SLAName,
-# ---
-# ITSMCore
-# ---
-            TypeID => $SLATypeName2ID{Other},
-# ---
             ValidID    => 1,
             UserID     => 1,
         );
@@ -552,18 +519,6 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
             $Success,
             "Relation SLAID $SLAID referenced to service ID $ServiceID is deleted",
         );
-# ---
-# ITSMCore
-# ---
-        # Delete created test service preferences.
-        $Success = $DBObject->Do(
-            SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
-        );
-        $Self->True(
-            $Success,
-            "ServiceID $ServiceID prefereneces is deleted",
-        );
-# ---
 
         # Delete created test service.
         $Success = $DBObject->Do(

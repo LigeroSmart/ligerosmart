@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -111,12 +109,6 @@ my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 # create new service
 my $ServiceID = $ServiceObject->ServiceAdd(
     Name    => 'TestService' . $RandomID,
-# ---
-# ITSMCore
-# ---
-    TypeID      => 1,
-    Criticality => '3 normal',
-# ---
     ValidID => 1,
     UserID  => 1,
 );

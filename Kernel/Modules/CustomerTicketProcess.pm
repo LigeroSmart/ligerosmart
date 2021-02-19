@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Modules/CustomerTicketProcess.pm
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -49,16 +47,6 @@ sub new {
         ServiceID      => 'ServiceID',
         Article        => 'Article',
     };
-# ---
-# ITSMIncidentProblemManagement
-# ---
-
-    # Check if ITSMIncidentProblemManagement is used.
-    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
-    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
-        $Self->{ITSMIncidentProblemManagement} = 1;
-    }
-# ---
 
     return $Self;
 }
@@ -594,46 +582,6 @@ sub _RenderAjax {
             my $Data = $Self->_GetPriorities(
                 %{ $Param{GetParam} },
             );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-            # check if priority needs to be recalculated
-            if (
-                $Self->{ITSMIncidentProblemManagement}
-                && ( $Param{GetParam}->{ElementChanged} eq 'ServiceID'
-                || $Param{GetParam}->{ElementChanged} eq 'DynamicField_ITSMImpact'
-                )
-                && $Param{GetParam}->{ServiceID}
-                && $Param{GetParam}->{DynamicField_ITSMImpact}
-            ) {
-
-                my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-                    ServiceID     => $Param{GetParam}->{ServiceID},
-                    UserID        => $Self->{UserID},
-                );
-
-                # calculate priority from the CIP matrix
-                my $PriorityIDFromImpact = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
-                    Criticality => $Service{Criticality},
-                    Impact      => $Param{GetParam}->{DynamicField_ITSMImpact},
-                );
-
-                # add Priority to the JSONCollector
-                push(
-                    @JSONCollector,
-                    {
-                        Name        => $Self->{NameToID}{$CurrentField},
-                        Data        => $Data,
-                        SelectedID  => $PriorityIDFromImpact,
-                        Translation => 1,
-                        Max         => 100,
-                    },
-                );
-                $FieldsProcessed{ $Self->{NameToID}->{$CurrentField} } = 1;
-
-                next DIALOGFIELD;
-            }
-# ---
 
             # add Priority to the JSONCollector
             push(
@@ -947,22 +895,6 @@ sub _GetParam {
                 ParamObject        => $ParamObject,
                 LayoutObject       => $LayoutObject,
             );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-            # set the criticality from the service
-            if ( $Self->{ITSMIncidentProblemManagement} && $DynamicFieldName eq 'ITSMCriticality' && $ParamObject->GetParam( Param => 'ServiceID' ) ) {
-
-                # get service
-                my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-                    ServiceID => $ParamObject->GetParam( Param => 'ServiceID' ),
-                    UserID    => $Self->{UserID},
-                );
-
-                # set the criticality
-                $Value = $Service{Criticality};
-            }
-# ---
 
             # If we got a submitted param, take it and next out
             if (
@@ -1117,11 +1049,6 @@ sub _GetParam {
     # and finally we'll have the special parameters:
     $GetParam{ResponsibleAll} = $ParamObject->GetParam( Param => 'ResponsibleAll' );
     $GetParam{OwnerAll}       = $ParamObject->GetParam( Param => 'OwnerAll' );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    $GetParam{ElementChanged} = $ParamObject->GetParam( Param => 'ElementChanged' );
-# ---
 
     return \%GetParam;
 }

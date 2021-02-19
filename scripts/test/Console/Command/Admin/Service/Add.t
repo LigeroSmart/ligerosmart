@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Console/Command/Admin/Service/Add.t
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -38,12 +36,7 @@ $Self->Is(
 );
 
 # provide minimum options
-# ---
-# ITSMCore
-# ---
-#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
-$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
-# ---
+$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
 $Self->Is(
     $ExitCode,
     0,
@@ -51,12 +44,7 @@ $Self->Is(
 );
 
 # same again (should fail because already exists)
-# ---
-# ITSMCore
-# ---
-#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
-$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
-# ---
+$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
 $Self->Is(
     $ExitCode,
     1,
@@ -64,12 +52,7 @@ $Self->Is(
 );
 
 # invalid parent
-# ---
-# ITSMCore
-# ---
-#$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ChildServiceName );
-$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ChildServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
-# ---
+$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ChildServiceName );
 $Self->Is(
     $ExitCode,
     1,
@@ -77,12 +60,7 @@ $Self->Is(
 );
 
 # valid parent
-# ---
-# ITSMCore
-# ---
-#$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName );
-$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
-# ---
+$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName );
 $Self->Is(
     $ExitCode,
     0,
@@ -90,12 +68,7 @@ $Self->Is(
 );
 
 # Same again (should fail because already exists).
-# ---
-# ITSMCore
-# ---
-#$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName );
-$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
-# ---
+$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName );
 $Self->Is(
     $ExitCode,
     1,
@@ -103,12 +76,7 @@ $Self->Is(
 );
 
 # Parent and child service same name.
-# ---
-# ITSMCore
-# ---
-#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ParentServiceName );
-$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
-# ---
+$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ParentServiceName );
 my $ServiceName = $ParentServiceName . '::' . $ParentServiceName;
 $Self->Is(
     $ExitCode,
@@ -117,12 +85,7 @@ $Self->Is(
 );
 
 # Parent (two levels) and child same name.
-# ---
-# ITSMCore
-# ---
-#$ExitCode    = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName );
-$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
-# ---
+$ExitCode    = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName );
 $ServiceName = $ServiceName . '::' . $ParentServiceName;
 $Self->Is(
     $ExitCode,

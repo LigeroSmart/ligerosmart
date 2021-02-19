@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Output/HTML/TicketOverview/Medium.pm
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -40,16 +38,6 @@ sub new {
 
     # get UserID param
     $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
-# ---
-# ITSMIncidentProblemManagement
-# ---
-
-    # Check if ITSMIncidentProblemManagement is used.
-    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
-    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
-        $Self->{ITSMIncidentProblemManagement} = 1;
-    }
-# ---
 
     return $Self;
 }
@@ -381,12 +369,7 @@ sub _Show {
     # Get ticket data.
     my %Ticket = $TicketObject->TicketGet(
         TicketID      => $Param{TicketID},
-# ---
-# ITSMIncidentProblemManagement
-# ---
-#        DynamicFields => 0,
-        DynamicFields => 1,
-# ---
+        DynamicFields => 0,
     );
 
     %Article = ( %Article, %Ticket );
@@ -404,13 +387,6 @@ sub _Show {
 
     # show ticket create time in current view
     $Article{Created} = $Ticket{Created};
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    # set criticality and impact
-    $Article{Criticality} = $Article{DynamicField_ITSMCriticality} || '-';
-    $Article{Impact}      = $Article{DynamicField_ITSMImpact}      || '-';
-# ---
 
     # user info
     my %UserInfo = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
@@ -571,11 +547,6 @@ sub _Show {
         Data => {
             %Param,
             %Article,
-# ---
-# ITSMIncidentProblemManagement
-# ---
-            ITSMIncidentProblemManagement => $Self->{ITSMIncidentProblemManagement},
-# ---
         },
     );
 
