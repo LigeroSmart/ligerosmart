@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Modules/AdminSLA.pm
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -32,11 +30,6 @@ sub Run {
     my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $SLAObject    = $Kernel::OM->Get('Kernel::System::SLA');
-# ---
-# ITSMCore
-# ---
-    my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-# ---
     my %Error        = ();
 
     # ------------------------------------------------------------ #
@@ -69,12 +62,7 @@ sub Run {
         # get params
         my %GetParam;
         for my $Param (
-# ---
-# ITSMCore
-# ---
-#            qw(SLAID Name Calendar FirstResponseTime FirstResponseNotify SolutionTime SolutionNotify UpdateTime UpdateNotify ValidID Comment)
-            qw(SLAID Name Calendar FirstResponseTime FirstResponseNotify SolutionTime SolutionNotify UpdateTime UpdateNotify ValidID Comment TypeID MinTimeBetweenIncidents)
-# ---
+            qw(SLAID Name Calendar FirstResponseTime FirstResponseNotify SolutionTime SolutionNotify UpdateTime UpdateNotify ValidID Comment)
             )
         {
             $GetParam{$Param} = $ParamObject->GetParam( Param => $Param ) || '';
@@ -380,20 +368,6 @@ sub _MaskNew {
         Max         => 200,
         Class       => 'Modernize',
     );
-# ---
-# ITSMCore
-# ---
-        # generate TypeOptionStrg
-        my $TypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-            Class => 'ITSM::SLA::Type',
-        );
-        $Param{TypeOptionStrg} = $LayoutObject->BuildSelection(
-            Data       => $TypeList,
-            Name       => 'TypeID',
-            SelectedID => $SLAData{TypeID},
-            Class      => 'Modernize',
-        );
-# ---
 
     # generate CalendarOptionStrg
     my %CalendarList;
