@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Modules/AdminService.pm
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -14,11 +12,6 @@ use strict;
 use warnings;
 
 our $ObjectManagerDisabled = 1;
-# ---
-# ITSMCore
-# ---
-use Kernel::System::VariableCheck qw(:all);
-# ---
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,33 +29,6 @@ sub Run {
     my $LayoutObject  = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
     my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
-# ---
-# ITSMCore
-# ---
-    my $DynamicFieldObject   = $Kernel::OM->Get('Kernel::System::DynamicField');
-
-    # get the dynamic field for ITSMCriticality
-    my $DynamicFieldConfigArrayRef = $DynamicFieldObject->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => [ 'Ticket' ],
-        FieldFilter => {
-            ITSMCriticality => 1,
-        },
-    );
-
-    # get the dynamic field value for ITSMCriticality
-    my %PossibleValues;
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $DynamicFieldConfigArrayRef } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-
-        # get PossibleValues
-        $PossibleValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
-    }
-
-    # set the criticality list
-    $Self->{CriticalityList} = $PossibleValues{ITSMCriticality};
-# ---
 
     # ------------------------------------------------------------ #
     # service edit
@@ -94,12 +60,7 @@ sub Run {
 
         # get params
         my %GetParam;
-# ---
-# ITSMCore
-# ---
-#        for (qw(ServiceID ParentID Name ValidID Comment)) {
-        for (qw(ServiceID ParentID Name ValidID Comment TypeID Criticality)) {
-# ---
+        for (qw(ServiceID ParentID Name ValidID Comment)) {
             $GetParam{$_} = $ParamObject->GetParam( Param => $_ ) || '';
         }
 
@@ -378,30 +339,6 @@ sub _MaskNew {
         Translation    => 0,
         Class          => 'Modernize',
     );
-# ---
-# ITSMCore
-# ---
-    # generate TypeOptionStrg
-    my $TypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-        Class => 'ITSM::Service::Type',
-    );
-
-    # build the type dropdown
-    $ServiceData{TypeOptionStrg} = $LayoutObject->BuildSelection(
-        Data       => $TypeList,
-        Name       => 'TypeID',
-        SelectedID => $Param{TypeID} || $ServiceData{TypeID},
-        Class      => 'Modernize',
-    );
-
-    # build the criticality dropdown
-    $ServiceData{CriticalityOptionStrg} = $LayoutObject->BuildSelection(
-        Data       => $Self->{CriticalityList},
-        Name       => 'Criticality',
-        SelectedID => $Param{Criticality} || $ServiceData{Criticality},
-        Class      => 'Modernize',
-    );
-# ---
 
     # get valid list
     my %ValidList        = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();

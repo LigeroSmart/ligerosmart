@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>TrackSolutionTime</Name>
+    <Version>6.0.12</Version>
+    <Framework>6.0.x</Framework>
+    <PackageRequired Version="6.x.x">SlaStop</PackageRequired>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Fills automatically dynamic fields with relevant information about ticket SLA.</Description>
+    <Description Lang="pt_BR">Preenche automaticamente o valor do campo dinamico com a informacao de tempo de solucao baseado em SLA.</Description>
+    <IntroInstall Type="post" Lang="en" Title="Attention!">Try on a test system before uploading an production server.</IntroInstall>
+    <Filelist>
+        <File Permission="644" Location="Custom/TrackSolutionTime.sopm"></File>
+        <File Permission="644" Location="Kernel/System/GenericAgent/SetSolutionTimeField.pm"></File>
+        <File Permission="644" Location="var/packagesetup/TrackSolutionTime.pm"></File>
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/TrackSolutionTime/TrackSolutionTimeRebuild.pm"></File>        
+    </Filelist>
+    <CodeInstall Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+    </CodeInstall>
+	<CodeUpgrade Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+    </CodeUpgrade>
+</otrs_package>
