@@ -33,7 +33,7 @@ sub PreRun {
 	$Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
 		SessionID => $Self->{SessionID},
 		Key       => 'UserRepository',
-		Value     => 'http://addons.ligerosmart.com/AddOns/6.0/',
+		Value     => 'https://addons.ligerosmart.org/6.0/',
 	);
     
     return;

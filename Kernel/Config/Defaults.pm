@@ -1083,7 +1083,7 @@ sub LoadDefaults {
     # Package::RepositoryRoot
     # (get online repository list, use the fist availabe result)
     $Self->{'Package::RepositoryRoot'} = [
-        'https://ftp.otrs.org/pub/otrs/misc/packages/repository.xml',
+        'https://addons.ligerosmart.org/6.0/otrs.xml',
     ];
 
     # Package::RepositoryList

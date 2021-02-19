@@ -2707,7 +2707,7 @@
         <Navigation>Core::Package</Navigation>
         <Value>
             <Array>
-                <Item>https://ftp.otrs.org/pub/otrs/misc/packages/repository.xml</Item>
+                <Item>https://addons.ligerosmart.org/6.0/otrs.xml</Item>
             </Array>
         </Value>
     </Setting>

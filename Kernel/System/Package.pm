@@ -5305,7 +5305,7 @@ framework version.
 Returns:
 
     %RepositoryList = (
-        'http://ftp.otrs.org/pub/otrs/packages' => 'OTRS Freebie Features',
+        'http://addons.ligerosmart.org/6.0/' => 'OTRS Freebie Features',
         # ...,
     );
 
@@ -5326,29 +5326,7 @@ sub _ConfiguredRepositoryDefinitionGet {
 
     return () if !%RepositoryList;
 
-    # Make sure ITSM repository matches the current framework version.
-    my @Matches = grep { $_ =~ m{http://ftp\.otrs\.org/pub/otrs/itsm/packages\d+/}msxi } sort keys %RepositoryList;
-
-    return %RepositoryList if !@Matches;
-
-    my @FrameworkVersionParts = split /\./, $Self->{ConfigObject}->Get('Version');
-    my $FrameworkVersion      = $FrameworkVersionParts[0];
-
-    my $CurrentITSMRepository = "http://ftp.otrs.org/pub/otrs/itsm/packages$FrameworkVersion/";
-
-    # Delete all old ITSM repositories, but leave the current if exists
-    for my $Repository (@Matches) {
-        if ( $Repository ne $CurrentITSMRepository ) {
-            delete $RepositoryList{$Repository};
-        }
-    }
-
-    return %RepositoryList if exists $RepositoryList{$CurrentITSMRepository};
-
-    # Make sure that current ITSM repository is in the list.
-    $RepositoryList{$CurrentITSMRepository} = "OTRS::ITSM $FrameworkVersion Master";
-
-    return %RepositoryList;
+    return %RepositoryList
 }
 
 =head2 _RepositoryCacheClear()
