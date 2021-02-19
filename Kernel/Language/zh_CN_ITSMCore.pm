@@ -29,7 +29,7 @@ sub Data {
 
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'SLA信息';
-    $Self->{Translation}->{'Last changed'} = '上次修改于';
+    $Self->{Translation}->{'Last changed'} = '最后修改';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
     $Self->{Translation}->{'Associated Services'} = '关联的服务';
 
@@ -59,7 +59,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
     $Self->{Translation}->{'Incident State'} = '故障状态';
 
-    # Database XML Definition: ITSMCore.sopm
+    # Database XML / SOPM Definition: ITSMCore.sopm
     $Self->{Translation}->{'Operational'} = '正常';
     $Self->{Translation}->{'Incident'} = '故障';
     $Self->{Translation}->{'End User Service'} = '最终用户服务';
@@ -102,12 +102,12 @@ sub Data {
         '为服务人员界面中的 AgentITSMServicePrint 对象注册前端模块。';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         '为服务人员界面中的 AgentITSMServiceZoom 对象注册前端模块。';
-    $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA概览';
-    $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM服务概览';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA概览。';
+    $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM服务概览。';
     $Self->{Translation}->{'Incident State Type'} = '故障状态类型';
     $Self->{Translation}->{'Includes'} = '包括';
     $Self->{Translation}->{'Manage priority matrix.'} = '管理优先级矩阵。';
-    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '管理 紧急度-影响-优先级 矩阵';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '管理 紧急度-影响-优先级 矩阵。';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'SLA菜单中显示“后退”菜单项的模块。';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = '服务菜单中显示“后退”菜单项的模块。';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = '服务菜单中显示“链接”菜单项的模块。';
@@ -125,7 +125,7 @@ sub Data {
     $Self->{Translation}->{'Service Zoom.'} = '服务详情。';
     $Self->{Translation}->{'Service-Area'} = '服务区';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
-        '设置链接的类型和方向以便计算故障状态。键是链接类型的名称（在LinkObject::Type中定义），值是IncidentLinkType（故障链接类型）的方向以计算故障状态。示例：如果IncidentLinkType（故障链接类型）设为“DependsOn（依赖）”，方向是Source（源），只有“依赖”链接（而不是链接类型为“被...需要”的链接）才用来计算故障状态。可以根据需要添加更多的链接类型和方向，如方向为“目标”的“Includes（包含）”链接。所有在系统配置选项的LinkObject::Type中定义的链接类型都可以使用，方向只可以是“Source（源）”、“Target（目标）”或“Both（源和目标都是）”。重要：在更改了系统配置选项后，你需要运行脚本bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate，才能按新的设置重新计算故障状态。';
+        '设置链接的类型和方向以便计算故障状态。键是链接类型的名称（在LinkObject::Type中定义），值是IncidentLinkType（故障链接类型）的方向以计算故障状态。示例：如果IncidentLinkType（故障链接类型）设为“DependsOn（依赖）”，方向是Source（源），只有“依赖”链接（而不是链接类型为“被...需要”的链接）才用来计算故障状态。可以根据需要添加更多的链接类型和方向，如方向为“目标”的“Includes（包含）”链接。所有在系统配置选项的LinkObject::Type中定义的链接类型都可以使用，方向只可以是“Source（源）”、“Target（目标）”或“Both（源和目标都是）”。重要：在更改了系统配置选项后，你需要运行脚本命令 bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate，才能按新的设置重新计算故障状态！';
     $Self->{Translation}->{'Source'} = '源';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         '这个设置定义了一个“ITSMChange（变更）”对象能够以链接类型“普通”链接到工单。';

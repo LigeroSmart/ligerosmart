@@ -221,7 +221,7 @@ sub Data {
         'Parameter für die Seiten der Umfrageübersicht.';
     $Self->{Translation}->{'Public Survey.'} = 'Öffentliche Umfrage.';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
-        'Ergebnisse, die älter als die konfigurierte Anzahl von Tagen sind, werden gelöscht. Hinweis: Löschen Sie die Ergebnisse des OTRS-Daemons, bevor Sie die Einstellung \'Task#####SurveyRequestsDelete\' aktivieren.';
+        'Ergebnisse, die älter als die konfigurierte Anzahl von Tagen sind, werden gelöscht. Hinweis: Löschen Sie die Ergebnisse des OTRS-Daemons, bevor Sie die Einstellung \'Task###SurveyRequestsDelete\' aktivieren.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Zeigt einen Link im Menü der Detailansicht im Agenten-Interface an, der es ermöglicht eine Umfrage zu bearbeiten.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =

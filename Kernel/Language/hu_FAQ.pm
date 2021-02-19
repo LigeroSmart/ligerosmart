@@ -89,7 +89,7 @@ sub Data {
     $Self->{Translation}->{'Keyword'} = 'Kulcsszó';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Szavazás (például Egyenlő 10 vagy Nagyobb mint 60)';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Értékelés (például Egyenlő 25% vagy Nagyobb mint 75%)';
-    $Self->{Translation}->{'Approved'} = 'Jóváhagyott';
+    $Self->{Translation}->{'Approved'} = 'Jóváhagyva';
     $Self->{Translation}->{'Last changed by'} = 'Utoljára módosította';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'GyIK bejegyzés létrehozási ideje (előtt/után)';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'GyIK bejegyzés létrehozási ideje (között)';
@@ -220,7 +220,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Nincs találat!';
     $Self->{Translation}->{'FAQ Number'} = 'GyIK szám';
-    $Self->{Translation}->{'Last Changed by'} = 'Utoljára módosította:';
+    $Self->{Translation}->{'Last Changed by'} = 'Utoljára módosította';
     $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'GyIK elem létrehozási ideje (előtt/után)';
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'GyIK elem létrehozási ideje (között)';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'GyIK elem módosítási ideje (előtt/után)';
@@ -279,7 +279,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = 'Tartalomtípus';
 
-    # Database XML Definition: FAQ.sopm
+    # Database XML / SOPM Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'belső';
     $Self->{Translation}->{'external'} = 'külső';
     $Self->{Translation}->{'public'} = 'nyilvános';

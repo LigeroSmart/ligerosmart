@@ -37,12 +37,12 @@ sub Data {
     $Self->{Translation}->{'Add Question'} = 'Aggiungi domanda';
     $Self->{Translation}->{'Type the question'} = 'Inserisci la domanda';
     $Self->{Translation}->{'Answer required'} = 'Risposta richiesta';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'Non ci sono voci per questo sondaggio';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Non ci sono voci per questo sondaggio.';
     $Self->{Translation}->{'Question'} = 'Domanda';
     $Self->{Translation}->{'Answer Required'} = 'Risposta richiesta';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         'Quando completi la modifica delle domande del sondaggio, basta chiudere questa schermata.';
-    $Self->{Translation}->{'Close this window'} = '';
+    $Self->{Translation}->{'Close this window'} = 'Chiudi questa finestra';
     $Self->{Translation}->{'Edit Question'} = 'Modifica domanda';
     $Self->{Translation}->{'go back to questions'} = 'Ritorna alle domande';
     $Self->{Translation}->{'Question:'} = 'Domanda:';
@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Add Answer'} = 'Aggiungi risposta';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Nessuna risposta salvata per questa domanda.';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
-        'Non sono previste risposte multiple, il destinatario inserisce del testo libero';
+        'Non sono previste risposte multiple, il destinatario inserisce del testo libero.';
     $Self->{Translation}->{'Edit Answer'} = 'Modifica risposta';
     $Self->{Translation}->{'go back to edit question'} = 'Ritorna a modificare le domande';
     $Self->{Translation}->{'Answer:'} = 'Risposta:';
@@ -90,7 +90,7 @@ sub Data {
     $Self->{Translation}->{'Survey Details'} = 'Dettagli sul sondaggio';
     $Self->{Translation}->{'Ticket Services'} = 'Servizi ticket';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafici sul sondaggio';
-    $Self->{Translation}->{'No stat results.'} = 'Non ci sono risultati da mostrare';
+    $Self->{Translation}->{'No stat results.'} = 'Non ci sono risultati da mostrare.';
 
     # Template: PublicSurvey
     $Self->{Translation}->{'Survey'} = 'Sondaggio';
@@ -104,7 +104,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = 'Non hai i permessi per questo Sondaggio!';
-    $Self->{Translation}->{'No SurveyID is given!'} = 'Non è stato specificato un SurveyID';
+    $Self->{Translation}->{'No SurveyID is given!'} = 'Non è stato specificato un SurveyID!';
     $Self->{Translation}->{'Survey Edit'} = 'Modifica Sondaggio';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
@@ -134,7 +134,7 @@ sub Data {
     $Self->{Translation}->{'- No ticket type selected -'} = '- Nessuna tipologia di ticket selezionata -';
     $Self->{Translation}->{'- No ticket service selected -'} = '- Nessun servizio di ticket selezionato -';
     $Self->{Translation}->{'- Change Status -'} = '- Cambia stato -';
-    $Self->{Translation}->{'Master'} = 'Principale';
+    $Self->{Translation}->{'Master'} = 'Primario';
     $Self->{Translation}->{'Invalid'} = 'Non valido';
     $Self->{Translation}->{'New Status'} = 'Nuovo stato';
     $Self->{Translation}->{'Survey Description'} = 'Descrizione del sondaggio';
@@ -144,16 +144,16 @@ sub Data {
     # Perl Module: Kernel/Modules/PublicSurvey.pm
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Grazie per il tuo riscontro.';
     $Self->{Translation}->{'The survey is finished.'} = 'Il sondaggio è terminato.';
-    $Self->{Translation}->{'Survey Message!'} = '';
-    $Self->{Translation}->{'Module not enabled.'} = '';
+    $Self->{Translation}->{'Survey Message!'} = 'Messaggio dell\'indagine!';
+    $Self->{Translation}->{'Module not enabled.'} = 'Modulo non abilitato.';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
-        '';
-    $Self->{Translation}->{'Survey Error!'} = '';
-    $Self->{Translation}->{'Invalid survey key.'} = '';
+        'Questa funzionalità non è abilitata, contattare l\'amministratore.';
+    $Self->{Translation}->{'Survey Error!'} = 'Errore del sondaggio!';
+    $Self->{Translation}->{'Invalid survey key.'} = 'Chiave sondaggio non valida.';
     $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
         'La chiave di sondaggio inserita non è valida, se hai seguito un link forse è obsoleto o rotto.';
-    $Self->{Translation}->{'Survey Vote'} = '';
-    $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'Survey Vote'} = 'Voto del sondaggio';
+    $Self->{Translation}->{'Survey Vote Data'} = 'Data di voto del sondaggio';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Hai già risposto al sondaggio.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
@@ -186,7 +186,7 @@ sub Data {
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Definisci il numero massimo di sondaggi che possono essere inviati al cliente in un intervallo di 30 giorni (0 indica un numero illimitato, tutti i sondaggi saranno inviati).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
-        'Definisci il numero di ore dopo la chiusura del ticket per l\'invio del sondaggio (0 indica l\'invio immediato dopo la chiusura). Nota: l\'invio ritardato dei sondaggi viene eseguito dal Daemon OTRS con l\'attivazione della preferenza  \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\'.';
+        'Definisci il numero di ore dopo la chiusura del ticket per l\'invio del sondaggio (0 indica l\'invio immediato dopo la chiusura). Nota: l\'invio ritardato dei sondaggi viene eseguito dal Daemon OTRS con l\'attivazione della preferenza \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\'.';
     $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
         'Definisce le colonne per l\'elenco a discesa per la creazione delle condizioni di invio (0 => inattivo, 1 => attivo).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
@@ -201,7 +201,7 @@ sub Data {
     $Self->{Translation}->{'Edit survey general information.'} = 'Modifica le informazioni generali del sondaggio.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Modifica domande del sondaggio.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
-        '';
+        'Abilitare o disabilitare la schermata ShowVoteData nell\'interfaccia pubblica per mostrare i dati di uno specifico risultato del sondaggio quando il cliente tenta di rispondere a un sondaggio la seconda volta.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Abilita o disabilita il controllo della condizione di invio per il servizio.';
     $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
         'Abilita o disabilita il controllo della condizione di invio per il tipo di ticket.';
@@ -233,7 +233,7 @@ sub Data {
     $Self->{Translation}->{'Stats Details'} = 'Dettagli statistiche';
     $Self->{Translation}->{'Survey Add Module.'} = 'Modulo di aggiunta dei sondaggi.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Modulo di modifica dei sondaggi.';
-    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite per visualizzazione "compatta".';
+    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite per visualizzazione "compatta"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Modulo di statistiche dei sondaggi.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modulo di zoom per i sondaggi.';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Limite sondaggio per pagina per Panoramica sondaggio "Piccolo".';

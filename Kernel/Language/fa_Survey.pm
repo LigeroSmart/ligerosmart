@@ -16,39 +16,39 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentSurveyAdd
-    $Self->{Translation}->{'Create New Survey'} = '';
-    $Self->{Translation}->{'Introduction'} = '';
-    $Self->{Translation}->{'Survey Introduction'} = '';
-    $Self->{Translation}->{'Notification Body'} = '';
+    $Self->{Translation}->{'Create New Survey'} = 'ساختن نظرسنجی جدید';
+    $Self->{Translation}->{'Introduction'} = 'معرفی';
+    $Self->{Translation}->{'Survey Introduction'} = 'معرفی نظرسنجی';
+    $Self->{Translation}->{'Notification Body'} = 'بدنه هشدار';
     $Self->{Translation}->{'Ticket Types'} = 'انواع درخواست';
-    $Self->{Translation}->{'Internal Description'} = '';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Internal Description'} = 'توضیحات داخلی';
+    $Self->{Translation}->{'Customer conditions'} = 'شرایط مشتری';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = 'لطفا یک ویژگی مشتری را برای اضافه شدن به شرایط انتخاب کنید.';
+    $Self->{Translation}->{'Public survey key'} = 'کلید عمومی نظرسنجی';
+    $Self->{Translation}->{'Example survey'} = 'نظرسنجی نمونه';
 
     # Template: AgentSurveyEdit
-    $Self->{Translation}->{'Edit General Info'} = '';
+    $Self->{Translation}->{'Edit General Info'} = 'ویرایش اطلاعات عمومی';
 
     # Template: AgentSurveyEditQuestions
-    $Self->{Translation}->{'Edit Questions'} = '';
+    $Self->{Translation}->{'Edit Questions'} = 'ویرایش سوالات';
     $Self->{Translation}->{'You are here'} = 'تو اینجایی';
-    $Self->{Translation}->{'Survey Questions'} = '';
-    $Self->{Translation}->{'Add Question'} = '';
-    $Self->{Translation}->{'Type the question'} = '';
-    $Self->{Translation}->{'Answer required'} = '';
-    $Self->{Translation}->{'No questions saved for this survey.'} = '';
-    $Self->{Translation}->{'Question'} = '';
-    $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'Survey Questions'} = 'سوالات نظرسنجی ها';
+    $Self->{Translation}->{'Add Question'} = 'افزودن سوال';
+    $Self->{Translation}->{'Type the question'} = 'سوال را بنویسید';
+    $Self->{Translation}->{'Answer required'} = 'پاسخ الزامی است';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'سوالی برای این نظرسنجی ذخیره نشده است.';
+    $Self->{Translation}->{'Question'} = 'سوال';
+    $Self->{Translation}->{'Answer Required'} = 'پاسخ الزامی است';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
-    $Self->{Translation}->{'Close this window'} = '';
-    $Self->{Translation}->{'Edit Question'} = '';
-    $Self->{Translation}->{'go back to questions'} = '';
-    $Self->{Translation}->{'Question:'} = '';
-    $Self->{Translation}->{'Possible Answers For'} = '';
-    $Self->{Translation}->{'Add Answer'} = '';
-    $Self->{Translation}->{'No answers saved for this question.'} = '';
+        'وقتی کار ویرایش سوالات نظرسنجی تمام شد این پنجره را ببندید.';
+    $Self->{Translation}->{'Close this window'} = 'بستن این پنجره';
+    $Self->{Translation}->{'Edit Question'} = 'ویرایش سوال';
+    $Self->{Translation}->{'go back to questions'} = 'بازگشت به سوالات';
+    $Self->{Translation}->{'Question:'} = 'سوال:';
+    $Self->{Translation}->{'Possible Answers For'} = 'پاسخ های ممکن برای';
+    $Self->{Translation}->{'Add Answer'} = 'افزودن پاسخ';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'پاسخی برای این سوالات ذخیره نشده است.';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         '';
     $Self->{Translation}->{'Edit Answer'} = '';

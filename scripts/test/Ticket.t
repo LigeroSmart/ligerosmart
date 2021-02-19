@@ -1,6 +1,8 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
+# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - scripts/test/Ticket.t
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -921,12 +923,38 @@ $TypeObject->TypeUpdate(
     ValidID => 2,
     UserID  => 1,
 );
+# ---
+# ITSMCore
+# ---
+
+# get the list of service types from general catalog
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::Service::Type',
+);
+
+# build a lookup hash
+my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
+
+# get the list of sla types from general catalog
+my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::SLA::Type',
+);
+
+# build a lookup hash
+my %SLATypeName2ID = reverse %{ $SLATypeList };
+# ---
 
 # create a test service
 my $ServiceID = $ServiceObject->ServiceAdd(
     Name    => 'Service' . $Helper->GetRandomID(),
     ValidID => 1,
     Comment => 'Unit Test Comment',
+# ---
+# ITSMCore
+# ---
+    TypeID      => $ServiceTypeName2ID{Training},
+    Criticality => '3 normal',
+# ---
     UserID  => 1,
 );
 
@@ -1003,6 +1031,11 @@ my $SLAID = $SLAObject->SLAAdd(
     Name    => 'SLA' . $Helper->GetRandomID(),
     ValidID => 1,
     Comment => 'Unit Test Comment',
+# ---
+# ITSMCore
+# ---
+    TypeID => $SLATypeName2ID{Other},
+# ---
     UserID  => 1,
 );
 
@@ -2538,6 +2571,12 @@ for my $Index ( 1 .. 3 ) {
         Name    => $ServiceName,
         ValidID => 1,
         Comment => 'Unit Test Comment',
+# ---
+# ITSMCore
+# ---
+        TypeID      => $ServiceTypeName2ID{Training},
+        Criticality => '3 normal',
+# ---
         UserID  => 1,
     ) || die "ServiceAdd() error.";
 
@@ -2552,6 +2591,11 @@ for my $Index ( 1 .. 3 ) {
         Name    => $SLAName,
         ValidID => 1,
         Comment => 'Unit Test Comment',
+# ---
+# ITSMCore
+# ---
+        TypeID => $SLATypeName2ID{Other},
+# ---
         UserID  => 1,
     ) || die "SLAAdd() error.";
 

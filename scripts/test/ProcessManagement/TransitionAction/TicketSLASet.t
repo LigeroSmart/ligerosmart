@@ -1,6 +1,8 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
+# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -39,6 +41,26 @@ my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate();
 
 # set user details
 my ( $TestUserLogin, $TestUserID ) = $Helper->TestUserCreate();
+# ---
+# ITSMCore
+# ---
+
+# get the list of service types from general catalog
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::Service::Type',
+);
+
+# build a lookup hash
+my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
+
+# get the list of sla types from general catalog
+my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::SLA::Type',
+);
+
+# build a lookup hash
+my %SLATypeName2ID = reverse %{ $SLATypeList };
+# ---
 
 #
 # Create new services
@@ -46,6 +68,12 @@ my ( $TestUserLogin, $TestUserID ) = $Helper->TestUserCreate();
 my @Services = (
     {
         Name    => 'Service0' . $RandomID,
+# ---
+# ITSMCore
+# ---
+        TypeID      => $ServiceTypeName2ID{Training},
+        Criticality => '3 normal',
+# ---
         ValidID => 1,
         UserID  => 1,
     },
@@ -72,18 +100,33 @@ my @SLAs = (
     {
         Name       => 'SLA0' . $RandomID,
         ServiceIDs => [ $Services[0]->{ServiceID} ],
+# ---
+# ITSMCore
+# ---
+        TypeID => $SLATypeName2ID{Other},
+# ---
         ValidID    => 1,
         UserID     => 1,
     },
     {
         Name       => 'SLA1' . $RandomID,
         ServiceIDs => [ $Services[0]->{ServiceID} ],
+# ---
+# ITSMCore
+# ---
+        TypeID => $SLATypeName2ID{Other},
+# ---
         ValidID    => 1,
         UserID     => 1,
     },
     {
         Name       => 'SLA2' . $RandomID,
         ServiceIDs => [],
+# ---
+# ITSMCore
+# ---
+        TypeID => $SLATypeName2ID{Other},
+# ---
         ValidID    => 1,
         UserID     => 1,
     },

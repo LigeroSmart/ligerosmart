@@ -153,7 +153,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Workorder Report'} = 'ITSM munkamegrendelés jelentés';
     $Self->{Translation}->{'ITSM Change Priority'} = 'ITSM változás prioritás';
     $Self->{Translation}->{'ITSM Change Impact'} = 'ITSM változás hatás';
-    $Self->{Translation}->{'Change Category'} = 'Kategória módosítása';
+    $Self->{Translation}->{'Change Category'} = 'Változáskategória';
     $Self->{Translation}->{'(before/after)'} = '(előtt/után)';
     $Self->{Translation}->{'(between)'} = '(között)';
 
@@ -174,10 +174,10 @@ sub Data {
     $Self->{Translation}->{'Accounted Time'} = 'Elszámolt idő';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Változáskezdeményezők';
     $Self->{Translation}->{'CAB'} = 'CAB';
-    $Self->{Translation}->{'Last changed'} = 'Utoljára módosítva';
+    $Self->{Translation}->{'Last changed'} = 'Utolsó módosítás';
     $Self->{Translation}->{'Last changed by'} = 'Utoljára módosította';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        'A következő leírásblokkokban lévő hivatkozások megnyitásához lehet, hogy meg kell nyomnia a Ctrl vagy a Cmd vagy a Shift billentyűt, miközben a hivatkozásra kattint (a böngészőjétől és az operációs rendszerétől függően).';
+        'A következő leírási blokkokban lévő hivatkozások megnyitásához lehetséges, hogy le kell nyomnia a Ctrl vagy Cmd vagy Shift billentyűt, miközben a hivatkozásra kattint (a böngészőjétől és operációs rendszerétől függően).';
     $Self->{Translation}->{'Download Attachment'} = 'Melléklet letöltése';
 
     # Template: AgentITSMTemplateEditCAB
@@ -201,7 +201,7 @@ sub Data {
     $Self->{Translation}->{'Edit Content'} = 'Tartalom szerkesztése';
     $Self->{Translation}->{'Create by'} = 'Létrehozta';
     $Self->{Translation}->{'Change by'} = 'Módosította';
-    $Self->{Translation}->{'Change Time'} = 'Változtatás ideje';
+    $Self->{Translation}->{'Change Time'} = 'Változás ideje';
 
     # Template: AgentITSMWorkOrderAdd
     $Self->{Translation}->{'Add Workorder to %s%s'} = 'Munkamegrendelés hozzáadása ehhez: %s%s';
@@ -526,7 +526,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = 'ITSM változás-összeállító csoport';
     $Self->{Translation}->{'Group ITSMChangeManager'} = 'ITSM változásmenedzser csoport';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'kérve';
     $Self->{Translation}->{'pending approval'} = 'jóváhagyásra vár';
     $Self->{Translation}->{'rejected'} = 'visszautasítva';

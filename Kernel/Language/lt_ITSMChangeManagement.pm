@@ -33,7 +33,7 @@ sub Data {
     $Self->{Translation}->{'Select a catalog class!'} = '';
     $Self->{Translation}->{'A catalog class is required!'} = '';
     $Self->{Translation}->{'Add a state transition'} = '';
-    $Self->{Translation}->{'Catalog Class'} = '';
+    $Self->{Translation}->{'Catalog Class'} = 'Katalogo klasė';
     $Self->{Translation}->{'Object Name'} = '';
     $Self->{Translation}->{'Overview over state transitions for'} = '';
     $Self->{Translation}->{'Delete this state transition'} = '';
@@ -526,7 +526,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
     $Self->{Translation}->{'Group ITSMChangeManager'} = '';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = '';
     $Self->{Translation}->{'pending approval'} = '';
     $Self->{Translation}->{'rejected'} = '';
