@@ -18,7 +18,7 @@
 
 use strict;
 use warnings;
-
+use Data::Dumper;
 # use ../ as lib location
 use File::Basename;
 use File::Spec qw(catfile);
@@ -165,6 +165,29 @@ else {
     print STDERR "ERROR: Can't backup, no database dump support!\n";
     exit 1;
 }
+
+
+print "aaaaaaaaaaaaaaaaaaaaaa";
+
+my $PackageObject = $Kernel::OM->Get('Kernel::System::Package');
+my @List = $PackageObject->PackageOnlineList(
+    URL                => 'https://addons.ligerosmart.org/6.0/',
+    Lang               => 'en',
+    Cache              => 0,    # (optional) do not use cached data
+    FromCloud          => 0,    # optional 1 or 0, it indicates if a Cloud Service
+                                #  should be used for getting the packages list
+    IncludeSameVersion => 1,    # (optional) to also get packages already installed and with the same version
+);
+
+print Dumper(@List);
+
+exit;
+
+
+
+
+
+
 
 # check database env
 if ( $DB =~ m/mysql/i ) {
