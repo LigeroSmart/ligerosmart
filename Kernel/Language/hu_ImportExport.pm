@@ -32,8 +32,8 @@ sub Data {
     $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '3. lépés az 5-ből - formátuminformációk szerkesztése';
     $Self->{Translation}->{'is required!'} = 'kötelező!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '4. lépés az 5-ből - leképezési információk szerkesztése';
-    $Self->{Translation}->{'No map elements found.'} = 'Nem találhatók térképelemek.';
-    $Self->{Translation}->{'Add Mapping Element'} = 'Leképezési elemek hozzáadása';
+    $Self->{Translation}->{'No map elements found.'} = 'Nem találhatók leképezési elemek.';
+    $Self->{Translation}->{'Add Mapping Element'} = 'Leképezési elem hozzáadása';
     $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '5. lépés az 5-ből - keresési információk szerkesztése';
     $Self->{Translation}->{'Restrict export per search'} = 'Exportálás korlátozása keresésenként';
     $Self->{Translation}->{'Import information'} = 'Importálási információk';

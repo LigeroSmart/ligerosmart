@@ -17,9 +17,9 @@ sub Data {
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Створити нове опитування';
-    $Self->{Translation}->{'Introduction'} = 'Представлення';
-    $Self->{Translation}->{'Survey Introduction'} = 'Представлення опитування';
-    $Self->{Translation}->{'Notification Body'} = 'Тіло інформування';
+    $Self->{Translation}->{'Introduction'} = 'Вступ';
+    $Self->{Translation}->{'Survey Introduction'} = 'Вступ до опитування';
+    $Self->{Translation}->{'Notification Body'} = 'Тіло сповішення';
     $Self->{Translation}->{'Ticket Types'} = 'Типи заявок';
     $Self->{Translation}->{'Internal Description'} = 'Внутрішній опис';
     $Self->{Translation}->{'Customer conditions'} = 'Умови клієнта';
@@ -216,7 +216,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Frontend модуль реєстрації, що додає Публічне опитування в публічний інтерфейс';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Якщо регулярний вираз визначає, жодне опитування клієнту не буде відправлено';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Обмеження.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметри сторінки (в яких показуються опитування) в короткому представленні';
     $Self->{Translation}->{'Public Survey.'} = 'Публічне опитування';

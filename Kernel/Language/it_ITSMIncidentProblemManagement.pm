@@ -16,7 +16,7 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketOverviewMedium
-    $Self->{Translation}->{'Criticality'} = 'Criticità';
+    $Self->{Translation}->{'Criticality'} = 'Urgenza';
     $Self->{Translation}->{'Impact'} = 'Impatto';
 
     # JS Template: ServiceIncidentState
@@ -39,7 +39,7 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'Data di approvazione';
     $Self->{Translation}->{'Due Date'} = 'Data di scadenza';
 
-    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    # Database XML / SOPM Definition: ITSMIncidentProblemManagement.sopm
     $Self->{Translation}->{'closed with workaround'} = 'chiuso con soluzione tampone (workaround)';
 
     # SysConfig

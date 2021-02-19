@@ -18,7 +18,7 @@ sub Data {
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Aggiungere articolo FAQ';
     $Self->{Translation}->{'Keywords'} = 'Parole chiave';
-    $Self->{Translation}->{'A category is required.'} = 'Una categoria è obbligatoria';
+    $Self->{Translation}->{'A category is required.'} = 'Una categoria è obbligatoria.';
     $Self->{Translation}->{'Approval'} = 'Approvazione';
 
     # Template: AgentFAQCategory
@@ -30,7 +30,7 @@ sub Data {
     $Self->{Translation}->{'Edit Category'} = 'Modifica Categoria';
     $Self->{Translation}->{'Subcategory of'} = 'Sottocategoria di';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Selezionare almeno un gruppo di permessi.';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Gruppo di tecnici the può accedere agli aritcoli in questa categoria';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Gruppo di tecnici the può accedere agli aritcoli in questa categoria.';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Saranno visibili come commenti in Explorer.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = 'Si desidera veramente eliminare questa categoria?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} =
@@ -182,28 +182,28 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'Nessun ItemID è dato!';
-    $Self->{Translation}->{'You have no permission for this category!'} = '';
-    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = 'Non hai i permessi per questa categoria!';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = 'Impossibile eliminare l\'articolo %s dalle FAQ!';
 
     # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
-    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'L\'ID della categoria %s non è valido.';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = 'Impossibile mostrare la cronologia, poiché non viene fornito alcun riferimento!';
     $Self->{Translation}->{'FAQ History'} = 'Cronologia FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Registro delle FAQ';
-    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = 'Devi confgurare l\'opzione FAQ::Frontend::Overview';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
-        '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+        'Nell\'opzione FAQ::Frontend::Overview è ammesso un valore di tipo HASH!';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Nessuna opzione di configurazione trovata per la vista "%s"!';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'No LanguageID is given!'} = 'Non è stato inserito l\'ID della lingua!';
     $Self->{Translation}->{'The name is required!'} = 'Il nome è obbligatorio!';
     $Self->{Translation}->{'This language already exists!'} = 'Linguaggio esistente!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Impossibile eliminare la lingua %s!';
     $Self->{Translation}->{'FAQ language updated!'} = 'Linguaggio FAQ aggiornato!';
     $Self->{Translation}->{'FAQ language added!'} = 'Linguaggio FAQ aggiunto!';
     $Self->{Translation}->{'Delete Language %s'} = 'Elimina Lingua %s';
@@ -279,7 +279,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = 'Tipo di contenuto';
 
-    # Database XML Definition: FAQ.sopm
+    # Database XML / SOPM Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'interno';
     $Self->{Translation}->{'external'} = 'esterno';
     $Self->{Translation}->{'public'} = 'pubblico';
@@ -292,7 +292,7 @@ sub Data {
         'Un filtro per l\'output HTML per aggiungere collegamenti ad una stringa definita. L\'elemento Immagine permette due tipi di ingresso. Primo il nome di un\'immagine (ad esempio faq.png). In questo caso verrà utilizzato il percorso delle immagini di OTRS. La seconda possibilità è quella di inserire il collegamento all\'immagine.';
     $Self->{Translation}->{'Add FAQ article'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Colore CSS per il risultato del voto.';
-    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Tempo di durata nella Cache delle voci di FAQ';
+    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Tempo di durata nella Cache delle voci di FAQ.';
     $Self->{Translation}->{'Category Management'} = 'Gestione Categorie';
     $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
@@ -303,9 +303,9 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Posizioni decimali del risultato del voto.';
     $Self->{Translation}->{'Default category name.'} = 'Nome Predefinito della categoria.';
-    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Lingua predefinita per gli articoli  FAQ per la modalità singola lingua.';
+    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Lingua predefinita per gli articoli FAQ per la modalità singola lingua.';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        'Default numero di catteri del titolo di una FAQ da visualizzare';
+        'Default numero di caratteri del titolo di una FAQ da visualizzare.';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'Priorità predefinita dei ticket per l\'approvazione di articoli FAQ.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Stato di default per la voce delle FAQ.';
@@ -314,7 +314,7 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Il valore predefinito per il parametro Azione per il frontend pubblico. Il parametro Azione viene utilizzato negli script del sistema.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Definisce l\'azione con cui il bottone dei settaggi è disponibile in un oggetto widget collegato (LinkObject::ViewMode = "complex"). Notare che queste Actions devono essere registrate nei seguenti file JS e CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Definisce se il titolo FAQ dovrebbe essere concatenato con l\'oggetto dell\'articolo.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
@@ -360,7 +360,7 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
         'Definisce le colonne visibili nella ricerca FAQ. Questa opzione non ha effetto nella posizione della colonna.';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Definisce dove verrà visualizzato il collegamento \'Inserisci FAQ\'.';
-    $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definizione del campo testo libero delle FAQ';
+    $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definizione del campo testo libero delle FAQ.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Elimina questa FAQ';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
         '';

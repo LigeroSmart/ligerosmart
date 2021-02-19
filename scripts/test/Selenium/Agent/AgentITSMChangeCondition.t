@@ -240,7 +240,7 @@ $Selenium->RunTest(
         );
 
         $Selenium->WaitFor(
-            JavaScript => 'return $(".Value:contains(\'Successful\')").length;'
+            JavaScript => 'return typeof($) === "function" && $(".Value:contains(\'Successful\')").length;'
         );
 
         # Check for expected change state to verify test condition.

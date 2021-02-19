@@ -17,7 +17,7 @@ sub Data {
 
     # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = '紧急度';
-    $Self->{Translation}->{'Impact'} = '影响度';
+    $Self->{Translation}->{'Impact'} = '影响';
 
     # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = '服务故障状态';
@@ -39,7 +39,7 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = '决定日期';
     $Self->{Translation}->{'Due Date'} = '到期日';
 
-    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    # Database XML / SOPM Definition: ITSMIncidentProblemManagement.sopm
     $Self->{Translation}->{'closed with workaround'} = '通过权变措施关闭';
 
     # SysConfig
