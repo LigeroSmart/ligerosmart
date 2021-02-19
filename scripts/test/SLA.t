@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/SLA.t
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -82,12 +80,6 @@ for my $Counter ( 1 .. 3 ) {
         Name    => 'UnitTest-SLA' . $Helper->GetRandomID(),
         ValidID => 1,
         UserID  => 1,
-# ---
-# ITSMCore
-# ---
-        TypeID      => 1,
-        Criticality => '3 normal',
-# ---
     );
 
     push @ServiceIDs, $ServiceID;
@@ -110,11 +102,6 @@ my $ItemData = [
         Add => {
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -123,11 +110,6 @@ my $ItemData = [
         Add => {
             Name   => $SLAName[0],
             UserID => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -136,25 +118,8 @@ my $ItemData = [
         Add => {
             Name    => $SLAName[0],
             ValidID => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
-# ---
-# ITSMCore
-# ---
-    # this SLA is NOT complete and must not be added
-    {
-        Add => {
-            Name    => $SLAName[0],
-            ValidID => 1,
-            UserID  => 1,
-        },
-    },
-# ---
 
     # service ids must be an array reference (check return false)
     {
@@ -163,11 +128,6 @@ my $ItemData = [
             Name       => $SLAName[0],
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -178,11 +138,6 @@ my $ItemData = [
             Name       => $SLAName[0],
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -193,11 +148,6 @@ my $ItemData = [
             Name       => $SLAName[0],
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -207,11 +157,6 @@ my $ItemData = [
             Name    => $SLAName[0],
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
         AddGet => {
             ServiceIDs          => [],
@@ -227,11 +172,6 @@ my $ItemData = [
             Comment             => '',
             CreateBy            => 1,
             ChangeBy            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID              => 1,
-# ---
         },
     },
 
@@ -241,11 +181,6 @@ my $ItemData = [
             Name    => $SLAName[0],
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -254,11 +189,6 @@ my $ItemData = [
         Update => {
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -267,11 +197,6 @@ my $ItemData = [
         Update => {
             Name   => $SLAName[0] . 'UPDATE1',
             UserID => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -280,11 +205,6 @@ my $ItemData = [
         Update => {
             Name    => $SLAName[0] . 'UPDATE1',
             ValidID => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -295,11 +215,6 @@ my $ItemData = [
             Name       => $SLAName[0] . 'UPDATE1',
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -310,11 +225,6 @@ my $ItemData = [
             Name       => $SLAName[0] . 'UPDATE1',
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -325,11 +235,6 @@ my $ItemData = [
             Name       => $SLAName[0] . 'UPDATE1',
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -340,11 +245,6 @@ my $ItemData = [
             Name       => $SLAName[1],
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
         AddGet => {
             ServiceIDs          => [ $ServiceIDs[0] ],
@@ -360,11 +260,6 @@ my $ItemData = [
             Comment             => '',
             CreateBy            => 1,
             ChangeBy            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
     },
 
@@ -375,11 +270,6 @@ my $ItemData = [
             Name       => $SLAName[2],
             ValidID    => 1,
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
         AddGet => {
             ServiceIDs          => [ $ServiceIDs[0], $ServiceIDs[1] ],
@@ -395,11 +285,6 @@ my $ItemData = [
             Comment             => '',
             CreateBy            => 1,
             ChangeBy            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
     },
 
@@ -409,11 +294,6 @@ my $ItemData = [
             Name    => $SLAName[1],
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -432,11 +312,6 @@ my $ItemData = [
             ValidID             => 1,
             Comment             => 'TestComment2',
             UserID              => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
         AddGet => {
             ServiceIDs          => [ $ServiceIDs[0], $ServiceIDs[1], $ServiceIDs[2] ],
@@ -452,11 +327,6 @@ my $ItemData = [
             Comment             => 'TestComment2',
             CreateBy            => 1,
             ChangeBy            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -465,11 +335,6 @@ my $ItemData = [
         Update => {
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -478,11 +343,6 @@ my $ItemData = [
         Update => {
             Name   => $SLAName[3] . 'UPDATE1',
             UserID => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -491,11 +351,6 @@ my $ItemData = [
         Update => {
             Name    => $SLAName[3] . 'UPDATE1',
             ValidID => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -514,11 +369,6 @@ my $ItemData = [
             ValidID             => 1,
             Comment             => 'TestComment2UPDATE2',
             UserID              => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
         UpdateGet => {
             ServiceIDs          => [],
@@ -534,11 +384,6 @@ my $ItemData = [
             Comment             => 'TestComment2UPDATE2',
             CreateBy            => 1,
             ChangeBy            => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
     },
 
@@ -557,11 +402,6 @@ my $ItemData = [
             ValidID             => 2,
             Comment             => 'TestComment2UPDATE3',
             UserID              => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
         UpdateGet => {
             ServiceIDs          => [ $ServiceIDs[2] ],
@@ -577,11 +417,6 @@ my $ItemData = [
             Comment             => 'TestComment2UPDATE3',
             CreateBy            => 1,
             ChangeBy            => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -593,11 +428,6 @@ my $ItemData = [
             ValidID    => 1,
             Comment    => " \t \n \r Test Comment \t \n \r ",
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
         AddGet => {
             ServiceIDs          => [ $ServiceIDs[0] ],
@@ -613,11 +443,6 @@ my $ItemData = [
             Comment             => 'Test Comment',
             CreateBy            => 1,
             ChangeBy            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
     },
 
@@ -629,11 +454,6 @@ my $ItemData = [
             ValidID    => 2,
             Comment    => " \t \n \r Test Comment UPDATE1 \t \n \r ",
             UserID     => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
         UpdateGet => {
             ServiceIDs          => [ $ServiceIDs[1] ],
@@ -649,11 +469,6 @@ my $ItemData = [
             Comment             => 'Test Comment UPDATE1',
             CreateBy            => 1,
             ChangeBy            => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -664,11 +479,6 @@ my $ItemData = [
             ValidID => 1,
             Comment => ' Ѡ Ѥ TestComment5 Ϡ Ω ',
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 3,
-# ---
         },
         AddGet => {
             ServiceIDs          => [],
@@ -684,11 +494,6 @@ my $ItemData = [
             Comment             => 'Ѡ Ѥ TestComment5 Ϡ Ω',
             CreateBy            => 1,
             ChangeBy            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 3,
-# ---
         },
     },
 
@@ -699,11 +504,6 @@ my $ItemData = [
             ValidID => 2,
             Comment => ' Ѡ Ѥ TestComment5 Ϡ Ω UPDATE1',
             UserID  => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
         UpdateGet => {
             ServiceIDs          => [],
@@ -719,11 +519,6 @@ my $ItemData = [
             Comment             => 'Ѡ Ѥ TestComment5 Ϡ Ω UPDATE1',
             CreateBy            => 1,
             ChangeBy            => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -735,11 +530,6 @@ my $ItemData = [
             ValidID    => 1,
             Comment    => ' [test]%*\\ Test Comment [test]%*\\ ',
             UserID     => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
         AddGet => {
             ServiceIDs          => [],
@@ -755,11 +545,6 @@ my $ItemData = [
             Comment             => '[test]%*\\ Test Comment [test]%*\\',
             CreateBy            => 1,
             ChangeBy            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID => 1,
-# ---
         },
     },
 
@@ -771,11 +556,6 @@ my $ItemData = [
             ValidID    => 2,
             Comment    => ' [test]%*\\ Test Comment UPDATE1 [test]%*\\ ',
             UserID     => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
         UpdateGet => {
             ServiceIDs          => [],
@@ -791,11 +571,6 @@ my $ItemData = [
             Comment             => '[test]%*\\ Test Comment UPDATE1 [test]%*\\',
             CreateBy            => 1,
             ChangeBy            => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID => 2,
-# ---
         },
     },
 ];

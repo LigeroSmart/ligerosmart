@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/Admin/AdminUser.t
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -226,12 +224,6 @@ $Selenium->RunTest(
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
             Comment => 'Selenium Test',
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
             ValidID => 1,
             UserID  => 1,
         );
@@ -256,8 +248,8 @@ $Selenium->RunTest(
 
         # Wait for the AJAX call to finish.
         $Selenium->WaitFor(
-            JavaScript =>
-                "return typeof(\$) === 'function' && \$('#QueueID').closest('.WidgetSimple').hasClass('HasOverlay')"
+            ElementMissing =>
+                "//i[contains(\@class,\'fa fa-circle-o-notch fa-spin\')]"
         );
         $Selenium->WaitFor(
             JavaScript =>
@@ -275,8 +267,8 @@ $Selenium->RunTest(
 
         # Wait for the AJAX call to finish.
         $Selenium->WaitFor(
-            JavaScript =>
-                "return typeof(\$) === 'function' && \$('#ServiceID').closest('.WidgetSimple').hasClass('HasOverlay')"
+            ElementMissing =>
+                "//i[contains(\@class,\'fa fa-circle-o-notch fa-spin\')]"
         );
         $Selenium->WaitFor(
             JavaScript =>
@@ -324,6 +316,116 @@ $Selenium->RunTest(
             $ServiceName,
             "Selected Service '$ServiceName' is in 'My Services'",
         );
+
+        # Create another test user.
+        my $TestUserLogin2 = $Helper->TestUserCreate(
+            Groups => [ 'admin', 'users' ],
+        ) || die "Did not get test user";
+
+        $Selenium->Login(
+            Type     => 'Agent',
+            User     => $TestUserLogin2,
+            Password => $TestUserLogin2,
+        );
+
+        my $SchedulerDBObject = $Kernel::OM->Get('Kernel::System::Daemon::SchedulerDB');
+
+        for my $Test (qw(ChangeUserLogin SetToInvalid)) {
+
+            # Navigate to AdminUser screen.
+            $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminUser");
+
+            # Remove scheduled asynchronous tasks from DB, as they may interfere with tests run later.
+            my @TaskIDs;
+            my @AllTasks = $SchedulerDBObject->TaskList(
+                Type => 'AsynchronousExecutor',
+            );
+            for my $Task (@AllTasks) {
+                if ( $Task->{Name} eq 'Kernel::System::AuthSession-RemoveSessionByUser()' ) {
+                    my $Success = $SchedulerDBObject->TaskDelete(
+                        TaskID => $Task->{TaskID},
+                    );
+                    $Self->True(
+                        $Success,
+                        "$Test - TaskID $Task->{TaskID} is deleted",
+                    );
+                }
+            }
+
+            $Selenium->find_element( "#Search", 'css' )->clear();
+            $Selenium->find_element( "#Search", 'css' )->send_keys($TestUserLogin);
+            $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
+
+            if ( $Test eq 'ChangeUserLogin' ) {
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$('#User a:contains($TestUserLogin)').length;"
+                );
+
+                $Selenium->find_element( $TestUserLogin, 'link_text' )->VerifiedClick();
+
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$('#UserLogin').length;"
+                );
+
+                $Self->Is(
+                    $Selenium->find_element( "#UserLogin", 'css' )->get_value(),
+                    $TestUserLogin,
+                    "$Test - UserLogin value is correct",
+                );
+
+                $Selenium->find_element( "#UserLogin", 'css' )->send_keys('-edit');
+                $Selenium->find_element( "#Submit",    'css' )->VerifiedClick();
+            }
+            else {
+                $TestUserLogin .= '-edit';
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$('#User a:contains($TestUserLogin)').length;"
+                );
+
+                $Selenium->find_element( $TestUserLogin, 'link_text' )->VerifiedClick();
+
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$('#ValidID').length;"
+                );
+
+                $Self->Is(
+                    $Selenium->find_element( "#ValidID", 'css' )->get_value(),
+                    1,
+                    "$Test - ValidID value is correct",
+                );
+
+                $Selenium->InputFieldValueSet(
+                    Element => '#ValidID',
+                    Value   => 2,
+                );
+
+                $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
+            }
+
+            @AllTasks = $SchedulerDBObject->TaskList(
+                Type => 'AsynchronousExecutor',
+            );
+
+            for my $Task (@AllTasks) {
+                if ( $Task->{Name} eq 'Kernel::System::AuthSession-RemoveSessionByUser()' ) {
+                    $Self->True(
+                        $Task->{TaskID},
+                        "$Test - Task (Name 'RemoveSessionByUser()', TaskID $Task->{TaskID}) is found",
+                    );
+
+                    my $Success = $SchedulerDBObject->TaskDelete(
+                        TaskID => $Task->{TaskID},
+                    );
+                    $Self->True(
+                        $Success,
+                        "$Test - TaskID $Task->{TaskID} is deleted",
+                    );
+                }
+            }
+
+        }
+
+        # Cleanup.
 
         # Delete Queue.
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');

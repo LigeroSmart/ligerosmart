@@ -1,8 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 0927fbc4716e7bdbe25cbbaaaf1b93e9bdb1488f - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -209,36 +207,10 @@ $Self->True(
 
 # create service object
 my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
-# ---
-# ITSMCore
-# ---
-
-# get the list of service types from general catalog
-my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::Service::Type',
-);
-
-# build a lookup hash
-my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
-
-# get the list of sla types from general catalog
-my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::SLA::Type',
-);
-
-# build a lookup hash
-my %SLATypeName2ID = reverse %{ $SLATypeList };
-# ---
 
 # create new service
 my $ServiceID = $ServiceObject->ServiceAdd(
     Name    => 'TestService' . $RandomID,
-# ---
-# ITSMCore
-# ---
-    TypeID      => $ServiceTypeName2ID{Training},
-    Criticality => '3 normal',
-# ---
     ValidID => 1,
     UserID  => 1,
 );
@@ -275,11 +247,6 @@ my $SLAObject = $Kernel::OM->Get('Kernel::System::SLA');
 my $SLAID = $SLAObject->SLAAdd(
     Name       => 'TestSLA' . $RandomID,
     ServiceIDs => [$ServiceID],
-# ---
-# ITSMCore
-# ---
-    TypeID     => $SLATypeName2ID{Other},
-# ---
     ValidID    => 1,
     UserID     => 1,
 );
@@ -396,6 +363,7 @@ my %DynamicFieldDropdownConfig = (
             1 => 'One',
             2 => 'Two',
             3 => 'Three',
+            0 => '0',
         },
     },
 );
@@ -666,7 +634,10 @@ my $TestTicketDelete = sub {
     # Allow some time for all history entries to be written to the ticket before deleting it,
     #   otherwise TicketDelete could fail.
     sleep 1;
+    TICKETID:
     for my $TicketID (@TicketIDs) {
+
+        next TICKETID if !$TicketID;
 
         my $TicketDelete = $TicketObject->TicketDelete(
             TicketID => $TicketID,
@@ -3995,6 +3966,60 @@ my @Tests        = (
             Attachment => {
                 Content     => 'VGhpcyBpcyBhIHRlc3QgdGV4dC4=',
                 ContentType => 'text/plain; charset=UTF8',
+                Disposition => 'attachment',
+                Filename    => 'Test.txt',
+            },
+        },
+        Operation => 'TicketCreate',
+    },
+    {
+        Name           => 'Create DynamicFields (with dropdown value 0)',    # see bug#14858
+        SuccessRequest => 1,
+        SuccessCreate  => 1,
+        RequestData    => {
+            Ticket => {
+                Title         => 'Ticket Title',
+                CustomerUser  => $TestCustomerUserLogin,
+                QueueID       => $Queues[0]->{QueueID},
+                TypeID        => $TypeID,
+                ServiceID     => $ServiceID,
+                SLAID         => $SLAID,
+                StateID       => $StateID,
+                PriorityID    => $PriorityID,
+                OwnerID       => $OwnerID,
+                ResponsibleID => $ResponsibleID,
+                PendingTime   => {
+                    Year   => 2012,
+                    Month  => 12,
+                    Day    => 16,
+                    Hour   => 20,
+                    Minute => 48,
+                },
+            },
+            Article => {
+                Subject                         => 'Article subject',
+                Body                            => 'Article body',
+                AutoResponseType                => 'auto reply',
+                SenderTypeID                    => 1,
+                IsVisibleForCustomer            => 1,
+                From                            => 'enjoy@otrs.com',
+                ContentType                     => 'text/plain; charset=utf8',
+                HistoryType                     => 'NewTicket',
+                HistoryComment                  => '% % ',
+                TimeUnit                        => 25,
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
+            },
+            DynamicField => [
+                {
+                    Name  => "Unittest2$RandomID",
+                    Value => '0',
+                },
+            ],
+            Attachment => {
+                Content     => 'VGhpcyBpcyBhIHRlc3QgdGV4dC4=',
+                ContentType => 'text/plain; charset=utf8',
                 Disposition => 'attachment',
                 Filename    => 'Test.txt',
             },
