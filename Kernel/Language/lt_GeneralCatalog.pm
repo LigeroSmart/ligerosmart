@@ -16,18 +16,18 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAGeneralCatalog
-    $Self->{Translation}->{'Functionality'} = '';
+    $Self->{Translation}->{'Functionality'} = 'Funkcionalumas';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = '';
+    $Self->{Translation}->{'General Catalog Management'} = 'Bendrojo katalogo valdymas';
     $Self->{Translation}->{'Items in Class'} = '';
-    $Self->{Translation}->{'Edit Item'} = '';
+    $Self->{Translation}->{'Edit Item'} = 'Redaguoti';
     $Self->{Translation}->{'Add Class'} = '';
-    $Self->{Translation}->{'Add Item'} = '';
-    $Self->{Translation}->{'Add Catalog Item'} = '';
+    $Self->{Translation}->{'Add Item'} = 'Pridėti dokumentą';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Pridėti katalogo objektą';
     $Self->{Translation}->{'Add Catalog Class'} = '';
-    $Self->{Translation}->{'Catalog Class'} = '';
-    $Self->{Translation}->{'Edit Catalog Item'} = '';
+    $Self->{Translation}->{'Catalog Class'} = 'Katalogo klasė';
+    $Self->{Translation}->{'Edit Catalog Item'} = 'Redaguoti katalogo objektą';
 
     # JS File: ITSM.GeneralCatalog
     $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = '';

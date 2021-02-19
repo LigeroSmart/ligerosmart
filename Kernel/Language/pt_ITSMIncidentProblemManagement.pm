@@ -28,7 +28,7 @@ sub Data {
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = 'Altera campos ITSM de %s%s%s';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
-    $Self->{Translation}->{'Review Required'} = 'Avaliação necessária ';
+    $Self->{Translation}->{'Review Required'} = 'Avaliação necessária';
     $Self->{Translation}->{'Decision Result'} = 'Resultado da decisão';
     $Self->{Translation}->{'Approved'} = 'Aprovado';
     $Self->{Translation}->{'Postponed'} = 'Adiado';
@@ -39,7 +39,7 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'Data da Decisão';
     $Self->{Translation}->{'Due Date'} = 'Data vencimento';
 
-    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    # Database XML / SOPM Definition: ITSMIncidentProblemManagement.sopm
     $Self->{Translation}->{'closed with workaround'} = 'fechado com solução de contorno';
 
     # SysConfig

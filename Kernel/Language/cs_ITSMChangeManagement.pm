@@ -526,7 +526,7 @@ sub Data {
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
     $Self->{Translation}->{'Group ITSMChangeManager'} = '';
 
-    # Database XML Definition: ITSMChangeManagement.sopm
+    # Database XML / SOPM Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'zažádáno';
     $Self->{Translation}->{'pending approval'} = 'čeká na schválení';
     $Self->{Translation}->{'rejected'} = 'zamítnuto';

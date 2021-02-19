@@ -39,7 +39,7 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'Entscheidungsdatum';
     $Self->{Translation}->{'Due Date'} = 'Fälligkeitsdatum';
 
-    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    # Database XML / SOPM Definition: ITSMIncidentProblemManagement.sopm
     $Self->{Translation}->{'closed with workaround'} = 'provisorisch geschlossen';
 
     # SysConfig

@@ -96,7 +96,7 @@ $Selenium->RunTest(
         # FAQ item is created in Misc category, users with stats permission don't see it
         $Self->Is(
             $Selenium->execute_script("return \$('#EmptyMessageSmall').text().trim()"),
-            'No FAQ Journal data found',
+            'No FAQ Journal data found.',
             "There is no permission to see FAQ items",
         );
 

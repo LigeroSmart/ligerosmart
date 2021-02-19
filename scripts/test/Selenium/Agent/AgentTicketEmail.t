@@ -1,6 +1,8 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
+# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/AgentTicketEmail.t
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -39,12 +41,22 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
-            Value => 0,
+# ---
+# ITSMIncidentProblemManagement
+# ---
+#            Value => 0,
+            Value => 1,
+# ---
         );
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Type',
-            Value => 0,
+# ---
+# ITSMIncidentProblemManagement
+# ---
+#            Value => 0,
+            Value => 1,
+# ---
         );
 
         # Enable session management use html cookies.
@@ -131,7 +143,12 @@ $Selenium->RunTest(
 
         # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'users' ],
+# ---
+# ITSMIncidentProblemManagement
+# ---
+#            Groups => [ 'admin', 'users' ],
+            Groups => [ 'admin', 'users', 'itsm-service' ],
+# ---
         ) || die "Did not get test user";
 
         $Selenium->Login(
@@ -149,6 +166,11 @@ $Selenium->RunTest(
         for my $ID (
             qw(Dest ToCustomer CcCustomer BccCustomer CustomerID RichText
             Signature FileUpload NextStateID PriorityID submitRichText)
+# ---
+# ITSMIncidentProblemManagement
+# ---
+            , qw(TypeID ServiceID OptionLinkTicket DynamicField_ITSMImpact)
+# ---
             )
         {
             my $Element = $Selenium->find_element( "#$ID", 'css' );
@@ -189,6 +211,40 @@ $Selenium->RunTest(
             $SignatureText,
             "Signature is found with no replaced tags"
         );
+# ---
+# ITSMIncidentProblemManagement
+# ---
+        # get service object
+        my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
+
+        # get test user ID
+        my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
+            UserLogin => $TestUserLogin,
+        );
+
+        # create test service
+        my $ServiceName = "Selenium" . $Helper->GetRandomID();
+        my $ServiceID   = $ServiceObject->ServiceAdd(
+            Name        => $ServiceName,
+            ValidID     => 1,
+            Comment     => 'Selenium Test Service',
+            TypeID      => 2,
+            Criticality => '5 very high',
+            UserID      => $TestUserID,
+        );
+        $Self->True(
+            $ServiceID,
+            "Service is created - ID $ServiceID",
+        );
+
+        # add customer user as member to the test service
+        $ServiceObject->CustomerUserServiceMemberAdd(
+            CustomerUserLogin => $TestData[1]->{UserLogin},
+            ServiceID         => $ServiceID,
+            Active            => 1,
+            UserID            => $TestUserID,
+        );
+# ---
 
         # Select customer user.
         $Selenium->find_element( "#ToCustomer", 'css' )->clear();
@@ -268,6 +324,44 @@ $Selenium->RunTest(
             $SignatureText,
             "Signature is found with replaced tags on selected customer change"
         );
+# ---
+# ITSMIncidentProblemManagement
+# ---
+        $Selenium->execute_script(
+            "\$('#TypeID').val(\$('#TypeID option').filter(function () { return \$(this).html() == 'Unclassified'; } ).val() ).trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
+
+        $Selenium->WaitFor( JavaScript => "return \$('#ServiceID option[value=\"$ServiceID\"]').length;" );
+        $Selenium->execute_script("\$('#ServiceID').val('$ServiceID').trigger('redraw.InputField').trigger('change');");
+        $Selenium->WaitFor( JavaScript => 'return $("#ServiceIncidentState").length' );
+
+        # check for service incident state field
+        my $ServiceIncidentStateElement = $Selenium->find_element( "#ServiceIncidentState", 'css' );
+        $ServiceIncidentStateElement->is_enabled();
+        $ServiceIncidentStateElement->is_displayed();
+
+        $Selenium->WaitFor( JavaScript => "return \$('#DynamicField_ITSMImpact option[value=\"3 normal\"]').length;" );
+        $Selenium->WaitFor( JavaScript => "return \$('#PriorityID option[value=\"4\"]').length;" );
+
+        # test priority update based on impact value
+        $Self->Is(
+            $Selenium->find_element( '#PriorityID', 'css' )->get_value(),
+            '4',
+            "#PriorityID stored value",
+        );
+
+        $Selenium->execute_script(
+            "\$('#DynamicField_ITSMImpact').val('1 very low').trigger('redraw.InputField').trigger('change');");
+
+        sleep 2;
+
+        $Self->Is(
+            $Selenium->find_element( '#PriorityID', 'css' )->get_value(),
+            '3',
+            "#PriorityID updated value",
+        );
+# ---
 
         # Submit form.
         $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
@@ -311,6 +405,20 @@ $Selenium->RunTest(
             index( $Selenium->get_page_source(), $SignatureText ) > -1,
             "Signature found on page"
         ) || die "$SignatureText not found on page";
+# ---
+# ITSMIncidentProblemManagement
+# ---
+        # Navigate to AgentTicketHistory screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketID");
+
+        # check for ITSM updated fields
+        for my $UpdateText (qw(Impact Criticality)) {
+            $Self->True(
+                index( $Selenium->get_page_source(), "Changed dynamic field ITSM$UpdateText" ) > -1,
+                "DynamicFieldUpdate $UpdateText - found",
+            );
+        }
+# ---
 
         # Disable session management use html cookies to check signature update (see bug#12890).
         $Helper->ConfigSettingChange(
@@ -378,6 +486,36 @@ $Selenium->RunTest(
             $Success,
             "Ticket with ticket ID $TicketID is deleted",
         );
+# ---
+# ITSMIncidentProblemManagement
+# ---
+        # delete test service - test customer connection
+        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+            SQL => "DELETE FROM service_customer_user WHERE service_id = $ServiceID",
+        );
+        $Self->True(
+            $Success,
+            "Delete service-customer connection",
+        );
+
+        # delete test service preferences
+        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+            SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
+        );
+        $Self->True(
+            $Success,
+            "Service preferences is deleted - ID $ServiceID",
+        );
+
+        # delete created test service
+        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+            SQL => "DELETE FROM service WHERE id = $ServiceID",
+        );
+        $Self->True(
+            $Success,
+            "Service is deleted - ID $ServiceID",
+        );
+# ---
 
         # Delete created test customer users.
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
@@ -420,7 +558,12 @@ $Selenium->RunTest(
         my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
         # Make sure the cache is correct.
-        for my $Cache (qw (Ticket CustomerUser)) {
+# ---
+# ITSMIncidentProblemManagement
+# ---
+#        for my $Cache (qw (Ticket CustomerUser)) {
+        for my $Cache (qw (Ticket CustomerUser Service)) {
+# ---
             $CacheObject->CleanUp( Type => $Cache );
         }
 

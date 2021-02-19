@@ -97,11 +97,10 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
-
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # check created test work order values
+        $Selenium->VerifiedRefresh();
         $Self->True(
             index( $Selenium->get_page_source(), $WorkOrderTitleRandom ) > -1,
             "$WorkOrderTitleRandom is found",

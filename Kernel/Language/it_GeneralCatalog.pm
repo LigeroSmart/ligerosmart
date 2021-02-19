@@ -34,8 +34,8 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = 'Commento 2';
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crea e gestisci il Catalogo Generale';
-    $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Definisci il commento 2 del catalogo generale';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crea e gestisci il Catalogo Generale.';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Definisci il commento 2 del catalogo generale.';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Specifica il percorso dell\'URL del selettore di colori JS.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Modulo di registrazione per la configurazione di AdminGeneralCatalog nell\'area di admin.';
