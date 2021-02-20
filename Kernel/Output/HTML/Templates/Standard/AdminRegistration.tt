@@ -7,9 +7,9 @@
 # --
 
 [% IF Data.OTRSSTORMIsInstalled %]
-    [% SET OTRSBusinessLabel = '<strong>STORM powered by LIGERO</strong>™' %]
+    [% SET OTRSBusinessLabel = '<strong>STORM powered by LigeroSmart</strong>™' %]
 [% ELSIF Data.OTRSCONTROLIsInstalled %]
-    [% SET OTRSBusinessLabel = '<strong>CONTROL powered by LIGERO</strong>™' %]
+    [% SET OTRSBusinessLabel = '<strong>CONTROL powered by LigeroSmart</strong>™' %]
 [% ELSE %]
     [% SET OTRSBusinessLabel = '<strong>OTRS Business Solution</strong>™' %]
 [% END %]
