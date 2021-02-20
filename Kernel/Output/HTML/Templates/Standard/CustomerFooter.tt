@@ -21,13 +21,13 @@
 [% IF !Config("Secure::DisableBanner") %]
         <span></span>
         [% IF Data.OTRSSTORMIsInstalled %]
-            [% Translate("%s powered by %s™", "STORM", "LIGERO") | html %]
+            [% Translate("%s powered by %s™", "STORM", "LigeroSmart") | html %]
         [% ELSIF Data.OTRSCONTROLIsInstalled %]
-            [% Translate("%s powered by %s™", "CONTROL", "LIGERO") | html %]
+            [% Translate("%s powered by %s™", "CONTROL", "LigeroSmart") | html %]
         [% ELSIF Data.OTRSBusinessIsInstalled %]
-            [% Translate("Powered by %s™", "LIGERO Business Solution") | html %]
+            [% Translate("Powered by %s™", "LigeroSmart Business Solution") | html %]
         [% ELSE %]
-            [% Translate("Powered by %s™", "LIGERO") | html %]
+            [% Translate("Powered by %s™", "LigeroSmart") | html %]
         [% END %]
     </a>
     <div class="Clear"></div>
