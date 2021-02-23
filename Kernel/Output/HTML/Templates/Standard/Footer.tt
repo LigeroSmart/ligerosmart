@@ -9,15 +9,7 @@
 <div id="Footer" class="ARIARoleContentinfo">
 [% IF !Config("Secure::DisableBanner") %]
         <span></span>
-        [% IF Data.OTRSSTORMIsInstalled %]
-            [% Translate("%s powered by %s™", "STORM", "LIGERO") | html %]
-        [% ELSIF Data.OTRSCONTROLIsInstalled %]
-            [% Translate("%s powered by %s™", "CONTROL", "LIGERO") | html %]
-        [% ELSIF Data.OTRSBusinessIsInstalled %]
-            [% Translate("Powered by %s™", "LIGERO Business Solution") | html %]
-        [% ELSE %]
-            [% Translate("Powered by %s™", "LIGERO") | html %]
-        [% END %]
+            [% Translate("Powered by %s", "LigeroSmart") | html %]
     </a>
 [% END %]
 </div>

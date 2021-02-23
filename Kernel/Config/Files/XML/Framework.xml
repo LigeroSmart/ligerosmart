@@ -2707,16 +2707,16 @@
         <Navigation>Core::Package</Navigation>
         <Value>
             <Array>
-                <Item>https://addons.ligerosmart.org/6.0/otrs.xml</Item>
+                <Item></Item>
             </Array>
         </Value>
     </Setting>
-    <Setting Name="Package::RepositoryList" Required="0" Valid="0" ConfigLevel="200">
+    <Setting Name="Package::RepositoryList" Required="0" Valid="1" ConfigLevel="200">
         <Description Translatable="1">Defines the list of online repositories. Another installations can be used as repository, for example: Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name".</Description>
         <Navigation>Core::Package</Navigation>
         <Value>
             <Hash>
-                <Item Key="ftp://ftp.example.com/pub/otrs/misc/packages/">[Example] ftp://ftp.example.com/</Item>
+                <Item Key="https://addons.ligerosmart.org/6.0">LigeroSmart</Item>
             </Hash>
         </Value>
     </Setting>
