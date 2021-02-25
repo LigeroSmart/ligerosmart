@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- nofilter(TidyAll::Plugin::OTRS::SOPM::OndemandTestingPresent) -->
+<otrs_package version="1.0">
+    <Name>Fred</Name>
+    <Version>0.0.0</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>OTRS AG</Vendor>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">A tool to support the developer by his development.</Description>
+    <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
+    <Description Lang="hu">Egy eszköz a fejlesztők munkájának támogatásához.</Description>
+    <Filelist>
+        <File Permission="660" Location="doc/en/Fred.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/AAAFred.pm" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/Fred.xml" />
+        <File Permission="660" Location="Kernel/Modules/DevelFred.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FilterContent/Fred.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/ConfigLog.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/ConfigSwitch.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/Console.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/EnvDump.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/HTMLCheck.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/JSLint.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/SessionDump.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/STDERRLog.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/SQLLog.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Fred/TranslationDebug.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredConfigLog.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredConfigSwitch.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredConsole.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredContainer.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredEnvDump.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredHTMLCheck.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredJSLint.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredSessionDump.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredSetting.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredSQLLog.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredSTDERRLog.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/DevelFredTranslationDebug.tt" />
+        <File Permission="660" Location="Kernel/System/Fred/ConfigLog.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/ConfigSwitch.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/Console.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/EnvDump.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/HTMLCheck.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/JSLint.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/SessionDump.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/SQLLog.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/STDERRLog.pm" />
+        <File Permission="660" Location="Kernel/System/Fred/TranslationDebug.pm" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Core.Fred.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Core.Fred.HTMLCheck.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Core.Fred.JSLint.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jslint/jslint.js" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Fred.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/Core.Fred.css" />
+    </Filelist>
+    <IntroInstall Type="pre" Title="Fred Features" Lang="en"><![CDATA[
+        <br/>
+        Welcome! <br/>
+        <br/>
+        What can Fred do?<br/>
+        <br/>
+        To date, Fred has the following features: <br/>
+        <ul>
+        <li> HTMLCheck: <br/>
+                    perform different HTML quality checks in JavaScript </li>
+        <li> JSLint: <br/>
+                    perform different JavaScript quality checks in JavaScript </li>
+        <li> STDERRLog: <br/>
+                    every entry contained in STDERR is displayed </li>
+        <li> TranslationDebug: <br/>
+                    display all translation attempts of the current request which failed </li>
+        <li> SQLLog: <br/>
+                    list all SQL statements of the current request </li>
+        <li> ConfigLog: <br/>
+                    list all ConfigGet requests, indicating their frequency </li>
+        <li> SessionDump: <br/>
+                    show the current content of the serverside session </li>
+        <li> EnvDump: <br/>
+                    show info about the environment of the layout object </li>
+        </ul>
+        <br/>
+        <strong>Caution</strong>: Please have a look at the possible config settings, which are easily accessible by clicking on "setting". <br/>
+        <br/>
+        <br/>
+        What is Fred's current status?<br/>
+        <br/>
+        <ul>
+        <li> modular design: <br/>
+                    anybody can add a new module at any time </li>
+        <li> the modules' output is not yet sophisticated <br/>
+                    ideas for improving the output or sensible configurations will be very welcome </li>
+        <li> please extend Fred, if you have good ideas <br/>
+        <li> if you have no time to implement your ideas yourselves, please enter them in dev mailinglist </li>
+        </ul>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="A Fred funkciói" Lang="hu"><![CDATA[
+        <br/>
+        Üdvözöljük! <br/>
+        <br/>
+        Mire képes a Fred?<br/>
+        <br/>
+        A Fred jelenleg a következő funkciókkal rendelkezik: <br/>
+        <ul>
+        <li> HTMLCheck: <br/>
+                    különböző HTML minőség-ellenőrzések végrehajtása a JavaScript kódban </li>
+        <li> JSLint: <br/>
+                    különböző JavaScript minőség-ellenőrzések végrehajtása a JavaScript kódban </li>
+        <li> STDERRLog: <br/>
+                    a szabványos hibakimeneten megjelenő összes bejegyzés megjelenítése </li>
+        <li> TranslationDebug: <br/>
+                    az aktuális kérés összes olyan fordítási kísérletének megjelenítése, amely sikertelen </li>
+        <li> SQLLog: <br/>
+                    az aktuális kérés összes SQL-lekérdezésének felsorolása </li>
+        <li> ConfigLog: <br/>
+                    az összes ConfigGet kérés felsorolása, jelezve azok gyakoriságát </li>
+        <li> SessionDump: <br/>
+                    a kiszolgáló oldali munkamenet aktuális tartalmának megjelenítése </li>
+        <li> EnvDump: <br/>
+                    információk megjelenítése a megjelenítő objektum környezetéről </li>
+        </ul>
+        <br/>
+        <strong>Vigyázat</strong>: nézze meg a lehetséges konfigurációs beállításokat, amelyek egyszerűen elérhetők a „beállításra” kattintva. <br/>
+        <br/>
+        <br/>
+        Mi a Fred jelenlegi állapota?<br/>
+        <br/>
+        <ul>
+        <li> moduláris felépítés: <br/>
+                    bárki bármikor hozzáadhat egy új modult </li>
+        <li> a modulok kimenete még nem kifinomult <br/>
+                    szívesen fogadjuk a kimenet javításával vagy az érzékeny beállításokkal kapcsolatos ötleteket </li>
+        <li> bővítse a Fred programot, ha vannak jó ötletei <br/>
+        <li> ha nincs ideje az ötletei megvalósításához, akkor írja le a fejlesztői levelezőlistán </li>
+        </ul>
+        <br/>
+    ]]></IntroInstall>
+</otrs_package>

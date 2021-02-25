@@ -1,0 +1,30 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<!-- nofilter(TidyAll::Plugin::OTRS::TT::ScriptUsage) -->
+
+<div class="DevelFredBox">
+    <h1>
+        JSLint
+        <span class="FredToolBar">
+            <i class="fa fa-minus FredMinimize" title="Minimize"></i>
+            <i class="fa fa-times FredClose" title="Close"></i>
+        </span>
+    </h1>
+    <script type="text/javascript">
+        "use strict";
+        Core.App.Ready(function(){
+            Core.Fred.JSLint.Init();
+        });
+    </script>
+    <div class="DevelFredBoxContent" id="FredJSLintScripts">
+        <div id="FredJSLintRunning">
+            <i class="fa fa-spinner fa fa-spin"></i>&nbsp; Checks are running...
+        </div>
+    </div>
+</div>

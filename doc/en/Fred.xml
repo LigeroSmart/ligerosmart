@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+
+<book lang='en'>
+
+<bookinfo>
+<title>$Name</title>
+<edition>$Description Version $Version</edition>
+
+<copyright>
+<year>$YearStamp</year>
+<holder>$Vendor, $URL</holder>
+</copyright>
+
+<date>$DateStamp</date>
+
+<legalnotice>
+    <para>$License</para>
+    <para>This work is copyrighted by $Vendor, Zimmersmühlenweg 11, 61440 Oberursel, Germany.</para>
+    <para>Build Date: $DateStamp</para>
+</legalnotice>
+
+</bookinfo>
+
+<preface id="preface" >
+    <title>Preface</title>
+    <para>A module for helping with developing web applictions.</para>
+</preface>
+
+<chapter>
+    <title>Feature List</title>
+    <sect1>
+        <title>HTMLCheck</title>
+        <para>Performs different bad/best practice checks on the generated pages via JavaScript.</para>
+    </sect1>
+    <sect1>
+        <title>JSLint</title>
+        <para>
+            Examines the code quality of all JavaScript code that is used
+            on the page on the fly (also via JavaScript), using the great tool JSLint.
+        </para>
+    </sect1>
+    <sect1>
+        <title>STDERRLog</title>
+        <para>every entry contained in STDERR is displayed </para>
+    </sect1>
+    <sect1>
+        <title>TranslationDebug</title>
+        <para>displays all translation attempts of the current request which failed. </para>
+    </sect1>
+    <sect1>
+        <title>SQLLog</title>
+        <para>lists all SQL statements of the current request </para>
+    </sect1>
+    <sect1>
+        <title>ConfigLog</title>
+        <para>lists all ConfigGet requests, indicating their frequency </para>
+    </sect1>
+    <sect1>
+        <title>SessionDump</title>
+        <para>show the current content of the serverside session </para>
+    </sect1>
+    <sect1>
+        <title>EnvDump</title>
+        <para>show info about the environment of the layout object </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Installation</title>
+    <para>The following instructions explain how to install the package.</para>
+    <sect1>
+        <title>Admin Interface</title>
+        <para>
+Please use the following URL to install the package utilizing the admin
+interface (please note that you need to be in the admin group).
+        </para>
+        <para>
+<ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">http://localhost/otrs/index.pl?Action=AdminPackageManager</ulink>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Command Line</title>
+        <para>
+If you don't want to use the Admin Interface, you can use the following
+OPM command to install the package with "bin/opm.pl".
+        </para>
+        <para>
+        <screen>
+shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
+        </screen>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Configuration</title>
+    <para>The following config options can or need to be changed via SysConfig.</para>
+    <sect1>
+        <title>Fred::ConfigLog###OrderBy</title>
+        <para>Which order should the config log data have?</para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Manifest</title>
+    <para>The manifest lists all included files and the referring permissions.</para>
+    <sect1>
+        <title>Filelist</title>
+        <para>
+        $Filelist
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>ChangeLog</title>
+    <para>
+    $ChangeLog
+    </para>
+</chapter>
+
+</book>

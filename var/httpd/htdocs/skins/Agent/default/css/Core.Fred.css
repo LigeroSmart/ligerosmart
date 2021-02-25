@@ -1,0 +1,330 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Fred CSS
+ */
+
+.DevelFredContainer {
+    position: fixed;
+    top: 33px;
+    right: 16px;
+    z-index: 5000;
+}
+
+.DevelFredContainer:hover {
+    -webkit-opacity: 1.0 !important;
+    -moz-opacity: 1.0 !important;
+    opacity: 1.0 !important;
+}
+
+.DevelFredBox {
+    -webkit-box-shadow: 1px 1px 3px #777;
+    -moz-box-shadow: 1px 1px 3px #777;
+    -ms-box-shadow: 1px 1px 3px #777;
+    -o-box-shadow: 1px 1px 3px #777;
+    box-shadow: 1px 1px 3px #777;
+    background-color: #fff;
+    margin-bottom: 5px;
+}
+
+.DevelFredBoxContent {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #aaa;
+    border-top: 0px;
+    display: none;
+}
+
+.DevelFredBoxContent.Expanded {
+    display: block;
+}
+
+.DevelFredBoxContent .FredQuickSearch {
+    display: none;
+    background-color: #ccc;
+    padding: 5px;
+    -webkit-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    -moz-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    -ms-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    -o-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    position: relative;
+}
+
+.DevelFredBoxContent .FredQuickSearch input {
+    display: block;
+    width: 98%;
+    border: 1px solid #aaa;
+    font-size: 11px;
+}
+
+.DevelFredBoxContent .FredQuickSearch i {
+    position: absolute;
+    right: 2.5%;
+    top: 9px;
+    font-size: 12px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.DevelFredBoxContent .FredQuickSearch:hover i {
+    color: #333;
+}
+
+.DevelFredBox .strong,
+.DevelFredBox .strong * {
+    font-weight: bold;
+}
+
+.DevelFredBox h1 {
+    font-size: 12px;
+    background-color: #255565;
+    color: #fff;
+    margin: 0px;
+    padding: 6px 7px;
+    cursor: move;
+    overflow: hidden;
+}
+
+.DevelFredBox.Expanded h1 {
+    background: #255565;
+}
+
+.DevelFredBox.Collapsed h1 {
+    background-color: #888;
+}
+
+.DevelFredBox h1 .FredToolBar {
+    float: right;
+}
+
+.DevelFredBox h1 .FredToolBar i {
+    font-size: 13px;
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+#FredJSLintScripts {
+    padding: 5px;
+}
+
+.FredJSLintSuccessful {
+    color: green;
+}
+
+.FredJSLintError {
+    margin-bottom: 6px;
+    font-size: 11px;
+}
+
+body #FredHTMLCheckResults p ,
+body #FredHTMLCheckResults pre,
+body #FredJSLintScripts p ,
+body #FredJSLintScripts pre {
+    margin: 0px;
+    padding: 0px;
+}
+
+.DevelFredSettings {
+    padding: 15px;
+}
+
+.DevelFredSettings h1 {
+    font-size: 14px;
+    margin: 0px 0px 10px 0px;
+    text-align: center;
+}
+
+.DevelFredSettings ul {
+    margin-bottom: 10px;
+}
+
+.DevelFredSettings .CallForAction {
+    margin: 0px auto;
+    display: block;
+}
+
+.DevelFredSettings li {
+    margin-bottom: 2px;
+    font-size: 11px;
+    position: relative;
+}
+
+.DevelFredSettings li span {
+    color: #777777;
+    display: block;
+    font-size: 10px;
+    padding-left: 23px;
+    margin-bottom: 3px;
+    line-height: 130%;
+}
+
+.DevelFredSettings li label {
+    display: block;
+    padding: 3px 20px 3px 5px;
+    background-color: #eee;
+}
+
+.DevelFredSettings li:hover label {
+    background-color: #ddd;
+}
+
+.DevelFredSettings li a {
+    color: #000;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    font-size: 13px;
+}
+
+table.FredTableDefault {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.FredTableDefault th {
+    font-weight: bold;
+}
+
+table.FredTableDefault td,
+table.FredTableDefault th {
+    padding: 5px 5px;
+    border-bottom: 1px solid #ccc;
+    font-size: 11px;
+    border-right: 1px solid #ddd;
+}
+
+table.FredTableDefault th {
+    background-color: #ddd;
+    border-right-color: #aaa;
+}
+
+table.FredTableDefault tr:nth-child(odd) td {
+    background-color: #eee;
+}
+
+table.FredTableDefault tr:last-child td {
+    border-bottom: 0px;
+}
+
+.DevelFredBox .FredElementList {
+    padding: 5px 3px 0px 5px;
+}
+
+.FredElementList span {
+    font-size: 11px;
+    display: inline-block;
+    padding: 3px 5px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    margin: 0px 3px 5px 0px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.FredElementList span i {
+    position: relative;
+    top: 1px;
+}
+
+.FredElementList span a {
+    text-decoration: underline;
+    color: #000;
+}
+
+.FredElementList span a:hover {
+    text-decoration: none;
+}
+
+.FredElementList span.Warning {
+    background-color: red;
+    color: #fff;
+    border-color: #CE0000;
+}
+
+.FredMonoSpace {
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 130%;
+    padding: 10px;
+    white-space: pre;
+}
+
+table.FredSwitchTable td {
+    padding: 3px;
+    vertical-align: middle;
+}
+
+table.FredSwitchTable td:first-child {
+    width: 40px;
+}
+
+table.FredSwitchTable td:last-child {
+    padding-left: 10px;
+}
+
+.FredSwitch a {
+    display: block;
+    position: relative;
+    width: 30px;
+    border: 1px solid #888;
+    height: 16px;
+    border-radius: 10px;
+    margin: 0px auto;
+    background-color: #eee
+}
+
+.FredSwitch a span {
+    width: 15px;
+    height: 14px;
+    border-radius: 13px;
+    border: 1px solid #333;
+    display: block;
+    position: absolute;
+    left: -1px;
+    top: 0px;
+    background-color: #fff;
+    -webkit-transition: all 0.2s ease-in;
+     -moz-transition: all 0.2s ease-in;
+       -o-transition: all 0.2s ease-in;
+          transition: all 0.2s ease-in;
+}
+
+.FredSwitch.On a {
+    background-color: #777;
+    border-color: #333;
+}
+
+.FredSwitch.On span {
+    right: -1px;
+    left: auto;
+}
+
+.DevelFredToggleContainer {
+    position: absolute;
+    right: 5px;
+}
+
+a#DevelFredToggleContainerLink {
+    font-size: 35px;
+    font-weight:bold;
+    color: #808080;
+}
+
+a#DevelFredToggleContainerLink.FredActive {
+    font-size: 35px;
+    font-weight:bold;
+    color: #006ea5;
+}
