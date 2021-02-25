@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SystemMonitoring\n"
+"POT-Creation-Date: 2020-01-24 14:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. SysConfig
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run AFTER PostMasterFilter."
+msgstr ""
+"Grundlegendes Mail-Interface zu System Monitoring Anwendungen. Benutzen Sie "
+"diesen Abschnitt, wenn der Filter NACH dem PostMaster-Filter ausgeführt "
+"werden soll."
+
+#. SysConfig
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run BEFORE PostMasterFilter."
+msgstr ""
+"Grundlegendes Mail-Interface zu System Monitoring Anwendungen. Benutzen Sie "
+"diesen Abschnitt, wenn der Filter VOR dem PostMaster-Filter ausgeführt "
+"werden soll."
+
+#. SysConfig
+msgid "Define Nagios acknowledge type."
+msgstr "Definiere Nagios-Bestätigungs-Typ ."
+
+#. SysConfig
+msgid "HTTP"
+msgstr "HTTP"
+
+#. SysConfig
+msgid "Icinga API URL."
+msgstr "Icinga API URL."
+
+#. SysConfig
+msgid "Icinga2 acknowledgement author."
+msgstr "Icinga2 Bestätigungsverfasser"
+
+#. SysConfig
+msgid "Icinga2 acknowledgement comment."
+msgstr "Icinga2 Bestätigungskommentar"
+
+#. SysConfig
+msgid "Icinga2 acknowledgement enabled?"
+msgstr "Icinga2 Bestätigung aktiviert?"
+
+#. SysConfig
+msgid "Icinga2 acknowledgement notify."
+msgstr "Icinga2 Bestätigungsnachricht"
+
+#. SysConfig
+msgid "Icinga2 acknowledgement sticky."
+msgstr "Icinga2 acknowledgement sticky."
+
+#. SysConfig
+msgid ""
+"Link an already opened incident ticket with the affected CI. This is only "
+"possible when a subsequent system monitoring email arrives."
+msgstr ""
+"Verlinkung eines bereits geöffneten Incident Tickets mit einem betroffenen "
+"CI. Dies ist nur möglich, wenn eine entsprechende System Monitoring E-Mail "
+"eintrifft."
+
+#. SysConfig
+msgid "Name of the Dynamic Field for Host."
+msgstr "Name des dynamischen Feldes für den Host."
+
+#. SysConfig
+msgid "Name of the Dynamic Field for Service."
+msgstr "Name des dynamischen Feldes für den Service."
+
+#. SysConfig
+msgid "Named pipe acknowledge command."
+msgstr "Named Pipe Bestätigungskommando"
+
+#. SysConfig
+msgid "Named pipe acknowledge format for host."
+msgstr "Named Pipe-Acknowledge-Format für Host."
+
+#. SysConfig
+msgid "Named pipe acknowledge format for service."
+msgstr "Named Pipe-Acknowledge-Format für Service."
+
+#. SysConfig
+msgid ""
+"Set the incident state of a CI automatically when a system monitoring email "
+"arrives."
+msgstr ""
+"Setzt den Vorfallstatus eines Configuration Item automatisch, wenn eine E-"
+"Mail vom System-Monitoring eintrifft."
+
+#. SysConfig
+msgid "The HTTP acknowledge URL."
+msgstr "Die URL der HTTP-Bestätigung."
+
+#. SysConfig
+msgid "The HTTP acknowledge password."
+msgstr "Das HTTP-Bestätigungspasswort."
+
+#. SysConfig
+msgid "The HTTP acknowledge user."
+msgstr "Der HTTP-Bestätigungsbenutzer."
+
+#. SysConfig
+msgid "Ticket event module to send an acknowledge to Icinga2."
+msgstr "Ticket-Ereignismodul, um eine Bestätigung an Icinga2 zu senden."
+
+#. SysConfig
+msgid "Ticket event module to send an acknowledge to Nagios."
+msgstr "Ticket-Ereignismodul, um eine Bestätigung zu Nagios zu senden."
+
+#. SysConfig
+msgid "pipe"
+msgstr "Pipe"

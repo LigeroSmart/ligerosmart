@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>SystemMonitoring</Name>
+    <Version>0.0.0</Version>
+    <Framework Minimum="6.0.27">6.0.x</Framework>
+    <Vendor>OTRS AG</Vendor>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">Basic mail interface to System Monitoring Suites. Also provides deeper integration to Nagios and Icinga2 (acknowledge on lock and check script).</Description>
+    <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites. Weitergehende Integration mit Nagios und Icinga2 (Acknowledge on lock and Checkscript).</Description>
+    <Description Lang="es">Interfaz de correo básico para sistema de monitorización. También proporciona una integración más profunda de Nagios e Icinga2 (reconocer el bloqueo y script de control).</Description>
+    <Description Lang="hu">Alapszintű levelezési felület a rendszerfigyelő alkalmazáscsomagokhoz. Mélyebb integrációt biztosít a Nagios és Icinga2 programokhoz (nyugtázás zároláskor és ellenőrző parancsfájl).</Description>
+    <Filelist>
+        <File Permission="660" Location="doc/en/SystemMonitoring.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/SystemMonitoring.xml" />
+        <File Permission="660" Location="Kernel/Config/NagiosCheck.pm.example" />
+        <File Permission="660" Location="Kernel/Language/bg_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/de_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/es_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/it_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/sk_SK_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheck.pm" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.pm" />
+        <File Permission="660" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/System/Ticket/Event/NagiosAcknowledge.pm" />
+        <File Permission="660" Location="Kernel/System/Ticket/Event/Icinga2Acknowledge.pm" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheck.t" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.t" />
+        <File Permission="660" Location="scripts/test/SystemMonitoring.t" />
+        <File Permission="660" Location="scripts/test/sample/NagiosCheckTesting.pm" />
+        <File Permission="660" Location="scripts/test/sample/SystemMonitoring1.box" />
+        <File Permission="660" Location="scripts/test/sample/SystemMonitoring2.box" />
+        <File Permission="660" Location="var/packagesetup/SystemMonitoring.pm" />
+    </Filelist>
+
+    <CodeInstall Type="post"><![CDATA[
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+    ]]></CodeInstall>
+    <CodeReinstall Type="post"><![CDATA[
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+    ]]></CodeReinstall>
+    <CodeUpgrade Type="post"><![CDATA[
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="pre"><![CDATA[
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradePre();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="2.2.92"><![CDATA[
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_2_2_92();
+    ]]></CodeUpgrade>
+    <CodeUninstall Type="pre"><![CDATA[
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+    ]]></CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to install the OTRS package SystemMonitoring.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket SystemMonitoring zu installieren.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
+
+        <br>
+        <b>BIENVENIDO</b>
+        <br>
+        <br>
+        Ud. está a punto de instalar el paquete de Monitorización del Sistema de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>ÜDVÖZÖLJÜK</b>
+        <br>
+        <br>
+        Ön a SystemMonitoring OTRS csomag telepítésére készül.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>NOTICE</b>
+        <br>
+        <br>
+        For configuration instructions please refer to the enclosed PDF documentation.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>HINWEIS</b>
+        <br>
+        <br>
+        Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei PDF.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="es"><![CDATA[
+
+        <br>
+        <b>NOTA</b>
+        <br>
+        <br>
+        Instrucciones sobre cómo configurar el módulo de monitorización del sistema se proporcionan en el archivo PDF .
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>FIGYELMEZTETÉS</b>
+        <br>
+        <br>
+        A beállítási utasításokért nézze meg a mellékelt PDF-dokumentumot.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to upgrade the OTRS package SystemMonitoring.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket SystemMonitoring zu aktualisieren.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+
+        <br>
+        <b>BIENVENIDO</b>
+        <br>
+        <br>
+        Ud. está a punto de actualizar el paquete de Monitorización del Sistema de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>ÜDVÖZÖLJÜK</b>
+        <br>
+        <br>
+        Ön a SystemMonitoring OTRS csomag frissítésére készül.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+
+</otrs_package>

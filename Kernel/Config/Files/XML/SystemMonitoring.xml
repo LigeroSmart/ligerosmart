@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
+        <Description Translatable="1">Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</Description>
+        <Navigation>Core::Email::PostMaster</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::PostMaster::Filter::SystemMonitoring</Item>
+                <Item Key="FromAddressRegExp">nagios@example.com</Item>
+                <Item Key="StateRegExp">\s*State:\s+(\S+)</Item>
+                <Item Key="HostRegExp">\s*Host:\s+(.*)\s*</Item>
+                <Item Key="ServiceRegExp">\s*Service:\s+(.*)\s*</Item>
+                <Item Key="NewTicketRegExp">CRITICAL|DOWN</Item>
+                <Item Key="CloseTicketRegExp">OK|UP</Item>
+                <Item Key="CloseActionState">closed successful</Item>
+                <Item Key="ClosePendingTime">172800</Item>
+                <Item Key="DefaultService">Host</Item>
+                <Item Key="FreeTextHost">1</Item>
+                <Item Key="FreeTextService">2</Item>
+                <Item Key="SenderType">system</Item>
+                <Item Key="ArticleType">note-report</Item>
+                <Item Key="FreeTextState">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PostMaster::PreFilterModule###00-SystemMonitoring" Required="0" Valid="0">
+        <Description Translatable="1">Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.</Description>
+        <Navigation>Core::Email::PostMaster</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::PostMaster::Filter::SystemMonitoring</Item>
+                <Item Key="FromAddressRegExp">nagios@example.com</Item>
+                <Item Key="StateRegExp">\s*State:\s+(\S+)</Item>
+                <Item Key="HostRegExp">\s*Host:\s+(.*)\s*</Item>
+                <Item Key="ServiceRegExp">\s*Service:\s+(.*)\s*</Item>
+                <Item Key="NewTicketRegExp">CRITICAL|DOWN</Item>
+                <Item Key="CloseTicketRegExp">OK|UP</Item>
+                <Item Key="CloseActionState">closed successful</Item>
+                <Item Key="ClosePendingTime">172800</Item>
+                <Item Key="DefaultService">Host</Item>
+                <Item Key="FreeTextHost">1</Item>
+                <Item Key="FreeTextService">2</Item>
+                <Item Key="SenderType">system</Item>
+                <Item Key="ArticleType">note-report</Item>
+                <Item Key="FreeTextState">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="SystemMonitoring::SetIncidentState" Required="0" Valid="1">
+        <Description Translatable="1">Set the incident state of a CI automatically when a system monitoring email arrives.</Description>
+        <Navigation>Core::SystemMonitoring</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="SystemMonitoring::LinkTicketWithCI" Required="0" Valid="1">
+        <Description Translatable="1">Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.</Description>
+        <Navigation>Core::SystemMonitoring</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::FreeField::Host" Required="1" Valid="1">
+        <Description Translatable="1">Name of the Dynamic Field for Host.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::FreeField::Service" Required="1" Valid="1">
+        <Description Translatable="1">Name of the Dynamic Field for Service.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText2</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::Type" Required="0" Valid="1">
+        <Description Translatable="1">Define Nagios acknowledge type.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="">
+                <Item ValueType="Option" Value="">-</Item>
+                <Item ValueType="Option" Value="pipe" Translatable="1">pipe</Item>
+                <Item ValueType="Option" Value="http" Translatable="1">HTTP</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::NamedPipe::CMD" Required="0" Valid="1">
+        <Description Translatable="1">Named pipe acknowledge command.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">echo '&lt;OUTPUTSTRING&gt;' > /usr/local/nagios/var/rw/nagios.cmd</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::NamedPipe::Host" Required="0" Valid="1">
+        <Description Translatable="1">Named pipe acknowledge format for host.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_HOST_PROBLEM;&lt;HOST_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::NamedPipe::Service" Required="0" Valid="1">
+        <Description Translatable="1">Named pipe acknowledge format for service.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_SVC_PROBLEM;&lt;HOST_NAME&gt;;&lt;SERVICE_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="1" Valid="1">
+        <Description Translatable="1">Ticket event module to send an acknowledge to Nagios.</Description>
+        <Navigation>Core::Event::Nagios</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::NagiosAcknowledge</Item>
+                <Item Key="Event">TicketLockUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::HTTP::URL" Required="0" Valid="1">
+        <Description Translatable="1">The HTTP acknowledge URL.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">http://nagios.example.com/nagios/cgi-bin/cmd.cgi?cmd_typ=&lt;CMD_TYP&gt;&amp;cmd_mod=2&amp;host=&lt;HOST_NAME&gt;&amp;service=&lt;SERVICE_NAME&gt;&amp;sticky_ack=on&amp;send_notification=on&amp;persistent=on&amp;com_data=&lt;TicketNumber&gt;&amp;btnSubmit=Commit</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::HTTP::User" Required="0" Valid="1">
+        <Description Translatable="1">The HTTP acknowledge user.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">John</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Nagios::Acknowledge::HTTP::Password" Required="0" Valid="1">
+        <Description Translatable="1">The HTTP acknowledge password.</Description>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">some_pass</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Enabled" Required="1" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement enabled?</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###9-Icinga2Acknowledge" Required="1" Valid="1">
+        <Description Translatable="1">Ticket event module to send an acknowledge to Icinga2.</Description>
+        <Navigation>Core::Event::Icinga2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::Icinga2Acknowledge</Item>
+                <Item Key="Event">TicketLockUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::FreeField::Host" Required="1" Valid="1">
+        <Description Translatable="1">Name of the Dynamic Field for Host.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::FreeField::Service" Required="1" Valid="1">
+        <Description Translatable="1">Name of the Dynamic Field for Service.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText2</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::HTTP::URL" Required="0" Valid="1">
+        <Description Translatable="1">Icinga API URL.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">http://icinga2.example.com:5665/v1/actions/acknowledge-problem</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::HTTP::User" Required="0" Valid="1">
+        <Description Translatable="1">The HTTP acknowledge user.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">John</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::HTTP::Password" Required="0" Valid="1">
+        <Description Translatable="1">The HTTP acknowledge password.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">some_pass</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Author" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement author.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Comment" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement comment.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Ticket#&lt;TicketNumber&gt;</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Sticky" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement sticky.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Notify" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement notify.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+</otrs_config>
