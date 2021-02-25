@@ -1,0 +1,383 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRSMasterSlave\n"
+"POT-Creation-Date: 2020-01-24 14:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTicketMasterSlave
+msgid "Manage Master/Slave status for %s%s%s"
+msgstr "Управљање статусом главни/зависни за %s%s%s"
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "New Master Ticket"
+msgstr "Нови главни тикет"
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Master Ticket"
+msgstr "Опозови подешавање главног тикета"
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Slave Ticket"
+msgstr "Опозови подешавање зависног тикета"
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Slave of %s%s%s: %s"
+msgstr "Зависни од %s%s%s: %s"
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr "Опозови подешавање главних тикета"
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr "Опозови подешавање зависних тикета"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master"
+msgstr "Главно"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Slave of %s%s%s"
+msgstr "Зависни од %s%s%s"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master Ticket"
+msgstr "Главни тикет"
+
+#. SysConfig
+msgid "All master tickets"
+msgstr "Сви главни тикети"
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr "Сви зависни тикети"
+
+#. SysConfig
+msgid ""
+"Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Дозвољава додавање белешки на главни/зависни екрану детаљног приказа тикета "
+"оператерског интерфејса."
+
+#. SysConfig
+msgid "Change the MasterSlave state of the ticket."
+msgstr "Промени главни/зависни статус тикета."
+
+#. SysConfig
+msgid "Defines dynamic field name for master ticket feature."
+msgstr "Дефинише динамички назив поља за функцију главног тикета."
+
+#. SysConfig
+msgid ""
+"Defines if a ticket lock is required in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface (if the ticket isn't locked yet, the "
+"ticket gets locked and the current agent will be set automatically as its "
+"owner)."
+msgstr ""
+"Одређује да ли је потребно закључати главни/зависни екран тикета на детаљном "
+"приказу тикета у интерфејсу оператера (ако тикет још увек није закључан, "
+"тикет ће добити статус закључан и тренутни оператер ће бити аутоматски "
+"постављен као власник)."
+
+#. SysConfig
+msgid "Defines if the MasterSlave note is visible for the customer by default."
+msgstr ""
+"Дефинише уколико је MasterSlave напомена подразумевано видљива за клијент "
+"кориснике."
+
+#. SysConfig
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Одређује подразумевани наредни статус тикета после додаваља белешке, на "
+"главни/зависни екрану детаљног приказа тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default ticket priority in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Одређује подразумевани приоритет тикета на главни/зависни екану детаљног "
+"приказа тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the history comment for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Одређује коментар за историјат на главни/зависни екранској акцији, што ће се "
+"користити за историјат у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the history type for the ticket MasterSlave screen action, which "
+"gets used for ticket history in the agent interface."
+msgstr ""
+"Одређује тип историјата за главни/зависни екранску акцију, што ће се "
+"користити за историјат у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the next state of a ticket after adding a note, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Одређује наредни статус тикета после додаваља белешке, на главни/зависни "
+"екрану детаљног приказа тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid "Enables the advanced MasterSlave part of the feature."
+msgstr "Активира напредни део функције главни/зависни."
+
+#. SysConfig
+msgid ""
+"Enables the feature that slave tickets follow the master ticket to a new "
+"master in the advanced MasterSlave mode."
+msgstr ""
+"Активирање својства да зависни тикет прати главни на нови главни у напредном "
+"главни/зависни моду."
+
+#. SysConfig
+msgid ""
+"Enables the feature to change the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
+msgstr ""
+"Активирање функције за промену стања тикета главни/зависни  у напредном "
+"главни/зависни моду."
+
+#. SysConfig
+msgid ""
+"Enables the feature to forward articles from type 'forward' of a master "
+"ticket to the customers of the slave tickets. By default (disabled) it will "
+"not forward articles from type 'forward' to the slave tickets."
+msgstr ""
+"Активирање својства за прослеђивање чланака типа \"проследи\" главног тикета "
+"корисницима зависних тикета. Подразумевано је (искључено) да се ништа не "
+"прослеђује зависним тикетима."
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+"Активирање функције за задржавање везе надређени-подређени после измене "
+"стања главни/зависни у напредном главни/зависни моду."
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave "
+"state in the advanced MasterSlave mode."
+msgstr ""
+"Активирање функције за задржавање везе надређени-подређени после опозива "
+"подешавања стања главни/зависни  у напредном главни/зависни моду."
+
+#. SysConfig
+msgid ""
+"Enables the feature to unset the MasterSlave state of a ticket in the "
+"advanced MasterSlave mode."
+msgstr ""
+"Активирање функције за опозив подешавања стања тикета главни/зависни у "
+"напредном главни/зависни моду."
+
+#. SysConfig
+msgid ""
+"If a note is added by an agent, sets the state of the ticket in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Ако је оператер додао напомену, подешава статус тикета на екрану главни/"
+"зависни тикета на детаљном приказу у интерфејсу оператера."
+
+#. SysConfig
+msgid "Master / Slave"
+msgstr "Главни / зависни"
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr "Главни тикети"
+
+#. SysConfig
+msgid "MasterSlave"
+msgstr "Главни/зависни"
+
+#. SysConfig
+msgid "MasterSlave module for Ticket Bulk feature."
+msgstr "Модул главни/зависни за функцију масовне обраде тикета."
+
+#. SysConfig
+msgid ""
+"Parameters for the dashboard backend of the master tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Параметри за додатак прегледа главних тикета контролне табле у интерфејсу "
+"оператера. \"Limit\" је број подразумевано приказаних тикета. \"Group\" се "
+"користи да ограничи приступ додатку (нпр. Group: admin;group1;group2;). "
+"\"Default\" одређује да ли је подразумевано активиран или да је потребно да "
+"га корисник мануелно активира. \"CacheTTLLocal\" је време у минутима за кеш "
+"додатка. "
+
+#. SysConfig
+msgid ""
+"Parameters for the dashboard backend of the slave tickets overview of the "
+"agent interface. \"Limit\" is the number of entries shown by default. \"Group"
+"\" is used to restrict the access to the plugin (e. g. Group: admin;group1;"
+"group2;). \"Default\" determines if the plugin is enabled by default or if "
+"the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in "
+"minutes for the plugin."
+msgstr ""
+"Параметри за додатак прегледа зависних тикета контролне табле у интерфејсу "
+"оператера. \"Limit\" је број подразумевано приказаних тикета. \"Group\" се "
+"користи да ограничи приступ додатку (нпр. Group: admin;group1;group2;). "
+"\"Default\" одређује да ли је подразумевано активиран или да је потребно да "
+"га корисник мануелно активира. \"CacheTTLLocal\" је време у минутима за кеш "
+"додатка. "
+
+#. SysConfig
+msgid "Registration of the ticket event module."
+msgstr "Регистрација модула догађаја за тикете."
+
+#. SysConfig
+msgid ""
+"Required permissions to use the ticket MasterSlave screen of a zoomed ticket "
+"in the agent interface."
+msgstr ""
+"Неопходна дозвола за употребу главни/зависни екрана детаљног приказа тикета "
+"у интерфејсу оператера."
+
+#. SysConfig
+msgid "Sets if Master / Slave field must be selected by the agent."
+msgstr ""
+"Дефинише да ли поље Главни / Зависни мора бити подешено од стране оператера."
+
+#. SysConfig
+msgid ""
+"Sets the default body text for notes added in the ticket MasterSlave screen "
+"of a zoomed ticket in the agent interface."
+msgstr ""
+"Одређује подразумевани садржај за напомене додате на на Главни/Зависни "
+"екрану детаљног приказа тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Sets the default subject for notes added in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Одређује подразумевани предмет за напомене додате на Главни/Зависни екрану "
+"детаљног приказа тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Sets the responsible agent of the ticket in the ticket MasterSlave screen of "
+"a zoomed ticket in the agent interface."
+msgstr ""
+"Одређује одговорног оператера за тикет на екрану главни/зависни  детаљног "
+"приказа тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Sets the service in the ticket MasterSlave screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+"Одређује сервис на главни/зависни екрану детаљног приказа тикета у "
+"интерфејсу оператера (Ticket::Service мора бити активиран)."
+
+#. SysConfig
+msgid ""
+"Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Одређује власника тикета на главни/зависни екрану детаљног приказа тикета у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Одређује тип тикета на главни/зависни екрану детаљног приказа тикета у "
+"интерфејсу оператера (Ticket::Type мора бити активиран)."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to change the MasterSlave status of a ticket in the "
+"ticket zoom view of the agent interface."
+msgstr ""
+"У менију приказује везу за измену главни/зависни статуса тикета на детаљном "
+"приказу тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the ticket "
+"MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Приказује листу свих оператера укључених у овај тикет на главни/зависни "
+"екрану детаљног приказа тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgstr ""
+"Приказује листу свих могућих оператера (сви оператери са дозволом за "
+"напомену за ред/тикет) ради утврђивања ко треба да буде информисан о овој "
+"напомени, на главни/зависни екрану тикета на детаљном приказу тикета у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows the ticket priority options in the ticket MasterSlave screen of a "
+"zoomed ticket in the agent interface."
+msgstr ""
+"Приказује опције приоритета тикета на екрану главни/зависни тикета на "
+"детаљном приказу тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in "
+"the agent interface."
+msgstr ""
+"Приказује насловна поља на екрану главни/зависни тикета у интерфејсу "
+"оператера."
+
+#. SysConfig
+msgid "Slave Tickets"
+msgstr "Зависни тикети"
+
+#. SysConfig
+msgid ""
+"Specifies the different article communication channels where the real name "
+"from Master ticket will be replaced with the one in the Slave ticket."
+msgstr ""
+"Наводи разне комуникационе канале чланака где ће стварно име са главног "
+"тикета бити замењено са једним на зависном тикету."
+
+#. SysConfig
+msgid ""
+"This module activates Master/Slave field in new email and phone ticket "
+"screens."
+msgstr ""
+"Овај модул активира поље главни/зависни на екрану нових имејл тикета и "
+"тикета позива."
+
+#. SysConfig
+msgid ""
+"This setting is deprecated and will be removed in further versions of "
+"OTRSMasterSlave."
+msgstr ""
+"Ово подешавање је застарело и биће избачено из будућих верзија модула главни/"
+"зависни."
+
+#. SysConfig
+msgid "Ticket MasterSlave."
+msgstr "Тикет главни/зависни."

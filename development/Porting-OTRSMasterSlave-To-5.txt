@@ -1,0 +1,30 @@
+1 Create new dynamic field driver Kernel/System/DynamicField/Driver/MasterSlave.pm
+ * New Admin module is needed (similar to Dropdown but removing the possible values options, can use same files with commented parts and different names, if so it has to specify in the origin tag) *** currently not done that way but it might be a good idea for fast porting!
+ * Check if Kernel/System/Ticket/Event/MasterSlave.pm really needs to set the dynamic field value again
+
+2 Cleanup AgentTicketMasterSlave.pm
+ * Code to set the config to show the dynamic field should be moved to the pre-action module
+
+3 Cleanup Kernel/System/Ticket/Event/MasterSlave
+ * Better split it into functions by event
+ * Check if it is really needed to set the value here and when is needed (maybe the links are just for AgentTicketPhone and AgentTicketEmail ) set the value again does not make much sense, this might be a remnant of a previous wrong porting
+
+4 Add tests
+ * Unit test for dynamic field driver
+  * EditFieldRender()
+  * EditFieldRenderForTicket()
+  * ValueSet() with different scenarios
+ * Unit test for event module
+  * Event DynamicFieldUpdate
+  * Event ArticleSend
+  * Event ArticleCreate
+  * Event TicketStateUpdate
+  * Event TicketPendingTimeUpdate
+  * Event TicketPriorityUpdate
+  * Event TicketOwnerUpdate
+  * Event TicketResponsibleUpdate
+  * Event TicketLockUpdate
+ * Selenium tests (with advanced mode) it should include:
+  * a TicketCreate screen
+  * TicketBulk screen
+  * MasterSlave screen

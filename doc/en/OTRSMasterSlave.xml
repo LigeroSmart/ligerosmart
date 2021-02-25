@@ -1,0 +1,772 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!-- nofilter(TidyAll::Plugin::OTRS::Common::ProhibitEmailAddresses) -->
+<book lang="en">
+
+<!--
+************************************** Head ***********************************************
+-->
+<bookinfo>
+    <title>$Name</title>
+    <edition>$Description Version $Version</edition>
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
+    <date>$DateStamp</date>
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            This work is copyrighted by $Vendor, Zimmersmühlenweg 11, 61440 Oberursel, Germany.
+        </para>
+        <para>Build Date: $DateStamp</para>
+    </legalnotice>
+</bookinfo>
+
+<!--
+************************************ Customer part ******************************************
+-->
+
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
+    <title>Preface</title>
+    <para>
+        This package adds the support to create slaves tickets from a master that follows their
+        master updates.
+    </para>
+    <para>
+        If you have questions regarding this document or if you need further information, please log in to our customer portal at portal.otrs.com with your OTRS ID and create a ticket. You do not have an OTRS ID yet? Register
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">here for free</ulink>.
+    </para>
+</preface>
+
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
+<chapter>
+    <title>Feature List</title>
+    <section>
+        <title>Basic Mode</title>
+        <para>
+            It's the default mode for this package.
+        </para>
+        <para>
+            In basic mode it is possible to define a master ticket and some slaves tickets that
+            follows master tickets updates:
+        </para>
+        <itemizedlist mark="Round">
+            <listitem>
+                <para>
+                    Replies (sent new articles as email)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Notes (any new article)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    State changes (including pending time set)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Priority changes
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Owner changes
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Responsible changes
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Lock status changes
+                </para>
+            </listitem>
+        </itemizedlist>
+        <warning>
+            <para>
+                In basic mode Master Slave status can't be changed.
+            </para>
+        </warning>
+    </section>
+    <section>
+        <title>Advanced Mode</title>
+        <para>
+            The advanced mode allows to make the use of the Master Slave relations more flexible by
+            adding support to the following actions:
+        </para>
+        <itemizedlist mark="round">
+            <listitem>
+                <para>New Master</para>
+                <para>Slave tickets can be changed into new masters.</para>
+            </listitem>
+            <listitem>
+                <para>Slave of Ticket# *****</para>
+                <para>Master tickets can be turned into slaves tickets of other master ticket.</para>
+            </listitem>
+            <listitem>
+                <para>Unset Master</para>
+                <para>Master tickets can become normal tickets.</para>
+            </listitem>
+            <listitem>
+                <para>Unset Slave</para>
+                <para>Slave tickets can become normal tickets.</para>
+            </listitem>
+        </itemizedlist>
+        <note>
+            <para>
+                Above features can be enabled or disabled on SysConfig, for more information take a look in the
+                "Configuration" chapter.
+            </para>
+        </note>
+        <section>
+            <title>MasterSlave Screen</title>
+            <para>
+                A new button "MasterSlave" is set to the ticket menu in the ticket zoom screen.
+            </para>
+            <note>
+                <para>
+                    While this screen is available also in Basic Mode, the "Master Ticket" field is
+                    not available, it's only in advanced mode where this screen will let the change
+                    of the Master Slave status.
+                </para>
+            </note>
+        </section>
+        <section>
+            <title>Bulk Action</title>
+            <para>
+                If Advanced mode is enabled, bulk action screen enables the "Master Ticket field
+                to allow the change of the MasterSlave status.
+            </para>
+        </section>
+    </section>
+    <section>
+        <title>Replace customer's from Master ticket</title>
+        <para>
+            When a new article is created on the Master ticket, the Slave tickets replicates the
+            article using the customer from the Master and not the own from the Slave.
+        </para>
+        <para>
+            Enabled article types defined in the SysConfig option
+            'ReplaceCustomerRealNameOnSlaveArticleTypes' will retain the customer that is set in the
+            Slave tickets for Master ticket replicated articles.
+        </para>
+    </section>
+</chapter>
+
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- ********************** -->
+<chapter>
+    <title>System Requirements</title>
+    <section>
+        <title>Framework</title>
+        <para>The following OTRS framework is required:</para>
+        <para>$Framework</para>
+    </section>
+    <section>
+        <title>Packages</title>
+        <para>The following packages are required:</para>
+        <para>$PackageRequired</para>
+    </section>
+    <section>
+        <title>Operating System</title>
+        <para>This package requires one of the following operating systems:</para>
+        <para>$OS</para>
+    </section>
+    <section>
+        <title>Third Party Software</title>
+        <para>This third party software is required to use this package:</para>
+        <itemizedlist>
+            <listitem>
+                <para>None.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</chapter>
+
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
+<chapter>
+    <title>Installation</title>
+    <para>
+        The following instructions explain how to install the package.
+    </para>
+    <section>
+        <title>Admin Interface</title>
+        <para>
+            Please use the following URL to install the package utilizing the Admin Interface
+            (please note that you need to be in the "admin" group).
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
+        </para>
+    </section>
+    <section>
+        <title>Command Line</title>
+        <para>
+            Whenever you cannot use the Admin Interface for whatever reason, you may use the
+            following command line tool ("bin/otrs.Console.pl Admin::Package::Install") instead.
+        </para>
+        <para>
+            <screen>
+shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
+            </screen>
+        </para>
+    </section>
+</chapter>
+
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
+<chapter>
+    <title>Configuration</title>
+    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
+    <section>
+        <title>ACLKeysLevel3::Actions###888-OTRSMasterSlave.</title>
+        <para>Navigation: Core::Ticket::ACL.</para>
+        <para>Defines which items are available for 'Action' in third level of the ACL structure.</para>
+    </section>
+    <section>
+        <title>DashboardBackend###0900-TicketMaster.</title>
+        <para>Navigation: Frontend::Agent::View::Dashboard.</para>
+        <para>Parameters for the dashboard backend of the master tickets overview of the agent interface. &quot;Limit&quot; is the number of entries shown by default. &quot;Group&quot; is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; determines if the plugin is enabled by default or if the user needs to enable it manually. &quot;CacheTTLLocal&quot; is the cache time in minutes for the plugin.</para>
+    </section>
+    <section>
+        <title>DashboardBackend###0910-TicketSlave.</title>
+        <para>Navigation: Frontend::Agent::View::Dashboard.</para>
+        <para>Parameters for the dashboard backend of the slave tickets overview of the agent interface. &quot;Limit&quot; is the number of entries shown by default. &quot;Group&quot; is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; determines if the plugin is enabled by default or if the user needs to enable it manually. &quot;CacheTTLLocal&quot; is the cache time in minutes for the plugin.</para>
+    </section>
+    <section>
+        <title>DynamicFields::Driver###MasterSlave.</title>
+        <para>Navigation: Core::DynamicFields::DriverRegistration.</para>
+        <para>DynamicField backend registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AdminDynamicFieldMasterSlave.</title>
+        <para>Navigation: Frontend::Admin::ModuleRegistration.</para>
+        <para>Frontend module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentTicketMasterSlave.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AdminDynamicFieldMasterSlave###004-OTRSMasterSlave.</title>
+        <para>Navigation: Frontend::Admin::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTicketMasterSlave###004-OTRSMasterSlave.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AdminDynamicFieldMasterSlave###004-OTRSMasterSlave.</title>
+        <para>Navigation: Frontend::Admin::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTicketMasterSlave###004-OTRSMasterSlave.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>MasterSlave::AdvancedEnabled.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Enables the advanced MasterSlave part of the feature.</para>
+    </section>
+    <section>
+        <title>MasterSlave::DynamicField.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Defines dynamic field name for master ticket feature.</para>
+    </section>
+    <section>
+        <title>MasterSlave::FollowUpdatedMaster.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.</para>
+    </section>
+    <section>
+        <title>MasterSlave::ForwardSlaves.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets.</para>
+    </section>
+    <section>
+        <title>MasterSlave::KeepParentChildAfterUnset.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.</para>
+    </section>
+    <section>
+        <title>MasterSlave::KeepParentChildAfterUpdate.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.</para>
+    </section>
+    <section>
+        <title>MasterSlave::UnsetMasterSlave.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.</para>
+    </section>
+    <section>
+        <title>MasterSlave::UpdateMasterSlave.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.</para>
+    </section>
+    <section>
+        <title>PreApplicationModule###AgentPreMasterSlave.</title>
+        <para>Navigation: Core::MasterSlave.</para>
+        <para>This module activates Master/Slave field in new email and phone ticket screens.</para>
+    </section>
+    <section>
+        <title>ReplaceCustomerRealNameOnSlaveArticleTypes.</title>
+        <para>Group: MasterSlave, Subgroup: Frontend::Agent::Ticket::ViewMasterSlave.</para>
+        <para>This setting is deprecated and will be removed in further versions of OTRSMasterSlave.</para>
+    </section>
+    <section>
+        <title>ReplaceCustomerRealNameOnSlaveArticleCommunicationChannels.</title>
+        <para>Group: MasterSlave, Subgroup: Frontend::Agent::Ticket::ViewMasterSlave.</para>
+        <para>Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.</para>
+    </section>
+    <section>
+        <title>Ticket::EventModulePost###MasterSlave.</title>
+        <para>Navigation: Core::Event::MasterSlave.</para>
+        <para>Registration of the ticket event module.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###ArticleTypeDefault.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###ArticleTypes.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Specifies the different note types that will be used in the system.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Body.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###HistoryComment.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###HistoryType.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###InformAgent.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###MasterSlaveMandatory.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets if Master / Slave field must be selected by the agent.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Note.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###NoteMandatory.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Owner.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###OwnerMandatory.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets if ticket owner must be selected by the agent.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Permission.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Priority.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###PriorityDefault.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###RequiredLock.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner).</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Responsible.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###ResponsibleMandatory.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets if ticket responsible must be selected by the agent.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###RichTextHeight.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###RichTextWidth.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Service.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###State.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###StateDefault.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###StateType.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Subject.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###TicketType.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###Title.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::BulkModule###010-MasterSlave.</title>
+        <para>Navigation: Frontend::Agent::View::TicketBulk::Module.</para>
+        <para>MasterSlave module for Ticket Bulk feature.</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::MenuModule###480-MasterSlave.</title>
+        <para>Navigation: Frontend::Agent::View::TicketZoom::MenuModule.</para>
+        <para>Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface.</para>
+    </section>
+</chapter>
+
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
+<chapter>
+    <title>Usage</title>
+    <note>
+        <para>
+            Be sure to enable the Master Slave dynamic field in the ticket zoom screen, this help
+            to see quickly the Master Slave status in the "Ticket Information" box.
+        </para>
+        <para>
+            Be aware 'Ticket::Acl::Module###1-Ticket::Acl::Module' is not compatible to use with this package.
+        </para>
+    </note>
+    <section>
+        <title>Create a Master Ticket</title>
+        <para>At the end of this example a new master ticket will be created.</para>
+        <orderedlist>
+            <listitem>
+                <para>Open "New phone Ticket" screen</para>
+            </listitem>
+            <listitem>
+                <para>Fill all mandatory elements of the screen</para>
+            </listitem>
+            <listitem>
+                <para>From "Master Ticket" select "New Master Ticket" and create the ticket</para>
+            </listitem>
+            <listitem>
+                <para>Write down the new ticket number (*****)</para>
+            </listitem>
+            <listitem>
+                <para>Zoom into the ticket to check the Master Slave status</para>
+            </listitem>
+        </orderedlist>
+    </section>
+    <section>
+        <title>Create A Slave Ticket</title>
+        <para>At the end of this example a new slave ticket will be created.</para>
+        <orderedlist>
+            <listitem>
+                <para>Be sure you have at least one Master ticket on the system</para>
+            </listitem>
+            <listitem>
+                <para>Open "New phone Ticket" screen</para>
+            </listitem>
+            <listitem>
+                <para>Fill all mandatory elements of the screen</para>
+            </listitem>
+            <listitem>
+                <para>
+                    From "Master Ticket" select "Slave of Ticket# *****: &lt;Title&gt;" and create
+                    the ticket
+                </para>
+            </listitem>
+            <listitem>
+                <para>Zoom into the ticket to check the Master Slave status</para>
+            </listitem>
+        </orderedlist>
+    </section>
+    <section>
+        <title>Make Slave ticket To Follow Master Updates</title>
+        <para>
+            At the end of this example the slave ticket will have a different priority by changing
+            the master.
+        </para>
+        <note>
+            <para>
+                For this example we will change the priority of the master ticket but there are
+                other activities that can be done instead to test this behavior, like change the
+                state, the owner, the responsible, the lock status, reply the ticket or add a note.
+            </para>
+        </note>
+        <para>For this example the two tickets created in the above examples will be used.</para>
+        <para>
+            Make sure that both tickets have a different priority than the one to be set for this
+            example we will set priority "1 very low", so the tickets should be in a priority
+            greater than "1 very low".
+         </para>
+         <orderedlist>
+            <listitem>
+                 <para>
+                    Zoom into the master ticket
+                 </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Open the priority screen by clicking on the "Priority" button in the ticket menu
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Fill any mandatory field and set the priority to "1 very low" and submit
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Zoom into the slave ticket (This can be done quickly from the master ticket
+                    linked items table).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Look at the priority of the slave ticket.
+                </para>
+            </listitem>
+         </orderedlist>
+    </section>
+    <section>
+        <title>Change The Master Slave Status</title>
+        <para>By the end of this tests the Master Slave status of a ticket will be changed</para>
+        <note>
+            <para>
+                Depending on the current Master Slave status of the tickets, the enabled settings
+                and the status of other tickets, different options will be presented in the "Master
+                Ticket" field.
+            </para>
+        </note>
+        <para>
+            Make sure to enable the following options in the "SysConfig" settings:
+        </para>
+        <itemizedlist mark="round">
+            <listitem><para>MasterSlave::AdvancedEnabled</para></listitem>
+            <listitem><para>MasterSlave::UnsetMasterSlave</para></listitem>
+            <listitem><para>MasterSlave::UpdateMasterSlave</para></listitem>
+            <listitem><para>MasterSlave::FollowUpdatedMaste</para></listitem>
+        </itemizedlist>
+        <warning>
+            <para>
+                The most important setting to be enable is "MasterSlave::AdvancedEnabled", if it is
+                not enabled then the "Master Ticket" field will not appear
+             </para>
+        </warning>
+        <orderedlist>
+            <listitem>
+                <para>
+                    Zoom into the slave ticket
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Open Master Slave screen by click in in the "Master Slave" button in the ticket
+                    menu
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Fill any mandatory field
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Expand "Master Field" dropdown, the following options will appear:
+                    <itemizedlist>
+                        <listitem><para>New Master Ticket</para></listitem>
+                        <listitem><para>Unset Slave Ticket</para></listitem>
+                    </itemizedlist>
+                </para>
+                <note>
+                    <para>
+                        If there are other master tickets, for example: ticket number $$$$$, then
+                        other options will appear like "Slave of Ticket# $$$$$: &lt;Title&gt;", one
+                        per master ticket.
+                    </para>
+                </note>
+            </listitem>
+            <listitem>
+                <para>Choose "Unset Slave Ticket" and submit</para>
+            </listitem>
+            <listitem>
+                <para>Take a look to the new Master status in the "Ticket Information" box</para>
+            </listitem>
+        </orderedlist>
+        <note>
+            <para>
+                As an additional test a change in the priority on the original master can be made,
+                now the changed of the original master will not affect the former slave ticket.
+            </para>
+        </note>
+    </section>
+</chapter>
+
+<!--
+***************************************** Technical part ************************************
+-->
+
+<!-- ********************************* -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************* -->
+<chapter>
+    <title>Technical Implementation Details</title>
+    <para>
+        Master Slave relations are based in Parent Child link relations.
+    </para>
+    <para>
+        The package adds a new dynamic field type (MasterSlave). The creation of more fields of
+        this type is not possible.
+    </para>
+    <para>
+        Master Slave information is stored in the dynamic_field_value table as any other dynamic
+        field.
+    </para>
+    <para>
+        To make slave tickets to follow master updates there is ticket event module
+        (Kernel::System::Ticket::Event::MasterSlave.pm) that catches the events from the master
+        ticket and replicates them into its slaves.
+    </para>
+</chapter>
+
+<!-- ************ -->
+<!-- 8. File List -->
+<!-- ************ -->
+<chapter>
+    <title>File list</title>
+    <para>This list shows all included files and the referring permissions.</para>
+    <para>$Filelist</para>
+</chapter>
+
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
+<chapter>
+    <title>Tests</title>
+    <para>This module has been tested on the current state of the art in quality.</para>
+    <section>
+        <title>Test Cases</title>
+        <para>
+            To tests this package please follow the examples described in the Usage section, all the
+            tests cases should return the expected results defined at the beginning of each example.
+        </para>
+    </section>
+    <section>
+        <title>Unit Tests</title>
+        <para>
+            To ensure the quality of the module, several so-called unit tests were created, to test
+            the functionalities of this module. These unit tests can be run via command line.
+        </para>
+        <para>
+            ATTENTION: Please never run unit tests on a productive system, since the added test data
+            to the system will no longer be removed. Always use a test system.
+        </para>
+        <para>Run the package specific unit tests</para>
+        <para>
+            To run only the unit test which will be delivered with this package, use the following
+            command on the command line:
+        </para>
+         <para>
+            <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Ticket/Event/MasterSlave
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --directory DynamicField/MasterSlave
+            </screen>
+        </para>
+        <para>Selenium unit tests</para>
+        <para>
+            To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
+        </para>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentTicketCreateMasterSlave --test AgentTicketMasterSlave
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TicketBulk/MasterSlave
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Ticket/Event/MasterSlave/ReplaceCustomerRealName
+        </screen>
+        <para>Run all available unit tests</para>
+        <para>
+            To run all available unit tests, use the following command on the command line:
+        </para>
+        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run</screen>
+    </section>
+</chapter>
+
+<!-- ************** -->
+<!-- 10. Change Log -->
+<!-- ************** -->
+<chapter>
+    <title>Change Log</title>
+    <para>$ChangeLog</para>
+</chapter>
+
+</book>

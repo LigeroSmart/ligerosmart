@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Changes">
+    <Setting Name="MasterSlave::DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Defines dynamic field name for master ticket feature.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String">MasterSlave</Item>
+        </Value>
+    </Setting>
+    <Setting Name="MasterSlave::AdvancedEnabled" Required="1" Valid="1">
+        <Description Translatable="1">Enables the advanced MasterSlave part of the feature.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="0">
+                <Item ValueType="Option" Value="0" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">Enabled</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="MasterSlave::UnsetMasterSlave" Required="1" Valid="1">
+        <Description Translatable="1">Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="0">
+                <Item ValueType="Option" Value="0" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">Enabled</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="MasterSlave::UpdateMasterSlave" Required="1" Valid="1">
+        <Description Translatable="1">Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="0">
+                <Item ValueType="Option" Value="0" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">Enabled</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="MasterSlave::FollowUpdatedMaster" Required="1" Valid="1">
+        <Description Translatable="1">Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="0">
+                <Item ValueType="Option" Value="0" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">Enabled</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="MasterSlave::ForwardSlaves" Required="1" Valid="1">
+        <Description Translatable="1">Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="0">
+                <Item ValueType="Option" Value="0" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">Enabled</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="MasterSlave::KeepParentChildAfterUnset" Required="1" Valid="1">
+        <Description Translatable="1">Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="0">
+                <Item ValueType="Option" Value="0" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">Enabled</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="MasterSlave::KeepParentChildAfterUpdate" Required="1" Valid="1">
+        <Description Translatable="1">Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="0">
+                <Item ValueType="Option" Value="0" Translatable="1">Disabled</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">Enabled</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###MasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Registration of the ticket event module.</Description>
+        <Navigation>Core::Event::MasterSlave</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::MasterSlave</Item>
+                <Item Key="Event">ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreApplicationModule###AgentPreMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">This module activates Master/Slave field in new email and phone ticket screens.</Description>
+        <Navigation>Core::MasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::AgentPreMasterSlave</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket MasterSlave.</Item>
+                    <Item Key="Title" Translatable="1">MasterSlave</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketMasterSlave###004-OTRSMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketMasterSlave.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketMasterSlave###004-OTRSMasterSlave" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::MenuModule###480-MasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketZoom::MenuModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenu::Generic</Item>
+                <Item Key="Name" Translatable="1">MasterSlave</Item>
+                <Item Key="Description" Translatable="1">Change the MasterSlave state of the ticket.</Item>
+                <Item Key="Action">AgentTicketMasterSlave</Item>
+                <Item Key="Link">Action=AgentTicketMasterSlave;TicketID=[% Data.TicketID | html %]</Item>
+                <Item Key="Target"></Item>
+                <Item Key="PopupType">TicketAction</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">MasterSlave</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###RequiredLock" Required="0" Valid="1">
+        <Description Translatable="1">Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner).</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###TicketType" Required="0" Valid="1">
+        <Description Translatable="1">Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Service" Required="0" Valid="1">
+        <Description Translatable="1">Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Owner" Required="0" Valid="1">
+        <Description Translatable="1">Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###OwnerMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if ticket owner must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Responsible" Required="0" Valid="1">
+        <Description Translatable="1">Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###ResponsibleMandatory" UserPreferencesGroup="Advanced" UserModificationPossible="1" Required="0" Valid="1">
+        <Description Translatable="1">Sets if ticket responsible must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###State" Required="0" Valid="1">
+        <Description Translatable="1">If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###StateType" Required="1" Valid="1">
+        <Description Translatable="1">Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Array>
+                <Item>open</Item>
+                <Item>closed</Item>
+                <Item>pending reminder</Item>
+                <Item>pending auto</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###StateDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">pending reminder</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Note" Required="0" Valid="1">
+        <Description Translatable="1">Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###NoteMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Subject" Required="0" Valid="1">
+        <Description Translatable="1">Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Body" Required="0" Valid="1">
+        <Description Translatable="1">Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Textarea"></Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###RichTextWidth" UserPreferencesGroup="Advanced" UserModificationPossible="1" Required="0" Valid="1">
+        <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">620</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###RichTextHeight" UserPreferencesGroup="Advanced" UserModificationPossible="1" Required="0" Valid="1">
+        <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">100</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent" Required="0" Valid="0">
+        <Description Translatable="1">Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###InformAgent" Required="0" Valid="0">
+        <Description Translatable="1">Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###IsVisibleForCustomerDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines if the MasterSlave note is visible for the customer by default.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+             <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Priority" Required="0" Valid="0">
+        <Description Translatable="1">Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###PriorityDefault" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="Priority" ValueRegex="">3 normal</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Title" Required="0" Valid="1">
+        <Description Translatable="1">Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryType" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">AddNote</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryComment" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">%%MasterSlave</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###MasterSlaveMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if Master / Slave field must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###0900-TicketMaster" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>Frontend::Agent::View::Dashboard</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Dashboard::TicketGeneric</Item>
+                <Item Key="Title" Translatable="1">Master Tickets</Item>
+                <Item Key="Description" Translatable="1">All master tickets</Item>
+                <Item Key="Attributes">DynamicField_MasterSlave_Equals=Master;StateType=open;StateType=new;</Item>
+                <Item Key="Filter">All</Item>
+                <Item Key="Time">Age</Item>
+                <Item Key="Limit">10</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Default">1</Item>
+                <Item Key="CacheTTLLocal">0.5</Item>
+                <Item Key="DefaultColumns">
+                    <Hash>
+                        <Item Key="Age">2</Item>
+                        <Item Key="Changed">1</Item>
+                        <Item Key="CustomerID">1</Item>
+                        <Item Key="CustomerName">1</Item>
+                        <Item Key="CustomerUserID">1</Item>
+                        <Item Key="EscalationResponseTime">1</Item>
+                        <Item Key="EscalationSolutionTime">1</Item>
+                        <Item Key="EscalationTime">1</Item>
+                        <Item Key="EscalationUpdateTime">1</Item>
+                        <Item Key="TicketNumber">2</Item>
+                        <Item Key="Lock">1</Item>
+                        <Item Key="Owner">1</Item>
+                        <Item Key="PendingTime">1</Item>
+                        <Item Key="Queue">1</Item>
+                        <Item Key="Responsible">1</Item>
+                        <Item Key="Priority">1</Item>
+                        <Item Key="Service">1</Item>
+                        <Item Key="State">1</Item>
+                        <Item Key="SLA">1</Item>
+                        <Item Key="Title">2</Item>
+                        <Item Key="Type">1</Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="DashboardBackend###0910-TicketSlave" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Navigation>Frontend::Agent::View::Dashboard</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Dashboard::TicketGeneric</Item>
+                <Item Key="Title" Translatable="1">Slave Tickets</Item>
+                <Item Key="Description" Translatable="1">All slave tickets</Item>
+                <Item Key="Attributes">DynamicField_MasterSlave_Like=Slave*;StateType=open;StateType=new;</Item>
+                <Item Key="Filter">All</Item>
+                <Item Key="Time">Age</Item>
+                <Item Key="Limit">10</Item>
+                <Item Key="Permission">rw</Item>
+                <Item Key="Block">ContentLarge</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Default">1</Item>
+                <Item Key="CacheTTLLocal">0.5</Item>
+                <Item Key="DefaultColumns">
+                    <Hash>
+                        <Item Key="Age">2</Item>
+                        <Item Key="Changed">1</Item>
+                        <Item Key="CustomerID">1</Item>
+                        <Item Key="CustomerName">1</Item>
+                        <Item Key="CustomerUserID">1</Item>
+                        <Item Key="EscalationResponseTime">1</Item>
+                        <Item Key="EscalationSolutionTime">1</Item>
+                        <Item Key="EscalationTime">1</Item>
+                        <Item Key="EscalationUpdateTime">1</Item>
+                        <Item Key="TicketNumber">2</Item>
+                        <Item Key="Lock">1</Item>
+                        <Item Key="Owner">1</Item>
+                        <Item Key="PendingTime">1</Item>
+                        <Item Key="Queue">1</Item>
+                        <Item Key="Responsible">1</Item>
+                        <Item Key="Priority">1</Item>
+                        <Item Key="Service">1</Item>
+                        <Item Key="State">1</Item>
+                        <Item Key="SLA">1</Item>
+                        <Item Key="Title">2</Item>
+                        <Item Key="Type">1</Item>
+                    </Hash>
+                </Item>
+                <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ReplaceCustomerRealNameOnSlaveArticleTypes" Required="0" Valid="1">
+        <Description Translatable="1">This setting is deprecated and will be removed in further versions of OTRSMasterSlave.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="email-external">0</Item>
+                <Item Key="email-internal">0</Item>
+                <Item Key="email-notification-ext">0</Item>
+                <Item Key="email-notification-int">0</Item>
+                <Item Key="phone">0</Item>
+                <Item Key="fax">0</Item>
+                <Item Key="sms">0</Item>
+                <Item Key="webrequest">0</Item>
+                <Item Key="note-internal">0</Item>
+                <Item Key="note-external">0</Item>
+                <Item Key="note-report">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+    <Setting Name="ReplaceCustomerRealNameOnSlaveArticleCommunicationChannels" Required="0" Valid="1">
+        <Description Translatable="1">Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Email">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+    <Setting Name="ACLKeysLevel3::Actions###888-OTRSMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Defines which items are available for 'Action' in third level of the ACL structure.</Description>
+        <Navigation>Core::Ticket::ACL</Navigation>
+        <Value>
+            <Array>
+                <Item>AgentTicketMasterSlave</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="DynamicFields::Driver###MasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">DynamicField backend registration.</Description>
+        <Navigation>Core::DynamicFields::DriverRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="DisplayName" Translatable="1">Master / Slave</Item>
+                <Item Key="Module">Kernel::System::DynamicField::Driver::MasterSlave</Item>
+                <Item Key="ConfigDialog">AdminDynamicFieldMasterSlave</Item>
+                <Item Key="DisabledAdd">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AdminDynamicFieldMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title" Translatable="1">Dynamic Fields Drop-down Backend GUI</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminDynamicFieldMasterSlave###004-OTRSMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.Agent.Admin.DynamicField.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.Admin.DynamicField.js</Item>
+                        <Item>Core.Agent.Admin.DynamicFieldMasterSlave.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AdminDynamicFieldMasterSlave###004-OTRSMasterSlave" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+     <Setting Name="Ticket::Frontend::BulkModule###010-MasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">MasterSlave module for Ticket Bulk feature.</Description>
+        <Navigation>Frontend::Agent::View::TicketBulk::Module</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketBulk::MasterSlave</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>
