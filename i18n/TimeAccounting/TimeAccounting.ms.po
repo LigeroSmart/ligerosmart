@@ -1,0 +1,867 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TimeAccounting\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTimeAccountingDelete
+msgid "Do you really want to delete the Time Accounting of this day?"
+msgstr "Adakah anda pasti ingin menghapuskan Perakaunan Masa hari ini?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Edit Time Record"
+msgstr "Sunting Rekod Masa"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Go to settings"
+msgstr "Pergi ke tetapan"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Date Navigation"
+msgstr "Navigasi Tarikh"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Days without entries"
+msgstr "Hari tanpa penyertaan"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Select all days"
+msgstr "Pilih kesemua hari"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Mass entry"
+msgstr "Kemasukan besar-besaran"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please choose the reason for your absence for the selected days"
+msgstr "Pilih sebab ketidakhadiran anda untuk hari-hari yang dipilih"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On vacation"
+msgstr "Bercuti"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On sick leave"
+msgstr "Cuti sakit"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On overtime leave"
+msgstr "Bercuti lebih masa"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Required fields are marked with a \"*\"."
+msgstr "Medan yang diperlukan ditandai dengan \"*\"."
+
+#. Template: AgentTimeAccountingEdit
+msgid "You have to fill in start and end time or a time period."
+msgstr "Anda perlu mengisi permulaan dan akhir masa atau tempoh masa."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Project"
+msgstr "Projek"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Task"
+msgstr "Tugas"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Remark"
+msgstr "Komen"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please add a remark with more than 8 characters!"
+msgstr "Sila tambah komen dengan lebih daripada 8 karakter!"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Negative times are not allowed."
+msgstr "Waktu negatif tidak dibenarkan."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. Start time matches another interval."
+msgstr ""
+"Pengulangan jam adalah tidak dibenarkan. Masa mula padan dengan selang lain."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid format! Please enter a time with the format HH:MM."
+msgstr "Format tidak sah! Sila masukkan masa dengan format HH:MM."
+
+#. Template: AgentTimeAccountingEdit
+msgid "24:00 is only permitted as end time."
+msgstr "24:00 hanya dibenarkan sebagai masa akhir."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid time! A day has only 24 hours."
+msgstr "Masa tidak sah! Sehari hanya mempunyai 24 jam."
+
+#. Template: AgentTimeAccountingEdit
+msgid "End time must be after start time."
+msgstr "Masa tamat mesti selepas masa mula."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. End time matches another interval."
+msgstr ""
+"Pengulangan jam adalah tidak dibenarkan. Masa akhir padan dengan selang lain."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! A day has only 24 hours."
+msgstr "Tempoh tidak sah! Sehari hanya mempunyai 24 jam."
+
+#. Template: AgentTimeAccountingEdit
+msgid "A valid period must be greater than zero."
+msgstr "Tempoh sah mesti lebih besar daripada sifar."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! Negative periods are not allowed."
+msgstr "Tempoh tidak sah! Tempoh negatif adalah tidak dibenarkan."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Add one row"
+msgstr "Tambah satu baris"
+
+#. Template: AgentTimeAccountingEdit
+msgid "You can only select one checkbox element!"
+msgstr "Anda hanya boleh pilih satu elemen kotak semak!"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on sick leave?"
+msgstr "Adakah anda pasti bahawa anda bekerja semasa anda bercuti sakit?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on vacation?"
+msgstr "Adakah anda pasti bahawa anda bekerja semasa anda bercuti?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on overtime leave?"
+msgstr "Adakah anda pasti bahawa anda bekerja semasa anda bercuti lebih masa?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked more than 16 hours?"
+msgstr "Adakah anda pasti bahawa anda bekerja lebih daripada 16 jam?"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Time reporting monthly overview"
+msgstr "Gambaran bulanan masa melaporkan"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (Hours)"
+msgstr "Lebih masa (Jam)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (this month)"
+msgstr "Kerja lebih masa (bulan ini)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (total)"
+msgstr "Kerja lebih masa (jumlah)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining overtime leave"
+msgstr "Baki cuti lebih masa"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation (Days)"
+msgstr "Bercuti (Hari)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (this month)"
+msgstr "Cuti diambil (bulan ini)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (total)"
+msgstr "Cuti diambil (jumlah)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining vacation"
+msgstr "Baki cuti"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick Leave (Days)"
+msgstr "Cuti Sakit (Hari)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (this month)"
+msgstr "Cuti sakit diambil (bulan ini)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (total)"
+msgstr "Cuti sakit diambil (jumlah)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Previous month"
+msgstr "Bulan sebelum"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Next month"
+msgstr "Bulan berikutnya"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Weekday"
+msgstr "Hari minggu"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Working Hours"
+msgstr "Jam bekerja"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Total worked hours"
+msgstr "Jumlah jam bekerja"
+
+#. Template: AgentTimeAccountingOverview
+msgid "User's project overview"
+msgstr "Gambaran projek pengguna"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (monthly)"
+msgstr "Jam (bulanan)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (Lifetime)"
+msgstr "Jam (Hayat)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Grand total"
+msgstr "Jumlah keseluruhan"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Time reporting"
+msgstr "Masa melaporkan"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Month Navigation"
+msgstr "Navigasi bulan"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Go to date"
+msgstr "Pergi ke tarikh"
+
+#. Template: AgentTimeAccountingReporting
+msgid "User reports"
+msgstr "Laporan pengguna"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Monthly total"
+msgstr "Jumlah bulanan"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Lifetime total"
+msgstr "Jumlah hayat"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Overtime leave"
+msgstr "Cuti lebih masa"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation"
+msgstr "Bercuti"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Sick leave"
+msgstr "Cuti sakit"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation remaining"
+msgstr "Baki cuti"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Project reports"
+msgstr "Laporan projek"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Project report"
+msgstr "Laporan projek"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Go to reporting overview"
+msgstr "Pergi ke tinjauan melaporkan"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"Pada masa ini hanya pengguna aktif dalam projek ini akan ditunjukkan. Untuk "
+"mengubah sifat ini, sila kemas kini tetapan:"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"Pada masa ini kesemua pengguna perakaunan masa ditunjukkan. Untuk mengubah "
+"tingkah laku ini, sila kemas kini tetapan:"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Project Settings"
+msgstr "Sunting Tetapan Projek Perakaunan Masa "
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add project"
+msgstr "Tambah projek"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Go to settings overview"
+msgstr "Pergi ke gambaran keseluruhan tetapan"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Project"
+msgstr "Tambah projek"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Project Settings"
+msgstr "Sunting tetapan projek"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There is already a project with this name. Please, choose a different one."
+msgstr "Sudah ada projek dengan nama ini. Sila pilih yang lain."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Settings"
+msgstr "Sunting Tetapan Perakaunan Masa"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add task"
+msgstr "Tambah tugas"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Filter for projects, tasks or users"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr "Tempoh masa tidak boleh dihapuskan."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Project List"
+msgstr "Senarai projek"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Task List"
+msgstr "Senarai tugas"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Task"
+msgstr "Tambah tugas"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Task Settings"
+msgstr "Sunting tetapan tugas"
+
+#. Template: AgentTimeAccountingSetting
+msgid "There is already a task with this name. Please, choose a different one."
+msgstr "Sudah ada tugas dengan nama ini. Sila pilih yang lain."
+
+#. Template: AgentTimeAccountingSetting
+msgid "User List"
+msgstr "Senarai Pengguna"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User Settings"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to see overtimes"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Show Overtime"
+msgstr "Tunjuk lebihan masa"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow project creation"
+msgstr "Benarkan ciptaan projek"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period Begin"
+msgstr "Tempoh Mula"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period End"
+msgstr "Tempoh tamat"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Days of Vacation"
+msgstr "Hari Bercuti"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Hours per Week"
+msgstr "Jam Seminggu"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Authorized Overtime"
+msgstr "Lebihan masa dibenarkan"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "Tarikh Mula"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Please insert a valid date."
+msgstr "Sila masukkan tarikh yang sah."
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "Tarikh Tamat"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period end must be after period begin."
+msgstr "Tempoh tamat mestilah selepas tempoh mula."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr "Hari cuti"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr "Jam mingguan"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "Lebih masa"
+
+#. Template: AgentTimeAccountingSetting
+msgid "No time periods found."
+msgstr "Tiada tempoh masa dijumpai."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add time period"
+msgstr "Tambah tempoh masa"
+
+#. Template: AgentTimeAccountingView
+msgid "View Time Record"
+msgstr "Lihat Rekod Masa"
+
+#. Template: AgentTimeAccountingView
+msgid "View of "
+msgstr "Pandangan"
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Hari sebelum"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Hari seterusnya"
+
+#. Template: AgentTimeAccountingView
+msgid "No data found for this day."
+msgstr "Tiada data dijumpai pada hari ini."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr "Tidak boleh memasukkan Unit Kerja!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr "Projek Lepas"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr "Tidak boleh menyimpan tetapan-tetapan, kerana sehari hanya ada 24 jam!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr "Tidak boleh membuang Unit Kerja!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"Tarikh ini telah terlebih had, tetapi anda masih belum memasukkan hari ini "
+"lagi, jadi anda mendapat satu(!) peluang untuk masukkan"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr "Hari Bekerja Tidak Lengkap"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr "Berjaya dimasukkan!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr "Ralat semasa memasukkan beberapa tarikh!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr "Berjaya dimasukkan penyertaan untuk beberapa tarikh!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr ""
+"Tarikh yang dimasukkan tidak sah! Tarikh telah ditukar kepada hari ini."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr "Projek Dipilih Lepas"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr "Semua Projek"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr "MelaporkanProjek: Perlukan ProjectID"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr "Melaporkan Projek"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "Melaporkan"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr "Tidak boleh untuk kemaskini tetapan-tetapan pengguna!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr "Projek telah ditambah!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr "Projek telah dikemaskini!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr "Tugasan telah ditambah!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr "Tugasan telah dikemaskini!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr "ID Pengguna tidak sah!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr "Tidak boleh memasukkan data pengguna!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr "Tidak boleh menambah tempoh masa!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Tetapan"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr "Pengguna telah dikemaskini!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr "Pengguna telah ditambah!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr "Pengguna Baharu"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr "Status Tempoh"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
+msgstr "Pandangan: Perlu %s!"
+
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr "Sila masukkan waktu kerja anda! "
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr "Hari bekerja tidak lengkap"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Sila pilih sekurang-kurangnya sehari!"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "Kemasukan besar-besaran"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Sila pilih sebab ketidakhadiran!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "Padam Kemasukan Masa Perakaunan "
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "Sahkan kemasukan"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"Modul pemberitahuan antara muka ejen untuk melihat bilangan hari bekerja "
+"yang tidak lengkap untuk pengguna."
+
+#. SysConfig
+msgid "Default name for new actions."
+msgstr "Nama lalai untuk tindakan baru."
+
+#. SysConfig
+msgid "Default name for new projects."
+msgstr "Nama lalai untuk projek baru."
+
+#. SysConfig
+msgid "Default setting for date end."
+msgstr "Tetapan lalai untuk tarikh akhir."
+
+#. SysConfig
+msgid "Default setting for date start."
+msgstr "Tetapan lalai untuk tarikh mula."
+
+#. SysConfig
+msgid "Default setting for description."
+msgstr "Tetapan lalai untuk gambaran."
+
+#. SysConfig
+msgid "Default setting for leave days."
+msgstr "Tetapan lalai untuk hari cuti."
+
+#. SysConfig
+msgid "Default setting for overtime."
+msgstr "Tetapan lalai untuk lebih masa."
+
+#. SysConfig
+msgid "Default setting for the standard weekly hours."
+msgstr "Tetapan lalai untuk jam mingguan piawai."
+
+#. SysConfig
+msgid "Default status for new actions."
+msgstr "Tetapan lalai untuk tindakan baharu."
+
+#. SysConfig
+msgid "Default status for new projects."
+msgstr "Tetapan lalai untuk projek baharu."
+
+#. SysConfig
+msgid "Default status for new users."
+msgstr "Tetapan lalai untuk pengguna baharu."
+
+#. SysConfig
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"Mentakrifkan projek-projek yang mana komen diperlukan. Jika UngkapanBiasa "
+"padan dalam projek ini, anda perlu memasukkan komen juga. UngkapanBiasa "
+"menggunakan parameter smx."
+
+#. SysConfig
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+"Menentukan jika modul statistik boleh menjana masa maklumat perakaunan."
+
+#. SysConfig
+msgid "Edit time accounting settings."
+msgstr "Sunting tetapan-tetapan perakaunan masa."
+
+#. SysConfig
+msgid "Edit time record."
+msgstr "Sunting rekod masa."
+
+#. SysConfig
+msgid "For how many days ago you can insert working units."
+msgstr "Untuk berapa hari yang lalu, anda boleh memasukkan unit kerja."
+
+#. SysConfig
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"Jika dibolehkan, hanya pengguna yang telah ditambah masa kerja untuk projek "
+"yang dipilih akan ditunjukkan."
+
+#. SysConfig
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+"Jika dibolehkan, unsur-unsur kotak pilihan dalam skrin sunting ditukar "
+"kepada bidang penyiapan secara automatik moden."
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"Jika diaktifkan, penapis bagi projek-projek sebelum boleh digunakan selain "
+"dua senarai projek-projek (terakhir dan semuanya). Ia boleh digunakan hanya "
+"jika TimeAccounting::EnableAutoCompletion didayakan."
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"Jika diaktifkan, penapis bagi projek-projek sebelum adalah aktif secara "
+"lalai sekiranya terdapat projek lepas. Ia boleh digunakan hanya jika "
+"EnableAutoCompletion dan TimeAccounting::UseFilter didayakan."
+
+#. SysConfig
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"Jika dibolehkan, pengguna dibenarkan untuk memasuki \"sedang cuti rehat \", "
+"\"sedang cuti sakit \" dan \"sedang cuti lebih masa\" pada beberapa tarikh "
+"sekaligus."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
+msgstr "Bilangan maksimum hari bekerja selepas unit kerja perlu dimasukkan."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+"Bilangan maksimum hari bekerja tanpa kemasukan unit bekerja selepas di mana "
+"amaran akan ditunjukkan."
+
+#. SysConfig
+msgid "Overview."
+msgstr "Pandangan keseluruhan."
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr "melaporkan masa projek"
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"Ungkapan biasa untuk mengekang senarai tindakan mengikut projek yang "
+"dipilih. Kunci mengandungi ungkapan biasa untuk projek (projek-projek), "
+"kandungan mengandungi ungkapan biasa untuk tindakan (tindakan-tindakan)."
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"Ungkapan biasa untuk mengekang senarai projek mengikut kumpulan pengguna. "
+"Kunci mengandungi ungkapan biasa untuk projek (projek-projek), kandungan "
+"mengandungi koma senarai kumpulan dipisahkan."
+
+#. SysConfig
+msgid "Specifies if working hours can be inserted without start and end times."
+msgstr ""
+"Menentukan jika waktu bekerja boleh dimasukkan tanpa permulaan dan akhir "
+"masa."
+
+#. SysConfig
+msgid "This module forces inserts in TimeAccounting."
+msgstr "Modul ini memaksa kemasukan dalam PerakaunanSemasa."
+
+#. SysConfig
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"Modul pemberitahuan ini memberi amaran jika terdapat terlalu banyak hari "
+"bekerja tidak lengkap."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr "Masa Perakaunan"
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr "Sunting perakaunan semasa."
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr "Gambaran keseluruhan perakaunan semasa."
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr "Melapor perakaunan semasa."
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr "Tetapan perakaunan semasa."
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr "Paparan perakaunan semasa."
+
+#. SysConfig
+msgid "Time accounting."
+msgstr "Perakaunan semasa."
+
+#. SysConfig
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"Untuk digunakan jika beberapa tindakan mengurangkan waktu kerja (contohnya, "
+"jika hanya separuh daripada masa perjalanan dibayar Kunci => perjalanan; "
+"Kandungan = > 50)."

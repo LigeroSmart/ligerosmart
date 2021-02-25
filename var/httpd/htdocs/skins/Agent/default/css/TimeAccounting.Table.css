@@ -1,0 +1,134 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Time Accounting Additional Table Settings
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  data table elements without hover
+ */
+
+.NoHover tbody tr:hover td {
+    background: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.NoHover tr.Even:hover td {
+    background-color: #F5F5F5;
+}
+
+.NoHover tr.GrandTotal:hover td {
+    background-color: #CFCFCF;
+}
+
+.TimeAccountingTable input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.TimeAccountingTable td {
+    padding: 10px !important;
+}
+
+/**
+ * @subsection  special table height
+ */
+
+.HighCells tbody td {
+    height: 30px;
+}
+
+/**
+ * @subsection  fixed data table widths
+ */
+
+.DataTable td.Fixed.Day {
+    width: 50px;
+}
+
+.DataTable td.Fixed.Weekday {
+    width: 80px;
+}
+
+/**
+ * @subsection  table colours for overview
+ */
+
+.DataTable tr.Vacation td {
+    background-color: #EBCCCC;
+}
+
+.DataTable tr.NonWorkingDay td {
+    background-color: #FFE0E0;
+}
+
+.DataTable tr.Active td {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    color: #1A1A1A;
+}
+
+.DataTable tr.Active td:first-child {
+    border-left: 1px solid #000000;
+}
+
+.DataTable tr.Active td:last-child,
+.DataTable tr.Active td.Last {
+    border-right: 1px solid #000000;
+}
+
+.DataTable tr.GrandTotal td {
+    background-color: #CFCFCF;
+}
+
+/**
+ * @subsection  data table with two header rows
+ */
+
+.DataTable thead.TwoRows {
+    background: none;
+}
+
+.DataTable thead.TwoRows tr {
+    background: #eeeeee;
+}
+
+.DataTable thead.TwoRows tr:first-child th {
+    border-bottom: none;
+    padding-bottom: 2px;
+}
+
+.DataTable thead.TwoRows tr:last-child th,
+.DataTable thead.TwoRows tr.Last th {
+    border-top: none;
+    padding-top: 3px;
+}
+
+tr.MasterAction td.RowSpan {
+    vertical-align: top;
+}
+
+td.RowSpan{
+    border-bottom: 1px dotted #ccc;
+    background-color: white !important;
+}
+
+#TimeAccountingEmptyMessageSmall {
+    border-color: #ddd;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    padding: 7px;
+    background-color: white;
+}
+/* end @media */

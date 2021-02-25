@@ -1,0 +1,876 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TimeAccounting\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTimeAccountingDelete
+msgid "Do you really want to delete the Time Accounting of this day?"
+msgstr "Valóban törölni szeretné ennek a napnak az időelszámolását?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Edit Time Record"
+msgstr "Időfeljegyzés szerkesztése"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Go to settings"
+msgstr "Ugrás a beállításokhoz"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Date Navigation"
+msgstr "Dátum navigáció"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Days without entries"
+msgstr "Bejegyzések nélküli napok"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Select all days"
+msgstr "Minden nap kijelölése"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Mass entry"
+msgstr "Tömeges bejegyzés"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please choose the reason for your absence for the selected days"
+msgstr "Válassza ki a távolléte okát a kijelölt napokra"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On vacation"
+msgstr "Szabadságon"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On sick leave"
+msgstr "Betegszabadságon"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On overtime leave"
+msgstr "Csúsztatáson túlóra miatt"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Required fields are marked with a \"*\"."
+msgstr "A kötelező mezők „*” jellel vannak megjelölve."
+
+#. Template: AgentTimeAccountingEdit
+msgid "You have to fill in start and end time or a time period."
+msgstr "Ki kell töltenie a kezdő és befejező időt vagy egy időszakot."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Project"
+msgstr "Projekt"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Task"
+msgstr "Feladat"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Remark"
+msgstr "Észrevétel"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please add a remark with more than 8 characters!"
+msgstr "Adjon hozzá egy 8 karakternél hosszabb észrevételt!"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Negative times are not allowed."
+msgstr "Negatív időpontok nem engedélyezettek."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. Start time matches another interval."
+msgstr ""
+"Az ismétlődő órák nem engedélyezettek. A kezdési idő egy másik időközre "
+"illeszkedik."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid format! Please enter a time with the format HH:MM."
+msgstr "Érvénytelen formátum! ÓÓ:PP formátumú időt adjon meg."
+
+#. Template: AgentTimeAccountingEdit
+msgid "24:00 is only permitted as end time."
+msgstr "A 24:00 csak befejezési időként engedélyezett."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid time! A day has only 24 hours."
+msgstr "Érvénytelen időpont! Egy napnak csak 24 órája van."
+
+#. Template: AgentTimeAccountingEdit
+msgid "End time must be after start time."
+msgstr "A befejezési időnek a kezdési idő után kell lennie."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. End time matches another interval."
+msgstr ""
+"Az ismétlődő órák nem engedélyezettek. A befejezési idő egy másik időközre "
+"illeszkedik."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! A day has only 24 hours."
+msgstr "Érvénytelen időszak! Egy napnak csak 24 órája van."
+
+#. Template: AgentTimeAccountingEdit
+msgid "A valid period must be greater than zero."
+msgstr "Egy érvényes időszaknak nagyobbnak kell lennie nullánál."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! Negative periods are not allowed."
+msgstr "Érvénytelen időszak! Negatív időszakok nem engedélyezettek."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Add one row"
+msgstr "Egy sor hozzáadása"
+
+#. Template: AgentTimeAccountingEdit
+msgid "You can only select one checkbox element!"
+msgstr "Csak egy jelölőnégyzet elemet választhat ki!"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on sick leave?"
+msgstr "Biztos benne, hogy dolgozott, mialatt betegszabadságon volt?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on vacation?"
+msgstr "Biztos benne, hogy dolgozott, mialatt szabadságon volt?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on overtime leave?"
+msgstr "Biztos benne, hogy dolgozott, mialatt csúsztatott?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked more than 16 hours?"
+msgstr "Biztos benne, hogy több mint 16 órát dolgozott?"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Time reporting monthly overview"
+msgstr "Időjelentés havi áttekintése"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (Hours)"
+msgstr "Túlóra (óra)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (this month)"
+msgstr "Túlóra (ez a hónap)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (total)"
+msgstr "Túlóra (összesen)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining overtime leave"
+msgstr "Megmaradt csúsztatás"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation (Days)"
+msgstr "Szabadság (nap)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (this month)"
+msgstr "Kivett szabadság (ez a hónap)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (total)"
+msgstr "Kivett szabadság (összesen)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining vacation"
+msgstr "Megmaradt szabadság"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick Leave (Days)"
+msgstr "Betegszabadság (nap)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (this month)"
+msgstr "Kivett betegszabadság (ez a hónap)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (total)"
+msgstr "Kivett betegszabadság (összesen)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Previous month"
+msgstr "Előző hónap"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Next month"
+msgstr "Következő hónap"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Weekday"
+msgstr "Hétköznap"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Working Hours"
+msgstr "Munkaidő"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Total worked hours"
+msgstr "Ledolgozott órák összesen"
+
+#. Template: AgentTimeAccountingOverview
+msgid "User's project overview"
+msgstr "A felhasználó projektjének áttekintője"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (monthly)"
+msgstr "Órák (havonta)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (Lifetime)"
+msgstr "Órák (élettartam)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Grand total"
+msgstr "Mindösszesen"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Time reporting"
+msgstr "Időjelentés"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Month Navigation"
+msgstr "Hónap navigáció"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Go to date"
+msgstr "Ugrás dátumra"
+
+#. Template: AgentTimeAccountingReporting
+msgid "User reports"
+msgstr "Felhasználói jelentések"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Monthly total"
+msgstr "Havi összesítő"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Lifetime total"
+msgstr "Élettartam összesen"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Overtime leave"
+msgstr "Csúsztatás"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation"
+msgstr "Szabadság"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Sick leave"
+msgstr "Betegszabadság"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation remaining"
+msgstr "Hátralévő szabadság"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Project reports"
+msgstr "Projekt jelentések"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Project report"
+msgstr "Projekt jelentés"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Go to reporting overview"
+msgstr "Ugrás a jelentés áttekintőhöz"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"Jelenleg csak az aktív felhasználók vannak megjelenítve ebben a projektben. "
+"A működés módosításához frissítse a beállítást:"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"Jelenleg minden időelszámoló felhasználó meg van jelenítve. A működés "
+"módosításához frissítse a beállítást:"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Project Settings"
+msgstr "Időelszámolás projektbeállítások szerkesztése"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add project"
+msgstr "Projekt hozzáadása"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Go to settings overview"
+msgstr "Ugrás a beállítások áttekintőhöz"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Project"
+msgstr "Projekt hozzáadása"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Project Settings"
+msgstr "Projektbeállítások szerkesztése"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There is already a project with this name. Please, choose a different one."
+msgstr "Már létezik egy ilyen nevű projekt. Válasszon egy másik nevet."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Settings"
+msgstr "Időelszámolási beállítások szerkesztése"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add task"
+msgstr "Feladat hozzáadása"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Filter for projects, tasks or users"
+msgstr "Szűrő a projektkehez, feladatokhoz vagy felhasználókhoz"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr "Az időszakok nem törölhetők."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Project List"
+msgstr "Projektlista"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Task List"
+msgstr "Feladatlista"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Task"
+msgstr "Feladat hozzáadása"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Task Settings"
+msgstr "Feladatbeállítások szerkesztése"
+
+#. Template: AgentTimeAccountingSetting
+msgid "There is already a task with this name. Please, choose a different one."
+msgstr "Már létezik egy ilyen nevű feladat. Válasszon egy másik nevet."
+
+#. Template: AgentTimeAccountingSetting
+msgid "User List"
+msgstr "Felhasználólista"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User Settings"
+msgstr "Felhasználói beállítások"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to see overtimes"
+msgstr "A felhasználó megtekintheti a túlórákat"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Show Overtime"
+msgstr "Túlóra megjelenítése"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr "A felhasználó létrehozhat projekteket"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow project creation"
+msgstr "Projektlétrehozás engedélyezése"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr "A felhasználónak lehetősége van kihagyni az időelszámolást"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr "Időelszámolás kihagyásának lehetővé tétele"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+"Ha ez a lehetőség van kiválasztva, akkor az időelszámolás ténylegesen "
+"választható a felhasználónak."
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+"Nem lesznek figyelmeztetések a hiányzó bejegyzésekről és nem lesz beírási "
+"kényszerítés."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr "Időtartamok"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period Begin"
+msgstr "Időszak kezdete"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period End"
+msgstr "Időszak vége"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Days of Vacation"
+msgstr "Szabadság napjai"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Hours per Week"
+msgstr "Órák hetente"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Authorized Overtime"
+msgstr "Jogosult túlóra"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "Kezdési dátum"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Please insert a valid date."
+msgstr "Érvényes dátumot illesszen be."
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "Befejezési dátum"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period end must be after period begin."
+msgstr "Az időszak végének az időszak kezdete után kell lennie."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr "Szabadság napjai"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr "Heti órák"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "Túlóra"
+
+#. Template: AgentTimeAccountingSetting
+msgid "No time periods found."
+msgstr "Nem találhatók időszakok."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add time period"
+msgstr "Időszak hozzáadása"
+
+#. Template: AgentTimeAccountingView
+msgid "View Time Record"
+msgstr "Időfeljegyzés megtekintése"
+
+#. Template: AgentTimeAccountingView
+msgid "View of "
+msgstr "A következő megtekintése: "
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Előző nap"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Következő nap"
+
+#. Template: AgentTimeAccountingView
+msgid "No data found for this day."
+msgstr "Nem található adat erre a napra."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr "Nem lehet beilleszteni a munkaegységeket!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr "Legutóbbi projektek"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr ""
+"Nem lehet elmenteni a beállításokat, mert egy napnak csak 24 órája van!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr "Nem lehet törölni a munkaegységeket!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"Ez a dátum a határon kívül van, de még nem illesztette be ez a napot, így "
+"kap még egy(!) esélyt a beillesztésre"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr "Befejezetlen munkanapok"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr "Sikeres beillesztés!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr "Hiba történt több dátum beillesztése közben!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr "A bejegyzések sikeresen beillesztve a különböző dátumokhoz!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr "A megadott dátum érvénytelen volt! A dátum a mai napra lett módosítva."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+"Nincs időszak beállítva, vagy a megadott dátum a meghatározott időszakokon "
+"kívül van."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
+msgstr ""
+"Vegye fel a kapcsolatot az időelszámolás adminisztrátorával, hogy frissítse "
+"az időszakait!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr "Legutóbb kiválasztott projektek"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr "Minden projekt"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr "Jelentés projekt: projektazonosító szükséges"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr "Jelentés projekt"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "Jelentés"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr "Nem lehet frissíteni a felhasználói beállításokat!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr "Projekt hozzáadva!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr "Projekt frissítve!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr "Feladat hozzáadva!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr "Feladat frissítve!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr "A felhasználó-azonosító nem érvényes!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr "Nem lehet beilleszteni a felhasználóadatokat!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr "Nem lehet hozzáadni időszakot!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Beállítás"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr "Felhasználó frissítve!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr "Felhasználó hozzáadva!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr "Felhasználó hozzáadása az időelszámoláshoz…"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr "Új felhasználó"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr "Időszak állapot"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
+msgstr "Nézet: %s szükséges!"
+
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr "Illessze be a munkaidejét!"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr "Befejezetlen munkanapok"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Legalább egy napot válasszon ki!"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "Tömeges bejegyzés"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Válassza ki a távollét okát!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "Időelszámolás bejegyzés törlése"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "Beillesztés megerősítése"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"Ügyintézői felület értesítési modul a felhasználó befejezetlen munkanapjai "
+"számának megtekintéséhez."
+
+#. SysConfig
+msgid "Default name for new actions."
+msgstr "Alapértelmezett név az új műveletekhez."
+
+#. SysConfig
+msgid "Default name for new projects."
+msgstr "Alapértelmezett név az új projektekhez."
+
+#. SysConfig
+msgid "Default setting for date end."
+msgstr "Alapértelmezett beállítás a befejezési dátumhoz."
+
+#. SysConfig
+msgid "Default setting for date start."
+msgstr "Alapértelmezett beállítás a kezdési dátumhoz."
+
+#. SysConfig
+msgid "Default setting for description."
+msgstr "Alapértelmezett beállítás a leíráshoz."
+
+#. SysConfig
+msgid "Default setting for leave days."
+msgstr "Alapértelmezett beállítás a szabadság napjaihoz."
+
+#. SysConfig
+msgid "Default setting for overtime."
+msgstr "Alapértelmezett beállítás a túlórához."
+
+#. SysConfig
+msgid "Default setting for the standard weekly hours."
+msgstr "Alapértelmezett beállítás a szabványos heti munkaórákhoz."
+
+#. SysConfig
+msgid "Default status for new actions."
+msgstr "Alapértelmezett állapot az új műveletekhez."
+
+#. SysConfig
+msgid "Default status for new projects."
+msgstr "Alapértelmezett állapot az új projektekhez."
+
+#. SysConfig
+msgid "Default status for new users."
+msgstr "Alapértelmezett állapot az új felhasználókhoz."
+
+#. SysConfig
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"Meghatározza azokat a projekteket, amelyekhez észrevétel szükséges. Ha a "
+"reguláris kifejezés illeszkedik a projektre, akkor be kell illesztenie egy "
+"észrevételt is. A reguláris kifejezés az smx paramétert használja."
+
+#. SysConfig
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+"Meghatározza, hogy a statisztika modul előállíthat-e időelszámolási "
+"információkat."
+
+#. SysConfig
+msgid "Edit time accounting settings."
+msgstr "Időelszámolás beállításainak szerkesztése."
+
+#. SysConfig
+msgid "Edit time record."
+msgstr "Időfeljegyzés szerkesztése."
+
+#. SysConfig
+msgid "For how many days ago you can insert working units."
+msgstr "Hány nappal ezelőtthöz illeszthet be munkaegységeket."
+
+#. SysConfig
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"Ha engedélyezve van, akkor csak azok a felhasználók lesznek megjelenítve, "
+"akik munkaidőt adtak hozzá a kijelölt projekthez."
+
+#. SysConfig
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+"Ha engedélyezve van, akkor a szerkesztési képernyőn lévő lenyíló elemek "
+"korszerűsített automatikusan kiegészített mezőkre lesznek megváltoztatva."
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"Ha engedélyezve van, akkor az előző projektek szűrője használható a "
+"projektek két listája helyett (legutóbbi és összes). Csak akkor használható, "
+"ha a TimeAccounting::EnableAutoCompletion engedélyezve van."
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"Ha engedélyezve van, akkor az előző projektek szűrője alapértelmezetten be "
+"van kapcsolva, ha vannak előző projektek. Csak akkor használható, ha az "
+"EnableAutoCompletion és a TimeAccounting::UseFilter engedélyezve van."
+
+#. SysConfig
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"Ha engedélyezve van, akkor a felhasználónak megengedett egyszerre több "
+"dátumhoz „szabadságon”, „betegszabadságon” és „csúsztatáson” érték megadása."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
+msgstr ""
+"A munkanapok legnagyobb száma, amelyek után a munkaegységeket be kell szúrni."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+"A munkaegységek bejegyzés nélküli munkanapok legnagyobb száma, amelyek után "
+"egy figyelmeztetés lesz megjelenítve."
+
+#. SysConfig
+msgid "Overview."
+msgstr "Áttekintés."
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr "Projektidő jelentés."
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"Reguláris kifejezések a kijelölt projekt szerinti korlátozó művelet "
+"listájához. A kulcs a projektekhez tartalmaz reguláris kifejezést, a "
+"tartalom pedig a műveletekhez."
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"Reguláris kifejezések a felhasználócsoportok szerinti korlátozó projekt "
+"listájához. A kulcs a projektekhez tartalmaz reguláris kifejezést, a "
+"tartalom pedig csoportok vesszővel elválasztott listáját tartalmazza."
+
+#. SysConfig
+msgid "Specifies if working hours can be inserted without start and end times."
+msgstr ""
+"Megadja, hogy a munkaidő beszúrható-e kezdési és befejezési idők nélkül."
+
+#. SysConfig
+msgid "This module forces inserts in TimeAccounting."
+msgstr "Ez a modul kikényszeríti a beszúrásokat az időelszámolásban."
+
+#. SysConfig
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"Ez az értesítési modul egy figyelmeztetést ad, ha túl sok befejezetlen "
+"munkanap található."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr "Időelszámolás"
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr "Időelszámolás szerkesztés."
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr "Időelszámolás áttekintő."
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr "Időelszámolás jelentés."
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr "Időelszámolás beállítások."
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr "Időelszámolás nézet."
+
+#. SysConfig
+msgid "Time accounting."
+msgstr "Időelszámolás."
+
+#. SysConfig
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"Akkor kell használni, ha néhány művelet csökkentette a munkaidőt (például ha "
+"csak az utazási idő fele van kifizetve: Kulcs => utazás; Tartalom => 50)."

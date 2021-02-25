@@ -1,0 +1,121 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">[% Translate("View Time Record") | html %]
+[% RenderBlockStart("User") %]
+        - [% Translate("View of ") | html %] [% Data.User | html %]
+[% RenderBlockEnd("User") %]
+    </h1>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=AgentTimeAccountingOverview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Date Navigation") | html %]</h2>
+            </div>
+            <div class="Content">
+                <div class="MonthSelection">
+                    <a class="Arrow" title="[% Translate("Previous day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];Day=[% Data.DayBack | uri %];UserID=[% Data.UserID | uri %]"><i class="fa fa-caret-left"></i></a>
+                    <a class="Arrow" title="[% Translate("Next day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];Day=[% Data.DayNext | uri %];UserID=[% Data.UserID | uri %]"><i class="fa fa-caret-right"></i></a>
+                    [% Data.Year | html %]-[% Data.Month | html %]-[% Data.Day | html %]
+                </div>
+                <div class="Clear"></div>
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="DateSelection" class="Validate" id="DateSelectionForm">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
+                    <input type="hidden" name="Subaction" value="View" />
+                    <input type="hidden" name="UserID"    value="[% Data.UserID | html %]" />
+                    [% Data.DateSelection %]
+                </form>
+                <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop"><span><i class="fa fa-arrow-circle-o-right"></i>[% Translate("Go to date") | html %]</span></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Date") | html %]: [% Translate(Data.Weekday_to_Text) | html %] [% Data.Date | html %]</h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable DataTableNoHighlight">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Project") | html %]</th>
+                            <th>[% Translate("Task") | html %]</th>
+                            <th>[% Translate("Remark") | html %]</th>
+                            <th>[% Translate("Start") | html %]</th>
+                            <th>[% Translate("End") | html %]</th>
+                            <th>[% Translate("Period") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("Unit") %]
+                        <tr>
+                            <td>[% Data.Project | html %]</td>
+                            <td>[% Data.Action | html %]</td>
+                            <td>[% Data.Remark | html %]</td>
+                            <td class="Right">[% Data.StartTime | html %]</td>
+                            <td class="Right">[% Data.EndTime | html %]</td>
+                            <td class="Right">[% Data.Period | html %]</td>
+                        </tr>
+[% RenderBlockEnd("Unit") %]
+
+[% RenderBlockStart("Total") %]
+                        <tr>
+                            <td colspan="4"></td>
+                            <td><strong>[% Translate("Total") | html %]:</strong></td>
+                            <td class="Right"><strong>[% Data.Total | html %]</strong></td>
+
+                        </tr>
+[% RenderBlockEnd("Total") %]
+
+[% RenderBlockStart("NoDataFound") %]
+                        <tr>
+                            <td colspan="6">[% Translate("No data found for this day.") | html %]</td>
+                        </tr>
+[% RenderBlockEnd("NoDataFound") %]
+
+                    </tbody>
+                </table>
+
+[% RenderBlockStart("OtherTimes") %]
+                <div>
+                    <input type="checkbox" value="-2" id="LeaveDay" name="LeaveDay" title="[% Translate("On vacation") | html %]" [% Data.LeaveDay %] disabled />
+                    <label for="LeaveDay">[% Translate("On vacation") | html %]</label>
+                    <input type="checkbox" value="-1" id="Sick" name="Sick" title="[% Translate("On sick leave") | html %]" [% Data.Sick %] disabled />
+                    <label for="Sick">[% Translate("On sick leave") | html %]</label>
+                    <input type="checkbox" value="-3" id="Overtime" name="Overtime" title="[% Translate("On overtime leave") | html %]" [% Data.Overtime %] disabled />
+                    <label for="Overtime">[% Translate("On overtime leave") | html %]</label>
+                </div>
+[% RenderBlockEnd("OtherTimes") %]
+
+                <div class="Clear"></div>
+[% RenderBlockStart("Vacation") %]
+                <div class="SpacingTopSmall">
+                    <p>
+                        [% Data.Vacation | html %]
+                    </p>
+                </div>
+[% RenderBlockEnd("Vacation") %]
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+</div>

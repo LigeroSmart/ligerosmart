@@ -1,0 +1,866 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TimeAccounting\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTimeAccountingDelete
+msgid "Do you really want to delete the Time Accounting of this day?"
+msgstr "本当に該当日の情報を削除しますか？"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Edit Time Record"
+msgstr "タイムレコードの編集"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Go to settings"
+msgstr "設定へ"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Date Navigation"
+msgstr "日別ナビゲーション"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Days without entries"
+msgstr "エントリーのない日"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Select all days"
+msgstr "全ての日を選択"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Mass entry"
+msgstr "全体入力"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please choose the reason for your absence for the selected days"
+msgstr "該当の日の欠勤理由を入力してください"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On vacation"
+msgstr "休暇取得中"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On sick leave"
+msgstr "病欠中"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On overtime leave"
+msgstr "代休中"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Required fields are marked with a \"*\"."
+msgstr "* の項目は入力必須です。"
+
+#. Template: AgentTimeAccountingEdit
+msgid "You have to fill in start and end time or a time period."
+msgstr "開始時間と終了時間、または期間を指定してください。"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Project"
+msgstr "プロジェクト"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Task"
+msgstr "タスク"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Remark"
+msgstr "注釈"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please add a remark with more than 8 characters!"
+msgstr "8文字以上の注釈を追加してください。"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Negative times are not allowed."
+msgstr "－（マイナス）の時間は入力できません"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. Start time matches another interval."
+msgstr "繰り返された時間は許可されません。開始時刻は別の間隔と一致します。"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid format! Please enter a time with the format HH:MM."
+msgstr ""
+"不正なフォーマットです! 時間の入力はHH:MMのフォーマットに従ってください"
+
+#. Template: AgentTimeAccountingEdit
+msgid "24:00 is only permitted as end time."
+msgstr "24:00は終了時間としてのみ入力可能です"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid time! A day has only 24 hours."
+msgstr "不正な時間です! 1日は24時間です"
+
+#. Template: AgentTimeAccountingEdit
+msgid "End time must be after start time."
+msgstr "終了時間の前に開始時間を設定することはできません。"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. End time matches another interval."
+msgstr "Diese Endzeit wurde bereits in einem anderen Eintrag angegeben."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! A day has only 24 hours."
+msgstr "「期間」の設定が不正です。（24時間以上は許可されません）"
+
+#. Template: AgentTimeAccountingEdit
+msgid "A valid period must be greater than zero."
+msgstr "「期間」の設定が不正です。（0は許可されません）"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! Negative periods are not allowed."
+msgstr "「期間」の設定が不正です。（－（マイナス）は許可されません）"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Add one row"
+msgstr "行の追加"
+
+#. Template: AgentTimeAccountingEdit
+msgid "You can only select one checkbox element!"
+msgstr "1項目のみ選択できます。"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on sick leave?"
+msgstr "病欠に設定された期間中に稼働しましたか？"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on vacation?"
+msgstr "休暇に設定された期間中に稼働しましたか？"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on overtime leave?"
+msgstr "代休に設定された期間中に稼働しましたか？"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked more than 16 hours?"
+msgstr "16時間以上稼働しましたか？"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Time reporting monthly overview"
+msgstr "月別一覧"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (Hours)"
+msgstr "超過勤務（：時間）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (this month)"
+msgstr "超過勤務（今月）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (total)"
+msgstr "超過勤務（累計）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining overtime leave"
+msgstr "超過勤務可能残（時間）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation (Days)"
+msgstr "休暇（日数）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (this month)"
+msgstr "休暇取得日数（今月）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (total)"
+msgstr "休暇取得日数（累計）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining vacation"
+msgstr "休暇取得残日数"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick Leave (Days)"
+msgstr "病欠（日数）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (this month)"
+msgstr "病欠日数（今月）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (total)"
+msgstr "病欠日数（累計）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Previous month"
+msgstr "前月"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Next month"
+msgstr "次月"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Weekday"
+msgstr "曜日"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Working Hours"
+msgstr "稼働時間"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Total worked hours"
+msgstr "総稼働時間"
+
+#. Template: AgentTimeAccountingOverview
+msgid "User's project overview"
+msgstr "ユーザーのプロジェクト一覧"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (monthly)"
+msgstr "時間（今月）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (Lifetime)"
+msgstr "時間（通算）"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Grand total"
+msgstr "合計"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Time reporting"
+msgstr "時間会計レポート"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Month Navigation"
+msgstr "月別ナビゲーション"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Go to date"
+msgstr "日付に移動する"
+
+#. Template: AgentTimeAccountingReporting
+msgid "User reports"
+msgstr "ユーザ・レポート"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Monthly total"
+msgstr "月合計"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Lifetime total"
+msgstr "通算合計"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Overtime leave"
+msgstr "代休"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation"
+msgstr "休暇"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Sick leave"
+msgstr "病欠"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation remaining"
+msgstr "休日残日数"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Project reports"
+msgstr "プロジェクト・レポート"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Project report"
+msgstr "プロジェクト・レポート"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Go to reporting overview"
+msgstr "報告の概要に移動する"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"本プロジェクトのアクティブユーザーのみ表示しています、変更するには設定を更新"
+"してください。"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"すべてのタイムアカウントユーザーを表示しています、変更するには設定を更新して"
+"ください。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Project Settings"
+msgstr "時間会計 プロジェクト設定の編集"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add project"
+msgstr "新規プロジェクトの追加"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Go to settings overview"
+msgstr "設定に移動する"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Project"
+msgstr "新規プロジェクトの追加"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Project Settings"
+msgstr "プロジェクトの編集"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There is already a project with this name. Please, choose a different one."
+msgstr "同名のプロジェクトが存在します。名称を変更してください。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Settings"
+msgstr "設定の編集"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add task"
+msgstr "新規タスクの追加"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Filter for projects, tasks or users"
+msgstr "プロジェクト、タスク、またはユーザーのフィルタリング"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr "時間は削除できません"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Project List"
+msgstr "プロジェクト一覧"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Task List"
+msgstr "タスク一覧"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Task"
+msgstr "新規タスクの追加"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Task Settings"
+msgstr "タスク設定"
+
+#. Template: AgentTimeAccountingSetting
+msgid "There is already a task with this name. Please, choose a different one."
+msgstr "同名のタスクが存在します。名称を変更してください。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User List"
+msgstr "ユーザ一覧"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User Settings"
+msgstr "ユーザー設定"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to see overtimes"
+msgstr "ユーザーはオーバータイムを見ることができます。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Show Overtime"
+msgstr "超過勤務を表示"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr "ユーザーはプロジェクトを作成できます。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow project creation"
+msgstr "プロジェクトの新規追加を許可する"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr "ユーザーはタイムアカウンティングのスキップを許可されます。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr "タイムアカウンティングのスキップを許可する"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+"このオプションが選択されると、ユーザーに対するタイムアカウンティングがオプ"
+"ション項目扱いとなります。"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+"未入力のエントリに対する警告や、エントリへの入力を強制する表示はなくなりま"
+"す。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr "期間"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period Begin"
+msgstr "開始点"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period End"
+msgstr "終了点"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Days of Vacation"
+msgstr "休暇"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Hours per Week"
+msgstr "時間 / 週"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Authorized Overtime"
+msgstr "承認済の超過勤務"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "スタート日付"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Please insert a valid date."
+msgstr "正しい日付を入力してください"
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "終了時間"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period end must be after period begin."
+msgstr "終了点の前に開始点を設定することはできません。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr "休暇日数"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr "週あたりの時間"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "残業時間"
+
+#. Template: AgentTimeAccountingSetting
+msgid "No time periods found."
+msgstr "期間が未設定です。"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add time period"
+msgstr "期間を追加してください。"
+
+#. Template: AgentTimeAccountingView
+msgid "View Time Record"
+msgstr "タイム・レコードを表示"
+
+#. Template: AgentTimeAccountingView
+msgid "View of "
+msgstr "一覧"
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "前の日"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "次の日"
+
+#. Template: AgentTimeAccountingView
+msgid "No data found for this day."
+msgstr "該当するデータがありません。"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr "工数を挿入できません！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr "前プロジェクト"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr "不正な時間です! 1日は24時間です"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr "工数を削除できません！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"入力された日付は期間外ですので、挿入する事はできませんでした。もう一度(!)日付"
+"を入力してください。"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr "未完了の可動日"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr "入力に成功しました!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr "複数日を入力中にエラーが発生しました !"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr "複数日にわたる稼働実績の入力に成功しました !"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr "入力された日付は不正です ! 日付は本日に変更されました"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+"指定された期間が設定されていないか、または指定された日付が定義された期間外で"
+"す。"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
+msgstr "勤怠管理担当者に連絡して期間を更新してください！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr "前回選択されたプロジェクト"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr "全プロジェクト"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr "ReportingProject: プロジェクトIDの入力が必要です。"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr "プロジェクトを報告する"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "報告する"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr "ユーザー設定を更新できません！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr "プロジェクトを追加しました！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr "プロジェクトを更新しました！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr "タスクを追加しました！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr "タスクを更新しました！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr "UserID が無効です！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr "ユーザーデータが挿入できません！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr "期間を追加できません！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "設定"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr "ユーザーを更新しました！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr "ユーザーを追加しました！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr "タイムアカウンティングにユーザーを追加..."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr "新規ユーザー"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr "期間の状態"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
+msgstr "注目！： %s の入力が必要です。"
+
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr "勤務実績を入力してください"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr "未完了の可動日"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "少なくとも一日は選択してください"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "全体入力"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "欠勤理由を選択してください"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "エントリーを削除"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "挿入の確認"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"ユーザの不完全な稼働日数をカウントし通知するエージェント・インターフェイスで"
+"す。"
+
+#. SysConfig
+msgid "Default name for new actions."
+msgstr "新規操作に対するデフォルトの名称"
+
+#. SysConfig
+msgid "Default name for new projects."
+msgstr "新規プロジェクトに対するデフォルトの名称"
+
+#. SysConfig
+msgid "Default setting for date end."
+msgstr "「終了日」のデフォルト値"
+
+#. SysConfig
+msgid "Default setting for date start."
+msgstr "「開始日」のデフォルト値"
+
+#. SysConfig
+msgid "Default setting for description."
+msgstr "「説明文」のデフォルト値"
+
+#. SysConfig
+msgid "Default setting for leave days."
+msgstr "「休暇」のデフォルト値"
+
+#. SysConfig
+msgid "Default setting for overtime."
+msgstr "「超過勤務」のデフォルト値"
+
+#. SysConfig
+msgid "Default setting for the standard weekly hours."
+msgstr "週あたり基本稼働時間のデフォルト値"
+
+#. SysConfig
+msgid "Default status for new actions."
+msgstr "新規操作に対するデフォルトのステータス"
+
+#. SysConfig
+msgid "Default status for new projects."
+msgstr "新規プロジェクトに対するデフォルトのステータス"
+
+#. SysConfig
+msgid "Default status for new users."
+msgstr "新規ユーザに対するデフォルトのステータス"
+
+#. SysConfig
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"「注釈」エントリーを必要とする項目を定義します。 もしプロジェクト名がここで設"
+"定した正規表現にマッチする場合、「注釈｝は必須項目となります。※正規表現には"
+"SMXパラメータを使います。"
+
+#. SysConfig
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr "統計モジュールがタイムアカウンティング情報を生成するか選択してください"
+
+#. SysConfig
+msgid "Edit time accounting settings."
+msgstr "時間会計の設定を編集"
+
+#. SysConfig
+msgid "Edit time record."
+msgstr "タイムレコードを編集"
+
+#. SysConfig
+msgid "For how many days ago you can insert working units."
+msgstr "何日前からワーキング・ユニットの新規登録が可能であるかの設定です。"
+
+#. SysConfig
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"有効時には、該当のプロジェクトに稼働時間を投入しているユーザーのみ表示されま"
+"す"
+
+#. SysConfig
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+"有効時には、編集画面のドロップダウンエレメントは自動フィールドに置き換えられ"
+"ます。"
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"有効時には以前のプロジェクトフィルターを選択することが可能です(通常は前回およ"
+"びすべて)。この項目は TimeAccounting::EnableAutoCompletion が有効になっている"
+"時のみ利用可能"
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"有効時には「以前のプロジェクト」が存在する時は、以前のプロジェクトフィルター"
+"がデフォルト値になります。この項目は TimeAccounting::UseFilter が有効になって"
+"いる時のみ利用可能"
+
+#. SysConfig
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"有効にすれば一回の編集で、複数の日に渡り「休暇」「病欠」「代休」が選択できま"
+"す"
+
+#. SysConfig
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
+msgstr "1つ以上のワーキング・ユニットを設定すべき最大の稼働日数。"
+
+#. SysConfig
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr "警告が表示されることなくエントリ出来る、営業日の最大日数。"
+
+#. SysConfig
+msgid "Overview."
+msgstr "概要"
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr "プロジェクト別時間会計レポート"
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"プロジェクトによって行動リストを絞り込むための正規表現。「鍵」ではプロジェク"
+"トに対する正規表現を、「内容」では`行動`に対する正規表現を指定する。"
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"ユーザグループによってプロジェクトリストを絞り込むための正規表現。「鍵」では"
+"プロジェクトに対する正規表現を、「内容」ではカンマ区切りのユーザリストを指定"
+"する。"
+
+#. SysConfig
+msgid "Specifies if working hours can be inserted without start and end times."
+msgstr ""
+"業務時間を「開始時間」と「終了時間」の指定ナシで新規登録できるかどうか指定す"
+"る。"
+
+#. SysConfig
+msgid "This module forces inserts in TimeAccounting."
+msgstr "TimeAccountingモジュールと同等の項目が設定必須となります。"
+
+#. SysConfig
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"あまりにも多くの不完全な稼働日がある場合、この通知モジュールは警告を与えま"
+"す。"
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr "タイムアカウンティング"
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr "タイムアカウンティングを編集する"
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr "タイムアカウンティングの概要"
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr "タイムアカウンティングの報告"
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr "タイムアカウンティングの設定"
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr "タイムアカウンティング ビュー"
+
+#. SysConfig
+msgid "Time accounting."
+msgstr "時間会計"
+
+#. SysConfig
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、"
+"この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」"
+"に`journey`、「内容」に`50`と設定)"

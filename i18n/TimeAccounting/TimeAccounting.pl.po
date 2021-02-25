@@ -1,0 +1,875 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TimeAccounting\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTimeAccountingDelete
+msgid "Do you really want to delete the Time Accounting of this day?"
+msgstr "Czy na pewno chcesz usunąć rozliczenie czasu pracy tego dnia?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Edit Time Record"
+msgstr "Edycja ewidencji czasu pracy"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Go to settings"
+msgstr "Przejdź do ustawień"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Date Navigation"
+msgstr "Nawigacja po dacie"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Days without entries"
+msgstr "Dni bez wpisów"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Select all days"
+msgstr "Zaznacz wszystkie dni"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Mass entry"
+msgstr "Masowe wpisywanie"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please choose the reason for your absence for the selected days"
+msgstr "Proszę wybrać przyczynę nieobecności dla wybranych dni"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On vacation"
+msgstr "Urlop"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On sick leave"
+msgstr "Zwolnienie lekarskie"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On overtime leave"
+msgstr "Wolne za godziny nadliczbowe"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Required fields are marked with a \"*\"."
+msgstr "Pola wymagane oznaczone są \"*\"."
+
+#. Template: AgentTimeAccountingEdit
+msgid "You have to fill in start and end time or a time period."
+msgstr ""
+"Musisz wprowadzić czas początku i zakończenia lub określ czas trwania cylku."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Project"
+msgstr "Projekt"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Task"
+msgstr "Zadanie"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Remark"
+msgstr "Uwaga"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please add a remark with more than 8 characters!"
+msgstr "Proszę dodać uwagę zawierającą więcej niż 8 znaków!"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Negative times are not allowed."
+msgstr "Ujemne czasy są niedozwolone."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. Start time matches another interval."
+msgstr ""
+"Pokrywające się godziny nie są dozwolone. Czas rozpoczęcia pasuje do innego "
+"przedziału."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid format! Please enter a time with the format HH:MM."
+msgstr "Nieprawidłowy format! Proszę podać czas w formacie GG:MM."
+
+#. Template: AgentTimeAccountingEdit
+msgid "24:00 is only permitted as end time."
+msgstr "24:00 jest dozwolona jedynie jako czas zakończenia."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid time! A day has only 24 hours."
+msgstr "Nieprawidłowy czas! Dzień ma tylko 24 godziny."
+
+#. Template: AgentTimeAccountingEdit
+msgid "End time must be after start time."
+msgstr "Czas zakończenia musi być po czasie rozpoczęcia."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. End time matches another interval."
+msgstr ""
+"Pokrywające się godziny nie są dozwolone. Czas zakończenia pasuje do innego "
+"przedziału."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! A day has only 24 hours."
+msgstr "Nieprawidłowy czas cyklu! Dzień ma tylko 24 godziny."
+
+#. Template: AgentTimeAccountingEdit
+msgid "A valid period must be greater than zero."
+msgstr "Prawidłowy czas cyklu musi być większy od zera."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! Negative periods are not allowed."
+msgstr "Nieprawidłowy cykl! Ujemny czas cyklu nie jest dozwolony."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Add one row"
+msgstr "Dodaj wiersz"
+
+#. Template: AgentTimeAccountingEdit
+msgid "You can only select one checkbox element!"
+msgstr "Możesz zaznaczyć tylko jeden element!"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on sick leave?"
+msgstr "Czy jesteś pewien, że pracowałeś w trakcie zwolnienia lekarskiego?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on vacation?"
+msgstr "Czy jesteś pewien, że pracowałeś w trakcie urlopu?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on overtime leave?"
+msgstr "Czy jesteś pewien, że pracowałeś w trakcie wolnego za nadgodziny?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked more than 16 hours?"
+msgstr "Czy jesteś pewien, że pracowałeś więcej niż 16 godzin?"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Time reporting monthly overview"
+msgstr "Miesięczny raport czasu pracy"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (Hours)"
+msgstr "Godziny nadliczbowe"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (this month)"
+msgstr "Godziny nadliczbowe (bieżący miesiąc)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (total)"
+msgstr "Godziny nadliczbowe (łącznie)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining overtime leave"
+msgstr "Pozostałe godziny nadliczbowe do wybrania"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation (Days)"
+msgstr "Urlop (dni)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (this month)"
+msgstr "Wykorzystany urlop (bieżący miesiąc)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (total)"
+msgstr "Wykorzystany urlop (łącznie)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining vacation"
+msgstr "Urlop pozostały do wykorzystania"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick Leave (Days)"
+msgstr "Zwolnienie lekarskie (dni)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (this month)"
+msgstr "Dni zwolnienia lekarskiego (bieżący miesiąc)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (total)"
+msgstr "Dni zwolnienia lekarskiego (łącznie)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Previous month"
+msgstr "Poprzedni miesiąc"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Next month"
+msgstr "Następny miesiąc"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Weekday"
+msgstr "Dzień roboczy"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Working Hours"
+msgstr "Godziny pracy"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Total worked hours"
+msgstr "Łączna ilość przepracowanych godzin"
+
+#. Template: AgentTimeAccountingOverview
+msgid "User's project overview"
+msgstr "Opis projektu użytkownika"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (monthly)"
+msgstr "Godziny (miesięcznie)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (Lifetime)"
+msgstr "Godziny (łącznie)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Grand total"
+msgstr "Ogółem"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Time reporting"
+msgstr "Raortowanie czasu"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Month Navigation"
+msgstr "Nawigacja miesięczna"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Go to date"
+msgstr "Przejdź do daty"
+
+#. Template: AgentTimeAccountingReporting
+msgid "User reports"
+msgstr "Raporty użytkownika"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Monthly total"
+msgstr "Łącznie - miesięcznie"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Lifetime total"
+msgstr "Łącznie - ogółem"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Overtime leave"
+msgstr "Wolne za godziny nadliczbowe"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation"
+msgstr "Urlop"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Sick leave"
+msgstr "Zwolnienie lekarskie"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation remaining"
+msgstr "Urlop pozostały do wykorzystania"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Project reports"
+msgstr "Raporty projektu"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Project report"
+msgstr "Raport projektu"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Go to reporting overview"
+msgstr "Przejdź do przeglądu raportowania"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"Aktualnie widoczni są jedynie użytkownicy z tego projektu. Tutaj można to "
+"zmienić:"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"Aktualnie widoczni są wszyscy użytkownicy rozliczający czas pracy. Tutaj "
+"można to zmienić:"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Project Settings"
+msgstr "Edytuj ustawienia rozliczania czasu pracy w projekcie"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add project"
+msgstr "Dodaj projekt"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Go to settings overview"
+msgstr "Przejdź do opisu ustawień"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Project"
+msgstr "Dodaj projekt"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Project Settings"
+msgstr "Edytuj ustawienia projektu"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There is already a project with this name. Please, choose a different one."
+msgstr "Inny projekt używa już tej nazwy. Użyj innej nazwy."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Settings"
+msgstr "Edytuj ustawienia rozliczania czasu pracy"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add task"
+msgstr "Dodaj zadanie"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Filter for projects, tasks or users"
+msgstr "Filtruj projekty, zadania lub użytkowników"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr "Cykle czasu nie mogą zostać usunięte."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Project List"
+msgstr "Lista projektów"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Task List"
+msgstr "Lista zadań"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Task"
+msgstr "Dodaj zadanie"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Task Settings"
+msgstr "Edytuj ustawienia zadania"
+
+#. Template: AgentTimeAccountingSetting
+msgid "There is already a task with this name. Please, choose a different one."
+msgstr "Inne zadanie używa już tej nazwy. Użyj innej nazwy."
+
+#. Template: AgentTimeAccountingSetting
+msgid "User List"
+msgstr "Lista Użytkowników"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User Settings"
+msgstr "Ustawienia Użytkownika"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to see overtimes"
+msgstr "Użytkownik może zobaczyć nadgodziny"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Show Overtime"
+msgstr "Pokaż godziny nadliczbowe"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr "Użytkownik może tworzyć projekty"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow project creation"
+msgstr "Zezwalaj na tworzenie projektów"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr "Użytkownik może pominąć rozliczanie czasu pracy"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr "Pozwól na ominięcie rozliczania czasu pracy"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+"Jeśli ta opcja jest zaznaczona, rozliczanie czasu pracy jest nieobowiązkowe "
+"dla użytkownika."
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+"Nie będzie ostrzeżeń o brakujących jednostkach czasu oraz wymuszania wpisów."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr "Okresy Czasu"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period Begin"
+msgstr "Początek cyklu"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period End"
+msgstr "Koniec cyklu"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Days of Vacation"
+msgstr "Dni urlopu"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Hours per Week"
+msgstr "Ilość godzin w tygodniu"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Authorized Overtime"
+msgstr "Zezwól na godziny nadliczbowe"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "Data rozpoczęcia"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Please insert a valid date."
+msgstr "Proszę wprowadzić prawidłową datę."
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "Data zakończenia"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period end must be after period begin."
+msgstr "Koniec okresu musi być po jego początku."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr "Dni opuczone"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr "Tygodniowy czas pracy"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "Godziny nadliczbowe"
+
+#. Template: AgentTimeAccountingSetting
+msgid "No time periods found."
+msgstr "Nie znaleziono żadnego cyklu."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add time period"
+msgstr "Dodaj cykl"
+
+#. Template: AgentTimeAccountingView
+msgid "View Time Record"
+msgstr "Pokaż ewidencję czasu pracy"
+
+#. Template: AgentTimeAccountingView
+msgid "View of "
+msgstr "Widok "
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Poprzedni dzień"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Kolejny dzień"
+
+#. Template: AgentTimeAccountingView
+msgid "No data found for this day."
+msgstr "Brak danych dotyczących wybranego dnia."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr "Nie udało się wstawić jednostek pracy!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr "Ostatnie projekty"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr "Nie można zapisać ustawień, ponieważ doba ma tylko 24 godziny!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr "Nie udało się usunąć jednostek pracy!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+"Wprowadzona data jest poza zakresem, ale nie wprowadziłeś jeszcze tego dnia, "
+"masz więc jedyną(!) okazję"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr "Niepełne dni pracy"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr "Wprowadanie powiodło się!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr "Wystąpił błąd podczas wprowadzania wielu dat jednocześnie!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr "Pomyślnie wprowadzono wiele dat jednocześnie!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr "Wprowadzono nieprawidłową datę! Została ona zmieniona na bieżącą."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+"Nie skonfigurowano okresów czasu lub podana data leży poza zdefiniowanymi "
+"okresami."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
+msgstr ""
+"Skontaktuj się z administratorem czasu pracy w celu aktualizacji twoich "
+"okresów pracy!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr "Ostatnio wybrane projekty"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr "Wszystkie projekty"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr "Raportowanie projektu: Wymagany ProjectID"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr "Raportowanie projektu"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "Raportowanie"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr "Nie można zmienić ustawień użytkownika!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr "Projekt dodany!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr "Projekt zmieniony!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr "Zadanie dodane!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr "Zadanie zmienione!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr "Identyfikator UserID jest nieprawidłowy!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr "Nie udało się wstawić danych użytkownika!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr "Nie można dodać cyklu!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Ustawienie"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr "Użytkownik zmieniony!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr "Użytkownik dodany!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr "Dodaj użytkownika do rozliczania czasu pracy..."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr "Nowy Użytkownik"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr "Stan cyklu"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
+msgstr "Widok: Potrzebny %s!"
+
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr "Proszę wprowadzić swój czas pracy!"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr "Niepełne dni pracy"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Proszę wybrać co najmniej jeden dzień!"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "Masowe wpisywanie"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Proszę wybrać przyczynę nieobecności!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "Usuń rozliczenie czasu pracy"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "Potwierdź wpis"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"Moduł powiadamiania Agenta o liczbie dni z niekompletnym raportowaniem czasu "
+"pracy."
+
+#. SysConfig
+msgid "Default name for new actions."
+msgstr "Domyślna nazwa nowych czynności."
+
+#. SysConfig
+msgid "Default name for new projects."
+msgstr "Domyślna nazwa nowych projektów."
+
+#. SysConfig
+msgid "Default setting for date end."
+msgstr "Domyślna data zakończenia."
+
+#. SysConfig
+msgid "Default setting for date start."
+msgstr "Domyślna data rozpoczęcia."
+
+#. SysConfig
+msgid "Default setting for description."
+msgstr "Domyślne ustawienie opisu."
+
+#. SysConfig
+msgid "Default setting for leave days."
+msgstr "Domyślne konfiguracja urlopu."
+
+#. SysConfig
+msgid "Default setting for overtime."
+msgstr "Domyślne konfiguracja godzin nadliczbowych."
+
+#. SysConfig
+msgid "Default setting for the standard weekly hours."
+msgstr "Domyślna konfiguracja tygodniowego czasu pracy."
+
+#. SysConfig
+msgid "Default status for new actions."
+msgstr "Domyślny stan nowych czynności."
+
+#. SysConfig
+msgid "Default status for new projects."
+msgstr "Domyślny stan nowych projektów."
+
+#. SysConfig
+msgid "Default status for new users."
+msgstr "Domyślny stan nowych użytkowników."
+
+#. SysConfig
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"Określa projekty, które wymagają dodawania komentarzy. Jeżeli wyrażenie "
+"regularne pasuje do projektu, trzeba dodać komentarz. Wyrażenia regularne "
+"korzystają z parametrów serwera makr (SMX)."
+
+#. SysConfig
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+"Określa, czy moduł statystyczny może generować informacje o rozliczeniach "
+"czasu pracy."
+
+#. SysConfig
+msgid "Edit time accounting settings."
+msgstr "Edytuj ustawienia rozliczania czasu pracy."
+
+#. SysConfig
+msgid "Edit time record."
+msgstr "Edycja ewidencji czasu pracy."
+
+#. SysConfig
+msgid "For how many days ago you can insert working units."
+msgstr "Liczba dni wstecz, dla których można rozliczać czas pracy."
+
+#. SysConfig
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"Jeśli aktywne, widoczni są tylko użytkownicy, którzy rozliczyli czas pracy w "
+"wybranym projekcie."
+
+#. SysConfig
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+"Przy włączonej opcji, elementy rozwijane w oknie edycji będą zastąpione "
+"polami z automatycznym uzupełnianiem."
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+"Przy włączonej opcji, można użyć filtrów, użytych w poprzednich projektach, "
+"zamiast stosować dwie listy projektów (ostatniego i wszystkich). Niezbędne "
+"jest uruchomienie opcji TimeAccounting::EnableAutoCompletion."
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+"Jeśli aktywne, filtry użyte w poprzednich projektach są domyślnie aktywne "
+"(jeśli takie projekty istnieją). Niezbędne jest uruchomienie opcji "
+"EnableAutoCompletion oraz TimeAccounting::UseFilter."
+
+#. SysConfig
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"Jeśli aktywne, użytkownik może ustawić \"urlop\", \"zwolnienie lekarskie\" "
+"oraz \"wolne za nadgodziny\" dla wielu dni jednocześnie."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
+msgstr ""
+"Maksymalna liczba dni roboczych, w ciągu których należy uzupełnić czas pracy."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+"Maksymalna liczba dni roboczych, bez uzupełniania czasu pracy, po których "
+"pokazane zostanie ostrzeżenie."
+
+#. SysConfig
+msgid "Overview."
+msgstr "Przegląd."
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr "Raportowanie czasu projektu."
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"Wyrażenia regularne do ograniczenia listy zadań wybranych projektów. Klucz "
+"zawiera wyrażenie regularne dla projektu(ów), zawartość określa wyrażenie "
+"regularne dla akcji."
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"Wyrażenia regularne do ograniczenia listy projektów wybranych grup "
+"użytkowników. Klucz zawiera wyrażenie regularne dla projektu(ów), zawartość "
+"zawiera listę grup rozdzielonych przecinkami."
+
+#. SysConfig
+msgid "Specifies if working hours can be inserted without start and end times."
+msgstr ""
+"Określa, czy czas pracy może zostać wprowadzony bez podawania czasu "
+"rozpoczęcia oraz zakończenia."
+
+#. SysConfig
+msgid "This module forces inserts in TimeAccounting."
+msgstr "Ten moduł wymusza uzupełnianie rozliczeń czasu pracy."
+
+#. SysConfig
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr "Moduł ten ostrzega o zbyt dużej liczbie nierozliczonych dni roboczych."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr "Rozliczanie czasu pracy"
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr "Edycja rozliczeń czasu pracy."
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr "Opis rozliczania czasu pracy."
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr "Raportowanie rozliczeń czasu pracy."
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr "Konfiguracja rozliczeń czasu pracy."
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr "Przegląd rozliczeń czasu pracy."
+
+#. SysConfig
+msgid "Time accounting."
+msgstr "Rozliczanie czasu pracy."
+
+#. SysConfig
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"Wykorzystywane jeżeli któreś zadania redukują godziny pracy (np. jeśli za "
+"czasu dojazdu liczona jest tylko połowa czasy; Klucz => dojazd; Wartość => "
+"50)."

@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Frontend::Module###AgentTimeAccountingEdit" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Time accounting edit.</Item>
+                    <Item Key="NavBarName">TimeAccounting</Item>
+                    <Item Key="Title" Translatable="1">Edit</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTimeAccountingEdit###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>TimeAccounting.Defaults.css</Item>
+                        <Item>TimeAccounting.Table.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>TimeAccounting.Agent.js</Item>
+                        <Item>TimeAccounting.Agent.ConfirmationDialog.js</Item>
+                        <Item>TimeAccounting.Agent.EditTimeRecords.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingEdit###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Time accounting.</Item>
+                        <Item Key="Name" Translatable="1">Time Accounting</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingEdit</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block">ItemArea</Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">6000</Item>
+                    </Hash>
+                </Item>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Edit time record.</Item>
+                        <Item Key="Name" Translatable="1">Edit</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingEdit</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">200</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTimeAccountingOverview" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Time accounting overview.</Item>
+                    <Item Key="NavBarName">TimeAccounting</Item>
+                    <Item Key="Title" Translatable="1">Overview</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTimeAccountingOverview###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>TimeAccounting.Defaults.css</Item>
+                        <Item>TimeAccounting.Table.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingOverview###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Overview.</Item>
+                        <Item Key="Name" Translatable="1">Overview</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingOverview</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">100</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTimeAccountingSetting" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Time accounting settings.</Item>
+                    <Item Key="NavBarName">TimeAccounting</Item>
+                    <Item Key="Title" Translatable="1">Settings</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTimeAccountingSetting###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>TimeAccounting.Defaults.css</Item>
+                        <Item>TimeAccounting.Table.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>TimeAccounting.Agent.js</Item>
+                        <Item>TimeAccounting.Agent.ConfirmationDialog.js</Item>
+                        <Item>TimeAccounting.Agent.EditTimeRecords.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingSetting###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>admin</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Edit time accounting settings.</Item>
+                        <Item Key="Name" Translatable="1">Settings</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingSetting</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">900</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTimeAccountingReporting" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Time accounting reporting.</Item>
+                    <Item Key="NavBarName">TimeAccounting</Item>
+                    <Item Key="Title" Translatable="1">Reporting</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTimeAccountingReporting###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>TimeAccounting.Defaults.css</Item>
+                        <Item>TimeAccounting.Table.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>TimeAccounting.Agent.Reporting.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingReporting###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>admin</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Project time reporting.</Item>
+                        <Item Key="Name" Translatable="1">Reporting</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingReporting</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">500</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTimeAccountingView" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Time accounting view.</Item>
+                    <Item Key="NavBarName">TimeAccounting</Item>
+                    <Item Key="Title" Translatable="1">View</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTimeAccountingView###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>TimeAccounting.Defaults.css</Item>
+                        <Item>TimeAccounting.Table.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingView###002-TimeAccounting" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
+        <Description Translatable="1">Default name for new projects.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultProjectStatus" Required="1" Valid="1">
+        <Description Translatable="1">Default status for new projects.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="1">
+                <Item ValueType="Option" Value="0" Translatable="1">invalid</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">valid</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultActionName" Required="1" Valid="1">
+        <Description Translatable="1">Default name for new actions.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultActionStatus" Required="1" Valid="1">
+        <Description Translatable="1">Default status for new actions.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="1">
+                <Item ValueType="Option" Value="0" Translatable="1">invalid</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">valid</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultUserWeeklyHours" Required="1" Valid="1">
+        <Description Translatable="1">Default setting for the standard weekly hours.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">40</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultUserLeaveDays" Required="1" Valid="1">
+        <Description Translatable="1">Default setting for leave days.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">23</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultUserOvertime" Required="1" Valid="1">
+        <Description Translatable="1">Default setting for overtime.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultUserDateStart" Required="1" Valid="1">
+        <Description Translatable="1">Default setting for date start.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="Date" ValueRegex="">2019-01-01</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultUserDateEnd" Required="1" Valid="1">
+        <Description Translatable="1">Default setting for date end.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="Date" ValueRegex="">2019-12-31</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultUserDescription" Required="1" Valid="1">
+        <Description Translatable="1">Default setting for description.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Put your description here.</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::DefaultUserStatus" Required="1" Valid="1">
+        <Description Translatable="1">Default status for new users.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="1">
+                <Item ValueType="Option" Value="0" Translatable="1">invalid</Item>
+                <Item ValueType="Option" Value="1" Translatable="1">valid</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::MaxIntervalOfIncompleteDays" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of working days after which the working units have to be inserted.</Description>
+        <Navigation>Core::TimeAccounting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">4</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of working days without working units entry after which a warning will be shown.</Description>
+        <Navigation>Core::TimeAccounting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">2</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::NotifyModule###888-TimeAccounting" Required="1" Valid="1">
+        <Description Translatable="1">This notification module gives a warning if there are too many incomplete working days.</Description>
+        <Navigation>Frontend::Agent::FrontendNotification</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Notification::TimeAccounting</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::MaxAllowedInsertDays" Required="1" Valid="1">
+        <Description Translatable="1">For how many days ago you can insert working units.</Description>
+        <Navigation>Core::TimeAccounting</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">10</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::ReduceTime" Required="0" Valid="1">
+        <Description Translatable="1">To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key =&gt; traveling; Content =&gt; 50).</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="traveling">50</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::InputHoursWithoutStartEndTime" Required="0" Valid="1">
+        <Description Translatable="1">Specifies if working hours can be inserted without start and end times.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PreApplicationModule###AgentTimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">This module forces inserts in TimeAccounting.</Description>
+        <Navigation>Frontend::Base::PreApplicationModule</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::AgentTimeAccountingEdit</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::Project2RemarkRegExp" Required="0" Valid="1">
+        <Description Translatable="1">Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">^(?: PROJECT\# | INFRA: | PRODUCT: )</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::ProjectListConstraints" Required="0" Valid="1">
+        <Description Translatable="1">Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::ActionListConstraints" Required="0" Valid="1">
+        <Description Translatable="1">Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::EnableAutoCompletion" Required="0" Valid="1">
+        <Description Translatable="1">If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::UseFilter" Required="0" Valid="1">
+        <Description Translatable="1">If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::ActiveFilter" Required="0" Valid="1">
+        <Description Translatable="1">If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::AllowMassEntryForUser" Required="0" Valid="1">
+        <Description Translatable="1">If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.</Description>
+        <Navigation>Frontend::Agent::View::TimeAccountingEdit</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays" Required="0" Valid="1">
+        <Description Translatable="1">Agent interface notification module to see the number of incomplete working days for the user.</Description>
+        <Navigation>Frontend::Agent::ToolBar</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::IncompleteWorkingDays</Item>
+                <Item Key="CssClass">IncompleteWorkingDays</Item>
+                <Item Key="Icon">fa fa-clock-o</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::DynamicObjectRegistration###TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Determines if the statistics module may generate time accounting information.</Description>
+        <Navigation>Core::Stats</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::TimeAccounting</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="TimeAccounting::Frontend::ReportingProject###ShowOnlyActiveUsers" Required="0" Valid="1">
+        <Description Translatable="1">If enabled, only users that has added working time to the selected project are shown.</Description>
+        <Navigation>Core::TimeAccounting::ViewReportingProject</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+</otrs_config>
