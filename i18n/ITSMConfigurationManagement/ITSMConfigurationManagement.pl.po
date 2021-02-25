@@ -1,0 +1,1249 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ITSMConfigurationManagement\n"
+"POT-Creation-Date: 2020-09-22 13:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AdminITSMConfigItem
+msgid "Config Item Management"
+msgstr "Zarządzanie CI"
+
+#. Template: AdminITSMConfigItem
+msgid "Change class definition"
+msgstr "Zmień definicję klasy"
+
+#. Template: AdminITSMConfigItem
+msgid "Config Item Class"
+msgstr "Klasa CI"
+
+#. Template: AdminITSMConfigItem
+msgid "Definition"
+msgstr "Definicja"
+
+#. Template: AdminITSMConfigItem
+msgid "Change"
+msgstr "Zmiana"
+
+#. Template: AgentDashboardITSMConfigItemGeneric
+msgid "Incident State"
+msgstr "Stan zdarzenia"
+
+#. Template: AgentDashboardITSMConfigItemGeneric
+msgid "Deployment State"
+msgstr "Stan wdrożenia"
+
+#. Template: AgentDashboardITSMConfigItemGeneric
+msgid "Class"
+msgstr "Klasa"
+
+#. Template: AgentDashboardITSMConfigItemGeneric
+msgid "Deployment State Type"
+msgstr "Typ stanu wdrożenia"
+
+#. Template: AgentDashboardITSMConfigItemGeneric
+msgid "Current Incident State"
+msgstr "Aktualny stan"
+
+#. Template: AgentDashboardITSMConfigItemGeneric
+msgid "Current Incident State Type"
+msgstr "Aktualny typ stanu"
+
+#. Template: AgentDashboardITSMConfigItemGeneric
+msgid "Last changed"
+msgstr "Ostatnio zmienione"
+
+#. Template: AgentITSMConfigItemAdd
+msgid "Config Item"
+msgstr "CI"
+
+#. Template: AgentITSMConfigItemAdd
+msgid "Filter for Classes"
+msgstr "Filtr dla klas"
+
+#. Template: AgentITSMConfigItemAdd
+msgid "Select a Class from the list to create a new Config Item."
+msgstr "Zaznacz klasę na liście aby utworzyć nowe CI."
+
+#. Template: AgentITSMConfigItemBulk
+msgid "ITSM ConfigItem Bulk Action"
+msgstr "Akcja grupowa na CI"
+
+#. Template: AgentITSMConfigItemBulk
+msgid "Deployment state"
+msgstr "Stan wdrożenia"
+
+#. Template: AgentITSMConfigItemBulk
+msgid "Incident state"
+msgstr "Stan zdarzenia"
+
+#. Template: AgentITSMConfigItemBulk
+msgid "Link to another"
+msgstr "Połącz z innym"
+
+#. Template: AgentITSMConfigItemBulk
+msgid "Invalid Configuration Item number!"
+msgstr "Nieprawidłowy numer CI!"
+
+#. Template: AgentITSMConfigItemBulk
+msgid "The number of another Configuration Item to link with."
+msgstr ""
+
+#. Template: AgentITSMConfigItemDelete
+msgid "Do you really want to delete this config item?"
+msgstr ""
+
+#. Template: AgentITSMConfigItemEdit
+msgid "The name of this config item"
+msgstr "Nazwa tego CI"
+
+#. Template: AgentITSMConfigItemEdit
+msgid ""
+"Name is already in use by the ConfigItems with the following Number(s): %s"
+msgstr "Nazwa jest już używana przez CI o następujących numerach: %s"
+
+#. Template: AgentITSMConfigItemHistory
+msgid "History of Config Item: %s"
+msgstr ""
+
+#. Template: AgentITSMConfigItemHistory
+msgid "History Content"
+msgstr "Zawartość historii"
+
+#. Template: AgentITSMConfigItemHistory
+msgid "Createtime"
+msgstr "Utworzone"
+
+#. Template: AgentITSMConfigItemHistory
+msgid "Zoom view"
+msgstr "Widok szczegółowy"
+
+#. Template: AgentITSMConfigItemOverviewNavBar
+msgid "Context Settings"
+msgstr "Ustawienia kontekstu"
+
+#. Template: AgentITSMConfigItemOverviewNavBar
+msgid "Config Items per page"
+msgstr "Liczba CI na stronie"
+
+#. Template: AgentITSMConfigItemOverviewSmall
+msgid "A generic ITSM Configuration Item table"
+msgstr ""
+
+#. Template: AgentITSMConfigItemSearch
+msgid "Run Search"
+msgstr "Uruchom wyszukiwanie"
+
+#. Template: AgentITSMConfigItemSearch
+msgid "Also search in previous versions?"
+msgstr "Uwzględnić poprzednie wersje?"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Configuration Item"
+msgstr "CI"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Configuration Item Information"
+msgstr "Informacje o CI"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Current Deployment State"
+msgstr "Aktualny stan wdrożenia"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Last changed by"
+msgstr "Ostatnio zmienione przez"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Show one version"
+msgstr "Pokaż jedną wersję!"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Show all versions"
+msgstr "Pokaż wszystkie wersje"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Version Incident State"
+msgstr "Stan"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Version Deployment State"
+msgstr "Stan wdrożenia wersji"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Version Number"
+msgstr "Wersja"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Configuration Item Version Details"
+msgstr "Szczegóły wersji CI"
+
+#. Template: AgentITSMConfigItemZoom
+msgid "Property"
+msgstr "Właściwość"
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItem.pm
+msgid "No access to Class is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItem.pm
+msgid "Overview: ITSM ConfigItem"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemBulk.pm
+msgid "No ConfigItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemBulk.pm
+msgid "You need at least one selected Configuration Item!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemBulk.pm
+msgid "You don't have write access to this configuration item: %s."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemDelete.pm
+msgid "Config item \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemDelete.pm
+msgid "Was not able to delete the configitem ID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemDelete.pm
+msgid "No version found for ConfigItemID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemEdit.pm
+msgid "No ConfigItemID, DuplicateID or ClassID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemEdit.pm
+msgid "No access is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemEdit.pm
+msgid "No definition was defined for class %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Can't show history, no ConfigItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Can't show history, no access rights given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "New ConfigItem (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "New version (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Deployment state updated (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Incident state updated (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "ConfigItem (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Link to %s (type=%s) added"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Link to %s (type=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "ConfigItem definition updated (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Name updated (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Attribute %s updated from \"%s\" to \"%s\""
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemHistory.pm
+msgid "Version %s deleted"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemPrint.pm
+msgid "No ConfigItemID or VersionID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemPrint.pm
+msgid "Can't show config item, no access rights given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemPrint.pm
+msgid "ConfigItemID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemPrint.pm
+msgid "VersionID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemPrint.pm
+msgid "ConfigItem"
+msgstr "CI"
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemPrint.pm
+msgid "printed by %s at %s"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemSearch.pm
+msgid "Invalid ClassID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemSearch.pm
+msgid "No ClassID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemSearch.pm
+msgid "No access rights for this class given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemSearch.pm
+msgid "No Result!"
+msgstr "Brak Wyników!"
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemSearch.pm
+msgid "Config Item Search Results"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemZoom.pm
+msgid "Can't show item, no access rights for ConfigItem are given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemZoom.pm
+msgid "operational"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemZoom.pm
+msgid "warning"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemZoom.pm
+msgid "incident"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemZoom.pm
+msgid "The deployment state of this config item"
+msgstr "Stan wdrożenia tego CI"
+
+#. Perl Module: Kernel/Modules/AgentITSMConfigItemZoom.pm
+msgid "The incident state of this config item"
+msgstr "Stan zdarzenia tego CI"
+
+#. Perl Module: Kernel/Output/HTML/Dashboard/ITSMConfigItemGeneric.pm
+msgid "Shown config items"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ITSMConfigItem/LayoutDate.pm
+msgid "Between"
+msgstr "Pomiędzy"
+
+#. Perl Module: Kernel/System/ImportExport/ObjectBackend/ITSMConfigItem.pm
+msgid "Maximum number of one element"
+msgstr "Maksymalna liczba wystąpień pojednyczego elemetntu"
+
+#. Perl Module: Kernel/System/ImportExport/ObjectBackend/ITSMConfigItem.pm
+msgid "Empty fields indicate that the current values are kept"
+msgstr "Puste pola znaczają, że zatrzymane będą bieżące wartości"
+
+#. Perl Module: Kernel/System/ImportExport/ObjectBackend/ITSMConfigItem.pm
+msgid "Skipped"
+msgstr "Pominięte"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Model"
+msgstr "Model"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Customer Company"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Serial Number"
+msgstr "Numer seryjny"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "CPU"
+msgstr "Procesor"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Ram"
+msgstr "RAM"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Hard Disk"
+msgstr "Dysk twardy"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Capacity"
+msgstr "Pojemność"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Network Adapter"
+msgstr "Karta sieciowa"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "IP over DHCP"
+msgstr "Adres IP z DHCP"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "IP Address"
+msgstr "Adres IP"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Graphic Adapter"
+msgstr "Karta graficzna"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Other Equipment"
+msgstr "Pozostałe wyposażenie"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Warranty Expiration Date"
+msgstr "Data wygaśnięcia gwarancji"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Install Date"
+msgstr "Data instalacji"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Phone 1"
+msgstr "Telefon 1"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Phone 2"
+msgstr "Telefon 2"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "E-Mail"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Network Address"
+msgstr "Adres sieciowy"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Subnet Mask"
+msgstr "Maska sieci"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Gateway"
+msgstr "Brama"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Licence Type"
+msgstr "Typ licencji"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Licence Key"
+msgstr "Klucz licencyjny"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Quantity"
+msgstr "Ilość"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Expiration Date"
+msgstr "Data wygaśnięcia"
+
+#. Perl Module: var/packagesetup/ITSMConfigurationManagement.pm
+msgid "Media"
+msgstr "Nośnik"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Computer"
+msgstr ""
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Hardware"
+msgstr ""
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Network"
+msgstr ""
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Software"
+msgstr ""
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Expired"
+msgstr "Wygasło"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Maintenance"
+msgstr "Utrzymanie"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Pilot"
+msgstr "Pilotaż"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Planned"
+msgstr "Planowany"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Repair"
+msgstr "Naprawa"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Retired"
+msgstr "Wycofany"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Review"
+msgstr "Przegląd"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Test/QA"
+msgstr "Test/QA"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Laptop"
+msgstr "Laptop"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Desktop"
+msgstr "Desktop"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "PDA"
+msgstr "PDA"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Server"
+msgstr "Serwer"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Other"
+msgstr "Inne"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Monitor"
+msgstr "Monitor"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Printer"
+msgstr "Drukarka"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Switch"
+msgstr "Switch"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Router"
+msgstr "Ruter"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "WLAN Access Point"
+msgstr "Access Point"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Security Device"
+msgstr "Urządzenie zabezpieczające"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Backup Device"
+msgstr "Urządzenie do tworzenia kopii zapasowej"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Mouse"
+msgstr "Myszka"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Keyboard"
+msgstr "Klawiatura"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Camera"
+msgstr "Kamera"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Beamer"
+msgstr "Projektor"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Modem"
+msgstr "Modem"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "PCMCIA Card"
+msgstr "Karta PCMCIA"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "USB Device"
+msgstr "Urządzenie USB"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Docking Station"
+msgstr "Stacja dokująca"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Scanner"
+msgstr "Skaner"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Building"
+msgstr "Budynek"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Office"
+msgstr "Biuro"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Floor"
+msgstr "Piętro"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Room"
+msgstr "Pokój"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Rack"
+msgstr "Rack"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Workplace"
+msgstr "Miejsce pracy"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Outlet"
+msgstr "Punkt sprzedaży"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "IT Facility"
+msgstr "Dział IT"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "LAN"
+msgstr "LAN"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "WLAN"
+msgstr "WLAN"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Telco"
+msgstr "Telco"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "GSM"
+msgstr "GSM"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Client Application"
+msgstr "Aplikacja kliencka"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Middleware"
+msgstr "Middleware"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Server Application"
+msgstr "Aplikacja serwerowa"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Client OS"
+msgstr "System kliencki"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Server OS"
+msgstr "System serwerowy"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Admin Tool"
+msgstr "Narzędzie administratora"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "User Tool"
+msgstr "Narzędzie Użytkownika"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Embedded"
+msgstr "Osadzony"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Single Licence"
+msgstr "Pojedyńcza licencja"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Per User"
+msgstr "Na Użytkownika"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Per Processor"
+msgstr "Na procesor"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Per Server"
+msgstr "Na serwer"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Per Node"
+msgstr "Na urządzenie"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Volume Licence"
+msgstr "Zbiorcza licencja"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Enterprise Licence"
+msgstr "Licencja Enterprise"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Developer Licence"
+msgstr "Licencja developerska"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Demo"
+msgstr "Demo"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Time Restricted"
+msgstr "Czasowo ograniczona"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Freeware"
+msgstr "Freeware"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Open Source"
+msgstr "Open source"
+
+#. Database XML / SOPM Definition: ITSMConfigurationManagement.sopm
+msgid "Unlimited"
+msgstr "Bez limitu"
+
+#. JS File: ITSM.Agent.ConfigItem.Zoom
+msgid "Ok"
+msgstr "Ok"
+
+#. SysConfig
+msgid "Assigned CIs"
+msgstr ""
+
+#. SysConfig
+msgid "CIs assigned to customer company"
+msgstr ""
+
+#. SysConfig
+msgid "CIs assigned to customer user"
+msgstr ""
+
+#. SysConfig
+msgid "CMDB Settings"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Check for a unique name only within the same ConfigItem class ('class') or "
+"globally ('global'), which means every existing ConfigItem is taken into "
+"account when looking for duplicates."
+msgstr ""
+
+#. SysConfig
+msgid "Config Items"
+msgstr ""
+
+#. SysConfig
+msgid "Config item add."
+msgstr ""
+
+#. SysConfig
+msgid "Config item edit."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Config item event module that enables logging to history in the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid "Config item history."
+msgstr ""
+
+#. SysConfig
+msgid "Config item print."
+msgstr ""
+
+#. SysConfig
+msgid "Config item zoom."
+msgstr ""
+
+#. SysConfig
+msgid "ConfigItemNumber"
+msgstr ""
+
+#. SysConfig
+msgid "Configuration Item Limit"
+msgstr "Limit liczby CI"
+
+#. SysConfig
+msgid "Configuration Item limit per page."
+msgstr ""
+
+#. SysConfig
+msgid "Configuration Management Database."
+msgstr ""
+
+#. SysConfig
+msgid "Configuration item bulk module."
+msgstr ""
+
+#. SysConfig
+msgid "Configuration item search backend router of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage the definitions for Configuration Items."
+msgstr "Tworzenie i zarządzanie definicjami elementów konfiguracji."
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines Required permissions to create ITSM configuration items using the "
+"Generic Interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines Required permissions to delete ITSM configuration items using the "
+"Generic Interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines Required permissions to get ITSM configuration items using the "
+"Generic Interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines Required permissions to search ITSM configuration items using the "
+"Generic Interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines Required permissions to update ITSM configuration items using the "
+"Generic Interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines an overview module to show the small view of a configuration item "
+"list."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines regular expressions individually for each ConfigItem class to check "
+"the ConfigItem name and to show corresponding error messages."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default subobject of the class 'ITSMConfigItem'."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the number of rows for the CI definition editor in the admin "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the order of incident states from high (e.g. cricital) to low (e.g. "
+"functional)."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the relevant deployment states where linked tickets can affect the "
+"status of a CI."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the search limit for the AgentITSMConfigItem screen."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the search limit for the AgentITSMConfigItemSearch screen."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the config item overview. This option has no "
+"effect on the position of the column. Note: Class column is always available "
+"if filter 'All' is selected."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the config item search. This option has no "
+"effect on the position of the column."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns of CIs in the config item overview depending on "
+"the CI class. Each entry must be prefixed with the class name and double "
+"colons (i.e. Computer::). There are a few CI-Attributes that are common to "
+"all CIs (example for the class Computer: Computer::Name, Computer::"
+"CurDeplState, Computer::CreateTime). To show individual CI-Attributes as "
+"defined in the CI-Definition, the following scheme must be used (example for "
+"the class Computer): Computer::HardDisk::1, Computer::HardDisk::1::"
+"Capacity::1, Computer::HardDisk::2, Computer::HardDisk::2::Capacity::1. If "
+"there is no entry for a CI class, then the default columns are shown as "
+"defined in the setting ITSMConfigItem::Frontend::"
+"AgentITSMConfigItem###ShowColumns."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns of CIs in the config item search depending on the "
+"CI class. Each entry must be prefixed with the class name and double colons "
+"(i.e. Computer::). There are a few CI-Attributes that are common to all CIs "
+"(example for the class Computer: Computer::Name, Computer::CurDeplState, "
+"Computer::CreateTime). To show individual CI-Attributes as defined in the CI-"
+"Definition, the following scheme must be used (example for the class "
+"Computer): Computer::HardDisk::1, Computer::HardDisk::1::Capacity::1, "
+"Computer::HardDisk::2, Computer::HardDisk::2::Capacity::1. If there is no "
+"entry for a CI class, then the default columns are shown as defined in the "
+"setting ITSMConfigItem::Frontend::AgentITSMConfigItem###ShowColumns."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns of CIs in the config item widget depending on the "
+"CI class. Each entry must be prefixed with the class name and double colons "
+"(i.e. Computer::). There are a few CI-Attributes that are common to all CIs "
+"(example for the class Computer: Computer::Name, Computer::CurDeplState, "
+"Computer::CreateTime). To show individual CI-Attributes as defined in the CI-"
+"Definition, the following scheme must be used (example for the class "
+"Computer): Computer::HardDisk::1, Computer::HardDisk::1::Capacity::1, "
+"Computer::HardDisk::2, Computer::HardDisk::2::Capacity::1. If there is no "
+"entry for a CI class, then the default columns are shown as defined in the "
+"setting AgentCustomerInformationCenter::Backend###0060-CIC-"
+"ITSMConfigItemCustomerCompany (key DefaultColumns)."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns of CIs in the link table complex view for all CI "
+"classes. If there is no entry, then the default columns are shown."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns of CIs in the link table complex view, depending "
+"on the CI class. Each entry must be prefixed with the class name and double "
+"colons (i.e. Computer::). There are a few CI-Attributes that common to all "
+"CIs (example for the class Computer: Computer::Name, Computer::CurDeplState, "
+"Computer::CreateTime). To show individual CI-Attributes as defined in the CI-"
+"Definition, the following scheme must be used (example for the class "
+"Computer): Computer::HardDisk::1, Computer::HardDisk::1::Capacity::1, "
+"Computer::HardDisk::2, Computer::HardDisk::2::Capacity::1. If there is no "
+"entry for a CI class, then the default columns are shown."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines which type of link (named from the ticket perspective) can affect "
+"the status of a linked CI."
+msgstr ""
+
+#. SysConfig
+msgid "Defines which type of ticket can affect the status of a linked CI."
+msgstr ""
+
+#. SysConfig
+msgid "Delete Configuration Item"
+msgstr ""
+
+#. SysConfig
+msgid "Deployment State Color"
+msgstr ""
+
+#. SysConfig
+msgid "Duplicate"
+msgstr "Duplikat"
+
+#. SysConfig
+msgid ""
+"Enables configuration item bulk action feature for the agent frontend to "
+"work on more than one configuration item at a time."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables configuration item bulk action feature only for the listed groups."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables/disables the functionality to check ConfigItems for unique names. "
+"Before enabling this option you should check your system for already "
+"existing config items with duplicate names. You can do this with the script "
+"bin/otrs.ITSMConfigItemListDuplicates.pl."
+msgstr ""
+
+#. SysConfig
+msgid "Event module to set configitem-status on ticket-configitem-link."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM config item overview."
+msgstr ""
+
+#. SysConfig
+msgid "Module to check the group responsible for a class."
+msgstr ""
+
+#. SysConfig
+msgid "Module to check the group responsible for a configuration item."
+msgstr ""
+
+#. SysConfig
+msgid "Module to generate ITSM config item statistics."
+msgstr ""
+
+#. SysConfig
+msgid "Object backend module registration for the import/export module."
+msgstr ""
+
+#. SysConfig
+msgid "Overview."
+msgstr "Przegląd."
+
+#. SysConfig
+msgid ""
+"Parameters for the dashboard backend of the customer company config item "
+"overview of the agent interface . \"Limit\" is the number of entries shown "
+"by default. \"Group\" is used to restrict the access to the plugin (e. g. "
+"Group: admin;group1;group2;). \"Default\" determines if the plugin is "
+"enabled by default or if the user needs to enable it manually. "
+"\"CacheTTLLocal\" is the cache time in minutes for the plugin."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Parameters for the deployment states color in the preferences view of the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Parameters for the deployment states in the preferences view of the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Parametry dla przykładowych grup uprawnień atrybutów katalogu głównego."
+
+#. SysConfig
+msgid "Parameters for the pages (in which the configuration items are shown)."
+msgstr ""
+
+#. SysConfig
+msgid "Permission Group"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Required permissions to use the ITSM configuration item screen in the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Required permissions to use the ITSM configuration item search screen in the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Required permissions to use the ITSM configuration item zoom screen in the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Required permissions to use the add ITSM configuration item screen in the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Required permissions to use the edit ITSM configuration item screen in the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Required permissions to use the history ITSM configuration item screen in "
+"the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Required permissions to use the print ITSM configuration item screen in the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Required privileges to delete config items."
+msgstr ""
+
+#. SysConfig
+msgid "Search config items."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Selects the configuration item number generator module. \"AutoIncrement\" "
+"increments the configuration item number, the SystemID, the "
+"ConfigItemClassID and the counter are used. The format is \"SystemID."
+"ConfigItemClassID.Counter\", e.g. 1205000004, 1205000005."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Set the incident state of a CI automatically when a Ticket is Linked to a CI."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Sets the deployment state in the configuration item bulk screen of the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Sets the incident state in the configuration item bulk screen of the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a configuration item with "
+"another object in the config item zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a configuration item in "
+"the configuration item overview of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a configuration item in "
+"the its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to delete a configuration item in its zoom view of "
+"the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to duplicate a configuration item in the "
+"configuration item overview of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to duplicate a configuration item in the its zoom "
+"view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a configuration item in the its zoom view "
+"of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the configuration item zoom view of "
+"the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a configuration item in the its zoom view "
+"of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to zoom into a configuration item in the "
+"configuration item overview of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows the config item history (reverse ordered) in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"The identifier for a configuration item, e.g. ConfigItem#, MyConfigItem#. "
+"The default is ConfigItem#."
+msgstr ""
+
+#. SysConfig
+msgid "class"
+msgstr ""
+
+#. SysConfig
+msgid "global"
+msgstr ""
+
+#. SysConfig
+msgid "postproductive"
+msgstr ""
+
+#. SysConfig
+msgid "preproductive"
+msgstr ""
+
+#. SysConfig
+msgid "productive"
+msgstr ""
