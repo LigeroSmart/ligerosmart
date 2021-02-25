@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ITSMServiceLevelManagement</Name>
+<!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
+    <Version>6.0.30</Version>
+    <Framework Minimum="6.0.30">6.0.x</Framework>
+    <PackageRequired Version="6.0.30">ITSMCore</PackageRequired>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">The OTRS::ITSM Service Level Management package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Service Level Management Paket.</Description>
+    <Description Lang="es">El paquete OTRS::ITSM Service Level Management.</Description>
+    <Description Lang="hu">Az OTRS::ITSM szolgáltatásszint-menedzsment csomag.</Description>
+    <Filelist>
+        <File Permission="660" Location="var/stats/ITSMStats-001-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-002-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-003-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-004-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-005-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-006-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-007-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-008-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-009-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-010-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-011-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-012-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-013-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-014-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-015-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-016-Ticket.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-100-ITSMConfigItem.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-101-ITSMConfigItem.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-102-ITSMConfigItem.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-103-ITSMConfigItem.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-200-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-201-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-202-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-203-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-204-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-205-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-206-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-207-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-208-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-209-ITSMTicketFirstLevelSolutionRate.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-300-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-301-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-302-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-303-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-304-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-305-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-306-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-307-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-308-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-309-ITSMTicketSolutionTimeAverage.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-400-ITSMChangeManagement.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-401-ITSMChangeManagement.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-402-ITSMChangeManagement.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-403-ITSMChangeManagement.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-404-ITSMChangeManagement.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-405-ITSMChangeManagement.xml" />
+        <File Permission="660" Location="var/stats/ITSMStats-406-ITSMChangeManagement.xml" />
+        <File Permission="660" Location="var/packagesetup/ITSMServiceLevelManagement.pm" />
+    </Filelist>
+    <CodeInstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+
+
+    ]]></CodeInstall>
+    <CodeUpgrade Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+
+    ]]></CodeUpgrade>
+    <CodeReinstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+
+    ]]></CodeReinstall>
+    <CodeUninstall Type="pre"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+
+    ]]></CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package ITSMServiceLevelManagement.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu installieren.<br>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted esta apunto de instalar el paquete ITSMServiceLevelManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMServiceLevelManagement OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>NOTICE</strong>
+        <br/>
+        <br/>
+        The statistics that were installed by this package will be available in the menu item 'Stats'.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>HINWEIS</strong>
+        <br/>
+        <br/>
+        Im Menü-Punkt 'Statistik' sind die von diesem Paket installierten Statistiken verfügbar.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>NOTA</strong>
+        <br/>
+        <br/>
+        Las estadísticas que serán instaladas mediante este paquete estarán disponibles en el menú 'Stats'.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELMEZTETÉS</strong>
+        <br/>
+        <br/>
+        A csomag által telepített statisztikák a „Statisztikák” menüpontban lesznek elérhetők.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package ITSMServiceLevelManagement.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted esta apunto de actualizar el paquete ITSMServiceLevelManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMServiceLevelManagement OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        The statistics that are associated with this package, will no longer be available if the package is uninstalled.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>ACHTUNG</strong>
+        <br/>
+        <br/>
+        Nach der Deinstallation sind die von diesem Paket installierten Statistiken nicht mehr verfügbar.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Az ehhez a csomaghoz hozzárendelt statisztikák többé nem lesznek elérhetők, ha a csomag eltávolításra kerül.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+</otrs_package>
