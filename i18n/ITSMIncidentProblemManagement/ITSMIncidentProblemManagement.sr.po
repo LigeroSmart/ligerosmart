@@ -1,0 +1,489 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ITSMIncidentProblemManagement\n"
+"POT-Creation-Date: 2020-01-24 14:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTicketOverviewMedium
+msgid "Criticality"
+msgstr "Значај"
+
+#. Template: AgentTicketOverviewMedium
+msgid "Impact"
+msgstr "Утицај"
+
+#. JS Template: ServiceIncidentState
+msgid "Service Incident State"
+msgstr "Стање инцидента сервиса"
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Link ticket"
+msgstr "Повежи тикет"
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change Decision of %s%s%s"
+msgstr "Измена одлуке за %s%s%s"
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change ITSM fields of %s%s%s"
+msgstr "Измена ITSM поља за %s%s%s"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Review Required"
+msgstr "Обавезна рецензија"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Result"
+msgstr "Резултат oдлуке"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Approved"
+msgstr "Одобрено"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Postponed"
+msgstr "Одложено"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Pre-approved"
+msgstr "Унапред одобрено"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Rejected"
+msgstr "Одбијено"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Repair Start Time"
+msgstr "Време почетка поправке"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Recovery Start Time"
+msgstr "Време почетка опоравка"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Date"
+msgstr "Датум Одлуке"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Due Date"
+msgstr "Рок"
+
+#. Database XML Definition: ITSMIncidentProblemManagement.sopm
+msgid "closed with workaround"
+msgstr "затворено са алтернативним решењем"
+
+#. SysConfig
+msgid "Add a decision!"
+msgstr "Додај одлуку!"
+
+#. SysConfig
+msgid "Additional ITSM Fields"
+msgstr "Додатна ITSM поља"
+
+#. SysConfig
+msgid "Additional ITSM ticket fields."
+msgstr "Додатна ITSM поља тикета."
+
+#. SysConfig
+msgid ""
+"Allows adding notes in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Дозвољава додавање напомена на екрану додатних ITSM поља у интерфејсу "
+"оператера."
+
+#. SysConfig
+msgid "Allows adding notes in the decision screen of the agent interface."
+msgstr "Дозвољава додавање напомена на екрану одлуке интерфејса оператера."
+
+#. SysConfig
+msgid ""
+"Allows defining new types for ticket (if ticket type feature is enabled)."
+msgstr ""
+"Дозвољава дефинисање новог типа тикета (ако је опција типа тикета "
+"активирана)."
+
+#. SysConfig
+msgid "Change the ITSM fields!"
+msgstr "Измените ITSM поља!"
+
+#. SysConfig
+msgid "Decision"
+msgstr "Одлука"
+
+#. SysConfig
+msgid ""
+"Defines if a ticket lock is required in the additional ITSM field screen of "
+"the agent interface (if the ticket isn't locked yet, the ticket gets locked "
+"and the current agent will be set automatically as its owner)."
+msgstr ""
+"Одређује да ли је неопходно закључавање тикета на екрану додатних ITSM поља "
+"у интерфејсу оператера (ако тикет још увек није закључан, тикет ће добити "
+"статус закључан и тренутни оператер ће бити аутоматски постављен као "
+"власник)."
+
+#. SysConfig
+msgid ""
+"Defines if a ticket lock is required in the decision screen of the agent "
+"interface (if the ticket isn't locked yet, the ticket gets locked and the "
+"current agent will be set automatically as its owner)."
+msgstr ""
+"Одређује да ли је неопходно закључавање тикета на екрану одлуке у интерфејсу "
+"оператера (ако тикет још увек није закључан, тикет ће добити статус закључан "
+"и тренутни оператер ће бити аутоматски постављен као власник)."
+
+#. SysConfig
+msgid ""
+"Defines if the service incident state should be shown during service "
+"selection in the agent interface."
+msgstr ""
+"Одређује да ли ће статус инцидента сервиса бити приказан током избора "
+"сервиса у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default body of a note in the additional ITSM field screen of "
+"the agent interface."
+msgstr ""
+"Одређује подразумевани садржај напомене на екрану додатних ITSM поља у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default body of a note in the decision screen of the agent "
+"interface."
+msgstr ""
+"Одређује подразумевани садржај напомене на екрану одлуке у интерфејсу "
+"оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"additional ITSM field screen of the agent interface."
+msgstr ""
+"Одређује подразумевани наредни статус тикета после додавања напомене, на "
+"екрану додатних ITSM поља у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default next state of a ticket after adding a note, in the "
+"decision screen of the agent interface."
+msgstr ""
+"Одређује подразумевани наредни статус тикета после додавања напомене, на "
+"екрану одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default subject of a note in the additional ITSM field screen of "
+"the agent interface."
+msgstr ""
+"Одређује подразумевани предмет напомене, на екрану додатних ITSM поља у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default subject of a note in the decision screen of the agent "
+"interface."
+msgstr ""
+"Одређује подразумевани предмет напомене, на екрану одлуке у интерфејсу "
+"оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default ticket priority in the additional ITSM field screen of "
+"the agent interface."
+msgstr ""
+"Одређује подразумевани приоритет тикета, на екрану додатних ITSM поља у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Defines the default ticket priority in the decision screen of the agent "
+"interface."
+msgstr ""
+"Одређује подразумевани приоритет тикета на екрану одлуке у интерфејсу "
+"оператера."
+
+#. SysConfig
+msgid ""
+"Defines the history comment for the additional ITSM field screen action, "
+"which gets used for ticket history."
+msgstr ""
+"Одређује коментар за историјат за акцију на екрану додатних ITSM поља које "
+"ће се користити за историјат тикета."
+
+#. SysConfig
+msgid ""
+"Defines the history comment for the decision screen action, which gets used "
+"for ticket history."
+msgstr ""
+"Одређује коментар за историјат на екрану одлуке који ће се користити за "
+"историјат тикета."
+
+#. SysConfig
+msgid ""
+"Defines the history type for the additional ITSM field screen action, which "
+"gets used for ticket history."
+msgstr ""
+"Одређује тип историјата за акцију на екрану додатних ITSM поља које ће се "
+"користити за историјат тикета."
+
+#. SysConfig
+msgid ""
+"Defines the history type for the decision screen action, which gets used for "
+"ticket history."
+msgstr ""
+"Одређује тип историјата на акцију на екрану одлуке који ће се користити за "
+"историјат тикета."
+
+#. SysConfig
+msgid ""
+"Defines the next state of a ticket after adding a note, in the additional "
+"ITSM field screen of the agent interface."
+msgstr ""
+"Дефинише следећи статус тикета након додавања напомене на екрану додатних "
+"ITSM поља у интерфејсу оператера"
+
+#. SysConfig
+msgid ""
+"Defines the next state of a ticket after adding a note, in the decision "
+"screen of the agent interface."
+msgstr ""
+"Дефинише следећи статус тикета након додавања напомене на екрану одлуке у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Динамичка поља приказана у екрану додатних ITSM поља у интерфејсу оператера."
+
+#. SysConfig
+msgid "Dynamic fields shown in the decision screen of the agent interface."
+msgstr "Динамичка поља приказана у екрану одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
+msgstr ""
+"Динамичка поља приказана у детаљном прегледу тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Enables the stats module to generate statistics about the average of ITSM "
+"ticket first level solution rate."
+msgstr ""
+"Активира статистички модул за генерисање статистике о просеку решавања ITSM "
+"тикета на првом нивоу."
+
+#. SysConfig
+msgid ""
+"Enables the stats module to generate statistics about the average of ITSM "
+"ticket solution."
+msgstr ""
+"Активира статистички модул за генерисање статистике о просеку решавања ITSM "
+"тикета."
+
+#. SysConfig
+msgid ""
+"If a note is added by an agent, sets the state of a ticket in the additional "
+"ITSM field screen of the agent interface."
+msgstr ""
+"Ако је оператер додао напомену, подешава статус тикета на екрану додатних "
+"ITSM поља у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"If a note is added by an agent, sets the state of a ticket in the decision "
+"screen of the agent interface."
+msgstr ""
+"Ако је оператер додао напомену, подешава статус тикета на екрану одлуке у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Modifies the display order of the dynamic field ITSMImpact and other things."
+msgstr "Мења редослед приказа динамичког поља ITSMImpact и друге ствари."
+
+#. SysConfig
+msgid ""
+"Module to dynamically show the service incident state and to calculate the "
+"priority."
+msgstr ""
+"Модул за динамички приказ стања инцидента сервиса и израчунавање приоритета."
+
+#. SysConfig
+msgid ""
+"Required permissions to use the additional ITSM field screen in the agent "
+"interface."
+msgstr ""
+"Потребне дозволе за употребу екрана додатних ITSM поља у интерфејсу "
+"оператера."
+
+#. SysConfig
+msgid "Required permissions to use the decision screen in the agent interface."
+msgstr "Потребне дозволе за употребу екрана одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid "Service Incident State and Priority Calculation"
+msgstr "Прорачун приоритета и стања инцидента сервиса"
+
+#. SysConfig
+msgid ""
+"Sets the service in the additional ITSM field screen of the agent interface "
+"(Ticket::Service needs to be activated)."
+msgstr ""
+"Подешава сервис на екрану додатних ITSM поља у интерфејсу оператера (Ticket::"
+"Service мора бити активиран)."
+
+#. SysConfig
+msgid ""
+"Sets the service in the decision screen of the agent interface (Ticket::"
+"Service needs to be activated)."
+msgstr ""
+"Подешава сервис на екрану одлуке у интерфејсу оператера (Ticket::Service "
+"мора бити активиран)."
+
+#. SysConfig
+msgid ""
+"Sets the service in the ticket priority screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+"Подешава сервис на екрану приоритета тикета у интерфејсу оператера "
+"(неопходно је укључити Ticket::Service)."
+
+#. SysConfig
+msgid ""
+"Sets the ticket owner in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Одређује власника тикета на екрану додатних ITSM поља у интерфејсу оператера."
+
+#. SysConfig
+msgid "Sets the ticket owner in the decision screen of the agent interface."
+msgstr "Одређује власника тикета на екрану одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Sets the ticket responsible in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Одређује одговорног за тикет на екрану додатних ITSM поља у интерфејсу "
+"оператера."
+
+#. SysConfig
+msgid ""
+"Sets the ticket responsible in the decision screen of the agent interface."
+msgstr "Одређује одговорног за тикет на екрану одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Sets the ticket type in the additional ITSM field screen of the agent "
+"interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Подешава тип тикета на екрану додатних ITSM поља у интерфејсу оператера "
+"(Ticket::Type мора бити активиран)."
+
+#. SysConfig
+msgid ""
+"Sets the ticket type in the decision screen of the agent interface (Ticket::"
+"Type needs to be activated)."
+msgstr ""
+"Подешава тип тикета на екрану одлуке у интерфејсу оператера (Ticket::Type "
+"мора бити активиран)."
+
+#. SysConfig
+msgid ""
+"Sets the ticket type in the ticket priority screen of a zoomed ticket in the "
+"agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+"Одређује тип тикета на екрану приоритета тикета у интерфејсу оператера "
+"(Ticket::Type треба да буде укључено)."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to change the decision of a ticket in its zoom view "
+"of the agent interface."
+msgstr ""
+"У менију приказује везу за промену одлуке тикета на детаљном приказу у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to modify additional ITSM fields in the ticket zoom "
+"view of the agent interface."
+msgstr ""
+"У менију приказује везу за промену додатних ITSM поља на детаљном приказу у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the additional "
+"ITSM field screen of the agent interface."
+msgstr ""
+"Приказује листу свих укључених оператера на овај тикет на екрану додатних "
+"ITSM поља у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a list of all the involved agents on this ticket, in the decision "
+"screen of the agent interface."
+msgstr ""
+"Приказује листу свих укључених оператера на овај тикет на екрану одлуке у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the additional ITSM field screen of the agent interface."
+msgstr ""
+"Приказује листу свих могућих оператера (сви оператери са дозволом за "
+"напомену за ред/тикет) ради утврђивања ко треба да буде информисан о овој "
+"напомени, на екрану додатних ITSM поља тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a list of all the possible agents (all agents with note permissions on "
+"the queue/ticket) to determine who should be informed about this note, in "
+"the decision screen of the agent interface."
+msgstr ""
+"Приказује листу свих могућих оператера (сви оператери са дозволом за "
+"напомену за ред/тикет) ради утврђивања ко треба да буде информисан о овој "
+"напомени, на екрану одлуке тикета у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows the ticket priority options in the additional ITSM field screen of the "
+"agent interface."
+msgstr ""
+"Приказује опције приоритета за тикет на екрану додатних ITSM поља у "
+"интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows the ticket priority options in the decision screen of the agent "
+"interface."
+msgstr ""
+"Приказује опције приоритета за тикет на екрану одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows the title fields in the additional ITSM field screen of the agent "
+"interface."
+msgstr ""
+"Приказује поља наслова на екрану додатних ITSM поља у интерфејсу оператера."
+
+#. SysConfig
+msgid "Shows the title fields in the decision screen of the agent interface."
+msgstr "Приказује поља наслова на екрану одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid "Ticket decision."
+msgstr "Одлука тикета."
