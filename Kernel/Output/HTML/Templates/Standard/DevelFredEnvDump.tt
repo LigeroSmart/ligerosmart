@@ -1,0 +1,40 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+<div class="DevelFredBox">
+    <h1>
+        Environment Variables
+        <span class="FredToolBar">
+            <i class="fa fa-search FredSearch" title="Search"></i>
+            <i class="fa fa-minus FredMinimize" title="Minimize"></i>
+            <i class="fa fa-times FredClose" title="Close"></i>
+        </span>
+    </h1>
+    <div class="DevelFredBoxContent" id="DevelFredEnvDump">
+        <div class="FredQuickSearch">
+            <input type="text" placeholder="Search for..." />
+            <i class="fa fa-times"></i>
+        </div>
+        <table class="FredTableDefault">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+[% RenderBlockStart("EnvDataRow") %]
+            <tr>
+                <td>[% Data.Key | html %]</td>
+                <td>[% Data.Value | html %]</td>
+            </tr>
+[% RenderBlockEnd("EnvDataRow") %]
+            <tr class="Hidden FilterMessage">
+                <td colspan="2">No Items found.</td>
+            </tr>
+        </table>
+    </div>
+</div>

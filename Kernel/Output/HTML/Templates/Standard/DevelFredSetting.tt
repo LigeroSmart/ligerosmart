@@ -1,0 +1,32 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<div class="DevelFredSettings">
+    <h1>Fred Settings</h1>
+    <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="DevelFredSetting">
+        <input type="hidden" name="Action" value="DevelFred" />
+        <input type="hidden" name="Subaction" value="SettingAction" />
+        <ul class="FredSettings">
+[% RenderBlockStart("FredModule") %]
+            <li>
+                <label for="[% Data.FredModule | html %]">
+                    <input type="checkbox" name="FredModule" id="[% Data.FredModule | html %]" value="[% Data.FredModule | html %]" [% Data.Checked %]/>
+                    [% Data.FredModule | html %]
+                    <span>
+                        [% Data.Description %]
+                    </span>
+                </label>
+[% RenderBlockStart("Config") %]
+                <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.ModuleName %];SysConfigGroup=Fred" title="Settings" class="FredSettingsLink" target="_blank"><i class="fa fa-cog"></i></a>
+[% RenderBlockEnd("Config") %]
+            </li>
+[% RenderBlockEnd("FredModule") %]
+        </ul>
+        <button type="submit" class="CallForAction" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
+    </form>
+</div>

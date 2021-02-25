@@ -1,0 +1,83 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<!-- nofilter(TidyAll::Plugin::OTRS::TT::ScriptUsage) -->
+
+<div class="DevelFredBox">
+    <h1>
+        Configuration Switch
+        <span class="FredToolBar">
+            <i class="fa fa-search FredSearch" title="Toggle Search Bar"></i>
+            <i class="fa fa-minus FredMinimize" title="Minimize"></i>
+            <i class="fa fa-times FredClose" title="Close"></i>
+        </span>
+    </h1>
+    <div class="DevelFredBoxContent" id="DevelFredConfigSwitch">
+        <div class="FredQuickSearch">
+            <input type="text" placeholder="Search for..." />
+            <i class="fa fa-times"></i>
+        </div>
+        <table class="FredTableDefault FredSwitchTable">
+        [% FOREACH Item IN Data.ConfigItems %]
+            <tr>
+                <td class="FredSwitch [% IF Item.Value == 1 %]On[% END %]">
+                    <a href="#" data-key="[% Item.Key | html %]" data-value="[% Item.Value | html %]" title="Switch this setting"><span></span></a>
+                </td>
+                <td>[% Item.Key | html %]</td>
+            </tr>
+        [% END %]
+            <tr class="Hidden FilterMessage">
+                <td colspan="4">No Items found.</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- js_on_document_complete -->
+<script>
+'use strict';
+$('.FredSwitch a').unbind('click').bind('click', function(Event) {
+
+    var Key = $(this).data('key'),
+        Value = parseInt($(this).data('value'), 10),
+        Data = {};
+
+    if (!Key) {
+        return false;
+    }
+
+    $(this)
+        .parent()
+        .toggleClass('On');
+
+    $(this)
+        .parent()
+        .next('td')
+        .prepend('<i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;');
+
+    Data = {
+        Action: 'DevelFred',
+        Subaction: 'ConfigSwitchAJAX',
+        'Key': Key,
+        'Value': Value
+    };
+
+    Core.AJAX.FunctionCall(
+        Core.Config.Get('Baselink'),
+        Data,
+        function(Response) {
+            location.reload(true);
+        },
+        'json'
+    );
+
+    return false;
+
+});
+</script>
+<!-- js_on_document_complete -->
