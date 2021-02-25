@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ImportExport\n"
+"POT-Creation-Date: 2020-01-24 10:41+0000\n"
+"PO-Revision-Date: 2020-02-27 08:19+0000\n"
+"Last-Translator: Yuri Myasoedov <myasoedovys@gmail.com>\n"
+"Language-Team: Russian <https://translate.app.otrs.com/projects/otrs-6/"
+"import-export/ru/>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10.3\n"
+
+#. Template: AdminImportExport
+msgid "Import/Export Management"
+msgstr "Управление Импортом/Экспортом"
+
+#. Template: AdminImportExport
+msgid "Add template"
+msgstr "Добавить шаблон"
+
+#. Template: AdminImportExport
+msgid "Create a template to import and export object information."
+msgstr "Создайте шаблон для импорта и экспорта информации объектов"
+
+#. Template: AdminImportExport
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Start Import"
+msgstr "Начать импорт"
+
+#. Template: AdminImportExport
+msgid "Start Export"
+msgstr "Начать экспорт"
+
+#. Template: AdminImportExport
+msgid "Delete this template"
+msgstr "Удалить этот шаблон"
+
+#. Template: AdminImportExport
+msgid "Step 1 of 5 - Edit common information"
+msgstr "Шаг 1 из 5 — изменить общую информацию"
+
+#. Template: AdminImportExport
+msgid "Name is required!"
+msgstr "Требуется имя!"
+
+#. Template: AdminImportExport
+msgid "Object is required!"
+msgstr "Объект обязателен!"
+
+#. Template: AdminImportExport
+msgid "Format is required!"
+msgstr "Формат обязателен!"
+
+#. Template: AdminImportExport
+msgid "Step 2 of 5 - Edit object information"
+msgstr "Шаг 2 из 5 — изменить информацию об объекте"
+
+#. Template: AdminImportExport
+msgid "Step 3 of 5 - Edit format information"
+msgstr "Шаг 3 из 5 — изменить формат информации"
+
+#. Template: AdminImportExport
+msgid "is required!"
+msgstr "обязателен!"
+
+#. Template: AdminImportExport
+msgid "Step 4 of 5 - Edit mapping information"
+msgstr "Шаг 4 из 5 — изменить информацию о сопоставлении"
+
+#. Template: AdminImportExport
+msgid "No map elements found."
+msgstr "Элементы для сопоставления не найдены."
+
+#. Template: AdminImportExport
+msgid "Add Mapping Element"
+msgstr "Добавьте элемент сопоставления"
+
+#. Template: AdminImportExport
+msgid "Step 5 of 5 - Edit search information"
+msgstr "Шаг 5 из 5 — изменить информацию поиска"
+
+#. Template: AdminImportExport
+msgid "Restrict export per search"
+msgstr "Ограничить экспорт поиском"
+
+#. Template: AdminImportExport
+msgid "Import information"
+msgstr "Информация об импорте"
+
+#. Template: AdminImportExport
+msgid "Source File"
+msgstr "Исходный файл"
+
+#. Template: AdminImportExport
+msgid "Import summary for %s"
+msgstr "Импорт содержания для %s"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Записей"
+
+#. Template: AdminImportExport
+msgid "Success"
+msgstr "Успешно"
+
+#. Template: AdminImportExport
+msgid "Duplicate names"
+msgstr "Дублирующие имена"
+
+#. Template: AdminImportExport
+msgid "Last processed line number of import file"
+msgstr "Номер последней обработанной строки импортируемого файла"
+
+#. Template: AdminImportExport
+msgid "Ok"
+msgstr "Ok"
+
+#. Template: AdminImportExport
+msgid "Do you really want to delete this template item?"
+msgstr "Действительно удалть этот шаблон?"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No object backend found!"
+msgstr "Объект не найден!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No format backend found!"
+msgstr "Бэкэнд не найден!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template not found!"
+msgstr "Шаблон не найден!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Can't insert/update template!"
+msgstr "Невозможно добавить/обновить шаблон!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Needed TemplateID!"
+msgstr "Требуется ID Шаблона!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Import impossible! See Syslog for details."
+msgstr "Ошибка. Импорт невозможен! Смотри подробности в Syslog."
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Export impossible! See Syslog for details."
+msgstr "Ошибка. Экспорт невозможен! Смотри подробности в Syslog."
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr "Список шаблонов"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number"
+msgstr "номер"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number bigger than zero"
+msgstr "номер больше нуля"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer"
+msgstr "целое число"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer bigger than zero"
+msgstr "целое число больше нуля"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Element required, please insert data"
+msgstr "Обязательные элемент, пожалуйста введите данные."
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Invalid data, please insert a valid %s"
+msgstr "Неверные данные, пожалуйста, укажите верные %s"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Format not found!"
+msgstr "Формат не найден!"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Разделитель"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Табуляция (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Точка с запятой (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Двоеточие (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Точка (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr "Запятая (,)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Кодировка"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Включить заголовки столбцов"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Столбец "
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Deleting template..."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Template was deleted successfully."
+msgstr ""
+
+#. SysConfig
+msgid "Format backend module registration for the import/export module."
+msgstr "Format backend module registration для модуля import/export."
+
+#. SysConfig
+msgid "Import and export object information."
+msgstr "Импорт и экспорт информации об объектах"
+
+#. SysConfig
+msgid "Import/Export"
+msgstr "Импорт/Экспорт"

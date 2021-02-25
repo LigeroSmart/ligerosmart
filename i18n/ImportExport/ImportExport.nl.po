@@ -1,0 +1,255 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ImportExport\n"
+"POT-Creation-Date: 2020-01-24 10:41+0000\n"
+"PO-Revision-Date: 2020-03-04 21:49+0000\n"
+"Last-Translator: Nick van der Burg <nmp.vanderburg@gmail.com>\n"
+"Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/import-"
+"export/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.11.2\n"
+
+#. Template: AdminImportExport
+msgid "Import/Export Management"
+msgstr "Import/Export Management"
+
+#. Template: AdminImportExport
+msgid "Add template"
+msgstr "Sjabloon toevoegen"
+
+#. Template: AdminImportExport
+msgid "Create a template to import and export object information."
+msgstr "Maak een sjabloon om objectinformatie te importeren en exporteren."
+
+#. Template: AdminImportExport
+msgid ""
+"To use this module, you need to install ITSMConfigurationManagement or any "
+"other package that provides back end for objects to be imported and exported."
+msgstr ""
+"Om deze module te gebruiken, moet u ITSMConfigurationManagement of een ander "
+"pakket installeren dat back-end biedt voor objecten die moeten worden "
+"geïmporteerd en geëxporteerd."
+
+#. Template: AdminImportExport
+msgid "Start Import"
+msgstr "Import starten"
+
+#. Template: AdminImportExport
+msgid "Start Export"
+msgstr "Export starten"
+
+#. Template: AdminImportExport
+msgid "Delete this template"
+msgstr "Verwijder deze sjabloon"
+
+#. Template: AdminImportExport
+msgid "Step 1 of 5 - Edit common information"
+msgstr "Stap 1 van 5 - Bewerk algemene informatie"
+
+#. Template: AdminImportExport
+msgid "Name is required!"
+msgstr "Naam is verplicht!"
+
+#. Template: AdminImportExport
+msgid "Object is required!"
+msgstr "Object is verplicht!"
+
+#. Template: AdminImportExport
+msgid "Format is required!"
+msgstr "Formaat is vereist!"
+
+#. Template: AdminImportExport
+msgid "Step 2 of 5 - Edit object information"
+msgstr "Stap 2 van 5 - Bewerk objectinformatie"
+
+#. Template: AdminImportExport
+msgid "Step 3 of 5 - Edit format information"
+msgstr "Stap 3 van 5 - Bewerk fromaatinformatie"
+
+#. Template: AdminImportExport
+msgid "is required!"
+msgstr "is verplicht!"
+
+#. Template: AdminImportExport
+msgid "Step 4 of 5 - Edit mapping information"
+msgstr "Stap 4 van 5 - Bewerk de toewijzingsinformatie"
+
+#. Template: AdminImportExport
+msgid "No map elements found."
+msgstr "Geen toewijzingselementen gevonden."
+
+#. Template: AdminImportExport
+msgid "Add Mapping Element"
+msgstr "Toewijzingselement toevoegen"
+
+#. Template: AdminImportExport
+msgid "Step 5 of 5 - Edit search information"
+msgstr "Stap 5 van 5 - Bewerk zoekinformatie"
+
+#. Template: AdminImportExport
+msgid "Restrict export per search"
+msgstr "Export beperken met zoeken"
+
+#. Template: AdminImportExport
+msgid "Import information"
+msgstr "Importinformatie"
+
+#. Template: AdminImportExport
+msgid "Source File"
+msgstr "Bron bestand"
+
+#. Template: AdminImportExport
+msgid "Import summary for %s"
+msgstr "Importeer samenvatting voor %s"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Records"
+
+#. Template: AdminImportExport
+msgid "Success"
+msgstr "Succes"
+
+#. Template: AdminImportExport
+msgid "Duplicate names"
+msgstr "Dubbele namen"
+
+#. Template: AdminImportExport
+msgid "Last processed line number of import file"
+msgstr "Laatst verwerkte regelnummer van importbestand"
+
+#. Template: AdminImportExport
+msgid "Ok"
+msgstr "Ok"
+
+#. Template: AdminImportExport
+msgid "Do you really want to delete this template item?"
+msgstr "Wilt u dit sjabloonitem echt verwijderen?"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No object backend found!"
+msgstr "Geen object-backend gevonden!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No format backend found!"
+msgstr "Geen formaat-backend gevonden!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template not found!"
+msgstr "Sjabloon niet gevonden!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Can't insert/update template!"
+msgstr "Kan sjabloon niet invoegen/bijwerken!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Needed TemplateID!"
+msgstr "TemplateID nodig!"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Import impossible! See Syslog for details."
+msgstr "Fout opgetreden. Import onmogelijk! Zie Syslog voor details."
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Export impossible! See Syslog for details."
+msgstr "Fout opgetreden. Export onmogelijk! Zie Syslog voor details."
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr "Sjabloonlijst"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number"
+msgstr "Getal"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number bigger than zero"
+msgstr "getal groter dan nul"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer"
+msgstr "geheel getal"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer bigger than zero"
+msgstr "geheel getal groter dan nul"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Element required, please insert data"
+msgstr "Element vereist, voer gegevens in"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Invalid data, please insert a valid %s"
+msgstr "Ongeldige gegevens, voer een geldige %s in"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Format not found!"
+msgstr "Formaat niet gevonden!"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Kolomscheidingsteken"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Tabulator (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Puntkomma (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Dubbele punt (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Punt (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr "Komma (,)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Tekenset"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Kolomkoppen opnemen"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Kolom"
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Deleting template..."
+msgstr "Sjabloon verwijderen..."
+
+#. JS File: ITSM.Admin.ImportExport
+msgid ""
+"There was an error deleting the template. Please check the logs for more "
+"information."
+msgstr ""
+"Er is een fout opgetreden bij het verwijderen van de sjabloon. Controleer de "
+"logboeken voor meer informatie."
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Template was deleted successfully."
+msgstr "Sjabloon is succesvol verwijderd."
+
+#. SysConfig
+msgid "Format backend module registration for the import/export module."
+msgstr "Formaat backend module registratie voor de import/export module."
+
+#. SysConfig
+msgid "Import and export object information."
+msgstr "Objectinformatie importeren en exporteren."
+
+#. SysConfig
+msgid "Import/Export"
+msgstr "Importeren/Exporteren"
