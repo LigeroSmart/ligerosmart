@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="CloneDB::TargetDBSettings" Required="0" Valid="1">
+        <Description Translatable="1">Settings for connecting with the target database.</Description>
+        <Navigation>Core::OTRSCloneDB</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="TargetDatabaseHost">localhost</Item>
+                <Item Key="TargetDatabaseType" ValueType="Select" SelectedID='mysql'>
+                    <Item ValueType="Option" Value="mssql">MS SQL</Item>
+                    <Item ValueType="Option" Value="mysql">MySQL</Item>
+                    <Item ValueType="Option" Value="oracle">Oracle</Item>
+                    <Item ValueType="Option" Value="postgresql">PostgreSQL</Item>
+                </Item>
+                <Item Key="TargetDatabase">target</Item>
+                <Item Key="TargetDatabaseUser">user</Item>
+                <Item Key="TargetDatabasePw" ValueType="Password">password</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CloneDB::SkipTables" Required="0" Valid="1">
+        <Description Translatable="1">List of tables should be skipped, perhaps internal DB tables. Please use lowercase.</Description>
+        <Navigation>Core::OTRSCloneDB</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="otrsclonedb_example_skip_table">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CloneDB::BlobColumns" Required="0" Valid="1">
+        <Description Translatable="1">This setting specifies which table columns contain blob data as these need special treatment.</Description>
+        <Navigation>Core::OTRSCloneDB</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="article_data_mime_plain.body">1</Item>
+                <Item Key="article_data_mime_attachment.content">1</Item>
+                <Item Key="virtual_fs_db.content">1</Item>
+                <Item Key="web_upload_cache.content">1</Item>
+                <Item Key="standard_attachment.content">1</Item>
+                <Item Key="faq_attachment.content">1</Item>
+                <Item Key="change_template.content">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CloneDB::CheckEncodingColumns" Required="0" Valid="1">
+        <Description Translatable="1">Specifies which columns should be checked for valid UTF-8 source data.</Description>
+        <Navigation>Core::OTRSCloneDB</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="article_data_mime.a_body">1</Item>
+                <Item Key="article_data_mime_attachment.filename">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CloneDB::LogFile" Required="1" Valid="1">
+        <Description Translatable="1">Log file for replacement of malformed UTF-8 data values.</Description>
+        <Navigation>Core::OTRSCloneDB</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">/tmp/OTRSCloneDB.log</Item>
+        </Value>
+    </Setting>
+</otrs_config>

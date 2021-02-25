@@ -1,0 +1,35 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRSCloneDB\n"
+"POT-Creation-Date: 2020-01-24 14:03+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. SysConfig
+msgid ""
+"List of tables should be skipped, perhaps internal DB tables. Please use "
+"lowercase."
+msgstr "列表內的資料表應該略過，可能是內部DB的資料表。請使用小寫。"
+
+#. SysConfig
+msgid "Log file for replacement of malformed UTF-8 data values."
+msgstr "用於替換格式錯誤的UTF-8資料的Log文件。"
+
+#. SysConfig
+msgid "Settings for connecting with the target database."
+msgstr "資料庫連線設定。"
+
+#. SysConfig
+msgid "Specifies which columns should be checked for valid UTF-8 source data."
+msgstr "指定哪些列應該檢查來源為UTF-8的資料"
+
+#. SysConfig
+msgid ""
+"This setting specifies which table columns contain blob data as these need "
+"special treatment."
+msgstr "此設定指定表格列的blob資料需要特殊處理。"

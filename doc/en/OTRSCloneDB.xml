@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+
+<book lang='en'>
+
+<!--
+************************************** Head ***********************************************
+-->
+
+<bookinfo>
+    <title>$Name</title>
+    <edition>$Description Version $Version</edition>
+
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
+
+    <date>$DateStamp</date>
+
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            This work is copyrighted by $Vendor, Zimmersmühlenweg 11, 61440 Oberursel, Germany.
+        </para>
+        <para>Build Date: $DateStamp</para>
+    </legalnotice>
+</bookinfo>
+
+<!--
+************************************ Customer part ******************************************
+-->
+
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
+    <title>Preface</title>
+    <para>
+        This package provides the 'OTRSCloneDB' feature.
+    </para>
+    <para>
+        It clones an OTRS source database into a target database, possibly on a different RDBMS.
+    </para>
+    <para>
+        If you have questions regarding this document or if you need further information, please log in to our customer portal at portal.otrs.com with your OTRS ID and create a ticket.
+        You do not have an OTRS ID yet? Register
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">here for free</ulink>.
+    </para>
+</preface>
+
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
+<chapter>
+    <title>Feature List</title>
+    <section>
+        <title>Clone DB</title>
+        <para>
+            This script clones an OTRS database into an empty target database, even
+            on another database platform. It will dynamically get the list of tables in the
+            source DB, and copy the data of each table to the target DB.
+        </para>
+    </section>
+</chapter>
+
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- **********************-->
+<chapter>
+    <title>System Requirements</title>
+    <section>
+        <title>Framework</title>
+        <para>The following OTRS Framework is required:</para>
+        <para>$Framework</para>
+    </section>
+    <section>
+        <title>Packages</title>
+        <para>The following packages are required:</para>
+        <para>$PackageRequired</para>
+    </section>
+    <section>
+        <title>Operating System</title>
+        <para>
+            This package requires one of the following operating systems:
+        </para>
+        <para>$OS</para>
+    </section>
+    <section>
+        <title>Third Party Software</title>
+        <para>
+            This third party software is required to use this package:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>None.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</chapter>
+
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
+<chapter>
+    <title>Installation</title>
+    <para>The following instructions explain how to install the package.</para>
+    <section>
+        <title>Admin Interface</title>
+        <para>
+            Please use the following URL to install the package utilizing the Admin Interface
+            (please note that you need to be in the "admin" group).
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
+        </para>
+    </section>
+    <section>
+        <title>Command Line</title>
+        <para>
+            Whenever you cannot use the Admin Interface for whatever reason, you may use the
+            following command line tool ("bin/otrs.Console.pl Admin::Package::Install") instead.
+        </para>
+        <para>
+            <screen>
+shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
+            </screen>
+        </para>
+    </section>
+</chapter>
+
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
+<chapter>
+    <title>Configuration</title>
+    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
+    <section>
+        <title>CloneDB::BlobColumns.</title>
+        <para>Navigation: Core::OTRSCloneDB.</para>
+        <para>This setting specifies which table columns contain blob data as these need special treatment.</para>
+    </section>
+    <section>
+        <title>CloneDB::CheckEncodingColumns.</title>
+        <para>Navigation: Core::OTRSCloneDB.</para>
+        <para>Specifies which columns should be checked for valid UTF-8 source data.</para>
+    </section>
+    <section>
+        <title>CloneDB::LogFile.</title>
+        <para>Navigation: Core::OTRSCloneDB.</para>
+        <para>Log file for replacement of malformed UTF-8 data values.</para>
+    </section>
+    <section>
+        <title>CloneDB::SkipTables.</title>
+        <para>Navigation: Core::OTRSCloneDB.</para>
+        <para>List of tables should be skipped, perhaps internal DB tables. Please use lowercase.</para>
+    </section>
+    <section>
+        <title>CloneDB::TargetDBSettings.</title>
+        <para>Navigation: Core::OTRSCloneDB.</para>
+        <para>Settings for connecting with the target database.</para>
+    </section>
+</chapter>
+
+
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
+<chapter>
+    <title>Usage</title>
+        <section>
+            <title>Cloning a Database</title>
+            <para>
+                The goal of this example is to clone current database into another database engine.
+            </para>
+            <orderedlist>
+                <listitem>
+                    <para>
+                        Configure target database settings for this package (OTRSCloneDB).
+                    </para>
+                    <itemizedlist mark="round">
+                        <para>The following parameters should be configured:</para>
+                        <listitem><para>TargetDatabaseHost</para></listitem>
+                        <listitem><para>TargetDatabase</para></listitem>
+                        <listitem><para>TargetDatabaseUser</para></listitem>
+                        <listitem><para>TargetDatabasePw</para></listitem>
+                        <listitem><para>TargetDatabaseType</para></listitem>
+                    </itemizedlist>
+                    <para>
+                        Where "TargetDatabaseHost" is the host name or ip address of the target
+                        system, "TargetDatabase" is the name if the target database,
+                        "TargetDatabaseUser" is the name of the user that connects to the target
+                        database, "TargetDatabasePw" is the password of the user, be aware that
+                        the field is not masked and it is stored in plain text,
+                        "TargetDatabaseType" is the type of the target database (mysql, mssql,
+                        postgresql or oracle).
+                    </para>
+                    <note>
+                        <para>
+                            On 'CloneDB::TargetDBSettings' for Oracle you might want to configure
+                            extra parameters like:
+                         </para>
+                        <itemizedlist mark="round">
+                            <listitem><para>TargetDatabaseSID</para></listitem>
+                            <listitem><para>TargetDatabasePort</para></listitem>
+                        </itemizedlist>
+                        <para>
+                            If they are not set, the default values (XE and 1521 respectively) will
+                            be used.
+                        </para>
+                        <para>
+                            And please be aware to include the needed settings on the Config.pm
+                            file:
+                        </para>
+                        <itemizedlist mark="round">
+                            <listitem><para>$ENV{ORACLE_HOME}</para></listitem>
+                            <listitem><para>$ENV{NLS_DATE_FORMAT}</para></listitem>
+                            <listitem><para>$ENV{NLS_LANG}</para></listitem>
+                        </itemizedlist>
+                        <para>
+                            If MSSQL is going to be used, a database parameter for 'Driver' should
+                            be configured:
+                        </para>
+                        <itemizedlist>
+                            <listitem><para>TargetDatabaseDriver</para></listitem>
+                        </itemizedlist>
+                        <para>If not set, the default value "SQL Server" will be used.</para>
+                    </note>
+                    <note>
+                        <para>
+                            If you don't have access to the graphical user interface of the source
+                            OTRS system, for example during a migration, you can also perform the
+                            configuration directly in <filename>Kernel/Config.pm</filename> like this:
+                            <programlisting format="linespecific"><![CDATA[
+$Self->{'CloneDB::TargetDBSettings'} =  {
+    'TargetDatabaseHost' => 'localhost',
+    'TargetDatabaseType' => 'mysql',
+    'TargetDatabase'     => 'otrs_target',
+    'TargetDatabaseUser' => 'otrs_target'
+    'TargetDatabasePw'   => 'otrs_target',
+};
+                            ]]></programlisting>
+                        </para>
+                    </note>
+                </listitem>
+                <listitem>
+                    <para>
+                        Configure source database settings for this package (OTRSCloneDB).
+                        The only one setting currently available is CloneDB::SkipTables that
+                        allows you to set a list of tables should be skipped on the clone DB
+                        process, this feature is useful for internal use tables like for example
+                        in Oracle with the 'htmldb_plan_table' that is generated when you click
+                        on the 'Explain' Tab on the Oracle Web interface. Please use just lower
+                        case for this setting.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Run the <filename>bin/otrs.Console.pl Maint::Database::Clone</filename> console command.</para>
+                    <para>
+                        It strongly recommended to do a read and check test before actually migrate the data, this can be done with the
+                        "--dry-run" option as:
+                        <filename>perl bin/otrs.Console.pl Maint::Database::Clone --dry-run</filename>
+                     </para>
+                </listitem>
+                <listitem>
+                    <para>Verify the result.</para>
+                </listitem>
+            </orderedlist>
+        </section>
+</chapter>
+
+<!--
+***************************************** Technical part ************************************
+-->
+
+<!-- ********************************* -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************* -->
+<chapter>
+    <title>Technical Implementation Details</title>
+    <section>
+        <title>OTRS Clone DB</title>
+        <para>
+            <filename>Kernel/Config/Files/XML/OTRSCloneDB.xml</filename>: Holds all the needed settings for this package.
+        </para>
+        <para>
+            <filename>Kernel/System/CloneDB/Backend.pm</filename>: Is the common interface regardless the type of the
+            database that is used.
+        </para>
+        <para>
+            <filename>Kernel/System/CloneDB/Driver/Base</filename>: Holds shared function for all database types.
+        </para>
+        <para>
+            <filename>Kernel/System/CloneDB/Driver/mssql</filename>: Implement Backend functions for mssql database.
+        </para>
+        <para>
+            <filename>Kernel/System/CloneDB/Driver/myssql</filename>: Implement Backend functions for mysql database.
+        </para>
+        <para>
+            <filename>Kernel/System/CloneDB/Driver/oracle</filename>: Implement Backend functions for oracle database.
+        </para>
+        <para>
+            <filename>Kernel/System/CloneDB/Driver/postgresql</filename>: Implement Backend functions for postgresql
+            database.
+        </para>
+        <para>
+            <filename>Kernel/System/Console/Command/Maint/Database/Clone.pm</filename>: This is the console command that triggers the cloning of the databases.
+        </para>
+    </section>
+</chapter>
+
+<!-- *********** -->
+<!-- 8. File List -->
+<!-- *********** -->
+<chapter>
+    <title>File List</title>
+    <para>
+        This list shows all included files and the referring permissions.
+    </para>
+    <para>$Filelist</para>
+</chapter>
+
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
+<chapter>
+    <title>Tests</title>
+    <para>
+        This module has been tested on the current state of the art in quality.
+    </para>
+    <section>
+        <title>Test Cases</title>
+        <para>
+            To tests this package please follow the examples described in the Usage section,
+            all the tests cases should return the expected results defined at the beginning of
+            each example.
+        </para>
+    </section>
+</chapter>
+
+<!-- ************* -->
+<!-- 10. Change Log -->
+<!-- ************* -->
+<chapter>
+    <title>Change Log</title>
+    <para>$ChangeLog</para>
+</chapter>
+
+</book>
