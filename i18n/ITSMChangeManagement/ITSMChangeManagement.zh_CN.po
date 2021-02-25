@@ -1,0 +1,3368 @@
+#
+# Translators:
+# 汇民 王 <whuim@163.com>, 2017
+# 汇民 王 <whuim@qq.com>, 2017-2019
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2020-01-24 11:46+0000\n"
+"PO-Revision-Date: 2020-01-30 13:51+0000\n"
+"Last-Translator: Huimin Wang <whuim@qq.com>\n"
+"Language-Team: Chinese (Simplified) <https://translate.app.otrs.com/projects/"
+"otrs-6/itsm-change-management/zh_Hans/>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.10\n"
+
+#. Template: AdminITSMChangeCIPAllocate
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "风险类别 ↔ 影响 ↔ 优先级"
+
+#. Template: AdminITSMChangeCIPAllocate
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "管理\"风险类别 ↔ 影响\"组合决定的优先级结果。"
+
+#. Template: AdminITSMChangeCIPAllocate
+msgid "Priority allocation"
+msgstr "优先级分配"
+
+#. Template: AdminITSMChangeNotification
+msgid "ITSM ChangeManagement Notification Management"
+msgstr "管理变更通知"
+
+#. Template: AdminITSMChangeNotification
+msgid "Add Notification Rule"
+msgstr "添加通知规则"
+
+#. Template: AdminITSMChangeNotification
+msgid "Edit Notification Rule"
+msgstr "编辑通知规则"
+
+#. Template: AdminITSMChangeNotification
+msgid "A notification should have a name!"
+msgstr "通知必须有名称！"
+
+#. Template: AdminITSMChangeNotification
+msgid "Name is required."
+msgstr "名称是必需的。"
+
+#. Template: AdminITSMStateMachine
+msgid "Admin State Machine"
+msgstr "管理状态模式转换"
+
+#. Template: AdminITSMStateMachine
+msgid "Select a catalog class!"
+msgstr "选择一个目录类！"
+
+#. Template: AdminITSMStateMachine
+msgid "A catalog class is required!"
+msgstr "目录类是必需的！"
+
+#. Template: AdminITSMStateMachine
+msgid "Add a state transition"
+msgstr "添加一个状态转换"
+
+#. Template: AdminITSMStateMachine
+msgid "Catalog Class"
+msgstr "目录类"
+
+#. Template: AdminITSMStateMachine
+msgid "Object Name"
+msgstr "对象名称"
+
+#. Template: AdminITSMStateMachine
+msgid "Overview over state transitions for"
+msgstr "状态转换概况"
+
+#. Template: AdminITSMStateMachine
+msgid "Delete this state transition"
+msgstr "删除这个状态转换"
+
+#. Template: AdminITSMStateMachine
+msgid "Add a new state transition for"
+msgstr "添加一个新的状态转换"
+
+#. Template: AdminITSMStateMachine
+msgid "Please select a state!"
+msgstr "请选择一个状态！"
+
+#. Template: AdminITSMStateMachine
+msgid "Please select a next state!"
+msgstr "请选择一个'下一状态'！"
+
+#. Template: AdminITSMStateMachine
+msgid "Edit a state transition for"
+msgstr "编辑状态转换"
+
+#. Template: AdminITSMStateMachine
+msgid "Do you really want to delete the state transition"
+msgstr "您真的想要删除这个状态转换"
+
+#. Template: AgentITSMChangeAdd
+msgid "Add Change"
+msgstr "创建变更"
+
+#. Template: AgentITSMChangeAdd
+msgid "ITSM Change"
+msgstr "变更"
+
+#. Template: AgentITSMChangeAdd
+msgid "Justification"
+msgstr "理由"
+
+#. Template: AgentITSMChangeAdd
+msgid "Input invalid."
+msgstr "输入无效。"
+
+#. Template: AgentITSMChangeAdd
+msgid "Impact"
+msgstr "影响"
+
+#. Template: AgentITSMChangeAdd
+msgid "Requested Date"
+msgstr "请求日期"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "Select Change Template"
+msgstr "选择变更模板"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "Time type"
+msgstr "时间类型"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "Invalid time type."
+msgstr "无效的时间类型。"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "New time"
+msgstr "新的时间"
+
+#. Template: AgentITSMChangeCABTemplate
+msgid "Save Change CAB as template"
+msgstr "保存变更CAB为模板"
+
+#. Template: AgentITSMChangeCABTemplate
+msgid "go to involved persons screen"
+msgstr "转向相关人员窗口"
+
+#. Template: AgentITSMChangeCABTemplate
+msgid "Invalid Name"
+msgstr "无效的名称"
+
+#. Template: AgentITSMChangeCondition
+msgid "Conditions and Actions"
+msgstr "条件和操作"
+
+#. Template: AgentITSMChangeCondition
+msgid "Delete Condition"
+msgstr "删除条件"
+
+#. Template: AgentITSMChangeCondition
+msgid "Add new condition"
+msgstr "添加新的条件"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr "编辑条件"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Need a valid name."
+msgstr "需要一个有效的名称。"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "A valid name is needed."
+msgstr "需要一个有效的名称。"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Duplicate name:"
+msgstr "重复的名称："
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "This name is already used by another condition."
+msgstr "另一个条件已被使用过该名称。"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Matching"
+msgstr "匹配"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Any expression (OR)"
+msgstr "任意表达式(或)"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "All expressions (AND)"
+msgstr "所有表达式(与)"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Expressions"
+msgstr "表达式"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Selector"
+msgstr "选择器"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Operator"
+msgstr "操作符"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Delete Expression"
+msgstr "删除表达式"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "No Expressions found."
+msgstr "没有找到表达式。"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Add new expression"
+msgstr "添加新的表达式"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Delete Action"
+msgstr "删除操作"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "No Actions found."
+msgstr "没有找到操作。"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Add new action"
+msgstr "添加新的操作"
+
+#. Template: AgentITSMChangeDelete
+msgid "Do you really want to delete this change?"
+msgstr "您真的想要删除这个变更吗?"
+
+#. Template: AgentITSMChangeEdit
+msgid "Edit %s%s"
+msgstr "编辑%s%s"
+
+#. Template: AgentITSMChangeHistory
+msgid "History of %s%s"
+msgstr "工单%s%s的历史信息"
+
+#. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr "历史值"
+
+#. Template: AgentITSMChangeHistory
+msgid "Workorder"
+msgstr "工作指令"
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
+msgstr "创建时间"
+
+#. Template: AgentITSMChangeHistory
+msgid "Show details"
+msgstr "显示详情"
+
+#. Template: AgentITSMChangeHistory
+msgid "Show workorder"
+msgstr "显示工作指令"
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "Detailed history information of %s"
+msgstr "%s的详细历史信息"
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "Modified"
+msgstr "已修改"
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "Old Value"
+msgstr "旧值"
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "New Value"
+msgstr "新值"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Edit Involved Persons of %s%s"
+msgstr "编辑%s%s的相关人员"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Involved Persons"
+msgstr "相关人员"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "ChangeManager"
+msgstr "变更经理"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "User invalid."
+msgstr "用户无效。"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "ChangeBuilder"
+msgstr "变更创建人"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Change Advisory Board"
+msgstr "变更咨询委员会"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "CAB Template"
+msgstr "CAB模板"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Apply Template"
+msgstr "应用模板"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "NewTemplate"
+msgstr "新建模板"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Save this CAB as template"
+msgstr "保存这个CAB为模板"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Add to CAB"
+msgstr "添加到CAB"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Invalid User"
+msgstr "无效的用户"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Current CAB"
+msgstr "当前CAB"
+
+#. Template: AgentITSMChangeOverviewNavBar
+msgid "Context Settings"
+msgstr "上下文设置"
+
+#. Template: AgentITSMChangeOverviewNavBar
+msgid "Changes per page"
+msgstr "每页显示的变更个数"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder Title"
+msgstr "工作指令标题"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Title"
+msgstr "变更标题"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder Agent"
+msgstr "工作指令服务人员"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Builder"
+msgstr "变更创建人"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Manager"
+msgstr "变更经理"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorders"
+msgstr "工作指令"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change State"
+msgstr "变更状态"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder State"
+msgstr "工作指令状态"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder Type"
+msgstr "工作指令类型"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Requested Time"
+msgstr "请求时间"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Planned Start Time"
+msgstr "计划的开始时间"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Planned End Time"
+msgstr "计划结束时间"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Actual Start Time"
+msgstr "实际开始时间"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Actual End Time"
+msgstr "实际结束时间"
+
+#. Template: AgentITSMChangeReset
+msgid "Do you really want to reset this change?"
+msgstr "您真的想要重置这个变更吗？"
+
+#. Template: AgentITSMChangeSearch
+msgid "(e.g. 10*5155 or 105658*)"
+msgstr "例如：10*5155 or 105658*"
+
+#. Template: AgentITSMChangeSearch
+msgid "CAB Agent"
+msgstr "CAB服务人员成员"
+
+#. Template: AgentITSMChangeSearch
+msgid "e.g."
+msgstr "例如："
+
+#. Template: AgentITSMChangeSearch
+msgid "CAB Customer"
+msgstr "CAB客户成员"
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Workorder Instruction"
+msgstr "ITSM工作指令说明"
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Workorder Report"
+msgstr "ITSM工作指令报告"
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Change Priority"
+msgstr "ITSM变更优先级"
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Change Impact"
+msgstr "ITSM变更影响"
+
+#. Template: AgentITSMChangeSearch
+msgid "Change Category"
+msgstr "变更风险类别"
+
+#. Template: AgentITSMChangeSearch
+msgid "(before/after)"
+msgstr "（之前/之后）"
+
+#. Template: AgentITSMChangeSearch
+msgid "(between)"
+msgstr "（在...之间）"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Save Change as Template"
+msgstr "保存变更为模板"
+
+#. Template: AgentITSMChangeTemplate
+msgid "A template should have a name!"
+msgstr "模板应该有一个名称!"
+
+#. Template: AgentITSMChangeTemplate
+msgid "The template name is required."
+msgstr "模板名称是必需的。"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Reset States"
+msgstr "重置状态"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Overwrite original template"
+msgstr "覆盖原始模板"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Delete original change"
+msgstr "删除原始变更"
+
+#. Template: AgentITSMChangeTimeSlot
+msgid "Move Time Slot"
+msgstr "移动时间轴"
+
+#. Template: AgentITSMChangeZoom
+msgid "Change Information"
+msgstr "变更信息"
+
+#. Template: AgentITSMChangeZoom
+msgid "Planned Effort"
+msgstr "计划用时"
+
+#. Template: AgentITSMChangeZoom
+msgid "Accounted Time"
+msgstr "所用工时"
+
+#. Template: AgentITSMChangeZoom
+msgid "Change Initiator(s)"
+msgstr "变更发起人"
+
+#. Template: AgentITSMChangeZoom
+msgid "CAB"
+msgstr "CAB"
+
+#. Template: AgentITSMChangeZoom
+msgid "Last changed"
+msgstr "最后修改"
+
+#. Template: AgentITSMChangeZoom
+msgid "Last changed by"
+msgstr "上次修改人"
+
+#. Template: AgentITSMChangeZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+"要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift "
+"键 （取决于您的浏览器和操作系统 ）。"
+
+#. Template: AgentITSMChangeZoom
+msgid "Download Attachment"
+msgstr "下载附件"
+
+#. Template: AgentITSMTemplateEditCAB
+msgid "Edit CAB Template"
+msgstr "编辑CAB模板"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"This will create a new change from this template, so you can edit and save "
+"it."
+msgstr "这将从这个模板创建一个新的变更，这样您能够编辑和保存它。"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"The new change will be deleted automatically after it has been saved as "
+"template."
+msgstr "新变更保存为模板后，将被自动删除。"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"This will create a new workorder from this template, so you can edit and "
+"save it."
+msgstr "这将从这个模板创建一个新的工作指令，这样您能够编辑和保存它。"
+
+#. Template: AgentITSMTemplateEditContent
+msgid "A temporary change will be created which contains the workorder."
+msgstr "将创建一个包含这个工作指令的临时变更。"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"The temporary change and new workorder will be deleted automatically after "
+"the workorder has been saved as template."
+msgstr "新的工作指令保存为模板后，临时变更和新的工作指令都将被自动删除。"
+
+#. Template: AgentITSMTemplateEditContent
+msgid "Do you want to proceed?"
+msgstr "您要继续进行吗？"
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Template ID"
+msgstr "模板ID"
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Edit Content"
+msgstr "编辑内容"
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Create by"
+msgstr "创建人"
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Change by"
+msgstr "修改人"
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Change Time"
+msgstr "修改时间"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Add Workorder to %s%s"
+msgstr "将工作指令添加到%s%s"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Instruction"
+msgstr "指令"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Invalid workorder type."
+msgstr "无效的工作指令类型。"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "The planned start time must be before the planned end time!"
+msgstr "计划开始时间必须在计划结束时间之前!"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Invalid format."
+msgstr "无效的格式."
+
+#. Template: AgentITSMWorkOrderAddFromTemplate
+msgid "Select Workorder Template"
+msgstr "选择工作指令模板"
+
+#. Template: AgentITSMWorkOrderAgent
+msgid "Edit Workorder Agent of %s%s"
+msgstr "编辑工作指令%s%s的服务人员"
+
+#. Template: AgentITSMWorkOrderDelete
+msgid "Do you really want to delete this workorder?"
+msgstr "您真的想要删除这个工作指令吗?"
+
+#. Template: AgentITSMWorkOrderDelete
+msgid ""
+"You can not delete this Workorder. It is used in at least one Condition!"
+msgstr "你无法删除这个工作单。至少有一个条件用到了它!"
+
+#. Template: AgentITSMWorkOrderDelete
+msgid "This Workorder is used in the following Condition(s)"
+msgstr "此工作指令出现在下列条件中"
+
+#. Template: AgentITSMWorkOrderEdit
+msgid "Edit %s%s-%s"
+msgstr "编辑%s%s-%s"
+
+#. Template: AgentITSMWorkOrderEdit
+msgid "Move following workorders accordingly"
+msgstr "相应的移动工作指令"
+
+#. Template: AgentITSMWorkOrderEdit
+msgid ""
+"If the planned end time of this workorder is changed, the planned start "
+"times of all following workorders will be changed accordingly"
+msgstr ""
+"如果该工作指令的计划结束时间改变了，所有后续工作指令的计划开始时间将相应的改"
+"变"
+
+#. Template: AgentITSMWorkOrderHistory
+msgid "History of %s%s-%s"
+msgstr "%s%s-%s历史"
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Edit Report of %s%s-%s"
+msgstr "编辑%s%s-%s的报告"
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Report"
+msgstr "报告"
+
+#. Template: AgentITSMWorkOrderReport
+msgid "The actual start time must be before the actual end time!"
+msgstr "实际开始时间必须在实际结束时间之前!"
+
+#. Template: AgentITSMWorkOrderReport
+msgid "The actual start time must be set, when the actual end time is set!"
+msgstr "设置实际结束时间后必须设置实际开始时间!"
+
+#. Template: AgentITSMWorkOrderTake
+msgid "Current Agent"
+msgstr "当前的服务人员"
+
+#. Template: AgentITSMWorkOrderTake
+msgid "Do you really want to take this workorder?"
+msgstr "您真的想要删除这个工作指令吗?"
+
+#. Template: AgentITSMWorkOrderTemplate
+msgid "Save Workorder as Template"
+msgstr "保存工作指令为模板"
+
+#. Template: AgentITSMWorkOrderTemplate
+msgid "Delete original workorder (and surrounding change)"
+msgstr "删除原始工作指令（和相关的变更）"
+
+#. Template: AgentITSMWorkOrderZoom
+msgid "Workorder Information"
+msgstr "工作指令信息"
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Notification Added!"
+msgstr "通知已添加！"
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Unknown notification %s!"
+msgstr "未知的通知%s！"
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "There was an error creating the notification."
+msgstr "创建通知时出现一个错误。"
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Updated!"
+msgstr "状态转换已更新！"
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Added!"
+msgstr "状态转换已添加！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChange.pm
+msgid "Overview: ITSM Changes"
+msgstr "概览：变更"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Ticket with TicketID %s does not exist!"
+msgstr "TicketID为%s的工单不存在！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
+msgstr "系统配置选项\"ITSMChange::AddChangeLinkTicketTypes\"缺失！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Was not able to add change!"
+msgstr "不能添加变更！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
+msgid "Was not able to create change from template!"
+msgstr "不能从模板创建变更！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "No ChangeID is given!"
+msgstr "没有指定ChangeID！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "No change found for changeID %s."
+msgstr "没有找到ChangeID为%s的变更。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "The CAB of change \"%s\" could not be serialized."
+msgstr "不能序列化变更的CAB\"%s\"。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "Could not add the template."
+msgstr "不能添加模板。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
+msgid "Change \"%s\" not found in database!"
+msgstr "数据库中没有找到变更\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
+msgid "Could not delete ConditionID %s!"
+msgstr "不能删除ConditionID为%s的条件！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "No %s is given!"
+msgstr "没有指定%s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not create new condition!"
+msgstr "不能创建新的条件！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ConditionID %s!"
+msgstr "不能更新ConditionID为%s的条件！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ExpressionID %s!"
+msgstr "不能更新ExpressionID为%s的表达式！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not add new Expression!"
+msgstr "不能添加新的表达式！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ActionID %s!"
+msgstr "不能更新ActionID为%s的操作！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not add new Action!"
+msgstr "不能添加新的操作！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not delete ExpressionID %s!"
+msgstr "不能删除ExpressionID为%s的表达式！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not delete ActionID %s!"
+msgstr "不能删除ActionID为%s的操作！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Error: Unknown field type \"%s\"!"
+msgstr "错误：未知的字段类型\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "ConditionID %s does not belong to the given ChangeID %s!"
+msgstr "ExpressionID为%s的表达式不属于指定的变更ID %s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
+msgid "Change \"%s\" does not have an allowed change state to be deleted!"
+msgstr "变更\"%s\"没有在一个允许删除的变更状态！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
+msgid "Was not able to delete the changeID %s!"
+msgstr "不能删除变更ID为%s的变更！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
+msgid "Was not able to update Change!"
+msgstr "不能更新变更！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Can't show history, as no ChangeID is given!"
+msgstr "不能显示历史，因为没有指定变更ID！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Change \"%s\" not found in the database!"
+msgstr "数据库中没有找到变更\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Unknown type \"%s\" encountered!"
+msgstr "遇到了未知的类型\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Change History"
+msgstr "变更历史"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
+msgid "Can't show history zoom, no HistoryEntryID is given!"
+msgstr "不能显示历史详情，因为没有指定HistoryEntryID！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
+msgid "HistoryEntry \"%s\" not found in database!"
+msgstr "数据库中没有找到历史条目 \"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
+msgid "Was not able to update Change CAB for Change %s!"
+msgstr "不能更新变更%s的变更CAB！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
+msgid "Was not able to update Change %s!"
+msgstr "不能更新变更%s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
+msgid "Overview: ChangeManager"
+msgstr "概览：变更经理"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
+msgid "Overview: My CAB"
+msgstr "概览：我的CAB"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
+msgid "Overview: My Changes"
+msgstr "概览：我的变更"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyWorkOrders.pm
+msgid "Overview: My Workorders"
+msgstr "概览：我的工作指定"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+msgid "Overview: PIR"
+msgstr "概览：PIR（实施后评审）"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+msgid "Overview: PSA"
+msgstr "概览：PSA（计划服务可用性）"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrder \"%s\" not found in database!"
+msgstr "数据库中没有找到工作指令\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "Can't create output, as the workorder is not attached to a change!"
+msgstr "不能创建输出，因为这个工作指令没有附加到一个变更上！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "Can't create output, as no ChangeID is given!"
+msgstr "不能创建输出，因为没有指定变更ID！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "unknown change title"
+msgstr "未知的变更标题"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder"
+msgstr "工作指令"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderNumber"
+msgstr "工作指令编号"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderTitle"
+msgstr "工作指令标题"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "unknown workorder title"
+msgstr "未知的工作指令标题"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeState"
+msgstr "变更状态"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEffort"
+msgstr "计划工作量"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Agents"
+msgstr "服务人员CAB成员"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Customers"
+msgstr "客户CAB成员"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "RequestedTime"
+msgstr "请求时间"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedStartTime"
+msgstr "计划开始时间"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEndTime"
+msgstr "计划结束时间"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualStartTime"
+msgstr "实际开始时间"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualEndTime"
+msgstr "实际结束时间"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeTime"
+msgstr "修改时间"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeNumber"
+msgstr "变更编号"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderState"
+msgstr "工作指令状态"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderType"
+msgstr "工作指令类型"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderAgent"
+msgstr "工作指令服务人员"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder Overview (%s)"
+msgstr "工作指令概览（%s）"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
+msgid "Was not able to reset WorkOrder %s of Change %s!"
+msgstr "不能重置工作指令%s（属于变更%s）！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
+msgid "Was not able to reset Change %s!"
+msgstr "不能重置变更%s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
+msgid "Overview: Change Schedule"
+msgstr "概览：变更计划"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Search"
+msgstr "变更搜索"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "ChangeTitle"
+msgstr "变更标题"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrders"
+msgstr "工作指令"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Search Result"
+msgstr "变更搜索结果"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Number"
+msgstr "变更编号"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Work Order Title"
+msgstr "工作指令标题"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Description"
+msgstr "变更描述"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Justification"
+msgstr "变更理由"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Instruction"
+msgstr "工作指令说明"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Report"
+msgstr "工作指令报告"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Priority"
+msgstr "变更优先级"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Impact"
+msgstr "变更影响"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Created By"
+msgstr "创建人"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder State"
+msgstr "工作指令状态"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Type"
+msgstr "工作指令类型"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Agent"
+msgstr "工作指令服务人员"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "before"
+msgstr "在...之前"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "The change \"%s\" could not be serialized."
+msgstr "不能序列化变更\"%s\"。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "Could not update the template \"%s\"."
+msgstr "不能更新模板\"%s\"。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "Could not delete change \"%s\"."
+msgstr "不能删除变更\"%s\"。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The change can't be moved, as it has no workorders."
+msgstr "不能移动变更，因为它没有工作指令。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Add a workorder first."
+msgstr "首先添加一条工作指令。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Can't move a change which already has started!"
+msgstr "不能移动一个已经开始的变更！"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Please move the individual workorders instead."
+msgstr "请用移动单独的工作指令来代替。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The current %s could not be determined."
+msgstr "不能确定当前的%s。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The %s of all workorders has to be defined."
+msgstr "%s的所有工作指令必须被定义好。"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Was not able to move time slot for workorder #%s!"
+msgstr "不能移动工作指令#%s的时间轴！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "You need %s permission!"
+msgstr "你需要%s权限！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "No TemplateID is given!"
+msgstr "没有指定模板ID！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "Template \"%s\" not found in database!"
+msgstr "数据库中没有找到模板\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "Was not able to delete the template %s!"
+msgstr "不能删除模板%s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEdit.pm
+msgid "Was not able to update Template %s!"
+msgstr "不能更新模板%s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditCAB.pm
+msgid "Was not able to update Template \"%s\"!"
+msgstr "不能更新模板\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
+msgid "Was not able to create change!"
+msgstr "不能创建变更！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
+msgid "Was not able to create workorder from template!"
+msgstr "不能从模板创建工作指令！"
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateOverview.pm
+msgid "Overview: Template"
+msgstr "概览：模板"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
+msgid "You need %s permissions on the change!"
+msgstr "你需要有变更的%s权限！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
+msgid "Was not able to add workorder!"
+msgstr "不能添加工作指令！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "No WorkOrderID is given!"
+msgstr "没有指定工作指令ID！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid ""
+"Was not able to set the workorder agent of the workorder \"%s\" to empty!"
+msgstr "不能设置工作指令\"%s\"的服务人员为空！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "Was not able to update the workorder \"%s\"!"
+msgstr "不能更新工作指令\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "Could not find Change for WorkOrder %s!"
+msgstr "找不到工作指令 %s的变更！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderDelete.pm
+msgid "Was not able to delete the workorder %s!"
+msgstr "不能删除工作指令%s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderEdit.pm
+msgid "Was not able to update WorkOrder %s!"
+msgstr "不能更新工作指令%s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "Can't show history, as no WorkOrderID is given!"
+msgstr "不能显示历史，因为没有指定工作指令ID！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrder \"%s\" not found in the database!"
+msgstr "数据库中没有找到工作指令\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrder History"
+msgstr "工作指令历史"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
+msgid "History entry \"%s\" not found in the database!"
+msgstr "数据库中没有找到历史条目\"%s\"！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
+msgid "WorkOrder History Zoom"
+msgstr "工作指令历史详情"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderTake.pm
+msgid "Was not able to take the workorder %s!"
+msgstr "不能执行工作指令 %s！"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
+msgid "The workorder \"%s\" could not be serialized."
+msgstr "不能序列化工作指令\"%s\"。"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Need config option %s!"
+msgstr "需要配置%s选项！"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Config option %s needs to be a HASH ref!"
+msgstr "配置选项%s需要是一个哈希引用！"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "没有找到视图“%s”的配置选项！"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Title: %s | Type: %s"
+msgstr "标题：%s | 类型：%s"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "我的CAB"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "我的变更"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+msgid "My Work Orders"
+msgstr "我的工作指令"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Action (ID=%s)"
+msgstr "新建操作（ID=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) deleted"
+msgstr "操作（ID=%s）已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Actions of Condition (ID=%s) deleted"
+msgstr "条件（ID=%s）的所有操作已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) executed: %s"
+msgstr "操作（ID=%s）已执行：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Action ID=%s): (new=%s, old=%s)"
+msgstr "%s（操作ID=%s）：（新=%s，旧=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual end time."
+msgstr "变更（ID=%s）已到达实际结束时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual start time."
+msgstr "变更（ID=%s）已到达实际开始时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Change (ID=%s)"
+msgstr "新建变更（ID=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment: %s"
+msgstr "新的附件：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment %s"
+msgstr "已删除的附件%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "CAB Deleted %s"
+msgstr "CAB删除的%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: (new=%s, old=%s)"
+msgstr "%s：（新=%s，旧=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) added"
+msgstr "到%s的链接（ID=%s）已添加"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) deleted"
+msgstr "到%s的链接（ID=%s）已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Notification sent to %s (Event: %s)"
+msgstr "通知已发送给 %s（事件：%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned end time."
+msgstr "变更（ID=%s）已到达计划结束时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned start time."
+msgstr "变更（ID=%s）已到达计划开始时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached requested time."
+msgstr "变更（ID=%s）已到达请求的时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Condition (ID=%s)"
+msgstr "新建条件（ID=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Condition (ID=%s) deleted"
+msgstr "条件（ID=%s）已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Conditions of Change (ID=%s) deleted"
+msgstr "变更（ID=%s）的所有条件已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Condition ID=%s): (new=%s, old=%s)"
+msgstr "%s（条件ID=%s）：（新=%s，旧=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Expression (ID=%s)"
+msgstr "新建表达式（ID=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Expression (ID=%s) deleted"
+msgstr "表达式（ID=%s）已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Expressions of Condition (ID=%s) deleted"
+msgstr "条件（ID=%s）的所有表达式已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Expression ID=%s): (new=%s, old=%s)"
+msgstr "%s（操表达式ID=%s）：（新=%s，旧=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual end time."
+msgstr "工作指令（ID=%s）已到达实际结束时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual start time."
+msgstr "工作指令（ID=%s）已到达实际开始时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Workorder (ID=%s)"
+msgstr "新建工作指令（ID=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment for WorkOrder: %s"
+msgstr "工作指令新增附件：%s "
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Attachment for WorkOrder: %s"
+msgstr "（ID=%s）工作指令新增附件：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment from WorkOrder: %s"
+msgstr "工作指令已删除的附件：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Attachment from WorkOrder: %s"
+msgstr "（ID=%s）工作指令已删除附件：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Report Attachment for WorkOrder: %s"
+msgstr "工作指令新增报告附件：%s "
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Report Attachment for WorkOrder: %s"
+msgstr "（ID=%s）工作指令新增报告附件：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Report Attachment from WorkOrder: %s"
+msgstr "工作指令已删除的报告附件：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Report Attachment from WorkOrder: %s"
+msgstr "（ID=%s）工作指令已删除的报告附件：%s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) deleted"
+msgstr "工作指令（ID=%s）已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) added"
+msgstr "（ID=%s）到%s的链接（ID=%s）已添加"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) deleted"
+msgstr "（ID=%s）到%s的链接（ID=%s）已删除"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Notification sent to %s (Event: %s)"
+msgstr "（ID=%s）通知已发送给 %s（事件：%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned end time."
+msgstr "工作指令（ID=%s）已到达计划结束时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned start time."
+msgstr "工作指令（ID=%s）已到达计划开始时间。"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) %s: (new=%s, old=%s)"
+msgstr "（ID=%s）%s：（新=%s，旧=%s）"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "all"
+msgstr "全部"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "any"
+msgstr "任何"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Previous Change Builder"
+msgstr "前任变更创建人"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Previous Change Manager"
+msgstr "前任变更经理"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Workorder Agents"
+msgstr "工作指令服务人员"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Previous Workorder Agent"
+msgstr "前任工作指令服务人员"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Change Initiators"
+msgstr "变更发起人"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Group ITSMChange"
+msgstr "ITSM变更组"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Group ITSMChangeBuilder"
+msgstr "ITSM变更创建人组"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Group ITSMChangeManager"
+msgstr "ITSM变更经理组"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "已请求"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "待审批"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "被拒绝"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "通过审批"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "处理中"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "等待实施后评审"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "成功"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "失败"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "取消"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "撤回"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "已创建"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "已接受"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "就绪"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "审批"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "工作指令"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "回退"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "决定"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "PIR (实施后评审)"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeStateID"
+msgstr "变更状态ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "CategoryID"
+msgstr "类别ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ImpactID"
+msgstr "影响ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "PriorityID"
+msgstr "优先级ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeManagerID"
+msgstr "变更经理ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeBuilderID"
+msgstr "变更创建人ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderStateID"
+msgstr "工作指令状态ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderTypeID"
+msgstr "工作指令类型ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderAgentID"
+msgstr "工作指令服务人员ID"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "是"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "不是"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "为空"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "不为空"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "大于"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "小于"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "是在...之前"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "是在...之后"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "包含"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "不包含"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr "以...开始"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr "以...结束"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "设置"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this expression?"
+msgstr "你确定要删除这个表达式吗？"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this action?"
+msgstr "你确定要删除这个操作吗？"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this condition?"
+msgstr "你确定要删除这个条件吗？"
+
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr "确定"
+
+#. SysConfig
+msgid ""
+"A list of the agents who have permission to take workorders. Key is a login "
+"name. Content is 0 or 1."
+msgstr "有权限接手工作指令的服务人员列表。“键”是登录名，“值”是0或1。"
+
+#. SysConfig
+msgid ""
+"A list of workorder states, at which the ActualStartTime of a workorder will "
+"be set if it was empty at this point."
+msgstr ""
+"工作指令状态列表，工作指令的ActualStartTime（实际开始时间）将被设置（如果这时"
+"候还没有设置的话）。"
+
+#. SysConfig
+msgid "Actual end time"
+msgstr "实际结束时间"
+
+#. SysConfig
+msgid "Actual start time"
+msgstr "实际开始时间"
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "添加工作指令"
+
+#. SysConfig
+msgid "Add Workorder (from Template)"
+msgstr "从模板添加工作指令"
+
+#. SysConfig
+msgid "Add a change from template."
+msgstr "从模板添加一个变更。"
+
+#. SysConfig
+msgid "Add a change."
+msgstr "添加一个变更。"
+
+#. SysConfig
+msgid "Add a workorder (from template) to the change."
+msgstr "从模板添加变更的工作指令。"
+
+#. SysConfig
+msgid "Add a workorder to the change."
+msgstr "添加变更的工作指令。"
+
+#. SysConfig
+msgid "Add from template"
+msgstr "从模板添加"
+
+#. SysConfig
+msgid "Admin of the CIP matrix."
+msgstr "管理CIP矩阵。"
+
+#. SysConfig
+msgid "Admin of the state machine."
+msgstr "管理状态模式转换。"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of change advisory "
+"boards."
+msgstr "查看CAB数量的服务人员界面通知模块。"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of changes managed by "
+"the user."
+msgstr "查看变更经理管理的变更数的服务人员界面通知模块。"
+
+#. SysConfig
+msgid "Agent interface notification module to see the number of changes."
+msgstr "查看变更数量的服务人员界面通知模块。"
+
+#. SysConfig
+msgid "Agent interface notification module to see the number of workorders."
+msgstr "查看工作指令数量的服务人员界面通知模块。"
+
+#. SysConfig
+msgid "CAB Member Search"
+msgstr "CAB成员搜索"
+
+#. SysConfig
+msgid ""
+"Cache time in minutes for the change management toolbars. Default: 3 hours "
+"(180 minutes)."
+msgstr "变更管理工具栏的缓存时间（单位：分钟）。默认：3小时（180分钟）。"
+
+#. SysConfig
+msgid ""
+"Cache time in minutes for the change management. Default: 5 days (7200 "
+"minutes)."
+msgstr "变更管理的缓存时间（单位：分钟）。默认：5天（7200分钟）。"
+
+#. SysConfig
+msgid "Change CAB Templates"
+msgstr "变更CAB模板"
+
+#. SysConfig
+msgid "Change History."
+msgstr "变更历史。"
+
+#. SysConfig
+msgid "Change Involved Persons."
+msgstr "变更涉及的人员。"
+
+#. SysConfig
+msgid "Change Overview \"Small\" Limit"
+msgstr "变更概览简洁模式限制"
+
+#. SysConfig
+msgid "Change Overview."
+msgstr "变更概览。"
+
+#. SysConfig
+msgid "Change Print."
+msgstr "打印变更。"
+
+#. SysConfig
+msgid "Change Schedule"
+msgstr "变更计划"
+
+#. SysConfig
+msgid "Change Schedule."
+msgstr "变更计划表。"
+
+#. SysConfig
+msgid "Change Settings"
+msgstr "变更设置"
+
+#. SysConfig
+msgid "Change Zoom"
+msgstr "变更详情"
+
+#. SysConfig
+msgid "Change Zoom."
+msgstr "变更详情。"
+
+#. SysConfig
+msgid "Change and Workorder Templates"
+msgstr "变更和工作指令模板"
+
+#. SysConfig
+msgid "Change and workorder templates edited by this user."
+msgstr "本用户编辑的变更模板和工作指令模板。"
+
+#. SysConfig
+msgid "Change area."
+msgstr "变更区域。"
+
+#. SysConfig
+msgid "Change involved persons of the change."
+msgstr "更换变更涉及的相关人员。"
+
+#. SysConfig
+msgid "Change limit per page for Change Overview \"Small\"."
+msgstr "变更概览简洁模式每页变更数限制。"
+
+#. SysConfig
+msgid "Change number"
+msgstr "变更编号"
+
+#. SysConfig
+msgid "Change search backend router of the agent interface."
+msgstr "服务人员界面变更搜索后端路由。"
+
+#. SysConfig
+msgid "Change state"
+msgstr "变更状态"
+
+#. SysConfig
+msgid "Change time"
+msgstr "变更时间"
+
+#. SysConfig
+msgid "Change title"
+msgstr "变更标题"
+
+#. SysConfig
+msgid "Condition Edit"
+msgstr "条件编辑"
+
+#. SysConfig
+msgid "Condition Overview"
+msgstr "条件概览"
+
+#. SysConfig
+msgid ""
+"Configure which screen should be shown after a new workorder has been "
+"created."
+msgstr "配置创建新工作指令后显示的界面。"
+
+#. SysConfig
+msgid ""
+"Configures how often the notifications are sent when planned the start time "
+"or other time values have been reached/passed."
+msgstr "配置计划开始时间或其它时间到达/过去时发送通知的频率。"
+
+#. SysConfig
+msgid "Create Change"
+msgstr "创建变更"
+
+#. SysConfig
+msgid "Create Change (from Template)"
+msgstr "从模板创建变更"
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket."
+msgstr "从这个工单创建一个变更（即从模板的方式）。"
+
+#. SysConfig
+msgid "Create a change from this ticket."
+msgstr "从这个工单创建变更。"
+
+#. SysConfig
+msgid "Create and manage ITSM Change Management notifications."
+msgstr "创建和管理ITSM变更管理通知。"
+
+#. SysConfig
+msgid "Create and manage change notifications."
+msgstr "创建和管理变更通知。"
+
+#. SysConfig
+msgid ""
+"Default type for a workorder. This entry must exist in general catalog class "
+"'ITSM::ChangeManagement::WorkOrder::Type'."
+msgstr ""
+"工作指令的默认类型。这个条目必须在目录类'ITSM::ChangeManagement::WorkOrder::"
+"Type'中存在。"
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+"定义链接对象小部件(LinkObject::ViewMode = \\\"complex\\\")设置按钮中的操作。请注意，这些操作必须已经在以下JS和C"
+"SS文件中注册：Core.AllocationList.css、Core.UI.AllocationList.js、 "
+"Core.UI.Table.Sort.js、Core.Agent.TableFilters.js和Core.Agent.LinkObject.js。"
+
+#. SysConfig
+msgid "Define the signals for each workorder state."
+msgstr "定义每个工作指令状态的标志信号。"
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only Change attributes are allowed for "
+"DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled "
+"by default."
+msgstr ""
+"定义链接的变更小部件(LinkObject::ViewMode = \"complex\")要显示的列。注意：只"
+"有变更属性才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。"
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only Workorder attributes are allowed for "
+"DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled "
+"by default."
+msgstr ""
+"定义链接的工作指令小部件(LinkObject::ViewMode = \"complex\")要显示的列。注"
+"意：只有工作指令属性才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = "
+"默认启用。"
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a change list."
+msgstr "定义一个概览模块，以显示变更列表的简洁视图。"
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a template list."
+msgstr "定义一个概览模块，以显示模板列表的简洁视图。"
+
+#. SysConfig
+msgid "Defines if it will be possible to print the accounted time."
+msgstr "定义是否可以打印记帐时间。"
+
+#. SysConfig
+msgid "Defines if it will be possible to print the planned effort."
+msgstr "定义是否可以打印计划用时。"
+
+#. SysConfig
+msgid ""
+"Defines if reachable (as defined by the state machine) change end states "
+"should be allowed if a change is in a locked state."
+msgstr "定义是否允许一个锁定状态的变更可达到结束状态（在状态模式转换中定义）。"
+
+#. SysConfig
+msgid ""
+"Defines if reachable (as defined by the state machine) workorder end states "
+"should be allowed if a workorder is in a locked state."
+msgstr ""
+"定义是否允许一个锁定状态的工作指令可达到结束状态（在状态模式转换中定义）。"
+
+#. SysConfig
+msgid "Defines if the accounted time should be shown."
+msgstr "定义是否显示记帐时间。"
+
+#. SysConfig
+msgid "Defines if the actual start and end times should be set."
+msgstr "定义（工作指令报告中）是否要设置实际开始/结束时间。"
+
+#. SysConfig
+msgid ""
+"Defines if the change search and the workorder search functions could use "
+"the mirror DB."
+msgstr "定义变更搜索和工作指令搜索功能是否能够使用镜像数据库。"
+
+#. SysConfig
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
+msgstr "定义服务人员界面在变更编辑屏幕能否设置变更状态。"
+
+#. SysConfig
+msgid "Defines if the planned effort should be shown."
+msgstr "定义是否显示计划用时。"
+
+#. SysConfig
+msgid "Defines if the requested date should be print by customer."
+msgstr "定义客户是否可以打印请求日期。"
+
+#. SysConfig
+msgid "Defines if the requested date should be searched by customer."
+msgstr "定义客户是否可以搜索请求日期。"
+
+#. SysConfig
+msgid "Defines if the requested date should be set by customer."
+msgstr "定义客户是否可以设置请求日期。"
+
+#. SysConfig
+msgid "Defines if the requested date should be shown by customer."
+msgstr "定义客户是否可以显示请求的日期。"
+
+#. SysConfig
+msgid "Defines if the workorder state should be shown."
+msgstr "定义是否显示工作指令状态。"
+
+#. SysConfig
+msgid "Defines if the workorder title should be shown."
+msgstr "定义是否显示工作指令标题。"
+
+#. SysConfig
+msgid "Defines shown graph attributes."
+msgstr "定义（变更详情窗口工作指令图）显示的图形的属性。"
+
+#. SysConfig
+msgid ""
+"Defines that only changes containing Workorders linked with services, which "
+"the customer user has permission to use will be shown. Any other changes "
+"will not be displayed."
+msgstr ""
+"定义仅显示变更中包含的工作指令中有 到客户联系人有权限使用的服务 的链接 的变"
+"更，任何其它变更都不会显示。"
+
+#. SysConfig
+msgid "Defines the change states that will be allowed to delete."
+msgstr "定义允许删除变更的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the Change PSA "
+"overview."
+msgstr "定义'变更PSA'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the Change "
+"Schedule overview."
+msgstr "定义'变更计划'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the MyCAB overview."
+msgstr "定义'我的CAB'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the MyChanges "
+"overview."
+msgstr "定义'我的变更'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the change manager "
+"overview."
+msgstr "定义'变更经理'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the change "
+"overview."
+msgstr "定义'变更'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the customer "
+"change schedule overview."
+msgstr "定义客户'变更计划'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid ""
+"Defines the default change title for a dummy change which is needed to edit "
+"a workorder template."
+msgstr "定义编辑工作指令时创建的临时变更的默认标题。"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change PSA overview."
+msgstr "定义'变更PSA'概览中默认的排序条件。"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change manager overview."
+msgstr "定义'变更经理'概览中默认的排序条件。"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change overview."
+msgstr "定义'变更'概览中默认的排序条件。"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change schedule overview."
+msgstr "定义'变更计划'概览中默认的排序条件。"
+
+#. SysConfig
+msgid "Defines the default sort criteria of the changes in the MyCAB overview."
+msgstr "定义'我的CAB'概览中默认的变更排序条件。"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the MyChanges overview."
+msgstr "定义'我的变更'概览中默认的变更排序条件。"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the MyWorkorders "
+"overview."
+msgstr "定义'我的工作指令'概览中默认的变更排序条件。"
+
+#. SysConfig
+msgid "Defines the default sort criteria of the changes in the PIR overview."
+msgstr "定义'PIR（实施后评审）'概览中默认的变更排序条件。"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the customer change "
+"schedule overview."
+msgstr "定义客户'变更计划'概览中默认的变更排序条件。"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the template overview."
+msgstr "定义'模板'概览中默认的变更排序条件。"
+
+#. SysConfig
+msgid "Defines the default sort order in the MyCAB overview."
+msgstr "定义'我的CAB'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the MyChanges overview."
+msgstr "定义'我的变更'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the MyWorkorders overview."
+msgstr "定义'我的工作指令'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the PIR overview."
+msgstr "定义'PIR（实施后评审）'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the change PSA overview."
+msgstr "定义'变更PSA'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the change manager overview."
+msgstr "定义'变更经理'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the change overview."
+msgstr "定义变更概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the change schedule overview."
+msgstr "定义'变更计划'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid ""
+"Defines the default sort order in the customer change schedule overview."
+msgstr "定义客户界面'变更计划'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default sort order in the template overview."
+msgstr "定义模板概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the default value for the category of a change."
+msgstr "定义一个变更风险类别的默认值。"
+
+#. SysConfig
+msgid "Defines the default value for the impact of a change."
+msgstr "定义一个变更影响的默认值。"
+
+#. SysConfig
+msgid ""
+"Defines the field type of CompareValue fields for change attributes used in "
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
+"定义服务人员界面变更条件编辑屏幕变更属性比较值字段的类型，有效值是："
+"Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被"
+"显示出来。"
+
+#. SysConfig
+msgid ""
+"Defines the field type of CompareValue fields for workorder attributes used "
+"in the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
+"定义服务人员界面工作指令条件编辑屏幕变更属性比较值字段的类型，有效值是："
+"Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被"
+"显示出来。"
+
+#. SysConfig
+msgid ""
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中变更对象可选择的对象属性。"
+
+#. SysConfig
+msgid ""
+"Defines the object attributes that are selectable for workorder objects in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面工作指令条件编辑屏幕中工作指令对象可选择的对象属性。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute AccountedTime in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中占用时间属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ActualEndTime in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中实际结束时间属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ActualStartTime "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中实际开始时间属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute CategoryID in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中目录ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeBuilderID "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中目录创建人ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeManagerID "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中目录管理人ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeStateID in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中变更状态ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeTitle in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中变更标题属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute DynamicField in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中动态字段属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中影响ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedEffort in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中计划用时属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedEndTime "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中计划结束时间属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedStartTime "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中计划开始时间属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PriorityID in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中优先级ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute RequestedTime in "
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中请求时间属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderAgentID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+"定义服务人员界面变更条件编辑屏幕中工作指令服务人员ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderNumber "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中工作指令编号属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderStateID "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中工作指令状态ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderTitle "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中工作指令标题属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderTypeID "
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中工作指令类型ID属性可选择的运算符。"
+
+#. SysConfig
+msgid ""
+"Defines the period (in years), in which start and end times can be selected."
+msgstr "定义能够选择开始时间和结束时间的时间段（单位：年）。"
+
+#. SysConfig
+msgid ""
+"Defines the shown attributes of a workorder in the tooltip of the workorder "
+"graph in the change zoom. To show workorder dynamic fields in the tooltip, "
+"they must be specified like DynamicField_WorkOrderFieldName1, "
+"DynamicField_WorkOrderFieldName2, etc."
+msgstr ""
+"在变更详情窗口显示在工作指令图提示文本的属性。要在提示文本中显示工作指令动态"
+"字段，他们必须按如下格式指定，如DynamicField_WorkOrderFieldName1、"
+"DynamicField_WorkOrderFieldName2等等。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the Change PSA overview. This option has no "
+"effect on the position of the column."
+msgstr "定义在'变更PSA'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the Change Schedule overview. This option has "
+"no effect on the position of the column."
+msgstr "定义在'变更计划'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the MyCAB overview. This option has no effect "
+"on the position of the column."
+msgstr "定义在'我的CAB'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the MyChanges overview. This option has no "
+"effect on the position of the column."
+msgstr "定义在'我的变更'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the MyWorkorders overview. This option has no "
+"effect on the position of the column."
+msgstr "定义在'我的工作指令'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the PIR overview. This option has no effect on "
+"the position of the column."
+msgstr ""
+"定义在'PIR（实施后评审）'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the change manager overview. This option has no "
+"effect on the position of the column."
+msgstr "定义在'变更经理'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the change overview. This option has no effect "
+"on the position of the column."
+msgstr "定义在'变更'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the change search. This option has no effect on "
+"the position of the column."
+msgstr "定义在变更搜索结果中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the customer change schedule overview. This "
+"option has no effect on the position of the column."
+msgstr "定义在客户'变更计划'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the template overview. This option has no "
+"effect on the position of the column."
+msgstr "定义在模板概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid "Defines the signals for each ITSM change state."
+msgstr "定义每个变更状态的标志信号。"
+
+#. SysConfig
+msgid ""
+"Defines the template types that will be used as filters in the template "
+"overview."
+msgstr "定义在模板概览中用作过滤器的模板类型。"
+
+#. SysConfig
+msgid ""
+"Defines the workorder states that will be used as filters in the "
+"MyWorkorders overview."
+msgstr "定义在'我的工作指令'概览中用作过滤器的工作指令状态。"
+
+#. SysConfig
+msgid ""
+"Defines the workorder states that will be used as filters in the PIR "
+"overview."
+msgstr "定义在'PIR（实施后评审）'概览中用作过滤器的工作指令状态。"
+
+#. SysConfig
+msgid "Defines the workorder types that will be used to show the PIR overview."
+msgstr "定义在'PIR（实施后评审）'概览中用作过滤器的工作指令类型。"
+
+#. SysConfig
+msgid "Defines whether notifications should be sent."
+msgstr "定义是否发送通知。"
+
+#. SysConfig
+msgid "Delete a change."
+msgstr "删除一个变更。"
+
+#. SysConfig
+msgid "Delete the change."
+msgstr "删除此变更。"
+
+#. SysConfig
+msgid "Delete the workorder."
+msgstr "删除此工作指令。"
+
+#. SysConfig
+msgid "Details of a change history entry."
+msgstr "一个变更历史条目的详细信息。"
+
+#. SysConfig
+msgid ""
+"Determines if an agent can exchange the X-axis of a stat if he generates one."
+msgstr "确定服务人员能否交换他生成的统计的X轴。"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about changes done "
+"for config item classes."
+msgstr "确定通用统计模块能否生成配置项类所做的变更统计。"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about changes "
+"regarding change state updates within a timeperiod."
+msgstr "确定通用统计模块能否生成一段时间内变更关于变更状态更新的统计。"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about changes "
+"regarding the relation between changes and incident tickets."
+msgstr "确定通用统计模块能否生成变更关于变更和故障工单之间的关系的统计。"
+
+#. SysConfig
+msgid "Determines if the common stats module may generate stats about changes."
+msgstr "确定通用统计模块能否生成关于变更的统计。"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about the number of "
+"Rfc tickets a requester created."
+msgstr "确定通用统计模块能否生成一个请求者创建的RFC（变更请求）的数量的统计。"
+
+#. SysConfig
+msgid ""
+"Dynamic fields (for changes and workorders) shown in the change print screen "
+"of the agent interface."
+msgstr "在服务人员界面变更打印窗口中显示的（变更和工作指令）动态字段。"
+
+#. SysConfig
+msgid "Dynamic fields shown in the change add screen of the agent interface."
+msgstr "在服务人员界面添加变更窗口中显示的动态字段。"
+
+#. SysConfig
+msgid "Dynamic fields shown in the change edit screen of the agent interface."
+msgstr "在服务人员界面编辑变更窗口中显示的动态字段。"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the change search screen of the agent interface."
+msgstr "在服务人员界面搜索变更窗口中显示的动态字段。"
+
+#. SysConfig
+msgid "Dynamic fields shown in the change zoom screen of the agent interface."
+msgstr "在服务人员界面变更详情窗口中显示的动态字段。"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder add screen of the agent interface."
+msgstr "在服务人员界面添加工作指令窗口中显示的动态字段。"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder edit screen of the agent interface."
+msgstr "在服务人员界面编辑工作指令窗口中显示的动态字段。"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder report screen of the agent interface."
+msgstr "在服务人员界面工作指令报告窗口中显示的动态字段。"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder zoom screen of the agent interface."
+msgstr "在服务人员界面工作指令详情窗口中显示的动态字段。"
+
+#. SysConfig
+msgid ""
+"DynamicField event module to handle the update of conditions if dynamic "
+"fields are added, updated or deleted."
+msgstr "处理动态字段更新条件（添加、更新或删除）的动态字段事件模块。"
+
+#. SysConfig
+msgid "Edit a change."
+msgstr "编辑一个变更。"
+
+#. SysConfig
+msgid "Edit the change."
+msgstr "编辑变更。"
+
+#. SysConfig
+msgid "Edit the conditions of the change."
+msgstr "编辑变更条件。"
+
+#. SysConfig
+msgid "Edit the workorder."
+msgstr "编辑工作指令。"
+
+#. SysConfig
+msgid ""
+"Enables the minimal change counter size (if \"Date\" was selected as "
+"ITSMChange::NumberGenerator)."
+msgstr "启用最小的变更计数器大小（如果ITSMChange::NumberGenerator 变更编号生成器选择为“日期”）。"
+
+#. SysConfig
+msgid "Forward schedule of changes. Overview over approved changes."
+msgstr "转发变更的计划表。已批准变更的概览。"
+
+#. SysConfig
+msgid "History Zoom"
+msgstr "历史详情"
+
+#. SysConfig
+msgid "ITSM Change CAB Templates."
+msgstr "变更CAB模板。"
+
+#. SysConfig
+msgid "ITSM Change Condition Edit."
+msgstr "变更条件编辑。"
+
+#. SysConfig
+msgid "ITSM Change Condition Overview."
+msgstr "变更条件概览。"
+
+#. SysConfig
+msgid "ITSM Change Manager Overview."
+msgstr "变更经理概览。"
+
+#. SysConfig
+msgid "ITSM Change Notifications"
+msgstr "ITSM变更通知"
+
+#. SysConfig
+msgid "ITSM Change PIR Overview."
+msgstr "变更PIR（实施后评审）概览。"
+
+#. SysConfig
+msgid "ITSM Change notification rules"
+msgstr "变更通知规则"
+
+#. SysConfig
+msgid "ITSM Changes"
+msgstr "变更"
+
+#. SysConfig
+msgid "ITSM MyCAB Overview."
+msgstr "我的CAB概览。"
+
+#. SysConfig
+msgid "ITSM MyChanges Overview."
+msgstr "我的变更概览。"
+
+#. SysConfig
+msgid "ITSM MyWorkorders Overview."
+msgstr "我的工作指令概览。"
+
+#. SysConfig
+msgid "ITSM Template Delete."
+msgstr "删除模板。"
+
+#. SysConfig
+msgid "ITSM Template Edit CAB."
+msgstr "编辑模板CAB。"
+
+#. SysConfig
+msgid "ITSM Template Edit Content."
+msgstr "编辑模板内容。"
+
+#. SysConfig
+msgid "ITSM Template Edit."
+msgstr "编辑模板。"
+
+#. SysConfig
+msgid "ITSM Template Overview."
+msgstr "模板概览。"
+
+#. SysConfig
+msgid "ITSM event module that cleans up conditions."
+msgstr "清理变更条件的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that deletes the cache for a toolbar."
+msgstr "删除变更工具栏缓存的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that deletes the history of changes."
+msgstr "删除变更历史的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that matches conditions and executes actions."
+msgstr "匹配条件并执行操作的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that sends notifications."
+msgstr "发送通知的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that updates the history of changes."
+msgstr "更新变更历史的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that updates the history of conditions."
+msgstr "更新条件历史的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that updates the history of workorders."
+msgstr "更新工作指令历史的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module to recalculate the workorder numbers."
+msgstr "重新计算工作指令编号的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module to set the actual start and end times of workorders."
+msgstr "设置工作指令实际开始/结束时间的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSMChange"
+msgstr "变更"
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "工作指令"
+
+#. SysConfig
+msgid ""
+"If frequency is 'regularly', you can configure how often the notifications "
+"are sent (every X hours)."
+msgstr "如果频率设置为“定期”，你可以设置发送通知的频率间隔（每X小时）。"
+
+#. SysConfig
+msgid "Link another object to the change."
+msgstr "链接另一对象到变更。"
+
+#. SysConfig
+msgid "Link another object to the workorder."
+msgstr "链接另一对象到工作指令。"
+
+#. SysConfig
+msgid "List of all change events to be displayed in the GUI."
+msgstr "图形界面显示的所有变更事件列表。"
+
+#. SysConfig
+msgid "List of all workorder events to be displayed in the GUI."
+msgstr "在图形用户界面中显示的工作指令事件列表。"
+
+#. SysConfig
+msgid "Lookup of CAB members for autocompletion."
+msgstr "查找CAB成员，用于自动补齐功能。"
+
+#. SysConfig
+msgid "Lookup of agents, used for autocompletion."
+msgstr "查找服务人员，用于自动补齐功能。"
+
+#. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr "管理ITSM变更管理状态机。"
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
+msgstr "管理 风险类别 ↔ 影响 ↔ 优先级 矩阵。"
+
+#. SysConfig
+msgid ""
+"Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
+"permitted."
+msgstr ""
+"检查是否允许WorkOrderAdd（添加工作指令）或WorkOrderAddFromTemplate（从模板添"
+"加工作指令）的模块。"
+
+#. SysConfig
+msgid "Module to check the CAB members."
+msgstr "检查CAB成员的模块。"
+
+#. SysConfig
+msgid "Module to check the agent."
+msgstr "检查变更服务人员的模块。"
+
+#. SysConfig
+msgid "Module to check the change builder."
+msgstr "检查变更创建人的模块。"
+
+#. SysConfig
+msgid "Module to check the change manager."
+msgstr "检查变更经理的模块。"
+
+#. SysConfig
+msgid "Module to check the workorder agent."
+msgstr "检查工作指令服务人员的模块。"
+
+#. SysConfig
+msgid "Module to check whether no workorder agent is set."
+msgstr "检查是否没有设置工作指令服务人员的模块。"
+
+#. SysConfig
+msgid "Module to check whether the agent is contained in the configured list."
+msgstr "检查服务人员是否包含在在配置列表中的模块。"
+
+#. SysConfig
+msgid ""
+"Module to show a link to create a change from this ticket. The ticket will "
+"be automatically linked with the new change."
+msgstr "显示一个链接以从工单创建一个变更的模块。工单将自动链接到新的变更。"
+
+#. SysConfig
+msgid "Move Time Slot."
+msgstr "移动时间轴。"
+
+#. SysConfig
+msgid "Move all workorders in time."
+msgstr "移动所有工作指令的时间。"
+
+#. SysConfig
+msgid "New (from template)"
+msgstr "从模板新建变更"
+
+#. SysConfig
+msgid ""
+"Only users of these groups have the permission to use the ticket types as "
+"defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature \"Ticket::"
+"Acl::Module###200-Ticket::Acl::Module\" is enabled."
+msgstr ""
+"如果启用了“Ticket::Acl::Module###200-Ticket::Acl::Module”，只有这些组中的用户"
+"有权使用“ITSMChange::AddChangeLinkTicketTypes”中定义的工单类型。"
+
+#. SysConfig
+msgid "Other Settings"
+msgstr "其它设置"
+
+#. SysConfig
+msgid "Overview over all Changes."
+msgstr "所有变更的概览。"
+
+#. SysConfig
+msgid "PIR"
+msgstr "实施后评审"
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "PIR (实施后评审)"
+
+#. SysConfig
+msgid "PSA"
+msgstr "PSA"
+
+#. SysConfig
+msgid ""
+"Parameters for the UserCreateWorkOrderNextMask object in the preference view "
+"of the agent interface."
+msgstr ""
+"服务人员界面偏好设置视图UserCreateWorkOrderNextMask（创建工作指令后的窗口）对"
+"象的参数。"
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the changes are shown) of the small "
+"change overview."
+msgstr "变更概览简洁模式显示变更的页面参数。"
+
+#. SysConfig
+msgid ""
+"Performs the configured action for each event (as an Invoker) for each "
+"configured Webservice."
+msgstr "为每个配置的WEB服务的每个事件执行配置好的操作（以调用程序角色）。"
+
+#. SysConfig
+msgid "Planned end time"
+msgstr "计划结束时间"
+
+#. SysConfig
+msgid "Planned start time"
+msgstr "计划开始时间"
+
+#. SysConfig
+msgid "Print the change."
+msgstr "打印变更。"
+
+#. SysConfig
+msgid "Print the workorder."
+msgstr "打印工作指令。"
+
+#. SysConfig
+msgid "Projected Service Availability"
+msgstr "计划服务可用性"
+
+#. SysConfig
+msgid "Projected Service Availability (PSA)"
+msgstr "计划服务可用性（PSA）"
+
+#. SysConfig
+msgid ""
+"Projected Service Availability (PSA) of changes. Overview of approved "
+"changes and their services."
+msgstr "变更的计划服务可用性（PSA）。已批准的变更和它们的服务的概览。"
+
+#. SysConfig
+msgid "Requested time"
+msgstr "请求时间"
+
+#. SysConfig
+msgid "Required privileges in order for an agent to take a workorder."
+msgstr "服务人员接手工作指令所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to access the overview of all changes."
+msgstr "访问所有的变更概览所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to add a workorder."
+msgstr "添加一个工作指令所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to change the workorder agent."
+msgstr "更换工作指令服务人员所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to create a template from a change."
+msgstr "从变更中创建模板所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to create a template from a changes' CAB."
+msgstr "从变更CAB中创建模板所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to create a template from a workorder."
+msgstr "从工作指令创建模板所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to create changes from templates."
+msgstr "从模板中创建变更所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to create changes."
+msgstr "创建变更所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to delete a template."
+msgstr "删除模板所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to delete a workorder."
+msgstr "删除一个工作指令所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to delete changes."
+msgstr "删除变更所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to edit a template."
+msgstr "编辑变更所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to edit a workorder."
+msgstr "编辑工作指令所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to edit changes."
+msgstr "编辑变更所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to edit the conditions of changes."
+msgstr "编辑变更条件所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to edit the content of a template."
+msgstr "编辑模板内容所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to edit the involved persons of a change."
+msgstr "编辑变更相关人员所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to move changes in time."
+msgstr "移动变更时间轴所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to print a change."
+msgstr "打印变更所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to reset changes."
+msgstr "重置变更所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view a workorder."
+msgstr "查看工作指令所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view changes."
+msgstr "查看变更所需的权限。"
+
+#. SysConfig
+msgid ""
+"Required privileges to view list of changes where the user is a CAB member."
+msgstr "查看'我的CAB'的变更列表所需的权限。"
+
+#. SysConfig
+msgid ""
+"Required privileges to view list of changes where the user is the change "
+"manager."
+msgstr "查看'我的变更'的变更列表所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view overview over all templates."
+msgstr "查看所有模板概览所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the conditions of changes."
+msgstr "查看变更条件所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the history of a change."
+msgstr "查看变更历史所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the history of a workorder."
+msgstr "查看工作指令历史所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the history zoom of a change."
+msgstr "查看变更历史详情所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the history zoom of a workorder."
+msgstr "查看工作指令详情所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the list of Change Schedule."
+msgstr "查看变更计划列表所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the list of change PSA."
+msgstr "查看变更PSA列表所需的权限。"
+
+#. SysConfig
+msgid ""
+"Required privileges to view the list of changes with an upcoming PIR (Post "
+"Implementation Review)."
+msgstr "查看有即使来临的PIR（实施后评审）的变更列表所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the list of own changes."
+msgstr "查看自己的变更列表所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to view the list of own workorders."
+msgstr "查看自己的工作指令所需的权限。"
+
+#. SysConfig
+msgid "Required privileges to write a report for the workorder."
+msgstr "为工作指令编写报告所需的权限。"
+
+#. SysConfig
+msgid "Reset a change and its workorders."
+msgstr "重置一个变更和它的工作指令。"
+
+#. SysConfig
+msgid "Reset change and its workorders."
+msgstr "重置变更和它的工作指令。"
+
+#. SysConfig
+msgid ""
+"Run task to check if specific times have been reached in changes and "
+"workorders."
+msgstr "执行任务来检查是否到达了变更和工作指令的特定时间点。"
+
+#. SysConfig
+msgid "Save change as a template."
+msgstr "保存变更为模板。"
+
+#. SysConfig
+msgid "Save workorder as a template."
+msgstr "保存工作指令为模板。"
+
+#. SysConfig
+msgid "Schedule"
+msgstr "计划表"
+
+#. SysConfig
+msgid "Screen after creating a workorder"
+msgstr "创建工作指令后的窗口"
+
+#. SysConfig
+msgid "Search Changes"
+msgstr "搜索变更"
+
+#. SysConfig
+msgid "Search Changes."
+msgstr "搜索变更。"
+
+#. SysConfig
+msgid ""
+"Selects the change number generator module. \"AutoIncrement\" increments the "
+"change number, the SystemID and the counter are used with SystemID.counter "
+"format (e.g. 100118, 100119). With \"Date\", the change numbers will be "
+"generated by the current date and a counter; this format looks like Year."
+"Month.Day.counter, e.g. 2010062400001, 2010062400002. With \"DateChecksum\", "
+"the counter will be appended as checksum to the string of date plus the "
+"SystemID. The checksum will be rotated on a daily basis. This format looks "
+"like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, "
+"2010062410000026."
+msgstr ""
+"选择变更编号生成器模块。“自动增量”--递增变更编号，系统ID和计数器配合使用的格"
+"式为：系统ID.计数器（如100118、100119）。“日期”--会用当前日期、系统ID和计数器"
+"共同生成变更编号，格式为：年.月.日.系统ID.计数器（如2010062400001、"
+"2010062400002）。“日期校验和”--计数器的值以校验和的方式追加日期和系统ID的字符"
+"串后面，校验和每日轮换，这种格式为：年.月.日.系统ID.计数器.校验和（如"
+"2010062410000017、2010062410000026）。"
+
+#. SysConfig
+msgid "Set the agent for the workorder."
+msgstr "为工作指令指派服务人员。"
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
+"设置服务人员界面变更详情屏幕和工作指令详情屏幕中内联HTML字段的默认高度（单"
+"位：像素）。"
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
+"设置服务人员界面变更详情屏幕和工作指令详情屏幕中内联HTML字段的最大高度（单"
+"位：像素）。"
+
+#. SysConfig
+msgid ""
+"Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
+"ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
+"from 10000."
+msgstr ""
+"设置最小的变更计数器大小（如果变更编号生成器选用“自动增量”）。默认是5（位"
+"数），意味着计数器从10000开始。"
+
+#. SysConfig
+msgid "Sets up the state machine for changes."
+msgstr "设置变更的状态模式转换。"
+
+#. SysConfig
+msgid "Sets up the state machine for workorders."
+msgstr "设置工作指令的状态模式转换。"
+
+#. SysConfig
+msgid ""
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
+msgstr ""
+"在服务人员界面编辑工作指令屏幕显示一个复选框，用于确定当一个工作指令被修改且"
+"计划结束时间变更时，是否将后面的工作指令也随之移动时间。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows changing the workorder agent, in the "
+"zoom view of the workorder of the agent interface."
+msgstr ""
+"在服务人员界面工作指令详情窗口，在菜单中显示一个允许修改该工作指令的服务人员"
+"的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows defining a change as a template in the "
+"zoom view of the change, in the agent interface."
+msgstr ""
+"在服务人员界面变更详情窗口，在菜单中显示一个允许定义一个变更为模板的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows defining a workorder as a template in "
+"the zoom view of the workorder, in the agent interface."
+msgstr ""
+"在服务人员界面工作指令详情窗口，在菜单中显示一个允许定义一个工作指令为模板的"
+"链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows editing the report of a workorder, in "
+"the zoom view of the workorder of the agent interface."
+msgstr ""
+"在服务人员界面工作指令详情窗口，在菜单中显示一个允许编辑该工作指令的报告的链"
+"接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a change with another object in "
+"the change zoom view of the agent interface."
+msgstr ""
+"在服务人员界面变更详情窗口，在菜单中显示一个允许链接变更到另一对象的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a workorder with another object "
+"in the zoom view of the workorder of the agent interface."
+msgstr ""
+"在服务人员界面工作指令详情窗口，在菜单中显示一个允许链接该工作指令到其它对象"
+"的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows moving the time slot of a change in its "
+"zoom view of the agent interface."
+msgstr ""
+"在服务人员界面工单变更详情窗口，在菜单中显示一个允许移动变更时间轴的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows taking a workorder in the its zoom view "
+"of the agent interface."
+msgstr ""
+"在服务人员界面工作指令详情窗口，在菜单中显示一个允许执行一个工作指令的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the conditions of a change in the its "
+"zoom view of the agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更条件的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a change in the its zoom "
+"view of the agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更历史的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a workorder in the its "
+"zoom view of the agent interface."
+msgstr ""
+"在服务人员界面工作指令详情窗口，在菜单中显示一个访问工作指令历史的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to add a workorder in the change zoom view of the "
+"agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个添加工作指令的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to delete a change in its zoom view of the agent "
+"interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个删除变更的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to delete a workorder in its zoom view of the agent "
+"interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个删除工作指令的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a change in the its zoom view of the agent "
+"interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个编辑变更的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a workorder in the its zoom view of the "
+"agent interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个编辑工作指令的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the change zoom view of the agent "
+"interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个返回链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the workorder zoom view of the agent "
+"interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个返回链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a change in the its zoom view of the agent "
+"interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个打印变更的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a workorder in the its zoom view of the "
+"agent interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个打印工作指令的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to reset a change and its workorders in its zoom "
+"view of the agent interface."
+msgstr ""
+"在服务人员界面工作指令详情窗口，在菜单中显示一个重置变更和工作指令的链接。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个链接以显示变更的相关人员。"
+
+#. SysConfig
+msgid "Shows the change history (reverse ordered) in the agent interface."
+msgstr "在服务人员界面显示变更历史（倒序）。"
+
+#. SysConfig
+msgid "State Machine"
+msgstr "状态模式转换"
+
+#. SysConfig
+msgid ""
+"Stores change and workorder ids and their corresponding template id, while a "
+"user is editing a template."
+msgstr "当用户编辑一个模板时，存储变更和工作指令的ID和他们对应的模板ID。"
+
+#. SysConfig
+msgid "Take Workorder"
+msgstr "接手工作指令"
+
+#. SysConfig
+msgid "Take Workorder."
+msgstr "执行工作指令。"
+
+#. SysConfig
+msgid "Take the workorder."
+msgstr "接手这个工作指令。"
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "模板概览"
+
+#. SysConfig
+msgid "Template type"
+msgstr "模板类型"
+
+#. SysConfig
+msgid "Template."
+msgstr "模板。"
+
+#. SysConfig
+msgid ""
+"The identifier for a change, e.g. Change#, MyChange#. The default is Change#."
+msgstr "变更的标识符，例如：Change#、MyChange#。默认为Change#。"
+
+#. SysConfig
+msgid ""
+"The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
+"is Workorder#."
+msgstr "工作指令的标识符，例如：Workorder#、MyWorkorder#。默认为Workorder#。"
+
+#. SysConfig
+msgid ""
+"This ACL module restricts the usuage of the ticket types that are defined in "
+"the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the "
+"groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As this "
+"ACL could collide with other ACLs which are also related to the ticket type, "
+"this sysconfig option is disabled by default and should only be activated if "
+"needed."
+msgstr ""
+"这个ACL模块限制使用定义在系统配置选项'ITSMChange::AddChangeLinkTicketTypes'中"
+"的工单类型， 仅在'ITSMChange::RestrictTicketTypes::Groups'中定义的组成员能够"
+"使用。这个ACL可能会和其它与这个工单类型相关的ACL冲突， 所以这个系统配置选项默"
+"认是禁用的，仅在需要时启用。"
+
+#. SysConfig
+msgid "Time Slot"
+msgstr "时间轴"
+
+#. SysConfig
+msgid ""
+"Types of tickets, where in the ticket zoom view a link to add a change will "
+"be displayed."
+msgstr "在工单详情窗口添加一个变更链接时显示的工单类型。"
+
+#. SysConfig
+msgid "User Search"
+msgstr "用户搜索"
+
+#. SysConfig
+msgid "Workorder Add (from template)."
+msgstr "添加工作指令（从模板）。"
+
+#. SysConfig
+msgid "Workorder Add."
+msgstr "添加工作指令。"
+
+#. SysConfig
+msgid "Workorder Agent."
+msgstr "工作指令服务人员。"
+
+#. SysConfig
+msgid "Workorder Delete."
+msgstr "删除工作指令。"
+
+#. SysConfig
+msgid "Workorder Edit."
+msgstr "编辑工作指令。"
+
+#. SysConfig
+msgid "Workorder History Zoom."
+msgstr "工作指令历史详情。"
+
+#. SysConfig
+msgid "Workorder History."
+msgstr "工作指令历史。"
+
+#. SysConfig
+msgid "Workorder Report."
+msgstr "工作指令报告。"
+
+#. SysConfig
+msgid "Workorder Zoom"
+msgstr "工作指令详情"
+
+#. SysConfig
+msgid "Workorder Zoom."
+msgstr "工作指令详情。"
+
+#. SysConfig
+msgid "once"
+msgstr "单次"
+
+#. SysConfig
+msgid "regularly"
+msgstr "定期"
+
+#~ msgid "ITSM Change Attachment"
+#~ msgstr "ITSM变更附件"
+
+#~ msgid "ITSM Work Order"
+#~ msgstr "ITSM工作指令"
+
+#~ msgid "ITSM Work Order Attachment"
+#~ msgstr "ITSM工作指令附件"
+
+#~ msgid "ITSM Work Orders"
+#~ msgstr "ITSM工作指令"
+
+#~ msgid "Defines if the requested date could be printed by customer."
+#~ msgstr "定义客户是否可以打印请求的日期。"
+
+#~ msgid "Defines if the requested date could be searched by customer."
+#~ msgstr "定义客户是否可以搜索请求的日期。"
+
+#~ msgid "Defines if the requested date could be set by customer."
+#~ msgstr "定义客户是否可以设置请求的日期。"
+
+#~ msgid "ITSM event module that updates the ITSMChange index."
+#~ msgstr "更新变更索引的ITSM事件模块。"
+
+#~ msgid "ITSM event module that updates the ITSMWorkOrder index."
+#~ msgstr "更新ITSM工作指令索引的ITSM事件模块。"
+
+#~ msgid "It controls availability for ITSMChange search driver."
+#~ msgstr "它控制ITSM变更搜索驱动的可用性。"
+
+#~ msgid "It controls availability for ITSMWorkOrder search driver."
+#~ msgstr "它控制ITSM工作指令搜索驱动的可用性。"
+
+#~ msgid ""
+#~ "Shows a link in the menu that allows taking a workorder in the zoom view "
+#~ "of the agent interface."
+#~ msgstr ""
+#~ "在服务人员界面工作指令详情窗口，在菜单中显示一个允许执行一个工作指令的链"
+#~ "接。"
+
+#~ msgid ""
+#~ "Shows a link in the menu to access the conditions of a change in the zoom "
+#~ "view of the agent interface."
+#~ msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更条件的链接。"
+
+#~ msgid ""
+#~ "Shows a link in the menu to access the history of a change in the zoom "
+#~ "view of the agent interface."
+#~ msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更历史的链接。"
+
+#~ msgid ""
+#~ "Shows a link in the menu to access the history of a workorder in the zoom "
+#~ "view of the agent interface."
+#~ msgstr ""
+#~ "在服务人员界面工作指令详情窗口，在菜单中显示一个访问工作指令历史的链接。"
+
+#~ msgid ""
+#~ "Shows a link in the menu to edit a change in the zoom view of the agent "
+#~ "interface."
+#~ msgstr "在服务人员界面变更详情窗口，在菜单中显示一个编辑变更的链接。"
+
+#~ msgid ""
+#~ "Shows a link in the menu to edit a workorder in the zoom view of the "
+#~ "agent interface."
+#~ msgstr ""
+#~ "在服务人员界面工作指令详情窗口，在菜单中显示一个编辑工作指令的链接。"
+
+#~ msgid ""
+#~ "Shows a link in the menu to print a change in the zoom view of the agent "
+#~ "interface."
+#~ msgstr "在服务人员界面变更详情窗口，在菜单中显示一个打印变更的链接。"
+
+#~ msgid ""
+#~ "Shows a link in the menu to print a workorder in the zoom view of the "
+#~ "agent interface."
+#~ msgstr ""
+#~ "在服务人员界面工作指令详情窗口，在菜单中显示一个打印工作指令的链接。"
