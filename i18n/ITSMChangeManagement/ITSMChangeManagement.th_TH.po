@@ -1,0 +1,3275 @@
+#
+# Translators:
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2020-01-24 11:46+0000\n"
+"PO-Revision-Date: 2019-04-09 12:23+0000\n"
+"Last-Translator: Udo Bretz\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/"
+"th_TH/)\n"
+"Language: th_TH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Template: AdminITSMChangeCIPAllocate
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "หมวดหมู่↔ ผลกระทบ ↔ ลำดับความสำคัญ"
+
+#. Template: AdminITSMChangeCIPAllocate
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "การจัดการลำดับความสำคัญของผลการผสมผสานวิกฤต↔ ผลกระทบ"
+
+#. Template: AdminITSMChangeCIPAllocate
+msgid "Priority allocation"
+msgstr "การจัดสรรลำดับความสำคัญ"
+
+#. Template: AdminITSMChangeNotification
+msgid "ITSM ChangeManagement Notification Management"
+msgstr "การจัดการการแจ้งเตือน ITSM ChangeManagement"
+
+#. Template: AdminITSMChangeNotification
+msgid "Add Notification Rule"
+msgstr "เพิ่มการแจ้งเตือนบทบาทหน้าที่"
+
+#. Template: AdminITSMChangeNotification
+msgid "Edit Notification Rule"
+msgstr ""
+
+#. Template: AdminITSMChangeNotification
+msgid "A notification should have a name!"
+msgstr "การแจ้งเตือนต้องมีชื่อ!"
+
+#. Template: AdminITSMChangeNotification
+msgid "Name is required."
+msgstr "ต้องระบุชื่อ!"
+
+#. Template: AdminITSMStateMachine
+msgid "Admin State Machine"
+msgstr "ผู้ดูแลสถานะกลไก"
+
+#. Template: AdminITSMStateMachine
+msgid "Select a catalog class!"
+msgstr "เลือกคลาสแคตตาล็อก"
+
+#. Template: AdminITSMStateMachine
+msgid "A catalog class is required!"
+msgstr "ต้องระบุคลาสหมวดหมู่"
+
+#. Template: AdminITSMStateMachine
+msgid "Add a state transition"
+msgstr "เพิ่มสถานภาพการเปลี่ยนแปลง"
+
+#. Template: AdminITSMStateMachine
+msgid "Catalog Class"
+msgstr "ห้องแค็ตตาล็อก"
+
+#. Template: AdminITSMStateMachine
+msgid "Object Name"
+msgstr "ชื่อออบเจกต์"
+
+#. Template: AdminITSMStateMachine
+msgid "Overview over state transitions for"
+msgstr "ภาพรวมของสถานภาพการเปลี่ยนแปลงสำหรับ"
+
+#. Template: AdminITSMStateMachine
+msgid "Delete this state transition"
+msgstr "ลบสถานภาพการเปลี่ยนแปลงนี้"
+
+#. Template: AdminITSMStateMachine
+msgid "Add a new state transition for"
+msgstr "เพิ่มสถานภาพการเปลี่ยนแปลงสำหรับ"
+
+#. Template: AdminITSMStateMachine
+msgid "Please select a state!"
+msgstr "กรุณาเลือกสถานภาพ"
+
+#. Template: AdminITSMStateMachine
+msgid "Please select a next state!"
+msgstr "กรุณาเลือกสถานภาพถัดไป"
+
+#. Template: AdminITSMStateMachine
+msgid "Edit a state transition for"
+msgstr "แก้ไขสถานภาพการเปลี่ยนแปลงสำหรับ"
+
+#. Template: AdminITSMStateMachine
+msgid "Do you really want to delete the state transition"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบการเปลี่ยนสถานภาพนี้"
+
+#. Template: AgentITSMChangeAdd
+msgid "Add Change"
+msgstr "เพิ่มChange "
+
+#. Template: AgentITSMChangeAdd
+msgid "ITSM Change"
+msgstr "ITSM Change "
+
+#. Template: AgentITSMChangeAdd
+msgid "Justification"
+msgstr "แสดงเหตุผล"
+
+#. Template: AgentITSMChangeAdd
+msgid "Input invalid."
+msgstr "input ไม่ถูกต้อง"
+
+#. Template: AgentITSMChangeAdd
+msgid "Impact"
+msgstr "ผลกระทบ"
+
+#. Template: AgentITSMChangeAdd
+msgid "Requested Date"
+msgstr "เวลาที่ร้องขอ"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "Select Change Template"
+msgstr "เลือกแม่แบบการเปลี่ยนแปลง"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "Time type"
+msgstr "ประเภทเวลา"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "Invalid time type."
+msgstr "ประเภทเวลาไม่ถูกต้อง"
+
+#. Template: AgentITSMChangeAddFromTemplate
+msgid "New time"
+msgstr "เวลาใหม่"
+
+#. Template: AgentITSMChangeCABTemplate
+msgid "Save Change CAB as template"
+msgstr "บันทึกChange CAB เป็นแม่แบบ"
+
+#. Template: AgentITSMChangeCABTemplate
+msgid "go to involved persons screen"
+msgstr "ไปที่สกรีนของบุคคลที่เกี่ยวข้อง"
+
+#. Template: AgentITSMChangeCABTemplate
+msgid "Invalid Name"
+msgstr "ชื่อไม่ถูกต้อง"
+
+#. Template: AgentITSMChangeCondition
+msgid "Conditions and Actions"
+msgstr "เงื่อนไขและการทำงาน"
+
+#. Template: AgentITSMChangeCondition
+msgid "Delete Condition"
+msgstr "ลบเงื่อนไข"
+
+#. Template: AgentITSMChangeCondition
+msgid "Add new condition"
+msgstr "เพิ่มเงื่อนไขใหม่"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Need a valid name."
+msgstr "ต้องการชื่อที่ถูกต้อง"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "A valid name is needed."
+msgstr ""
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Duplicate name:"
+msgstr "ชื่อซ้ำ"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "This name is already used by another condition."
+msgstr "ชื่อนี้ได้ถูกใช้งานโดยเงื่อนไขอื่น"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Matching"
+msgstr "ตรงกัน"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Any expression (OR)"
+msgstr "การแสดงผลใดๆ (OR)"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "All expressions (AND)"
+msgstr "การแสดงผลทั้งหมด (AND)"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Expressions"
+msgstr "การแสดงผล"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Selector"
+msgstr "ผู้เลือก"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Operator"
+msgstr "ผู้ดำเนินการ"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Delete Expression"
+msgstr "ลบการแสดงผล"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "No Expressions found."
+msgstr "ไม่พบการแสดงผล"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Add new expression"
+msgstr "เพิ่มการแสดงผล"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Delete Action"
+msgstr "ลบการทำงาน"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "No Actions found."
+msgstr "ไม่พบการทำงาน"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Add new action"
+msgstr "เพิ่มการทำงานใหม่"
+
+#. Template: AgentITSMChangeDelete
+msgid "Do you really want to delete this change?"
+msgstr "คุณต้องการลบChange นี้หรือไม่?"
+
+#. Template: AgentITSMChangeEdit
+msgid "Edit %s%s"
+msgstr ""
+
+#. Template: AgentITSMChangeHistory
+msgid "History of %s%s"
+msgstr "ประวัติของ %s%s"
+
+#. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr "เนื้อหาประวัติ"
+
+#. Template: AgentITSMChangeHistory
+msgid "Workorder"
+msgstr "ใบสั่งงาน"
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
+msgstr "เวลาที่สร้าง"
+
+#. Template: AgentITSMChangeHistory
+msgid "Show details"
+msgstr "แสดงเนื้อหา"
+
+#. Template: AgentITSMChangeHistory
+msgid "Show workorder"
+msgstr "แสดงใบสั่งงาน"
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "Detailed history information of %s"
+msgstr ""
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "Modified"
+msgstr "การปรับเปลี่ยน"
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "Old Value"
+msgstr "ค่าเดิม"
+
+#. Template: AgentITSMChangeHistoryZoom
+msgid "New Value"
+msgstr "ค่าใหม่"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Edit Involved Persons of %s%s"
+msgstr ""
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Involved Persons"
+msgstr "บุคคลที่เกี่ยวข้อง"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "ChangeManager"
+msgstr "ผู้จัดการของChange "
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "User invalid."
+msgstr "ผู้ใช้ไม่ถูกต้อง"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "ChangeBuilder"
+msgstr "ผู้สร้างChange "
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Change Advisory Board"
+msgstr "คณะกรรมการที่ปรึกษา Change"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "CAB Template"
+msgstr "แม่แบบ CAB"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Apply Template"
+msgstr "ใช้แม่แบบ"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "NewTemplate"
+msgstr "แม่แบบใหม่"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Save this CAB as template"
+msgstr "บันทึก CAB นี้เป็นแม่แบบ"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Add to CAB"
+msgstr "เพิ่มไปยัง CAB"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Invalid User"
+msgstr "ผู้ใช้ไม่ถูกต้อง"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Current CAB"
+msgstr "CAB ปัจจุบัน"
+
+#. Template: AgentITSMChangeOverviewNavBar
+msgid "Context Settings"
+msgstr "การตั้งค่าข้อความ"
+
+#. Template: AgentITSMChangeOverviewNavBar
+msgid "Changes per page"
+msgstr "Changes ในแต่ละหน้า"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder Title"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Title"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder Agent"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Builder"
+msgstr "ผู้สร้าง Change"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Manager"
+msgstr "ผู้จัดการ "
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorders"
+msgstr "ใบสั่งงาน"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change State"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder State"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Workorder Type"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Requested Time"
+msgstr "เวลาที่ร้องขอ"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Planned Start Time"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Planned End Time"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Actual Start Time"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Actual End Time"
+msgstr ""
+
+#. Template: AgentITSMChangeReset
+msgid "Do you really want to reset this change?"
+msgstr "คุณต้องการรีเซตการเปลี่ยนแปลงนี้หรือไม่?"
+
+#. Template: AgentITSMChangeSearch
+msgid "(e.g. 10*5155 or 105658*)"
+msgstr "(เช่น 10*5155 หรือ 105658*)"
+
+#. Template: AgentITSMChangeSearch
+msgid "CAB Agent"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "e.g."
+msgstr "เช่น"
+
+#. Template: AgentITSMChangeSearch
+msgid "CAB Customer"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Workorder Instruction"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Workorder Report"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Change Priority"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Change Impact"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "Change Category"
+msgstr "หมวดหมู่ของChange "
+
+#. Template: AgentITSMChangeSearch
+msgid "(before/after)"
+msgstr "(ก่อน/หลัง)"
+
+#. Template: AgentITSMChangeSearch
+msgid "(between)"
+msgstr "(ระหว่าง)"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Save Change as Template"
+msgstr "บันทึกChange เป็นแม่แบบ"
+
+#. Template: AgentITSMChangeTemplate
+msgid "A template should have a name!"
+msgstr "ควรระบุชื่อแม่แบบ!"
+
+#. Template: AgentITSMChangeTemplate
+msgid "The template name is required."
+msgstr "ต้องระบุชื่อของแม่แบบ!"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Reset States"
+msgstr "รีเซตสถานภาพ"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Overwrite original template"
+msgstr "เขียนทับแม่แบบเดิม"
+
+#. Template: AgentITSMChangeTemplate
+msgid "Delete original change"
+msgstr "ลบChange เดิม"
+
+#. Template: AgentITSMChangeTimeSlot
+msgid "Move Time Slot"
+msgstr "ย้าย Time Slot"
+
+#. Template: AgentITSMChangeZoom
+msgid "Change Information"
+msgstr "ข้อมูลของChange "
+
+#. Template: AgentITSMChangeZoom
+msgid "Planned Effort"
+msgstr ""
+
+#. Template: AgentITSMChangeZoom
+msgid "Accounted Time"
+msgstr ""
+
+#. Template: AgentITSMChangeZoom
+msgid "Change Initiator(s)"
+msgstr "ผู้ริเริ่ม(s) Change"
+
+#. Template: AgentITSMChangeZoom
+msgid "CAB"
+msgstr "CAB"
+
+#. Template: AgentITSMChangeZoom
+msgid "Last changed"
+msgstr "การเปลี่ยนแปลงล่าสุด"
+
+#. Template: AgentITSMChangeZoom
+msgid "Last changed by"
+msgstr "การเปลี่ยนแปลงล่าสุดโดย"
+
+#. Template: AgentITSMChangeZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+"ในการเปิดการลิ้งในบล็อกคำอธิบายต่อไปนี้ คุณอาจจะต้องกดปุ่ม Ctrl หรือ Cmd หรือ Shift "
+"ในขณะที่กดลิ้ง (ขึ้นอยุ่กับเบราเซอร์และระบบปฎิบัติการของคุณ)"
+
+#. Template: AgentITSMChangeZoom
+msgid "Download Attachment"
+msgstr "ดาวน์โหลดสิ่งที่แนบมา"
+
+#. Template: AgentITSMTemplateEditCAB
+msgid "Edit CAB Template"
+msgstr "แก้ไขแม่แบบ CAB"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"This will create a new change from this template, so you can edit and save "
+"it."
+msgstr "นี่จะสร้างChange ใหม่จากแม่แบบนี้ ดังนั้นคุณจึงสามารถแก้ไขและบันทึกไว้"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"The new change will be deleted automatically after it has been saved as "
+"template."
+msgstr "Change ใหม่จะถูกลบโดยอัตโนมัติหลังจากที่มันได้รับการบันทึกเป็นแม่แบบ"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"This will create a new workorder from this template, so you can edit and "
+"save it."
+msgstr "นี่จะสร้างใบสั่งงานใหม่จากแม่แบบนี้ ดังนั้นคุณจึงสามารถแก้ไขและบันทึกไว้"
+
+#. Template: AgentITSMTemplateEditContent
+msgid "A temporary change will be created which contains the workorder."
+msgstr "Change ชั่วคราวจะถูกสร้างขึ้นซึ่งประกอบด้วยใบสั่งงาน"
+
+#. Template: AgentITSMTemplateEditContent
+msgid ""
+"The temporary change and new workorder will be deleted automatically after "
+"the workorder has been saved as template."
+msgstr "Change ชั่วคราวและใบสั่งงานใหม่จะถูกลบโดยอัตโนมัติหลังจากที่มันได้รับการบันทึกเป็นแม่แบบ"
+
+#. Template: AgentITSMTemplateEditContent
+msgid "Do you want to proceed?"
+msgstr "คุณต้องการดำเนินการต่อไปหรือไม่?"
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Template ID"
+msgstr ""
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Edit Content"
+msgstr "แก้ไข้เนื้อหา"
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Create by"
+msgstr ""
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Change by"
+msgstr ""
+
+#. Template: AgentITSMTemplateOverviewSmall
+msgid "Change Time"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Add Workorder to %s%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Instruction"
+msgstr "การสร้าง"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Invalid workorder type."
+msgstr "ประเภทใบสั่งงานไม่ถูกต้อง"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "The planned start time must be before the planned end time!"
+msgstr "เวลาเริ่มต้นที่วางแผนจะต้องเริ่มก่อนเวลาสิ้นสุดที่วางแผนไว้!"
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Invalid format."
+msgstr "รูปแบบไม่ถูกต้อง"
+
+#. Template: AgentITSMWorkOrderAddFromTemplate
+msgid "Select Workorder Template"
+msgstr "เลือกแม่แบบใบสั่งงาน"
+
+#. Template: AgentITSMWorkOrderAgent
+msgid "Edit Workorder Agent of %s%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderDelete
+msgid "Do you really want to delete this workorder?"
+msgstr "คุณแน่ใจหรือไม่ที่จะลบใบสั่งงานนี้?"
+
+#. Template: AgentITSMWorkOrderDelete
+msgid ""
+"You can not delete this Workorder. It is used in at least one Condition!"
+msgstr "คุณไม่สามรถลบใบสั่งงานนี้ เนื่องจากได้ใช้งานอย่างน้อยหนึ่งเงื่อนไข!"
+
+#. Template: AgentITSMWorkOrderDelete
+msgid "This Workorder is used in the following Condition(s)"
+msgstr "ใบสั่งงานนี้จะใช้ในเงื่อนไขดังต่อไปนี้ (s)"
+
+#. Template: AgentITSMWorkOrderEdit
+msgid "Edit %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderEdit
+msgid "Move following workorders accordingly"
+msgstr "ย้าย workorders ต่อไปนี้ตามลำดับ"
+
+#. Template: AgentITSMWorkOrderEdit
+msgid ""
+"If the planned end time of this workorder is changed, the planned start "
+"times of all following workorders will be changed accordingly"
+msgstr ""
+"หากเวลาสิ้นสุดที่วางแผนไว้ของ workorder นี้มีการเปลี่ยนแปลง ดังนั้นเวลาเริ่มต้นที่วางแผนไว้ ของ "
+"workorders ต่อไปนี้จะมีการเปลี่ยนแปลงตามความเหมาะสม"
+
+#. Template: AgentITSMWorkOrderHistory
+msgid "History of %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Edit Report of %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Report"
+msgstr "รายงาน"
+
+#. Template: AgentITSMWorkOrderReport
+msgid "The actual start time must be before the actual end time!"
+msgstr "เวลาเริ่มต้นที่เกิดขึ้นจริงจะต้องเริ่มก่อนเวลาสิ้นสุดที่เกิดขึ้นจริง!"
+
+#. Template: AgentITSMWorkOrderReport
+msgid "The actual start time must be set, when the actual end time is set!"
+msgstr "เวลาเริ่มต้นที่เกิดขึ้นจริงจะต้องตั้งค่าเมื่อเวลาสิ้นสุดที่เกิดขึ้นจริงมีการตั้งค่า!"
+
+#. Template: AgentITSMWorkOrderTake
+msgid "Current Agent"
+msgstr "เอเย่นต์ปัจจุบัน"
+
+#. Template: AgentITSMWorkOrderTake
+msgid "Do you really want to take this workorder?"
+msgstr "คุณแน่ใจหรือไม่ที่จะลบใบสั่งงานนี้?"
+
+#. Template: AgentITSMWorkOrderTemplate
+msgid "Save Workorder as Template"
+msgstr "บันทึกใบสั่งงานเป็นแม่แบบ"
+
+#. Template: AgentITSMWorkOrderTemplate
+msgid "Delete original workorder (and surrounding change)"
+msgstr "ลบworkorder เดิม(และการเปลี่ยนแปลงใกล้เคียง)"
+
+#. Template: AgentITSMWorkOrderZoom
+msgid "Workorder Information"
+msgstr "ข้อมูลของใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Notification Added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Unknown notification %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "There was an error creating the notification."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChange.pm
+msgid "Overview: ITSM Changes"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Ticket with TicketID %s does not exist!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Was not able to add change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
+msgid "Was not able to create change from template!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "No ChangeID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "No change found for changeID %s."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "The CAB of change \"%s\" could not be serialized."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "Could not add the template."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
+msgid "Change \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
+msgid "Could not delete ConditionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not create new condition!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ConditionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ExpressionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not add new Expression!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ActionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not add new Action!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not delete ExpressionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not delete ActionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Error: Unknown field type \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "ConditionID %s does not belong to the given ChangeID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
+msgid "Change \"%s\" does not have an allowed change state to be deleted!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
+msgid "Was not able to delete the changeID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
+msgid "Was not able to update Change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Can't show history, as no ChangeID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Change \"%s\" not found in the database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Unknown type \"%s\" encountered!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Change History"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
+msgid "Can't show history zoom, no HistoryEntryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
+msgid "HistoryEntry \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
+msgid "Was not able to update Change CAB for Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
+msgid "Was not able to update Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
+msgid "Overview: ChangeManager"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
+msgid "Overview: My CAB"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
+msgid "Overview: My Changes"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyWorkOrders.pm
+msgid "Overview: My Workorders"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+msgid "Overview: PIR"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+msgid "Overview: PSA"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrder \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "Can't create output, as the workorder is not attached to a change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "Can't create output, as no ChangeID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "unknown change title"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder"
+msgstr "ใบสั่งงาน ITSM"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderNumber"
+msgstr "ใบสั่งงานที่"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderTitle"
+msgstr "หัวข้อใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "unknown workorder title"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeState"
+msgstr "สถานภาพของChange "
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEffort"
+msgstr "ความพยายามที่วางแผนไว้"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Agents"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Customers"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "RequestedTime"
+msgstr "เวลาที่ร้องขอ"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedStartTime"
+msgstr "เวลาเริ่มต้นที่วางแผน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEndTime"
+msgstr "เวลาสิ้นสุดที่วางแผน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualStartTime"
+msgstr "เวลาเริ่มต้นที่เกิดขึ้นจริง"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualEndTime"
+msgstr "เวลาสิ้นสุดที่เกิดขึ้นจริง"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeTime"
+msgstr "เวลาของการเปลี่ยนแปลง"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeNumber"
+msgstr "ลำดับของChange"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderState"
+msgstr "สถานภาพของใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderType"
+msgstr "ประเภทใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderAgent"
+msgstr "เอเย่นต์ของใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder Overview (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
+msgid "Was not able to reset WorkOrder %s of Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
+msgid "Was not able to reset Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
+msgid "Overview: Change Schedule"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Search"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "ChangeTitle"
+msgstr "หัวข้อChange "
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrders"
+msgstr "ใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Search Result"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Number"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Work Order Title"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Description"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Justification"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Instruction"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Report"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Priority"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Impact"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Created By"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder State"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Type"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Agent"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "before"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "The change \"%s\" could not be serialized."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "Could not update the template \"%s\"."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "Could not delete change \"%s\"."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The change can't be moved, as it has no workorders."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Add a workorder first."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Can't move a change which already has started!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Please move the individual workorders instead."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The current %s could not be determined."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The %s of all workorders has to be defined."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Was not able to move time slot for workorder #%s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "You need %s permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "No TemplateID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "Template \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "Was not able to delete the template %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEdit.pm
+msgid "Was not able to update Template %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditCAB.pm
+msgid "Was not able to update Template \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
+msgid "Was not able to create change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
+msgid "Was not able to create workorder from template!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateOverview.pm
+msgid "Overview: Template"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
+msgid "You need %s permissions on the change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
+msgid "Was not able to add workorder!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "No WorkOrderID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid ""
+"Was not able to set the workorder agent of the workorder \"%s\" to empty!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "Was not able to update the workorder \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "Could not find Change for WorkOrder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderDelete.pm
+msgid "Was not able to delete the workorder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderEdit.pm
+msgid "Was not able to update WorkOrder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "Can't show history, as no WorkOrderID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrder \"%s\" not found in the database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrder History"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
+msgid "History entry \"%s\" not found in the database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
+msgid "WorkOrder History Zoom"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderTake.pm
+msgid "Was not able to take the workorder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
+msgid "The workorder \"%s\" could not be serialized."
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Need config option %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Config option %s needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Title: %s | Type: %s"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "CAB ของฉัน"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "changeของฉัน"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+msgid "My Work Orders"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Action (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Actions of Condition (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) executed: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Action ID=%s): (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual end time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual start time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Change (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "CAB Deleted %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) added"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Notification sent to %s (Event: %s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned end time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned start time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached requested time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Condition (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Condition (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Conditions of Change (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Condition ID=%s): (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Expression (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Expression (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Expressions of Condition (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Expression ID=%s): (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual end time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual start time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Workorder (ID=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment for WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Attachment for WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment from WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Attachment from WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Report Attachment for WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Report Attachment for WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Report Attachment from WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Report Attachment from WorkOrder: %s"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) added"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) deleted"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Notification sent to %s (Event: %s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned end time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned start time."
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) %s: (new=%s, old=%s)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "all"
+msgstr "ทั้งหมด"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "any"
+msgstr "ใดๆ"
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Previous Change Builder"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Previous Change Manager"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Workorder Agents"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Previous Workorder Agent"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Change Initiators"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Group ITSMChange"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Group ITSMChangeBuilder"
+msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/Notification.pm
+msgid "Group ITSMChangeManager"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "ร้องขอ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "การอนุมัติที่ค้างอยู่"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "ถูกปฏิเสธ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "อนุมัติแล้ว"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "อยู่ในข่วงดำเนินการ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "PIR ที่ค้างอยู่"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "สำเร็จ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "ล้มเหลว"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "ยกเลิก"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "ถอยกลับ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "สร้างแล้ว"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "ยอมรับแล้ว"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "เรียบร้อย"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "การอนุมัติ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "ใบสั่งงาน"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "backout"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "การตัดสินใจ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "pir"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeStateID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "CategoryID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ImpactID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "PriorityID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeManagerID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeBuilderID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderStateID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderTypeID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderAgentID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "คือ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "คือ ไม่"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "คือ ว่างเปล่า"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "คือ ไม่ว่างเปล่า"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "คือ มากกว่า"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "คือ น้อยกว่า"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "คือ ก่อนหน้า"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "คือ หลังจาก"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "บรรจุ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "ไม่บรรจุ"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr "เริ่มต้นด้วย"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr "ลงท้ายด้วย"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "ตั้งค่า"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this expression?"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this action?"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this condition?"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr "โอเค"
+
+#. SysConfig
+msgid ""
+"A list of the agents who have permission to take workorders. Key is a login "
+"name. Content is 0 or 1."
+msgstr "รายชื่อของเอเย่นต์ที่ได้รับอนุญาตให้ใช้ใบสั่งงาน คีย์สำคัญคือชื่อล๊อกอิน เนื้อหาเป็น 0 หรือ 1"
+
+#. SysConfig
+msgid ""
+"A list of workorder states, at which the ActualStartTime of a workorder will "
+"be set if it was empty at this point."
+msgstr ""
+"รายการสถานภาพของใบสั่งงานที่ ActualStartTime ของ workorder "
+"จะถูกตั้งค่าถ้าหากจุดนี้เป็นที่ว่างเปล่า"
+
+#. SysConfig
+msgid "Actual end time"
+msgstr ""
+
+#. SysConfig
+msgid "Actual start time"
+msgstr ""
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "เพิ่มใบสั่งงาน"
+
+#. SysConfig
+msgid "Add Workorder (from Template)"
+msgstr ""
+
+#. SysConfig
+msgid "Add a change from template."
+msgstr ""
+
+#. SysConfig
+msgid "Add a change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder (from template) to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add from template"
+msgstr "เพิ่มจากแม่แบบ"
+
+#. SysConfig
+msgid "Admin of the CIP matrix."
+msgstr "ผู้ดูแลระบบของ CIP matrix."
+
+#. SysConfig
+msgid "Admin of the state machine."
+msgstr "ผู้ดูแลของสถานะกลไก"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of change advisory "
+"boards."
+msgstr ""
+"โมดูลอินเตอร์เฟซการแจ้งเตือนเอเย่นต์ในการดูจำนวนของการเปลี่ยนแปลงของ advisory boards "
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of changes managed by "
+"the user."
+msgstr "โมดูลอินเตอร์เฟซการแจ้งเตือนเอเย่นต์ในการดูจำนวนของการเปลี่ยนแปลงการควบคุมโดยลูกค้า"
+
+#. SysConfig
+msgid "Agent interface notification module to see the number of changes."
+msgstr "โมดูลอินเตอร์เฟซการแจ้งเตือนตัวของเอเย่นต์ในการดูจำนวนของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Agent interface notification module to see the number of workorders."
+msgstr ""
+
+#. SysConfig
+msgid "CAB Member Search"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Cache time in minutes for the change management toolbars. Default: 3 hours "
+"(180 minutes)."
+msgstr "เวลา Cache ต่อนาทีสำหรับการจัดการการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid ""
+"Cache time in minutes for the change management. Default: 5 days (7200 "
+"minutes)."
+msgstr "แคชเวลาเป็นนาทีสำหรับการจัดการการเปลี่ยนแปลง เริ่มต้น: 5 วัน (7200 นาที)"
+
+#. SysConfig
+msgid "Change CAB Templates"
+msgstr ""
+
+#. SysConfig
+msgid "Change History."
+msgstr ""
+
+#. SysConfig
+msgid "Change Involved Persons."
+msgstr ""
+
+#. SysConfig
+msgid "Change Overview \"Small\" Limit"
+msgstr "ภาพรวมของChange \"ขนาดเล็ก\""
+
+#. SysConfig
+msgid "Change Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Change Print."
+msgstr ""
+
+#. SysConfig
+msgid "Change Schedule"
+msgstr "ตารางchange"
+
+#. SysConfig
+msgid "Change Schedule."
+msgstr ""
+
+#. SysConfig
+msgid "Change Settings"
+msgstr ""
+
+#. SysConfig
+msgid "Change Zoom"
+msgstr ""
+
+#. SysConfig
+msgid "Change Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Change and Workorder Templates"
+msgstr ""
+
+#. SysConfig
+msgid "Change and workorder templates edited by this user."
+msgstr ""
+
+#. SysConfig
+msgid "Change area."
+msgstr ""
+
+#. SysConfig
+msgid "Change involved persons of the change."
+msgstr ""
+
+#. SysConfig
+msgid "Change limit per page for Change Overview \"Small\"."
+msgstr ""
+
+#. SysConfig
+msgid "Change number"
+msgstr ""
+
+#. SysConfig
+msgid "Change search backend router of the agent interface."
+msgstr "เปลี่ยนการค้นหา  backend router ของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid "Change state"
+msgstr ""
+
+#. SysConfig
+msgid "Change time"
+msgstr ""
+
+#. SysConfig
+msgid "Change title"
+msgstr ""
+
+#. SysConfig
+msgid "Condition Edit"
+msgstr "แก้ไขเงื่อนไข"
+
+#. SysConfig
+msgid "Condition Overview"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Configure which screen should be shown after a new workorder has been "
+"created."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Configures how often the notifications are sent when planned the start time "
+"or other time values have been reached/passed."
+msgstr ""
+"กำหนดค่าการแจ้งเตือนจะถูกส่งบ่อยแค่ใหนเมื่อมีการวางแผนเวลาเริ่มต้นหรือค่าเวลาอื่น ๆ ได้มาถึง /"
+"ผ่านไป"
+
+#. SysConfig
+msgid "Create Change"
+msgstr "สร้างChange"
+
+#. SysConfig
+msgid "Create Change (from Template)"
+msgstr ""
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Create a change from this ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage ITSM Change Management notifications."
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage change notifications."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Default type for a workorder. This entry must exist in general catalog class "
+"'ITSM::ChangeManagement::WorkOrder::Type'."
+msgstr ""
+"ประเภทเริ่มต้นสำหรับการสั่งงาน รายการป้อนนี้ต้องมีอยู่ในคลาสแคตตาล็อกทั่วไป 'ITSM::"
+"ChangeManagement::WorkOrder::Type'."
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid "Define the signals for each workorder state."
+msgstr "กำหนดสัญญาณสำหรับแต่ละสถานภาพของใบสั่งงาน"
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only Change attributes are allowed for "
+"DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled "
+"by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only Workorder attributes are allowed for "
+"DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled "
+"by default."
+msgstr ""
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a change list."
+msgstr "กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็กๆของรายการการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a template list."
+msgstr "กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายการแม่แบบ"
+
+#. SysConfig
+msgid "Defines if it will be possible to print the accounted time."
+msgstr "กำหนดค่าถ้าหากเป็นไปได้ในการที่จะพิมพ์ the accounted time"
+
+#. SysConfig
+msgid "Defines if it will be possible to print the planned effort."
+msgstr "กำหนดค่าถ้าหากเป็นไปไมได้ในการที่จะพิมพ์ the planned effort"
+
+#. SysConfig
+msgid ""
+"Defines if reachable (as defined by the state machine) change end states "
+"should be allowed if a change is in a locked state."
+msgstr ""
+"กำหนดหากสามารถเข้าถึง (ตามที่กำหนดโดยเครื่องสถานะ) "
+"สถานะการเปลี่ยนแปลงที่สิ้นสุดควรได้รับอนุญาตหากมีการเปลี่ยนแปลงที่อยู่ในสถานะที่ถูกล็อก"
+
+#. SysConfig
+msgid ""
+"Defines if reachable (as defined by the state machine) workorder end states "
+"should be allowed if a workorder is in a locked state."
+msgstr ""
+"กำหนดหากสามารถเข้าถึง (ตามที่กำหนดโดยเครื่องสถานะ) "
+"สถานะใบสั่งงานที่สิ้นสุดควรได้รับอนุญาตหากมีใบสั่งงานอยู่ในสถานะที่ถูกล็อก"
+
+#. SysConfig
+msgid "Defines if the accounted time should be shown."
+msgstr "กำหนดถ้าหาก the accounted time จะต้องแสดง"
+
+#. SysConfig
+msgid "Defines if the actual start and end times should be set."
+msgstr "กำหนดถ้าหาก the actual start time และ the end time จะต้องบันทึก"
+
+#. SysConfig
+msgid ""
+"Defines if the change search and the workorder search functions could use "
+"the mirror DB."
+msgstr ""
+"กำหนดหากการค้นหาการเปลี่ยนแปลงและฟังก์ชั่นการค้นหา workorder สามารถใช้ฐานข้อมูลสะท้อนกลับ"
+
+#. SysConfig
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines if the planned effort should be shown."
+msgstr "กำหนดค่าถ้าหาก the planned effort จะต้องแสดง"
+
+#. SysConfig
+msgid "Defines if the requested date should be print by customer."
+msgstr "กำหนดค่าถ้าหากลูกค้าต้องการพิมพ์ the requested date "
+
+#. SysConfig
+msgid "Defines if the requested date should be searched by customer."
+msgstr "กำหนดค่าถ้าหากลูกค้าจะต้องค้นหา the requested date"
+
+#. SysConfig
+msgid "Defines if the requested date should be set by customer."
+msgstr "กำหนดค่าถ้าหากลูกค้าต้องการเซตวันที่ที่เรียกร้อง"
+
+#. SysConfig
+msgid "Defines if the requested date should be shown by customer."
+msgstr "กำหนดค่าถ้าหากลูกค้าต้องการแสดงวันที่ที่เรียกร้อง"
+
+#. SysConfig
+msgid "Defines if the workorder state should be shown."
+msgstr "กำหนดค่าถ้าหากจะต้องแสดงสถานภาพของใบสั่งงาน"
+
+#. SysConfig
+msgid "Defines if the workorder title should be shown."
+msgstr "กำหนดค่าถ้าหากต้องแสดงหัวข้อใบสั่งงาน"
+
+#. SysConfig
+msgid "Defines shown graph attributes."
+msgstr "กำหนดค่ากราฟแอตทริบิวต์ที่จะแสดง"
+
+#. SysConfig
+msgid ""
+"Defines that only changes containing Workorders linked with services, which "
+"the customer user has permission to use will be shown. Any other changes "
+"will not be displayed."
+msgstr ""
+"กำหนดว่ามีการเปลี่ยนแปลงเท่านั้นที่ประกอบด้วยการเชื่อมโยงใบสั่งงานด้วยการบริการที่จะแสดงลูกค้าผู้ใช้มีสิทธิ์ในการใช้ "
+"การเปลี่ยนแปลงอื่น ๆ จะไม่สามารถแสดงได้"
+
+#. SysConfig
+msgid "Defines the change states that will be allowed to delete."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะได้รับอนุญาตให้ลบ"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the Change PSA "
+"overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม Change PSA "
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the Change "
+"Schedule overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม Change Schedule "
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the MyCAB overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม MyCAB"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the MyChanges "
+"overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม MyChanges"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the change manager "
+"overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวมตัวจัดการการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the change "
+"overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวมการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid ""
+"Defines the change states that will be used as filters in the customer "
+"change schedule overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
+
+#. SysConfig
+msgid ""
+"Defines the default change title for a dummy change which is needed to edit "
+"a workorder template."
+msgstr "กำหนดชื่อการเปลี่ยนแปลงเริ่มต้นสำหรับการเปลี่ยนแปลงจำลองซึ่งจำเป็นเพื่อแก้ไขแม่แบบใบสั่งงาน"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change PSA overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมการเปลี่ยนแปลง PSA"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change manager overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตั๋วจัดการการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Defines the default sort criteria in the change schedule overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตารางการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Defines the default sort criteria of the changes in the MyCAB overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม MyCAB"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the MyChanges overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม MyChanges "
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the MyWorkorders "
+"overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม MyWorkorders"
+
+#. SysConfig
+msgid "Defines the default sort criteria of the changes in the PIR overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม PIR"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the customer change "
+"schedule overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the template overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวมรูปแบบ"
+
+#. SysConfig
+msgid "Defines the default sort order in the MyCAB overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวม MyCAB "
+
+#. SysConfig
+msgid "Defines the default sort order in the MyChanges overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวม MyChanges "
+
+#. SysConfig
+msgid "Defines the default sort order in the MyWorkorders overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวม MyWorkorders"
+
+#. SysConfig
+msgid "Defines the default sort order in the PIR overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวม PIR "
+
+#. SysConfig
+msgid "Defines the default sort order in the change PSA overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมการเปลี่ยนแปลง PSA "
+
+#. SysConfig
+msgid "Defines the default sort order in the change manager overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมการเปลี่ยนแปลงตัวการจัดการ"
+
+#. SysConfig
+msgid "Defines the default sort order in the change overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Defines the default sort order in the change schedule overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตารางการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid ""
+"Defines the default sort order in the customer change schedule overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
+
+#. SysConfig
+msgid "Defines the default sort order in the template overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมรูปแบบ"
+
+#. SysConfig
+msgid "Defines the default value for the category of a change."
+msgstr "กำหนดประเภทเริ่มต้นสำหรับประเภทของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Defines the default value for the impact of a change."
+msgstr "กำหนดประเภทเริ่มต้นสำหรับผลกระทบของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid ""
+"Defines the field type of CompareValue fields for change attributes used in "
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the field type of CompareValue fields for workorder attributes used "
+"in the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the object attributes that are selectable for workorder objects in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute AccountedTime in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ActualEndTime in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ActualStartTime "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute CategoryID in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeBuilderID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeManagerID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeStateID in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeTitle in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute DynamicField in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedEffort in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedEndTime "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedStartTime "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute PriorityID in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute RequestedTime in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderAgentID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderNumber "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderStateID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderTitle "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderTypeID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the period (in years), in which start and end times can be selected."
+msgstr "กำหนดระยะเวลา (ในปีที่ผ่านมา) ซึ่งวันเริ่มต้นและวันสิ้นสุดสามารถเลือกได้"
+
+#. SysConfig
+msgid ""
+"Defines the shown attributes of a workorder in the tooltip of the workorder "
+"graph in the change zoom. To show workorder dynamic fields in the tooltip, "
+"they must be specified like DynamicField_WorkOrderFieldName1, "
+"DynamicField_WorkOrderFieldName2, etc."
+msgstr ""
+"กำหนดคุณลักษณะของใบสั่งงานที่จะแสดงในคำแนะนำของกราฟใบสั่งงานในการซูมการเปลี่ยนแปลง "
+"เพื่อแสดงฟิลด์แบบไดนามิกของใบสั่งงานในคำแนะนำที่พวกเขาจะต้องระบุเช่น "
+"DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2 ฯลฯ"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the Change PSA overview. This option has no "
+"effect on the position of the column."
+msgstr ""
+"กำหนดคอลัมน์ที่จะแสดงในภาพรวมของภาพรวมการเปลี่ยนแปลง PSA "
+"ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the Change Schedule overview. This option has "
+"no effect on the position of the column."
+msgstr ""
+"กำหนดคอลัมน์ที่จะแสดงในภาพรวมตารางเวลาการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the MyCAB overview. This option has no effect "
+"on the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม MyCAB  ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the MyChanges overview. This option has no "
+"effect on the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม MyChanges  ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the MyWorkorders overview. This option has no "
+"effect on the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม MyWorkorders  ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the PIR overview. This option has no effect on "
+"the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม PIR ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the change manager overview. This option has no "
+"effect on the position of the column."
+msgstr ""
+"กำหนดคอลัมน์ที่จะแสดงในภาพรวมตัวจัดการการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the change overview. This option has no effect "
+"on the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the change search. This option has no effect on "
+"the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในค้นหาการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the customer change schedule overview. This "
+"option has no effect on the position of the column."
+msgstr ""
+"กำหนดคอลัมน์ที่จะแสดงในภาพรวมตารางการเปลี่ยนแปลงลูกค้า ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the template overview. This option has no "
+"effect on the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมรูแปบบ ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid "Defines the signals for each ITSM change state."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the template types that will be used as filters in the template "
+"overview."
+msgstr "กำหนดประเภทแม่แบบที่จะนำมาใช้เป็นตัวกรองในภาพรวมแม่แบบ"
+
+#. SysConfig
+msgid ""
+"Defines the workorder states that will be used as filters in the "
+"MyWorkorders overview."
+msgstr "กำหนดสถานะของใบสั่งงานที่จะนำมาใช้เป็นตัวกรองในภาพรวม MyWorkorders"
+
+#. SysConfig
+msgid ""
+"Defines the workorder states that will be used as filters in the PIR "
+"overview."
+msgstr "กำหนดสถานะของใบสั่งงานที่จะนำมาใช้เป็นตัวกรองในภาพรวมPIR"
+
+#. SysConfig
+msgid "Defines the workorder types that will be used to show the PIR overview."
+msgstr "กำหนดประเภทของใบสั่งงานที่จะนำมาแสดงในภาพรวมPIR"
+
+#. SysConfig
+msgid "Defines whether notifications should be sent."
+msgstr "กำหนดว่าการแจ้งเตือนควรถูกส่งออกไปหรือไม่"
+
+#. SysConfig
+msgid "Delete a change."
+msgstr ""
+
+#. SysConfig
+msgid "Delete the change."
+msgstr ""
+
+#. SysConfig
+msgid "Delete the workorder."
+msgstr ""
+
+#. SysConfig
+msgid "Details of a change history entry."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Determines if an agent can exchange the X-axis of a stat if he generates one."
+msgstr "กำหนดถ้าหากเอเย่นต์สามารถแลกเปลี่ยนแกน X ของสถิติถ้าเขาสร้างแค่หนึ่ง"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about changes done "
+"for config item classes."
+msgstr "กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลงสำหรับคลาสรายการการตั้งค่า"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about changes "
+"regarding change state updates within a timeperiod."
+msgstr "กำหนดถ้าหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลงในการอัพเดตสถานะการเปลี่ยนแปลงภายในระยะเวลาที่กำหนด"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about changes "
+"regarding the relation between changes and incident tickets."
+msgstr "กำหนดถ้าหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลงในความสัมพันธ์ระหว่างการเปลี่ยนแปลงและตั๋วที่เกิดขึ้น"
+
+#. SysConfig
+msgid "Determines if the common stats module may generate stats about changes."
+msgstr "กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid ""
+"Determines if the common stats module may generate stats about the number of "
+"Rfc tickets a requester created."
+msgstr "กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับจำนวนของตั๋ว RFC ผู้ร้องขอที่สร้างขึ้น"
+
+#. SysConfig
+msgid ""
+"Dynamic fields (for changes and workorders) shown in the change print screen "
+"of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the change search screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change zoom screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder report screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the workorder zoom screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"DynamicField event module to handle the update of conditions if dynamic "
+"fields are added, updated or deleted."
+msgstr ""
+"โมดูลจัดกิจกรรม DynamicField เพื่อจัดการกับการอัพเดตเงื่อนไขถ้าฟิลด์แบบไดนามิกที่มีการเพิ่ม "
+"การปรับปรุงหรือลบ"
+
+#. SysConfig
+msgid "Edit a change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the conditions of the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the workorder."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the minimal change counter size (if \"Date\" was selected as "
+"ITSMChange::NumberGenerator)."
+msgstr ""
+
+#. SysConfig
+msgid "Forward schedule of changes. Overview over approved changes."
+msgstr ""
+
+#. SysConfig
+msgid "History Zoom"
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change CAB Templates."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Condition Edit."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Condition Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Manager Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Notifications"
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change PIR Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change notification rules"
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Changes"
+msgstr "ITSM Changes"
+
+#. SysConfig
+msgid "ITSM MyCAB Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyChanges Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyWorkorders Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Delete."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit CAB."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit Content."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that cleans up conditions."
+msgstr "โมดูลเหตุการณ์ ITSM ที่จะลบเงื่อนไข"
+
+#. SysConfig
+msgid "ITSM event module that deletes the cache for a toolbar."
+msgstr "โมดูลเหตุการณ์ ITSM ที่จะลบการแคชสำหรับแถบเครื่องมือ"
+
+#. SysConfig
+msgid "ITSM event module that deletes the history of changes."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that matches conditions and executes actions."
+msgstr "โมดูลเหตุการณ์ ITSM ที่จับคู่เงื่อนไขและดำเนินการการกระทำ"
+
+#. SysConfig
+msgid "ITSM event module that sends notifications."
+msgstr "โมดูลเหตุการณ์ ITSM ที่ส่งการแจ้งเตือน"
+
+#. SysConfig
+msgid "ITSM event module that updates the history of changes."
+msgstr "โมดูลเหตุการณ์ ITSM ที่อัปเดตประวัติของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "ITSM event module that updates the history of conditions."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that updates the history of workorders."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module to recalculate the workorder numbers."
+msgstr "โมดูลเหตุการณ์ ITSM ที่คำนวณจำนวนใบสั่งงานใหม่"
+
+#. SysConfig
+msgid "ITSM event module to set the actual start and end times of workorders."
+msgstr "โมดูลเหตุการณ์ ITSM เพื่อตั้งค่าเวลาเริ่มต้นและเวลาสิ้นสุดที่เกิดขึ้นจริงของใบสั่งงาน"
+
+#. SysConfig
+msgid "ITSMChange"
+msgstr "ITSMChange"
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "ใบสั่งงานของITSM"
+
+#. SysConfig
+msgid ""
+"If frequency is 'regularly', you can configure how often the notifications "
+"are sent (every X hours)."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to the workorder."
+msgstr ""
+
+#. SysConfig
+msgid "List of all change events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
+msgid "List of all workorder events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
+msgid "Lookup of CAB members for autocompletion."
+msgstr ""
+
+#. SysConfig
+msgid "Lookup of agents, used for autocompletion."
+msgstr ""
+
+#. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr ""
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
+"permitted."
+msgstr ""
+"โมดูลเพื่อตรวจสอบว่า WorkOrderAdd หรือ WorkOrderAddFromTemplate ควรได้รับการอนุญาต"
+
+#. SysConfig
+msgid "Module to check the CAB members."
+msgstr "โมดูลในการตรวจสอบสมาชิก CAB"
+
+#. SysConfig
+msgid "Module to check the agent."
+msgstr "โมดูลในการตรวจสอบเอเย่นต์"
+
+#. SysConfig
+msgid "Module to check the change builder."
+msgstr "โมดูลในการตรวจสอบผู้สร้างChange "
+
+#. SysConfig
+msgid "Module to check the change manager."
+msgstr "โมดูลการตรวจสอบผู้จัดการChange "
+
+#. SysConfig
+msgid "Module to check the workorder agent."
+msgstr "โมดูลในการตรวจสอบเอเย่นต์ใบสั่งงาน"
+
+#. SysConfig
+msgid "Module to check whether no workorder agent is set."
+msgstr "โมดูลในการตรวจสอบว่าเซตใบสั่งงานหรือไม่"
+
+#. SysConfig
+msgid "Module to check whether the agent is contained in the configured list."
+msgstr "โมดูลในการตรวจสอบว่าเอเย่นต์บรรจุอยู่ในรายการของการกำหนดค่าหรือไม่"
+
+#. SysConfig
+msgid ""
+"Module to show a link to create a change from this ticket. The ticket will "
+"be automatically linked with the new change."
+msgstr ""
+"โมดูลในการแสดงลิงค์เพื่อสร้างการเปลี่ยนแปลงจากตั๋วนี้ ตั๋วนี้จะลิงค์กับการเปลี่ยนแปลงใหม่โดยอัตโนมัติ"
+
+#. SysConfig
+msgid "Move Time Slot."
+msgstr ""
+
+#. SysConfig
+msgid "Move all workorders in time."
+msgstr ""
+
+#. SysConfig
+msgid "New (from template)"
+msgstr "ใหม่ (จาก แม่แบบ)"
+
+#. SysConfig
+msgid ""
+"Only users of these groups have the permission to use the ticket types as "
+"defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature \"Ticket::"
+"Acl::Module###200-Ticket::Acl::Module\" is enabled."
+msgstr ""
+"เฉพาะผู้ใช้ของกลุ่มเหล่านี้เท่านั้นที่ได้รับอนุญาตให้ใช้รูปแบบตั๋วตามที่กำหนดใน \"ITSMChange::"
+"AddChangeLinkTicketTypes\" ถ้าคุณลักษณะแบบดังกล่าว \"Tiket::Acl::Modul###200-"
+"Tiket::Acl::Modul\" เปิดใช้งาน"
+
+#. SysConfig
+msgid "Other Settings"
+msgstr "การตั้งค่าอื่นๆ"
+
+#. SysConfig
+msgid "Overview over all Changes."
+msgstr ""
+
+#. SysConfig
+msgid "PIR"
+msgstr ""
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "PIR (ความคิดเห็นหลังการดำเนินการ)"
+
+#. SysConfig
+msgid "PSA"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Parameters for the UserCreateWorkOrderNextMask object in the preference view "
+"of the agent interface."
+msgstr ""
+"พารามิเตอร์สำหรับออบเจค UserCreateWorkOrderNextMask "
+"ในมุมมองของการตั้งค่าของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the changes are shown) of the small "
+"change overview."
+msgstr ""
+"พารามิเตอร์สำหรับแต่ละหน้า(ซึ่งการเปลี่ยนแปลงจะแสดง) ของภาพรวมการเปลี่ยนแปลงขนาดเล็ก"
+
+#. SysConfig
+msgid ""
+"Performs the configured action for each event (as an Invoker) for each "
+"configured Webservice."
+msgstr ""
+
+#. SysConfig
+msgid "Planned end time"
+msgstr ""
+
+#. SysConfig
+msgid "Planned start time"
+msgstr ""
+
+#. SysConfig
+msgid "Print the change."
+msgstr ""
+
+#. SysConfig
+msgid "Print the workorder."
+msgstr ""
+
+#. SysConfig
+msgid "Projected Service Availability"
+msgstr ""
+
+#. SysConfig
+msgid "Projected Service Availability (PSA)"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Projected Service Availability (PSA) of changes. Overview of approved "
+"changes and their services."
+msgstr ""
+
+#. SysConfig
+msgid "Requested time"
+msgstr ""
+
+#. SysConfig
+msgid "Required privileges in order for an agent to take a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นต้องใช้เพื่อให้เอเย่นต์ที่จะรับใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to access the overview of all changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการเข้าถึงภาพรวมของการเปลี่ยนแปลงทั้งหมด"
+
+#. SysConfig
+msgid "Required privileges to add a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการเพิ่มใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to change the workorder agent."
+msgstr "สิทธิพิเศษที่จำเป็นในการเปลี่ยนแปลงเอเย่นต์ของใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to create a template from a change."
+msgstr "สิทธิพิเศษที่จำเป็นในการสร้างแม่แบบจากการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to create a template from a changes' CAB."
+msgstr "สิทธิพิเศษที่จำเป็นในการสร้างแม่แบบจากเปลี่ยนแปลง CAB"
+
+#. SysConfig
+msgid "Required privileges to create a template from a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการสร้างแม่แบบจากใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to create changes from templates."
+msgstr "สิทธิพิเศษที่จำเป็นในการสร้างการเปลี่ยนแปลงจากแม่แบบ"
+
+#. SysConfig
+msgid "Required privileges to create changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการสร้างการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to delete a template."
+msgstr "สิทธิพิเศษที่จำเป็นในการลบแม่แบบ"
+
+#. SysConfig
+msgid "Required privileges to delete a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการลบใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to delete changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการลบการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to edit a template."
+msgstr "สิทธิพิเศษที่จำเป็นในการแก้ไขแม่แบบ"
+
+#. SysConfig
+msgid "Required privileges to edit a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการแก้ไขใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to edit changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการแก้ไขเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to edit the conditions of changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการแก้ไขเงื่อนไขของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to edit the content of a template."
+msgstr "สิทธิพิเศษที่จำเป็นในการแก้ไขเนื้อหาของแม่แบบ"
+
+#. SysConfig
+msgid "Required privileges to edit the involved persons of a change."
+msgstr "สิทธิพิเศษที่จำเป็นในการแก้ไขผู้ที่เกี่ยวข้องของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to move changes in time."
+msgstr "สิทธิพิเศษที่จำเป็นในการย้ายการเปลี่ยนแปลงตามเวลา"
+
+#. SysConfig
+msgid "Required privileges to print a change."
+msgstr "สิทธิพิเศษที่จำเป็นในการพิมพ์การเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to reset changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการการรีเซ็ตการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to view a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to view changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid ""
+"Required privileges to view list of changes where the user is a CAB member."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลงที่ผู้ใช้ที่เป็นสมาชิก CAB"
+
+#. SysConfig
+msgid ""
+"Required privileges to view list of changes where the user is the change "
+"manager."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลงที่ผู้ใช้เป็นผู้จัดการการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to view overview over all templates."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูภาพรวมแม่แบบทั้งหมด"
+
+#. SysConfig
+msgid "Required privileges to view the conditions of changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูเงื่อนไขของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to view the history of a change."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูประวัติการของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to view the history of a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูประวัติของใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to view the history zoom of a change."
+msgstr "สิทธิพิเศษที่จำเป็นในการซูมดูประวัติของการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to view the history zoom of a workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการซูมดูประวัติของใบสั่งงาน"
+
+#. SysConfig
+msgid "Required privileges to view the list of Change Schedule."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการกำหนดการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Required privileges to view the list of change PSA."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลง PSA"
+
+#. SysConfig
+msgid ""
+"Required privileges to view the list of changes with an upcoming PIR (Post "
+"Implementation Review)."
+msgstr ""
+"สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลงด้วย PIR ที่จะมาถึง (รีวิวหลังการดำเนินงาน)"
+
+#. SysConfig
+msgid "Required privileges to view the list of own changes."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลงของตัวเอง"
+
+#. SysConfig
+msgid "Required privileges to view the list of own workorders."
+msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของใบสั่งงานของตัวเอง"
+
+#. SysConfig
+msgid "Required privileges to write a report for the workorder."
+msgstr "สิทธิพิเศษที่จำเป็นในการเขียนรายงานสำหรับใบสั่งงาน"
+
+#. SysConfig
+msgid "Reset a change and its workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Reset change and its workorders."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Run task to check if specific times have been reached in changes and "
+"workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Save change as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Save workorder as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Schedule"
+msgstr ""
+
+#. SysConfig
+msgid "Screen after creating a workorder"
+msgstr "หน้าจอหลังจากที่สร้างใบสั่งงาน"
+
+#. SysConfig
+msgid "Search Changes"
+msgstr "ค้นหาChange "
+
+#. SysConfig
+msgid "Search Changes."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Selects the change number generator module. \"AutoIncrement\" increments the "
+"change number, the SystemID and the counter are used with SystemID.counter "
+"format (e.g. 100118, 100119). With \"Date\", the change numbers will be "
+"generated by the current date and a counter; this format looks like Year."
+"Month.Day.counter, e.g. 2010062400001, 2010062400002. With \"DateChecksum\", "
+"the counter will be appended as checksum to the string of date plus the "
+"SystemID. The checksum will be rotated on a daily basis. This format looks "
+"like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, "
+"2010062410000026."
+msgstr ""
+"เลือกโมดูลตัวสร้างหมายเลขการเปลี่ยนแปลง \"AutoIncrement\" เพิ่มจำนวนการเปลี่ยนแปลง "
+"SystemID และตัวนับจะใช้กับ SystemID รูปแบบตัวนับ (เช่น 100118, 100119) กับ \"วันที่\" "
+"ซึ่งหมายเลขการเปลี่ยนแปลงจะถูกสร้างขึ้นโดยวันที่ปัจจุบันและตัวนับ; รูปแบบนี้มีลักษณะเช่น Year."
+"Month.Day.counter เช่น 2010062400001, 2010062400002. กับ \"DateChecksum\" "
+"ตัวนับจะถูกผนวกเป็นการตรวจสอบไปยังสตริงวันบวกด้วย SystemID "
+"ที่การตรวจสอบจะมีการหมุนในแต่ละวัน รูปแบบนี้มีลักษณะเช่นYear.Month.Day.SystemID.Counter."
+"CheckSum เช่น 2010062410000017, 2010062410000026"
+
+#. SysConfig
+msgid "Set the agent for the workorder."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
+"ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
+"from 10000."
+msgstr ""
+"ตั้งค่าขนาดตัวนับการเปลี่ยนแปลงน้อยที่สุด (ถ้า \"AutoIncrement\" ได้รับเลือกเป็น "
+"ITSMChange :: NumberGenerator) ค่าเริ่มต้นคือ 5 ซึ่งหมายความว่าตัวนับเริ่มต้นจาก 10000"
+
+#. SysConfig
+msgid "Sets up the state machine for changes."
+msgstr "ตั้งค่าเครื่องของสถานะสำหรับการเปลี่ยนแปลง"
+
+#. SysConfig
+msgid "Sets up the state machine for workorders."
+msgstr "ตั้งค่าเครื่องของสถานะสำหรับใบสั่งงาน"
+
+#. SysConfig
+msgid ""
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows changing the workorder agent, in the "
+"zoom view of the workorder of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows defining a change as a template in the "
+"zoom view of the change, in the agent interface."
+msgstr ""
+"แสดงการเชื่อมโยงในเมนูที่อนุญาติให้กำหนด\n"
+"การเปลี่ยนแปลงเป็นแม่แบบในมุมมองการซูมของใบสั่งงานดังกล่าวอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows defining a workorder as a template in "
+"the zoom view of the workorder, in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows editing the report of a workorder, in "
+"the zoom view of the workorder of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a change with another object in "
+"the change zoom view of the agent interface."
+msgstr "แสดงการเชื่อมโยงในเมนูที่อนุญาติให้เชื่อมโยงการเปลี่ยนแปลงกับออบเจคอื่นในมุมมองการซูมของใบสั่งงานดังกล่าวอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a workorder with another object "
+"in the zoom view of the workorder of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows moving the time slot of a change in its "
+"zoom view of the agent interface."
+msgstr "แสดงการเชื่อมโยงในเมนูที่อนุญาติให้ย้ายช่วงเวลาของการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows taking a workorder in the its zoom view "
+"of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the conditions of a change in the its "
+"zoom view of the agent interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อที่เข้าดูเงื่อนไขการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a change in the its zoom "
+"view of the agent interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อที่เข้าชมประวัติการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a workorder in the its "
+"zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to add a workorder in the change zoom view of the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to delete a change in its zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อที่จะลบการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to delete a workorder in its zoom view of the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a change in the its zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไขการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a workorder in the its zoom view of the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the change zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อกลับไปยังมุมมองการซูมของการเปลี่ยนแปลงของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the workorder zoom view of the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a change in the its zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อพิมพ์การเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a workorder in the its zoom view of the "
+"agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to reset a change and its workorders in its zoom "
+"view of the agent interface."
+msgstr "แสดงการเชื่อมโยงในเมนูเพื่อรีเซ็ตการเปลี่ยนแปลงและใบสั่งงานในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows the change history (reverse ordered) in the agent interface."
+msgstr "แสดงประวัติการเปลี่ยนแปลง (ลำดับย้อนกลับ) ในอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid "State Machine"
+msgstr "สถานะกลไก"
+
+#. SysConfig
+msgid ""
+"Stores change and workorder ids and their corresponding template id, while a "
+"user is editing a template."
+msgstr "จัดเก็บการเปลี่ยนแปลงและไอดีใบสั่งงานและไอดีแม่แบบที่สอดคล้องกันของพวกเขาในขณะที่ผู้ใช้แก้ไขแม่แบบ"
+
+#. SysConfig
+msgid "Take Workorder"
+msgstr "รับใบสั่งงาน"
+
+#. SysConfig
+msgid "Take Workorder."
+msgstr ""
+
+#. SysConfig
+msgid "Take the workorder."
+msgstr ""
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "มุมมองแม่แบบ"
+
+#. SysConfig
+msgid "Template type"
+msgstr ""
+
+#. SysConfig
+msgid "Template."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"The identifier for a change, e.g. Change#, MyChange#. The default is Change#."
+msgstr ""
+"ตัวบ่งชี้สำหรับการเปลี่ยนแปลง เช่น การเปลี่ยนแปลง#  การเปลี่ยนแปลงของฉัน# ค่าเริ่มต้นคือ "
+"การเปลี่ยนแปลง#"
+
+#. SysConfig
+msgid ""
+"The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
+"is Workorder#."
+msgstr "ตัวบ่งชี้สำหรับใบสั่งงาน เช่น ใบสั่งงาน#  ใบสั่งงานของฉัน# ค่าเริ่มต้นคือ ใบสั่งงาน#.';"
+
+#. SysConfig
+msgid ""
+"This ACL module restricts the usuage of the ticket types that are defined in "
+"the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the "
+"groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As this "
+"ACL could collide with other ACLs which are also related to the ticket type, "
+"this sysconfig option is disabled by default and should only be activated if "
+"needed."
+msgstr ""
+"โมดูล ACL นี้จำกัดการใช้งานของประเภทตั๋วที่กำหนดไว้ในตัวเลือกที่ sysconfig 'ITSMChange :: "
+"AddChangeLinkTicketTypes' ให้กับผู้ใช้ของกลุ่มนั้นๆตามที่กำหนดใน \"ITSMChange :: "
+"RestrictTicketTypes :: Groups\"\n"
+"ในฐานะที่เป็น ACL นี้อาจขัดแย้งกับ ACLs อื่น ๆ ที่ยังเกี่ยวข้องกับประเภทตั๋ว ตัวเลือก sysconfig "
+"นี้ถูกปิดใช้งานโดยค่าเริ่มต้นและควรจะเปิดใช้งานในกรณีที่จำเป็น"
+
+#. SysConfig
+msgid "Time Slot"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Types of tickets, where in the ticket zoom view a link to add a change will "
+"be displayed."
+msgstr "ประเภทของตั๋วที่ซูมตั๋วดูการลิงค์ที่จะเพิ่มการเปลี่ยนแปลงจะปรากฏ"
+
+#. SysConfig
+msgid "User Search"
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Add (from template)."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Add."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Agent."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Delete."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Edit."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder History Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder History."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Report."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Zoom"
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "once"
+msgstr ""
+
+#. SysConfig
+msgid "regularly"
+msgstr ""
