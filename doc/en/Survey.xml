@@ -1,0 +1,678 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+
+<book lang="en">
+
+<!--
+************************************** Head ***********************************************
+-->
+<bookinfo>
+    <title>$Name</title>
+    <edition>$Description Version $Version</edition>
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
+    <date>$DateStamp</date>
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            This work is copyrighted by $Vendor, Zimmersmühlenweg 11, 61440 Oberursel, Germany.
+        </para>
+        <para>Build Date: $DateStamp</para>
+    </legalnotice>
+</bookinfo>
+
+<!--
+************************************ Customer part ******************************************
+-->
+
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
+    <title>Preface</title>
+    <para>
+        Adds the functionality to create Surveys that customers of closed tickets are invited to
+        take part.
+    </para>
+    <para>
+        Shows graphical statistics of completed Surveys.
+    </para>
+    <para>
+        If you have questions regarding this document or if you need further information, please log in to our customer portal at portal.otrs.com with your OTRS ID and create a ticket.
+        You do not have an OTRS ID yet? Register
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">here for free</ulink>.
+    </para>
+</preface>
+
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
+<chapter>
+    <title>Feature List</title>
+    <para>
+        This Module enables you to create new Surveys, add questions to a created Survey, set a
+        Survey live in order to send requests, modify existing Surveys to a certain extent,
+        and view statistics of submitted Survey answers as well as the answers themselves.
+    </para>
+</chapter>
+
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- ********************** -->
+<chapter>
+    <title>System Requirements</title>
+    <section>
+        <title>Framework</title>
+        <para>The following OTRS framework is required:</para>
+        <para>$Framework</para>
+    </section>
+    <section>
+        <title>Packages</title>
+        <para>The following packages are required:</para>
+        <para>$PackageRequired</para>
+    </section>
+    <section>
+        <title>Operating System</title>
+        <para>This package requires one of the following operating systems:</para>
+        <para>$OS</para>
+    </section>
+    <section>
+        <title>Third Party Software</title>
+        <para>This third party software is required to use this package:</para>
+        <itemizedlist>
+            <listitem>
+                <para>None.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</chapter>
+
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
+<chapter>
+    <title>Installation</title>
+    <para>
+        The following instructions explain how to install the package.
+    </para>
+    <section>
+        <title>Admin Interface</title>
+        <para>
+            Please use the following URL to install the package utilizing the Admin Interface
+            (please note that you need to be in the "admin" group).
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
+        </para>
+    </section>
+    <section>
+        <title>Command Line</title>
+        <para>
+            Whenever you cannot use the Admin Interface for whatever reason, you may use the
+            following command line tool ("bin/otrs.Console.pl Admin::Package::Install") instead.
+        </para>
+        <para>
+            <screen>
+shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
+            </screen>
+        </para>
+    </section>
+</chapter>
+
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
+<chapter>
+    <title>Configuration</title>
+    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
+    <section>
+        <title>Daemon::SchedulerCronTaskManager::Task###SurveyRequestsDelete.</title>
+        <para>Navigation: Daemon::SchedulerCronTaskManager::Task.</para>
+        <para>Trigger delete results (including vote data and requests).</para>
+    </section>
+    <section>
+        <title>Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend.</title>
+        <para>Navigation: Daemon::SchedulerCronTaskManager::Task.</para>
+        <para>Trigger sending delayed survey requests.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyAdd.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey add in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyEdit.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey edit in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyEditQuestions.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey zoom in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyOverview.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>All parameters for the Survey object in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyStats.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey stats in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyZoom.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey zoom in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyAdd###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyEdit###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyOverview###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyStats###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyZoom###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyAdd###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyEdit###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyEditQuestions###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyOverview###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyStats###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyZoom###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::PublicSurvey###002-Survey.</title>
+        <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>PreferencesGroups###SurveyOverviewSmallPageShown.</title>
+        <para>Navigation: Frontend::Agent::View::Preferences.</para>
+        <para>Parameters for the pages (in which the surveys are shown) of the small survey overview.</para>
+    </section>
+    <section>
+        <title>PublicFrontend::Module###PublicSurvey.</title>
+        <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+        <para>Frontend module registration for the PublicSurvey object in the public Survey area.</para>
+    </section>
+    <section>
+        <title>Stats::DynamicObjectRegistration###SurveyList.</title>
+        <para>Navigation: Core::Stats.</para>
+        <para>Determines if the statistics module may generate survey lists.</para>
+    </section>
+    <section>
+        <title>Survey::AmountOfSurveysPer30Days.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).</para>
+    </section>
+    <section>
+        <title>Survey::CheckSendConditionCustomerFields.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Defines the columns for the dropdown list for building send conditions (0 =&gt; inactive, 1 =&gt; active).</para>
+    </section>
+    <section>
+        <title>Survey::CheckSendConditionService.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Enable or disable the send condition check for the service.</para>
+    </section>
+    <section>
+        <title>Survey::CheckSendConditionTicketType.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Enable or disable the send condition check for the ticket type.</para>
+    </section>
+    <section>
+        <title>Survey::DeletePeriod.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::AgentSurveyOverview###ShowColumns.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyOverview.</para>
+        <para>Defines the shown columns in the survey overview. This option has no effect on the position of the columns.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::ChangeSurveyStatusGroups.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom.</para>
+        <para>Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::HTMLRichTextHeightDefault.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom.</para>
+        <para>Defines the default height for Richtext views for SurveyZoom elements.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::HTMLRichTextHeightMax.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom.</para>
+        <para>Defines the maximum height for Richtext views for SurveyZoom elements.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###000-Back.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
+        <para>Shows a link in the menu to go back in the survey zoom view of the agent interface.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###010-EditGeneralInfo.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
+        <para>Shows a link in the menu to edit a survey in its zoom view of the agent interface.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###020-EditQuestions.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
+        <para>Shows a link in the menu to edit survey questions in its zoom view of the agent interface.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###030-StatsDetails.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
+        <para>Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::Overview###Small.</title>
+        <para>Navigation: Frontend::Agent::SurveyOverview.</para>
+        <para>Defines an overview module to show the small view of a survey list.</para>
+    </section>
+    <section>
+        <title>Survey::Hook.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.</para>
+    </section>
+    <section>
+        <title>Survey::NotificationBody.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Default body for the notification email to customers about new survey.</para>
+    </section>
+    <section>
+        <title>Survey::NotificationRecipientBlacklist.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Surveys will not be sent to the configured email addresses.</para>
+    </section>
+    <section>
+        <title>Survey::NotificationSender.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Default sender for the notification email to customers about new survey.</para>
+    </section>
+    <section>
+        <title>Survey::NotificationSubject.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Default subject for the notification email to customers about new survey.</para>
+    </section>
+    <section>
+        <title>Survey::SendInHoursAfterClose.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting.</para>
+    </section>
+    <section>
+        <title>Survey::SendNoSurveyRegExp.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>If this regex matches, no customer survey will be sent.</para>
+    </section>
+    <section>
+        <title>Survey::SendOnlyToRealCustomer.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Defines if survey requests will be only send to real customers.</para>
+    </section>
+    <section>
+        <title>Survey::SendPeriod.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.</para>
+    </section>
+    <section>
+        <title>Survey::ShowVoteData.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.</para>
+    </section>
+    <section>
+        <title>SurveyStats::ShowDelete.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyStats.</para>
+        <para>Defines the groups (rw) which can delete survey stats.</para>
+    </section>
+    <section>
+        <title>Ticket::EventModulePost###99-SurveySendRequest.</title>
+        <para>Navigation: Core::Event::Survey.</para>
+        <para>Ticket event module to send automatically survey email requests to customers if a ticket is closed.</para>
+    </section>
+</chapter>
+
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
+<chapter>
+    <title>Usage</title>
+    <section>
+        <title>Create new Survey</title>
+        <para>
+            This feature lets OTRS users create new Survey by selecting the menu "SURVEY"
+            and choosing "New".
+        </para>
+        <para>
+            New Surveys require a title, an introduction text, a sender mail address, a mail
+            subject, a mail body and an internal description of the Survey.
+        </para>
+        <para>
+            Additionally the new Survey can be created for just some queues, ticket types or services.
+            If none are selected, it will be valid for every queue, ticket type annd service.
+            As default the send condition check for ticket types or services are disabled. So the fields aren't displayed in the mask (new and edit mask for a survey).
+        </para>
+        <para>
+            It is also possible to define conditions based on customer user attributes,
+            e.g. all customer users with a specified comment would not get any survey emails.
+            The attributes are selectable in the masks "AgentSurveyAdd" and "AgentSurveyEdit".
+            Each attribute could have at least one condition.
+            A condition contains a checkbox value for negation and a value field (input type text or multiple select).
+        </para>
+    </section>
+    <section>
+        <title>Add Questions</title>
+        <para>
+            As soon as a new Survey is created, the user can add questions to this Survey by
+            clicking "Edit Questions" in the displayed Survey.
+        </para>
+        <para>
+            A new window will pop up. In there the user can add questions.
+        </para>
+        <para>
+            Five types of questions are selectable. These are:
+        </para>
+        <para>
+            "YesNo" questions a user can answer by selecting "Yes" or "No" of a drop down select.
+        </para>
+        <para>
+            "Radio (List)" questions a user can answer by selecting exactly one and just one of the
+            possible answers.
+        </para>
+        <para>
+            "Checkbox (List)" questions a user can answer by selecting none to all listed answers.
+        </para>
+        <para>
+            "Textarea" questions a user can write answers by typing regular text.
+        </para>
+        <para>
+            "Net Promoter Score" questions a user can answer by selecting exactly one and just one of the
+            possible scores.
+        </para>
+        <para>
+            For each answer type the OTRS user can choose
+            if he wants a customer to be required to answer this question or if a customer can
+            ignore the question.
+        </para>
+        <para>
+            As soon as questions of type "Radio (List)", "Checkbox (List)" or "Net Promoter Score" got added, the question
+            will be shown in the "Survey Questions"-List. By clicking on the question the user can
+            add answers, change the answer order by clicking the "UP" or "DOWN" icon, or delete the
+            answer by clicking the "DELETE" icon.
+        </para>
+        <para>
+            Questions of type "Radio (List)" and "Net Promoter Score" needs to have at least two answers to be valid.
+            Furthermore, questions of type "Checkbox (List)" needs to have at least one answer to be valid.
+        </para>
+    </section>
+    <section>
+        <title>Start sending Survey requests</title>
+        <para>
+            When the OTRS user has finished adding or modifying questions and possible answers,
+            he can leave the "Edit Questions" area by clicking "Close window".
+        </para>
+        <para>
+            Back on the Survey detail page the user can select "Master" from the
+            "- Change Status -" select.
+        </para>
+        <para>
+            As soon as the Survey has the state "Master" the Survey is set live.
+        </para>
+        <para>
+            Only one Survey can have the state "Master".
+        </para>
+        <para>
+            If a Ticket got closed, the customer gets an E-Mail invitation to fill the Survey
+            by clicking a link inside the invitation E-Mail.
+        </para>
+    </section>
+    <section>
+        <title>Survey Results Graph</title>
+        <para>
+            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a a Survey that
+            customers already submitted and scrolling down, you can see the "Survey Results Graph".
+        </para>
+        <para>
+            This displays the statistically a summary of questions (e.g. YesNo, Radio and Checkbox).
+        </para>
+        <para>
+            As soon as the Survey has the state "Master" the Survey is set live.
+        </para>
+        <para>
+            Questions where answers were configured as "required" will have one vote for each
+            customer submitted Survey.
+        </para>
+        <para>
+            Questions where answers were not configured as "required" are optional for the customer.
+            This means that for example 200 customers submitted the Survey but in the statistic in
+            total only 10 or 20 answers may occur, if customers did not select any of the Radio
+            (List), YesNo or checkbox answers or haven't put anything in a textarea answer.
+        </para>
+        <para>
+            Statistics for required Checkbox (List) questions will have at least one checked value
+            for every submitted Survey but due to it's nature of been multiple clickable there may
+            be more answers than the total amount of submitted Surveys. Example: 200 Surveys
+            submitted by customers, 350 answers on one Checkbox (List) question.
+        </para>
+        <para>
+            Statistics for not required questions may have less votes than the total amount of
+            submitted Surveys (answer is optional).
+        </para>
+    </section>
+    <section>
+        <title>Statistics Details</title>
+        <para>
+            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a Survey that
+            customers already submitted and choosing "Stats Details" you can see a list containing
+            the time the Survey invitation was sent to the customer, the time the customer submitted
+            his filled Survey, the Ticket (clickable) and a magnifying glass that shows the selected
+            votes for this customer.
+        </para>
+        <para>
+            In there you can find the answers the customer chose or typed in question by question.
+        </para>
+        <para>
+            Especially Textarea answers are of interest in here.
+        </para>
+    </section>
+    <section>
+        <title>Modifying Survey</title>
+        <para>
+            As soon as a Survey had the Status "Master" the possible modifications are limited. So
+            please make sure to have especially the amount of questions as well as the amount of
+            answers correctly configured before changing it's status to Master.
+        </para>
+        <warning>
+            <para>
+                In a Survey of type "Master" you can not add or delete questions any more.
+            </para>
+        </warning>
+        <para>
+            In a Survey of type Master you can change the general info (e.g. Title, Introduction,
+            Sender,...), the question text, the answer text, as well as the order of the answers.
+        </para>
+        <para>
+            You can change the "Answer Required" part of a question too, but this may just make
+            sense as long as there are no submitted customer Surveys.
+        </para>
+        <para>
+            Changing a "Answer Required" Question to answer not required makes the answer optional,
+            so the statistic for this question may not have an answer for each submitted customer
+            Survey any more.
+        </para>
+        <para>
+            Changing a "Answer not Required" Question to answer required will require future Survey
+            customers to give a vote for this question, but will not add votes for already submitted
+            Surveys. So statistics will render rather useless too.
+        </para>
+    </section>
+</chapter>
+
+<!--
+***************************************** Technical part ************************************
+-->
+
+<!-- ********************************* -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************* -->
+<chapter>
+    <title>Technical Implementation Details</title>
+    <para>
+        This module adds the following database tables:
+        survey,
+        survey_answer,
+        survey_question,
+        survey_queue,
+        survey_request,
+        survey_vote.
+    </para>
+    <para>
+        The survey table holds the general information of a survey and the send condition information for a survey.
+    </para>
+    <para>
+        The survey_answer holds the answers for a survey questions.
+    </para>
+    <para>
+        The survey_question holds all question related information as well as if an answer is
+        required or not.
+    </para>
+    <para>
+        The survey_queue table holds a record for each queue a survey is added.
+    </para>
+    <para>
+        The survey_request table holds a record for each request sent to a customer,
+        as well as the time, a customer has submitted the survey he was invited to.
+    </para>
+    <para>
+        The survey_vote table holds a reference to the corresponding request and question
+        as well as the chosen answers.
+    </para>
+    <!--
+            OK, so far for the users and now for the developers underneath us:
+
+            Add a new send condition:
+
+            - The send condition are stored in a yaml structure.
+            - In the Survey.pm the function "_BuildSendConditionStrg" generate the yaml structure.
+            The function is used in the two functions "SurveyAdd" and "SurveyUpdate". So these two functions
+            need a new optional parameter for the new send condition (similar the ticket type or service).
+            - The function "SurveyGet" in the Survey.pm return the new send condition as a own parameter.
+            - Now the check for the new send condition must be added in the function "RequestSend" from the
+            Request.pm (similar the ticket type or service).
+            - Optional you can add a Setting for the send condition.
+            - The last step is to add the new send condition in the new and edit mask for the survey. Also it can be
+            added in the detail survey view.
+    -->
+</chapter>
+
+<!-- *********** -->
+<!-- 8. Filelist -->
+<!-- *********** -->
+<chapter>
+    <title>File list</title>
+    <para>This list shows all included files and the referring permissions.</para>
+    <para>$Filelist</para>
+</chapter>
+
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
+<chapter>
+    <title>Tests</title>
+    <para>This module has been tested on the current state of the art in quality.</para>
+    <section>
+        <title>Test Cases</title>
+        <para>
+            To tests this package please follow the examples described in the Usage section, all the
+            tests cases should return the expected results defined at the beginning of each example.
+        </para>
+    </section>
+    <section>
+        <title>Unit Tests</title>
+        <para>
+            To ensure the quality of the module, several so-called unit tests were created, to test
+            the functionalities of this module. These unit tests can be run via command line.
+        </para>
+        <para>
+            ATTENTION: Please never run unit tests on a productive system, since the added test data
+            to the system will no longer be removed. Always use a test system.
+        </para>
+        <para>Run the package specific unit tests</para>
+        <para>
+            To run only the unit test which will be delivered with this package, use the following
+            command on the command line:
+        </para>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Survey --test GetRequestRecipient --test RequestsSend --test VoteGetAll
+        </screen>
+        <para>Selenium unit tests</para>
+        <para>
+            To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
+        </para>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentSurveyAdd --test AgentSurveyEdit --test AgentSurveyEditQuestions --test AgentSurveyOverview --test AgentSurveyStats --test AgentSurveyZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicSurvey
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SurveyMenu/Generic:SurveyOverview/Small
+        </screen>
+        <para>Run all available unit tests</para>
+        <para>
+            To run all available unit tests, use the following command on the command line:
+        </para>
+        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run</screen>
+    </section>
+</chapter>
+
+<!-- ************* -->
+<!-- 10. Changelog -->
+<!-- ************* -->
+<chapter>
+    <title>Change Log</title>
+    <para>$ChangeLog</para>
+</chapter>
+
+</book>
