@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ITSMCore</Name>
+<!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
+    <Version>6.0.30</Version>
+    <Framework Minimum="6.0.30">6.0.x</Framework>
+    <PackageRequired Version="6.0.30">GeneralCatalog</PackageRequired>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">The OTRS::ITSM Core package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
+    <Description Lang="hu">Az OTRS::ITSM alapcsomag.</Description>
+    <Filelist>
+        <File Permission="660" Location="doc/itsm-core-database.dia" />
+        <File Permission="660" Location="doc/itsm-core-database.png" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/FrameworkITSMCore.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/ITSMCore.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/ITSMService.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/TicketITSMService.xml" />
+        <File Permission="660" Location="Kernel/Language/ar_SA_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/bg_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ca_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/cs_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/da_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/de_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/el_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/en_CA_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/en_GB_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/es_CO_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/es_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/et_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/fa_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_CA_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/he_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/hi_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/id_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/it_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ko_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/lt_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/lv_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/mk_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ms_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/nl_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sk_SK_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sl_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sw_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/tr_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Modules/AdminITSMCIPAllocate.pm" />
+        <File Permission="660" Location="Kernel/Modules/AdminService.pm" />
+        <File Permission="660" Location="Kernel/Modules/AdminSLA.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentITSMService.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentITSMServicePrint.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentITSMServiceZoom.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentITSMSLA.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentITSMSLAPrint.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentITSMSLAZoom.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/ITSMServiceMenu/Generic.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/ITSMServiceMenu/Link.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/ITSMSLAMenu/Generic.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/LinkObject/Service.pm" />
+        <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/ITSMCore/LoadingDialog.html.tmpl" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMCIPAllocate.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminService.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminSLA.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMService.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMServiceZoom.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMSLA.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMSLAZoom.tt" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Admin/Service/Add.pm" />
+        <File Permission="660" Location="Kernel/System/LinkObject/Service.pm" />
+        <File Permission="660" Location="Kernel/System/ITSMCIPAllocate.pm" />
+        <File Permission="660" Location="Kernel/System/Service.pm" />
+        <File Permission="660" Location="Kernel/System/SLA.pm" />
+        <File Permission="660" Location="scripts/test/Console/Command/Admin/Service/Add.t" />
+        <File Permission="660" Location="scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t" />
+        <File Permission="660" Location="scripts/test/GenericInterface/Operation/Ticket/TicketCreateIncludeTicketData.t" />
+        <File Permission="660" Location="scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t" />
+        <File Permission="660" Location="scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t" />
+        <File Permission="660" Location="scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t" />
+        <File Permission="660" Location="scripts/test/ProcessManagement/Process.t" />
+        <File Permission="660" Location="scripts/test/Stats/TicketSolutionResponseTimeGetStatElement.t" />
+        <File Permission="660" Location="scripts/test/Ticket/TicketACL.t" />
+        <File Permission="660" Location="scripts/test/Ticket/TicketServiceList.t" />
+        <File Permission="660" Location="scripts/test/CustomerUserService.t" />
+        <File Permission="660" Location="scripts/test/ITSMCIPAllocate.t" />
+        <File Permission="660" Location="scripts/test/Service.t" />
+        <File Permission="660" Location="scripts/test/SLA.t" />
+        <File Permission="660" Location="scripts/test/Ticket.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/AdminITSMCIPAllocate.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/AdminUser.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentStatistics/Add.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentStatistics/Import.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketActionCommon/AgentTicketFreeText.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMService.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMServicePrint.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMServiceZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMSLA.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMSLAPrint.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMSLAZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketActionCommonACLFrontend.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketService.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/PDFTicket.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/Preferences/Agent/CustomService.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/TicketZoom/TicketInformation.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/ToolBar/TicketService.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/PDFTicket.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmDialog.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.Service.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ServiceZoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.SLA.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.SLAZoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Default.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Search.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Print.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Table.css" />
+        <File Permission="660" Location="var/packagesetup/ITSMCore.pm" />
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="cip_allocate">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="criticality" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="impact" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="priority_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Column Name="create_by" Required="false" Type="INTEGER" />
+            <Column Name="change_time" Required="false" Type="DATE" />
+            <Column Name="change_by" Required="false" Type="INTEGER" />
+            <ForeignKey ForeignTable="ticket_priority">
+                <Reference Local="priority_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableAlter Name="service">
+            <ColumnAdd Name="type_id" Required="false" Type="INTEGER" />
+            <ColumnAdd Name="criticality" Required="false" Size="200" Type="VARCHAR" />
+        </TableAlter>
+        <TableAlter Name="sla">
+            <ColumnAdd Name="type_id" Required="false" Type="INTEGER" />
+            <ColumnAdd Name="min_time_bet_incidents" Required="false" Type="INTEGER" />
+        </TableAlter>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Operational</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Warning</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Incident</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">End User Service</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Front End</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Back End</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">IT Management</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Reporting</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">IT Operational</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Demonstration</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Project</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Training</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Underpinning Contract</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Availability</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Response Time</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Recovery Time</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Resolution Rate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Transactions</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Errors</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>
+    <DatabaseUpgrade Type="post">
+        <TableAlter Name="cip_allocate" Version="3.2.91">
+            <ForeignKeyDrop ForeignTable="general_catalog">
+                <Reference Local="criticality_id" Foreign="id" />
+                <Reference Local="impact_id" Foreign="id" />
+            </ForeignKeyDrop>
+        </TableAlter>
+        <TableAlter Name="cip_allocate" Version="3.2.91">
+            <ColumnAdd Name="criticality" Required="true" Size="200" Type="VARCHAR" />
+            <ColumnAdd Name="impact" Required="true" Size="200" Type="VARCHAR" />
+        </TableAlter>
+        <TableAlter Name="service" Version="3.2.91">
+            <ColumnAdd Name="criticality" Required="false" Size="200" Type="VARCHAR" />
+        </TableAlter>
+    </DatabaseUpgrade>
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="cip_allocate" />
+        <TableAlter Name="service">
+            <ColumnDrop Name="type_id" />
+            <ColumnDrop Name="criticality" />
+        </TableAlter>
+        <TableAlter Name="sla">
+            <ColumnDrop Name="type_id" />
+            <ColumnDrop Name="min_time_bet_incidents" />
+        </TableAlter>
+    </DatabaseUninstall>
+    <CodeInstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+
+    ]]></CodeInstall>
+    <CodeReinstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+
+    ]]></CodeReinstall>
+    <!-- It is IMPORTANT that this CodeUpgrade (Version="3.2.91") comes BEFORE the regular CodeUpgrade block without any version number! -->
+    <CodeUpgrade Type="post" Version="3.2.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_3_2_91();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.2"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_2();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+
+    ]]></CodeUpgrade>
+    <CodeUninstall Type="pre"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+
+    ]]></CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package ITSMCore.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMCore zu installieren.<br/>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted está apunto de instalar el modulo ITSMCore de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES REQUERIDOS</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMCore OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>NOTICE</strong>
+        <br/>
+        <br/>
+        In order to grant users access to the service menu, you need to add them as member to the group 'itsm-service'.
+        <br/>
+        <br/>
+        The menu items that were added by this package will be visible after you log-in to the system again.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>HINWEIS</strong>
+        <br/>
+        <br/>
+        Um Benutzern Zugriff auf das Service-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'itsm-service' sein.
+        <br/>
+        <br/>
+        Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>AVISO</strong>
+        <br/>
+        <br/>
+        Para poder permitir el acceso a los usuarios al menu de servicios, usted necesita agregarlos como miembros del grupo 'itsm-service'.<br/>
+        <br/>
+        Los elementos del menu que fueron agregados por este packete serán visibles despues de que cierre y abra su sesion de nuevo.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELMEZTETÉS</strong>
+        <br/>
+        <br/>
+        Annak érdekében, hogy hozzáférést adjon a felhasználók számára a szolgáltatás menühöz, hozzá kell adnia őket az „itsm-service” csoporthoz tagként.
+        <br/>
+        <br/>
+        Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package ITSMCore.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMCore zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted está apunto de instalar el modulo ITSMCore de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES REQUERIDOS</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMCore OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>GeneralCatalog 6.0.30</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        <br/>
+        <br/>
+        The group 'itsm-service' that was created during package installation will be deactivated.
+        You can activate this group again in the admin area.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>ACHTUNG</strong>
+        <br/>
+        <br/>
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        <br/>
+        <br/>
+        Die von diesem Paket angelegte Gruppe 'itsm-service' wird deaktiviert.
+        Sie kann jederzeit im Admin-Bereich wieder aktiviert werden.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>ATENCIÓN</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalación serán borradas.
+        ¡Todos los datos de esas tablas serán irrevocablemente perdidos!.
+        <br/>
+        <br/>
+        El grupo 'itsm-service' que fue creado durante la instalación será desactivado.
+        Usted puede activar este grupo de nuevo en el area de admin.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br/>
+        <br/>
+        A csomagtelepítés során létrehozott „itsm-service” csoport ki lesz kapcsolva.
+        Ezt a csoportot az adminisztrációs területen tudja ismét bekapcsolni.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+</otrs_package>
