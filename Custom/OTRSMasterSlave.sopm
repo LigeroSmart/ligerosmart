@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>OTRSMasterSlave</Name>
-    <Version>0.0.0</Version>
+    <Version>6.0.30</Version>
     <Framework Minimum="6.0.28">6.0.x</Framework>
-    <Vendor>OTRS AG</Vendor>
-    <URL>https://otrs.com/</URL>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://ligerosmart.com/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">Includes "Ticket Master/Slave" feature.</Description>
     <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
