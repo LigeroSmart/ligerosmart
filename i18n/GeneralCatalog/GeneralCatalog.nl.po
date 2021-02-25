@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: 2020-03-24 02:23+0000\n"
+"Last-Translator: Nick van der Burg <nmp.vanderburg@gmail.com>\n"
+"Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/general-"
+"catalog/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.11.2\n"
+
+#. Template: AAAGeneralCatalog
+msgid "Functionality"
+msgstr "Functionaliteit"
+
+#. Template: AdminGeneralCatalog
+msgid "General Catalog Management"
+msgstr "Algemene Catalogus beheer"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr "Items in klasse"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Item bewerken"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr "Klasse toevoegen"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Item toevoegen"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Item"
+msgstr "Catalogusitem toevoegen"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Class"
+msgstr "Catalogusklasse toevoegen"
+
+#. Template: AdminGeneralCatalog
+msgid "Catalog Class"
+msgstr "Catalogusklasse"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Catalog Item"
+msgstr "Catalogusitem bewerken"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr "Waarschuwing incident status kan niet worden ingesteld op ongeldig."
+
+#. SysConfig
+msgid "Comment 2"
+msgstr "Commentaar 2"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "Maak en beheer de Algemene Catalogus."
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr "Definieer de algemene cataloguscommentaar 2."
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr "Definieert het URL JS-kleurkiezerpad."
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Frontend module registratie voor de AdminGeneralCatalog configuratie in het "
+"admin gebied."
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "Algemene Catalogus"
+
+#. SysConfig
+msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgstr ""
+"Parameters voor het voorbeeldcommentaar 2 van de algemene cataloguskenmerken."
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Parameters voor de voorbeeldmachtigingsgroepen van de algemene "
+"cataloguskenmerken."
+
+#. SysConfig
+msgid "Permission Group"
+msgstr "Toestemmingsgroep"

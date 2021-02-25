@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AAAGeneralCatalog
+msgid "Functionality"
+msgstr "Funkcionalitás"
+
+#. Template: AdminGeneralCatalog
+msgid "General Catalog Management"
+msgstr "Általános katalógus kezelés"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr "Elemek az osztályban"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Elem szerkesztése"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr "Osztály hozzáadása"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Elem hozzáadása"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Item"
+msgstr "Katalóguselem hozzáadása"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Class"
+msgstr "Katalógusosztály hozzáadása"
+
+#. Template: AdminGeneralCatalog
+msgid "Catalog Class"
+msgstr "Katalógusosztály"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Catalog Item"
+msgstr "Katalóguselem szerkesztése"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr "A figyelmeztetés incidensállapotot nem lehet érvénytelenre állítani."
+
+#. SysConfig
+msgid "Comment 2"
+msgstr "2. megjegyzés"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "Az általános katalógus létrehozása és kezelése."
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr "Meghatározza az általános katalógus 2. megjegyzését."
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr "Meghatározza a JS színválasztó útvonalának URL-ét."
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Előtétprogram modul regisztráció az adminisztrációs területen lévő általános "
+"katalógus beállításhoz."
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "Általános katalógus"
+
+#. SysConfig
+msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgstr ""
+"Paraméterek az általános katalógus attribútumainak 2. példa megjegyzéseihez."
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Paraméterek az általános katalógus attribútumainak példa jogosultság "
+"csoportjaihoz."
+
+#. SysConfig
+msgid "Permission Group"
+msgstr "Jogosultsági csoport"

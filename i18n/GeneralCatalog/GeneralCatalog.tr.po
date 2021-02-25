@@ -1,0 +1,96 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AAAGeneralCatalog
+msgid "Functionality"
+msgstr "İşlevsellik"
+
+#. Template: AdminGeneralCatalog
+msgid "General Catalog Management"
+msgstr "Genel Katalog Yönetimi"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Item"
+msgstr "Katalog Ögesi Ekleyin"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Class"
+msgstr "Katalog Sınıfı Ekleyin"
+
+#. Template: AdminGeneralCatalog
+msgid "Catalog Class"
+msgstr "Katalog Sınıfı"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Catalog Item"
+msgstr ""
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr ""
+
+#. SysConfig
+msgid "Comment 2"
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "Genel Katalog yönetimi."
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Yönetim bölümüneki AdminGeneralCatalog ayarları için önyüz modül kaydı."
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "Genel Katalog"
+
+#. SysConfig
+msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgstr "Genel katalog özniteliklerinin ikinci örnek yorumunun parametreleri."
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr "Genel katalog özniteliklerinin örnek izin gruplarının parametreleri."
+
+#. SysConfig
+msgid "Permission Group"
+msgstr ""
