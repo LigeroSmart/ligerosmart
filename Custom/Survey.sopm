@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>Survey</Name>
+    <Version>6.0.19</Version>
+    <Framework Minimum="6.0.26">6.0.x</Framework>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">A customer survey tool.</Description>
+    <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
+    <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
+    <Description Lang="hu">Egy ügyfélkérdőív eszköz.</Description>
+    <Filelist>
+        <File Permission="660" Location="doc/survey-database.png" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/Survey.xml" />
+        <File Permission="660" Location="Kernel/Language/bg_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/cs_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/da_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/de_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/el_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/en_GB_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/es_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/fa_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/id_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/it_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/mk_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/ms_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/nl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sw_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_Survey.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyAdd.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyEdit.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyEditQuestions.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyOverview.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyStats.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyZoom.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicSurvey.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Layout/Survey.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/SurveyMenu/Generic.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/SurveyOverview/Small.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyAdd.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEdit.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEditQuestions.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewNavBar.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewSmall.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyStats.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyZoom.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicSurvey.tt" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/Survey/RequestsDelete.pm" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/Survey/RequestsSend.pm" />
+        <File Permission="660" Location="Kernel/System/Stats/Dynamic/SurveyList.pm" />
+        <File Permission="660" Location="Kernel/System/Survey.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Answer.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Question.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Request.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Vote.pm" />
+        <File Permission="660" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/Survey/RequestsDelete.t" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/Survey/RequestsSend.t" />
+        <File Permission="660" Location="scripts/test/Survey/Vote/VoteGetAll.t" />
+        <File Permission="660" Location="scripts/test/Survey/GetRequestRecipient.t" />
+        <File Permission="660" Location="scripts/test/Survey/PublicAnswerSet.t" />
+        <File Permission="660" Location="scripts/test/Survey.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyAdd.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyEdit.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyOverview.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyEditQuestions.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyStats.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/SurveyMenu/Generic.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/SurveyOverview/Small.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Public/PublicSurvey.t" />
+        <File Permission="660" Location="scripts/test/Stats/Dynamic/DynamicList.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.CustomerUserConditions.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyEditQuestions.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyOverview.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyStats.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css" />
+        <File Permission="660" Location="var/packagesetup/Survey.pm" />
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="survey">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="surveynumber" Required="false" Size="50" Type="VARCHAR" />
+            <Column Name="title" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="introduction" Required="false" Size="1000" Type="VARCHAR" />
+            <Column Name="description" Required="false" Size="1000" Type="VARCHAR" />
+            <Column Name="notification_sender" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="notification_subject" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="notification_body" Required="false" Size="2000" Type="VARCHAR" />
+            <Column Name="status" Required="false" Size="50" Type="VARCHAR" />
+            <Column Name="send_conditions" Required="false" Size="2000" Type="VARCHAR" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Column Name="create_by" Required="false" Type="INTEGER" />
+            <Column Name="change_time" Required="false" Type="DATE" />
+            <Column Name="change_by" Required="false" Type="INTEGER" />
+        </TableCreate>
+        <TableCreate Name="survey_queue">
+            <Column Name="survey_id" Required="true" Type="BIGINT" />
+            <Column Name="queue_id" Required="true" Type="INTEGER" />
+            <Unique Name="survey_queue_view">
+                <UniqueColumn Name="survey_id" />
+                <UniqueColumn Name="queue_id" />
+            </Unique>
+            <Index Name="survey_queue_survey_id">
+                <IndexColumn Name="survey_id" />
+            </Index>
+            <Index Name="survey_queue_queue_id">
+                <IndexColumn Name="queue_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="survey_answer">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="question_id" Required="true" Type="BIGINT" />
+            <Column Name="answer" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="position" Required="true" Type="INTEGER" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Column Name="create_by" Required="false" Type="INTEGER" />
+            <Column Name="change_time" Required="false" Type="DATE" />
+            <Column Name="change_by" Required="false" Type="INTEGER" />
+            <Index Name="survey_answer_question_id">
+                <IndexColumn Name="question_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="survey_question">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="survey_id" Required="true" Type="BIGINT" />
+            <Column Name="question" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="question_type" Required="true" Size="50" Type="VARCHAR" />
+            <Column Name="position" Required="true" Type="SMALLINT" />
+            <Column Name="answer_required" Required="false" Type="SMALLINT" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Column Name="create_by" Required="false" Type="INTEGER" />
+            <Column Name="change_time" Required="false" Type="DATE" />
+            <Column Name="change_by" Required="false" Type="INTEGER" />
+            <Index Name="survey_question_survey_id">
+                <IndexColumn Name="survey_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="survey_request">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="ticket_id" Required="true" Type="BIGINT" />
+            <Column Name="survey_id" Required="true" Type="BIGINT" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="public_survey_key" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="send_to" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="send_time" Required="false" Type="DATE" />
+            <Column Name="vote_time" Required="false" Type="DATE" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Index Name="survey_request_ticket_id">
+                <IndexColumn Name="ticket_id" />
+            </Index>
+            <Index Name="survey_request_survey_id">
+                <IndexColumn Name="survey_id" />
+            </Index>
+            <Index Name="survey_request_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="survey_vote">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="request_id" Required="true" Type="BIGINT" />
+            <Column Name="question_id" Required="true" Type="BIGINT" />
+            <Column Name="vote_value" Required="true" Size="1000" Type="VARCHAR" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Index Name="survey_vote_request_id">
+                <IndexColumn Name="request_id" />
+            </Index>
+            <Index Name="survey_vote_question_id">
+                <IndexColumn Name="question_id" />
+            </Index>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUpgrade Type="post">
+        <TableAlter Name="survey_question" Version="1.0.14">
+            <ColumnChange NameOld="type" NameNew="question_type" Required="true" Size="50" Type="VARCHAR" />
+        </TableAlter>
+        <TableAlter Name="survey" Version="1.0.18">
+            <ColumnAdd Name="notification_sender" Required="false" Size="250" Type="VARCHAR" />
+            <ColumnAdd Name="notification_subject" Required="false" Size="250" Type="VARCHAR" />
+            <ColumnAdd Name="notification_body" Required="false" Size="2000" Type="VARCHAR" />
+        </TableAlter>
+        <TableCreate Name="survey_queue" Version="1.0.18">
+            <Column Name="survey_id" Required="true" Type="BIGINT" />
+            <Column Name="queue_id" Required="true" Type="INTEGER" />
+        </TableCreate>
+        <TableAlter Name="survey_request" Version="2.0.92">
+            <ColumnAdd Name="create_time" Required="false" Type="DATE" />
+        </TableAlter>
+        <TableAlter Name="survey_question" Version="2.1.5">
+            <ColumnAdd Name="answer_required" Required="false" Type="SMALLINT" />
+        </TableAlter>
+        <TableAlter Name="survey" Version="2.3.2">
+            <ColumnAdd Name="send_conditions" Required="false" Size="2000" Type="VARCHAR" />
+        </TableAlter>
+    </DatabaseUpgrade>
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="survey" />
+        <TableDrop Name="survey_queue" />
+        <TableDrop Name="survey_answer" />
+        <TableDrop Name="survey_question" />
+        <TableDrop Name="survey_request" />
+        <TableDrop Name="survey_vote" />
+    </DatabaseUninstall>
+    <CodeUpgrade Type="post" Version="2.1.5"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_2_1_5();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="2.0.92"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_2_0_92();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.1"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_1();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
+
+    ]]></CodeUpgrade>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br>
+        <strong>WELCOME</strong>
+        <br>
+        <br>
+        You are about to install the OTRS package Survey.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br>
+        <strong>WILLKOMMEN</strong>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket Survey zu installieren.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br>
+        <strong>BIENVENIDO</strong>
+        <br>
+        <br>
+        Está apunto de instalar el módulo de encuestas de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br>
+        <br>
+        Ön a Survey OTRS csomag telepítésére készül.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br>
+        <strong>WELCOME</strong>
+        <br>
+        <br>
+        You are about to upgrade the OTRS package Survey.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br>
+        <strong>WILLKOMMEN</strong>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket Survey zu aktualisieren.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+
+        <br>
+        <strong>BIENVENIDO</strong>
+        <br>
+        <br>
+        Esta apunto de actualizar el módulo de encuestas de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br>
+        <br>
+        Ön a Survey OTRS csomag frissítésére készül.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+
+        <br>
+        <strong>ATTENTION</strong>
+        <br>
+        <br>
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+
+        <br>
+        <strong>ACHTUNG</strong>
+        <br>
+        <br>
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+
+        <br>
+        <strong>ATENCIÓN</strong>
+        <br>
+        <br>
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalación serán borradas.
+        ¡Todos los datos de esas tablas serán irrevocablemente perdidos!.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br>
+        <strong>FIGYELEM</strong>
+        <br>
+        <br>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+
+</otrs_package>
