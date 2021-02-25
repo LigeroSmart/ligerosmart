@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>OTRSCloneDB</Name>
-    <Version>0.0.0</Version>
+    <Version>6.0.30</Version>
     <Framework Minimum="6.0.28">6.0.x</Framework>
-    <Vendor>OTRS AG</Vendor>
-    <URL>https://otrs.com/</URL>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://ligerosmart.com/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">The OTRS CloneDB package.</Description>
     <Description Lang="de">Das OTRS CloneDB Paket.</Description>
