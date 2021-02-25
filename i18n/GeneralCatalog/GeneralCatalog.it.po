@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: 2020-06-11 17:01+0000\n"
+"Last-Translator: Nic Cord <cordioli.nicola@gmail.com>\n"
+"Language-Team: Italian <https://translate.app.otrs.com/projects/otrs-6/"
+"general-catalog/it/>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.0.4\n"
+
+#. Template: AAAGeneralCatalog
+msgid "Functionality"
+msgstr "Funzionalità"
+
+#. Template: AdminGeneralCatalog
+msgid "General Catalog Management"
+msgstr "Gestione del Catalogo Generale"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr "Elementi nella Classe"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Modifica Elemento"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr "Aggiungi Classe"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Aggiungi Elemento"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Item"
+msgstr "Aggiungi Elemento al Catalogo"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Class"
+msgstr "Aggiungi Classe al Catalogo"
+
+#. Template: AdminGeneralCatalog
+msgid "Catalog Class"
+msgstr "Classe di Catalogo"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Catalog Item"
+msgstr "Modifica elemento di catalogo"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr ""
+"Lo stato dell'incidente di avviso non può essere impostato su non valido."
+
+#. SysConfig
+msgid "Comment 2"
+msgstr "Commento 2"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "Crea e gestisci il Catalogo Generale."
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr "Definisci il commento 2 del catalogo generale."
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr "Specifica il percorso dell'URL del selettore di colori JS."
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Modulo di registrazione per la configurazione di AdminGeneralCatalog "
+"nell'area di admin."
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "Catalogo Generale"
+
+#. SysConfig
+msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgstr ""
+"Parametri per il commento di esempio 2 degli attributi del catalogo generale."
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Parametri per i gruppi di permessi di esempio degli attributi del catalogo "
+"generale."
+
+#. SysConfig
+msgid "Permission Group"
+msgstr "Gruppo di autorizzazioni"

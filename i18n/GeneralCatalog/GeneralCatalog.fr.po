@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AAAGeneralCatalog
+msgid "Functionality"
+msgstr "Fonctionnalité"
+
+#. Template: AdminGeneralCatalog
+msgid "General Catalog Management"
+msgstr "Gestion du catalogue général"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr "Éléments dans la classe"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Éditer un élément"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr "Ajouter une classe"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Ajouter un élément"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Item"
+msgstr "Ajouter un élément au catalogue"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Catalog Class"
+msgstr "Ajouter une classe au catalogue"
+
+#. Template: AdminGeneralCatalog
+msgid "Catalog Class"
+msgstr "Classe de catalogue"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Catalog Item"
+msgstr "Éditer un élément du catalogue"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr ""
+
+#. SysConfig
+msgid "Comment 2"
+msgstr "Commentaire 2"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "Créer et gérer le catalogue général."
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr "Définir le commentaire 2 du catalogue général."
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr "Définit l'URL du chemin \"JS Color Picker\"."
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Interface d'enregistrement de module pour la configuration du catalogue "
+"général dans la zone administrateur"
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "Catalogue général"
+
+#. SysConfig
+msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgstr ""
+"Paramètres pour l'exemple du commentaire 2 des attributs du catalogue général"
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Paramètres pour l'exemple des permissions de groupes des attributs du "
+"catalogue général."
+
+#. SysConfig
+msgid "Permission Group"
+msgstr ""
