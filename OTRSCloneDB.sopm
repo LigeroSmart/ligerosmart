@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>OTRSCloneDB</Name>
+    <Version>0.0.0</Version>
+    <Framework Minimum="6.0.28">6.0.x</Framework>
+    <Vendor>OTRS AG</Vendor>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">The OTRS CloneDB package.</Description>
+    <Description Lang="de">Das OTRS CloneDB Paket.</Description>
+    <Description Lang="hu">Az OTRS CloneDB csomag.</Description>
+    <!--
+        Note for module porting: please verify that the mysql UTF8 replacement in Base.pm
+        is still needed in future versions of OTRS.
+
+        Quote:
+        Replace any unicode characters that need more then three bytes in UTF8
+        with the unicode replacement character. MySQL's utf8 encoding only
+        supports three bytes. In future we might want to use utf8mb4 (supported
+        since 5.5.3+).
+        See also http://mathiasbynens.be/notes/mysql-utf8mb4.
+    -->
+    <Filelist>
+        <File Permission="660" Location="Kernel/Config/Files/XML/OTRSCloneDB.xml" />
+        <File Permission="660" Location="Kernel/Language/bg_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/de_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/es_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/it_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/System/CloneDB/Backend.pm" />
+        <File Permission="660" Location="Kernel/System/CloneDB/Driver/Base.pm" />
+        <File Permission="660" Location="Kernel/System/CloneDB/Driver/mysql.pm" />
+        <File Permission="660" Location="Kernel/System/CloneDB/Driver/postgresql.pm" />
+        <File Permission="660" Location="Kernel/System/CloneDB/Driver/oracle.pm" />
+        <File Permission="660" Location="Kernel/System/CloneDB/Driver/mssql.pm" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/Database/Clone.pm" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/Database/Clone.t" />
+    </Filelist>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package OTRSCloneDB.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket OTRSCloneDB zu installieren.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSCloneDB OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package OTRSCloneDB.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket OTRSCloneDB zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSCloneDB OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+</otrs_package>
