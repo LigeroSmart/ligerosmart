@@ -1,0 +1,1617 @@
+#
+# Translators:
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/"
+"th_TH/)\n"
+"Language: th_TH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Template: AgentFAQAdd
+msgid "Add FAQ Article"
+msgstr "เพิ่มบทความ FAQ"
+
+#. Template: AgentFAQAdd
+msgid "Keywords"
+msgstr "คีย์เวิร์ด"
+
+#. Template: AgentFAQAdd
+msgid "A category is required."
+msgstr "ต้องระบุหมวดหมู่"
+
+#. Template: AgentFAQAdd
+msgid "Approval"
+msgstr "การอนุมัติ"
+
+#. Template: AgentFAQCategory
+msgid "FAQ Category Management"
+msgstr "การจัดการหมวดหมู่ FAQ"
+
+#. Template: AgentFAQCategory
+msgid "Add FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Edit FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Add category"
+msgstr "เพิ่มหมวดหมู่"
+
+#. Template: AgentFAQCategory
+msgid "Add Category"
+msgstr "เพิ่มหมวดหมู่"
+
+#. Template: AgentFAQCategory
+msgid "Edit Category"
+msgstr "แก้ไขหมวดหมู่"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "หมวดหมู่ย่อยของ"
+
+#. Template: AgentFAQCategory
+msgid "Please select at least one permission group."
+msgstr "กรุณาเลือกอย่างน้อยหนึ่งกลุ่มที่ได้รับอนุญาต"
+
+#. Template: AgentFAQCategory
+msgid "Agent groups that can access articles in this category."
+msgstr "กลุ่มเอเย่นต์ที่สามารถเข้าถึงบทความในหมวดหมู่นี้"
+
+#. Template: AgentFAQCategory
+msgid "Will be shown as comment in Explorer."
+msgstr "จะแสดงเป็นความคิดเห็นในExplorer"
+
+#. Template: AgentFAQCategory
+msgid "Do you really want to delete this category?"
+msgstr "คุณต้องการที่จะลบหมวดหมู่นี้หรือไม่?"
+
+#. Template: AgentFAQCategory
+msgid ""
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
+msgstr ""
+"คุณไม่สามารถลบหมวดหมู่นี้ได้เพราะหมวดหมู่นี้ถูกใช้ในอย่างน้อยหนึ่งบทความ FAQ หรือ หมวดหมู่นี้คือ "
+"หมวดหมู่หลัก"
+
+#. Template: AgentFAQCategory
+msgid "This category is used in the following FAQ article(s)"
+msgstr "หมวดหมู่นี้ใช้ในการติดตามบทความ FAQ (s)"
+
+#. Template: AgentFAQCategory
+msgid "This category is parent of the following subcategories"
+msgstr "หมวดหมู่นี้คือหมวดหมู่หลักของหมวดหมู่ย่อยต่อไปนี้"
+
+#. Template: AgentFAQDelete
+msgid "Do you really want to delete this FAQ article?"
+msgstr "คุณต้องการลบหัวข้อ FAQ นี้หรือไม่?"
+
+#. Template: AgentFAQEdit
+msgid "FAQ"
+msgstr "FAQ"
+
+#. Template: AgentFAQExplorer
+msgid "FAQ Explorer"
+msgstr "นักสำรวจ FAQ"
+
+#. Template: AgentFAQExplorer
+msgid "Quick Search"
+msgstr "การค้นหาแบบรวดเร็ว"
+
+#. Template: AgentFAQExplorer
+msgid "Wildcards are allowed."
+msgstr "ไวลด์การ์ดได้รับอนุญาต"
+
+#. Template: AgentFAQExplorer
+msgid "Advanced Search"
+msgstr "การค้นหาแบบละเอียด"
+
+#. Template: AgentFAQExplorer
+msgid "Subcategories"
+msgstr "หมวดหมู่ย่อย"
+
+#. Template: AgentFAQExplorer
+msgid "FAQ Articles"
+msgstr "บทความ FAQ"
+
+#. Template: AgentFAQExplorer
+msgid "No subcategories found."
+msgstr "ไม่พบหมวดหมู่ย่อย"
+
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "ประวัติของ"
+
+#. Template: AgentFAQHistory
+msgid "History Content"
+msgstr "เนื้อหาประวัติ"
+
+#. Template: AgentFAQHistory
+msgid "Createtime"
+msgstr "เวลาที่สร้าง"
+
+#. Template: AgentFAQJournalOverviewSmall
+msgid "No FAQ Journal data found."
+msgstr "ไม่พบวารสาร FAQ "
+
+#. Template: AgentFAQLanguage
+msgid "FAQ Language Management"
+msgstr "การจัดการภาษา FAQ"
+
+#. Template: AgentFAQLanguage
+msgid "Add FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Edit FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Add language"
+msgstr "เพิ่มภาษา"
+
+#. Template: AgentFAQLanguage
+msgid "Add Language"
+msgstr "เพิ่มภาษา"
+
+#. Template: AgentFAQLanguage
+msgid "Edit Language"
+msgstr "แก้ไขภาษา"
+
+#. Template: AgentFAQLanguage
+msgid "Do you really want to delete this language?"
+msgstr "คุณต้องการลบภาษานี้หรือไม่?"
+
+#. Template: AgentFAQLanguage
+msgid ""
+"You can not delete this language. It is used in at least one FAQ article!"
+msgstr "คุณไม่สามารถลบภาษานี้เพราะภาษานี้กำลังใช้ในอย่างน้อยหนึ่งในบทความ FAQ!"
+
+#. Template: AgentFAQLanguage
+msgid "This language is used in the following FAQ Article(s)"
+msgstr "ภาษานี้ใช้ในบทความ FAQ(s) เหล่านี้"
+
+#. Template: AgentFAQOverviewNavBar
+msgid "Context Settings"
+msgstr "การตั้งค่าข้อความ"
+
+#. Template: AgentFAQOverviewNavBar
+msgid "FAQ articles per page"
+msgstr "บทความ FAQ ของแต่ละหน้า"
+
+#. Template: AgentFAQOverviewSmall
+msgid "No FAQ data found."
+msgstr "ไม่พบข้อมูล FAQ"
+
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "1 ใน  5"
+
+#. Template: AgentFAQSearch
+msgid "Keyword"
+msgstr "คีย์เวิร์ด"
+
+#. Template: AgentFAQSearch
+msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
+msgstr "โหวต (เช่น เท่ากับ 10 หรือมากกว่า60)"
+
+#. Template: AgentFAQSearch
+msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
+msgstr "เรต (เช่น เท่ากับ 25% หรือ มากกว่า 75%)"
+
+#. Template: AgentFAQSearch
+msgid "Approved"
+msgstr "อนุมัติแล้ว"
+
+#. Template: AgentFAQSearch
+msgid "Last changed by"
+msgstr "การเปลี่ยนแปลงล่าสุดโดย"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Create Time (before/after)"
+msgstr "เวลาที่สร้างบทความ FAQ (ก่อน/หลัง)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Create Time (between)"
+msgstr "เวลาที่สร้างบทความ FAQ (ในระหว่าง)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Change Time (before/after)"
+msgstr "เวลาที่เปลี่ยนแปลงบทความ FAQ (ก่อน/หลัง)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Change Time (between)"
+msgstr "เวลาที่เปลี่ยนแปลงบทความ FAQ (ในระหว่าง)"
+
+#. Template: AgentFAQSearchOpenSearchDescriptionFulltext
+msgid "FAQFulltext"
+msgstr "ข้อความFAQฉบับเต็ม"
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Search"
+msgstr "การค้นหาโดย FAQ"
+
+#. Template: AgentFAQSearchSmall
+msgid "Profile Selection"
+msgstr "การเลือกโปรไฟล์"
+
+#. Template: AgentFAQSearchSmall
+msgid "Vote"
+msgstr "โหวต"
+
+#. Template: AgentFAQSearchSmall
+msgid "No vote settings"
+msgstr "ไม่มีการตั้งค่าการโหวต"
+
+#. Template: AgentFAQSearchSmall
+msgid "Specific votes"
+msgstr "การโหวตที่เฉพาะเจาะจง"
+
+#. Template: AgentFAQSearchSmall
+msgid "e. g. Equals 10 or GreaterThan 60"
+msgstr "เช่น เท่ากับ 10 หรือมากกว่า60"
+
+#. Template: AgentFAQSearchSmall
+msgid "Rate"
+msgstr "เรต"
+
+#. Template: AgentFAQSearchSmall
+msgid "No rate settings"
+msgstr "ไม่มีการตั้งค่าการเรต"
+
+#. Template: AgentFAQSearchSmall
+msgid "Specific rate"
+msgstr "การประเมินที่เฉพาะเจาะจง"
+
+#. Template: AgentFAQSearchSmall
+msgid "e. g. Equals 25% or GreaterThan 75%"
+msgstr "เช่น เท่ากับ 25% หรือ มากกว่า 75%"
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Article Create Time"
+msgstr "เวลาที่สร้างบทความ FAQ "
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Article Change Time"
+msgstr "เวลาที่เปลี่ยนแปลงบทความ"
+
+#. Template: AgentFAQZoom
+msgid "FAQ Information"
+msgstr "ข้อมูล FAQ"
+
+#. Template: AgentFAQZoom
+msgid "Rating"
+msgstr "เรตติ้ง"
+
+#. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "โหวต"
+
+#. Template: AgentFAQZoom
+msgid "No votes found!"
+msgstr "ไม่พบการโหวต!"
+
+#. Template: AgentFAQZoom
+msgid "No votes found! Be the first one to rate this FAQ article."
+msgstr "ไม่พบการโหวต! เป็นคนแรกในการประเมินหัวข้อ FAQ นี้"
+
+#. Template: AgentFAQZoom
+msgid "Download Attachment"
+msgstr "ดาวน์โหลดสิ่งที่แนบมา"
+
+#. Template: AgentFAQZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+"ในการเปิดการลิงค์ในบล็อกคำอธิบายต่อไปนี้ คุณอาจจะต้องกดปุ่ม Ctrl หรือ Cmd หรือ Shift "
+"ในขณะที่กดลิงค์ (ขึ้นอยุ่กับเบราเซอร์และระบบปฎิบัติการของคุณ)"
+
+#. Template: AgentFAQZoom
+msgid ""
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank You!"
+msgstr ""
+"หัวข้อนี้ได้ประโยชน์กับคุณหรือไม่? กรุณาให้คะแนนของคุณและช่วยในการปรับปรุงฐานข้อมูล FAQ. ขอบคุณ!"
+
+#. Template: AgentFAQZoom
+msgid "not helpful"
+msgstr "ไม่มีประโยชน์"
+
+#. Template: AgentFAQZoom
+msgid "very helpful"
+msgstr "มีประโยชน์มาก"
+
+#. Template: AgentFAQZoomSmall
+msgid "Add FAQ title to article subject"
+msgstr "เพิ่มหัวข้อ FAQ ในตัวบทของบทความ"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Text"
+msgstr "ป้อนข้อความ FAQ"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert Full FAQ"
+msgstr "ป้อน FAQ ฉบับเต็ม"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Link"
+msgstr "ป้อนลิงค์ FAQ"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Text & Link"
+msgstr "ป้อนลิงค์และข้อความ FAQ"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert Full FAQ & Link"
+msgstr "ป้อน FAQ ฉบับเต็มและลิงค์"
+
+#. Template: CustomerFAQExplorer
+msgid "No FAQ articles found."
+msgstr "ไม่พบบทความ FAQ "
+
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
+#. Template: CustomerFAQSearch
+msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
+msgstr "ค้นหาแบบฉบับเต็มในบทความ FAQ (เช่น \"John*n\" or \"Will*\")"
+
+#. Template: CustomerFAQSearch
+msgid "Vote restrictions"
+msgstr "ข้อจำกัดการโหวต"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles with votes..."
+msgstr "เฉพาะบทความFAQ โดยการโหวด..."
+
+#. Template: CustomerFAQSearch
+msgid "Rate restrictions"
+msgstr "ข้อจำกัดการประเมิน"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles with rate..."
+msgstr "เฉพาะบทความFAQ โดยการประเมิน..."
+
+#. Template: CustomerFAQSearch
+msgid "Time restrictions"
+msgstr "การจำกัดเวลา"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles created"
+msgstr "เฉพาะบทความ FAQที่สร้างแล้ว"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles created between"
+msgstr "เฉพาะบทความ FAQที่สร้างในระหว่าง"
+
+#. Template: CustomerFAQSearch
+msgid "Search-Profile as Template?"
+msgstr "Search-Profile เป็นแม่แบบ?"
+
+#. Template: CustomerFAQZoom
+msgid "Article Number"
+msgstr "หมายเลขบทความ"
+
+#. Template: CustomerFAQZoom
+msgid "Search for articles with keyword"
+msgstr "ค้นหาบทความด้วยคีย์เวิร์ด"
+
+#. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
+msgid "Public"
+msgstr "สาธารณะ"
+
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr "กลับไปที่ FAQ Explorer"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "ต้องระบุชื่อหมวดหมู่!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "หมวดหมู่นี้มีอยู่แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "อัปเดตหมวดหมู่ FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "เพิ่มหมวดหมู่ FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Delete Category"
+msgstr "ลบหมวดหมู่"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "วารสาร FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "ต้องระบุชื่อ!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "ภาษานี้มีอยู่แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "อัปเดตภาษา FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "เพิ่มภาษา FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Delete Language %s"
+msgstr "ลบภาษา %"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Result"
+msgstr "ผลลัพธ์"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "อัปเดตล่าสุด"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr "ไดมานิคฟิลด์ของ FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr "ไม่มีผลลัพธ์!"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "หมายเลข FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "ขอบคุณสำหรับการโหวตของคุณ!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "คุณได้ทำการโหวตแล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "ไม่มีเรทที่ถูกเลือก"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "พิมพ์บทความ FAQ "
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "บทความ FAQ (เพิ่งสร้างใหม่)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "บทความ FAQ (เพิ่งเปลี่ยนแปลง)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "บทความ FAQ (10 อันดับยอดนิยม)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Need rate!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr "บทความนี้ว่างเปล่า"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest created FAQ articles"
+msgstr "บทความ FAQ ที่สร้างล่าสุด"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest updated FAQ articles"
+msgstr "บทความ FAQ ที่อัปเดตล่าสุด"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Top 10 FAQ articles"
+msgstr "10 บทความ FAQ ยอดนิยม"
+
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "internal"
+msgstr "ภายใน"
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "external"
+msgstr "ภายนอก"
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "public"
+msgstr "สาธารณะ"
+
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "โอเค"
+
+#. SysConfig
+msgid ""
+"A filter for HTML output to add links behind a defined string. The element "
+"Image allows two input kinds. First the name of an image (e.g. faq.png). In "
+"this case the OTRS image path will be used. The second possibility is to "
+"insert the link to the image."
+msgstr ""
+"ตัวกรองสำหรับการแสดงผล HTMLเพื่อเพิ่มการเชื่อมโยงที่อยู่เบื้องหลังของอักขระที่กำหนดไว้ "
+"องค์ประกอบของภาพที่จะช่วยให้สามารถป้อนข้อมูลสองชนิดได้ หนึ่งคือชื่อของภาพ (เช่น faq."
+"png)ในกรณีนี้เส้นทางของภาพOTRS จะถูกนำมาใช้ สองคือการแทรกการเชื่อมโยงไปยังภาพ"
+
+#. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
+msgid "CSS color for the voting result."
+msgstr "สี CSS สำหรับผลการโหวต"
+
+#. SysConfig
+msgid "Cache Time To Leave for FAQ items."
+msgstr "เวลาแคชที่จะปล่อยให้สำหรับรายการFAQ"
+
+#. SysConfig
+msgid "Category Management"
+msgstr "การจัดการหมวดหมู่"
+
+#. SysConfig
+msgid "Category Management."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "Decimal places of the voting result."
+msgstr "ตำแหน่งทศนิยมของผลการนับคะแนน"
+
+#. SysConfig
+msgid "Default category name."
+msgstr "ชื่อหมวดหมู่เริ่มต้น"
+
+#. SysConfig
+msgid "Default language for FAQ articles on single language mode."
+msgstr "ภาษาเริ่มต้นสำหรับ FAQ ในโหมดภาษาเดียว"
+
+#. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr "ขนาดเริ่มต้นที่สูงสุดของหัวข้อในบทความ FAQ ที่จะแสดง"
+
+#. SysConfig
+msgid "Default priority of tickets for the approval of FAQ articles."
+msgstr "ลำดับความสำคัญเริ่มต้นของตั๋วสำหรับการอนุมัติของบทความ FAQ."
+
+#. SysConfig
+msgid "Default state for FAQ entry."
+msgstr "สถานภาพเริ่มต้นสำหรับการกรอกข้อมูล FAQ."
+
+#. SysConfig
+msgid "Default state of tickets for the approval of FAQ articles."
+msgstr "สถานภาพตั๋วเริ่มต้นสำหรับการอนุมัติบทความ FAQ."
+
+#. SysConfig
+msgid "Default type of tickets for the approval of FAQ articles."
+msgstr "ประเภทตั๋วเริ่มต้นสำหรับการอนุมัติบทความ FAQ."
+
+#. SysConfig
+msgid ""
+"Default value for the Action parameter for the public frontend. The Action "
+"parameter is used in the scripts of the system."
+msgstr ""
+"ค่าเริ่มต้นสำหรับพารามิเตอร์การดำเนินการในหน้าสาธารณะ "
+"พารามิเตอร์การดำเนินการถูกนำมาใช้ในสคริปต์ของระบบ"
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid "Define if the FAQ title should be concatenated to article subject."
+msgstr "กำหนดค่าถ้าหากหัวข้อFAQ ควรได้รับการตัดแบ่งข้อความไปยังบทความ"
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
+"(DynamicField_NameX) are allowed for DefaultColumns."
+msgstr ""
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a FAQ journal."
+msgstr "กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของวารสาร FAQ."
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a FAQ list."
+msgstr "กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายการ FAQ."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"agent interface."
+msgstr ""
+"กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับFAQ ในการค้นหาของFAQ ในอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"customer interface."
+msgstr ""
+"กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับFAQ ในการค้นหาของ FAQ ในอินเตอร์เฟซลูกค้า"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"public interface."
+msgstr ""
+"กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับ FAQ ในการค้นหาของFAQ "
+"ในอินเตอร์เฟซสาธารณะ"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
+msgstr ""
+"กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับFAQ ใน FAQ Explorer "
+"ของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
+msgstr ""
+"กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับ  FAQ ในFAQ Explorer ของอินเตอร์เฟซลูกค้า"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
+msgstr ""
+"กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับ  FAQ ในFAQ Explorer "
+"ของอินเตอร์เฟซสาธารณะ"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the agent "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"กำหนด FAQ order เริ่มต้น ในผลการค้นหา FAQ Explorer ของอินเตอร์เฟซเอเย่นต์ ขึ้น: "
+"เก่าที่สุดด้านบน ลง: ล่าสุดด้านบน"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the customer "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"กำหนด FAQ order เริ่มต้น ในผลการค้นหา FAQ Explorer ของอินเตอร์เฟซลูกค้า ขึ้น: "
+"เก่าที่สุดด้านบน ลง: ล่าสุดด้านบน"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the public "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"กำหนด FAQ order เริ่มต้น ในผลการค้นหา FAQ Explorer ของอินเตอร์เฟซสาธารณะ ขึ้น: "
+"เก่าที่สุดด้านบน ลง: ล่าสุดด้านบน"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
+msgstr ""
+"กำหนด FAQ order เริ่มต้น ของผลการค้นหาในอินตอร์เฟซเอเย่นต์ ขึ้น: เก่าที่สุดด้านบน ลง: "
+"ล่าสุดด้านบน"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the customer interface. "
+"Up: oldest on top. Down: latest on top."
+msgstr ""
+"กำหนด FAQ order เริ่มต้น ของผลการค้นหาในอินตอร์เฟซลูกค้า ขึ้น: เก่าที่สุดด้านบน ลง: "
+"ล่าสุดด้านบน"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the public interface. "
+"Up: oldest on top. Down: latest on top."
+msgstr ""
+"กำหนด FAQ order เริ่มต้น ของผลการค้นหาในอินตอร์เฟซสาธารณะ ขึ้น: เก่าที่สุดด้านบน ลง: "
+"ล่าสุดด้านบน"
+
+#. SysConfig
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
+msgstr "กำหนดค่าค่าเริ่มต้นที่แสดงแอตทริบิวต์ของการค้นหาของFAQ สำหรับหน้าจอการค้นหาของFAQ"
+
+#. SysConfig
+msgid ""
+"Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
+"includes text, attachments and inline images."
+msgstr ""
+"กำหนดข้อมูลที่จะแทรกในFAQ ตาทตั๋ว \"FAQ ฉบับเต็ม\" จะรวมถึงข้อความและภาพที่แนบมาแบบอินไลน์"
+
+#. SysConfig
+msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
+msgstr ""
+"กำหนดพารามิเตอร์สำหรับแดชบอร์ดเบื้องหลัง  \"จำกัด\" "
+"คือกำหนดจำนวนของรายการที่แสดงโดยค่าเริ่มต้น \"กลุ่ม\" จะถูกนำมาใช้เพื่อจำกัดการเข้าถึงปลั๊กอิน "
+"(เช่นกลุ่ม: ผู้ดูแลระบบ; กลุ่ม 1; กลุ่ม2;) \"เริ่มต้น\" "
+"ระบุว่าถ้าปลั๊กอินถูกเปิดใช้งานโดยค่าเริ่มต้นหรือหากผู้ใช้ต้องการเพื่อเปิดใช้งานได้ด้วยตนเอง"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ Explorer. This option has no effect on "
+"the position of the column."
+msgstr "กำหนดคอลัมน์ที่แสดงอยู่ใน FAQ Explorer  ซึ่งตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ journal. This option has no effect on "
+"the position of the column."
+msgstr "กำหนดคอลัมน์ที่แสดงอยู่ในนิตยสาร FAQ ซึ่งตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ search. This option has no effect on "
+"the position of the column."
+msgstr "กำหนดคอลัมน์ที่แสดงอยู่ในการค้นหา FAQ ซึ่งตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid "Defines where the 'Insert FAQ' link will be displayed."
+msgstr "กำหนดสถานที่ที่ลิงค์ 'แทรกFAQ ' จะปรากฏ"
+
+#. SysConfig
+msgid "Definition of FAQ item free text field."
+msgstr "คำนิยามของช่องข้อความของรายการ FAQ"
+
+#. SysConfig
+msgid "Delete this FAQ"
+msgstr "ลบ FAQ นี้!"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ search screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ small format overview screen of the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Edit this FAQ"
+msgstr "แก้ไข FAQ นี้"
+
+#. SysConfig
+msgid "Enable multiple languages on FAQ module."
+msgstr "เปิดใช้งานหลากหลายภาษา ในโมดูล FAQ."
+
+#. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
+msgid "Enable voting mechanism on FAQ module."
+msgstr "เปิดใช้งานกลไกการโหวตในโมดูลFAQ."
+
+#. SysConfig
+msgid "Explorer"
+msgstr "นักสำรวจ"
+
+#. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ History."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Journal Overview \"Small\" Limit"
+msgstr "ภาพรวมของวารสารFAQ\"ขนาดเล็ก\""
+
+#. SysConfig
+msgid "FAQ Overview \"Small\" Limit"
+msgstr "ภาพรวมของFAQ\"ขนาดเล็ก\""
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ search backend router of the agent interface."
+msgstr "backend router ค้นหา FAQ ของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid "Field4"
+msgstr "ฟิลด์4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "ฟิลด์5"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
+
+#. SysConfig
+msgid "Group for the approval of FAQ articles."
+msgstr "กลุ่มสำหรับการอนุมัติบทความ FAQ."
+
+#. SysConfig
+msgid "History of this FAQ"
+msgstr "ประวัติของ FAQ นี้"
+
+#. SysConfig
+msgid "Include internal fields on a FAQ based Ticket."
+msgstr "รวมเขตข้อมูลภายในเกี่ยวกับFAQ ตามตั๋ว"
+
+#. SysConfig
+msgid "Include the name of each field in a FAQ based Ticket."
+msgstr "รวมถึงชื่อของแต่ละเขตข้อมูลภายในFAQ ตามตั๋ว"
+
+#. SysConfig
+msgid "Interfaces where the quick search should be shown."
+msgstr "อินเตอร์เฟซที่การค้นหาแบบรวดเร็วควรจะแสดง"
+
+#. SysConfig
+msgid "Journal"
+msgstr "วารสาร"
+
+#. SysConfig
+msgid "Language Management"
+msgstr "การจัดการภาษา"
+
+#. SysConfig
+msgid "Language Management."
+msgstr ""
+
+#. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to this FAQ item"
+msgstr "ลิงค์ออบเจกต์อื่นไปยัง FAQ นี้"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
+
+#. SysConfig
+msgid "List of state types which can be used in the agent interface."
+msgstr "รายชื่อของประเภทสถานภาพต่างๆที่สามารถใช้งานในอินเตอร์เฟซของเอเย่นต์ได้"
+
+#. SysConfig
+msgid "List of state types which can be used in the customer interface."
+msgstr "รายชื่อของประเภทสถานภาพต่างๆที่สามารถใช้งานในอินเตอร์เฟซของลูกค้าได้"
+
+#. SysConfig
+msgid "List of state types which can be used in the public interface."
+msgstr "รายชื่อของประเภทสถานภาพต่างๆที่สามารถใช้งานในอินเตอร์เฟซสาธารณะได้"
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
+msgstr "จำนวนบทความ FAQ สูงสุดที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซของเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
+msgstr "จำนวนบทความ FAQ สูงสุดที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซของลูกค้า"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
+msgstr "จำนวนบทความ FAQ สูงสุดที่จะแสดงใน FAQ  Explorer ในอินเตอร์เฟซที่สาธารณะ"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ journal in the "
+"agent interface."
+msgstr "จำนวนบทความ FAQ สูงสุดที่จะแสดงในวารสาร FAQ ในอินเตอร์เฟซของเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the agent interface."
+msgstr "จำนวนบทความ FAQ สูงสุดที่จะแสดงในผลการค้นหาในอินเตอร์เฟซของเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the customer interface."
+msgstr "จำนวนบทความ FAQ สูงสุดที่จะแสดงในผลการค้นหาในอินเตอร์เฟซของลูกค้า"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the public interface."
+msgstr "จำนวนบทความ FAQ สูงสุดที่จะแสดงในผลการค้นหาในอินเตอร์เฟซที่สาธารณะ"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the agent interface."
+msgstr "จำนวนหัวข้อสูงสุดในบทความ FAQ  ที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซของเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the customer interface."
+msgstr "จำนวนหัวข้อสูงสุดในบทความ FAQ  ที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซของลูกค้า"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the public interface."
+msgstr "จำนวนหัวข้อสูงสุดในบทความ FAQ  ที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซสาธารณะ"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
+msgstr ""
+"จำนวนหัวข้อสูงสุดในบทความ FAQ  ที่จะแสดงในการค้นหาของ FAQ ในอินเตอร์เฟซของเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
+msgstr "จำนวนหัวข้อสูงสุดในบทความ FAQ  ที่จะแสดงในการค้นหาของ FAQ ในอินเตอร์เฟซของลูกค้า"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
+msgstr "จำนวนหัวข้อสูงสุดในบทความ FAQ  ที่จะแสดงในการค้นหาของ FAQ ในอินเตอร์เฟซสาธารณะ"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
+"in the agent interface."
+msgstr "จำนวนหัวข้อสูงสุดในบทความ FAQ ที่จะแสดงในวารสาร FAQ ในอินเตอร์เฟซของเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"public interface."
+msgstr ""
+"โมดูลในการสร้างโปรไฟล์ OpenSearch html สำหรับการค้นหา FAQ แบบกระชับ "
+"ในอินเตอร์เฟซที่สาธารณะ"
+
+#. SysConfig
+msgid "Module to generate html OpenSearch profile for short FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "New FAQ Article."
+msgstr ""
+
+#. SysConfig
+msgid "New FAQ articles need approval before they get published."
+msgstr "บทความFAQ ใหม่ต้องที่ได้รับการอนุมัติก่อนได้รับการตีพิมพ์"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
+"interface."
+msgstr "จำนวนบทความ FAQ ที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซของลูกค้า"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the public "
+"interface."
+msgstr "จำนวนบทความ FAQ ที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซสาธารณะ"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the customer interface."
+msgstr "จำนวนบทความ FAQ ที่จะแสดงบนแต่ละหน้าของผลการค้นหาในอินเตอร์เฟซของลูกค้า"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the public interface."
+msgstr "จำนวนบทความ FAQ ที่จะแสดงบนแต่ละหน้าของผลการค้นหาในอินเตอร์เฟซสาธารณะ"
+
+#. SysConfig
+msgid "Number of shown items in last changes."
+msgstr "จำนวน items ที่แสดงในช่วงที่เปลี่ยนแปลงครั้งล่าสุด"
+
+#. SysConfig
+msgid "Number of shown items in last created."
+msgstr "จำนวน items ที่แสดงในช่วงที่สร้างขึ้นครั้งล่าสุด"
+
+#. SysConfig
+msgid "Number of shown items in the top 10 feature."
+msgstr "จำนวนรายการที่แสดงฟีเจอร์ใน 10 อันดับแรก"
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
+msgstr "พารามิเตอร์สำหรับหน้าในรายการ (ซึ่งจะแสดงรายการ FAQ ) ของวารสาร FAQ ขนาดเล็ก"
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
+msgstr "พารามิเตอร์สำหรับหน้าในรายการ  (ซึ่งจะแสดงรายการ FAQ) ของ ภาพรวม FAQขนาดเล็ก"
+
+#. SysConfig
+msgid "Print this FAQ"
+msgstr "พิมพ์ FAQ นี้"
+
+#. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "Queue for the approval of FAQ articles."
+msgstr "คิวในการอนุมัติบทความFAQ."
+
+#. SysConfig
+msgid "Rates for voting. Key must be in percent."
+msgstr "เรตสำหรับการโหวตต้องกำหนดเป็นร้อยละ"
+
+#. SysConfig
+msgid "S"
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ"
+msgstr "ค้นหา FAQ"
+
+#. SysConfig
+msgid "Search FAQ Small."
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Select how many items should be shown in Journal Overview \"Small\" by "
+"default."
+msgstr ""
+
+#. SysConfig
+msgid "Select how many items should be shown in Overview \"Small\" by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr "เซตค่าความสูงเริ่มต้น(พิกเซล) ของฟิลด์HTML แบบอินไลน์ใน AgentFAQZoom."
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
+msgstr ""
+"เซตค่าความสูงเริ่มต้น(พิกเซล) ของฟิลด์HTML แบบอินไลน์ในCustomerFAQZoom  (และ "
+"PublicFAQZoom)"
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr "เซตค่าความสูงสูงสุด(พิกเซล) ของฟิลด์HTML แบบอินไลน์ใน AgentFAQZoom."
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
+msgstr ""
+"เซตค่าความสูงสูงสุด(พิกเซล) ของฟิลด์HTML แบบอินไลน์ในCustomerFAQZoom (และ "
+"PublicFAQZoom)"
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgstr "แสดงปุ่ม \"แทรกลิงค์ FAQ \" ใน AgentFAQZoomSmall สำหรับบทความFAQ สาธารณะ"
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
+"AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"แสดงปุ่ม \"แทรกข้อความ FAQและลิงค์ \" ใน AgentFAQZoomSmall สำหรับบทความ FAQ สาธารณะ"
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgstr "แสดงปุ่ม \"แทรกข้อความ FAQ \" ใน AgentFAQZoomSmall"
+
+#. SysConfig
+msgid "Show FAQ Article with HTML."
+msgstr "แสดงบทความFAQ ด้วย HTML."
+
+#. SysConfig
+msgid "Show FAQ path yes/no."
+msgstr "แสดง ใช่/ ไม่ใช่ พาธFAQ "
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Show items of subcategories."
+msgstr "แสดงรายการของหมวดหมู่ย่อย"
+
+#. SysConfig
+msgid "Show last change items in defined interfaces."
+msgstr "แสดงรายการการเปลี่ยนแปลงที่ผ่านมาล่าสุดในอินเตอร์เฟซที่กำหนดไว้"
+
+#. SysConfig
+msgid "Show last created items in defined interfaces."
+msgstr "แสดงรายการที่สร้างล่าสุดในอินเตอร์เฟซที่กำหนดไว้."
+
+#. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactivate the output)."
+msgstr ""
+
+#. SysConfig
+msgid "Show top 10 items in defined interfaces."
+msgstr "แสดง10 รายการยอดนิยมในอินเตอร์เฟซที่กำหนดไว้"
+
+#. SysConfig
+msgid "Show voting in defined interfaces."
+msgstr "แสดงการโหวตในอินเตอร์เฟซที่กำหนดไว้"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a FAQ with another object in "
+"the zoom view of such FAQ of the agent interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อลิงค์ FAQ กับออบเจกค์อื่นในการซูมในอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
+msgstr "แสดงลิงค์ในเมนูเพื่ออนุญาตการลบ FAQในการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a FAQ in its zoom view of "
+"the agent interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อเข้าดูประวัติของ FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไข FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the FAQ zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อย้อนกลับ FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a FAQ in the its zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อพิมพ์ FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid "Solution"
+msgstr "วิธีแก้ปัญหา"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "เครื่องแสดง"
+
+#. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
+msgstr ""
+
+#. SysConfig
+msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
+msgstr "ตัวบ่งชี้สำหรับ FAQ, เช่น FAQ#,  KB#, MyFAQ #. ค่าเริ่มต้นคือ FAQ#"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'Normal' link type."
+msgstr ""
+"การตั้งค่านี้กำหนดว่าออบเจกค์  'FAQ' สามารถลิงค์กับออบเจกค์  'FAQ' อื่น โดยการใช้ลิงค์  "
+"'Normal'"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'ParentChild' link type."
+msgstr ""
+"การตั้งค่านี้กำหนดว่าออบเจกค์ 'FAQ' สามารถลิงค์กับออบเจกค์ 'FAQ' อื่น โดยการใช้ลิงค์ "
+"'ParentChild'"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'Normal' link type."
+msgstr ""
+"การตั้งค่านี้กำหนดว่าออบเจกค์  'FAQ' สามารถลิงค์กับออบเจกค์  'ตั๋ว' อื่น โดยการใช้ลิงค์  "
+"'Normal'"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'ParentChild' link type."
+msgstr ""
+"การตั้งค่านี้กำหนดว่าออบเจกค์ 'FAQ' สามารถลิงค์กับออบเจกค์ 'FAQ' อื่น โดยการใช้ลิงค์ "
+"'ParentChild'"
+
+#. SysConfig
+msgid "Ticket body for approval of FAQ article."
+msgstr "เนื้อเรื่องของตั๋วสำหรับการอนุมัติของบทความ FAQ."
+
+#. SysConfig
+msgid "Ticket subject for approval of FAQ article."
+msgstr "หัวข้อของตั๋วสำหรับการอนุมัติของบทความFAQ."
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
+msgstr ""
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "ภายนอก (ลูกค้า)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "ภายใน (เอเย่นต์)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "สาธารณะ (ทั้งหมด)"
+
+#. SysConfig
+msgid "public (public)"
+msgstr ""

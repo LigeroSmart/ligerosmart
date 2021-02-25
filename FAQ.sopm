@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>FAQ</Name>
+    <Version>0.0.0</Version>
+    <Framework Minimum="6.0.26">6.0.x</Framework>
+    <Vendor>OTRS AG</Vendor>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">The FAQ/knowledge base.</Description>
+    <Description Lang="de">Die FAQ-/Wissensdatenbank.</Description>
+    <Description Lang="hu">A GyIK/tudásbázis csomag.</Description>
+    <Filelist>
+        <File Permission="770" Location="bin/cgi-bin/faq.pl" />
+        <File Permission="770" Location="bin/fcgi-bin/faq.fpl" />
+        <File Permission="660" Location="doc/faq-database.png" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/FAQ.xml" />
+        <File Permission="660" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm" />
+        <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm" />
+        <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/LanguageList.pm" />
+        <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQSearch.pm" />
+        <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQGet.pm" />
+        <File Permission="660" Location="Kernel/Language/da_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/de_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/en_GB_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/es_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/fa_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/id_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/it_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/ms_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/nl_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/sw_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_FAQ.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQAdd.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQCategory.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQDelete.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQEdit.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQExplorer.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQHistory.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQJournal.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQLanguage.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQPrint.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQRelatedArticles.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQRichText.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQSearch.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQSearchSmall.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQZoom.pm" />
+        <File Permission="660" Location="Kernel/Modules/CustomerFAQExplorer.pm" />
+        <File Permission="660" Location="Kernel/Modules/CustomerFAQPrint.pm" />
+        <File Permission="660" Location="Kernel/Modules/CustomerFAQRelatedArticles.pm" />
+        <File Permission="660" Location="Kernel/Modules/CustomerFAQSearch.pm" />
+        <File Permission="660" Location="Kernel/Modules/CustomerFAQZoom.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicFAQ.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicFAQExplorer.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicFAQPrint.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicFAQRSS.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicFAQSearch.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicFAQZoom.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Dashboard/FAQ.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FAQJournalOverview/Small.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FAQMenu/Generic.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FAQMenu/Delete.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FAQOverview/Small.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Layout/FAQ.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/LinkObject/FAQ.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/FAQ.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/FAQCustomerRelatedArticles.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQAdd.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardFAQOverview.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQCategory.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQDelete.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQEdit.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQExplorer.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQHistory.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQJournalOverviewSmall.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQLanguage.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQLanguage.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQOverviewNavBar.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQOverviewSmall.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearch.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchOpenSearchDescriptionFAQNumber.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchOpenSearchDescriptionFulltext.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchSmall.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoom.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoomSmall.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQRelatedArticles.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQExplorer.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQRelatedArticles.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearch.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearchOpenSearchDescriptionFAQNumber.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearchOpenSearchDescriptionFullText.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearchResultShort.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQZoom.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQExplorer.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearch.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchOpenSearchDescriptionFAQNumber.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchOpenSearchDescriptionFullText.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchResultShort.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQZoom.tt" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Admin/FAQ/Import.pm" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/FAQ/ContentTypeSet.pm" />
+        <File Permission="660" Location="Kernel/System/DynamicField/ObjectType/FAQ.pm" />
+        <File Permission="660" Location="Kernel/System/FAQ/Category.pm" />
+        <File Permission="660" Location="Kernel/System/FAQ/Language.pm" />
+        <File Permission="660" Location="Kernel/System/FAQ/RelatedArticle.pm" />
+        <File Permission="660" Location="Kernel/System/FAQ/State.pm" />
+        <File Permission="660" Location="Kernel/System/FAQ/Vote.pm" />
+        <File Permission="660" Location="Kernel/System/FAQ.pm" />
+        <File Permission="660" Location="Kernel/System/FAQSearch.pm" />
+        <File Permission="660" Location="Kernel/System/LinkObject/FAQ.pm" />
+        <File Permission="660" Location="Kernel/System/Stats/Static/FAQAccess.pm" />
+        <File Permission="660" Location="scripts/test/Console/Command/Admin/FAQ/Import.t" />
+        <File Permission="660" Location="scripts/webservices/GenericFAQConnectorREST.yml" />
+        <File Permission="660" Location="scripts/webservices/GenericFAQConnectorSOAP.yml" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/FAQ/ContentTypeSet.t" />
+        <File Permission="660" Location="scripts/test/DynamicField/ObjectType/FAQ/ObjectDataGet.t" />
+        <File Permission="660" Location="scripts/test/FAQSearch/InConditionGet.t" />
+        <File Permission="660" Location="scripts/test/FAQ.t" />
+        <File Permission="660" Location="scripts/test/FAQSearch.t" />
+        <File Permission="660" Location="scripts/test/FAQ/RelatedArticle.t" />
+        <File Permission="660" Location="scripts/test/FAQ/Category/AgentCategorySearch.t" />
+        <File Permission="660" Location="scripts/test/FAQ/Category/CategoryAdd.t" />
+        <File Permission="660" Location="scripts/test/FAQ/UpgradeLowerThan5092.t" />
+        <File Permission="660" Location="scripts/test/FAQ/Category/CheckCategoryUserPermission.t" />
+        <File Permission="660" Location="scripts/test/GenericInterface/FAQConnector.t" />
+        <File Permission="660" Location="scripts/test/sample/FAQ-Test1.doc" />
+        <File Permission="660" Location="scripts/test/sample/FAQ-Test1.pdf" />
+        <File Permission="660" Location="scripts/test/sample/FAQ.csv" />
+        <File Permission="660" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.bin" />
+        <File Permission="660" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.txt" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQAdd.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQCategory.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQDelete.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQEdit.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQExplorer.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQHistory.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQJournal.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQLanguage.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQLinkObject.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQPrint.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQSearch.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/FAQ/RelatedArticles.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerFAQExplorer.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerFAQPrint.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerFAQSearch.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerFAQZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Customer/FAQ/RelatedArticles.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Public/PublicFAQExplorer.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Public/PublicFAQPrint.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Public/PublicFAQRSS.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Public/PublicFAQSearch.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Public/PublicFAQZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/Dashboard/FAQ.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/FAQJournalOverview/Small.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/FAQMenu/Generic.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/FAQOverview/Small.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/HeaderMeta/AgentFAQSearch.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/HeaderMeta/CustomerFAQSearch.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/HeaderMeta/PublicFAQSearch.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/LinkObject/FAQ.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.FAQ.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.FAQZoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.RelatedArticles.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.TicketCompose.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Customer.FAQZoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Default.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Detail.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/img/help-small.png" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.RelatedArticles.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.FAQZoom.css" />
+        <File Permission="660" Location="var/packagesetup/FAQ.pm" />
+        <File Permission="660" Location="var/stats/FAQ-FAQAccess.xml" />
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="faq_language">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR" />
+            <Unique Name="faq_language_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+        </TableCreate>
+        <Insert Table="faq_language">
+            <Data Key="name" Type="Quote">en</Data>
+        </Insert>
+        <Insert Table="faq_language">
+            <Data Key="name" Type="Quote">de</Data>
+        </Insert>
+        <TableCreate Name="faq_state_type">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR" />
+            <Unique Name="faq_state_type_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+        </TableCreate>
+        <Insert Table="faq_state_type">
+            <Data Key="name" Type="Quote" Translatable="1">internal</Data>
+        </Insert>
+        <Insert Table="faq_state_type">
+            <Data Key="name" Type="Quote" Translatable="1">external</Data>
+        </Insert>
+        <Insert Table="faq_state_type">
+            <Data Key="name" Type="Quote" Translatable="1">public</Data>
+        </Insert>
+        <TableCreate Name="faq_state">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="type_id" Required="true" Type="INTEGER" />
+            <Unique Name="faq_state_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+            <Index Name="faq_state_type_id">
+                <IndexColumn Name="type_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="faq_category">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="parent_id" Required="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="comments" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="created" Required="true" Type="DATE" />
+            <Column Name="created_by" Required="true" Type="INTEGER" />
+            <Column Name="changed" Required="true" Type="DATE" />
+            <Column Name="changed_by" Required="true" Type="INTEGER" />
+            <Index Name="faq_category_parent_id">
+                <IndexColumn Name="parent_id" />
+            </Index>
+            <Index Name="faq_category_name">
+                <IndexColumn Name="name" />
+            </Index>
+            <Index Name="faq_category_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <Insert Table="faq_category">
+            <Data Key="name" Type="Quote">Misc</Data>
+            <Data Key="comments" Type="Quote">Misc Comment</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="created">current_timestamp</Data>
+            <Data Key="created_by">1</Data>
+            <Data Key="changed">current_timestamp</Data>
+            <Data Key="changed_by">1</Data>
+            <Data Key="parent_id">0</Data>
+        </Insert>
+        <TableCreate Name="faq_category_group">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="category_id" Required="true" Size="200" Type="INTEGER" />
+            <Column Name="group_id" Required="true" Type="INTEGER" />
+            <Column Name="created" Required="false" Type="DATE" />
+            <Column Name="created_by" Required="false" Type="INTEGER" />
+            <Column Name="changed" Required="false" Type="DATE" />
+            <Column Name="changed_by" Required="false" Type="INTEGER" />
+            <Index Name="faq_category_group_category_id">
+                <IndexColumn Name="category_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="faq_item">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="f_number" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="f_subject" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="f_name" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="f_language_id" Required="true" Type="SMALLINT" />
+            <Column Name="state_id" Required="true" Type="SMALLINT" />
+            <Column Name="category_id" Required="true" Type="SMALLINT" />
+            <Column Name="approved" Required="true" Default="1" Type="SMALLINT" />
+            <Column Name="valid_id" Required="true" Default="1" Type="SMALLINT" />
+            <Column Name="content_type" Required="true" Default="text/html" Size="250" Type="VARCHAR" />
+            <Column Name="f_keywords" Required="false" Size="400" Type="VARCHAR" />
+            <Column Name="f_field1" Required="false" Size="20000" Type="VARCHAR" />
+            <Column Name="f_field2" Required="false" Size="20000" Type="VARCHAR" />
+            <Column Name="f_field3" Required="false" Size="20000" Type="VARCHAR" />
+            <Column Name="f_field4" Required="false" Size="20000" Type="VARCHAR" />
+            <Column Name="f_field5" Required="false" Size="20000" Type="VARCHAR" />
+            <Column Name="f_field6" Required="false" Size="20000" Type="VARCHAR" />
+            <Column Name="created" Required="true" Type="DATE" />
+            <Column Name="created_by" Required="true" Type="INTEGER" />
+            <Column Name="changed" Required="true" Type="DATE" />
+            <Column Name="changed_by" Required="true" Type="INTEGER" />
+            <Index Name="faq_item_state_id">
+                <IndexColumn Name="state_id" />
+            </Index>
+            <Index Name="faq_item_category_id">
+                <IndexColumn Name="category_id" />
+            </Index>
+            <Index Name="faq_item_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="faq_history">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="item_id" Required="true" Type="INTEGER" />
+            <Column Name="created" Required="true" Type="DATE" />
+            <Column Name="created_by" Required="true" Type="INTEGER" />
+            <Column Name="changed" Required="true" Type="DATE" />
+            <Column Name="changed_by" Required="true" Type="INTEGER" />
+            <Index Name="faq_history_item_id">
+                <IndexColumn Name="item_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="faq_attachment">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="faq_id" Required="true" Type="BIGINT" />
+            <Column Name="filename" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="content_size" Required="false" Size="30" Type="VARCHAR" />
+            <Column Name="content_type" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="content" Required="true" Type="LONGBLOB" />
+            <Column Name="inlineattachment" Required="true" Default="0" Type="SMALLINT" />
+            <Column Name="created" Required="true" Type="DATE" />
+            <Column Name="created_by" Required="true" Type="INTEGER" />
+            <Column Name="changed" Required="true" Type="DATE" />
+            <Column Name="changed_by" Required="true" Type="INTEGER" />
+            <Index Name="faq_attachment_faq_id">
+                <IndexColumn Name="faq_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="faq_voting">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="created_by" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="item_id" Required="true" Type="INTEGER" />
+            <Column Name="interface" Required="false" Size="80" Type="VARCHAR" />
+            <Column Name="ip" Required="false" Size="50" Type="VARCHAR" />
+            <Column Name="rate" Required="true" Type="INTEGER" />
+            <Column Name="created" Required="false" Type="DATE" />
+            <Index Name="faq_voting_item_id">
+                <IndexColumn Name="item_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="faq_log">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="item_id" Required="true" Type="INTEGER" />
+            <Column Name="interface" Required="true" Size="80" Type="VARCHAR" />
+            <Column Name="ip" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="user_agent" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="created" Required="true" Type="DATE" />
+            <Index Name="faq_log_item_id">
+                <IndexColumn Name="item_id" />
+            </Index>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUpgrade Type="post">
+        <TableCreate Name="faq_category_group" Version="1.1.3">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="category_id" Required="true" Size="200" Type="INTEGER" />
+            <Column Name="group_id" Required="true" Type="INTEGER" />
+            <Column Name="created" Required="false" Type="DATE" />
+            <Column Name="created_by" Required="false" Type="INTEGER" />
+            <Column Name="changed" Required="false" Type="DATE" />
+            <Column Name="changed_by" Required="false" Type="INTEGER" />
+        </TableCreate>
+        <TableCreate Name="faq_log" Version="1.5.1">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="item_id" Required="true" Type="INTEGER" />
+            <Column Name="interface" Required="true" Size="80" Type="VARCHAR" />
+            <Column Name="ip" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="user_agent" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="created" Required="true" Type="DATE" />
+            <Index Name="item_id">
+                <IndexColumn Name="item_id" />
+            </Index>
+        </TableCreate>
+        <TableAlter Name="faq_item" Version="1.5.1">
+            <ColumnAdd Name="approved" Required="true" Default="1" Type="SMALLINT" />
+        </TableAlter>
+        <TableAlter Name="faq_attachment" Version="1.5.1">
+            <ColumnAdd Name="inlineattachment" Required="true" Default="0" Type="SMALLINT" />
+        </TableAlter>
+        <TableAlter Name="faq_item" Version="1.6.91">
+            <ColumnDrop Name="free_key1" />
+            <ColumnDrop Name="free_value1" />
+            <ColumnDrop Name="free_key2" />
+            <ColumnDrop Name="free_value2" />
+            <ColumnDrop Name="free_key3" />
+            <ColumnDrop Name="free_value3" />
+            <ColumnDrop Name="free_key4" />
+            <ColumnDrop Name="free_value4" />
+        </TableAlter>
+        <TableAlter Name="faq_state" Version="2.1.92">
+            <IndexCreate Name="faq_state_type_id">
+                <IndexColumn Name="type_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_category" Version="2.1.92">
+            <IndexCreate Name="faq_category_parent_id">
+                <IndexColumn Name="parent_id" />
+            </IndexCreate>
+            <IndexCreate Name="faq_category_name">
+                <IndexColumn Name="name" />
+            </IndexCreate>
+            <IndexCreate Name="faq_category_valid_id">
+                <IndexColumn Name="valid_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_category_group" Version="2.1.92">
+            <IndexCreate Name="faq_category_group_category_id">
+                <IndexColumn Name="category_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_item" Version="2.1.92">
+            <IndexCreate Name="faq_item_state_id">
+                <IndexColumn Name="state_id" />
+            </IndexCreate>
+            <IndexCreate Name="faq_item_category_id">
+                <IndexColumn Name="category_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_history" Version="2.1.92">
+            <IndexCreate Name="faq_history_item_id">
+                <IndexColumn Name="item_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_attachment" Version="2.1.92">
+            <IndexDrop Name="faq_id" />
+            <IndexCreate Name="faq_attachment_faq_id">
+                <IndexColumn Name="faq_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_voting" Version="2.1.92">
+            <IndexCreate Name="faq_voting">
+                <IndexColumn Name="item_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_log" Version="2.1.92">
+            <IndexDrop Name="item_id" />
+            <IndexCreate Name="faq_log_item_id">
+                <IndexColumn Name="item_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_category" Version="2.1.93">
+            <ForeignKeyCreate ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKeyCreate>
+        </TableAlter>
+        <TableAlter Name="faq_item" Version="2.1.93">
+            <ColumnAdd Name="valid_id" Required="true" Default="1" Type="SMALLINT" />
+            <IndexCreate Name="faq_item_valid_id">
+                <IndexColumn Name="valid_id" />
+            </IndexCreate>
+            <ForeignKeyCreate ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKeyCreate>
+        </TableAlter>
+        <TableAlter Name="faq_voting" Version="3.3.90">
+            <IndexDrop Name="faq_voting" />
+            <IndexCreate Name="faq_voting_item_id">
+                <IndexColumn Name="item_id" />
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_item" Version="4.0.91">
+            <ColumnAdd Name="content_type" Required="true" Default="text/html" Size="250" Type="VARCHAR" />
+        </TableAlter>
+    </DatabaseUpgrade>
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="faq_history" />
+        <TableDrop Name="faq_attachment" />
+        <TableDrop Name="faq_item" />
+        <TableDrop Name="faq_category" />
+        <TableDrop Name="faq_category_group" />
+        <TableDrop Name="faq_state" />
+        <TableDrop Name="faq_state_type" />
+        <TableDrop Name="faq_language" />
+        <TableDrop Name="faq_voting" />
+        <TableDrop Name="faq_log" />
+    </DatabaseUninstall>
+    <CodeInstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+    ]]></CodeInstall>
+    <CodeUpgrade Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="1.5.3"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeSpecial();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.1"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_1();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="5.0.92"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_5_0_92();
+    ]]></CodeUpgrade>
+    <CodeReinstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+    ]]></CodeReinstall>
+    <CodeUninstall Type="pre"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+    ]]></CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package FAQ.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket FAQ zu installieren.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; a punto de instalar el paquete FAQ de OTRS.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az FAQ OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>NOTICE</strong>
+        <br/>
+        <br/>
+        The menu items that were added by this package will be visible after you log-in to the system again.
+        <br/>
+        <br/>
+        To create new FAQ article you need to create categories and define the permission who can access categories.
+        <br/>
+        <br/>
+        If you are using the FAQ approval feature, you need to create a group and define a queue.
+        You will find further information in the sysconfig in FAQ -> Core::Approval.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
+        <br/>
+        <strong>HINWEIS</strong>
+        <br/>
+        <br/>
+        Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
+        <br/>
+        <br/>
+        Um FAQ Artikel erstellen zu können müssen zuerst Kategorien erstellt und die Berechtigungs-Gruppen dieser Kategorien definiert werden.
+        <br/>
+        <br/>
+        Wenn Sie das FAQ-Freigabe-Feature verwenden möchten, müssen Sie eine Gruppe dafür anlegen und eine Queue definieren.
+        Weitere Informationen finden Sie in der Sysconfig unter FAQ -> Core::Approval.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>AVISO</strong>
+        <br/>
+        <br/>
+        Los elementos del menu que fueron agregados por este paquete ser&aacute;n visibles despu&eacute;s de que cierre y abra su sesi&oacute;n de nuevo.
+        <br/>
+        <br/>
+        Para crear un nuevo art&iacute;culo FAQ usted necesita crear una categor&iacute;a y definir los permisos de quienes pueden acceder esta categor&iacute;a.
+        <br/>
+        <br/>
+        Si usted est&aacute; utilizando la funcionalidad de "FAQ approval", necesita crear un grupo y definir una cola.
+        Encontrar&aacute; m&aacute;s informaci&oacute;n en sysconfig, en FAQ -> Core::Approval.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>FIGYELMEZTETÉS</strong>
+        <br/>
+        <br/>
+        Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
+        <br/>
+        <br/>
+        Egy új GyIK bejegyzés létrehozásához kategóriákat kell létrehoznia, és meg kell határoznia a jogosultságokat, hogy ki férhet hozzá a kategóriákhoz.
+        <br/>
+        <br/>
+        Ha használja a GyIK jóváhagyás szolgáltatást, akkor létre kell hoznia egy csoportot, és meg kell határoznia egy várólistát.
+        További információkat fog találni a rendszerbeállításokban a FAQ -> Core::Approval alcsoportban.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package FAQ.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket FAQ zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; apunto de actualizar el paquete FAQ de OTRS.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az FAQ OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        <br/>
+        <br/>
+        All Dynamic Fields created for this package and its data will be deleted permanently.
+        <br/>
+        <br/>
+        The groups 'faq' and 'faq_admin' that were created during package installation will be deactivated.
+        You can activate these groups again in the admin area.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+        <br/>
+        <strong>ACHTUNG</strong>
+        <br/>
+        <br/>
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        <br/>
+        <br/>
+        Alle dynamischen Felder für dieses Paket erstellt und seine Daten dauerhaft gelöscht werden.
+        <br/>
+        <br/>
+        Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' werden deaktiviert.
+        Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>ATENCI&Oacute;N</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalaci&oacute;n ser&aacute;n borradas.
+        &iexcl;Todos los datos de esas tablas se perder&aacute;n irrevocablemente!.
+        <br/>
+        <br/>
+        Todos los Campos Dinámicos creados para este paquete y sus datos serán borrados permanentemente.
+        <br/>
+        <br/>
+        Los grupos 'faq' y 'faq_admin' que fueron creados durante la instalaci&oacute;n del paquete ser&aacute;n desactivados.
+        Usted puede activar estos grupos nuevamente en el &aacute;rea de admin.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br/>
+        <br/>
+        A csomaghoz létrehozott összes dinamikus mező és azok adatai véglegesen törölve lesznek.
+        <br/>
+        <br/>
+        A csomagtelepítés során létrehozott „faq” és „faq_admin” csoport ki lesz kapcsolva.
+        Ezeket a csoportokat az adminisztrációs területen tudja ismét bekapcsolni.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+</otrs_package>
