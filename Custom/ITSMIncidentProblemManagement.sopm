@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ITSMIncidentProblemManagement</Name>
+<!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
+    <Version>6.0.30</Version>
+    <Framework Minimum="6.0.30">6.0.x</Framework>
+    <PackageRequired Version="6.0.30">ITSMCore</PackageRequired>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">The OTRS::ITSM Incident and Problem Management package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Incident und Problem Management Paket.</Description>
+    <Description Lang="es">Paquete Incident and Problem Management de OTRS::ITSM.</Description>
+    <Description Lang="hu">Az OTRS::ITSM incidens- és problémamenedzsment csomag.</Description>
+    <Filelist>
+        <File Permission="660" Location="Kernel/Config/Files/XML/ITSMTicket.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/TicketITSMTicket.xml" />
+        <File Permission="660" Location="Kernel/Language/ar_SA_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/bg_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ca_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/cs_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/da_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/de_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/el_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/en_CA_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/en_GB_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/es_CO_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/es_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/et_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/fa_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_CA_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/he_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/hi_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/id_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/it_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ko_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/lt_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/lv_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/mk_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ms_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/nl_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sk_SK_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sl_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sw_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/tr_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentTicketActionCommon.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentTicketAddtlITSMField.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentTicketDecision.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentTicketEmail.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentTicketPhone.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentTicketProcess.pm" />
+        <File Permission="660" Location="Kernel/Modules/CustomerTicketProcess.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketAddtlITSMField.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketDecision.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewMedium.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/TicketOverview/Medium.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/TicketOverview/Preview.pm" />
+        <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/ITSMIncidentProblemManagement/ServiceIncidentState.html.tmpl" />
+        <File Permission="660" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm" />
+        <File Permission="660" Location="Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketPhone/ServiceDropdown.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMReviewRequired.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketAddtlITSMField.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketDecision.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketEmail.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketPhone.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketPrint.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerTicketPrint.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ITSMIncidentProblemManagement.js" />
+        <File Permission="660" Location="var/packagesetup/ITSMIncidentProblemManagement.pm" />
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <Insert Table="ticket_state">
+            <Data Key="name" Type="Quote" Translatable="1">closed with workaround</Data>
+            <Data Key="comments" Type="Quote">Ticket is closed with workaround.</Data>
+            <Data Key="type_id">3</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Incident</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Incident::Major</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">ServiceRequest</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Problem</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>
+    <CodeInstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+
+    ]]></CodeInstall>
+    <CodeReinstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+
+    ]]></CodeReinstall>
+    <CodeUpgrade Type="pre" Version="3.2.91"><![CDATA[
+
+        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 6.0.30 Beta 1)
+        $Kernel::OM->Get('Kernel::System::Package')->_PackageUninstallMerged(
+            Name => 'OTRSServiceIncidentState',
+        );
+
+    ]]></CodeUpgrade>
+    <!-- It is IMPORTANT that this CodeUpgrade (Version="3.2.91") comes BEFORE the regular CodeUpgrade block without any version number! -->
+    <CodeUpgrade Type="post" Version="3.2.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_3_2_91();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.2"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_2();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+
+    ]]></CodeUpgrade>
+    <CodeUninstall Type="pre"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+
+    ]]></CodeUninstall>
+    <CodeUninstall Type="post"><![CDATA[
+
+        {
+            # cleanup stats list (only stats related to the given stat objects)
+            $Kernel::OM->Get('Kernel::System::Stats')->StatsCleanUp(
+                ObjectNames => [
+                    'ITSMTicketFirstLevelSolutionRate',
+                    'ITSMTicketSolutionTimeAverage',
+                ],
+                UserID => 1,
+            );
+        }
+
+    ]]></CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package ITSMIncidentProblemManagement.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu installieren.<br/>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted esta apunto de instalar el paquete ITSMIncidentProblemManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMIncidentProblemManagement OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package ITSMIncidentProblemManagement.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted esta apunto de actualizar el paquete ITSMIncidentProblemManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMIncidentProblemManagement OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 6.0.30</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        If you uninstall this package, the ticket types and states that were added during installation will be deactivated.
+        They can be activated again in the admin area.
+        <br/>
+        <br/>
+        The statistics that are associated with this package, will no longer be available if the package is uninstalled.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>ACHTUNG</strong>
+        <br/>
+        <br/>
+        Bei der Deinstallation werden die von diesem Paket angelegten Ticket-Typen und -Status deaktiviert.
+        Diese können jederzeit im Admin-Bereich wieder aktiviert werden.
+        <br/>
+        <br/>
+        Nach der Deinstallation sind die zu diesem Paket zugehörigen Statistiken nicht mehr verfügbar.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, los tipos de ticket y estados que fueron agregados durante la instalación serán desactivados.
+        Pueden ser activados de nuevo en el área de admin.
+        <br/>
+        <br/>
+        Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során hozzáadott jegytípusok és állapotok ki lesznek kapcsolva.
+        Ezek az adminisztrációs területen kapcsolhatók be ismét.
+        <br/>
+        <br/>
+        Az ehhez a csomaghoz hozzárendelt statisztikák többé nem lesznek elérhetők, ha a csomagot eltávolítják.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+
+</otrs_package>
