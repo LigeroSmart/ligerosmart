@@ -1,0 +1,1765 @@
+#
+# Translators:
+# Macbethana Wilfred <mwi@nrd.no>, 2014
+# Mantas Gudas <mgu@nrd.no>, 2014
+# nilsleideck <nils.leideck@leidex.net>, 2014
+# nilsleideck <nils.leideck@leidex.net>, 2014
+# Silvanus Silvester Swai <ssw@nrd.no>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Template: AgentFAQAdd
+msgid "Add FAQ Article"
+msgstr "Ongeza makala ya maswali"
+
+#. Template: AgentFAQAdd
+msgid "Keywords"
+msgstr "Maneno makuu"
+
+#. Template: AgentFAQAdd
+msgid "A category is required."
+msgstr "Sehemu inahitajika"
+
+#. Template: AgentFAQAdd
+msgid "Approval"
+msgstr "Idhini"
+
+#. Template: AgentFAQCategory
+msgid "FAQ Category Management"
+msgstr "Sehemu ya menejimenti ya maswali"
+
+#. Template: AgentFAQCategory
+msgid "Add FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Edit FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Add category"
+msgstr "Ongeza sehemu"
+
+#. Template: AgentFAQCategory
+msgid "Add Category"
+msgstr "Ongeza sehemu"
+
+#. Template: AgentFAQCategory
+msgid "Edit Category"
+msgstr "Hariri sehemu"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "Kijisehemu cha"
+
+#. Template: AgentFAQCategory
+msgid "Please select at least one permission group."
+msgstr "Tafadhali chagua japo"
+
+#. Template: AgentFAQCategory
+msgid "Agent groups that can access articles in this category."
+msgstr "Makundi ya wakala yenye ruhusa kwa hii makala katika kategori hii."
+
+#. Template: AgentFAQCategory
+msgid "Will be shown as comment in Explorer."
+msgstr "Itaonyeshwa kama tamko kwenye Explorer."
+
+#. Template: AgentFAQCategory
+msgid "Do you really want to delete this category?"
+msgstr "Je unataka kufuta hii sehemu?"
+
+#. Template: AgentFAQCategory
+msgid ""
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
+msgstr ""
+"Huwezi kufuta sehemu hii.Imetumika na makala ya maswali si chini ya moja na/"
+"au ipo ndani ya kategori nyingine si chini ya moja. "
+
+#. Template: AgentFAQCategory
+msgid "This category is used in the following FAQ article(s)"
+msgstr "Hii sehemu inatumika katika makala ya maswali ifuatayo."
+
+#. Template: AgentFAQCategory
+msgid "This category is parent of the following subcategories"
+msgstr "Hii ni sehemu mama ya vijisehemu vifuatavyo "
+
+#. Template: AgentFAQDelete
+msgid "Do you really want to delete this FAQ article?"
+msgstr "Je unataka Kufuta hii makala ya maswali?"
+
+#. Template: AgentFAQEdit
+msgid "FAQ"
+msgstr "Maswali"
+
+#. Template: AgentFAQExplorer
+msgid "FAQ Explorer"
+msgstr "Kichunguzaji maswali"
+
+#. Template: AgentFAQExplorer
+msgid "Quick Search"
+msgstr "Tafuta haraka"
+
+#. Template: AgentFAQExplorer
+msgid "Wildcards are allowed."
+msgstr "Wildcard haziruhusiwi"
+
+#. Template: AgentFAQExplorer
+msgid "Advanced Search"
+msgstr "Tafuta zaidi"
+
+#. Template: AgentFAQExplorer
+msgid "Subcategories"
+msgstr "Kijikisehemu"
+
+#. Template: AgentFAQExplorer
+msgid "FAQ Articles"
+msgstr "Makala ya Maswali"
+
+#. Template: AgentFAQExplorer
+msgid "No subcategories found."
+msgstr "Hakuna vijisehemu vilivyopatikana."
+
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "Historia ya"
+
+#. Template: AgentFAQHistory
+msgid "History Content"
+msgstr "Maudhui ya historia"
+
+#. Template: AgentFAQHistory
+msgid "Createtime"
+msgstr "Muda wa kutengeneza"
+
+#. Template: AgentFAQJournalOverviewSmall
+msgid "No FAQ Journal data found."
+msgstr "Data za jarida la maswali hazijapatikana."
+
+#. Template: AgentFAQLanguage
+msgid "FAQ Language Management"
+msgstr "Menejimenti ya lugha ya maswali"
+
+#. Template: AgentFAQLanguage
+msgid "Add FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Edit FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Add language"
+msgstr "Ongeza lugha"
+
+#. Template: AgentFAQLanguage
+msgid "Add Language"
+msgstr "Ongeza Lugha"
+
+#. Template: AgentFAQLanguage
+msgid "Edit Language"
+msgstr "Hariri Lugha"
+
+#. Template: AgentFAQLanguage
+msgid "Do you really want to delete this language?"
+msgstr "Je unataka kufuta hii lugha?"
+
+#. Template: AgentFAQLanguage
+msgid ""
+"You can not delete this language. It is used in at least one FAQ article!"
+msgstr ""
+"Huwezi kufuta lugha hii. Imetumika kwenye makala ya maswali zaidi ya moja."
+
+#. Template: AgentFAQLanguage
+msgid "This language is used in the following FAQ Article(s)"
+msgstr "Hii lugha imetumika katika makala ya(za) maswali ifuatayo."
+
+#. Template: AgentFAQOverviewNavBar
+msgid "Context Settings"
+msgstr "Mipangilio ya muktadha"
+
+#. Template: AgentFAQOverviewNavBar
+msgid "FAQ articles per page"
+msgstr "Makala ya maswali kwa ukurasa"
+
+#. Template: AgentFAQOverviewSmall
+msgid "No FAQ data found."
+msgstr "Hakuna data za maswali"
+
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "Kati ya 5"
+
+#. Template: AgentFAQSearch
+msgid "Keyword"
+msgstr "Neno kuu"
+
+#. Template: AgentFAQSearch
+msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
+msgstr "Kura (mfano. sawa na 10 au Zaidi ya 60)"
+
+#. Template: AgentFAQSearch
+msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
+msgstr "Kiwango (mfano Sawa na 25% au Zaidi ya 75%)"
+
+#. Template: AgentFAQSearch
+msgid "Approved"
+msgstr "Kuidhinisha"
+
+#. Template: AgentFAQSearch
+msgid "Last changed by"
+msgstr "Mara ya mwisho imebadilishwa na"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Create Time (before/after)"
+msgstr "Muda wa kutengeneza makala ya maswali (kabla/baada)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Create Time (between)"
+msgstr "Muda wa kutengeneza Makala ya maswali (katikati)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Change Time (before/after)"
+msgstr "Muda wa kubadilisha makala ya maswali (kabla/baada)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Change Time (between)"
+msgstr "Muda wa kubadilisha makala ya maswali (katikati)"
+
+#. Template: AgentFAQSearchOpenSearchDescriptionFulltext
+msgid "FAQFulltext"
+msgstr "Nakala nzima ya maswali yanayo ulizwa mara kwa mara."
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Search"
+msgstr "Tafuta maswali"
+
+#. Template: AgentFAQSearchSmall
+msgid "Profile Selection"
+msgstr "Chaguo la maelezo mafupi"
+
+#. Template: AgentFAQSearchSmall
+msgid "Vote"
+msgstr "Kura"
+
+#. Template: AgentFAQSearchSmall
+msgid "No vote settings"
+msgstr "Hakuna Mipangilio ya kura"
+
+#. Template: AgentFAQSearchSmall
+msgid "Specific votes"
+msgstr "Kura maalumu"
+
+#. Template: AgentFAQSearchSmall
+msgid "e. g. Equals 10 or GreaterThan 60"
+msgstr "Mafano Sawa na 10 au Zaidi ya 60"
+
+#. Template: AgentFAQSearchSmall
+msgid "Rate"
+msgstr "Kiwango"
+
+#. Template: AgentFAQSearchSmall
+msgid "No rate settings"
+msgstr "Hakuna mipangilio ya kiwango"
+
+#. Template: AgentFAQSearchSmall
+msgid "Specific rate"
+msgstr "Kiwango maalum"
+
+#. Template: AgentFAQSearchSmall
+msgid "e. g. Equals 25% or GreaterThan 75%"
+msgstr "Mfano Sawa na 25% au Zaidi ya 75%"
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Article Create Time"
+msgstr "Muda wa kutengeneza makala ya maswali"
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Article Change Time"
+msgstr "Muda wa kubadili makala ya maswali"
+
+#. Template: AgentFAQZoom
+msgid "FAQ Information"
+msgstr "Habari za Maswali"
+
+#. Template: AgentFAQZoom
+msgid "Rating"
+msgstr "Thaminisha"
+
+#. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "Kura"
+
+#. Template: AgentFAQZoom
+msgid "No votes found!"
+msgstr "Hakuna Kura zilizopatika"
+
+#. Template: AgentFAQZoom
+msgid "No votes found! Be the first one to rate this FAQ article."
+msgstr "Hakuna kura. Kuwa wa kwanza kuthaminisha makala hii ya maswali."
+
+#. Template: AgentFAQZoom
+msgid "Download Attachment"
+msgstr "Download Kiambatanishwa"
+
+#. Template: AgentFAQZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank You!"
+msgstr ""
+"Ni kwa kiasi gan makala hii imesaidia? Tafadhali tusaidie kuthaminisha "
+"kuleta mabadiliko katika database ya Maswali. Asante"
+
+#. Template: AgentFAQZoom
+msgid "not helpful"
+msgstr "Haina Msaada"
+
+#. Template: AgentFAQZoom
+msgid "very helpful"
+msgstr "Ina msaada sana"
+
+#. Template: AgentFAQZoomSmall
+msgid "Add FAQ title to article subject"
+msgstr "Ongeza kichwa cha habari cha maswali katika somo ya makala"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Text"
+msgstr "Ingiza matini ya maswali"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert Full FAQ"
+msgstr "Ingiza maswali yote"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Link"
+msgstr "Ingiza link ya maswali"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Text & Link"
+msgstr "Ingiza nakala ya maswali na Link"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert Full FAQ & Link"
+msgstr "Ingiza maswali yote na link"
+
+#. Template: CustomerFAQExplorer
+msgid "No FAQ articles found."
+msgstr "Hakuna makala ya maswali iliyopatikana"
+
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
+#. Template: CustomerFAQSearch
+msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
+msgstr ""
+"Tafuta nakala kamili katika maswali yanayooulizwa mara kwa mara (mfano \"John"
+"\" au \"Will\")"
+
+#. Template: CustomerFAQSearch
+msgid "Vote restrictions"
+msgstr "Vizuizi vya kura"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles with votes..."
+msgstr "Makala ya maswali yenye kura "
+
+#. Template: CustomerFAQSearch
+msgid "Rate restrictions"
+msgstr "Vizuizi vya thamani"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles with rate..."
+msgstr "Makala ya maswali yaliyothaminishwa"
+
+#. Template: CustomerFAQSearch
+msgid "Time restrictions"
+msgstr "Vizuizi vya muda"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles created"
+msgstr "Makala ya maswali yaliyotengenezwa tu"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles created between"
+msgstr "Makala ya maswali yalitengenezwa kati ya"
+
+#. Template: CustomerFAQSearch
+msgid "Search-Profile as Template?"
+msgstr "Tafuta maelezo mafupi kama kielezo"
+
+#. Template: CustomerFAQZoom
+msgid "Article Number"
+msgstr "Namba ya makala"
+
+#. Template: CustomerFAQZoom
+msgid "Search for articles with keyword"
+msgstr "Tafuta Makala kwa neno kuu"
+
+#. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
+msgid "Public"
+msgstr "Umma"
+
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr "Back to FAQ mchunguzi"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "sehemu iwe na jina"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "Hii sehemu tayari ipo"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "Sehemu ya maswali iliyobadilishwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "Sehemu ya maswali iliyoongezwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Delete Category"
+msgstr "Futa sehemu"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "Jarida la maswali"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "Jina linahitajika!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "Lugha ipo tayari!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "Lugha ya maswali imebadilishwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "Lugha ya maswali  imeongezwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Delete Language %s"
+msgstr "Futa Lugha"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Result"
+msgstr "Matokeo"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "Mabadiliko ya mwisho"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "idadi ya maswali"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "Asante kwa Kura yako!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "Umeshapiga kura tayari!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "Hakuna chaguo la kiwango"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "Chapisha makala ya maswali"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "Makala ya maswali (Mpya iliyotengenezwa)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "Makala ya maswali (Iliyobadilishwa hivi karibuni)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "Makala ya maswali (10 bora)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Need rate!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest created FAQ articles"
+msgstr "Makala mpya ya maswali"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest updated FAQ articles"
+msgstr "Marekebisho mapya ya makala ya maswali"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Top 10 FAQ articles"
+msgstr "Makala 10 bora ya Maswali"
+
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "internal"
+msgstr "ndani"
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "external"
+msgstr "nje"
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "public"
+msgstr "umma"
+
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "Sawa"
+
+#. SysConfig
+msgid ""
+"A filter for HTML output to add links behind a defined string. The element "
+"Image allows two input kinds. First the name of an image (e.g. faq.png). In "
+"this case the OTRS image path will be used. The second possibility is to "
+"insert the link to the image."
+msgstr ""
+"Kichujio cha matokeo ya HTML ili kuongeza viungo kwa tungo zilizo "
+"fafanuliwa. Sura ya elemnti hii inaruhusu maingizo ya aina mbili. Kwanza "
+"jinala sura (mf. faq.png). Kwa kesi hii sura ya njia ya OTRS itatumika. Njia "
+"ya pili ni kuingiza kiungo cha hiyo sura."
+
+#. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
+msgid "CSS color for the voting result."
+msgstr "Rangi ya CSS kwa matokeo ya kura"
+
+#. SysConfig
+msgid "Cache Time To Leave for FAQ items."
+msgstr ""
+"Muda wa maswali yaliyyoulizwa mara myingi kufutika kutoka kwenye kumbukumbu"
+
+#. SysConfig
+msgid "Category Management"
+msgstr "Usimamizi wa kategori"
+
+#. SysConfig
+msgid "Category Management."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "Decimal places of the voting result."
+msgstr "Mwongo wa matokeo ya kura"
+
+#. SysConfig
+msgid "Default category name."
+msgstr "Jina la chaguo-msingi la kategori"
+
+#. SysConfig
+msgid "Default language for FAQ articles on single language mode."
+msgstr ""
+"Chaguo-msingi la lugha ya makala ya maswali yaliyoulizwa mara nyingi katika "
+"lugha moja."
+
+#. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr ""
+"Ukubwa wa upeo wa juu chaguo msingi wa vichwa katika makala ya maswali "
+"yanayoulizwa mara kwa mara kuonyeshwa."
+
+#. SysConfig
+msgid "Default priority of tickets for the approval of FAQ articles."
+msgstr ""
+"Kipaumbele cha chaguo-msingi cha tiketi kwa idhini ya makala ya maswali"
+
+#. SysConfig
+msgid "Default state for FAQ entry."
+msgstr "Hali ya chaguo-msingi ya ingizo la maswali yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "Default state of tickets for the approval of FAQ articles."
+msgstr ""
+"Hali ya chaguo-msingi kwa tiketi za idhini ya makala ya maswali yaliyoulizwa "
+"mara kwa mara."
+
+#. SysConfig
+msgid "Default type of tickets for the approval of FAQ articles."
+msgstr ""
+"Hali ya chaguo-msingi kwa tiketi za makala ya maswali yaliyoulizwa mara kwa "
+"mara."
+
+#. SysConfig
+msgid ""
+"Default value for the Action parameter for the public frontend. The Action "
+"parameter is used in the scripts of the system."
+msgstr "Thamani ya chaguo-msingi kwa patameta amilifu kwa "
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid "Define if the FAQ title should be concatenated to article subject."
+msgstr ""
+"Eleza kama kichwa cha habari cha maswali yaliyoulizwa maranyingi "
+"kiunganishwe na somo la makala."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
+"(DynamicField_NameX) are allowed for DefaultColumns."
+msgstr ""
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a FAQ journal."
+msgstr ""
+"Inaeleza mapitio ya moduli kuonyesha  muonekano mdogo wa jarida la maswali "
+"yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a FAQ list."
+msgstr ""
+"Inaeleza mapitio ya moduli kuonyesha muonekano mdogo wa orodha ya maswali "
+"yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"agent interface."
+msgstr ""
+"Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa "
+"ajili ya upangaji wa maswali yanayoulizwa mara kwa mara katika maswali "
+"yanayoulizwa mara kwa mara tafuti ya kiolesura cha wakala."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"customer interface."
+msgstr ""
+"Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa "
+"ajili ya upangaji wa maswali yanayoulizwa mara kwa mara tafuti ya kiolesura "
+"cha mteja."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"public interface."
+msgstr ""
+"Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa "
+"ajili ya upangaji wa maswali yanayoulizwa mara kwa mara tafuti ya kiolesura "
+"cha umma."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
+msgstr ""
+"Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa "
+"ajili ya upangaji wa maswali yanayoulizwa mara kwa mara katika kichunguzi "
+"cha maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
+msgstr ""
+"Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa "
+"ajili ya upangaji wa maswali yanayoulizwa mara kwa mara katika kichunguzi "
+"cha maswali yanayoulizwa mara kwa mara ya kiolesura cha mteja."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
+msgstr ""
+"Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa "
+"ajili ya upangaji wa maswali yanayoulizwa mara kwa mara katika kichunguzi "
+"cha maswali yanayoulizwa mara kwa mara ya kiolesura cha umma."
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the agent "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Fafanua chaguo-msingi wa mpangilio wa maswali yanayoulizwa mara kwa mara "
+"katika matokeo ya kichunguzi cha maswali yanayoulizwa mara kwa mara ya "
+"kiolesura cha wakala. Juu: Kongwe juu. Chini: ya sasahivi juu"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the customer "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Fafanua chaguo-msingi wa mpangilio wa maswali yanayoulizwa mara kwa mara "
+"katika matokeo ya kichunguzi cha maswali yanayoulizwa mara kwa mara ya "
+"kiolesura cha mteja. Juu: Kongwe juu. Chini: ya sasahivi juu"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the public "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Fafanua chaguo-msingi wa mpangilio wa maswali yanayoulizwa mara kwa mara "
+"katika matokeo ya kichunguzi cha maswali yanayoulizwa mara kwa mara ya "
+"kiolesura cha umma. Juu: Kongwe juu. Chini: ya sasahivi juu"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
+msgstr ""
+"Fafanua chaguo-msingi wa mpangilio wa maswali yanayoulizwa mara kwa mara "
+"katika matokeo ya kutafuta katika kiolesura cha wakala. Juu: Kongwe juu. "
+"Chini: ya sasahivi juu"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the customer interface. "
+"Up: oldest on top. Down: latest on top."
+msgstr ""
+"Fafanua chaguo-msingi wa mpangilio wa maswali yanayoulizwa mara kwa mara "
+"katika matokeo ya kutafuta katika kiolesura cha mteja. Juu: Kongwe juu. "
+"Chini: ya sasahivi juu"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the public interface. "
+"Up: oldest on top. Down: latest on top."
+msgstr ""
+"Fafanua chaguo-msingi wa maswali yanayoulizwa mara kwa mara ya majibu ya "
+"utafutaji katika intafase ya umma. Juu: Kongwe zaidi juu. Chini: Ya sasa "
+"hivi juu"
+
+#. SysConfig
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
+msgstr ""
+"Inafafana sifa ya utafutaji wa maswali yanayoulizwa mara kwa mara kwa ajili "
+"ya skrini ya utafutaji maswali yanayoulizwa mara kwa mara."
+
+#. SysConfig
+msgid ""
+"Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
+"includes text, attachments and inline images."
+msgstr ""
+"Fafanua taarifa itakayoingizwa kwenye maswali yanayoulizwa mara kwa mara kwa "
+"misingi ya tiketi. \"Maswali yaliyojaa nayayoulizwa mara kwa mara\" "
+"yanayojumuisha nakala, viambatanishi na taswaira ya mstari wa ndani."
+
+#. SysConfig
+msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ Explorer. This option has no effect on "
+"the position of the column."
+msgstr ""
+"Fafanua safu zilizoonyeshwa katika kitafuta maswali. Hili chaguo halina "
+"madhara katika nafasi kwenye safu."
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ journal. This option has no effect on "
+"the position of the column."
+msgstr ""
+"Fafanua safu zilizoonyeshwa katika jarida la maswali. Hili chaguo halina "
+"madhara katika nafasi kwenye safu."
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ search. This option has no effect on "
+"the position of the column."
+msgstr ""
+"Fafanua safu zilizoonyeshwa katika makala ya maswali. Hili chaguo halina "
+"madhara katika nafasi kwenye safu."
+
+#. SysConfig
+msgid "Defines where the 'Insert FAQ' link will be displayed."
+msgstr ""
+
+#. SysConfig
+msgid "Definition of FAQ item free text field."
+msgstr ""
+"Ufafanuzi wa uga ya matini huru ya kipengele cha maswali yanayoulizwa mara "
+"kwa mara."
+
+#. SysConfig
+msgid "Delete this FAQ"
+msgstr "Futa haya maswali yaliyoulizwa mara kwa mara"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ search screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ small format overview screen of the agent "
+"interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Edit this FAQ"
+msgstr "Hariri makala hii"
+
+#. SysConfig
+msgid "Enable multiple languages on FAQ module."
+msgstr "Wezesha Lugha nyingi nyingi katika maswali haya."
+
+#. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
+msgid "Enable voting mechanism on FAQ module."
+msgstr "Wezesha "
+
+#. SysConfig
+msgid "Explorer"
+msgstr "Kichunguzaji"
+
+#. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ History."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Journal Overview \"Small\" Limit"
+msgstr ""
+" Kikomo \"kidogo\" cha mapitio ya jarida la maswali yaliyoulizwa mara kwa "
+"mara"
+
+#. SysConfig
+msgid "FAQ Overview \"Small\" Limit"
+msgstr "Kikomo \"kidogo\" cha mapitio ya maswali yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ search backend router of the agent interface."
+msgstr ""
+"Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha "
+"wakala."
+
+#. SysConfig
+msgid "Field4"
+msgstr "Sehemu4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "Sehemu5"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
+
+#. SysConfig
+msgid "Group for the approval of FAQ articles."
+msgstr "Makundi ya idhini kwa maswali yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "History of this FAQ"
+msgstr "Historia ya maswali haya yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "Include internal fields on a FAQ based Ticket."
+msgstr ""
+"Jumuisha sehemu za ndani za maswali yaliyoulizwa mara kwa mara kulingana na "
+"tiketi."
+
+#. SysConfig
+msgid "Include the name of each field in a FAQ based Ticket."
+msgstr ""
+"Jumuisha jina la kila sehemu ya maswali yaliyoulizwa mara nyingi kulingana "
+"na tiketi."
+
+#. SysConfig
+msgid "Interfaces where the quick search should be shown."
+msgstr "Kiolesura ambacho utafutaji wa haraka unatakiwa kuonyeshwa."
+
+#. SysConfig
+msgid "Journal"
+msgstr "Jarida"
+
+#. SysConfig
+msgid "Language Management"
+msgstr "Menejimenti ya lugha"
+
+#. SysConfig
+msgid "Language Management."
+msgstr ""
+
+#. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to this FAQ item"
+msgstr ""
+"Unganishga kitu kingine na kipengele hiki cha  maswali yaliyoulizwa mara kwa "
+"mara"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
+
+#. SysConfig
+msgid "List of state types which can be used in the agent interface."
+msgstr ""
+"Orodha ya aina ya hali ambazo zinaweza kutumika katika kiolesura cha wakala."
+
+#. SysConfig
+msgid "List of state types which can be used in the customer interface."
+msgstr ""
+"Orodha ya aina ya hali ambazo zinaweza kutumika katika kiolesura cha mteja."
+
+#. SysConfig
+msgid "List of state types which can be used in the public interface."
+msgstr ""
+"Orodha ya aina ya hali ambazo zinaweza kutumika katika kiolesura cha umma."
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
+msgstr ""
+"Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara "
+"yanayatayoonyeshwa katika majibu ya kichunguzi cha maswali yanayoulizwa mara "
+"kwa mara ya kiolesura cha wakala."
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
+msgstr ""
+"Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara "
+"yanayatayoonyeshwa katika majibu ya kichunguzi cha maswali yanayoulizwa mara "
+"kwa mara ya kiolesura cha mteja."
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
+msgstr ""
+"Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara "
+"yanayatayoonyeshwa katika majibu ya kichunguzi cha maswali yanayoulizwa mara "
+"kwa mara ya kiolesura cha umma."
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ journal in the "
+"agent interface."
+msgstr ""
+"Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara "
+"yanayatayoonyeshwa katika  makala ya maswali yanayoulizwa mara kwa mara "
+"katika kiolesura cha wakala."
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the agent interface."
+msgstr ""
+"Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara "
+"yanayatayoonyeshwa katika majibu ya uchunguzi  ya kiolesura cha wakala."
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the customer interface."
+msgstr ""
+"Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara "
+"yanayatayoonyeshwa katika majibu ya uchunguzi  ya kiolesura cha mteja."
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the public interface."
+msgstr ""
+"Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara "
+"yanayatayoonyeshwa katika majibu ya uchunguzi  ya kiolesura cha umma."
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the agent interface."
+msgstr ""
+"Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa "
+"katika kivinjari cha maswali yanayoulizwa mara kwa mara katika kiolesura cha "
+"wakala."
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the customer interface."
+msgstr ""
+"Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa "
+"katika kivinjari cha maswali yanayoulizwa mara kwa mara katika kiolesura cha "
+"mteja."
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the public interface."
+msgstr ""
+"Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa "
+"katika kivinjari cha maswali yanayoulizwa mara kwa mara katika kiolesura cha "
+"umma."
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
+msgstr ""
+"Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa "
+"katika utafutaji wa maswali yanayoulizwa mara kwa mara katika kiolesura cha "
+"wakala."
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
+msgstr ""
+"Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa "
+"katika utafutaji wa maswali yanayoulizwa mara kwa mara  katika kiolesura cha "
+"mteja."
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
+msgstr ""
+"Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa "
+"katika utafutaji wa maswali yanayoulizwa mara kwa mara katika kiolesura cha "
+"umma."
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
+"in the agent interface."
+msgstr ""
+"Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa "
+"katika jarida la maswali yanayoulizwa mara kwa mara katika kiolesura cha "
+"wakala."
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"public interface."
+msgstr ""
+"Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa "
+"utafutaji mfupi wa maswali yanayoulizwa mara kwa mara katika kiolesura cha "
+"umma. "
+
+#. SysConfig
+msgid "Module to generate html OpenSearch profile for short FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "New FAQ Article."
+msgstr ""
+
+#. SysConfig
+msgid "New FAQ articles need approval before they get published."
+msgstr "Makala mpya ya maswali yanahitaji idhinisho kabla hayatolewa."
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
+"interface."
+msgstr ""
+"Namba ya makala ya maswali yanayoulizwa mara kwa mara yatakayoonyeshwa "
+"katika kitafuta maswali yanayoulizwa mara kwa mara ya kiolesura cha mteja."
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the public "
+"interface."
+msgstr ""
+"Namba ya makala ya maswali yanayoulizwa mara kwa mara yatakayoonyeshwa "
+"katika kitafuta maswali yanayoulizwa mara kwa mara ya kiolesura cha umma."
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the customer interface."
+msgstr ""
+"Namba ya makala ya maswali yanayoulizwa mara kwa mara yatakayoonyeshwa "
+"katika kila ukurasa wa matokeo ya utafutaji ya kiolesura cha mteja."
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the public interface."
+msgstr ""
+"Namba ya makala ya maswali yanayoulizwa mara kwa mara yatakayoonyeshwa "
+"katika kila ukurasa wa matokeo ya utafutaji ya kiolesura cha umma."
+
+#. SysConfig
+msgid "Number of shown items in last changes."
+msgstr "Namba ya vitu vilivoonyweshwa katika mabadiliko ya mwisho."
+
+#. SysConfig
+msgid "Number of shown items in last created."
+msgstr "Namba ya vitu vilivotengenezwa mwishoni."
+
+#. SysConfig
+msgid "Number of shown items in the top 10 feature."
+msgstr "Namba ya vitu vilivoonyweshwa katika vipengele 10 bora."
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
+msgstr ""
+"Parameta za kurasa (ambazo vipengee vya maswali yanayoulizwa mara kwa mara "
+"zimeonyeshwa) za mapitio madogo ya jarida la maswali yanayoulizwa mara kwa "
+"mara."
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
+msgstr ""
+"Parameta za kurasa (ambazo vipengee vya maswali yanayoulizwa mara kwa mara "
+"zimeonyeshwa) za mapitio madogo ya  maswali yanayoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "Print this FAQ"
+msgstr "Chapisha maswali haya."
+
+#. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "Queue for the approval of FAQ articles."
+msgstr "Foleni ya idhini ya makala ya maswali yanayoulizwa mara akwa mara."
+
+#. SysConfig
+msgid "Rates for voting. Key must be in percent."
+msgstr "Thaminisho la kura. Funguo lazima iwe kwenye asilimia."
+
+#. SysConfig
+msgid "S"
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ"
+msgstr "Tafuta maswali"
+
+#. SysConfig
+msgid "Search FAQ Small."
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Select how many items should be shown in Journal Overview \"Small\" by "
+"default."
+msgstr ""
+
+#. SysConfig
+msgid "Select how many items should be shown in Overview \"Small\" by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr ""
+"Seti urefu wa chaguo-msingi (katika pikseli) ya ndani ya mstari wa ugo wa "
+"HTML katika ukuzaji wa maswali yanayoulizwa mara kwa mara ya wakala."
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
+msgstr ""
+"Seti urefu wa chaguo-msingi (katika pikseli) ya ndani ya mstari wa ugo wa "
+"HTML katika ukuzaji wa maswali yanayoulizwa mara kwa mara ya mteja.(na "
+"ukuzaji wa maswali yanayoulizwa mara kwa maraya umma )"
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr ""
+"Seti upeo wa juu wa urefu (katika pikseli) ya ndani ya mstari wa ugo wa HTML "
+"katika ukuzaji wa maswali yanayoulizwa mara kwa mara ya wakala."
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
+msgstr ""
+"Seti upeo wa juu wa urefu (katika pikseli) ya ndani ya mstari wa ugo wa HTML "
+"katika ukuzaji wa maswali yanayoulizwa mara kwa mara ya mteja.(and ukuzaji "
+"wa maswali yanayoulizwa mara kwa mara ya umma)."
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"Inaonyesha kitufe cha '' Ingiza kiunganishi cha maswali yanayoulizwa mara "
+"kwa mara'' katika wakala fifiza wa maswali yanayoulizwa mara kwa mara kwa "
+"makala ya maswali yanayoulizwa mara kwa mara ya umma."
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
+"AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"Inaonyesha kitufe cha ''Ingiza matini ya maswali yanayoulizwa mara kwa mara "
+"& kiunganishi'' / ''ingiza mawali yanayoulizwa mara kwa mara yote "
+"&kiunganishi'' katika wakala fifiza wa maswali yanayoulizwa mara kwa mara "
+"kwa makala ya maswali yanayoulizwa mara kwa mara ya umma."
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgstr ""
+"Inaonyesha kitufe cha '' Ingiza matini ya maswali yanayoulizwa mara kwa "
+"mara'' / ''Ingiza maswali yanayoulizwa mara kwa mara yote''  katika wakala  "
+"fifiza wa maswali yanayoulizwa mara kwa mara "
+
+#. SysConfig
+msgid "Show FAQ Article with HTML."
+msgstr "Onyesha makala ya maswali na HTML"
+
+#. SysConfig
+msgid "Show FAQ path yes/no."
+msgstr "Onyesha njia ya maswali ndio/hapana."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Show items of subcategories."
+msgstr "Inaonyesha vipengele vya kategori."
+
+#. SysConfig
+msgid "Show last change items in defined interfaces."
+msgstr ""
+"Inaonyesha vipengele vilivyobadilishwa katika kiolesura kilichofafanuliwa."
+
+#. SysConfig
+msgid "Show last created items in defined interfaces."
+msgstr ""
+"Inaonyesha vipengele vilivyotengenezwa mwishoni katika kiolesura  "
+"kilichofafanuliwa."
+
+#. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactivate the output)."
+msgstr ""
+
+#. SysConfig
+msgid "Show top 10 items in defined interfaces."
+msgstr "Inaonyesha vipengele  10  bora katika kiolesura kilichofafanuliwa."
+
+#. SysConfig
+msgid "Show voting in defined interfaces."
+msgstr "Inaonyesha kupiga kura katika kiolesura kilichofafanuliwa."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a FAQ with another object in "
+"the zoom view of such FAQ of the agent interface."
+msgstr ""
+"Inaonyesha kiunganishi katika orodha ambacho kinaruhusu kuunganishwa kwa "
+"maswali yanayoulizwa mara kwa mara na kipengele kingine katika mandhari "
+"kuzwa ya hayo maswali yanayoulizwa mara kwa mara ya wakala wa kiolesura."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
+msgstr ""
+"Inaonyesha kiunganishi katika orodha amabcho kinaruhusu kufuta maswali "
+"yanayoulizwa mara kwa mara katika mandhani kuzwa katika wakala wa kiolesura."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a FAQ in its zoom view of "
+"the agent interface."
+msgstr ""
+"Inaonyesha kiunganishi katika orodha kufikia historia ya maswali "
+"yanayoulizwa mara kwa mara katika mandhari kuzwa ya wakala wa kiolesura."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
+"interface."
+msgstr ""
+"Inaonyesha kuinganishi katika orodha kuhariri katika mandhari kuzwa ya "
+"maswali yanayoulizwa mara kwa mara ya wakala wa kiolesura."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the FAQ zoom view of the agent "
+"interface."
+msgstr ""
+"Inaonyesha kiunganishi katika orodha cha kurudi nyuma katika mandhari kuzwa "
+"ya maswali yanayoulizwa mara kwa mara ya wakala wa kiolesura."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a FAQ in the its zoom view of the agent "
+"interface."
+msgstr ""
+"Inaonyesha kiunganishi katika orodha kuchapisha maswali yanayoulizwa mara "
+"kwa mara katika mandhari iliyokuzwa ya wakala wa kiolesura."
+
+#. SysConfig
+msgid "Solution"
+msgstr ""
+
+#. SysConfig
+msgid "Symptom"
+msgstr ""
+
+#. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
+msgstr ""
+
+#. SysConfig
+msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
+msgstr ""
+"Kitambulishi cha maswali yanayoulizwa mara kwa mara, mfano maswali "
+"yanayoulizwa mara kwa mara#,KB#, MyFAQ#. Chaguo msingi ni maswali "
+"yanayoulizwa mara kwa mara#."
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'Normal' link type."
+msgstr ""
+"Mpangilio huu unafafanua kwamba kipengele cha maswali yanayoulizwa mara kwa "
+"mara kinaweza kuunganishwa na kipengele kingine cha maswali yanayoulizwa "
+"mara kwa mara kwa kutumia kiunganishi aina ya 'kawaida'."
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'ParentChild' link type."
+msgstr ""
+"Mpangilio huu unafafanua kwamba kipengele cha maswali yanayoulizwa mara kwa "
+"mara kinaweza kuunganishwa na kipengele kingine cha tiketi kwa kutumia "
+"kiunganishi aina ya 'ZaziMtoto'."
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'Normal' link type."
+msgstr ""
+"Mpangilio huu unafafanua kwamba kipengele cha maswali yanayoulizwa mara kwa "
+"mara kinaweza kuunganishwa na kipengele kingine cha tiketi kwa kutumia "
+"kiunganishi aina ya 'kawaida'."
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'ParentChild' link type."
+msgstr ""
+"Mpangilio huu unafafanua kwamba kipengele cha maswali yanayoulizwa mara kwa "
+"mara kinaweza kuunganishwa na kipengele kingine cha tiketi kwa kutumia aina "
+"ya kiunganishi kizazi."
+
+#. SysConfig
+msgid "Ticket body for approval of FAQ article."
+msgstr ""
+"Kiini cha tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "Ticket subject for approval of FAQ article."
+msgstr ""
+"Somo la tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
+msgstr "Kipengele cha mwambaa zana kwa ajili ya mkato."
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "nje (mteja)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "ndani (wakala)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "Umma (wote)"
+
+#. SysConfig
+msgid "public (public)"
+msgstr ""

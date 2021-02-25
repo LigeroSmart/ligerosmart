@@ -1,0 +1,1665 @@
+#
+# Translators:
+# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017,2019
+# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014-2015,2017
+# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2018
+# Kozo Sakurai <sakurai@io-architect.com>, 2017
+# Norihiro Tanaka <noritnk@kcn.ne.jp>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2020-07-06 13:00+0000\n"
+"PO-Revision-Date: 2020-02-22 12:18+0000\n"
+"Last-Translator: HISATOSHI OONISHI <hisatoshi.onishi@gmail.com>\n"
+"Language-Team: Japanese <https://translate.app.otrs.com/projects/otrs-6/faq/"
+"ja/>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.10.3\n"
+
+#. Template: AgentFAQAdd
+msgid "Add FAQ Article"
+msgstr "FAQの新規追加"
+
+#. Template: AgentFAQAdd
+msgid "Keywords"
+msgstr "キーワード"
+
+#. Template: AgentFAQAdd
+msgid "A category is required."
+msgstr "カテゴリは必須項目です。"
+
+#. Template: AgentFAQAdd
+msgid "Approval"
+msgstr "承認"
+
+#. Template: AgentFAQCategory
+msgid "FAQ Category Management"
+msgstr "FAQ カテゴリ管理"
+
+#. Template: AgentFAQCategory
+msgid "Add FAQ Category"
+msgstr "FAQ カテゴリを追加"
+
+#. Template: AgentFAQCategory
+msgid "Edit FAQ Category"
+msgstr "FAQ カテゴリを編集"
+
+#. Template: AgentFAQCategory
+msgid "Add category"
+msgstr "カテゴリを追加"
+
+#. Template: AgentFAQCategory
+msgid "Add Category"
+msgstr "カテゴリを追加"
+
+#. Template: AgentFAQCategory
+msgid "Edit Category"
+msgstr "カテゴリを編集"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "親カテゴリ"
+
+#. Template: AgentFAQCategory
+msgid "Please select at least one permission group."
+msgstr "ひとつ以上の権限のグループを選択してください。"
+
+#. Template: AgentFAQCategory
+msgid "Agent groups that can access articles in this category."
+msgstr "このカテゴリで項目にアクセスできる担当者グループ"
+
+#. Template: AgentFAQCategory
+msgid "Will be shown as comment in Explorer."
+msgstr "一覧でコメントとして表示されます。"
+
+#. Template: AgentFAQCategory
+msgid "Do you really want to delete this category?"
+msgstr "このカテゴリを削除してよろしいですか？"
+
+#. Template: AgentFAQCategory
+msgid ""
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
+msgstr ""
+"このカテゴリを削除することはできません。一つ以上のFAQ記事で使用されているか、"
+"または他のカテゴリの親カテゴリになっています。"
+
+#. Template: AgentFAQCategory
+msgid "This category is used in the following FAQ article(s)"
+msgstr "このカテゴリは以下の記事で使用されています。"
+
+#. Template: AgentFAQCategory
+msgid "This category is parent of the following subcategories"
+msgstr "このカテゴリは以下のカテゴリの親カテゴリです。"
+
+#. Template: AgentFAQDelete
+msgid "Do you really want to delete this FAQ article?"
+msgstr "この記事を削除してよろしいですか？"
+
+#. Template: AgentFAQEdit
+msgid "FAQ"
+msgstr "FAQ"
+
+#. Template: AgentFAQExplorer
+msgid "FAQ Explorer"
+msgstr "FAQ一覧"
+
+#. Template: AgentFAQExplorer
+msgid "Quick Search"
+msgstr "検索"
+
+#. Template: AgentFAQExplorer
+msgid "Wildcards are allowed."
+msgstr "ワイルドカードが利用可能です。"
+
+#. Template: AgentFAQExplorer
+msgid "Advanced Search"
+msgstr "高機能検索"
+
+#. Template: AgentFAQExplorer
+msgid "Subcategories"
+msgstr "サブカテゴリ"
+
+#. Template: AgentFAQExplorer
+msgid "FAQ Articles"
+msgstr "FAQ項目"
+
+#. Template: AgentFAQExplorer
+msgid "No subcategories found."
+msgstr "子カテゴリはありません。"
+
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "履歴: "
+
+#. Template: AgentFAQHistory
+msgid "History Content"
+msgstr "履歴内容"
+
+#. Template: AgentFAQHistory
+msgid "Createtime"
+msgstr "作成日時"
+
+#. Template: AgentFAQJournalOverviewSmall
+msgid "No FAQ Journal data found."
+msgstr "ジャーナルの情報がありません。"
+
+#. Template: AgentFAQLanguage
+msgid "FAQ Language Management"
+msgstr "FAQ 言語管理"
+
+#. Template: AgentFAQLanguage
+msgid "Add FAQ Language"
+msgstr "FAQ 言語を追加"
+
+#. Template: AgentFAQLanguage
+msgid "Edit FAQ Language"
+msgstr "FAQ 言語を編集"
+
+#. Template: AgentFAQLanguage
+msgid "Use this feature if you want to work with multiple languages."
+msgstr "多言語で作業をしたい場合、この項目を設定してください。"
+
+#. Template: AgentFAQLanguage
+msgid "Add language"
+msgstr "言語を追加"
+
+#. Template: AgentFAQLanguage
+msgid "Add Language"
+msgstr "言語を追加"
+
+#. Template: AgentFAQLanguage
+msgid "Edit Language"
+msgstr "言語を編集"
+
+#. Template: AgentFAQLanguage
+msgid "Do you really want to delete this language?"
+msgstr "この言語を削除してよろしいですか？"
+
+#. Template: AgentFAQLanguage
+msgid ""
+"You can not delete this language. It is used in at least one FAQ article!"
+msgstr "この言語を削除することはできません。一つ以上のFAQで使用されています！"
+
+#. Template: AgentFAQLanguage
+msgid "This language is used in the following FAQ Article(s)"
+msgstr "この言語は、以下のFAQで使用されています。"
+
+#. Template: AgentFAQOverviewNavBar
+msgid "Context Settings"
+msgstr "設定"
+
+#. Template: AgentFAQOverviewNavBar
+msgid "FAQ articles per page"
+msgstr "ページ毎の記事数"
+
+#. Template: AgentFAQOverviewSmall
+msgid "No FAQ data found."
+msgstr "FAQデータはありません。"
+
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "5つ星のうち"
+
+#. Template: AgentFAQSearch
+msgid "Keyword"
+msgstr "キーワード"
+
+#. Template: AgentFAQSearch
+msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
+msgstr "投票 (例. 10に等しい あるいは 60より大きい)"
+
+#. Template: AgentFAQSearch
+msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
+msgstr "レート (例. 25%に等しい あるいは 75%より大きい)"
+
+#. Template: AgentFAQSearch
+msgid "Approved"
+msgstr "承認"
+
+#. Template: AgentFAQSearch
+msgid "Last changed by"
+msgstr "最終更新者"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Create Time (before/after)"
+msgstr "FAQ項目作成日時 (以前/以後)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Create Time (between)"
+msgstr "FAQ項目作成日時 (期間指定)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Change Time (before/after)"
+msgstr "FAQ項目変更日時 (以前/以後)"
+
+#. Template: AgentFAQSearch
+msgid "FAQ Article Change Time (between)"
+msgstr "FAQ項目変更日時 (期間指定)"
+
+#. Template: AgentFAQSearchOpenSearchDescriptionFulltext
+msgid "FAQFulltext"
+msgstr "FAQ全文"
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Search"
+msgstr "FAQ検索"
+
+#. Template: AgentFAQSearchSmall
+msgid "Profile Selection"
+msgstr "プロファイル選択"
+
+#. Template: AgentFAQSearchSmall
+msgid "Vote"
+msgstr "投票"
+
+#. Template: AgentFAQSearchSmall
+msgid "No vote settings"
+msgstr "投票の設定がありません"
+
+#. Template: AgentFAQSearchSmall
+msgid "Specific votes"
+msgstr "特定の投票"
+
+#. Template: AgentFAQSearchSmall
+msgid "e. g. Equals 10 or GreaterThan 60"
+msgstr "例. 10 に等しい あるいは 60 より大きい"
+
+#. Template: AgentFAQSearchSmall
+msgid "Rate"
+msgstr "レート"
+
+#. Template: AgentFAQSearchSmall
+msgid "No rate settings"
+msgstr "レートの設定がありません"
+
+#. Template: AgentFAQSearchSmall
+msgid "Specific rate"
+msgstr "特定のレート"
+
+#. Template: AgentFAQSearchSmall
+msgid "e. g. Equals 25% or GreaterThan 75%"
+msgstr "例. 25%に等しい あるいは 75%以上"
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Article Create Time"
+msgstr "FAQ項目作成日時"
+
+#. Template: AgentFAQSearchSmall
+msgid "FAQ Article Change Time"
+msgstr "FAQ項目変更時間"
+
+#. Template: AgentFAQZoom
+msgid "FAQ Information"
+msgstr "FAQ情報"
+
+#. Template: AgentFAQZoom
+msgid "Rating"
+msgstr "レーティング"
+
+#. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "投票"
+
+#. Template: AgentFAQZoom
+msgid "No votes found!"
+msgstr "投票はありません。"
+
+#. Template: AgentFAQZoom
+msgid "No votes found! Be the first one to rate this FAQ article."
+msgstr "投票はありません。この記事に最初の評価を投票しましょう。"
+
+#. Template: AgentFAQZoom
+msgid "Download Attachment"
+msgstr "添付ファイルをダウンロード"
+
+#. Template: AgentFAQZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+"(一部のOSにおいては)下記のリンクをオープンするためにクリック時に、Ctrl あるい"
+"は Cmd または Shiftキーを押下する必要がる場合があります。"
+
+#. Template: AgentFAQZoom
+msgid ""
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank You!"
+msgstr ""
+"このFAQ項目はお役にたちましたか? 　FAQデーターベースの改善に役立てますので、"
+"レーティングに協力ください。よろしくお願いします"
+
+#. Template: AgentFAQZoom
+msgid "not helpful"
+msgstr "あまり役に立たなかった"
+
+#. Template: AgentFAQZoom
+msgid "very helpful"
+msgstr "とても役に立った"
+
+#. Template: AgentFAQZoomSmall
+msgid "Add FAQ title to article subject"
+msgstr "項目の主題にFAQタイトルを追加する"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Text"
+msgstr "記事を挿入する"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert Full FAQ"
+msgstr "FAQ全文を挿入する"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Link"
+msgstr "リンクを挿入する"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert FAQ Text & Link"
+msgstr "記事とリンクを挿入する"
+
+#. Template: AgentFAQZoomSmall
+msgid "Insert Full FAQ & Link"
+msgstr "FAQ全文とリンクを挿入する"
+
+#. Template: CustomerFAQExplorer
+msgid "No FAQ articles found."
+msgstr "該当する記事はありません。"
+
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr "こちらの情報も役にたつかもしれません"
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr "件名と本文から有効な情報は見つかりませんでした"
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr "件名か本文を記入して、有効な情報のリストを取得"
+
+#. Template: CustomerFAQSearch
+msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
+msgstr "FAQ全文検索（例：\"John*n\"、\"Will*\"）"
+
+#. Template: CustomerFAQSearch
+msgid "Vote restrictions"
+msgstr "投票規制"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles with votes..."
+msgstr "投票されているFAQのみ..."
+
+#. Template: CustomerFAQSearch
+msgid "Rate restrictions"
+msgstr "レート規制"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles with rate..."
+msgstr "レートされているFAQのみ..."
+
+#. Template: CustomerFAQSearch
+msgid "Time restrictions"
+msgstr "時間制限"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles created"
+msgstr "作成されたFAQ項目のみ"
+
+#. Template: CustomerFAQSearch
+msgid "Only FAQ articles created between"
+msgstr "期間内に作成されたFAQ項目のみ"
+
+#. Template: CustomerFAQSearch
+msgid "Search-Profile as Template?"
+msgstr "Search-Profile-検索プロフィール　をテンプレートにしますか?"
+
+#. Template: CustomerFAQZoom
+msgid "Article Number"
+msgstr " FAQ 項目ナンバー"
+
+#. Template: CustomerFAQZoom
+msgid "Search for articles with keyword"
+msgstr "記事のキーワード検索"
+
+#. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
+msgid "Public"
+msgstr "公開"
+
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr "FAQエクスプローラーに戻る"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr "読書き(rw)の権限が必要です！"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr "ユーザーが　読む/書く 権限のあるカテゴリーが見つかりませんでした"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr "デフォルト言語が不明のため、新しいカテゴリの作成ができませんでした。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr "カテゴリIDの入力が必要です！"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "「名前」は必須項目です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "このカテゴリはすでに存在しています。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr "このカテゴリはすでに存在しています！"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr "カテゴリID が指定されていません！"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr "カテゴリ %s の削除ができませんでした！"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "カテゴリが更新されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "新しいカテゴリが追加されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Delete Category"
+msgstr "カテゴリを削除"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr "アイテムID が指定されていません！"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr "あなたはこのカテゴリへの権限がありません！"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr "FAQ 記事 %s を削除できませんでした！"
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr "CategoryID %sの値が不正です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr "ItemID が与えられていないため、履歴を表示できませんでした！"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr "FAQ ヒストリー"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "FAQ ジャーナル"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr "オプション FAQ::Frontend::Overview の設定が必要です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr "オプション FAQ::Frontend::Overview は HASH ref である必要があります!"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "\"%s\"を閲覧するための設定値がありません！"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr "言語IDが指定されていません！"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "「名前」は必須項目です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "この言語は設定済です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "言語 %s の削除ができませんでした！"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "言語が更新されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "言語が追加されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Delete Language %s"
+msgstr "言語を削除 %s"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Result"
+msgstr "結果"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "最終更新日"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr "FAQ ダイナミック・フィールド"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr "%s  が不足しています。"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr "LanguageObject (言語オブジェクト)が読み込めません"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr "結果がありません。"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "FAQナンバー"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr "最終更新"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr "FAQ項目作成日時 (以前/以後)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr "FAQ項目作成日時 (期間指定)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr "FAQ項目変更日時 (以前/以後)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr "FAQ項目変更日時 (期間指定)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr "等しい"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr "超"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr "以上"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr "未満"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr "以下"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr "ファイルIDが必要です！"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "評価をいただきありがとうございます。"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "あなたはすでに評価済です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "評価が選択されていません。"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr "評価の機能を有効になっていません！"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr "投票率が定義されていません!"
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "記事印刷"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr "この期間内に作成された"
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr "アイテムIDの入力が必要です！"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "新着記事"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "最近更新された記事"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "上位10件の記事"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr "タイプが指定されていません！"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+"Type は、 \"LastCreate\", \"LastChange\", \"Top10\" のいずれかでなくてはなり"
+"ません!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr "RSSファイルが作成できません！"
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr "%s (FAQ全文)"
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr "%s - 顧客のみ (%s)"
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr "%s - 顧客のみ (FAQ全文)"
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr "%s - 公開 (%s)"
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr "%s - 公開 (FAQ全文)"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Need rate!"
+msgstr "評価してください。"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr "この記事は空です!"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest created FAQ articles"
+msgstr "最後に作成されたFAQ項目"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest updated FAQ articles"
+msgstr "最後に更新されたFAQ項目"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Top 10 FAQ articles"
+msgstr "Top 10 FAQ項目"
+
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr "コンテンツタイプ"
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "internal"
+msgstr "内部向"
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "external"
+msgstr "外部向"
+
+#. Database XML / SOPM Definition: FAQ.sopm
+msgid "public"
+msgstr "公開"
+
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "はい"
+
+#. SysConfig
+msgid ""
+"A filter for HTML output to add links behind a defined string. The element "
+"Image allows two input kinds. First the name of an image (e.g. faq.png). In "
+"this case the OTRS image path will be used. The second possibility is to "
+"insert the link to the image."
+msgstr ""
+"フィルタ定義　-定義された文字列（string）にリンクを追加するhtmlアウトプッ"
+"ト-  エレメント・イメージは、2種類のインプットが可能です。1つ目、イメージの名"
+"前です (例. faq.png)。この場合、OTRSイメージ・パスが使用されます。2つ目、イ"
+"メージにリンクを挿入することが可能性です。"
+
+#. SysConfig
+msgid "Add FAQ article"
+msgstr "FAQ 記事を追加する"
+
+#. SysConfig
+msgid "CSS color for the voting result."
+msgstr "評価の結果表示ようのカラー（スタイルシート）"
+
+#. SysConfig
+msgid "Cache Time To Leave for FAQ items."
+msgstr "FAQ項目から離脱するまでのキャッシュ時間"
+
+#. SysConfig
+msgid "Category Management"
+msgstr "カテゴリー管理"
+
+#. SysConfig
+msgid "Category Management."
+msgstr "カテゴリ管理"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr "顧客用FAQの表示"
+
+#. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr "顧客向けFAQの関連記事"
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr "顧客向けFAQの関連記事"
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr "顧客用FAQの詳細表示"
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr "顧客用FAQの検索"
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr "顧客用FAQ"
+
+#. SysConfig
+msgid "Decimal places of the voting result."
+msgstr "投票の結果の小数点以下の桁数"
+
+#. SysConfig
+msgid "Default category name."
+msgstr "既定のカテゴリ"
+
+#. SysConfig
+msgid "Default language for FAQ articles on single language mode."
+msgstr "規定の言語（単一言語モードで運用時）"
+
+#. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr "デフォルトで表示されるFAQ項目タイトルのデフォルト最大値"
+
+#. SysConfig
+msgid "Default priority of tickets for the approval of FAQ articles."
+msgstr "FAQへの取り込みを行うチケットの優先順位の既定値"
+
+#. SysConfig
+msgid "Default state for FAQ entry."
+msgstr "記事エントリー時の規定のステータス"
+
+#. SysConfig
+msgid "Default state of tickets for the approval of FAQ articles."
+msgstr "FAQへの取り込みを行うチケットの優先順位の既定値"
+
+#. SysConfig
+msgid "Default type of tickets for the approval of FAQ articles."
+msgstr "FAQ項目承認用デフォルトチケットタイプ"
+
+#. SysConfig
+msgid ""
+"Default value for the Action parameter for the public frontend. The Action "
+"parameter is used in the scripts of the system."
+msgstr ""
+"公開画面用パラメータのデフォルト値。パラメータ（Action=XXXXXX）は、スクリプト"
+"で使用されています。"
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+"リンクオブジェクトウィジェット（LinkObject :: ViewMode = \"complex\"）で設定"
+"ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよび"
+"CSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI."
+"AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及び"
+"Core.Agent .LinkObject.js"
+
+#. SysConfig
+msgid "Define if the FAQ title should be concatenated to article subject."
+msgstr "FAQタイトルが記事の件名に連結するかどうかを定義します"
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
+"(DynamicField_NameX) are allowed for DefaultColumns."
+msgstr ""
+"リンクされた FAQ ウィジェットに表示される列を定義します (LinkObject::"
+"ViewMode = \"complex\") 。\n"
+"注: DefaultColumns には、FAQ属性とダイナミック・フィールド "
+"(DynamicField_NameX) のみが設定できます。"
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a FAQ journal."
+msgstr "簡易版FAQジャーナル表示用モジュールの概要を定義"
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a FAQ list."
+msgstr "簡易版FAQ一覧表示用モジュールの概要を定義"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"agent interface."
+msgstr ""
+"担当者インターフェイスにおける、FAQ検索結果並び替えに利用する属性順の既定値を"
+"定義します。"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"customer interface."
+msgstr ""
+"顧客用画面における、FAQ検索結果並び替えに利用する属性順の既定値を定義します。"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"public interface."
+msgstr ""
+"公開画面における、FAQ検索結果並び替えに利用する属性順の既定値を定義します。"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
+msgstr ""
+"担当者インターフェイス（FAQ一覧）における、FAQ検索結果並び替えに利用する属性"
+"順の既定値を定義します。"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
+msgstr ""
+"顧客用画面（FAQ一覧）における、FAQ検索結果並び替えに利用する属性順の既定値を"
+"定義します。"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
+msgstr ""
+"公開画面（FAQ一覧）における、FAQ検索結果並び替えに利用する属性順の既定値を定"
+"義します。"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the agent "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"担当者インターフェイスにおける、FAQ一覧の表示順の既定値を定義します。Up: 古い"
+"順 / Down: 新しい順"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the customer "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"顧客用画面における、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: "
+"新しい順"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the public "
+"interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"公開画面における、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: 新"
+"しい順"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
+msgstr ""
+"担当者インターフェイス（FAQ一覧）における、FAQ検索結果並び順の既定値を定義し"
+"ます。Up: 古い順 / Down: 新しい順"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the customer interface. "
+"Up: oldest on top. Down: latest on top."
+msgstr ""
+"顧客用画面における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / "
+"Down: 新しい順"
+
+#. SysConfig
+msgid ""
+"Defines the default FAQ order of a search result in the public interface. "
+"Up: oldest on top. Down: latest on top."
+msgstr ""
+"公開画面における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / Down: "
+"新しい順"
+
+#. SysConfig
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
+msgstr "FAQ 検索画面に表示されるFAQ 検索属性のデフォルト値を定義する。"
+
+#. SysConfig
+msgid ""
+"Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
+"includes text, attachments and inline images."
+msgstr ""
+"FAQ記事からチケットへの挿入される情報を定義する。「FAQすべて」にはテキスト・"
+"添付・及びインラインの画像が含まれます。"
+
+#. SysConfig
+msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
+msgstr ""
+"ダッシュボードのバックエンドパラメータを定義。「Limit リミット」は標準で表示"
+"されるエントリーを定義します。「Group グループ」はプラグインへのアクセスを制"
+"限します。(例. Group: admin;group1;group2)。「Default　デフォルト」はプラグイ"
+"ンが標準で有効になっているか、ユーザーが手動で有効にする必要があるかを定義し"
+"ます。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ Explorer. This option has no effect on "
+"the position of the column."
+msgstr ""
+"担当者画面における、FAQ一覧での表示項目の設定。この設定によって項目の並び順を"
+"制御することはできません。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ journal. This option has no effect on "
+"the position of the column."
+msgstr ""
+"顧客用画面における、FAQ一覧での表示項目の設定。この設定によって項目の並び順を"
+"制御することはできません。"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ search. This option has no effect on "
+"the position of the column."
+msgstr ""
+"公開画面における、FAQ一覧での表示項目の設定。この設定によって項目の並び順を制"
+"御することはできません。"
+
+#. SysConfig
+msgid "Defines where the 'Insert FAQ' link will be displayed."
+msgstr "FAQリンクがどこに表示されるか定義する"
+
+#. SysConfig
+msgid "Definition of FAQ item free text field."
+msgstr "FAQのフリーテキストフィールドの定義。"
+
+#. SysConfig
+msgid "Delete this FAQ"
+msgstr "この記事を削除"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
+msgstr "担当者インタフェースの FAQ 追加画面に表示するダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
+msgstr "担当者インタフェースの FAQ 編集画面に表示するダイナミック・フィールド"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the customer interface."
+msgstr ""
+"顧客インターフェイス の FAQ 一覧画面に表示する ダイナミック・フィールド"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the public interface."
+msgstr ""
+"公開インターフェイス の FAQ 一覧画面に表示する ダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
+msgstr "担当者インタフェースの FAQ 印刷画面に表示するダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
+msgstr ""
+"顧客インターフェイス の FAQ 印刷画面に表示する ダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the public interface."
+msgstr ""
+"公開インターフェイス の FAQ 印刷画面に表示する ダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
+msgstr "担当者インタフェースの FAQ 検索画面に表示するダイナミック・フィールド"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ search screen of the customer interface."
+msgstr ""
+"顧客インターフェイス の FAQ 検索画面に表示する ダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the public interface."
+msgstr ""
+"公開インターフェイス の FAQ 検索画面に表示する ダイナミック・フィールド"
+
+#. SysConfig
+msgid ""
+"Dynamic fields shown in the FAQ small format overview screen of the agent "
+"interface."
+msgstr ""
+"担当者インターフェイスのコンパクトなFAQ概要画面に表示するダイナミック・フィー"
+"ルド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
+msgstr ""
+"担当者インターフェイスのFAQズーム画面に表示するダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
+msgstr "顧客インターフェイスのFAQズーム画面に表示するダイナミック・フィールド"
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
+msgstr "公開インターフェイスのFAQズーム画面に表示するダイナミック・フィールド"
+
+#. SysConfig
+msgid "Edit this FAQ"
+msgstr "この記事を編集"
+
+#. SysConfig
+msgid "Enable multiple languages on FAQ module."
+msgstr "多言語を有効にする"
+
+#. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr "顧客向けフロントエンドの関連記事機能を有効にします。"
+
+#. SysConfig
+msgid "Enable voting mechanism on FAQ module."
+msgstr "評価の機能を有効にする"
+
+#. SysConfig
+msgid "Explorer"
+msgstr "一覧"
+
+#. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr "FAQ エリア"
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr "FAQ エリア"
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr "FAQ の削除"
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr "FAQ の編集"
+
+#. SysConfig
+msgid "FAQ History."
+msgstr "FAQ 更新履歴"
+
+#. SysConfig
+msgid "FAQ Journal Overview \"Small\" Limit"
+msgstr "FAQジャーナル一覧(S)の表示数"
+
+#. SysConfig
+msgid "FAQ Overview \"Small\" Limit"
+msgstr "FAQ一覧(S)の表示数"
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr "FAQ の表示"
+
+#. SysConfig
+msgid "FAQ search backend router of the agent interface."
+msgstr "担当者インターフェイスにおける、FAQ検索のバックエンドルータ"
+
+#. SysConfig
+msgid "Field4"
+msgstr "Field4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "Field5"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr "FAQ全文"
+
+#. SysConfig
+msgid "Group for the approval of FAQ articles."
+msgstr "FAQの記事の承認のためのグループ"
+
+#. SysConfig
+msgid "History of this FAQ"
+msgstr "この記事の履歴"
+
+#. SysConfig
+msgid "Include internal fields on a FAQ based Ticket."
+msgstr "FAQ由来のチケットに含まれる内部項目"
+
+#. SysConfig
+msgid "Include the name of each field in a FAQ based Ticket."
+msgstr "FAQ由来のチケットに含まれる内部項目すべての名称"
+
+#. SysConfig
+msgid "Interfaces where the quick search should be shown."
+msgstr "クイック検索が表示される画面"
+
+#. SysConfig
+msgid "Journal"
+msgstr "ジャーナル"
+
+#. SysConfig
+msgid "Language Management"
+msgstr "言語管理"
+
+#. SysConfig
+msgid "Language Management."
+msgstr "言語管理"
+
+#. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to this FAQ item"
+msgstr "このFAQ記事に他オブジェクトを関連付ける"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
+
+#. SysConfig
+msgid "List of state types which can be used in the agent interface."
+msgstr "担当者インターフェイスで利用可能なステートタイプリスト"
+
+#. SysConfig
+msgid "List of state types which can be used in the customer interface."
+msgstr "顧客画面で利用可能なステートタイプリスト"
+
+#. SysConfig
+msgid "List of state types which can be used in the public interface."
+msgstr "公開画面で利用可能なステートタイプリスト"
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
+msgstr "担当者インターフェイスのFAQ一覧で表示する記事の最大数"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
+msgstr "顧客用画面のFAQ一覧で表示する記事の最大数"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
+msgstr "公開画面のFAQ一覧で表示する記事の最大数"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ journal in the "
+"agent interface."
+msgstr "担当者インターフェイスのFAQジャーナルで表示する記事の最大数"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the agent interface."
+msgstr "検索結果として担当者インターフェイスで表示されるFAQ項目の最大数"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the customer interface."
+msgstr "検索結果として顧客画面で表示されるFAQ項目の最大数"
+
+#. SysConfig
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the public interface."
+msgstr "検索結果として公開画面で表示されるFAQ項目の最大数"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the agent interface."
+msgstr ""
+"担当者インターフェイスのFAQ Explorerで表示される件名のFAQ記事の最大サイズ"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the customer interface."
+msgstr ""
+"顧客インターフェイスのFAQ Explorer に表示される「FAQ項目の件名」の最大値。"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the public interface."
+msgstr ""
+"公開インターフェイスのFAQ Explorer に表示される「FAQ項目の件名」の最大値。"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
+msgstr "担当者インターフェイスのFAQ 検索で表示される件名のFAQ記事の最大サイズ"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
+msgstr "顧客インターフェイスのFAQ 検索 に表示される「FAQ項目の件名」の最大値。"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
+msgstr "公開インターフェイスのFAQ 検索 に表示される「FAQ項目の件名」の最大値。"
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
+"in the agent interface."
+msgstr ""
+"担当者インターフェイスのFAQ ジャーナルで表示される件名のFAQ記事の最大サイズ"
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"public interface."
+msgstr ""
+"公開インタフェースにおいて、ショート・チケット検索のためのhtml OpenSearchプロ"
+"フィールを生成するモジュールです"
+
+#. SysConfig
+msgid "Module to generate html OpenSearch profile for short FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "New FAQ Article."
+msgstr "新規 FAQ 項目"
+
+#. SysConfig
+msgid "New FAQ articles need approval before they get published."
+msgstr "新規 FAQ 項目を公開するには事前に承認されることが必要です"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
+"interface."
+msgstr "顧客用インターフェイスで表示される FAQ 項目の数"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the public "
+"interface."
+msgstr "公開用インターフェイスで表示される FAQ 項目の数"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the customer interface."
+msgstr "顧客用インターフェイス 検索結果表示の各画面で表示される FAQ 項目の数"
+
+#. SysConfig
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the public interface."
+msgstr "公開インターフェイス の検索結果表示の各画面で表示される FAQ 項目の数"
+
+#. SysConfig
+msgid "Number of shown items in last changes."
+msgstr "「最近の変更」に何件まで表示するか"
+
+#. SysConfig
+msgid "Number of shown items in last created."
+msgstr "「最新の新規作成」に何件まで表示するか"
+
+#. SysConfig
+msgid "Number of shown items in the top 10 feature."
+msgstr "「トップ10記事」に何件まで表示するか"
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
+msgstr "簡易版FAQジャーナル一覧のページ指定用のパラメータ"
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
+msgstr "簡易版FAQ概要のページ指定用のパラメータ"
+
+#. SysConfig
+msgid "Print this FAQ"
+msgstr "この記事を印刷"
+
+#. SysConfig
+msgid "Public FAQ Print."
+msgstr "公開FAQの表示"
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr "公開FAQの詳細を表示"
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr "公開FAQの検索"
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr "公開FAQ"
+
+#. SysConfig
+msgid "Queue for the approval of FAQ articles."
+msgstr "記事承認キュー"
+
+#. SysConfig
+msgid "Rates for voting. Key must be in percent."
+msgstr "評価率。キーは、パーセントで指定する必要があります。"
+
+#. SysConfig
+msgid "S"
+msgstr "S"
+
+#. SysConfig
+msgid "Search FAQ"
+msgstr "FAQを検索"
+
+#. SysConfig
+msgid "Search FAQ Small."
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ."
+msgstr "FAQの検索"
+
+#. SysConfig
+msgid ""
+"Select how many items should be shown in Journal Overview \"Small\" by "
+"default."
+msgstr ""
+
+#. SysConfig
+msgid "Select how many items should be shown in Overview \"Small\" by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr ""
+"AgentFAQZoomで表示されるインラインHTMLのデフォルト高さ(ピクセル表記)を設定"
+
+#. SysConfig
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
+msgstr ""
+"CustomerFAQZoom (及び PublicFAQZoom)で表示されるインラインHTMLのデフォルト高"
+"さ(ピクセル表記)を設定"
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr "AgentFAQZoomで表示されるインラインHTMLの最大の高さ(ピクセル表記)を設定"
+
+#. SysConfig
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
+msgstr ""
+"CustomerFAQZoom (及び PublicFAQZoom)で表示されるインラインHTMLの最大の高さ(ピ"
+"クセル表記)を設定"
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"'AgentFAQZoomSmall'の設定。公開画面において「リンクを挿入する」ボタンを表示す"
+"る/表示しない"
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
+"AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"公開されたFAQ記事のAgentFAQZoomSmallに\"FAQのテキスト、およびリンクを挿入"
+"\" / \"FAQのすべて、およびリンクを挿入\" ボタンを表示する"
+
+#. SysConfig
+msgid ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgstr ""
+"AgentFAQZoomSmallに\"FAQのテキストを挿入\" / \"FAQのすべてを挿入\"ボタンを表"
+"示する"
+
+#. SysConfig
+msgid "Show FAQ Article with HTML."
+msgstr "記事でHTMLタグを表示する/表示しない"
+
+#. SysConfig
+msgid "Show FAQ path yes/no."
+msgstr "記事のパスを表示する/表示しない"
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Show items of subcategories."
+msgstr "サブカテゴリーのトピックを表示する/表示しない"
+
+#. SysConfig
+msgid "Show last change items in defined interfaces."
+msgstr "最新の変更を表示する画面（担当者用/顧客用/公開）を定義"
+
+#. SysConfig
+msgid "Show last created items in defined interfaces."
+msgstr "最新の新規作成を表示する画面（担当者用/顧客用/公開）を定義"
+
+#. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactivate the output)."
+msgstr ""
+
+#. SysConfig
+msgid "Show top 10 items in defined interfaces."
+msgstr "トップ10を表示する画面（担当者用/顧客用/公開）を定義"
+
+#. SysConfig
+msgid "Show voting in defined interfaces."
+msgstr "評価を表示する画面（担当者用/顧客用/公開）を定義"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows linking a FAQ with another object in "
+"the zoom view of such FAQ of the agent interface."
+msgstr ""
+"担当者インタフェースなどのズーム・ビューで、FAQを他のオブジェクトとリンクさせ"
+"るリンクをメニューに表示します。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
+msgstr "担当者インターフェイスのズームビューでFAQ削除のリンクを表示する。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a FAQ in its zoom view of "
+"the agent interface."
+msgstr "担当者インターフェイスのズームビューでFAQの履歴のリンクを表示する。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
+"interface."
+msgstr "担当者インターフェイスのズームビューでFAQ編集のリンクを表示する。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the FAQ zoom view of the agent "
+"interface."
+msgstr "担当者インターフェイスのズームビューで「戻る」のリンクを表示する。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a FAQ in the its zoom view of the agent "
+"interface."
+msgstr "担当者インターフェイスのズームビューでFAQを印刷リンクを表示する。"
+
+#. SysConfig
+msgid "Solution"
+msgstr "解決"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "症状"
+
+#. SysConfig
+msgid "Text Only"
+msgstr "テキストのみ"
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
+msgstr ""
+
+#. SysConfig
+msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
+msgstr ""
+"FAQ用の識別子 例. FAQ#, KB#, MyFAQ#. デフォルトでは FAQ# となっています"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'Normal' link type."
+msgstr ""
+"‘Normal’リンク・タイプを使用して、‘FAQ’オブジェクトが他の‘FAQ’オブジェクトと"
+"リンクされるように、定義します。"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'ParentChild' link type."
+msgstr ""
+"‘ParentChild’リンク・タイプを使用して、‘FAQ’オブジェクトが他の‘FAQ’オブジェク"
+"トとリンクされるように、定義します。"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'Normal' link type."
+msgstr ""
+"‘Normal’リンク・タイプを使用して、‘FAQ’オブジェクトが他の‘Ticket’オブジェクト"
+"とリンクされるように、定義します。"
+
+#. SysConfig
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'ParentChild' link type."
+msgstr ""
+"‘ParentChild’リンク・タイプを使用して、‘FAQ’オブジェクトが他の‘Ticket’オブ"
+"ジェクトとリンクされるように、定義します。"
+
+#. SysConfig
+msgid "Ticket body for approval of FAQ article."
+msgstr "FAQ承認チケット用　チケット本文"
+
+#. SysConfig
+msgid "Ticket subject for approval of FAQ article."
+msgstr "FAQ承認チケット用　チケット件名 "
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
+msgstr "ショートカットのためのツールバー・アイテムです。"
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "外部 (顧客)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "内部 (担当者)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "公開 (全員)"
+
+#. SysConfig
+msgid "public (public)"
+msgstr "公開　(パブリック)"
