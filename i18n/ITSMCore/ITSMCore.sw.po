@@ -1,0 +1,440 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ITSMCore\n"
+"POT-Creation-Date: 2020-01-24 12:24+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Umuhimu ↔ Madhara ↔ Kipaumbele"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr "Simamia matokeo ya kipaumbele ya kuunganisha Umuhimu "
+
+#. Template: AdminITSMCIPAllocate
+msgid "Priority allocation"
+msgstr "Kuweka kipaumbele"
+
+#. Template: AdminSLA
+msgid "Minimum Time Between Incidents"
+msgstr "Kima cha chini cha muda kati ya matukio"
+
+#. Template: AdminService
+msgid "Criticality"
+msgstr "Umuhimu"
+
+#. Template: AgentITSMSLAZoom
+msgid "SLA Information"
+msgstr "Taarifa za SLA"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed"
+msgstr "Mwisho kubadilishwa"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr "Mwsho kubadilishwa na"
+
+#. Template: AgentITSMSLAZoom
+msgid "Associated Services"
+msgstr "Huduma zinazohusika"
+
+#. Template: AgentITSMServiceZoom
+msgid "Service Information"
+msgstr "Taarifa za huduma"
+
+#. Template: AgentITSMServiceZoom
+msgid "Current incident state"
+msgstr "Hali ya tukio la sasa"
+
+#. Template: AgentITSMServiceZoom
+msgid "Associated SLAs"
+msgstr "SLA zinazohusika"
+
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Madhara"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "operational"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "warning"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "incident"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "Current Incident State"
+msgstr "Hali ya tukio la sasa"
+
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "Hali ya tukio"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "Uendeshaji"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "Tukio"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Huduma ya mtumiaji wa mwihso"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Mazingira ya mbele"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Mazingira ya nyuma"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "Usimamizi wa IT"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Uarifu"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "Uendeshaji wa IT"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Maonyesho"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Mradi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Mkataba wa kuimarisha"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Engine"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Upatikanaji"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Muda wa majibu"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Muda wa kupona"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "Kiwango cha muonekano"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Miamala"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Makosa"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Badala ya "
+
+#. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Imeunganishwa na"
+
+#. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Inategemeana na "
+
+#. SysConfig
+msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
+msgstr "Usajili wa moduli za mazingira ya mbele kwa usanidi wa AdminITSMCIPAllocate katika eneo la kiongozi."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLA object in the agent interface."
+msgstr "Usajili wa moduli ya mazingira ya mbele kwa kipengee cha ITSMSLA cha wakala  katika kiolesura cha wakala."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAPrint object in the agent interface."
+msgstr "Usajili wa moduli ya mazingira ya mbele kwa kipengee cha  uchapishwaji cha ITSMSLA cha wakala katika kiolesura cha wakala"
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAZoom object in the agent interface."
+msgstr "Usajili wa moduli ya mazingira ya mbele kwa kipengee cha kukuzwa cha ITSMSLA cha wakala katika kiolesura cha wakala"
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMService object in the agent interface."
+msgstr "Usajili wa moduli ya mazingira ya mbele kwa kipengee cha huduma cha ITSMSLA cha wakala katika kiolesura cha wakala."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServicePrint object in the agent interface."
+msgstr "Usajili wa moduli ya mazingira ya mbele kwa kipengee cha kuchapishwa kwa huduma cha ITSMSLA cha wakala katika kiolesura cha wakala."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServiceZoom object in the agent interface."
+msgstr "Usajili wa moduli ya mazingira ya mbele kwa kipengee cha kukuzwa kwa huduma cha ITSMSLA cha wakala katika kiolesura cha wakala."
+
+#. SysConfig
+msgid "ITSM SLA Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Includes"
+msgstr "Inahusisha"
+
+#. SysConfig
+msgid "Manage priority matrix."
+msgstr "Simamia matriki ya kipaumbele."
+
+#. SysConfig
+msgid "Manage the criticality - impact - priority matrix."
+msgstr ""
+
+#. SysConfig
+msgid "Module to show the Back menu item in SLA menu."
+msgstr "Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya sla."
+
+#. SysConfig
+msgid "Module to show the Back menu item in service menu."
+msgstr "Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya huduma."
+
+#. SysConfig
+msgid "Module to show the Link menu item in service menu."
+msgstr "Moduli ya kuonyesha kiungo cha kiungo katika menyu ya huduma."
+
+#. SysConfig
+msgid "Module to show the Print menu item in SLA menu."
+msgstr "Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya sla."
+
+#. SysConfig
+msgid "Module to show the Print menu item in service menu."
+msgstr "Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya huduma."
+
+#. SysConfig
+msgid "Parameters for the incident states in the preference view."
+msgstr "Vigezo ya hali ya matukio katika mandhari ya mapendeleo."
+
+#. SysConfig
+msgid "Part of"
+msgstr "Sehemu ya"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Husiana na"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Inahitajika kwa"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "Marejeo ya SLA"
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Overview"
+msgstr "Marejeo ya huduma"
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Eneo la huduma"
+
+#. SysConfig
+msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "Source"
+msgstr ""
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Badiliko la ITSM' kinweza kuunganishwa na kipengee cha 'Tiketi' kwa kutumia aina ya kiungo 'Kawaida'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Maswali yanayoulizwa mara kwa mara' kwa kutumia aina ya kiungo 'Kawaida'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Maswali yanayoulizwa mara kwa mara' kwa kutumia aina ya kiungo 'ParentChild'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Maswali yanayoulizwa mara kwa mara' kwa kutumia aina ya kiungo 'Inahusiana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Huduma' kwa kutumia aina ya kiungo 'Badala ya'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Huduma' kwa kutumia aina ya kiungo 'Inategemeana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Huduma' kwa kutumia aina ya kiungo 'Husiana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Tiketi' kwa kutumia aina ya kiungo 'Badala ya'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Tiketi' kwa kutumia aina ya kiungo 'Inategemeana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee cha 'Tiketi' kwa kutumia aina ya kiungo 'Husiana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee kingine cha'Kipengele cha usanidi cha ITSM'  kwa kutumia aina ya kiungo 'Badala ya'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee kingine cha'Kipengele cha usanidi cha ITSM'  kwa kutumia aina ya kiungo 'Inaunganishwa na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee kingine cha'Kipengele cha usanidi cha ITSM'  kwa kutumia aina ya kiungo 'Inategemeana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee kingine cha'Kipengele cha usanidi cha ITSM'  kwa kutumia aina ya kiungo 'Husisha'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Kipengele cha usanidi cha ITSM' kinaweza kuunganishwa na kipengee kingine cha'Kipengele cha usanidi cha ITSM'  kwa kutumia aina ya kiungo 'Husiana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Mpangilio wa kazi wa ITSM' kinaweza kuunganishwa na kipengee kingine cha'Kipengele cha usanidi cha ITSM'  kwa kutumia aina ya kiungo 'Inategemeana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Mpangilio wa kazi wa ITSM' kinaweza kuunganishwa na kipengee kingine cha'Kipengele cha usanidi cha ITSM'  kwa kutumia aina ya kiungo 'Kawaida'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Mpangilio wa kazi wa ITSM' kinaweza kuunganishwa na kipengee kingine cha'Huduma' kwa kutumia aina ya kiungo 'Inategemeana na'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Mpangilio wa kazi wa ITSM' kinaweza kuunganishwa na kipengee kingine cha'Huduma' kwa kutumia aina ya kiungo 'Kawaida'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Mpangilio wa kazi wa ITSM' kinaweza kuunganishwa na kipengee kingine cha'Tiketi' kwa kutumia aina ya kiungo 'Kawaida'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Huduma' kinaweza kuunganishwa na kipengee cha 'Maswali yanayoulizwa mara kwa mara' kwa kutumia aina ya kiungo 'Kawaida'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr "Mpangilio huu unafafanua kwamba kipengee cha 'Huduma' kinaweza kuunganishwa na kipengee cha 'Maswali yanayoulizwa mara kwa mara' kwa kutumia aina ya kiungo 'ParentChild'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr "Husiana na"
+
+#. SysConfig
+msgid "This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Mipangilio hii inafafanua aina ya kiungo 'Badala ya'. Kama jina la chanzo na jina lengwa yana thamani moja, kiungo kinachotokana ni hakina uelekeo. Kama thamani ni tofauti, kiungo kilichotokea kina uelekeo."
+
+#. SysConfig
+msgid "This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Mipangilio hii inafafanua aina ya kiungo 'Imeunganishwa na'. Kama jina la chanzo na jina lengwa yana thamani moja, kiungo kinachotokana ni hakina uelekeo. Kama thamani ni tofauti, kiungo kilichotokea kina uelekeo."
+
+#. SysConfig
+msgid "This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Mipangilio hii inafafanua aina ya kiungo 'Inategemeana na'. Kama jina la chanzo na jina lengwa yana thamani moja, kiungo kinachotokana ni hakina uelekeo. Kama thamani ni tofauti, kiungo kilichotokea kina uelekeo."
+
+#. SysConfig
+msgid "This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Mipangilio hii inafafanua aina ya kiungo 'Inahusisha'. Kama jina la chanzo na jina lengwa yana thamani moja, kiungo kilichotokea ni hakina uelekeo. Kama thamani ni tofauti, kiungo kilichotokea kina uelekeo."
+
+#. SysConfig
+msgid "This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Mipangilio hii inafafanua aina ya kiungo 'Husiana na'. Kama jina la chanzo na jina lengwa yana thamani moja, kiungo kilichotokea ni hakina uelekeo. Kama thamani ni tofauti, kiungo kilichotokea kina uelekeo."
+
+#. SysConfig
+msgid "Width of ITSM textareas."
+msgstr "Upana wa eneo la matini la ITSM "
+

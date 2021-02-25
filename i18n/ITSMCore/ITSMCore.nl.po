@@ -1,0 +1,560 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ITSMCore\n"
+"POT-Creation-Date: 2020-01-24 12:24+0000\n"
+"PO-Revision-Date: 2020-03-24 16:54+0000\n"
+"Last-Translator: Nick van der Burg <nmp.vanderburg@gmail.com>\n"
+"Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/"
+"itsm-core/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.11.2\n"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Urgentie ↔ Impact ↔ Prioriteit"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr ""
+"Beheer het prioriteitsresultaat van het combineren van Urgentie ↔ Impact."
+
+#. Template: AdminITSMCIPAllocate
+msgid "Priority allocation"
+msgstr "Prioriteitstoewijzing"
+
+#. Template: AdminSLA
+msgid "Minimum Time Between Incidents"
+msgstr "Minimale Tijd Tussen Incidenten"
+
+#. Template: AdminService
+msgid "Criticality"
+msgstr "Urgentie"
+
+#. Template: AgentITSMSLAZoom
+msgid "SLA Information"
+msgstr "SLA-informatie"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed"
+msgstr "Laatst gewijzigd"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr "Laatst gewijzigd door"
+
+#. Template: AgentITSMSLAZoom
+msgid "Associated Services"
+msgstr "Bijbehorende Services"
+
+#. Template: AgentITSMServiceZoom
+msgid "Service Information"
+msgstr "Service-informatie"
+
+#. Template: AgentITSMServiceZoom
+msgid "Current incident state"
+msgstr "Huidige incidentstatus"
+
+#. Template: AgentITSMServiceZoom
+msgid "Associated SLAs"
+msgstr "Bijbehorende SLA's"
+
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Impact"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr "Er wordt geen SLAID gegeven!"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr "SLAID %s niet gevonden in database!"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr "Kalender Standaard"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "operational"
+msgstr "operationeel"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "warning"
+msgstr "waarschuwing"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "incident"
+msgstr "incident"
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr "Er wordt geen ServiceID gegeven!"
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr "ServiceID %s niet gevonden in database!"
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "Current Incident State"
+msgstr "Huidige Incidentstatus"
+
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "Incidentstatus"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "Operationeel"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "Incident"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Eindgebruiker Service"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Frontend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Backend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "IT Management"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Rapportage"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "IT Operationeel"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Demonstratie"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Project"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Onderliggend contract"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Anders"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Beschikbaarheid"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Reactietijd"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Hersteltijd"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "Oplospercentage"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Transacties"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Fouten"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Alternatief voor"
+
+#. SysConfig
+msgid "Both"
+msgstr "Beide"
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Verbonden met"
+
+#. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+"Definieer acties waarbij een instellingenknop beschikbaar is in de widget "
+"voor gekoppelde objecten (LinkObject::ViewMode = \"complex\"). Houd er "
+"rekening mee dat deze acties de volgende JS- en CSS-bestanden moeten hebben "
+"geregistreerd: Core.AllocationList.css, Core.UI.AllocationList.js, "
+"Core.UI.Table.Sort.js, Core.Agent.TableFilters.js en Core.Agent "
+".LinkObject.js."
+
+#. SysConfig
+msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
+"Definieer welke kolommen worden weergegeven in de widget gekoppelde Services "
+"(LinkObject::ViewMode = \"complex\"). Opmerking: alleen servicekenmerken "
+"zijn toegestaan voor DefaultColumns. Mogelijke instellingen: 0 = "
+"Uitgeschakeld, 1 = Beschikbaar, 2 = Standaard ingeschakeld."
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Afhankelijk van"
+
+#. SysConfig
+msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
+msgstr ""
+"Frontend module registratie voor de AdminITSMCIPAllocate configuratie in het "
+"admin gebied."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLA object in the agent interface."
+msgstr ""
+"Frontend module registratie voor het AgentITSMSLA-object in de "
+"agentinterface."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAPrint object in the agent interface."
+msgstr ""
+"Frontend module registratie voor het AgentITSMSLAPrint-object in de "
+"agentinterface."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAZoom object in the agent interface."
+msgstr ""
+"Frontend module registratie voor het AgentITSMSLAZoom-object in de "
+"agentinterface."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMService object in the agent interface."
+msgstr ""
+"Frontend module registratie voor het AgentITSMService-object in de "
+"agentinterface."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServicePrint object in the agent interface."
+msgstr ""
+"Frontend module registratie voor het AgentITSMServicePrint-object in de "
+"agentinterface."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServiceZoom object in the agent interface."
+msgstr ""
+"Frontend module registratie voor het AgentITSMServiceZoom-object in de "
+"agentinterface."
+
+#. SysConfig
+msgid "ITSM SLA Overview."
+msgstr "ITSM SLA Overzicht."
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr "ITSM Service Overzicht."
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr "Incidentstatustype"
+
+#. SysConfig
+msgid "Includes"
+msgstr "Omvat"
+
+#. SysConfig
+msgid "Manage priority matrix."
+msgstr "Beheer prioriteitsmatrix."
+
+#. SysConfig
+msgid "Manage the criticality - impact - priority matrix."
+msgstr "Beheer de urgentie - impact - prioriteitsmatrix."
+
+#. SysConfig
+msgid "Module to show the Back menu item in SLA menu."
+msgstr "Module om het menu-item Terug in het SLA-menu weer te geven."
+
+#. SysConfig
+msgid "Module to show the Back menu item in service menu."
+msgstr "Module om het menu-item Terug in het servicemenu weer te geven."
+
+#. SysConfig
+msgid "Module to show the Link menu item in service menu."
+msgstr "Module om het menu-item Koppel in het servicemenu weer te geven."
+
+#. SysConfig
+msgid "Module to show the Print menu item in SLA menu."
+msgstr "Module om het menu-item Afdrukken in het SLA-menu weer te geven."
+
+#. SysConfig
+msgid "Module to show the Print menu item in service menu."
+msgstr "Module om het menu-item Afdrukken in het servicemenu weer te geven."
+
+#. SysConfig
+msgid "Parameters for the incident states in the preference view."
+msgstr "Parameters voor de incidentstatussen in de voorkeursweergave."
+
+#. SysConfig
+msgid "Part of"
+msgstr "Deel van"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Relevant voor"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Vereist voor"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "SLA Overzicht"
+
+#. SysConfig
+msgid "SLA Print."
+msgstr "SLA Afdrukken."
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr "SLA Zoom."
+
+#. SysConfig
+msgid "Service Overview"
+msgstr "Service Overzicht"
+
+#. SysConfig
+msgid "Service Print."
+msgstr "Service Afdrukken."
+
+#. SysConfig
+msgid "Service Zoom."
+msgstr "Service Zoom."
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Service-Gebied"
+
+#. SysConfig
+msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+"Stel het type en de richting in van de koppelingen die moeten worden "
+"gebruikt om de incidentstatus te berekenen. De sleutel is de naam van het "
+"koppeltype (zoals gedefinieerd in LinkObject::Type) en de waarde is de "
+"richting van het IncidentLinkType die moet worden gevolgd om de "
+"incidentstatus te berekenen. Als het IncidentLinkType bijvoorbeeld is "
+"ingesteld op 'AfhankelijkVan' en de richting 'Bron' is, worden alleen de "
+"koppelingen 'Afhankelijk van' gevolgd (en niet de tegenovergestelde link "
+"'Vereist voor') om de incidentstatus te berekenen. je kunt desgewenst meer "
+"koppelingstypen en richtingen toevoegen, bijv. 'Omvat' met de richting "
+"'Doel'. Alle koppelingstypen die zijn gedefinieerd in de sysconfig-opties "
+"LinkObject::Type zijn mogelijk en de richting kan 'Bron', 'Doel' of 'Beide' "
+"zijn. BELANGRIJK: NA WIJZIGING VAN DEZE SYSTEEMCONFIGURATIE-OPTIE MOET HET "
+"CONSOLE-COMMANDO bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate "
+"WORDEN UITGEVOERD ZODAT ALLE INCIDENT-STATUSSEN WORDEN HERBERKEND OP BASIS "
+"VAN DE NIEUWE INSTELLINGEN!"
+
+#. SysConfig
+msgid "Source"
+msgstr "Bron"
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMChange' kan worden gekoppeld "
+"aan 'Ticket'-objecten met behulp van het koppeltype 'Normaal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'FAQ'-objecten met behulp van het koppeltype 'Normaal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'FAQ'-objecten met het koppeltype 'OuderKind'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr ""
+"Deze instelling definieert dat een 'ITSMConfigItem'-object kan worden "
+"gekoppeld aan 'FAQ'-objecten met behulp van het koppeltype 'RelevantVoor'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'Service'-objecten met behulp van het linktype "
+"'AlternatiefVoor'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'Service'-objecten met behulp van het koppelingstype' "
+"AfhankelijkVan'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'Service'-objecten met behulp van het linktype 'RelevantVoor'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'Ticket'-objecten met behulp van het linktype "
+"'AlternatiefVoor'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'Ticket'-objecten met behulp van het koppelingstype "
+"'AfhankelijkVan'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan 'Ticket'-objecten met behulp van het linktype 'RelevantVoor '."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan andere objecten 'ITSMConfigItem' met behulp van het linktype "
+"'AlternatiefVoor'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan andere objecten 'ITSMConfigItem' met behulp van het linktype "
+"'VerbondenAan'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan andere objecten 'ITSMConfigItem' met behulp van het "
+"koppelingstype 'AfhankelijkVan'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan andere objecten 'ITSMConfigItem' met behulp van het "
+"koppelingstype 'Omvat'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMConfigItem' kan worden "
+"gekoppeld aan andere objecten 'ITSMConfigItem' met behulp van het linktype "
+"'RelevantTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMWorkOrder' kan worden "
+"gekoppeld aan objecten 'ITSMConfigItem' met behulp van het koppelingstype "
+"'DependsOn'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMWorkOrder' kan worden "
+"gekoppeld aan 'ITSMConfigItem'-objecten met behulp van het linktype "
+"'Normaal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMWorkOrder' kan worden "
+"gekoppeld aan 'Service'-objecten met behulp van het koppelingstype "
+"'DependsOn'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMWorkOrder' kan worden "
+"gekoppeld aan 'Service'-objecten met behulp van het koppelingstype 'Normaal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'ITSMWorkOrder' kan worden "
+"gekoppeld aan 'Ticket'-objecten met behulp van het linktype 'Normaal'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'Service' kan worden gekoppeld aan "
+"'FAQ'-objecten met behulp van het linktype 'Normaal'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'Service' kan worden gekoppeld aan "
+"'FAQ'-objecten met behulp van het koppelingstype 'ParentChild'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr ""
+"Deze instelling definieert dat een object 'Service' kan worden gekoppeld aan "
+"'FAQ'-objecten met behulp van het linktype 'RelevantTo'."
+
+#. SysConfig
+msgid "This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr ""
+"Deze instelling definieert het linktype 'AlternativeTo'. Als de bronnaam en "
+"de doelnaam dezelfde waarde bevatten, is de resulterende link niet-"
+"directioneel. Als de waarden verschillen, is de resulterende link een "
+"directionele link."
+
+#. SysConfig
+msgid "This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr ""
+"Deze instelling definieert het linktype 'ConnectedTo'. Als de bronnaam en de "
+"doelnaam dezelfde waarde bevatten, is de resulterende link niet-"
+"directioneel. Als de waarden verschillen, is de resulterende link een "
+"directionele link."
+
+#. SysConfig
+msgid "This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr ""
+"Deze instelling definieert het linktype 'DependsOn'. Als de bronnaam en de "
+"doelnaam dezelfde waarde bevatten, is de resulterende link niet-"
+"directioneel. Als de waarden verschillen, is de resulterende link een "
+"directionele link."
+
+#. SysConfig
+msgid "This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr ""
+"Deze instelling definieert het linktype 'Inclusief'. Als de bronnaam en de "
+"doelnaam dezelfde waarde bevatten, is de resulterende link niet-"
+"directioneel. Als de waarden verschillen, is de resulterende link een "
+"directionele link."
+
+#. SysConfig
+msgid "This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr ""
+"Deze instelling definieert het linktype 'RelevantTo'. Als de bronnaam en de "
+"doelnaam dezelfde waarde bevatten, is de resulterende link niet-"
+"directioneel. Als de waarden verschillen, is de resulterende link een "
+"directionele link."
+
+#. SysConfig
+msgid "Width of ITSM textareas."
+msgstr "Breedte van ITSM-tekstgebieden."
