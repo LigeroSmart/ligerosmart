@@ -1,0 +1,73 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Time Accounting Default CSS
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  left and right arrows
+ */
+
+.Arrow {
+    display: block;
+    width: 10px;
+    height: 12px;
+    float: left;
+    margin-top: -2px;
+    margin-right: 4px;
+}
+
+.Arrow i {
+    font-size: 16px;
+    color: #555;
+}
+
+/**
+ * @subsection  special settings: reporting
+ */
+
+div.MonthSelection {
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+.MonthSelection .Arrow {
+    margin-top: 1px;
+}
+
+/**
+ * @subsection  IncompleteWorkingDays select
+ */
+#IncompleteWorkingDaysList option[selected=selected] {
+    font-weight: bold;
+}
+
+/**
+ * @subsection  project and action dropdowns
+ */
+.ProjectSelection {
+    width: 300px;
+}
+
+.ActionSelection {
+    width: 300px;
+}
+
+.SidebarColumn .DatepickerIcon {
+    vertical-align: middle;
+}
+
+.SidebarColumn th input[type=checkbox] {
+    margin: 0px;
+}
+
+} /* end @media */

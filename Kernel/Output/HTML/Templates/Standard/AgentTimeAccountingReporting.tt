@@ -1,0 +1,172 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">[% Translate("Time reporting") | html %]: [% Translate(Data.Month_to_Text) | html %] [% Data.Year %]</h1>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Month Navigation") | html %]</h2>
+            </div>
+            <div class="Content">
+                <div class="MonthSelection">
+                    <a class="Arrow Left" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %]">
+                        <i class="fa fa-caret-left"></i>
+                    </a>
+                    <a class="Arrow" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %]">
+                        <i class="fa fa-caret-right"></i>
+                    </a>
+                    <strong>[% Translate(Data.Month_to_Text) | html %] [% Data.Year %]</strong>
+                </div>
+                <div class="Clear"></div>
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="compose" id="DateSelectionForm">
+                    <input type="hidden" name="Action"    value="[% Env("Action") %]" />
+                    <input type="hidden" name="Subaction" value="Reporting" />
+                    [% Data.MonthOption %]
+                    [% Data.YearOption %]
+                </form>
+                <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop" accesskey="g"><span><i class="fa fa-arrow-circle-o-right"></i>[% Translate("Go to date") | html %]</span></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("User reports") | html %]</h2>
+            </div>
+            <div class="Content HorizontalScroll">
+
+[% RenderBlockStart("NoUserDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoUserDataFoundMsg") %]
+
+[% RenderBlockStart("UserTable") %]
+                <table class="DataTable">
+                    <thead class="TwoRows">
+                        <tr>
+                            <th></th>
+                            <th class="Center" colspan="4">[% Translate("Monthly total") | html %]</th>
+                            <th class="Center" colspan="2">[% Translate("Lifetime total") | html %]</th>
+                        </tr>
+                        <tr>
+                            <th>[% Translate("User") | html %]</th>
+                            <th>[% Translate("Working Hours") | html %]</th>
+                            <th>[% Translate("Overtime leave") | html %]</th>
+                            <th>[% Translate("Vacation") | html %]</th>
+                            <th>[% Translate("Sick leave") | html %]</th>
+                            <th>[% Translate("Overtime leave") | html %]</th>
+                            <th>[% Translate("Vacation remaining") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("User") %]
+                        <tr class="MasterAction">
+                            <td>
+                                <a href="[% Env("Baselink") %]Action=AgentTimeAccountingOverview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
+                                    [% Data.User | html %]
+                                </a>
+                            </td>
+                            <td class="Right">[% Data.WorkingHours | html %]</td>
+                            <td class="Right">[% Data.Overtime | html %]</td>
+                            <td class="Right">[% Data.LeaveDay | html %]</td>
+                            <td class="Right">[% Data.Sick | html %]</td>
+                            <td class="Right">[% Data.OvertimeTotal | html %]</td>
+                            <td class="Right">[% Data.LeaveDayRemaining | html %]</td>
+                        </tr>
+[% RenderBlockEnd("User") %]
+[% RenderBlockStart("UserGrandTotal") %]
+                        <tr class="GrandTotal">
+                            <td><strong>[% Translate("Total") | html %]</strong></td>
+                            <td class="Right"><strong>[% Data.TotalWorkingHours | html %]</strong></td>
+                            <td class="Right"><strong>[% Data.TotalOvertime | html %]</strong></td>
+                            <td class="Right"><strong>[% Data.TotalLeaveDay | html %]</strong></td>
+                            <td class="Right"><strong>[% Data.TotalSick | html %]</strong></td>
+                            <td class="Right"><strong>[% Data.TotalOvertimeTotal | html %]</strong></td>
+                            <td class="Right"><strong>[% Data.TotalLeaveDayRemaining | html %]</strong></td>
+                        </tr>
+[% RenderBlockEnd("UserGrandTotal") %]
+                    </tbody>
+                </table>
+ [% RenderBlockEnd("UserTable") %]
+
+            </div>
+        </div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Project reports") | html %]
+                    <a class="[% Data.ProjectStatusLinkClass %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];ProjectStatusShow=[% Data.ProjectStatusShow | uri %]">
+                        ([% Translate(Data.ShowProjects) | html %])
+                    </a>
+                </h2>
+            </div>
+
+            <div class="Content HorizontalScroll">
+
+[% RenderBlockStart("NoProjectDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoProjectDataFoundMsg") %]
+
+[% RenderBlockStart("ProjectTable") %]
+                <table class="DataTable NoHover">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Project") | html %]</th>
+                            <th>[% Translate("Task") | html %]</th>
+                            <th>[% Translate("Hours (monthly)") | html %]</th>
+                            <th>[% Translate("Hours (Lifetime)") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("Action") %]
+                        <tr class="MasterAction">
+[% RenderBlockStart("Project") %]
+                            <td rowspan="[% Data.RowSpan %]" class="RowSpan">
+                                <strong>
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ReportingProject;ProjectID=[% Data.ProjectID | uri %]" class="MasterActionLink">
+                                        [% Data.Project %]
+                                    </a>
+                                </strong>
+[% RenderBlockStart("ProjectDescription") %]
+                            <br />[% Data.ProjectDescription %]
+[% RenderBlockEnd("ProjectDescription") %]
+                        </td>
+[% RenderBlockEnd("Project") %]
+                        <td>[% Data.Action | html %]</td>
+                        <td class="Right">[% Data.Hours | html %]</td>
+                        <td class="Right">[% Data.HoursTotal | html %]</td>
+                    </tr>
+[% RenderBlockStart("ActionTotal") %]
+                    <tr>
+                        <td><strong>[% Translate("Total") | html %]</strong></td>
+                        <td class="Right"><strong>[% Data.Hours | html %]</strong></td>
+                        <td class="Right"><strong>[% Data.HoursTotal | html %]</strong></td>
+                    </tr>
+[% RenderBlockEnd("ActionTotal") %]
+[% RenderBlockEnd("Action") %]
+[% RenderBlockStart("ProjectGrandTotal") %]
+                    <tr class="GrandTotal">
+                        <td colspan="2"><strong>[% Translate("Grand total") | html %]</strong></td>
+                        <td class="Right"><strong>[% Data.TotalHours | html %]</strong></td>
+                        <td class="Right"><strong>[% Data.TotalHoursTotal | html %]</strong></td>
+                    </tr>
+[% RenderBlockEnd("ProjectGrandTotal") %]
+                </tbody>
+            </table>
+[% RenderBlockEnd("ProjectTable") %]
+
+        </div>
+    </div>
+</div>
+</div>

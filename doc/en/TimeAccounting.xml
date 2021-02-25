@@ -1,0 +1,695 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+
+<book lang="en">
+
+<!--
+************************************** Head ***********************************************
+-->
+<bookinfo>
+    <title>$Name</title>
+    <edition>$Description Version $Version</edition>
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
+    <date>$DateStamp</date>
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            This work is copyrighted by $Vendor, Zimmersmühlenweg 11, 61440 Oberursel, Germany.
+        </para>
+        <para>Build Date: $DateStamp</para>
+    </legalnotice>
+</bookinfo>
+
+<!--
+************************************ Customer part ******************************************
+-->
+
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
+    <title>Preface</title>
+    <para>
+        TimeAccounting module extends OTRS framework enabling the track of time that agents spend
+        on different tasks, vacations, overtime and sick leaves.
+    </para>
+    <para>
+        If you have questions regarding this document or if you need further information, please log in to our customer portal at portal.otrs.com with your OTRS ID and create a ticket.
+        You do not have an OTRS ID yet? Register
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">here for free</ulink>.
+    </para>
+</preface>
+
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
+<chapter>
+    <title>Feature List</title>
+    <section>
+        <title>Time Accounting Overview</title>
+        <para>
+            It displays for the current logged user a summary of its own working hours per day
+            (month based), vacation days summary, sick leave days, and the distribution of its
+            working hours on each project and tasks.
+        </para>
+    </section>
+    <section>
+        <title>Time Accounting Edit</title>
+        <para>
+            Allows to set working hours, vacation, sick leaves and overtime leaves on a day basis.
+            The working hours can be set by defining the start and the end dates, or a period of
+            time.
+        </para>
+        <para>
+            The working hours can be registered per project and task. Pre-filled selection lists are
+            used to speedup the register process and prevent typos.
+        </para>
+    </section>
+    <section>
+        <title>Time Accounting Reporting</title>
+        <para>
+            Designed for administrators and managers, shows a monthly based timing information
+            summary for each registered user (working hours, overtime leave, sick leave and
+            vacations), as well as timing information summary for each project and tasks (the time
+            spend on each).
+        </para>
+    </section>
+    <section>
+        <title>Time Accounting Settings</title>
+        <para>
+            Also designed for administrators and managers, it allows the creation of multiple
+            projects and tasks. It also enables the assignment of the users defining their working
+            calendar, working periods (begin date, end date, number of vacation days, hours per week
+            and allowed overtime hours).
+        </para>
+    </section>
+    <section>
+        <title>Time Accounting Statistics</title>
+        <para>
+            A new statistics type has been added to show working hours based on projects or users.
+        </para>
+    </section>
+    <section>
+        <title>Time Accounting Notification</title>
+        <para>
+            A notification reminder for agents to insert their working hours (can be configured in
+            SysConfig to define the maximum days without entry to display the notification).
+        </para>
+    </section>
+    <section>
+        <title>Toolbar Shortcut For Days Without Time Accounting Entry</title>
+        <para>
+            A counter displaying the number of days without registering the working hours can be set
+            in the upper part of the screen (similar to Locked tickets counter or Responsible
+            tickets counter). When clicking on the icon, agents are redirected to the Time
+            Accounting Edit screen, to fill the missing records.
+        </para>
+    </section>
+    <section>
+        <title>Time Accounting Registration Enforcement</title>
+        <para>
+            Configurable by a SysConfig setting, the system can be blocked, not allowing to perform
+            any actions, if a certain number of days without time accounting registers has been
+            passed (agents are redirected to Time Accounting Edit screen to fill the missing
+            records).
+        </para>
+    </section>
+    <section>
+        <title>Exclusion of Time Accounting Registration Enforcement</title>
+        <para>
+            The enforcement of logging accounted time can be disabled on a per-user base.
+            If the checkbox 'User is allowed to skip time accounting' is checked in the time accounting settings for this user,
+            the user can use the full functionality of the time accounting but logging time will be completely optional.
+            This feature may be used for cases where users are only supposed to log times irregularily or for a part of their working time.
+        </para>
+    </section>
+    <section>
+        <title>Mass Entries</title>
+        <para>
+            Disabled by default, this feature allows agents to set special time accounting
+            information (such as: on vacation, overtime leaves and sick leave) to multiple days at
+            the same time.
+        </para>
+    </section>
+</chapter>
+
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- ********************** -->
+<chapter>
+    <title>System Requirements</title>
+    <section>
+        <title>Framework</title>
+        <para>The following OTRS framework is required:</para>
+        <para>$Framework</para>
+    </section>
+    <section>
+        <title>Packages</title>
+        <para>The following packages are required:</para>
+        <para>$PackageRequired</para>
+    </section>
+    <section>
+        <title>Operating System</title>
+        <para>This package requires one of the following operating systems:</para>
+        <para>$OS</para>
+    </section>
+    <section>
+        <title>Third Party Software</title>
+        <para>This third party software is required to use this package:</para>
+        <itemizedlist>
+            <listitem>
+                <para>None.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</chapter>
+
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
+<chapter>
+    <title>Installation</title>
+    <para>
+        The following instructions explain how to install the package.
+    </para>
+    <para>
+        After having successfully completed the installation, please follow the instructions
+        provided in the chapter &quot;First steps&quot;.
+    </para>
+    <section>
+        <title>Admin Interface</title>
+        <para>
+            Please use the following URL to install the package utilizing the Admin Interface
+            (please note that you need to be in the "admin" group).
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
+        </para>
+    </section>
+    <section>
+        <title>Command Line</title>
+        <para>
+            Whenever you cannot use the Admin Interface for whatever reason, you may use the
+            following command line tool ("bin/otrs.Console.pl Admin::Package::Install") instead.
+        </para>
+        <para>
+            <screen>
+shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
+            </screen>
+        </para>
+    </section>
+</chapter>
+
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
+<chapter>
+    <title>Configuration</title>
+    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
+    <section>
+        <title>Frontend::Module###AgentTimeAccountingEdit.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentTimeAccountingOverview.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentTimeAccountingReporting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentTimeAccountingSetting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentTimeAccountingView.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingEdit###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingOverview###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingReporting###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingSetting###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingView###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::NotifyModule###888-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::FrontendNotification.</para>
+        <para>This notification module gives a warning if there are too many incomplete working days.</para>
+    </section>
+    <section>
+        <title>Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays.</title>
+        <para>Navigation: Frontend::Agent::ToolBar.</para>
+        <para>Agent interface notification module to see the number of incomplete working days for the user.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingEdit###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingOverview###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingReporting###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingSetting###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingView###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>PreApplicationModule###AgentTimeAccounting.</title>
+        <para>Navigation: Frontend::Base::PreApplicationModule.</para>
+        <para>This module forces inserts in TimeAccounting.</para>
+    </section>
+    <section>
+        <title>Stats::DynamicObjectRegistration###TimeAccounting.</title>
+        <para>Navigation: Core::Stats.</para>
+        <para>Determines if the statistics module may generate time accounting information.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::ActionListConstraints.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).</para>
+    </section>
+    <section>
+        <title>TimeAccounting::ActiveFilter.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::AllowMassEntryForUser.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>If enabled, the user is allowed to enter &quot;on vacation leave&quot;, &quot;on sick leave&quot; and &quot;on overtime leave&quot; to multiple dates at once.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultActionName.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default name for new actions.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultActionStatus.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default status for new actions.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultProjectName.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default name for new projects.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultProjectStatus.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default status for new projects.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultUserDateEnd.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default setting for date end.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultUserDateStart.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default setting for date start.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultUserDescription.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default setting for description.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultUserLeaveDays.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default setting for leave days.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultUserOvertime.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default setting for overtime.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultUserStatus.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default status for new users.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::DefaultUserWeeklyHours.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
+        <para>Default setting for the standard weekly hours.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::EnableAutoCompletion.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::Frontend::ReportingProject###ShowOnlyActiveUsers.</title>
+        <para>Navigation: Core::TimeAccounting::ViewReportingProject.</para>
+        <para>If enabled, only users that has added working time to the selected project are shown.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::InputHoursWithoutStartEndTime.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>Specifies if working hours can be inserted without start and end times.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::MaxAllowedInsertDays.</title>
+        <para>Navigation: Core::TimeAccounting.</para>
+        <para>For how many days ago you can insert working units.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::MaxIntervalOfIncompleteDays.</title>
+        <para>Navigation: Core::TimeAccounting.</para>
+        <para>Maximum number of working days after which the working units have to be inserted.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning.</title>
+        <para>Navigation: Core::TimeAccounting.</para>
+        <para>Maximum number of working days without working units entry after which a warning will be shown.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::Project2RemarkRegExp.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::ProjectListConstraints.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.</para>
+    </section>
+    <section>
+        <title>TimeAccounting::ReduceTime.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key =&gt; traveling; Content =&gt; 50).</para>
+    </section>
+    <section>
+        <title>TimeAccounting::UseFilter.</title>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
+        <para>If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.</para>
+    </section>
+</chapter>
+
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
+<chapter>
+    <title>Usage</title>
+    <para>
+        This package is shipped with a default configuration where all agents can access to their
+        personal overview (Time Accounting Overview) and working hours registration
+        (Time Accounting Edit) screens, while only users from  the "admin" group has access to the
+        settings and reporting screens. This can be changed in frontend module registration of
+        specific screens by setting Group and GroupRo keys.
+    </para>
+    <note>
+        <para>
+            For some features users must be added to the time accounting feature from the time
+            accounting settings screen and have a valid time span.
+        </para>
+    </note>
+    <section>
+        <title>Create A New Project</title>
+        <para>This example shows how to create a new project to register working hours on.</para>
+        <note>
+            <para>
+                For this and following examples a user with "rw" in "admin" group is needed.
+            </para>
+        </note>
+        <orderedlist>
+            <listitem><para>From Time Accounting menu choose "Settings".</para></listitem>
+            <listitem>
+                <para>
+                    Click on "Add Project" from the Actions list in the sidebar, located in the left
+                    part of the screen.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    In the new screen fill the name of the project and a description if needed
+                    (make sure that status is set to "valid").
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Click on "Submit" button.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    After the redirect to the main Settings window, notice that the new project
+                    appears in the project list in the center of the screen.
+                </para>
+            </listitem>
+        </orderedlist>
+        <note><para>Optionally register more projects, repeating the same steps.</para></note>
+    </section>
+    <section>
+        <title>Create A New Task</title>
+        <para>This example shows how to create a new task to register working hours on.</para>
+        <note>
+            <para>Tasks are available to all projects.</para>
+        </note>
+        <orderedlist>
+            <listitem><para>From Time Accounting menu choose "Settings".</para></listitem>
+            <listitem>
+                <para>
+                    Click on "Add Task" from the Actions list in the sidebar, located in the left
+                    part of the screen.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    In the new screen fill the name of the task (make sure that status is set to
+                    "valid").
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Click on "Submit" button.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    After the redirect to the main Settings window, notice that the new task appears
+                    in the task list in the center of the screen.
+                </para>
+            </listitem>
+        </orderedlist>
+        <note><para>Optionally register more tasks, repeating the same steps.</para></note>
+    </section>
+    <section>
+        <title>Add a User</title>
+        <para>This example shows how to add an agent to the time accounting.</para>
+        <orderedlist>
+            <listitem><para>From Time Accounting menu choose "Settings".</para></listitem>
+            <listitem>
+                <para>
+                    Select a user from the Actions list in the sidebar, located in the left part of
+                    the screen.
+                </para>
+            </listitem>
+            <listitem><para>Click on "New user".</para></listitem>
+            <listitem><para>In the new screen fill the comments if needed.</para></listitem>
+            <listitem>
+                <para>
+                    For this example we will leave unchecked "Show Overtime",
+                    "Allow project creation" and "Allow time accounting skipping" and we will use the default calendar.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    In the period table choose a near date for "Period Begin" (otherwise the user
+                    will have to fill several time accounting records, due to the enforcement
+                    policy).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Optionally change the "Period End" and leave all other columns with the
+                    defaults (for this example).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Click on "Submit" button.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    After the redirect to the main Settings window, notice that the new user appears
+                    in the user list in the center of the screen.
+                </para>
+            </listitem>
+        </orderedlist>
+    </section>
+    <section>
+        <title>Register Your Working Hours</title>
+        <para>This example shows how to register the working hours in time accounting.</para>
+        <note><para>A previously added user to time accounting is needed for this example.</para></note>
+        <orderedlist>
+            <listitem><para>Login to OTRS with a proper user.</para></listitem>
+            <listitem><para>From Time Accounting menu choose "Edit".</para></listitem>
+            <listitem>
+                <para>
+                    Navigate to the desired date by using the left and right arrows in the "Date
+                    Navigation" widget located in the sidebar, at the left part of the screen
+                    (navigation is automatic by clicking the arrows). Alternatively a date can be
+                    defined with the controls below. Click on "Submit" button within the widget to
+                    go to the selected date.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Select a project and task in the first row of the table in the central part
+                    of the screen.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Type a comment in the "Remarks" column.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Now fill the working hours. It can be done by setting the "Start" and "End" times
+                    in "HH:MM" format or register the period of time in the proper column.
+                </para>
+                <example>
+                    <title>Setting Working Hours For Two And A Half Hours</title>
+                    <para>
+                        Lets think that the working hours took place from 11:00 AM to 01:30 PM.
+                        Set 11:00 for the "Start" column and 13:30 for the "End" column, or
+                        alternatively to this, just set 2.5 (two and a half hours) in the "Period"
+                        column.
+                    </para>
+                </example>
+            </listitem>
+            <listitem>
+                <para>
+                    After setting working hours in one or more rows, make sure the "Total" (in the
+                    table footer) has the expected value, the sum of all working hours. Then click
+                    on "Submit" button on the lower part of the screen.
+                </para>
+            </listitem>
+        </orderedlist>
+    </section>
+</chapter>
+
+<!--
+***************************************** Technical part ************************************
+-->
+<!-- ********************************* -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************* -->
+<!--
+<chapter>
+    <title>Technical Implementation Details</title>
+    <para></para>
+</chapter>
+ -->
+<!-- *********** -->
+<!-- 8. Filelist -->
+<!-- *********** -->
+<chapter>
+    <title>File List</title>
+    <para>This list shows all included files and the referring permissions.</para>
+    <para>$Filelist</para>
+</chapter>
+
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
+<chapter>
+    <title>Tests</title>
+    <para>This module has been tested on the current state of the art in quality.</para>
+    <section>
+        <title>Test Cases</title>
+        <para>
+            To test this package please follow the examples described in the "Usage" section. All the
+            tests cases should return the expected results defined at the beginning of each example.
+        </para>
+    </section>
+    <section>
+        <title>Unit Tests</title>
+        <para>
+            To ensure the quality of the module, several so-called unit tests were created, to test
+            the functionalities of this module. These unit tests can be run via command line.
+        </para>
+        <para>
+            ATTENTION: Please never run unit tests on a productive system, since the added test data
+            to the system will no longer be removed. Always use a test system.
+        </para>
+        <para>Run the package specific unit tests</para>
+        <para>
+            To run only the unit test which will be delivered with this package, use the following
+            command on the command line:
+        </para>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --directory TimeAccounting
+        </screen>
+        <para>Selenium unit tests</para>
+        <para>
+            To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
+        </para>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentTimeAccountingEdit --test AgentTimeAccountingOverview --test AgentTimeAccountingReporting --test AgentTimeAccountingSetting --test AgentTimeAccountingView
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Notification/TimeAccounting --test ToolBar/IncompleteWorkingDays
+         </screen>
+         <para>Run all available unit tests</para>
+         <para>
+             To run all available unit tests, use the following command on the command line:
+         </para>
+        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run</screen>
+    </section>
+</chapter>
+
+<!-- ************* -->
+<!-- 10. Changelog -->
+<!-- ************* -->
+<chapter>
+    <title>ChangeLog</title>
+    <para>$ChangeLog</para>
+</chapter>
+
+</book>

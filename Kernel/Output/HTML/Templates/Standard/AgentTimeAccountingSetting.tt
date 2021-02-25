@@ -1,0 +1,524 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+[% RenderBlockStart("OverviewProject") %]
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">[% Translate("Edit Time Accounting Project Settings") | html %]</h1>
+
+    <div class="SidebarColumn">
+[% RenderBlockStart("ActionListProject") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionAddProject") %]
+                    <li>
+                        <form action="[% Env("CGIHandle") %]" method="post">
+                            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                            <input type="hidden" name="Subaction" value="AddProject"/>
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("Add") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add project") | html %]</span>
+                            </button>
+                        </form>
+                    </li>
+[% RenderBlockEnd("ActionAddProject") %]
+
+[% RenderBlockStart("ActionSettingOverview") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to settings overview") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionSettingOverview") %]
+                </ul>
+            </div>
+        </div>
+[% RenderBlockEnd("ActionListProject") %]
+    </div>
+
+    <div class="ContentColumn">
+
+[% RenderBlockStart("OverviewUpdateProject") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+[% RenderBlockStart("HeaderAddProject") %]
+                <h2>[% Translate("Add Project") | html %]</h2>
+[% RenderBlockEnd("HeaderAddProject") %]
+[% RenderBlockStart("HeaderEditProject") %]
+                <h2>[% Translate("Edit Project Settings") | html %]</h2>
+[% RenderBlockEnd("HeaderEditProject") %]
+            </div>
+            <div class="Content">
+                <form action="[% Env("CGIHandle") %]" method="post" name="ProjectUpdate" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]">
+                    <input type="hidden" name="Subaction" value="[% Data.Action | html %]Action">
+                    <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+                    <fieldset class="TableLike">
+
+                        <label class="Mandatory" for="Project"><span class="Marker">*</span> [% Translate("Name") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Project" id="Project" value="[% Data.Project | html %]" class="W50pc Validate_Required [% Data.ProjectInvalid | html %]" maxlength="50"/>
+                            <div id="ProjectError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+
+[% RenderBlockStart("ProjectMissingValue") %]
+                            <div id="ProjectServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+[% RenderBlockEnd("ProjectMissingValue") %]
+
+[% RenderBlockStart("ProjectDuplicateName") %]
+                            <div id="ProjectServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("There is already a project with this name. Please, choose a different one.") | html %]</p>
+                            </div>
+[% RenderBlockEnd("ProjectDuplicateName") %]
+
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="ProjectDescription">[% Translate("Description") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="ProjectDescription" id="ProjectDescription" value="[% Data.ProjectDescription | html %]" class="W50pc" maxlength="150"/>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="ProjectStatus">[% Translate("Status") | html %]:</label>
+                        <div class="Field">
+                            [% Data.StatusOption %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewUpdateProject") %]
+    </div>
+</div>
+[% RenderBlockEnd("OverviewProject") %]
+
+[% RenderBlockStart("Setting") %]
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">[% Translate("Edit Time Accounting Settings") | html %]</h1>
+
+    <div class="SidebarColumn">
+
+[% RenderBlockStart("ActionListSetting") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionAddProject") %]
+                    <li>
+                        <form action="[% Env("CGIHandle") %]" method="post">
+                            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                            <input type="hidden" name="Subaction" value="AddProject"/>
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("Add") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add project") | html %]</span>
+                            </button>
+                        </form>
+                    </li>
+[% RenderBlockEnd("ActionAddProject") %]
+[% RenderBlockStart("ActionAddTask") %]
+                    <li>
+                        <form action="[% Env("CGIHandle") %]" method="post">
+                            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                            <input type="hidden" name="Subaction" value="AddTask"/>
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("Add task") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add task") | html %]</span>
+                            </button>
+                        </form>
+                    </li>
+[% RenderBlockEnd("ActionAddTask") %]
+[% RenderBlockStart("ActionAddUser") %]
+                    <li>
+                        <form action="[% Env("CGIHandle") %]" method="post" id="ActionAddUser">
+                            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                            <input type="hidden" name="Subaction" value="AddUser"/>
+                            [% Data.NewUserOption %]
+                        </form>
+                    </li>
+[% RenderBlockEnd("ActionAddUser") %]
+[% RenderBlockStart("ActionOverviewSetting") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to settings overview") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionOverviewSetting") %]
+
+                </ul>
+            </div>
+        </div>
+[% RenderBlockEnd("ActionListSetting") %]
+
+    [% IF !Env("Subaction") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Filter") | html %]</h2>
+            </div>
+            <div class="Content">
+                <input type="text" class="FilterBox" placeholder="[% Translate("Just start typing to filter...") | html %]" value="" title="[% Translate("Filter for projects, tasks or users") | html %]" />
+            </div>
+        </div>
+    [% END %]
+
+[% RenderBlockStart("Reference") %]
+        <div class="WidgetSimple SpacingTop">
+            <div class="Header">
+                <h2>[% Translate("Reference") | html %]</h2>
+            </div>
+            <div class="Content">
+                <p class="FieldExplanation">
+                    [% Translate("Required fields are marked with a \"*\".") | html %]
+                </p>
+                <p class="FieldExplanation">
+                    [% Translate("Time periods can not be deleted.") | html %]
+                </p>
+            </div>
+        </div>
+[% RenderBlockEnd("Reference") %]
+
+    </div>
+
+    <div class="ContentColumn">
+[% RenderBlockStart("OverviewResultProject") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
+                <h2>[% Translate("Project List") | html %]</h2>
+            </div>
+            <div class="Content">
+
+[% RenderBlockStart("NoProjectDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoProjectDataFoundMsg") %]
+
+[% RenderBlockStart("OverviewResultProjectTable") %]
+                <table class="DataTable" id="Projects">
+                    <thead>
+                        <tr>
+                            <th class="W33pc">[% Translate("Project") | html %]</th>
+                            <th class="W33pc">[% Translate("Comment") | html %]</th>
+                            <th>[% Translate("Status") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="FilterMessage Hidden">
+                            <td colspan="2">
+                                [% Translate("No matches found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockStart("OverviewResultProjectRow") %]
+                        <tr [% IF Data.Status == 'invalid'%]class="Invalid"[% END %]>
+                            <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=EditProject;ID=[% Data.ProjectID | uri %]">[% Data.Project | html %]</a></td>
+                            <td title="[% Data.ProjectDescription | html %]">[% Data.ProjectDescription | truncate(40) | html %]</td>
+                            <td>[% Translate(Data.Status) | html %]</td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultProjectRow") %]
+                    </tbody>
+                </table>
+[% RenderBlockEnd("OverviewResultProjectTable") %]
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewResultProject") %]
+
+[% RenderBlockStart("OverviewResultSetting") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
+                <h2>[% Translate("Task List") | html %]</h2>
+            </div>
+            <div class="Content">
+
+[% RenderBlockStart("NoSettingDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoSettingDataFoundMsg") %]
+
+[% RenderBlockStart("OverviewResultSettingTable") %]
+                <table class="DataTable" id="Tasks">
+                    <thead>
+                        <tr>
+                            <th class="W33pc">[% Translate("Task") | html %]</th>
+                            <th>[% Translate("Status") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="FilterMessage Hidden">
+                            <td colspan="2">
+                                [% Translate("No matches found.") | html %]
+                            </td>
+                        </tr>
+
+[% RenderBlockStart("OverviewResultSettingRow") %]
+                        <tr [% IF Data.Status == 'invalid'%]class="Invalid"[% END %]>
+                            <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=EditTask;ActionID=[% Data.ActionID | uri %]">[% Data.Action | html %]</a></td>
+                            <td>[% Translate(Data.Status) | html %]</td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultSettingRow") %]
+                    </tbody>
+                </table>
+[% RenderBlockEnd("OverviewResultSettingTable") %]
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewResultSetting") %]
+
+[% RenderBlockStart("OverviewUpdateTask") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+[% RenderBlockStart("HeaderAddTask") %]
+                <h2>[% Translate("Add Task") | html %]</h2>
+[% RenderBlockEnd("HeaderAddTask") %]
+[% RenderBlockStart("HeaderEditTask") %]
+                <h2>[% Translate("Edit Task Settings") | html %]</h2>
+[% RenderBlockEnd("HeaderEditTask") %]
+            </div>
+            <div class="Content">
+                <form action="[% Env("CGIHandle") %]" method="post" name="TaskUpdate" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]">
+                    <input type="hidden" name="Subaction" value="[% Data.Action | html %]Action">
+                    <input type="hidden" name="ActionID" value="[% Data.ActionID | html %]"/>
+                    <fieldset class="TableLike">
+
+                        <label class="Mandatory" for="Task"><span class="Marker">*</span> [% Translate("Task") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Task" id="Task" value="[% Data.Task | html %]" class="W50pc Validate_Required [% Data.TaskInvalid | html %]" maxlength="50"/>
+                            <div id="TaskError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+
+[% RenderBlockStart("TaskMissingValue") %]
+                            <div id="TaskServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+[% RenderBlockEnd("TaskMissingValue") %]
+
+[% RenderBlockStart("TaskDuplicateName") %]
+                            <div id="TaskServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("There is already a task with this name. Please, choose a different one.") | html %]</p>
+                            </div>
+[% RenderBlockEnd("TaskDuplicateName") %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="TaskStatus">[% Translate("Status") | html %]:</label>
+                        <div class="Field">
+                            [% Data.StatusOption %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewUpdateTask") %]
+
+[% RenderBlockStart("OverviewResultUser") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
+                <h2>[% Translate("User List") | html %]</h2>
+            </div>
+            <div class="Content">
+
+[% RenderBlockStart("NoUserDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoUserDataFoundMsg") %]
+
+[% RenderBlockStart("OverviewResultUserTable") %]
+                <table class="DataTable" id="Users">
+                    <thead>
+                        <tr>
+                            <th class="W33pc">[% Translate("User") | html %]</th>
+                            <th class="W33pc">[% Translate("Comment") | html %]</th>
+                            <th>[% Translate("Calendar") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="FilterMessage Hidden">
+                            <td colspan="3">
+                                [% Translate("No matches found.") | html %]
+                            </td>
+                        </tr>
+
+[% RenderBlockStart("OverviewResultUserRow") %]
+                        <tr>
+                            <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=EditUser;UserID=[% Data.UserID | uri %]">[% Data.User | html %]</a></td>
+                            <td>[% Data.Comment %]</td>
+                            <td>[% Translate(Data.Calendar) | html %]</td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultUserRow") %]
+                    </tbody>
+                </table>
+[% RenderBlockEnd("OverviewResultUserTable") %]
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewResultUser") %]
+
+[% RenderBlockStart("OverviewUpdateUser") %]
+    <form action="[% Env("CGIHandle") %]" method="post" name="UserUpdate" class="Validate PreventMultipleSubmits">
+        <input type="hidden" name="Action" value="[% Env("Action") %]" />
+        <input type="hidden" name="Subaction" value="[% Data.Subaction | html %]" />
+        <input type="hidden" name="UserID" value="[% Data.UserID | html %]" />
+        <input type="hidden" name="AddPeriod" value="" />
+        <input type="hidden" name="SubmitUserData" value="" />
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("User Settings") | html %]</h2>
+            </div>
+            <div class="Content">
+                <fieldset class="TableLike">
+                    <label for="Name">[% Translate("Name") | html %] ([% Translate("Username") | html %]):</label>
+                    <div class="Value">[% Data.UserFullname | html %] ([% Data.UserLogin | html %])</div>
+                    <div class="Clear"></div>
+
+                    <label for="Description">[% Translate("Description") | html %]:</label>
+                    <div class="Field">
+                        <input type="text" name="Description" id="Description" class="W50pc" value="[% Data.Description | html %]" />
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="ShowOvertime">[% Translate("User is allowed to see overtimes") | html %]</label>
+                    <div class="Field">
+                        <input type="checkbox" name="ShowOvertime" id="ShowOvertime" value="1" title="[% Translate("Show Overtime") | html %]" [% Data.ShowOvertime %] />
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="CreateProject">[% Translate("User is allowed to create projects") | html %]</label>
+                    <div class="Field">
+                        <input type="checkbox" name="CreateProject" id="CreateProject" value="1" title="[% Translate("Allow project creation") | html %]" [% Data.CreateProject %] />
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="AllowSkip">[% Translate("User is allowed to skip time accounting") | html %]</label>
+                    <div class="Field">
+                        <input type="checkbox" name="AllowSkip" id="AllowSkip" value="1" title="[% Translate("Allow time accounting skipping") | html %]" [% Data.AllowSkip %] />
+                        <p class="FieldExplanation">[% Translate("If this option is selected, time accounting is effectively optional for the user.") | html %]</p>
+                        <p class="FieldExplanation">[% Translate("There will be no warnings about missing entries and no entry enforcement.") | html %]</p>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="Calendar">[% Translate("Calendar") | html %]:</label>
+                    <div class="Field">
+                        [% Data.CalendarOption %]
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Time Spans") | html %]</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable NoHover TimeAccountingTable">
+                    <thead>
+                        <tr>
+                            <th><span class="Marker">*</span> [% Translate("Period Begin") | html %]</th>
+                            <th><span class="Marker">*</span> [% Translate("Period End") | html %]</th>
+                            <th><span class="Marker">*</span> [% Translate("Days of Vacation") | html %]</th>
+                            <th>[% Translate("Hours per Week") | html %]</th>
+                            <th>[% Translate("Authorized Overtime") | html %]</th>
+                            <th>[% Translate("Status") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("PeriodOverviewRow") %]
+                        <tr>
+                            <td>
+                                <input type="text" id="DateStart-[% Data.Period | html %]" name="DateStart[[% Data.Period | html %]]" value="[% Data.DateStart | html %]" class=" Validate_Required [% Data.DateStartInvalid | html %]" title="[% Translate("Start Date") | html %]" />
+                                <div id="DateStart-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
+[% RenderBlockStart("DateStartInvalid") %]
+                                <div id="DateStart-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+[% RenderBlockEnd("DateStartInvalid") %]
+[% RenderBlockStart("DateStartMissingValue") %]
+                                <div id="DateStart-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+[% RenderBlockEnd("DateStartMissingValue") %]
+                            </td>
+                            <td>
+                                <input type="text" id="DateEnd-[% Data.Period | html %]" name="DateEnd[[% Data.Period | html %]]" value="[% Data.DateEnd | html %]" class=" Validate_Required [% Data.DateEndInvalid | html %]" title="[% Translate("End Date") | html %]" />
+                                <div id="DateEnd-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
+[% RenderBlockStart("DateEndInvalid") %]
+                                <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+[% RenderBlockEnd("DateEndInvalid") %]
+[% RenderBlockStart("DateEndMissingValue") %]
+                                <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+[% RenderBlockEnd("DateEndMissingValue") %]
+[% RenderBlockStart("DateEndBeforeDateStart") %]
+                                <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Period end must be after period begin.") | html %]</p></div>
+[% RenderBlockEnd("DateEndBeforeDateStart") %]
+                            </td>
+                            <td>
+                                <input type="text" id="LeaveDays-[% Data.Period | html %]" name="LeaveDays[[% Data.Period | html %]]" value="[% Data.LeaveDays | html %]" class="LeaveDays Validate_Required [% Data.LeaveDaysInvalid | html %]" title="[% Translate("Leave Days") | html %]" />
+                                <div id="LeaveDays-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                <div id="LeaveDays-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            </td>
+                            <td>
+                                <input type="text" id="WeeklyHours-[% Data.Period | html %]" name="WeeklyHours[[% Data.Period | html %]]" value="[% Data.WeeklyHours | html %]" title="[% Translate("Weekly Hours") | html %]" />
+                            </td>
+                            <td>
+                                <input type="text" id="Overtime-[% Data.Period | html %]" name="Overtime[[% Data.Period | html %]]" value="[% Data.Overtime | html %]" title="[% Translate("Overtime") | html %]" />
+                            </td>
+                            <td>
+                                [% Data.PeriodStatusOption %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("PeriodOverviewRow") %]
+
+[% RenderBlockStart("PeriodOverviewRowNoData") %]
+                        <tr>
+                            <td colspan="6">
+                                [% Translate("No time periods found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("PeriodOverviewRowNoData") %]
+                    </tbody>
+                </table>
+
+                <button type="submit" title="[% Translate("Add time period") | html %]" value="[% Translate("Add time period") | html %]" id="AddPeriod" class="CallForAction Plus SpacingTopSmall"><span><i class="fa fa-plus-square"></i> [% Translate("Add time period") | html %]</span></button>
+            </div>
+        </div>
+        <div class="WidgetSimple">
+            <div class="Content">
+                <fieldset class="TableLike">
+                    <div class="Field">
+                        <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]" id="SubmitUserData"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
+                        [% Translate("or") | html %]
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+[% RenderBlockEnd("OverviewUpdateUser") %]
+    </div>
+</div>
+
+[% RenderBlockEnd("Setting") %]

@@ -1,0 +1,855 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TimeAccounting\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTimeAccountingDelete
+msgid "Do you really want to delete the Time Accounting of this day?"
+msgstr "Je unataka kufuta Uhasibu wa Muda kwa siku ya leo?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Edit Time Record"
+msgstr "Hariri rekodi ya muda"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Go to settings"
+msgstr "Nenda kwenye mpangilio"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Date Navigation"
+msgstr "Uabiri wa tarehe"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Days without entries"
+msgstr "Siku zisizokuwa na maingizo"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Select all days"
+msgstr "Chagua siku zote"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Mass entry"
+msgstr "Ingizo la pamoja"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please choose the reason for your absence for the selected days"
+msgstr "Tafadhali chagua sababu ya kutokuwepo kwa siku zilizo chaguliwa"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On vacation"
+msgstr "Katika likizo"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On sick leave"
+msgstr "Katika ruhusa ya wagonjwa"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On overtime leave"
+msgstr "Katika ruhusa ya muda wa nyongeza"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Required fields are marked with a \"*\"."
+msgstr "Sehemu zinazotakiwa zina alama \"*\""
+
+#. Template: AgentTimeAccountingEdit
+msgid "You have to fill in start and end time or a time period."
+msgstr "Unatakiwa kujaza muda wa kuanza na kumaliza au muda uliotumika."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Project"
+msgstr "Mradi"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Task"
+msgstr "Kazi"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Remark"
+msgstr "Maoni"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please add a remark with more than 8 characters!"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Negative times are not allowed."
+msgstr "Muda hasi hauruhusiwi."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. Start time matches another interval."
+msgstr ""
+"Muda uliojirudia hauruhusiwi. Muda wa kuanza unafanana na muda mwingine."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid format! Please enter a time with the format HH:MM."
+msgstr "Muundo batili! Tafadhali ingiza muda na muundo HH:MM."
+
+#. Template: AgentTimeAccountingEdit
+msgid "24:00 is only permitted as end time."
+msgstr "24:00 inaruhusiwa katika muda wa kumaliza."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid time! A day has only 24 hours."
+msgstr "Muda batili! Siku ina masaa 24 tu."
+
+#. Template: AgentTimeAccountingEdit
+msgid "End time must be after start time."
+msgstr "Muda wa kumaliza lazima uwe baada ya muda wa kuanza."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. End time matches another interval."
+msgstr ""
+"Masaa yaliyojirudia hayaruhusiwi. Muda wa kumaliza unafanana muda mwingine."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! A day has only 24 hours."
+msgstr "Muda batili! Siku ina masaa 24 tu."
+
+#. Template: AgentTimeAccountingEdit
+msgid "A valid period must be greater than zero."
+msgstr "Muda halali una masaa zaidi ya sifuri."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! Negative periods are not allowed."
+msgstr "Kipindi batili! Vipindi hasi haviruhusiwi."
+
+#. Template: AgentTimeAccountingEdit
+msgid "Add one row"
+msgstr "Ongeza safu moja"
+
+#. Template: AgentTimeAccountingEdit
+msgid "You can only select one checkbox element!"
+msgstr "Unaweza kuchagua elementi moja katika cheki boksi"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on sick leave?"
+msgstr "Una uhakika ulifanya kazi wakati upo likizo ya wagonjwa?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on vacation?"
+msgstr "Una uhakika ulifanya kazi wakati upo likizo?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on overtime leave?"
+msgstr "Una uhakika ulifanya kazi wakati upo likizo ya muda wa nyongeza?"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked more than 16 hours?"
+msgstr "Una uhakika ulifanya kazi zaidi ya masaa 16?"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Time reporting monthly overview"
+msgstr "Mapitio ya mwezi ya uarifu wa muda "
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (Hours)"
+msgstr "Muda wa nyogneza (Masaa)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (this month)"
+msgstr "Muda wa nyongeza (mwezi huu)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (total)"
+msgstr "Muda wa nyongeza (jumla)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining overtime leave"
+msgstr "Muda uliobaki wa likizo ya muda wa nyongeza"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation (Days)"
+msgstr "Likizo (siku)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (this month)"
+msgstr "Likizo iliyochukuliwa (mwezi huu)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (total)"
+msgstr "Likizo iliyochukuliwa (jumla)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining vacation"
+msgstr "Likizo iliyobaki"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick Leave (Days)"
+msgstr "Likizo ya wagonjwa (siku)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (this month)"
+msgstr "Likizo ya wagonjwa iliyochukuliwa (mwezi huu)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (total)"
+msgstr "Likizo ya wagonjwa iliyochukuliwa (jumla)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Previous month"
+msgstr "Mwezi uliopita"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Next month"
+msgstr "Mwezi ujao"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Weekday"
+msgstr "Siku za kazi"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Working Hours"
+msgstr "Masaa ya kazi"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Total worked hours"
+msgstr "Jumla ya masaa ya kazi"
+
+#. Template: AgentTimeAccountingOverview
+msgid "User's project overview"
+msgstr "Mapitio ya mradi wa mtumiaji"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (monthly)"
+msgstr "Masaa (kwa mwezi)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (Lifetime)"
+msgstr "Masaa (muda wote)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Grand total"
+msgstr "Jumla kuu"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Time reporting"
+msgstr "Uarifu wa muda"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Month Navigation"
+msgstr "Uabiri wa mwezi"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Go to date"
+msgstr "Nenda tarehe"
+
+#. Template: AgentTimeAccountingReporting
+msgid "User reports"
+msgstr "Ripoti za mtumiaji"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Monthly total"
+msgstr "Jumla ya mwezi"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Lifetime total"
+msgstr "Jumla ya muda wote"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Overtime leave"
+msgstr "Likizo ya muda wa nyongeza"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation"
+msgstr "Likizo"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Sick leave"
+msgstr "Likizo ya wagonjwa"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation remaining"
+msgstr "Likizo iliyobaki"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Project reports"
+msgstr "Ripoti za mradi"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Project report"
+msgstr "Ripoti ya mradi"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Go to reporting overview"
+msgstr "Nenda kwenye mapitio ya uarifu"
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+"Kwa sasa watumiaji amilifu tu katika mradi huu wataonyeshwa. Kubadilisha "
+"tabia hii, tafadhali sasisha mpangalio."
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+"Kwa sasa watumiaji wote wa muda uliohesabika wataonyeshwa. Kubadilisha tabia "
+"hii, tafadhali sasisha mpangalio."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Project Settings"
+msgstr "Hariri Uhasibu wa Muda kwenye mipangilio ya mradi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add project"
+msgstr "Ongeza mradi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Go to settings overview"
+msgstr "Nenda kwenye mapitio ya mpangiio"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Project"
+msgstr "Ongeza mradi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Project Settings"
+msgstr "Hariri mipangilio ya mradi"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There is already a project with this name. Please, choose a different one."
+msgstr "Tayari kuna mradi wenye hili jina. Tafadhali, chagua jengine."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Settings"
+msgstr "Hariri mipangilio ya Uhasubu wa Muda"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add task"
+msgstr "Ongeza kazi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Filter for projects, tasks or users"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Project List"
+msgstr "Orodha ya miradi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Task List"
+msgstr "Orodha ya kazi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Task"
+msgstr "Ongeza kazi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Task Settings"
+msgstr "Hariri mipangilio ya kazi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "There is already a task with this name. Please, choose a different one."
+msgstr "Tayari kuna kazi yenye hili jina. Tafadhali chagua jengine."
+
+#. Template: AgentTimeAccountingSetting
+msgid "User List"
+msgstr "Orodha ya mtumiaji"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User Settings"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to see overtimes"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Show Overtime"
+msgstr "Onyesha muda wa nyongeza"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow project creation"
+msgstr "Ruhusu utengenezaji wa mradi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period Begin"
+msgstr "Kuanza kwa kipengele"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period End"
+msgstr "Kuisha kwa kipengele"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Days of Vacation"
+msgstr "Siku za likizo"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Hours per Week"
+msgstr "Masaa kwa wiki"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Authorized Overtime"
+msgstr "Muda wa nyongeza ulioruhusiwa"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "Tarehe ya kuanza"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Please insert a valid date."
+msgstr "Tafadhali ingiza tarehe halali"
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "Tarehe ya kumaliza"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period end must be after period begin."
+msgstr "Mwisho wa kipengele lazima uwe baada ya mwanzo wa kipengele"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr "Siku za likizo"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr "Masaa ya wiki"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "Muda wa nyongeza"
+
+#. Template: AgentTimeAccountingSetting
+msgid "No time periods found."
+msgstr "Hakuna vipengele vya muda vilivyopatikana"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add time period"
+msgstr "Ongeza kipengele cha muda"
+
+#. Template: AgentTimeAccountingView
+msgid "View Time Record"
+msgstr "Onyesha kipengele cha muda"
+
+#. Template: AgentTimeAccountingView
+msgid "View of "
+msgstr "Muonekano wa"
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Siku iliyopita"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Siku inayofwata"
+
+#. Template: AgentTimeAccountingView
+msgid "No data found for this day."
+msgstr "Hakuna data zilizopatikana kwa siku hii"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr "Ingizo limefanikiwa"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr "Kosa katika kuingiza tarehe zaidi ya moja!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr "Maingizo yaliyofanikiwa kwa tarehe zaidi ya moja!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr "Ingizo la tarehe ni batili! Tarehe imebadilishwa leo."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "Uarifu"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Mpangilio"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr "Tafadhali ingiza massaa ya kazi!"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr ""
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Tafadhali chagua japo siku moja"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "Ingizo la pamoja"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Tafadhali chagua sababu ya kuto kuwepo!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "Futa ingizo la Uhasibu wa Muda"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "Hakiki ingizo"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+"Moduli ya taarifa kwa kiolesura cha wakala kuona idadi ya siku za kazi za "
+"mtumiaji zisizo kamili."
+
+#. SysConfig
+msgid "Default name for new actions."
+msgstr "Jina la chaguo-msingi kwa vitendo vipya."
+
+#. SysConfig
+msgid "Default name for new projects."
+msgstr "Jina la chaguo-msingi kwa miradi mipya"
+
+#. SysConfig
+msgid "Default setting for date end."
+msgstr "Chaguo-msingi kwa mipangilio ya tarehe ya kumaliza"
+
+#. SysConfig
+msgid "Default setting for date start."
+msgstr "Chaguo-msingi kwa mipangilio ya tarehe ya kuanza."
+
+#. SysConfig
+msgid "Default setting for description."
+msgstr "Chaguo-msingi kwa mipangilio ya maelezo"
+
+#. SysConfig
+msgid "Default setting for leave days."
+msgstr "Chaguo-msingi la siku za likizo"
+
+#. SysConfig
+msgid "Default setting for overtime."
+msgstr "Chaguo-msingi la muda wa nyongeza"
+
+#. SysConfig
+msgid "Default setting for the standard weekly hours."
+msgstr "Chaguo-msingi la mipangilio ya siku za kawaida za wiki"
+
+#. SysConfig
+msgid "Default status for new actions."
+msgstr "Hali ya chaguo-msingi kwa vitendo vipya."
+
+#. SysConfig
+msgid "Default status for new projects."
+msgstr "Hali ya chaguo-msingi kwa miradi mipya."
+
+#. SysConfig
+msgid "Default status for new users."
+msgstr "Hali ya chaguo-msingi kwa watumiaji wapya."
+
+#. SysConfig
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+"Inafafanua miradi ambayo maoni yanahitajika. Kama RegExp inafanana katika "
+"mradi, unatakiwa kuweka maoni pia. RegExp inatumia parameta ya smx"
+
+#. SysConfig
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+"Inahakiki kama moduli ya takwimu inaweza kutengeneza taarifa ya uhasibu wa "
+"muda."
+
+#. SysConfig
+msgid "Edit time accounting settings."
+msgstr ""
+
+#. SysConfig
+msgid "Edit time record."
+msgstr ""
+
+#. SysConfig
+msgid "For how many days ago you can insert working units."
+msgstr "Kwa siku ngapi zilizopita unaweza kuingiza vitengo vya kazi."
+
+#. SysConfig
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+"Kama imewezeshwa, watumiaji walioweka muda wa kazi kwa mradi uliochaguliwa "
+"ndio wataonyeshwa"
+
+#. SysConfig
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+"Kama imewezeshwa, mtumiaji anaruhusiwa kuingiza \"kwenye likizo\", \"kwenye "
+"likizo ya wagonjwa\", \"kwenye likizo ya siku za nyongeza\" kwa tarehe zaidi "
+"ya moja kwa mkupuo."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
+msgstr "Kima cha juu cha siku za kazi baada ya vitengo vya kazi kuingizwa."
+
+#. SysConfig
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+"Kima cha juu cha siku za kazi bila ya vitengo vya kazi kuingizwa ambavyo  "
+"onyo litaonyeshwa."
+
+#. SysConfig
+msgid "Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+"Maneno ya kawaida yanayo kwamisha orodha ya vitendo kwa mradi uliochaguliwa. "
+"Ufunguo una maneno ya kawaida ya mradi (miradi), maudhui yana maneno ya "
+"kawaida ya kitendo (vitendo). "
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+"Maneno ya kawaida ya kuzuia orodha ya mradi kuendana na makundi ya "
+"watumiaji. Ufunguo una maneno ya kawaida ya mradi (miradi), maudhui yana "
+"makundi yaliyogawanywa kwa alama ya mkato."
+
+#. SysConfig
+msgid "Specifies if working hours can be inserted without start and end times."
+msgstr ""
+"Inabainisha kama masaa ya kazi yanaweza kuingizwa bila ya muda wa kuanza na "
+"kumaliza."
+
+#. SysConfig
+msgid "This module forces inserts in TimeAccounting."
+msgstr "Hii moduli inaingiza Uhasibu wa Muda"
+
+#. SysConfig
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+"Hii moduli ya taarifa inatoa onyo endapo kuna siku nyingi za kazi ambazo "
+"hazijakamilika."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr "Uhasibu wa muda"
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr "Hariri uhasibu wa muda."
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr "Mapitio ya uhasibu wa muda."
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr "Uarifu wa uhasibu wa muda."
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr "Mpangilio wa uhasibu wa muda."
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr "Muonekano wa uhasibu wa muda "
+
+#. SysConfig
+msgid "Time accounting."
+msgstr "Uhasibu wa muda"
+
+#. SysConfig
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
+"Itatumika kama baadhi ya vitendo vitapunguza muda wa kazi (mfano, kama nusu "
+"ya muda wa kusafiri umelipwa Ufonguo=> kusafiri; maudhui=> 50)."

@@ -1,0 +1,824 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TimeAccounting\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTimeAccountingDelete
+msgid "Do you really want to delete the Time Accounting of this day?"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Edit Time Record"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Go to settings"
+msgstr "前往設定"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Date Navigation"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Days without entries"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Select all days"
+msgstr "選取所有日子"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Mass entry"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please choose the reason for your absence for the selected days"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "On vacation"
+msgstr "休假"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On sick leave"
+msgstr "病假"
+
+#. Template: AgentTimeAccountingEdit
+msgid "On overtime leave"
+msgstr "超時工作補假"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Required fields are marked with a \"*\"."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "You have to fill in start and end time or a time period."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Project"
+msgstr "項目"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Task"
+msgstr "工作"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Remark"
+msgstr "備註"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Please add a remark with more than 8 characters!"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Negative times are not allowed."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. Start time matches another interval."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid format! Please enter a time with the format HH:MM."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "24:00 is only permitted as end time."
+msgstr "24:00 只容許於設定結束時間"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid time! A day has only 24 hours."
+msgstr "無效的時間! 一日只有24小時。"
+
+#. Template: AgentTimeAccountingEdit
+msgid "End time must be after start time."
+msgstr "結束時間必須在開始時間之後"
+
+#. Template: AgentTimeAccountingEdit
+msgid "Repeated hours are not allowed. End time matches another interval."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! A day has only 24 hours."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "A valid period must be greater than zero."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Invalid period! Negative periods are not allowed."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Add one row"
+msgstr "添加一行"
+
+#. Template: AgentTimeAccountingEdit
+msgid "You can only select one checkbox element!"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on sick leave?"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on vacation?"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked while you were on overtime leave?"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Are you sure that you worked more than 16 hours?"
+msgstr ""
+
+#. Template: AgentTimeAccountingOverview
+msgid "Time reporting monthly overview"
+msgstr ""
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (Hours)"
+msgstr "超時 (小時)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (this month)"
+msgstr "超時 (此月)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Overtime (total)"
+msgstr "超時 (總計)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining overtime leave"
+msgstr "餘下的超時工作補假"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation (Days)"
+msgstr "休假 (日)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (this month)"
+msgstr "已提交的休假 (此月)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Vacation taken (total)"
+msgstr "已提交的休假 (總計)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Remaining vacation"
+msgstr "餘下的休假"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick Leave (Days)"
+msgstr "病假 (日)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (this month)"
+msgstr "已放的病假 (此月)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Sick leave taken (total)"
+msgstr "已放的病假 (總計)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Previous month"
+msgstr "上月"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Next month"
+msgstr "下月"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Weekday"
+msgstr "平日"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Working Hours"
+msgstr "工作時間"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Total worked hours"
+msgstr "工作時間總計"
+
+#. Template: AgentTimeAccountingOverview
+msgid "User's project overview"
+msgstr ""
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (monthly)"
+msgstr "小時 (每月)"
+
+#. Template: AgentTimeAccountingOverview
+msgid "Hours (Lifetime)"
+msgstr ""
+
+#. Template: AgentTimeAccountingOverview
+msgid "Grand total"
+msgstr ""
+
+#. Template: AgentTimeAccountingReporting
+msgid "Time reporting"
+msgstr ""
+
+#. Template: AgentTimeAccountingReporting
+msgid "Month Navigation"
+msgstr ""
+
+#. Template: AgentTimeAccountingReporting
+msgid "Go to date"
+msgstr "前往日期"
+
+#. Template: AgentTimeAccountingReporting
+msgid "User reports"
+msgstr "用戶報告"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Monthly total"
+msgstr "每月總計"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Lifetime total"
+msgstr ""
+
+#. Template: AgentTimeAccountingReporting
+msgid "Overtime leave"
+msgstr "超時工作補假"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation"
+msgstr "休假"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Sick leave"
+msgstr "病假"
+
+#. Template: AgentTimeAccountingReporting
+msgid "Vacation remaining"
+msgstr ""
+
+#. Template: AgentTimeAccountingReporting
+msgid "Project reports"
+msgstr ""
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Project report"
+msgstr ""
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Go to reporting overview"
+msgstr ""
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Project Settings"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add project"
+msgstr "添加項目"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Go to settings overview"
+msgstr "前往設定概況"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Project"
+msgstr "添加項目"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Project Settings"
+msgstr "編輯項目設定"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There is already a project with this name. Please, choose a different one."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Time Accounting Settings"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add task"
+msgstr "添加工作"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Filter for projects, tasks or users"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Project List"
+msgstr "項目列表"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Task List"
+msgstr "工作列表"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add Task"
+msgstr "添加工作"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Edit Task Settings"
+msgstr "編輯工作設定"
+
+#. Template: AgentTimeAccountingSetting
+msgid "There is already a task with this name. Please, choose a different one."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "User List"
+msgstr "用戶列表"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User Settings"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to see overtimes"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Show Overtime"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow project creation"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period Begin"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period End"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Days of Vacation"
+msgstr "休假日數"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Hours per Week"
+msgstr "小時/每週"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Authorized Overtime"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "開始時間"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Please insert a valid date."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "結束時間"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Period end must be after period begin."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "超時工作"
+
+#. Template: AgentTimeAccountingSetting
+msgid "No time periods found."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Add time period"
+msgstr ""
+
+#. Template: AgentTimeAccountingView
+msgid "View Time Record"
+msgstr ""
+
+#. Template: AgentTimeAccountingView
+msgid "View of "
+msgstr ""
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "前一天"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "下一天"
+
+#. Template: AgentTimeAccountingView
+msgid "No data found for this day."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr "最後的項目"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time periods!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr "所有項目"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "報告"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "設置"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr "新用戶"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr ""
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "請選取至少一天!"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr ""
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "請選擇缺席原因!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr ""
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "確認插入"
+
+#. SysConfig
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
+msgstr ""
+
+#. SysConfig
+msgid "Default name for new actions."
+msgstr ""
+
+#. SysConfig
+msgid "Default name for new projects."
+msgstr ""
+
+#. SysConfig
+msgid "Default setting for date end."
+msgstr ""
+
+#. SysConfig
+msgid "Default setting for date start."
+msgstr ""
+
+#. SysConfig
+msgid "Default setting for description."
+msgstr ""
+
+#. SysConfig
+msgid "Default setting for leave days."
+msgstr ""
+
+#. SysConfig
+msgid "Default setting for overtime."
+msgstr ""
+
+#. SysConfig
+msgid "Default setting for the standard weekly hours."
+msgstr ""
+
+#. SysConfig
+msgid "Default status for new actions."
+msgstr ""
+
+#. SysConfig
+msgid "Default status for new projects."
+msgstr ""
+
+#. SysConfig
+msgid "Default status for new users."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Determines if the statistics module may generate time accounting information."
+msgstr ""
+
+#. SysConfig
+msgid "Edit time accounting settings."
+msgstr ""
+
+#. SysConfig
+msgid "Edit time record."
+msgstr ""
+
+#. SysConfig
+msgid "For how many days ago you can insert working units."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
+msgstr ""
+
+#. SysConfig
+msgid "Overview."
+msgstr "概況"
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
+msgstr ""
+
+#. SysConfig
+msgid "Specifies if working hours can be inserted without start and end times."
+msgstr ""
+
+#. SysConfig
+msgid "This module forces inserts in TimeAccounting."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
+msgstr ""
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
+msgstr ""
