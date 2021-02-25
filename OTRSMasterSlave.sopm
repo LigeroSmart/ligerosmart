@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>OTRSMasterSlave</Name>
+    <Version>0.0.0</Version>
+    <Framework Minimum="6.0.28">6.0.x</Framework>
+    <Vendor>OTRS AG</Vendor>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">Includes "Ticket Master/Slave" feature.</Description>
+    <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
+    <Description Lang="hu">A „mester/alárendelt jegy” funkciót tartalmazza.</Description>
+    <Filelist>
+        <File Permission="660" Location="Kernel/Config/Files/XML/OTRSMasterSlave.xml" />
+        <File Permission="660" Location="Kernel/Language/cs_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/de_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/es_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/id_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/it_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/ms_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/sw_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Modules/AdminDynamicFieldMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentPreMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentTicketMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/TicketBulk/MasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldMasterSlave.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketMasterSlave.tt" />
+        <File Permission="660" Location="Kernel/System/DynamicField/Driver/MasterSlave.pm" />
+        <File Permission="660" Location="Kernel/System/Ticket/Event/MasterSlave.pm" />
+        <File Permission="660" Location="scripts/test/DynamicField/MasterSlave/EditFieldRender.t" />
+        <File Permission="660" Location="scripts/test/DynamicField/MasterSlave/ValueSet.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/GenericAgent/MasterSlaveSelection.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketCreateMasterSlave.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketMasterSlave.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketSlaveSalutation.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/TicketBulk/MasterSlave.t" />
+        <File Permission="660" Location="scripts/test/Ticket/Event/MasterSlave/ReplaceCustomerRealName.t" />
+        <File Permission="660" Location="scripts/test/Ticket/Event/MasterSlave.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.Admin.DynamicFieldMasterSlave.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.TicketMasterSlave.js" />
+        <File Permission="660" Location="var/packagesetup/OTRSMasterSlave.pm" />
+    </Filelist>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeInstall();
+    ]]></CodeInstall>
+    <CodeUpgrade Type="post" Version="1.2.5"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUpgrade125();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUpgrade();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
+    ]]></CodeUpgrade>
+    <CodeReinstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeReinstall();
+    ]]></CodeReinstall>
+    <CodeUninstall Type="pre"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUninstall();
+    ]]></CodeUninstall>
+
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package OTRSMasterSlave.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; a punto de instalar el paquete OTRSMasterSlave de OTRS.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSMasterSlave OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package OTRSMasterSlave.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; apunto de actualizar el paquete OTRSMasterSlave de OTRS.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSMasterSlave OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        If you uninstall this package, ParentChild ticket links will remain, but all ticket Master
+        Slave relations that were created during the use of this package be deleted.
+        All data from these relations will be irrevocably lost!
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>ATENCI&Oacute;N</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, los v&iacute;nculos de tickets PadreHijo
+        permanecer&aacute;n, pero todas relaciones de tickets Master Slave creadas durante
+        el uso de este paquete ser&aacute;n borradas.
+        &iexcl;Todos los datos de esas relaciones se perder&aacute;n irrevocablemente!.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a szülő-gyermek jegy hivatkozások meg fognak maradni,
+        de az összes olyan mester-alárendelt kapcsolat törlésre kerül, amelyek a csomag használata
+        során lettek létrehozva.
+        Ezekből a kapcsolatokból az összes adat visszavonhatatlanul el fog veszni!
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+</otrs_package>
