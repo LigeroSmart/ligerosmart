@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>GeneralCatalog</Name>
+<!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
+    <Version>6.0.30</Version>
+    <Framework Minimum="6.0.30">6.0.x</Framework>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">The General Catalog package.</Description>
+    <Description Lang="de">Das General Catalog Paket.</Description>
+    <Description Lang="es">El paquete General Catalog.</Description>
+    <Description Lang="hu">Az általános katalógus csomag.</Description>
+    <Filelist>
+        <File Permission="660" Location="doc/general-catalog-database.dia" />
+        <File Permission="660" Location="doc/general-catalog-database.png" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/GeneralCatalog.xml" />
+        <File Permission="660" Location="Kernel/Language/ar_SA_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/bg_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/ca_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/cs_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/da_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/de_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/el_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/en_CA_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/en_GB_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/es_CO_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/es_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/et_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/fa_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_CA_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/he_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/hi_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/id_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/it_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/ko_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/lt_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/lv_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/mk_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/ms_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/nl_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sk_SK_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sl_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sw_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/tr_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Modules/AdminGeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/GeneralCatalogPreferences/Generic.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AAAGeneralCatalog.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminGeneralCatalog.tt" />
+        <File Permission="660" Location="Kernel/System/GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/System/GeneralCatalog/PreferencesDB.pm" />
+        <File Permission="660" Location="scripts/test/GeneralCatalog.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/GeneralCatalogPreferencesGeneric.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/AdminGeneralCatalog.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/arrow.gif" />
+        <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/cross.gif" />
+        <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hs.png" />
+        <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hv.png" />
+        <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/jscolor.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.GeneralCatalog.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.GeneralCatalog.JSColorPicker.js" />
+        <File Permission="660" Location="var/packagesetup/GeneralCatalog.pm" />
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="general_catalog">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="general_catalog_class" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="name" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="comments" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
+            <Unique>
+                <UniqueColumn Name="general_catalog_class" />
+                <UniqueColumn Name="name" />
+            </Unique>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="general_catalog_preferences">
+            <Column Name="general_catalog_id" Required="true" Type="INTEGER" />
+            <Column Name="pref_key" Required="true" Size="255" Type="VARCHAR" />
+            <Column Name="pref_value" Required="false" Size="255" Type="VARCHAR" />
+            <Index Name="general_catalog_preferences_general_catalog_id">
+                <IndexColumn Name="general_catalog_id" />
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="general_catalog_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUpgrade Type="pre">
+        <TableCreate Name="general_catalog_preferences" Version="1.3.72">
+            <Column Name="general_catalog_id" Required="true" Type="INTEGER" />
+            <Column Name="pref_key" Required="true" Size="255" Type="VARCHAR" />
+            <Column Name="pref_value" Required="false" Size="255" Type="VARCHAR" />
+            <Index Name="general_catalog_preferences_general_catalog_id">
+                <IndexColumn Name="general_catalog_id" />
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="general_catalog_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseUpgrade>
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="general_catalog_preferences" />
+        <TableDrop Name="general_catalog" />
+    </DatabaseUninstall>
+    <CodeInstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+
+    ]]></CodeInstall>
+    <CodeReinstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+
+    ]]></CodeReinstall>
+    <!-- It is IMPORTANT that this CodeUpgrade (Version="1.3.72") comes BEFORE the regular CodeUpgrade block without any version number! -->
+    <CodeUpgrade Type="post" Version="1.3.72"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
+
+    ]]></CodeUpgrade>
+    <CodeUninstall Type="pre"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+
+    ]]></CodeUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from this table will be irrevocably lost.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+
+        <br/>
+        <strong>ACHTUNG</strong>
+        <br/>
+        <br/>
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>ATENCIÓN</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalación serán borradas.
+        ¡Todos los datos de esas tablas serán irrevocablemente perdidos!.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+</otrs_package>
