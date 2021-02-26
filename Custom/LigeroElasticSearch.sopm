@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroElasticSearch</Name>
+    <Version>6.0.0</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Ligero Elastic Search</Description>
+    <Filelist>
+		  <File Permission="644" Location="Custom/LigeroElasticSearch.sopm"></File>
+      <File Permission="644" Location="Kernel/Config/Files/XML/LigeroElasticSearch.xml"></File>
+    </Filelist>
+</otrs_package>
