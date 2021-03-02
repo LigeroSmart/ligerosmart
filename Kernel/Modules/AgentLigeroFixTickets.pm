@@ -31,44 +31,44 @@ sub new {
 sub Run {
 	my ( $Self, %Param ) = @_;
 
-	my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
-  my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-  my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-  my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-  my $TranslateObject = $Kernel::OM->Get('Kernel::Language');
-  my $JSONObject = $Kernel::OM->Get('Kernel::System::JSON');
-  my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-  my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $TranslateObject = $Kernel::OM->Get('Kernel::Language');
+    my $JSONObject = $Kernel::OM->Get('Kernel::System::JSON');
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
 
-  $Param{TicketID} = $ParamObject->GetParam(Param => "TicketID") || "";
+    $Param{TicketID} = $ParamObject->GetParam(Param => "TicketID") || "";
 
-  my %Ticket = $TicketObject->TicketGet(
-      TicketID      => $Param{TicketID},
-      DynamicFields => 0,         # Optional, default 0. To include the dynamic field values for this ticket on the return structure.
-      UserID        => 1,
-      Silent        => 0,         # Optional, default 0. To suppress the warning if the ticket does not exist.
-  );
+    my %Ticket = $TicketObject->TicketGet(
+        TicketID      => $Param{TicketID},
+        DynamicFields => 0,         # Optional, default 0. To include the dynamic field values for this ticket on the return structure.
+        UserID        => 1,
+        Silent        => 0,         # Optional, default 0. To suppress the warning if the ticket does not exist.
+    );
 
-  my $LigeroFixModules = $Kernel::OM->Get('Kernel::Config')->Get('LigeroFix::Modules');
+    my $LigeroFixModules = $Kernel::OM->Get('Kernel::Config')->Get('LigeroFix::Modules');
 
-  my $ModuleConfig = $LigeroFixModules->{'031-Tickets'};
+    my $ModuleConfig = $LigeroFixModules->{'031-Tickets'};
 
-  my $FilterText = $ModuleConfig->{Filters};
-  while(index($FilterText, '<OTRS_Ticket_') > -1){
-    my $tag = substr $FilterText, index($FilterText, '<OTRS_Ticket_');
-    $tag = substr $tag, 0, index($tag,'>')+1;
+    my $FilterText = $ModuleConfig->{Filters};
+    while(index($FilterText, '<OTRS_Ticket_') > -1){
+        my $tag = substr $FilterText, index($FilterText, '<OTRS_Ticket_');
+        $tag = substr $tag, 0, index($tag,'>')+1;
 
-    my $field = substr $tag, 13, index($tag,'>') -13;
+        my $field = substr $tag, 13, index($tag,'>') -13;
+        
+        my $valueToSubst = $Ticket{$field};
+
+        $FilterText =~ s/$tag/$valueToSubst/ig;
+    }
+
+    my %SearchParams        = $Self->_SearchParamsGet(Filters => $FilterText);
+    my %TicketSearch        = %{ $SearchParams{TicketSearch} };
+    my %TicketSearchSummary = %{ $SearchParams{TicketSearchSummary} };
     
-    my $valueToSubst = $Ticket{$field};
-
-    $FilterText =~ s/$tag/$valueToSubst/ig;
-  }
-
-  my %SearchParams        = $Self->_SearchParamsGet(Filters => $FilterText);
-  my %TicketSearch        = %{ $SearchParams{TicketSearch} };
-  my %TicketSearchSummary = %{ $SearchParams{TicketSearchSummary} };
-  
 
 	if ( $Self->{Subaction} eq 'GetCounter' ) {
 
@@ -268,9 +268,10 @@ sub _SearchParamsGet {
     );
 
     # get column names from Preferences
-    my $PreferencesColumn = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
+    my $PreferencesColumn;
+    $PreferencesColumn = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
         Data => $Preferences{ $Self->{PrefKeyColumns} },
-    );
+    ) if $Self->{PrefKeyColumns};
 
     # check for default settings
     my @Columns;
