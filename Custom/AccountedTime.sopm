@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
     <Name>AccountedTime</Name>
-    <Version>6.0.7</Version>
+    <Version>6.0.8</Version>
     <PackageRequired Version="6.x.x">HighCharts</PackageRequired>
     <Vendor>Ligero Community</Vendor>
     <URL>http://www.complemento.net.br/</URL>
