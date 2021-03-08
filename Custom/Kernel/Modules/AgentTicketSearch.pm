@@ -736,12 +736,7 @@ sub Run {
 
         if ( !$ESActive ) {
             local $Kernel::System::DB::UseSlaveDB = 1;
-
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "CHEGUEI AQUI COM SUCESSO"
-            );
-
+            
             # perform ticket search
             @ViewableTicketIDs = $TicketObject->TicketSearch(
                 Result              => 'ARRAY',
@@ -761,10 +756,6 @@ sub Run {
         else {
           
           if ( ( defined $GetParam{Fulltext} ) ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "CHEGUEI AQUI NO FILTRO COM FULLTEXT"
-            );
 
             my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
             my $ConfigFulltext  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("LigeroSmart::FullTextSearch")||{};
