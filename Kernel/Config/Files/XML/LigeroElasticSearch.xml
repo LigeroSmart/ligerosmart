@@ -7,4 +7,50 @@
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
+    <Setting Name="LigeroSmart::Dashboard###TicketStatsGenericOpen" Required="1" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Ticket Stats Generic Dashboard.</Description>
+        <Navigation>Core::Search::Templates</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+{
+  "bool": {
+				"must": [
+					{
+						"range": {
+							"Ticket.Created": {
+									"gte"   : "{{datemin}}",
+									"lte"   : "{{datemax}}"
+							}
+						}	
+					}
+				]
+			}
+    
+}
+			</Item>
+		</Value>
+	</Setting>
+  <Setting Name="LigeroSmart::Dashboard###TicketStatsGenericClosed" Required="1" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Ticket Stats Generic Dashboard.</Description>
+        <Navigation>Core::Search::Templates</Navigation>
+        <Value>
+            <Item ValueType="Textarea">
+{
+  "bool": {
+				"must": [
+					{
+						"range": {
+							"Ticket.Closed": {
+									"gte"   : "{{datemin}}",
+									"lte"   : "{{datemax}}"
+							}
+						}	
+					}
+				]
+			}
+    
+}
+			</Item>
+		</Value>
+	</Setting>
 </otrs_config>
