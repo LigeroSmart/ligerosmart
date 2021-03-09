@@ -190,36 +190,17 @@ sub Run {
 
           $Index = lc($Index);
 
-          my %HashQuery;
-
-          $HashQuery{params}->{datemin} = $TimeStart;
-          $HashQuery{params}->{datemax} = $TimeStop;
-
-          
-
-          $HashQuery{source}->{query} = 
-            $Kernel::OM->Get('Kernel::System::JSON')->Decode(Data => $ConfigFulltext->{TicketStatsGenericOpen});
-
-          my %ViewableTicketIDs = $LigeroSmartObject->SearchTemplate(
-                  Indexes => $Index,
-                  Types   => 'ticket',
-                  Data    => \%HashQuery,
-          );
-
-          my @ViewableTicketIDs;
-
-          my $AllHits = $ViewableTicketIDs{hits}{total};
-
-          foreach my $document (@{$ViewableTicketIDs{hits}->{hits}}){ 
-            push @ViewableTicketIDs, $document->{_source}->{Ticket}->{TicketID};
-          }
-
-          my $CountCreated = $ViewableTicketIDs{hits}{total} && $TicketObject->TicketSearch(
-
+          my $CountCreated = $LigeroSmartObject->TicketSearch(
+              Indexes => $Index,
+              Types   => 'ticket',
               # cache search result
               CacheTTL => $CacheTTL,
 
-              TicketID            => [@ViewableTicketIDs],
+              # tickets with create time after ... (ticket newer than this date) (optional)
+              TicketCreateTimeNewerDate => $TimeStart,
+
+              # tickets with created time before ... (ticket older than this date) (optional)
+              TicketCreateTimeOlderDate => $TimeStop,
 
               CustomerID => $Param{Data}->{UserCustomerID},
               Result     => 'COUNT',
@@ -234,27 +215,18 @@ sub Run {
           }
           push @TicketsCreated, $CountCreated;
 
-          $HashQuery{source}->{query} = 
-            $Kernel::OM->Get('Kernel::System::JSON')->Decode(Data => $ConfigFulltext->{TicketStatsGenericClosed});
-
-          %ViewableTicketIDs = $LigeroSmartObject->SearchTemplate(
-                  Indexes => $Index,
-                  Types   => 'ticket',
-                  Data    => \%HashQuery,
-          );
-
-          $AllHits = $ViewableTicketIDs{hits}{total};
-
-          foreach my $document (@{$ViewableTicketIDs{hits}->{hits}}){ 
-            push @ViewableTicketIDs, $document->{_source}->{Ticket}->{TicketID};
-          }
-
-          my $CountClosed = $ViewableTicketIDs{hits}{total} && $TicketObject->TicketSearch(
+          my $CountClosed = $LigeroSmartObject->TicketSearch(
+              Indexes => $Index,
+              Types   => 'ticket',
 
               # cache search result
               CacheTTL => $CacheTTL,
 
-              TicketID            => [@ViewableTicketIDs],
+              # tickets with create time after ... (ticket newer than this date) (optional)
+              TicketCloseTimeNewerDate => $TimeStart,
+
+              # tickets with created time before ... (ticket older than this date) (optional)
+              TicketCloseTimeOlderDate => $TimeStop,
 
               CustomerID => $Param{Data}->{UserCustomerID},
               Result     => 'COUNT',

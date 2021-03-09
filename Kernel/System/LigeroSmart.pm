@@ -184,6 +184,128 @@ sub Search {
     return %SearchResultsHash;
 }
 
+=item TicketSearch
+
+
+=cut
+
+sub TicketSearch {
+    my ( $Self, %Param ) = @_;
+
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+    if (!$Self->{Config}->{Nodes}){
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "You must specify at least one node"
+        );
+        return;
+    }
+
+    my $Indexes = $Param{Indexes} || '';
+    my $Types   = $Param{Types} || '';
+
+    # Connect
+    my @Nodes = @{$Self->{Config}->{Nodes}};
+    
+    my $e = Search::Elasticsearch->new(
+        nodes => @Nodes,
+        # (trace_to => ['File','/opt/otrs/var/tmp/ligerosearch.log'])
+    );    
+    
+    my @SearchResults;
+
+    my %HashQuery;
+
+    my @Must;
+
+    if($Param{TicketCreateTimeNewerDate} || $Param{TicketCreateTimeOlderDate}) {
+      my $range = {}; 
+      if($Param{TicketCreateTimeNewerDate}) {
+        $range->{range}->{"Ticket.Created"}->{gte} = $Param{TicketCreateTimeNewerDate};
+      }
+      if($Param{TicketCreateTimeOlderDate}) {
+        $range->{range}->{"Ticket.Created"}->{lte} = $Param{TicketCreateTimeOlderDate};
+      }
+
+      push @Must, $range;
+    }
+
+    if($Param{TicketCloseTimeNewerDate} || $Param{TicketCloseTimeOlderDate}) {
+      my $range = {}; 
+      if($Param{TicketCloseTimeNewerDate}) {
+        $range->{range}->{"Ticket.Closed"}->{gte} = $Param{TicketCloseTimeNewerDate};
+      }
+      if($Param{TicketCloseTimeOlderDate}) {
+        $range->{range}->{"Ticket.Closed"}->{lte} = $Param{TicketCloseTimeOlderDate};
+      }
+
+      push @Must, $range;
+    }
+
+    if($Param{CustomerID}){
+      my $term = {};
+      $term->{term}->{"Ticket.CustomerUserID"} = $Param{CustomerID};
+      push @Must, $term;
+    }
+
+    $HashQuery{query}->{bool}->{must} = [@Must];
+    
+    try {
+        @SearchResults = $e->search(
+            'index' => $Types.'_'.$Indexes,
+            'type'  => 'doc',
+            'body'  => {
+                %HashQuery
+            }
+        );
+
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Passou aqui"
+        );
+
+        my %SearchResultsHash;
+
+        my @ViewableTicketIDs;
+    
+        if(@SearchResults){
+            %SearchResultsHash = %{ $SearchResults[0] };
+
+            foreach my $document (@{$SearchResultsHash{hits}->{hits}}){ 
+              push @ViewableTicketIDs, $document->{_source}->{Ticket}->{TicketID};
+            }  
+        }
+
+        
+        
+
+        return (@ViewableTicketIDs) && $TicketObject->TicketSearch(
+
+            # cache search result
+            CacheTTL => $Param{CacheTTL},
+
+            TicketID            => [@ViewableTicketIDs],
+
+            Result     => $Param{Result},
+
+            # search with user permissions
+            Permission => $Param{Permission},
+            UserID     => $Param{UserID},
+        );
+
+
+
+    } catch {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "error"
+        );
+    
+    }
+    
+}
+
 sub SearchTemplate {
     my ( $Self, %Param ) = @_;
 
