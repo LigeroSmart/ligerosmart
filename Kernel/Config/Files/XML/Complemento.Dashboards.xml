@@ -720,8 +720,7 @@
     </Setting>
     <Setting Name="ComplementoDashboardsOverview4###005-Unlocked" Required="0" Valid="1">
         <Description Translatable="1">Complemento Overview Dashboard config</Description>
-        <Navigation>OverviewBars::Itens::Bar-4
-        </Navigation>
+        <Navigation>OverviewBars::Itens::Bar-4</Navigation>
         <Value>
             <Hash>
                 <Item Key="Theme"></Item>
