@@ -249,6 +249,112 @@ sub TicketSearch {
       push @Must, $term;
     }
 
+    if($Param{Limit}){
+      $HashQuery{size} = $Param{Limit};
+    }
+
+    if{$Param{TicketID} && ref($Param{TicketID}) ne 'ARRAY'}
+    {
+      my $term = {};
+      $term->{term}->{"Ticket.TicketID"} = $Param{TicketID};
+      push @Must, $term;
+    }
+
+    if{$Param{TicketID} && ref($Param{TicketID}) eq 'ARRAY'}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.TicketID"} = $Param{TicketID};
+      push @Must, $term;
+    }
+
+    if{$Param{TicketNumber} && ref($Param{TicketNumber}) ne 'ARRAY'}
+    {
+      my $term = {};
+      $Param{TicketNumber} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.TicketNumber"} = $Param{TicketNumber};
+      push @Must, $term;
+    }
+
+    if{$Param{TicketNumber} && ref($Param{TicketNumber}) eq 'ARRAY'}
+    {
+      my $term = {};
+      $Param{TicketNumber} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.TicketNumber"} = $Param{TicketNumber};
+      push @Must, $term;
+    }
+
+    if{$Param{Title} && ref($Param{Title}) ne 'ARRAY'}
+    {
+      my $term = {};
+      $Param{Title} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.Title"} = $Param{Title};
+      push @Must, $term;
+    }
+
+    if{$Param{Title} && ref($Param{Title}) eq 'ARRAY'}
+    {
+      my $term = {};
+      $Param{Title} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.TicketNumber"} = $Param{Title};
+      push @Must, $term;
+    }
+
+    if{$Param{Queues}}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Queue"} = $Param{Queues};
+      push @Must, $term;
+    }
+
+    if{$Param{QueueIDs}}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.QueueID"} = $Param{QueueIDs};
+      push @Must, $term;
+    }
+
+    if{$Param{Types}}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Type"} = $Param{Types};
+      push @Must, $term;
+    }
+
+    if{$Param{TypeIDs}}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.TypeID"} = $Param{TypeIDs};
+      push @Must, $term;
+    }
+
+    if{$Param{States}}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.State"} = $Param{States};
+      push @Must, $term;
+    }
+
+    if{$Param{StateIDs}}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.StateID"} = $Param{StateIDs};
+      push @Must, $term;
+    }
+
+    if{$Param{StateType} && ref($Param{Title}) ne 'ARRAY'}
+    {
+      my $term = {};
+      $term->{term}->{"Ticket.StateType"} = $Param{StateType};
+      push @Must, $term;
+    }
+
+    if{$Param{StateType} && ref($Param{Title}) eq 'ARRAY'}
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.StateType"} = $Param{StateType};
+      push @Must, $term;
+    }
+
     $HashQuery{query}->{bool}->{must} = [@Must];
     
     try {
@@ -292,6 +398,8 @@ sub TicketSearch {
             # search with user permissions
             Permission => $Param{Permission},
             UserID     => $Param{UserID},
+            UseSubQueues => $Param{UseSubQueues},
+            StateTypeIDs => $Param{StateTypeIDs},
         );
 
 
