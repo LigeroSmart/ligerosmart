@@ -63,7 +63,9 @@ sub Run {
         $GeneralStartTime = Time::HiRes::time();
     }
 
-    print "\nLigeroSmart Upgrade started ... \n";
+    print "\nLigeroSmart Migration or Upgrade Started ... \n";
+    print "\nYou are currently running $Self->{ProductInfo}->{ProductName} $Self->{ProductInfo}->{Version} ... \n";
+
 
     my $SuccessfulMigration = 1;
 
@@ -110,6 +112,8 @@ sub _Upgrade {
         next TASK if !$Task;
         next TASK if !$Task->{Module};
 
+        print "\n$Task->{TargetVersion} ---- $Task->{Module}\n";
+
         my $ModuleName = "scripts::LigeroSmartUpgrade::$Task->{Module}";
         if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($ModuleName) ) {
             $SuccessfulMigration = 0;
@@ -136,7 +140,6 @@ sub _Upgrade {
         }
 
         my $Success = 1;
-
 
         print "    Step $CurrentStep of $Steps: $Task->{Message} ...\n";
         $Success = $Self->{TaskObjects}->{$ModuleName}->Run(%Param);
@@ -179,15 +182,19 @@ sub _TasksGet {
     for my $TaskModule (@TaskModules){
 
         next TASKMODULE if $TaskModule =~ /Base\.pm/;
+        my $TargetVersion = $TaskModule;
 
         $TaskModule =~ s/^.*\/(.+?)\/(.+?)\.pm$/$1::$2/;
+        $TargetVersion =~ s/^.*\/(.+?)\/(.+?)\.pm$/$1/;
+
+        next TASKMODULE if $Self->{ProductInfo}->{VersionPath} gt $TargetVersion;
 
         push @Tasks, {
-            Message => "",
-            Module  => $TaskModule
+            Message         => "",
+            TargetVersion   => $TargetVersion,
+            Module          => $TaskModule
         }
     }
-
 
     return @Tasks;
 }
