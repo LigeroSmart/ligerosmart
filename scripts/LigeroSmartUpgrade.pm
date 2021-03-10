@@ -11,7 +11,9 @@ package scripts::LigeroSmartUpgrade;    ## no critic
 
 use strict;
 use warnings;
-
+use utf8;
+use File::Find;
+use Data::Dumper;
 use Time::HiRes ();
 use Kernel::System::VariableCheck qw(IsHashRefWithData);
 
@@ -42,6 +44,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
+    $Self->{ProductInfo} = $Self->_GetCurrentVersion();
+
     return $Self;
 }
 
@@ -59,20 +63,13 @@ sub Run {
         $GeneralStartTime = Time::HiRes::time();
     }
 
-    print "\n Migration started ... \n";
+    print "\nLigeroSmart Upgrade started ... \n";
 
     my $SuccessfulMigration = 1;
-    my @Components          = ( 'CheckPreviousRequirement', 'Run' );
 
-    COMPONENT:
-    for my $Component (@Components) {
-
-        $SuccessfulMigration = $Self->_ExecuteComponent(
-            Component => $Component,
+    $SuccessfulMigration = $Self->_Upgrade(
             %Param,
-        );
-        last COMPONENT if !$SuccessfulMigration;
-    }
+    );
 
     if ($SuccessfulMigration) {
         print "\n\n\n Migration completed! \n\n";
@@ -90,15 +87,8 @@ sub Run {
     return $SuccessfulMigration;
 }
 
-sub _ExecuteComponent {
+sub _Upgrade {
     my ( $Self, %Param ) = @_;
-
-    if ( !$Param{Component} ) {
-        print " Error: Need Component!\n\n";
-        return;
-    }
-
-    my $Component = $Param{Component};
 
     # Enable timing feature in case it is call.
     my $TimingEnabled = $Param{CommandlineOptions}->{Timing} || 0;
@@ -112,12 +102,7 @@ sub _ExecuteComponent {
     my $SuccessfulMigration = 1;
 
     # Show initial message for current component
-    if ( $Component eq 'Run' ) {
-        print "\n Executing tasks ... \n\n";
-    }
-    else {
-        print "\n Checking requirements ... \n\n";
-    }
+    print "\n Executing tasks ... \n\n";
 
     TASK:
     for my $Task (@Tasks) {
@@ -125,7 +110,7 @@ sub _ExecuteComponent {
         next TASK if !$Task;
         next TASK if !$Task->{Module};
 
-        my $ModuleName = "scripts::DBUpdateTo6::$Task->{Module}";
+        my $ModuleName = "scripts::LigeroSmartUpgrade::$Task->{Module}";
         if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($ModuleName) ) {
             $SuccessfulMigration = 0;
             last TASK;
@@ -138,7 +123,7 @@ sub _ExecuteComponent {
 
         # Run module.
         $Kernel::OM->ObjectParamAdd(
-            "scripts::DBUpdateTo6::$Task->{Module}" => {
+            "scripts::LigeroSmartUpgrade::$Task->{Module}" => {
                 Opts => $Self->{Opts},
             },
         );
@@ -152,22 +137,10 @@ sub _ExecuteComponent {
 
         my $Success = 1;
 
-        # Execute Run-Component
-        if ( $Component eq 'Run' ) {
-            print "    Step $CurrentStep of $Steps: $Task->{Message} ...\n";
-            $Success = $Self->{TaskObjects}->{$ModuleName}->$Component(%Param);
-        }
 
-        # Execute previous check, printing a different message
-        elsif ( $Self->{TaskObjects}->{$ModuleName}->can($Component) ) {
-            print "    Requirement check for: $Task->{Message} ...\n";
-            $Success = $Self->{TaskObjects}->{$ModuleName}->$Component(%Param);
-        }
+        print "    Step $CurrentStep of $Steps: $Task->{Message} ...\n";
+        $Success = $Self->{TaskObjects}->{$ModuleName}->Run(%Param);
 
-        # Do not handle timing if task has no appropriate component.
-        else {
-            next TASK;
-        }
 
         if ($TimingEnabled) {
             my $StopTaskTime      = Time::HiRes::time();
@@ -189,190 +162,82 @@ sub _ExecuteComponent {
 sub _TasksGet {
     my ( $Self, %Param ) = @_;
 
-    my @Tasks = (
-        {
-            Message => 'Check framework version',
-            Module  => 'FrameworkVersionCheck',
-        },
-        {
-            Message => 'Check required Perl version',
-            Module  => 'PerlVersionCheck',
-        },
-        {
-            Message => 'Check required database version',
-            Module  => 'DatabaseVersionCheck',
-        },
-        {
-            Message => 'Check database charset',
-            Module  => 'DatabaseCharsetCheck',
-        },
-        {
-            Message => 'Check required Perl modules',
-            Module  => 'PerlModulesCheck',
-        },
-        {
-            Message => 'Check installed CPAN modules for known vulnerabilities',
-            Module  => 'CPANAuditCheck',
-        },
-        {
-            Message => 'Check if database has been backed up',
-            Module  => 'DatabaseBackupCheck',
-        },
-        {
-            Message => 'Upgrade database structure',
-            Module  => 'UpgradeDatabaseStructure',
-        },
-        {
-            Message => 'Migrate configuration',
-            Module  => 'MigrateConfigEffectiveValues',
-        },
-        {
-            Message => 'Refresh configuration cache after migration of OTRS 5 settings',
-            Module  => 'RebuildConfig',
-        },
-        {
-            Message => 'Migrating ticket storage configuration',
-            Module  => 'MigrateTicketStorageModule',
-        },
-        {
-            Message => 'Migrating article search index configuration',
-            Module  => 'MigrateArticleSearchIndex',
-        },
-        {
-            Message => 'Migrating ticket zoom customer information widget configuration',
-            Module  => 'MigrateTicketFrontendCustomerInfoZoom',
-        },
-        {
-            Message => 'Drop deprecated table gi_object_lock_state',
-            Module  => 'DropObjectLockState',
-        },
-        {
-            Message => 'Migrate PossibleNextActions setting',
-            Module  => 'MigratePossibleNextActions',
-        },
-        {
-            Message => 'Migrate ZoomExpand setting',
-            Module  => 'MigrateZoomExpandConfig',
-        },
-        {
-            Message => 'Migrating time zone configuration',
-            Module  => 'MigrateTimeZoneConfiguration',
-        },
-        {
-            Message => 'Migrating modified settings',
-            Module  => 'MigrateModifiedSettings',
-        },
-        {
-            Message => 'Create appointment calendar tables',
-            Module  => 'CreateAppointmentCalendarTables',
-        },
-        {
-            Message => 'Create ticket number counter tables',
-            Module  => 'CreateTicketNumberCounterTables',
-        },
-        {
-            Message => 'Update calendar appointment future tasks',
-            Module  => 'UpdateAppointmentCalendarFutureTasks',
-        },
-        {
-            Message => 'Add basic appointment notification for reminders',
-            Module  => 'AddAppointmentCalendarNotification',
-        },
-        {
-            Message => 'Create Form Draft tables',
-            Module  => 'CreateFormDraftTables',
-        },
-        {
-            Message => 'Clean and drop group_user permission_value column',
-            Module  => 'CleanGroupUserPermissionValue',
-        },
-        {
-            Message => 'Migrate GenericAgent jobs configuration',
-            Module  => 'MigrateGenericAgentJobs',
-        },
-        {
-            Message => 'Migrate TicketAppointment rules configuration',
-            Module  => 'MigrateTicketAppointments',
-        },
-        {
-            Message => 'Migrate Merged Ticket history name values',
-            Module  => 'MigrateTicketMergedHistory',
-        },
-        {
-            Message => 'Migrate ticket statistics',
-            Module  => 'MigrateTicketStats',
-        },
-        {
-            Message => 'Migrate ticket notifications',
-            Module  => 'MigrateTicketNotifications',
-        },
-        {
-            Message => 'Create entries in new article table',
-            Module  => 'MigrateArticleData',
-        },
-        {
-            Message => 'Post changes on article related tables',
-            Module  => 'PostArticleTableStructureChanges',
-        },
-        {
-            Message => 'Migrate ArticleType in ProcessManagement Data',
-            Module  => 'MigrateProcessManagementData',
-        },
-        {
-            Message => 'Migrate ArticleType in PostMaster filters',
-            Module  => 'MigratePostMasterData',
-        },
-        {
-            Message => 'Migrate chat articles',
-            Module  => 'MigrateChatData',
-        },
-        {
-            Message => 'Initialize default cron jobs',
-            Module  => 'InitializeDefaultCronjobs',
-        },
-        {
-            Message => 'Migrate web service configuration',
-            Module  => 'MigrateWebServiceConfiguration',
-        },
-        {
-            Message => 'Migrate package repository configuration',
-            Module  => 'MigratePackageRepositoryConfiguration',
-        },
-        {
-            Message => 'Migrate ticket search profiles',
-            Module  => 'MigrateTicketSearchProfiles',
-        },
+    my $Home    = $Kernel::OM->Get('Kernel::Config')->Get('Home');
 
-        # ...
+    my @TaskFiles;
+    # Use $File::Find::name instead of $_ to get the paths.
 
-        {
-            Message => 'Uninstall Merged Feature Add-Ons',
-            Module  => 'UninstallMergedFeatureAddOns',
-        },
-        {
-            Message => 'Clean up the cache',
-            Module  => 'CacheCleanup',
-        },
-        {
-            Message => 'Refresh configuration cache another time',
-            Module  => 'RebuildConfigCleanup',
-        },
-        {
-            Message => 'Deploy ACLs',
-            Module  => 'ACLDeploy',
-        },
-        {
-            Message => 'Deploy processes',
-            Module  => 'ProcessDeploy',
-        },
-        {
-            Message => 'Check invalid settings',
-            Module  => 'InvalidSettingsCheck',
-        },
+    my @TaskModules = $Kernel::OM->Get('Kernel::System::Main')->DirectoryRead(
+        Directory => "$Home/scripts/LigeroSmartUpgrade",
+        Recursive => 1,
+        Filter    => '*.pm',
     );
+
+    my @Tasks;
+
+    TASKMODULE:
+    for my $TaskModule (@TaskModules){
+
+        next TASKMODULE if $TaskModule =~ /Base\.pm/;
+
+        $TaskModule =~ s/^.*\/(.+?)\/(.+?)\.pm$/$1::$2/;
+
+        push @Tasks, {
+            Message => "",
+            Module  => $TaskModule
+        }
+    }
+
 
     return @Tasks;
 }
+
+sub _GetCurrentVersion {
+    my ( $Self, %Param ) = @_;
+
+    my %ProductInfo;
+
+    my $Verbose = $Param{CommandlineOptions}->{Verbose} || 0;
+    my $Home    = $Kernel::OM->Get('Kernel::Config')->Get('Home');
+
+    # load RELEASE file
+    if ( !-e "$Home/RELEASE" ) {
+        print "\n    Error: $Home/RELEASE does not exist!\n";
+        return;
+    }
+
+    my $ProductName;
+    my $Version;
+    if ( open( my $Product, '<', "$Home/RELEASE" ) ) {    ## no critic
+        while (<$Product>) {
+
+            # filtering of comment lines
+            if ( $_ !~ /^#/ ) {
+                if ( $_ =~ /^PRODUCT\s{0,2}=\s{0,2}(.*)\s{0,2}$/i ) {
+                    $ProductName = $1;
+                }
+                elsif ( $_ =~ /^VERSION\s{0,2}=\s{0,2}(.*)\s{0,2}$/i ) {
+                    $Version = $1;
+                }
+            }
+        }
+        close($Product);
+    }
+    else {
+        print "\n    Error: Can't read $Home/RELEASE: $!\n";
+        return;
+    }
+
+    $ProductInfo{ProductName} = $ProductName;
+    $ProductInfo{Version}     = $Version;
+
+    my @VersionArray = split /\./, $Version;
+
+    $ProductInfo{VersionPath} = sprintf("%02d_%02d_%02d",@VersionArray);
+
+    return \%ProductInfo;
+}
+
 
 1;
 
