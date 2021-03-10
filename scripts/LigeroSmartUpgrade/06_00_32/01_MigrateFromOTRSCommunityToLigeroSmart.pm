@@ -6,7 +6,7 @@
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
-package scripts::LigeroSmartUpgrade::06_00_32::01_checkFramework;    ## no critic
+package scripts::LigeroSmartUpgrade::06_00_32::01_MigrateFromOTRSCommunityToLigeroSmart;    ## no critic
 
 use strict;
 use warnings;
@@ -22,7 +22,7 @@ use parent qw(scripts::LigeroSmartUpgrade::Base);
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    print "        6.0.32 --------\n\n";
+    print "        You are about to migrate from ((otrs)) Community 6 to LigeroSmart\n\n";
 
     return 1;
 }

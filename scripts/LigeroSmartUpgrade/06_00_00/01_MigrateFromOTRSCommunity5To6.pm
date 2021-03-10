@@ -6,7 +6,7 @@
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
-package scripts::LigeroSmartUpgrade::06_00_33::22_JustTesting;    ## no critic
+package scripts::LigeroSmartUpgrade::06_00_00::01_MigrateFromOTRSCommunity5To6;    ## no critic
 
 use strict;
 use warnings;
@@ -22,7 +22,7 @@ use parent qw(scripts::LigeroSmartUpgrade::Base);
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    print "        6.0.33 - 22 JUST TESTING\n\n";
+    print "        You are about to migrate from ((otrs)) Community 5 to 6\n\n";
 
     return 1;
 }
