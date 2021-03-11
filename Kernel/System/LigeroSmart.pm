@@ -243,9 +243,15 @@ sub TicketSearch {
       push @Must, $range;
     }
 
-    if($Param{CustomerID}){
+    if($Param{CustomerID} && ref($Param{CustomerID}) ne 'ARRAY'){
       my $term = {};
-      $term->{term}->{"Ticket.CustomerUserID"} = $Param{CustomerID};
+      $term->{term}->{"Ticket.CustomerID"} = $Param{CustomerID};
+      push @Must, $term;
+    }
+
+    if($Param{CustomerID} && ref($Param{CustomerID}) eq 'ARRAY'){
+      my $term = {};
+      $term->{terms}->{"Ticket.CustomerID"} = $Param{CustomerID};
       push @Must, $term;
     }
 
@@ -253,21 +259,21 @@ sub TicketSearch {
       $HashQuery{size} = $Param{Limit};
     }
 
-    if{$Param{TicketID} && ref($Param{TicketID}) ne 'ARRAY'}
+    if($Param{TicketID} && ref($Param{TicketID}) ne 'ARRAY')
     {
       my $term = {};
       $term->{term}->{"Ticket.TicketID"} = $Param{TicketID};
       push @Must, $term;
     }
 
-    if{$Param{TicketID} && ref($Param{TicketID}) eq 'ARRAY'}
+    if($Param{TicketID} && ref($Param{TicketID}) eq 'ARRAY')
     {
       my $term = {};
       $term->{terms}->{"Ticket.TicketID"} = $Param{TicketID};
       push @Must, $term;
     }
 
-    if{$Param{TicketNumber} && ref($Param{TicketNumber}) ne 'ARRAY'}
+    if($Param{TicketNumber} && ref($Param{TicketNumber}) ne 'ARRAY')
     {
       my $term = {};
       $Param{TicketNumber} =~ s/%/*/gi;
@@ -275,7 +281,7 @@ sub TicketSearch {
       push @Must, $term;
     }
 
-    if{$Param{TicketNumber} && ref($Param{TicketNumber}) eq 'ARRAY'}
+    if($Param{TicketNumber} && ref($Param{TicketNumber}) eq 'ARRAY')
     {
       my $term = {};
       $Param{TicketNumber} =~ s/%/*/gi;
@@ -283,7 +289,7 @@ sub TicketSearch {
       push @Must, $term;
     }
 
-    if{$Param{Title} && ref($Param{Title}) ne 'ARRAY'}
+    if($Param{Title} && ref($Param{Title}) ne 'ARRAY')
     {
       my $term = {};
       $Param{Title} =~ s/%/*/gi;
@@ -291,7 +297,7 @@ sub TicketSearch {
       push @Must, $term;
     }
 
-    if{$Param{Title} && ref($Param{Title}) eq 'ARRAY'}
+    if($Param{Title} && ref($Param{Title}) eq 'ARRAY')
     {
       my $term = {};
       $Param{Title} =~ s/%/*/gi;
@@ -299,59 +305,143 @@ sub TicketSearch {
       push @Must, $term;
     }
 
-    if{$Param{Queues}}
+    if($Param{Queues})
     {
       my $term = {};
       $term->{terms}->{"Ticket.Queue"} = $Param{Queues};
       push @Must, $term;
     }
 
-    if{$Param{QueueIDs}}
+    if($Param{QueueIDs})
     {
       my $term = {};
       $term->{terms}->{"Ticket.QueueID"} = $Param{QueueIDs};
       push @Must, $term;
     }
 
-    if{$Param{Types}}
+    if($Param{Types})
     {
       my $term = {};
       $term->{terms}->{"Ticket.Type"} = $Param{Types};
       push @Must, $term;
     }
 
-    if{$Param{TypeIDs}}
+    if($Param{TypeIDs})
     {
       my $term = {};
       $term->{terms}->{"Ticket.TypeID"} = $Param{TypeIDs};
       push @Must, $term;
     }
 
-    if{$Param{States}}
+    if($Param{States})
     {
       my $term = {};
       $term->{terms}->{"Ticket.State"} = $Param{States};
       push @Must, $term;
     }
 
-    if{$Param{StateIDs}}
+    if($Param{StateIDs})
     {
       my $term = {};
       $term->{terms}->{"Ticket.StateID"} = $Param{StateIDs};
       push @Must, $term;
     }
 
-    if{$Param{StateType} && ref($Param{Title}) ne 'ARRAY'}
+    if($Param{StateType} && ref($Param{StateType}) ne 'ARRAY')
     {
       my $term = {};
       $term->{term}->{"Ticket.StateType"} = $Param{StateType};
       push @Must, $term;
     }
 
-    if{$Param{StateType} && ref($Param{Title}) eq 'ARRAY'}
+    if($Param{StateType} && ref($Param{StateType}) eq 'ARRAY')
     {
       my $term = {};
       $term->{terms}->{"Ticket.StateType"} = $Param{StateType};
+      push @Must, $term;
+    }
+
+    if($Param{Priorities})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Priority"} = $Param{Priorities};
+      push @Must, $term;
+    }
+
+    if($Param{PriorityIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.PriorityID"} = $Param{PriorityIDs};
+      push @Must, $term;
+    }
+
+    if($Param{Services})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Service"} = $Param{Services};
+      push @Must, $term;
+    }
+
+    if($Param{ServiceIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.ServiceID"} = $Param{ServiceIDs};
+      push @Must, $term;
+    }
+
+    if($Param{SLAs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.SLA"} = $Param{SLAs};
+      push @Must, $term;
+    }
+
+    if($Param{SLAIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.SLAID"} = $Param{SLAIDs};
+      push @Must, $term;
+    }
+
+    if($Param{Locks})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Lock"} = $Param{Locks};
+      push @Must, $term;
+    }
+
+    if($Param{LockIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.LockID"} = $Param{LockIDs};
+      push @Must, $term;
+    }
+
+    if($Param{OwnerIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.OwnerID"} = $Param{OwnerIDs};
+      push @Must, $term;
+    }
+
+    if($Param{ResponsibleIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.ResponsibleID"} = $Param{ResponsibleIDs};
+      push @Must, $term;
+    }
+
+    if($Param{CustomerUserLogin} && ref($Param{CustomerUserLogin}) ne 'ARRAY')
+    {
+      my $term = {};
+      $term->{term}->{"Ticket.CustomerUserID"} = $Param{ResponsibleIDs};
+      push @Must, $term;
+    }
+
+    if($Param{CustomerUserLogin} && ref($Param{CustomerUserLogin}) eq 'ARRAY')
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.CustomerUserID"} = $Param{ResponsibleIDs};
       push @Must, $term;
     }
 
@@ -388,18 +478,9 @@ sub TicketSearch {
 
         return (@ViewableTicketIDs) && $TicketObject->TicketSearch(
 
-            # cache search result
-            CacheTTL => $Param{CacheTTL},
-
             TicketID            => [@ViewableTicketIDs],
 
-            Result     => $Param{Result},
-
-            # search with user permissions
-            Permission => $Param{Permission},
-            UserID     => $Param{UserID},
-            UseSubQueues => $Param{UseSubQueues},
-            StateTypeIDs => $Param{StateTypeIDs},
+            \%Param
         );
 
 
