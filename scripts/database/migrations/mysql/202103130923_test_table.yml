@@ -1,0 +1,11 @@
+---
+apply:
+  sql: >
+    CREATE TABLE `test` (
+      `id` int(11) AUTO_INCREMENT PRIMARY KEY,
+      `description` varchar(50) NOT NULL,
+      `created_at` datetime NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='testing';
+
+rollback:
+  sql: DROP TABLE test
