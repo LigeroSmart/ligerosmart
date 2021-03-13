@@ -1,0 +1,4 @@
+---
+apply:
+  command: >
+    psql < scripts/database/posgresql-database.sql.gz
