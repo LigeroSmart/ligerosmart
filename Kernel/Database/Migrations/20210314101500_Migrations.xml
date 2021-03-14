@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Migrations>
+    <DatabaseInstall>
+        <TableCreate Name="migrations">
+	   	    <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="60" Type="VARCHAR"/>
+            <Column Name="version" Required="true" Size="20" Type="VARCHAR"/>
+            <Column Name="batch" Type="INTEGER"/>
+            <Column Name="create_time" Type="DATE" />
+            <Index Name="migrations_name_idx">
+                <IndexColumn Name="name"/>
+            </Index>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUninstall>
+        <TableDrop Name="migrations"/>
+    </DatabaseUninstall>
+</Migrations>

@@ -145,7 +145,7 @@ sub Run {
 
         my $version = '7.0.0';
         $DBObject->Do(
-            SQL  => "INSERT INTO migrations (name, version, created_at) VALUES (?, ?, NOW())",
+            SQL  => "INSERT INTO migrations (name, version, create_time) VALUES (?, ?, NOW())",
             Bind => [ \$fileKey, \$version ],
         );
     }
