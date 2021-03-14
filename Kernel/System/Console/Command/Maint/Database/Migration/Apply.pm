@@ -8,8 +8,8 @@
 
 package Kernel::System::Console::Command::Maint::Database::Migration::Apply;
 
-use strict;
-use warnings;
+# use strict;
+# use warnings;
 
 use parent qw(Kernel::System::Console::BaseCommand);
 
@@ -17,10 +17,11 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
     'Kernel::System::DB',
-    'Kernel::System::YAML',
 );
 
-
+use File::Basename;
+use XML::LibXML;
+# use Syntax::Keyword::Try;
 # TODO: remove before release
 use Data::Dumper;
 
@@ -44,8 +45,10 @@ sub Run {
 
     $Param{Options}->{SourceDir} = $Self->GetOption('source-dir');
 
+    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
     my $DBType = $DBObject->{'DB::Type'};
+    my $XMLObject = $Kernel::OM->Get('Kernel::System::XML');
 
     # print database information
     my $DatabaseDSN  = $DBObject->{DSN};
@@ -57,70 +60,63 @@ sub Run {
         return $Self->ExitCodeError();
     }
 
-    $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
-    my $Check = 0;
     my %MigrationsApplied = ();
 
-    $Self->Print("Migrations already applied:\n");
+    eval {
+        no warnings;
 
-    while ( my @Row = $DBObject->FetchrowArray() ) {
-        $Check++;
+        $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
+        my $Result = "";
+        while ( my @Row = $DBObject->FetchrowArray() ) {
+            # if not exists here, apply commands
+            $Result .= join("\t", @Row)."\n";
+            my $migrationName = $Row[1];
+            $MigrationsApplied{$migrationName} = 1;
+        }
 
-        # if not exists here, apply commands
-        $Self->Print(join("\t", @Row)."\n");
-        my $migrationName = $Row[1];
-        $MigrationsApplied{$migrationName} = 1;
-    }
+        if($Result) {
+            $Self->Print("Migrations already applied:\n");
+            $Self->Print($Result);
+        }
+    };
 
 
     # read migrations YAML directory
     # my $SourceDir = $Self->GetOption('source-dir');
-    my $SourceDir = $Param{Options}->{SourceDir} || "/opt/otrs/scripts/database/migrations";
+    my $SourceDir = $Param{Options}->{SourceDir} || "/opt/otrs/Kernel/Database/Migrations";
 
     my %MigrationFileList = ();
     my %ApplyList = ();
 
-    opendir DIR,$SourceDir. "/". $DBType;
-    my @dir = readdir(DIR);
-    close DIR;
-    foreach(@dir){
-        if (-f $SourceDir . "/". $DBType. "/" . $_ ){
-            $MigrationFileList{$_} = $_;
-        }
+    my @Files     = $MainObject->DirectoryRead(
+        Directory => $SourceDir,
+        Filter    => '*.xml',
+    );
+
+    if ( !@Files ) {
+        $Self->PrintError("No XML files found in $SourceDir.");
+        return $Self->ExitCodeError();
     }
 
-    foreach (%MigrationFileList) {
+    FILE:
+    for my $File (@Files) {
 
-        next if($MigrationsApplied{$_});
+        my $filename = basename($File);
+        next if($MigrationsApplied{$filename});
 
-        my $filename = $_;
-
-        my $YAMLContentRef = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
-            Location        => "$SourceDir/$DBType/$filename",
-            Mode            => 'utf8',
-            Type            => 'Local',
-            Result          => 'SCALAR',
-            DisableWarnings => 1,
-        );
-
-        if ( !$YAMLContentRef ) {
-            $Self->PrintError("Could not read $SourceDir! $_");
+        my $XMLFile = XML::LibXML->load_xml(location => "$SourceDir/$filename");
+        if ( !$XMLFile ) {
+            $Self->PrintError("Could not read $SourceDir/$filename");
             return $Self->ExitCodeError();
         }
 
-        my $EffectiveValue = $Kernel::OM->Get('Kernel::System::YAML')->Load(
-            Data => ${$YAMLContentRef},
-        );
+        my $XMLNode = $XMLFile->findnodes('/Migrations/DatabaseInstall/*')->[0];
 
-        if ( !defined $EffectiveValue ) {
-            $Self->PrintError("The content of $SourceDir is invalid");
-            return $Self->ExitCodeError();
+        if( $XMLNode ) {
+            $ApplyList{$filename} = $XMLNode->toString();
         }
 
-        $ApplyList{$_} = $EffectiveValue->{apply};
-
     }
-
 
     my $appliedCount = 0;
     foreach my $fileKey (sort keys %ApplyList) {
@@ -128,27 +124,23 @@ sub Run {
 
         my $Result;
 
-        if($ApplyList{$fileKey}->{sql}) {
-            my $sql = $ApplyList{$fileKey}->{sql};
+        if($ApplyList{$fileKey}) {
+            my $XMLContentRef = $ApplyList{$fileKey};
 
-            $Self->Print("Appling $fileKey\n");
-            $Result = $DBObject->Do( SQL => $sql );
+            $Self->Print("Applying from $fileKey\n");
+            my @XMLARRAY = $XMLObject->XMLParse( String => $XMLContentRef );
 
-            if ( ! $Result ) {
-                $Self->PrintError("Error executing SQL:\n\t$sql\n");
-                $DBObject->Error();
-                return $Self->ExitCodeError();
+            my @SQL = $DBObject->SQLProcessor( Database => \@XMLARRAY );
+
+            for my $SQL (@SQL) {
+                $Result = $DBObject->Do( SQL => $SQL );
+                if ( ! $Result ) {
+                    $Self->PrintError("Error executing SQL: \n\t$SQL\n");
+                    $DBObject->Error();
+                    return $Self->ExitCodeError();
+                }
             }
-        }
 
-        if($ApplyList{$fileKey}->{command}) {
-            my $command = $ApplyList{$fileKey}->{command};
-            $Result = system($command);
-            if ( ! $Result ) {
-                $Self->PrintError("Error executing command:\n\t$command\n");
-                $DBObject->Error();
-                return $Self->ExitCodeError();
-            }
         }
 
         my $version = '7.0.0';
@@ -158,12 +150,42 @@ sub Run {
         );
     }
 
-
     if($appliedCount) {
         $Self->Print("<green>Migration applied.</green>\n");
     }
 
     return $Self->ExitCodeOk();
 }
+
+# sub _CreateMigrationsTable {
+
+#     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+#     my $DBType = $DBObject->{'DB::Type'};
+#     # create migrations table if not exists
+#     if($DBType == 'mysql') {
+#         $DBObject->Do( 
+#             SQL =>  "CREATE TABLE `migrations` (
+#                 `id` int(11) AUTO_INCREMENT PRIMARY KEY,
+#                 `name` varchar(50) NOT NULL,
+#                 `version` varchar(10) NOT NULL,
+#                 `created_at` datetime NOT NULL
+#             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='database modifications history';"
+#         );
+#     }
+
+#     if($DBType == 'postgresql') {
+#         # TODO: check compatibility
+#         # $DBObject->Do( 
+#         #     SQL =>  "CREATE TABLE `migrations` (;"
+#         # );
+#     }
+
+#     if($DBType == 'oracle') {
+#         # TODO: check compatibility
+#         # $DBObject->Do( 
+#         #     SQL =>  "CREATE TABLE `migrations` (;"
+#         # );
+#     }
+# }
 
 1;

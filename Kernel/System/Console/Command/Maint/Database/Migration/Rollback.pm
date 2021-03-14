@@ -8,8 +8,8 @@
 
 package Kernel::System::Console::Command::Maint::Database::Migration::Rollback;
 
-use strict;
-use warnings;
+# use strict;
+# use warnings;
 
 use parent qw(Kernel::System::Console::BaseCommand);
 
@@ -20,7 +20,7 @@ our @ObjectDependencies = (
     'Kernel::System::YAML',
 );
 
-
+use XML::LibXML;
 # TODO: remove before release
 use Data::Dumper;
 
@@ -42,10 +42,11 @@ sub Configure {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    $Param{Options}->{SourceDir} = $Self->GetOption('source-dir');
+    $Param{Options}->{SourceDir} = $Self->GetOption('source-dir') || "/opt/otrs/Kernel/Database/Migrations";
 
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
     my $DBType = $DBObject->{'DB::Type'};
+    my $XMLObject = $Kernel::OM->Get('Kernel::System::XML');
 
     # print database information
     my $DatabaseDSN  = $DBObject->{DSN};
@@ -57,88 +58,67 @@ sub Run {
         return $Self->ExitCodeError();
     }
 
-    my $SourceDir = $Param{Options}->{SourceDir} || "/opt/otrs/scripts/database/migrations";
+    my $SourceDir = $Param{Options}->{SourceDir};
 
-    $DBObject->Prepare( SQL => "SELECT * FROM migrations ORDER BY id DESC LIMIT 1" );
     my $Count = 0;
-    while ( my @Row = $DBObject->FetchrowArray() ) {
 
-        $Count++;
+    # eval {
 
-        # if not exists here, rollback commands
-        $Self->Print(join("\t", @Row)."\n");
+        $DBObject->Prepare( SQL => "SELECT * FROM migrations ORDER BY id DESC LIMIT 1" );
+        MIGRATION:
+        while ( my @Row = $DBObject->FetchrowArray() ) {
 
-        my $migrationId = $Row[0];
-        my $migrationName = $Row[1];
+            $Count++;
 
-        my $YAMLContentRef = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
-            Location        => "$SourceDir/$DBType/$migrationName",
-            Mode            => 'utf8',
-            Type            => 'Local',
-            Result          => 'SCALAR',
-            DisableWarnings => 1,
-        );
+            # if not exists here, rollback commands
+            $Self->Print(join("\t", @Row)."\n");
 
-        if ( !$YAMLContentRef ) {
-            $Self->PrintError("Could not read $SourceDir/$DBType/$migrationName");
-            return $Self->ExitCodeError();
-        }
+            my $migrationId = $Row[0];
+            my $migrationName = $Row[1];
 
-        my $EffectiveValue = $Kernel::OM->Get('Kernel::System::YAML')->Load(
-            Data => ${$YAMLContentRef},
-        );
-
-        if ( !defined $EffectiveValue ) {
-            $Self->PrintError("The content of $SourceDir is invalid");
-            return $Self->ExitCodeError();
-        }
-        
-        $Self->Print("Rollback $migrationName\n");
-
-        my $Result;
-
-        if($EffectiveValue->{rollback}->{sql}) {
-            my $sql = $EffectiveValue->{rollback}->{sql};
-            $Result = $DBObject->Do( SQL => $sql );
-
-            if ( ! $Result ) {
-                $Self->PrintError("Error executing SQL:\n\t$sql\n");
-                $DBObject->Error();
+            my $XMLFile = XML::LibXML->load_xml(location => "$SourceDir/$migrationName");
+            if ( !$XMLFile ) {
+                $Self->PrintError("Could not read $SourceDir/$migrationName");
                 return $Self->ExitCodeError();
             }
-        }
 
-        if($EffectiveValue->{rollback}->{command}) {
-            my $command = $EffectiveValue->{rollback}->{command};
-            $Result = system($EffectiveValue->{rollback}->{command});
-            if ( ! $Result ) {
-                $Self->PrintError("Error executing command:\n\t$command\n");
-                $DBObject->Error();
-                return $Self->ExitCodeError();
+            my $XMLNode = $XMLFile->findnodes('/Migrations/DatabaseUninstall/*')->[0];
+            if ( $XMLNode ) {
+                my $XMLContentRef = $XMLNode->toString();
+                
+                $Self->Print("Rollback $migrationName\n");
+
+                my @XMLARRAY = $XMLObject->XMLParse( String => $XMLContentRef );
+                my @SQL = $DBObject->SQLProcessor( Database => \@XMLARRAY );
+                my $Result;
+                for my $SQL (@SQL) {
+                    $Result = $DBObject->Do( SQL => $SQL );
+                    if ( ! $Result ) {
+                        $Self->PrintError("Error executing SQL: \n\t$SQL\n");
+                        $DBObject->Error();
+                        return $Self->ExitCodeError();
+                    }
+                }
             }
-        }
 
-        if($Result) {
             $DBObject->Do(
                 SQL  => "DELETE FROM migrations WHERE id=?",
                 Bind => [ \$migrationId ],
             );
-        }
 
-    }
+            $Self->Print("<green>Migration rollbacked.</green>\n");
+
+        }
+    # }; # eval
 
     if ( !$Count ) {
         $Self->Print("nothing to do\n");
-        # Maint::Database::Migration::Apply
-        return $Self->ExitCodeError();
     }
 
     # print "MigrationFileList\n";
     # print Dumper(%MigrationFileList);
     # print "ApplyList\n";
     # print Dumper(%ApplyList);
-
-    $Self->Print("<green>Migration rollbacked.</green>\n");
 
     return $Self->ExitCodeOk();
 }
