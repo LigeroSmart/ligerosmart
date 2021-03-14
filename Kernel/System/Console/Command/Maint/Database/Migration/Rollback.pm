@@ -62,19 +62,28 @@ sub Run {
 
     my $Count = 0;
 
-    # eval {
+    eval {
 
-        $DBObject->Prepare( SQL => "SELECT * FROM migrations ORDER BY id DESC LIMIT 1" );
+        my $LastBatchNumber;
+
+        $DBObject->Prepare( SQL => "SELECT * FROM migrations ORDER BY id DESC" );
+        
         MIGRATION:
         while ( my @Row = $DBObject->FetchrowArray() ) {
 
             $Count++;
 
-            # if not exists here, rollback commands
-            $Self->Print(join("\t", @Row)."\n");
-
             my $migrationId = $Row[0];
             my $migrationName = $Row[1];
+            my $migrationBatch = $Row[3];
+
+            if(!$LastBatchNumber) {
+                $LastBatchNumber = $migrationBatch;
+            }
+
+            if($LastBatchNumber && $LastBatchNumber != $migrationBatch) {
+                return $Self->ExitCodeOk();
+            }
 
             my $XMLFile = XML::LibXML->load_xml(location => "$SourceDir/$migrationName");
             if ( !$XMLFile ) {
@@ -106,19 +115,10 @@ sub Run {
                 Bind => [ \$migrationId ],
             );
 
-            $Self->Print("<green>Migration rollbacked.</green>\n");
 
         }
-    # }; # eval
 
-    if ( !$Count ) {
-        $Self->Print("nothing to do\n");
-    }
-
-    # print "MigrationFileList\n";
-    # print Dumper(%MigrationFileList);
-    # print "ApplyList\n";
-    # print Dumper(%ApplyList);
+    }; # eval 
 
     return $Self->ExitCodeOk();
 }

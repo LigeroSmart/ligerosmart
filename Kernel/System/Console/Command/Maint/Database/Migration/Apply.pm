@@ -21,6 +21,7 @@ our @ObjectDependencies = (
 
 use File::Basename;
 use XML::LibXML;
+use List::Util qw( min max );
 # use Syntax::Keyword::Try;
 # TODO: remove before release
 use Data::Dumper;
@@ -62,29 +63,30 @@ sub Run {
 
     my %MigrationsApplied = ();
 
-    my $LastBatchNumber = 1;
-    eval {
+    # eval {
         no warnings;
 
         $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
         my $Result = "";
-        my $LastBatchNumber = 1;
+        my @BatchArray = ();
         while ( my @Row = $DBObject->FetchrowArray() ) {
             # if not exists here, apply commands
             $Result .= join("\t", @Row)."\n";
             my $migrationName = $Row[1];
+            #https://stackoverflow.com/questions/10701210/how-to-find-maximum-and-minimum-value-in-an-array-of-integers-in-perl
+            # push($Row[3], @BatchArray);
             $MigrationsApplied{$migrationName} = 1;
-            if($LastBatchNumber < $Row[3] ) {
-                $LastBatchNumber = $Row[3];
-            }
+            push(@BatchArray, $Row[3]);
         }
+
 
         if($Result) {
             $Self->Print("Migrations already applied:\n");
             $Self->Print($Result);
         }
-    };
+    # };
 
+    my $NextBatchNumber = max(@BatchArray) + 1;
 
     # read migrations YAML directory
     # my $SourceDir = $Self->GetOption('source-dir');
@@ -151,7 +153,7 @@ sub Run {
         my $version = '7.0.0';
         $DBObject->Do(
             SQL  => "INSERT INTO migrations (name, version, batch, create_time) VALUES (?, ?, ?, NOW())",
-            Bind => [ \$fileKey, \$version, \$LastBatchNumber ],
+            Bind => [ \$fileKey, \$version, \$NextBatchNumber ],
         );
     }
 
