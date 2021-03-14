@@ -62,16 +62,21 @@ sub Run {
 
     my %MigrationsApplied = ();
 
+    my $LastBatchNumber = 1;
     eval {
         no warnings;
 
         $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
         my $Result = "";
+        my $LastBatchNumber = 1;
         while ( my @Row = $DBObject->FetchrowArray() ) {
             # if not exists here, apply commands
             $Result .= join("\t", @Row)."\n";
             my $migrationName = $Row[1];
             $MigrationsApplied{$migrationName} = 1;
+            if($LastBatchNumber < $Row[3] ) {
+                $LastBatchNumber = $Row[3];
+            }
         }
 
         if($Result) {
@@ -145,8 +150,8 @@ sub Run {
 
         my $version = '7.0.0';
         $DBObject->Do(
-            SQL  => "INSERT INTO migrations (name, version, create_time) VALUES (?, ?, NOW())",
-            Bind => [ \$fileKey, \$version ],
+            SQL  => "INSERT INTO migrations (name, version, batch, create_time) VALUES (?, ?, ?, NOW())",
+            Bind => [ \$fileKey, \$version, \$LastBatchNumber ],
         );
     }
 
