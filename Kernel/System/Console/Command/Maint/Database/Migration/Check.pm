@@ -19,6 +19,8 @@ our @ObjectDependencies = (
     'Kernel::System::DB',
 );
 
+use File::Basename;
+
 sub Configure {
     my ( $Self, %Param ) = @_;
 
@@ -29,6 +31,7 @@ sub Configure {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # print database information
@@ -44,18 +47,30 @@ sub Run {
     }
 
     # Try to get some data from the database.
-    eval {
-        $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
-        my $Check = 0;
+    # eval {
+        my $SourceDir = $Param{Options}->{SourceDir} || "/opt/otrs/Kernel/Database/Migrations";
+
+        my @Files     = $MainObject->DirectoryRead(
+            Directory => $SourceDir,
+            Filter    => '*.xml',
+        );
+
+        my @BaseFiles = map { "'".basename($_)."'" } @Files;
+        my $JoinedFiles = join(',', @BaseFiles);
+
+        my $FilesCount = @BaseFiles;
+
+        $DBObject->Prepare( SQL => "SELECT count(*) FROM migrations WHERE name IN ($JoinedFiles)" );
+        my $MigratedCount = 0;
         while ( my @Row = $DBObject->FetchrowArray() ) {
-            $Check++;
+            $MigratedCount = $Row[0];
         }
-        if ( !$Check ) {
-            $Self->PrintError("Connection was successful, but database content is missing.");
+        if ( $MigratedCount != $FilesCount ) {
+            $Self->Print("Apply migration\n");
             system('otrs.Console.pl Maint::Database::Migration::Apply');
             return $Self->ExitCodeError();
         }
-    };
+    # };
     $Self->Print("<green>Connection successful.</green>\n");
 
     return $Self->ExitCodeOk();
