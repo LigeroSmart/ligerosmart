@@ -8,8 +8,8 @@
 
 package Kernel::System::Console::Command::Maint::Database::Migration::Check;
 
-use strict;
-use warnings;
+# use strict;
+# use warnings;
 
 use parent qw(Kernel::System::Console::BaseCommand);
 
@@ -44,16 +44,18 @@ sub Run {
     }
 
     # Try to get some data from the database.
-    $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
-    my $Check = 0;
-    while ( my @Row = $DBObject->FetchrowArray() ) {
-        $Check++;
-    }
-    if ( !$Check ) {
-        $Self->PrintError("Connection was successful, but database content is missing.");
-        system('otrs.Console.pl Maint::Database::Migration::Apply');
-        return $Self->ExitCodeError();
-    }
+    eval {
+        $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
+        my $Check = 0;
+        while ( my @Row = $DBObject->FetchrowArray() ) {
+            $Check++;
+        }
+        if ( !$Check ) {
+            $Self->PrintError("Connection was successful, but database content is missing.");
+            system('otrs.Console.pl Maint::Database::Migration::Apply');
+            return $Self->ExitCodeError();
+        }
+    };
     $Self->Print("<green>Connection successful.</green>\n");
 
     return $Self->ExitCodeOk();
