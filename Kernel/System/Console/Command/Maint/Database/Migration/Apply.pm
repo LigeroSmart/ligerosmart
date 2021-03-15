@@ -139,7 +139,6 @@ sub Run {
 
         if($ApplyList{$fileKey}->{CodeInstall}->{pre}) {
             my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{pre};
-            my $test123 = $Kernel::OM->Get('var::packagesetup::Teste123')->CodeInstall();
             if ( !eval $CodeContent. "\n1;" ) {    ## no critic
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
