@@ -109,18 +109,22 @@ sub Run {
     for my $File (@Files) {
 
         my $filename = basename($File);
+        my $path = "$SourceDir/$filename";
         next if($MigrationsApplied{$filename});
 
-        my $XMLFile = XML::LibXML->load_xml(location => "$SourceDir/$filename");
+        my $XMLFile = XML::LibXML->load_xml(location => $path);
         if ( !$XMLFile ) {
-            $Self->PrintError("Could not read $SourceDir/$filename");
+            $Self->PrintError("Could not read $path");
             return $Self->ExitCodeError();
         }
 
-        my $XMLNode = $XMLFile->findnodes('/Migrations/DatabaseInstall/*')->[0];
+        foreach my $CodeInstallNode ($XMLFile->findnodes('/Migrations/CodeInstall')) {
+            my $Type = $CodeInstallNode->getAttribute('Type') || 'post';
+            $ApplyList{$filename}->{CodeInstall}->{$Type} = $CodeInstallNode->to_literal;
+        }
 
-        if( $XMLNode ) {
-            $ApplyList{$filename} = $XMLNode->toString();
+        foreach my $DatabaseInstallNode ($XMLFile->findnodes('/Migrations/DatabaseInstall')) {
+            $ApplyList{$filename}->{DatabaseInstall} = $DatabaseInstallNode->toString();
         }
 
     }
@@ -131,10 +135,24 @@ sub Run {
 
         my $Result;
 
-        if($ApplyList{$fileKey}) {
-            my $XMLContentRef = $ApplyList{$fileKey};
+        $Self->Print("Applying from $fileKey\n");
 
-            $Self->Print("Applying from $fileKey\n");
+        if($ApplyList{$fileKey}->{CodeInstall}->{pre}) {
+            my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{pre};
+            my $test123 = $Kernel::OM->Get('var::packagesetup::Teste123')->CodeInstall();
+            if ( !eval $CodeContent. "\n1;" ) {    ## no critic
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
+                    Priority => 'error',
+                    Message  => "Code: $CodeContent",
+                );
+                return;
+            }
+        }
+
+        if($ApplyList{$fileKey}->{DatabaseInstall}) {
+            my $XMLContentRef = $ApplyList{$fileKey}->{DatabaseInstall};
+
+            # DatabaseInstall
             my @XMLARRAY = $XMLObject->XMLParse( String => $XMLContentRef );
 
             my @SQL = $DBObject->SQLProcessor( Database => \@XMLARRAY );
@@ -148,6 +166,17 @@ sub Run {
                 }
             }
 
+        }
+        
+        if($ApplyList{$fileKey}->{CodeInstall}->{post}) {
+            my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{post};
+            if ( !eval $CodeContent. "\n1;" ) {    ## no critic
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
+                    Priority => 'error',
+                    Message  => "Code: $CodeContent",
+                );
+                return;
+            }
         }
 
         my $version = '7.0.0';

@@ -91,12 +91,36 @@ sub Run {
                 return $Self->ExitCodeError();
             }
 
-            my $XMLNode = $XMLFile->findnodes('/Migrations/DatabaseUninstall/*')->[0];
-            if ( $XMLNode ) {
+            my $XMLNode = $XMLFile->findnodes('/Migrations/CodeUninstall[@Type="pre"]');
+
+            if($ApplyList{$fileKey}->{CodeInstall}->{pre}) {
+                my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{pre};
+                my $test123 = $Kernel::OM->Get('var::packagesetup::Teste123')->CodeInstall();
+                if ( !eval $CodeContent. "\n1;" ) {    ## no critic
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "Code: $CodeContent",
+                    );
+                    return;
+                }
+            }
+
+            $Self->Print("Rollback $migrationName\n");
+
+            foreach my $XMLNode ($XMLFile->findnodes('/Migrations/CodeUninstall')) {
+                my $CodeContent = $XMLNode->to_literal;
+                if ( !eval $CodeContent. "\n1;" ) {    ## no critic
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "Code: $CodeContent",
+                    );
+                    return;
+                }
+            }
+
+            foreach my $XMLNode ($XMLFile->findnodes('/Migrations/DatabaseUninstall')) {
                 my $XMLContentRef = $XMLNode->toString();
                 
-                $Self->Print("Rollback $migrationName\n");
-
                 my @XMLARRAY = $XMLObject->XMLParse( String => $XMLContentRef );
                 my @SQL = $DBObject->SQLProcessor( Database => \@XMLARRAY );
                 my $Result;
