@@ -44,9 +44,11 @@ sub Configure {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+
     $Param{Options}->{SourceDir} = $Self->GetOption('source-dir');
 
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
     my $DBType = $DBObject->{'DB::Type'};
     my $XMLObject = $Kernel::OM->Get('Kernel::System::XML');
@@ -120,10 +122,16 @@ sub Run {
 
         foreach my $CodeInstallNode ($XMLFile->findnodes('/Migrations/CodeInstall')) {
             my $Type = $CodeInstallNode->getAttribute('Type') || 'post';
+            if($CodeInstallNode->getAttribute('Version')) {
+                $ApplyList{$filename}->{CodeInstall}->{Version} = $CodeInstallNode->getAttribute('Version');
+            }
             $ApplyList{$filename}->{CodeInstall}->{$Type} = $CodeInstallNode->to_literal;
         }
 
         foreach my $DatabaseInstallNode ($XMLFile->findnodes('/Migrations/DatabaseInstall')) {
+            if($DatabaseInstallNode->getAttribute('Version')) {
+                $ApplyList{$filename}->{DatabaseInstall}->{Version} = $CodeInstallNode->getAttribute('Version');
+            }
             $ApplyList{$filename}->{DatabaseInstall} = $DatabaseInstallNode->toString();
         }
 
