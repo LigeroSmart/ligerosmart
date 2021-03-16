@@ -186,7 +186,7 @@ sub Run {
             }
         }
 
-        my $version = '7.0.0';
+        my $version = $ConfigObject->{Version};
         $DBObject->Do(
             SQL  => "INSERT INTO migrations (name, version, batch, create_time) VALUES (?, ?, ?, NOW())",
             Bind => [ \$fileKey, \$version, \$NextBatchNumber ],
