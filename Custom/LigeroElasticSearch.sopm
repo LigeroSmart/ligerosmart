@@ -11,6 +11,10 @@
 		  <File Permission="644" Location="Custom/LigeroElasticSearch.sopm"></File>
       <File Permission="644" Location="Kernel/Config/Files/XML/LigeroElasticSearch.xml"></File>
       <File Permission="644" Location="Custom/Kernel/Modules/AgentTicketSearch.pm"></File>
-      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/TicketStatsGeneric.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/TicketStatsGeneric.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerIDList.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerIDStatus.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerUserList.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/EventsTicketCalendar.pm"></File>
     </Filelist>
 </otrs_package>
