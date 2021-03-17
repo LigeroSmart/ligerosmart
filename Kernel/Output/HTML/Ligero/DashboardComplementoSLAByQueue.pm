@@ -57,6 +57,15 @@ sub Run {
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket'); 
     my $EscalationKey = $Param{EscalationKey} || 'SolutionDiffInMin';
     my $QueueObject = $Kernel::OM->Get('Kernel::System::Queue');
+
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
+      
+    $Index .= "_*_search";
+
+    $Index = lc($Index);
+
     # Check if queues are forced, otherwise, take the custom queues
     if ($Filter{QueueIDs}){
          @Queues = @{$Filter{QueueIDs}};
@@ -119,7 +128,8 @@ sub Run {
        		$Param{TicketCloseTimeNewerDate} = "2017-03-01" if(!$Param{TicketCloseTimeNewerDate});
 			$Param{TicketCloseTimeOlderDate} = "2019-$NMonth-01" if(!$Param{TicketCloseTimeOlderDate});
 		 
-            # Search tickets on this queue   
+        if(!$ESActive) {
+           # Search tickets on this queue   
             @Tickets = $TicketObject->TicketSearch(
                             %Filter,
                             QueueIDs => [$Q],
@@ -128,6 +138,20 @@ sub Run {
                             TicketCloseTimeNewerDate => $Param{TicketCloseTimeNewerDate} . " 00:00:00",
                             TicketCloseTimeOlderDate => $Param{TicketCloseTimeOlderDate} . " 00:00:00",
                             );
+        } else {
+           # Search tickets on this queue   
+            @Tickets = $LigeroSmartObject->TicketSearch(
+                            Indexes => $Index,
+                            Types   => 'ticket',
+                            %Filter,
+                            QueueIDs => [$Q],
+                            UserID     => 1,
+                            Result => 'ARRAY',
+                            TicketCloseTimeNewerDate => $Param{TicketCloseTimeNewerDate} . " 00:00:00",
+                            TicketCloseTimeOlderDate => $Param{TicketCloseTimeOlderDate} . " 00:00:00",
+                            );
+        }
+           
 
             $TicketIDs = \@Tickets;
             if ( $Self->{Config}->{CacheTTLLocal} ) {

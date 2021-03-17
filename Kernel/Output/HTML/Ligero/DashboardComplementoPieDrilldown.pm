@@ -61,6 +61,14 @@ sub Run {
     my $NotDefined     = $Param{NotDefined} || 'Not defined';
 
     my $baseURL = 'Action=AgentTicketSearch;Subaction=Search;'.$Param{FilterRaw};
+
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
+      
+    $Index .= "_*_search";
+
+    $Index = lc($Index);
     
     # filtros de campos "especiais"
     my %UrlField = (
@@ -119,6 +127,7 @@ sub Run {
 
     # If not a cache
     if (!$TicketIDs) {
+      if(!$ESActive) {
         @TicketIDsArray = $TicketObject->TicketSearch(
                         %{ $Param{'Filter'} },
                         UserID     => 1,
@@ -126,6 +135,18 @@ sub Run {
                         OrderBy => ['Down','Down'],  # Down|Up
                         SortBy  => ['Lock','Owner'],   # Owner|Responsible|CustomerID|State|TicketNumber|Queue|Priority|Age|Type|Lock
                         );
+      } else {
+        @TicketIDsArray = $LigeroSmartObject->TicketSearch(
+                        Indexes => $Index,
+                        Types   => 'ticket',
+                        %{ $Param{'Filter'} },
+                        UserID     => 1,
+                        Result => 'ARRAY',
+                        OrderBy => ['Down','Down'],  # Down|Up
+                        SortBy  => ['Lock','Owner'],   # Owner|Responsible|CustomerID|State|TicketNumber|Queue|Priority|Age|Type|Lock
+                        );
+      }
+        
 
         $TicketIDs = \@TicketIDsArray;
         if ( $Self->{Config}->{CacheTTLLocal} ) {

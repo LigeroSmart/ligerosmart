@@ -52,6 +52,14 @@ sub Run {
 
     my ( $Self, %Param ) = @_;
 
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
+      
+    $Index .= "_*_search";
+
+    $Index = lc($Index);
+
     my $Title = $Param{Title} || '';
 
     my %Axis = (
@@ -122,6 +130,7 @@ sub Run {
     
         # Se não obteve do cache, pega do BD
         if ($CountCreated eq '') {
+          if(!$ESActive){
             $CountCreated = $TicketObject->TicketSearch(
                 %{ $Param{'Filter'} },
                 # cache search result 30 min
@@ -142,6 +151,31 @@ sub Run {
                 #UserID => $Self->{UserID},
                 UserID => 1,
             );
+          } else {
+            $CountCreated = $LigeroSmartObject->TicketSearch(
+                Indexes => $Index,
+                Types   => 'ticket',
+                %{ $Param{'Filter'} },
+                # cache search result 30 min
+#                CacheTTL => 60 * 30,
+
+                # tickets with create time after ... (ticket newer than this date) (optional)
+                TicketCreateTimeNewerDate => "$Year-$Month-$Day 00:00:00",
+
+                # tickets with created time before ... (ticket older than this date) (optional)
+                TicketCreateTimeOlderDate => "$Year-$Month-$Day 23:59:59",
+#                QueueIDs => \@Queues,
+
+#                CustomerID => $Param{Data}->{UserCustomerID},
+                Result     => 'COUNT',
+
+                # search with user permissions
+                # Permission => $Self->{Config}->{Permission} || 'ro',
+                #UserID => $Self->{UserID},
+                UserID => 1,
+            );
+          }
+            
             # Se CacheTTLLocal definido, armazena o valor recuperado
             if ($Self->{Config}->{CacheTTLLocal} ) {
                 $CacheObject->Set(
@@ -167,6 +201,7 @@ sub Run {
 
         if ($CountClosed eq '') {
         
+          if(!$ESActive) {
             $CountClosed = $TicketObject->TicketSearch(
 
                 %{ $Param{'Filter'} },
@@ -188,6 +223,31 @@ sub Run {
     #            UserID => $Self->{UserID},
                 UserID => 1,
             );
+          } else {
+            $CountClosed = $LigeroSmartObject->TicketSearch(
+                Indexes => $Index,
+                Types   => 'ticket',
+                %{ $Param{'Filter'} },
+                # cache search result 30 min
+                CacheTTL => 60 * 30,
+
+                # tickets with create time after ... (ticket newer than this date) (optional)
+                TicketCloseTimeNewerDate => "$Year-$Month-$Day 00:00:00",
+
+                # tickets with created time before ... (ticket older than this date) (optional)
+                TicketCloseTimeOlderDate => "$Year-$Month-$Day 23:59:59",
+#                QueueIDs => \@Queues,
+
+                CustomerID => $Param{Data}->{UserCustomerID},
+                Result     => 'COUNT',
+
+                # search with user permissions
+    #            Permission => $Self->{Config}->{Permission} || 'ro',
+    #            UserID => $Self->{UserID},
+                UserID => 1,
+            );
+          }
+            
                         # Se CacheTTLLocal definido, armazena o valor recuperado
             if ($Self->{Config}->{CacheTTLLocal} ) {
                 $CacheObject->Set(
