@@ -57,6 +57,14 @@ sub Run {
 
     my ( $Self, %Param ) = @_;
 
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
+      
+    $Index .= "_*_search";
+
+    $Index = lc($Index);
+
     # quote Title attribute, it will be used as name="" parameter of the iframe
     my $Title = $Self->{Config}->{Title} || '';
     $Title =~ s/\s/_/smx;
@@ -329,12 +337,25 @@ sub Run {
         # Not in cache
         if($Count eq ''){
             if($Data{SumOf}){
-                my @Tickets =$TicketObject->TicketSearch(
+              my @Tickets;
+              if(!$ESActive) {
+                @Tickets =$TicketObject->TicketSearch(
                             # Created Today
                             #Other Filters
                             %TicketSearch,
                             Result => 'ARRAY',
                             );
+              } else {
+                @Tickets =$LigeroSmartObject->TicketSearch(
+                            Indexes => $Index,
+                            Types   => 'ticket',
+                            # Created Today
+                            #Other Filters
+                            %TicketSearch,
+                            Result => 'ARRAY',
+                            );
+              }
+                
                 for my $TicketID (@Tickets){
                     my %Ticket = $TicketObject->TicketGet(
                                         TicketID => $TicketID,
@@ -356,13 +377,24 @@ sub Run {
                     $Count += $Val;
                 }
             } else {
-
+              if(!$ESActive) {
                 $Count =$TicketObject->TicketSearch(
                             # Created Today
                             #Other Filters
                             %TicketSearch,
                             Result => 'COUNT',
                             ) || 0;
+              } else {
+                $Count =$LigeroSmartObject->TicketSearch(
+                            Indexes => $Index,
+                            Types   => 'ticket',
+                            # Created Today
+                            #Other Filters
+                            %TicketSearch,
+                            Result => 'COUNT',
+                            ) || 0;
+              }
+                
 
                 #Check if we want to show count or Percentage of ocurrence of an attribute
                 my %ExtraSearch;
@@ -386,14 +418,29 @@ sub Run {
                         $Data{Filter} .= "$pKey=$pValue";
 
                     }
-                    # faz a pesquisa
-                    my $percCount =$TicketObject->TicketSearch(
-                                # Created Today
-                                #Other Filters
-                                %ExtraSearch,
-                                %TicketSearch,
-                                Result => 'COUNT',
-                                ) || 0;
+                    my $percCount;
+                    if(!$ESActive) {
+                      # faz a pesquisa
+                      $percCount =$TicketObject->TicketSearch(
+                                  # Created Today
+                                  #Other Filters
+                                  %ExtraSearch,
+                                  %TicketSearch,
+                                  Result => 'COUNT',
+                                  ) || 0;
+                    } else {
+                      # faz a pesquisa
+                      $percCount =$LigeroSmartObject->TicketSearch(
+                                  Indexes => $Index,
+                                  Types   => 'ticket',
+                                  # Created Today
+                                  #Other Filters
+                                  %ExtraSearch,
+                                  %TicketSearch,
+                                  Result => 'COUNT',
+                                  ) || 0;
+                    }
+                    
                     # calcula o percentual
                     if($Count != 0){
                         $Count = $percCount*100/$Count;

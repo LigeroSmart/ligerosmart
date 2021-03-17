@@ -64,6 +64,14 @@ sub Run {
     my $reverse=$Param{'reverse'}||0;
 #    my @Queues;
     my $total=0;
+
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
+      
+    $Index .= "_*_search";
+
+    $Index = lc($Index);
     
     # Check if queues are forced, otherwise, take the custom queues
 #    if ($Param{QueueIDs}){
@@ -87,7 +95,8 @@ sub Run {
     $url.=";TicketCreateTimeStartYear=$Year;TicketCreateTimeStopYear=$Year;TicketCreateTimeStartMonth=$Month";
     $url.=";TicketCreateTimeStopMonth=$Month;TicketCreateTimeStartDay=$Day;TicketCreateTimeStopDay=$Day;TimeSearchType=TimeSlot";
 
-    my @Tickets = $TicketObject->TicketSearch(
+    if(!$ESActive) {
+      my @Tickets = $TicketObject->TicketSearch(
                     %Filter,
                     # Created Today
                     # tickets with create time after ... (ticket newer than this date) (optional)
@@ -103,6 +112,27 @@ sub Run {
                     SortBy  => ['Responsible'],   # Owner|Responsible|CustomerID|State|TicketNumber|Queue|Priority|Age|Type|Lock
 
                     );
+    } else {
+      my @Tickets = $LigeroSmartObject->TicketSearch(
+                    Indexes => $Index,
+                    Types   => 'ticket',
+                    %Filter,
+                    # Created Today
+                    # tickets with create time after ... (ticket newer than this date) (optional)
+                    TicketCreateTimeNewerDate => "$Year-$Month-$Day 00:00:01",
+                    # tickets with created time before ... (ticket older than this date) (optional)
+                    TicketCreateTimeOlderDate => "$Year-$Month-$Day 23:59:59",
+                    #Other Filters
+#                    StateTypeIDs => \@StateTypeIDs,
+#                    CreatedQueueIDs => \@Queues,
+                    UserID     => 1,
+                    Result => 'ARRAY',
+                    OrderBy => ['Down','Down'],  # Down|Up
+                    SortBy  => ['Responsible'],   # Owner|Responsible|CustomerID|State|TicketNumber|Queue|Priority|Age|Type|Lock
+
+                    );
+    }
+    
 
     # Obtem cada Ticket, fazemos um loop e contabilizamos a quantidade de tickets por analista
     my %List;

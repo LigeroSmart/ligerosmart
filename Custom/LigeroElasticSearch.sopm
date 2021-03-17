@@ -16,5 +16,8 @@
       <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerIDStatus.pm"></File>
       <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerUserList.pm"></File>
       <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/EventsTicketCalendar.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/TicketGeneric.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/TicketQueueOverview.pm"></File>
+      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/Calendar.pm"></File>
     </Filelist>
 </otrs_package>

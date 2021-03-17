@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>Dashboards</Name>
-    <Version>6.0.5</Version>
+    <Version>6.0.6</Version>
     <Vendor>Ligero</Vendor>
     <Framework>6.0.x</Framework>
     <URL>http://www.complemento.net.br/</URL>
