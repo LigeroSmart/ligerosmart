@@ -66,12 +66,7 @@ sub Run {
     my $total=0;
 
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
     
     # Check if queues are forced, otherwise, take the custom queues
 #    if ($Param{QueueIDs}){
@@ -114,8 +109,6 @@ sub Run {
                     );
     } else {
       my @Tickets = $LigeroSmartObject->TicketSearch(
-                    Indexes => $Index,
-                    Types   => 'ticket',
                     %Filter,
                     # Created Today
                     # tickets with create time after ... (ticket newer than this date) (optional)

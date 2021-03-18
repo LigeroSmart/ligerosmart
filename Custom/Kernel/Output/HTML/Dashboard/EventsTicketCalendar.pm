@@ -71,12 +71,7 @@ sub Run {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     my $Queues = $ConfigObject->{DashboardEventsTicketCalendar}->{Queues};
 
@@ -135,8 +130,6 @@ sub Run {
           );
         } else {
           %Tickets = $LigeroSmartObject->TicketSearch(
-              Indexes => $Index,
-              Types   => 'ticket',
               SortBy   => $ConfigObject->{'SortBy::Default'} || 'Age',
               QueueIDs => [ sort keys %QueuesConfigured ],
               UserID   => $Self->{UserID},

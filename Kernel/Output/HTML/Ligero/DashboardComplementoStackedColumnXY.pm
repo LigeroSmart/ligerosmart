@@ -58,12 +58,7 @@ sub Run {
     my $NotDefined     = $Param{NotDefined} || 'Not defined';
 
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
     
     # Cache
     my $CacheKey = join '-', 'StackedXY',
@@ -93,8 +88,6 @@ sub Run {
                         );
       } else {
         @TicketIDsArray = $LigeroSmartObject->TicketSearch(
-                        Indexes => $Index,
-                        Types   => 'ticket',
                         %{ $Param{'Filter'} },
                         UserID     => 1,
                         Result => 'ARRAY',

@@ -193,6 +193,13 @@ sub TicketSearch {
     my ( $Self, %Param ) = @_;
 
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+
+    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+
+    $Index .= "_*_search";
+
+    $Index = lc($Index);
 
     if (!$Self->{Config}->{Nodes}){
         $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -202,8 +209,8 @@ sub TicketSearch {
         return;
     }
 
-    my $Indexes = $Param{Indexes} || '';
-    my $Types   = $Param{Types} || '';
+    my $Indexes = $Index || '';
+    my $Types   = 'ticket';
 
     # Connect
     my @Nodes = @{$Self->{Config}->{Nodes}};
@@ -454,6 +461,7 @@ sub TicketSearch {
 
     $HashQuery{query}->{bool}->{must} = [@Must];
     
+    
     try {
         @SearchResults = $e->search(
             'index' => $Types.'_'.$Indexes,
@@ -461,11 +469,6 @@ sub TicketSearch {
             'body'  => {
                 %HashQuery
             }
-        );
-
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Passou aqui"
         );
 
         my %SearchResultsHash;
@@ -479,16 +482,19 @@ sub TicketSearch {
               push @ViewableTicketIDs, $document->{_source}->{Ticket}->{TicketID};
             }  
         }
+        
+        if(@ViewableTicketIDs){
+          return $TicketObject->TicketSearch(
+
+              TicketID            => [@ViewableTicketIDs],
+              %Param
+          );
+        } else {
+          return undef;
+        }
+        
 
         
-        
-
-        return (@ViewableTicketIDs) && $TicketObject->TicketSearch(
-
-            TicketID            => [@ViewableTicketIDs],
-
-            \%Param
-        );
 
 
 

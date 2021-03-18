@@ -51,12 +51,7 @@ sub Run {
     # find tickets with reached times in near future
     my $PendingReminderStateTypes = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::PendingReminderStateType');
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     my %Map = (
         Escalation => [
@@ -124,8 +119,6 @@ sub Run {
         } else {
           # search tickets
           @TicketIDs = $LigeroSmartObject->TicketSearch(
-              Indexes => $Index,
-              Types   => 'ticket',
               # add search attributes
               %{ $Map{$Type}->[1] },
 

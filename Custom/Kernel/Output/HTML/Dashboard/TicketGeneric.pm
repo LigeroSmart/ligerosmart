@@ -516,8 +516,6 @@ sub FilterContent {
             );
           } else {
             @OriginalViewableTickets = $LigeroSmartObject->TicketSearch(
-                Indexes => $Index,
-                Types   => 'ticket',
                 %TicketSearch,
                 %{ $TicketSearchSummary{ $Self->{Filter} } },
                 Result => 'ARRAY',
@@ -588,12 +586,7 @@ sub Run {
     my %TicketSearch        = %{ $SearchParams{TicketSearch} };
     my %TicketSearchSummary = %{ $SearchParams{TicketSearchSummary} };
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     # Add the additional filter to the ticket search param.
     if ( $Self->{AdditionalFilter} ) {
@@ -763,8 +756,6 @@ sub Run {
                   );
                 } else {
                   @TicketIDsArray = $LigeroSmartObject->TicketSearch(
-                      Indexes => $Index,
-                      Types   => 'ticket',
                       Result => 'ARRAY',
                       %TicketSearch,
                       %{ $TicketSearchSummary{ $Self->{Filter} } },
@@ -872,8 +863,6 @@ sub Run {
                       ) || 0;
                     } else {
                       $Summary->{$Type} = $LigeroSmartObject->TicketSearch(
-                          Indexes => $Index,
-                          Types   => 'ticket',
                           Result => 'COUNT',
                           %TicketSearch,
                           %{ $TicketSearchSummary{$Type} },

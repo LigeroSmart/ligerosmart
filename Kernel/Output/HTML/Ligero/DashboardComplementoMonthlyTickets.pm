@@ -53,12 +53,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     my $Title = $Param{Title} || '';
 
@@ -153,8 +148,6 @@ sub Run {
             );
           } else {
             $CountCreated = $LigeroSmartObject->TicketSearch(
-                Indexes => $Index,
-                Types   => 'ticket',
                 %{ $Param{'Filter'} },
                 # cache search result 30 min
 #                CacheTTL => 60 * 30,
@@ -225,8 +218,6 @@ sub Run {
             );
           } else {
             $CountClosed = $LigeroSmartObject->TicketSearch(
-                Indexes => $Index,
-                Types   => 'ticket',
                 %{ $Param{'Filter'} },
                 # cache search result 30 min
                 CacheTTL => 60 * 30,

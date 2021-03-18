@@ -58,12 +58,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     # quote Title attribute, it will be used as name="" parameter of the iframe
     my $Title = $Self->{Config}->{Title} || '';
@@ -347,8 +342,6 @@ sub Run {
                             );
               } else {
                 @Tickets =$LigeroSmartObject->TicketSearch(
-                            Indexes => $Index,
-                            Types   => 'ticket',
                             # Created Today
                             #Other Filters
                             %TicketSearch,
@@ -386,8 +379,6 @@ sub Run {
                             ) || 0;
               } else {
                 $Count =$LigeroSmartObject->TicketSearch(
-                            Indexes => $Index,
-                            Types   => 'ticket',
                             # Created Today
                             #Other Filters
                             %TicketSearch,
@@ -431,8 +422,6 @@ sub Run {
                     } else {
                       # faz a pesquisa
                       $percCount =$LigeroSmartObject->TicketSearch(
-                                  Indexes => $Index,
-                                  Types   => 'ticket',
                                   # Created Today
                                   #Other Filters
                                   %ExtraSearch,

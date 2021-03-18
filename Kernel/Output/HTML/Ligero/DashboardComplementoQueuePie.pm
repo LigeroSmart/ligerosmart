@@ -58,12 +58,7 @@ sub Run {
     my $QueueObject = $Kernel::OM->Get('Kernel::System::Queue');
 
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 	
     my @Queues;
     my $total=0;
@@ -111,8 +106,6 @@ sub Run {
                             );
           } else {
             $Count = $LigeroSmartObject->TicketSearch(
-                            Indexes => $Index,
-                            Types   => 'ticket',
                             %Filter,
                             'QueueIDs' => [$Q],
                             UserID     => 1,
