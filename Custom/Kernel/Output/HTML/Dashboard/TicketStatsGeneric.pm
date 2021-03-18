@@ -182,17 +182,8 @@ sub Run {
         }
         else {
           my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-          my $ConfigFulltext  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("LigeroSmart::Dashboard")||{};
-
-          my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
-
-          $Index .= "_*_search";
-
-          $Index = lc($Index);
 
           my $CountCreated = $LigeroSmartObject->TicketSearch(
-              Indexes => $Index,
-              Types   => 'ticket',
               # cache search result
               CacheTTL => $CacheTTL,
 
@@ -216,9 +207,6 @@ sub Run {
           push @TicketsCreated, $CountCreated;
 
           my $CountClosed = $LigeroSmartObject->TicketSearch(
-              Indexes => $Index,
-              Types   => 'ticket',
-
               # cache search result
               CacheTTL => $CacheTTL,
 

@@ -91,12 +91,7 @@ sub Run {
     my $CustomerUserObject    = $Kernel::OM->Get('Kernel::System::CustomerUser');
     my $CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     # get all customer ids of this customer user
     my @CustomerIDs = $CustomerUserObject->CustomerIDs(
@@ -193,8 +188,6 @@ sub Run {
           ) || 0;
         } else {
           $TicketCountOpen = $LigeroSmartObject->TicketSearch(
-              Indexes => $Index,
-              Types   => 'ticket',
               StateType  => 'Open',
               CustomerID => $CustomerID,
               Result     => 'COUNT',

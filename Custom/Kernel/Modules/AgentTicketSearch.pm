@@ -820,19 +820,22 @@ sub Run {
               push @ViewableTicketIDs, $document->{_source}->{Ticket}->{TicketID};
             }
 
-            @ViewableTicketIDs = $TicketObject->TicketSearch(
-                Result              => 'ARRAY',
-                SortBy              => $Self->{SortBy},
-                OrderBy             => $Self->{OrderBy},
-                TicketID            => [@ViewableTicketIDs],
-                UserID              => $Self->{UserID},
-                ConditionInline     => $Config->{ExtendedSearchCondition},
-                ContentSearchPrefix => '*',
-                ContentSearchSuffix => '*',
-                FullTextIndex       => 1,
-                %GetParam,
-                %DynamicFieldSearchParameters,
-            );
+            if (@ViewableTicketIDs){
+              @ViewableTicketIDs = $TicketObject->TicketSearch(
+                  Result              => 'ARRAY',
+                  SortBy              => $Self->{SortBy},
+                  OrderBy             => $Self->{OrderBy},
+                  TicketID            => [@ViewableTicketIDs],
+                  UserID              => $Self->{UserID},
+                  ConditionInline     => $Config->{ExtendedSearchCondition},
+                  ContentSearchPrefix => '*',
+                  ContentSearchSuffix => '*',
+                  FullTextIndex       => 1,
+                  %GetParam,
+                  %DynamicFieldSearchParameters,
+              );
+            }
+            
 
             #use Data::Dumper;
             #die Dumper(@ViewableTicketIDs);
@@ -841,6 +844,20 @@ sub Run {
             #    Message  => "RESULTADO DO SEARCH ".Dumper(\@ViewableTicketIDs)
             #);
 
+          } else {
+            @ViewableTicketIDs = $TicketObject->TicketSearch(
+                Result              => 'ARRAY',
+                SortBy              => $Self->{SortBy},
+                OrderBy             => $Self->{OrderBy},
+                Limit               => $Self->{SearchLimit},
+                UserID              => $Self->{UserID},
+                ConditionInline     => $Config->{ExtendedSearchCondition},
+                ContentSearchPrefix => '*',
+                ContentSearchSuffix => '*',
+                FullTextIndex       => 1,
+                %GetParam,
+                %DynamicFieldSearchParameters,
+            );
           }
 
         }

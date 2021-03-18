@@ -56,12 +56,7 @@ sub Run {
     my $LimitGroup = $Self->{Config}->{QueuePermissionGroup} || 0;
     my $CacheKey   = 'User' . '-' . $Self->{UserID} . '-' . $LimitGroup;
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
@@ -163,8 +158,6 @@ sub Run {
       } else {
         # Run ticket search for all Queues and appropriate available State.
         @StateOrderTicketIDs = $LigeroSmartObject->TicketSearch(
-            Indexes => $Index,
-            Types   => 'ticket',
             UserID   => $Self->{UserID},
             Result   => 'ARRAY',
             QueueIDs => \@QueueIDs,

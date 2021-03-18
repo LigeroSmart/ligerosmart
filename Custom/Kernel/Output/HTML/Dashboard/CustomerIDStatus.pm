@@ -60,12 +60,7 @@ sub Run {
     # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     my $Count;
 
@@ -82,8 +77,6 @@ sub Run {
     } else {
       # escalated tickets
       $Count = $LigeroSmartObject->TicketSearch(
-          Indexes => $Index,
-          Types   => 'ticket',
           TicketEscalationTimeOlderMinutes => 1,
           CustomerIDRaw                    => $CustomerIDRaw,
           Result                           => 'COUNT',
@@ -118,8 +111,6 @@ sub Run {
     } else {
       # open tickets
       $Count = $LigeroSmartObject->TicketSearch(
-          Indexes => $Index,
-          Types   => 'ticket',
           StateType     => 'Open',
           CustomerIDRaw => $CustomerIDRaw,
           Result        => 'COUNT',
@@ -151,8 +142,6 @@ sub Run {
     } else {
       # closed tickets
       $Count = $LigeroSmartObject->TicketSearch(
-          Indexes => $Index,
-          Types   => 'ticket',
           StateType     => 'Closed',
           CustomerIDRaw => $CustomerIDRaw,
           Result        => 'COUNT',
@@ -183,8 +172,6 @@ sub Run {
     } else {
       # all tickets
       $Count = $LigeroSmartObject->TicketSearch(
-          Indexes => $Index,
-          Types   => 'ticket',
           CustomerIDRaw => $CustomerIDRaw,
           Result        => 'COUNT',
           Permission    => $Self->{Config}->{Permission},
@@ -215,8 +202,6 @@ sub Run {
           ) || 0;
         } else {
           $Count = $LigeroSmartObject->TicketSearch(
-              Indexes => $Index,
-              Types   => 'ticket',
               CustomerIDRaw => $CustomerIDRaw,
               ArchiveFlags  => ['y'],
               Result        => 'COUNT',
