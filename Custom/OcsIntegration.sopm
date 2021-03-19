@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>OcsIntegration</Name>
+    <Version>6.0.3</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Automatic import of OCS system data to the OTRS system.</Description>
+    <Description Lang="pt_BR">Importação automatica de dados do sistema OCS para o sistema OTRS.</Description>
+    <IntroInstall Type="post" Lang="en" Title="Attention!">OTRS API enhancements for use in Ligero applications.</IntroInstall>
+    <Filelist>
+        <File Permission="644" Location="Custom/OcsIntegration.sopm"></File>
+        <File Permission="644" Location="Kernel/Modules/AdminOcsIntegration.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminOcsIntegration.tt"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.OcsIntegration.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/angularjs/angular.js"></File>
+        <File Permission="644" Location="Kernel/System/OcsIntegrationSnmp.pm"></File>
+        <File Permission="644" Location="Kernel/System/OcsIntegrationComputer.pm"></File>
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/Ocs/OcsIntegration.pm"></File>
+        <File Permission="644" Location="var/packagesetup/OcsIntegration.pm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/OcsIntegration.xml"></File>
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <TableCreate Type="post" Name="ocsIntegrationSnmpClassesType">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="ocsType" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="otrsClass" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Unique Name="ocs_type">
+                <UniqueColumn Name="ocsType"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="ocsIntegrationSnmpMapping">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="active" Required="true" Type="SMALLINT"></Column>
+            <Column Name="key_field" Required="true" Type="SMALLINT"></Column>
+            <Column Name="it_order" Required="true" Type="INTEGER"></Column>
+            <Column Name="it_type" Required="true" Size="50" Type="VARCHAR"></Column>
+            <Column Name="ocsField" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="ocsPath" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="otrsTranslate" Required="false" Size="250" Type="VARCHAR"></Column>
+            <Column Name="parentId" Required="false" Type="INTEGER"></Column>
+            <Column Name="snmpClassTypeId" Required="false" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="ocsIntegrationSnmpMapping">
+                <Reference Local="parentId" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="ocsIntegrationSnmpClassesType">
+                <Reference Local="snmpClassTypeId" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="ocsIntegrationSnmpFilter">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="type" Required="true" Size="20" Type="VARCHAR"></Column>
+            <Column Name="field" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="condition_filter" Required="true" Size="20" Type="VARCHAR"></Column>
+            <Column Name="content" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="ocsPathId" Required="false" Type="INTEGER"></Column>
+            <Column Name="snmpClassTypeId" Required="false" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="ocsIntegrationSnmpMapping">
+                <Reference Local="ocsPathId" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="ocsIntegrationSnmpClassesType">
+                <Reference Local="snmpClassTypeId" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="ocsIntegrationComputerMapping">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="active" Required="true" Type="SMALLINT"></Column>
+            <Column Name="key_field" Required="true" Type="SMALLINT"></Column>
+            <Column Name="it_order" Required="true" Type="INTEGER"></Column>
+            <Column Name="it_type" Required="true" Size="50" Type="VARCHAR"></Column>
+            <Column Name="ocsField" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="ocsPath" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="otrsTranslate" Required="false" Size="250" Type="VARCHAR"></Column>
+            <Column Name="parentId" Required="false" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="ocsIntegrationComputerMapping">
+                <Reference Local="parentId" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="ocsIntegrationComputerFilter">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="type" Required="true" Size="20" Type="VARCHAR"></Column>
+            <Column Name="field" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="condition_filter" Required="true" Size="20" Type="VARCHAR"></Column>
+            <Column Name="content" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="ocsPathId" Required="false" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="ocsIntegrationComputerMapping">
+                <Reference Local="ocsPathId" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseInstall>
+    <CodeInstall Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+    </CodeInstall>
+	<CodeUpgrade Type="post">
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        $Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+    </CodeUpgrade>
+</otrs_package>
