@@ -110,6 +110,7 @@ sub Run {
                             'QueueIDs' => [$Q],
                             UserID     => 1,
                             Result => 'COUNT',
+                            JustES => $Self->{Config}->{JustES}
                             );
           }
             

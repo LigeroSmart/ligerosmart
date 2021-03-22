@@ -163,6 +163,7 @@ sub Run {
             QueueIDs => \@QueueIDs,
             States   => [ $ConfiguredStates{$StateOrderID} ],
             Limit    => 100_000,
+            JustES => $Self->{Config}->{JustES}
         );
       }
         
