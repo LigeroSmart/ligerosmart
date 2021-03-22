@@ -346,6 +346,7 @@ sub Run {
                             #Other Filters
                             %TicketSearch,
                             Result => 'ARRAY',
+                            JustES => $Self->{Config}->{JustES}
                             );
               }
                 
@@ -383,6 +384,7 @@ sub Run {
                             #Other Filters
                             %TicketSearch,
                             Result => 'COUNT',
+                            JustES => $Self->{Config}->{JustES}
                             ) || 0;
               }
                 
@@ -427,6 +429,7 @@ sub Run {
                                   %ExtraSearch,
                                   %TicketSearch,
                                   Result => 'COUNT',
+                                  JustES => $Self->{Config}->{JustES}
                                   ) || 0;
                     }
                     

@@ -352,6 +352,7 @@ sub Run {
               Permission           => $Self->{Config}->{Permission},
               UserID               => $Self->{UserID},
               CacheTTL             => $Self->{Config}->{CacheTTLLocal} * 60,
+              JustES => $Self->{Config}->{JustES}
           ) || 0;
         }
 
@@ -388,6 +389,7 @@ sub Run {
               Permission           => $Self->{Config}->{Permission},
               UserID               => $Self->{UserID},
               CacheTTL             => $Self->{Config}->{CacheTTLLocal} * 60,
+              JustES => $Self->{Config}->{JustES}
           ) || 0;
         }
         

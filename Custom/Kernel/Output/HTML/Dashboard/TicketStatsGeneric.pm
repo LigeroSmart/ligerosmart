@@ -199,6 +199,7 @@ sub Run {
               # search with user permissions
               Permission => $Self->{Config}->{Permission} || 'ro',
               UserID     => $Self->{UserID},
+              JustES => $Self->{Config}->{JustES}
           ) || 0;
 
           if ( $CountCreated && $CountCreated > $Max ) {
@@ -222,6 +223,7 @@ sub Run {
               # search with user permissions
               Permission => $Self->{Config}->{Permission} || 'ro',
               UserID     => $Self->{UserID},
+              JustES => $Self->{Config}->{JustES}
           ) || 0;
           if ( $CountClosed && $CountClosed > $Max ) {
               $Max = $CountClosed;

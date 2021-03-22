@@ -475,12 +475,7 @@ sub FilterContent {
     my @OriginalViewableTickets;
 
     my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
-    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
     my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
-      
-    $Index .= "_*_search";
-
-    $Index = lc($Index);
 
     if (
         $Kernel::OM->Get('Kernel::Config')->Get('OnlyValuesOnTicket')
@@ -519,6 +514,8 @@ sub FilterContent {
                 %TicketSearch,
                 %{ $TicketSearchSummary{ $Self->{Filter} } },
                 Result => 'ARRAY',
+                Source => 'TicketGeneric',
+                JustES => $Self->{Config}->{JustES},
             );
           }
             
@@ -761,6 +758,9 @@ sub Run {
                       %{ $TicketSearchSummary{ $Self->{Filter} } },
                       %ColumnFilter,
                       Limit => $Self->{PageShown} + $Self->{StartHit} - 1,
+                      JustES => $Self->{Config}->{JustES},
+                      Source => 'TicketGeneric',
+                      JustES => $Self->{Config}->{JustES}
                   );
                 }
                 
@@ -867,6 +867,9 @@ sub Run {
                           %TicketSearch,
                           %{ $TicketSearchSummary{$Type} },
                           %ColumnFilter,
+                          JustES => $Self->{Config}->{JustES},
+                          Source => 'TicketGeneric',
+                          JustES => $Self->{Config}->{JustES}
                       ) || 0;
                     }
                     

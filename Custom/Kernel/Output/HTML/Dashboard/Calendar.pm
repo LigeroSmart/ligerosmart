@@ -126,6 +126,7 @@ sub Run {
               Permission => $Self->{Config}->{Permission} || 'ro',
               UserID     => $Self->{UserID},
               Limit      => 25,
+              JustES => $Self->{Config}->{JustES}
           );
         }
         

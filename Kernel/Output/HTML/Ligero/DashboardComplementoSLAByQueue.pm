@@ -142,6 +142,7 @@ sub Run {
                             Result => 'ARRAY',
                             TicketCloseTimeNewerDate => $Param{TicketCloseTimeNewerDate} . " 00:00:00",
                             TicketCloseTimeOlderDate => $Param{TicketCloseTimeOlderDate} . " 00:00:00",
+                            JustES => $Self->{Config}->{JustES}
                             );
         }
            

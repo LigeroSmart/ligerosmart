@@ -122,7 +122,7 @@ sub Run {
                     Result => 'ARRAY',
                     OrderBy => ['Down','Down'],  # Down|Up
                     SortBy  => ['Responsible'],   # Owner|Responsible|CustomerID|State|TicketNumber|Queue|Priority|Age|Type|Lock
-
+                    JustES => $Self->{Config}->{JustES}
                     );
     }
     
