@@ -50,6 +50,8 @@ sub Run {
 
     # find tickets with reached times in near future
     my $PendingReminderStateTypes = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::PendingReminderStateType');
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
 
     my %Map = (
         Escalation => [
@@ -101,17 +103,33 @@ sub Run {
     my %Date;
     for my $Type ( sort keys %Map ) {
 
-        # search tickets
-        my @TicketIDs = $TicketObject->TicketSearch(
+        my @TicketIDs;
+        if(!$ESActive) {
+          # search tickets
+          @TicketIDs = $TicketObject->TicketSearch(
 
-            # add search attributes
-            %{ $Map{$Type}->[1] },
+              # add search attributes
+              %{ $Map{$Type}->[1] },
 
-            Result     => 'ARRAY',
-            Permission => $Self->{Config}->{Permission} || 'ro',
-            UserID     => $Self->{UserID},
-            Limit      => 25,
-        );
+              Result     => 'ARRAY',
+              Permission => $Self->{Config}->{Permission} || 'ro',
+              UserID     => $Self->{UserID},
+              Limit      => 25,
+          );
+        } else {
+          # search tickets
+          @TicketIDs = $LigeroSmartObject->TicketSearch(
+              # add search attributes
+              %{ $Map{$Type}->[1] },
+
+              Result     => 'ARRAY',
+              Permission => $Self->{Config}->{Permission} || 'ro',
+              UserID     => $Self->{UserID},
+              Limit      => 25,
+              JustES => $Self->{Config}->{JustES}
+          );
+        }
+        
 
         # get ticket attributes
         TICKETID:
