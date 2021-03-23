@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>LigeroElasticSearch</Name>
-    <Version>6.0.0</Version>
+    <Version>6.0.1</Version>
     <Framework>6.0.x</Framework>
     <Vendor>Ligero</Vendor>
     <URL>http://www.complemento.net.br/</URL>
@@ -10,14 +10,16 @@
     <Filelist>
 		  <File Permission="644" Location="Custom/LigeroElasticSearch.sopm"></File>
       <File Permission="644" Location="Kernel/Config/Files/XML/LigeroElasticSearch.xml"></File>
-      <File Permission="644" Location="Custom/Kernel/Modules/AgentTicketSearch.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/TicketStatsGeneric.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerIDList.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerIDStatus.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/CustomerUserList.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/EventsTicketCalendar.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/TicketGeneric.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/TicketQueueOverview.pm"></File>
-      <File Permission="644" Location="Custom/Kernel/Output/HTML/Dashboard/Calendar.pm"></File>
+      <File Permission="644" Location="Kernel/Modules/AgentTicketSearch.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/TicketStatsGeneric.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/CustomerIDList.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/CustomerIDStatus.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/CustomerUserList.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/EventsTicketCalendar.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/TicketGeneric.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/TicketQueueOverview.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Dashboard/Calendar.pm"></File>
+      <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminQueue.tt"></File>
+      <File Permission="644" Location="Kernel/Language/pt_BR_LigeroElasticSearch.pm"></File>
     </Filelist>
 </otrs_package>

@@ -459,6 +459,23 @@ sub TicketSearch {
       push @Must, $term;
     }
 
+    if ( $Param{UserID} && $Param{UserID} != 1 ) {
+        my $term = {};
+        # get users groups
+        my %GroupList = $Kernel::OM->Get('Kernel::System::Group')->PermissionUserGet(
+            UserID => $Param{UserID},
+            Type   => $Param{Permission} || 'ro',
+        );
+
+        # return if we have no permissions
+        return if !%GroupList;
+
+        # add groups to query
+        $term->{terms}->{"Ticket.GroupID"} = [sort keys %GroupList];
+        #$SQLExt .= ' AND sq.group_id IN (' . join( ',', sort keys %GroupList ) . ') ';
+        push @Must, $term;
+    }
+
     $HashQuery{query}->{bool}->{must} = [@Must];
 
     if($Param{Source} eq 'TicketGeneric'){
