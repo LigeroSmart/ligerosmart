@@ -38,6 +38,13 @@ sub Configure {
         HasValue    => 1,
         ValueRegex  => qr/.*/smx,
     );
+    $Self->AddArgument(
+        Name => 'file',
+        Description =>
+            "Specify the file name.",
+        Required   => 0,
+        ValueRegex => qr/.*/smx,
+    );
     return;
 }
 
@@ -46,6 +53,7 @@ sub Run {
 
 
     $Param{Options}->{SourceDir} = $Self->GetOption('source-dir');
+    $Param{Options}->{File} = $Self->GetArgument('file');
 
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
@@ -82,7 +90,7 @@ sub Run {
         }
 
 
-        if(@TableBody) {
+        if(@TableBody && !$Param{Options}->{File}) {
             $Self->Print("Migrations already applied:\n");
             my $TableOutput = $Self->TableOutput(
                 TableData => {
@@ -106,11 +114,14 @@ sub Run {
 
     my @Files     = $MainObject->DirectoryRead(
         Directory => $SourceDir,
-        Filter    => '*.xml',
+        Filter    => $Param{Options}->{File} || '*.xml',
     );
 
     if ( !@Files ) {
-        $Self->PrintError("No XML files found in $SourceDir.");
+        $Self->PrintError("No XML files found in $SourceDir.\n");
+        if($Param{Options}->{File}) {
+            $Self->PrintError($Param{Options}->{File});
+        }
         return $Self->ExitCodeError();
     }
 
@@ -119,7 +130,7 @@ sub Run {
 
         my $filename = basename($File);
         my $path = "$SourceDir/$filename";
-        next if($MigrationsApplied{$filename});
+        next if(!$Param{Options}->{File} && $MigrationsApplied{$filename});
 
         my $XMLFile = XML::LibXML->load_xml(location => $path);
         if ( !$XMLFile ) {
