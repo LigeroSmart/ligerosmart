@@ -188,7 +188,7 @@
         <TableDrop Name="faq_voting" />
         <TableDrop Name="faq_log" />
     </DatabaseUninstall>
-    <CodeUninstall Type="post"><![CDATA[
+    <CodeUninstall Type="pre"><![CDATA[
         $Kernel::OM->Get('var::packagesetup::FAQ')->CodeUninstall();
     ]]></CodeUninstall>
 </Migrations>
