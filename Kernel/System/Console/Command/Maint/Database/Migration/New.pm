@@ -51,7 +51,7 @@ sub Run {
     </DatabaseUninstall>
 </Migrations>';
 
-    my $FilePreffix = strftime "%Y%d%m%H%M%S", localtime;
+    my $FilePreffix = strftime "%Y%m%d%H%M%S", localtime;
     my $FileSuffix = $Param{Options}->{Suffix};
 
     my $TargetPath = $Param{Options}->{SourceDir} . "/" . $FilePreffix . "_" . $FileSuffix . ".xml";
