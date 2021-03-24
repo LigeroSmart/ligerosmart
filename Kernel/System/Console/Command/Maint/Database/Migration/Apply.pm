@@ -67,24 +67,31 @@ sub Run {
 
     # eval {
         no warnings;
-
+        my @TableBody;
         $DBObject->Prepare( SQL => "SELECT * FROM migrations" );
         my $Result = "";
         my @BatchArray = ();
         while ( my @Row = $DBObject->FetchrowArray() ) {
             # if not exists here, apply commands
-            $Result .= join("\t", @Row)."\n";
             my $migrationName = $Row[1];
             #https://stackoverflow.com/questions/10701210/how-to-find-maximum-and-minimum-value-in-an-array-of-integers-in-perl
             # push($Row[3], @BatchArray);
             $MigrationsApplied{$migrationName} = 1;
+            push(@TableBody, [ @Row ]);
             push(@BatchArray, $Row[3]);
         }
 
 
-        if($Result) {
+        if(@TableBody) {
             $Self->Print("Migrations already applied:\n");
-            $Self->Print($Result);
+            my $TableOutput = $Self->TableOutput(
+                TableData => {
+                    Header => ['ID', 'Name', 'Version', 'Batch step', 'Result', 'Date'],
+                    Body   => \@TableBody,
+                },
+                Indention => 2,
+            );
+            $Self->Print("\n$TableOutput\n");
         }
     # };
 
@@ -148,6 +155,7 @@ sub Run {
         if($ApplyList{$fileKey}->{CodeInstall}->{pre}) {
             my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{pre};
             if ( !eval $CodeContent. "\n1;" ) {    ## no critic
+                $ApplyList{$fileKey}->{Output} = "Error executing CodeInstall[Type=pre]";
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Code: $CodeContent",
@@ -167,9 +175,11 @@ sub Run {
             for my $SQL (@SQL) {
                 $Result = $DBObject->Do( SQL => $SQL );
                 if ( ! $Result ) {
-                    $Self->PrintError("Error executing SQL: \n\t$SQL\n");
+                    $ApplyList{$fileKey}->{Output} = "Error executing DatabaseInstall";
+                    $Self->PrintError("Error executing SQL:\n");
                     $DBObject->Error();
-                    return $Self->ExitCodeError();
+                    $ApplyList{$fileKey}->{Output} = $DBObject->Error();
+                    # $Self->ExitCodeError();
                 }
             }
 
@@ -178,18 +188,20 @@ sub Run {
         if($ApplyList{$fileKey}->{CodeInstall}->{post}) {
             my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{post};
             if ( !eval $CodeContent. "\n1;" ) {    ## no critic
+                $ApplyList{$fileKey}->{Output} = "Error executing CodeInstall[Type=post]";
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Code: $CodeContent",
                 );
-                return;
+                # return;
             }
         }
 
         my $version = $ConfigObject->{Version};
+        my $output = $ApplyList{$fileKey}->{Output} || 'OK';
         $DBObject->Do(
-            SQL  => "INSERT INTO migrations (name, version, batch, create_time) VALUES (?, ?, ?, NOW())",
-            Bind => [ \$fileKey, \$version, \$NextBatchNumber ],
+            SQL  => "INSERT INTO migrations (name, version, batch, output, create_time) VALUES (?, ?, ?, ?, NOW())",
+            Bind => [ \$fileKey, \$version, \$NextBatchNumber, \$output ],
         );
     }
 
