@@ -37,6 +37,9 @@ sub Run {
             <Column Name="batch" Type="INTEGER"/>
             <Column Name="output" Type="VARCHAR" Size="10000"/>
             <Column Name="create_time" Type="DATE" />
+            <Unique>
+                <UniqueColumn Name="name" />
+            </Unique>
             <Index Name="migrations_name_idx">
                 <IndexColumn Name="name"/>
             </Index>
