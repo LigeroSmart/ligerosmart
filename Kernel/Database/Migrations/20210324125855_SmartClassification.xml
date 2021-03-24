@@ -1,8 +1,7 @@
 <Migrations>
-    <CodeInstall Type="post">
-        $Kernel::OM-&gt;Get('var::packagesetup::SmartClassification')-&gt;CodeInstall();
-    </CodeInstall>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::SmartClassification')->CodeInstall();
+    ]]></CodeInstall>
     <CodeUninstall Type="post">
-        $Kernel::OM-&gt;Get('var::packagesetup::SmartClassification')-&gt;CodeUninstall();
     </CodeUninstall>
 </Migrations>

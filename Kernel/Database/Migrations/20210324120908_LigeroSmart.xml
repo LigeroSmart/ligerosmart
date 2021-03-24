@@ -9,9 +9,9 @@
             </IndexCreate>
         </TableAlter>
     </DatabaseInstall>
-    <CodeInstall Type="post">
-        $Kernel::OM-&gt;Get('var::packagesetup::LigeroSmart')-&gt;CodeInstall();
-    </CodeInstall>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::LigeroSmart')->CodeInstall();
+    ]]></CodeInstall>
     
     <DatabaseUninstall>
         <TableAlter Name="ticket_history">
@@ -19,6 +19,5 @@
         </TableAlter>
     </DatabaseUninstall>
     <CodeUninstall Type="post">
-        $Kernel::OM-&gt;Get('var::packagesetup::LigeroSmart')-&gt;CodeUninstall();
     </CodeUninstall>
 </Migrations>
