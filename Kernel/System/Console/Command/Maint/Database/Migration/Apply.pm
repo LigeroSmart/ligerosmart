@@ -106,7 +106,7 @@ sub Run {
                     Header => ['ID', 'Name', 'Version', 'Batch step', 'Result', 'Date'],
                     Body   => \@TableBody,
                 },
-                Indention => 2,
+                Indention => 0,
             );
             $Self->Print("\n$TableOutput\n");
         }
