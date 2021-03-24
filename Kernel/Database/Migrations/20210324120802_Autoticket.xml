@@ -1,0 +1,45 @@
+<Migrations>
+    <DatabaseInstall>
+        <TableCreate  Name="autoticket">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+            <Column Name="type_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="service_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="sla_id" Required="false" Type="INTEGER"></Column>
+            <Column Name="queue_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_state_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_priority_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_title" Size="255" Type="VARCHAR"></Column>
+            <Column Name="ticket_message" Size="20000" Type="VARCHAR"></Column>
+            <Column Name="article_type_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_customer_user" Size="255" Type="VARCHAR"></Column>
+            <Column Name="ticket_customer_id" Size="255" Type="VARCHAR"></Column>
+            <Column Name="no_agent_notify" Type="SMALLINT"></Column>
+            <Column Name="nwd" Required="true" Type="SMALLINT"></Column>
+            <Column Name="weekday" Size="20" Type="VARCHAR"></Column>
+            <Column Name="monthday" Size="200" Type="VARCHAR"></Column>
+            <Column Name="months" Size="30" Type="VARCHAR"></Column>
+            <Column Name="hour" Required="true" Type="SMALLINT"></Column>
+            <Column Name="minutes" Required="true" Type="SMALLINT"></Column>
+            <Column Name="comments" Size="255" Type="VARCHAR"></Column>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"></Column>
+            <Column Name="create_time" Required="true" Type="DATE"></Column>
+            <Column Name="create_by" Required="true" Type="INTEGER"></Column>
+            <Column Name="change_time" Required="true" Type="DATE"></Column>
+            <Column Name="change_by" Required="true" Type="INTEGER"></Column>
+            <Unique Name="autoticket_name">
+                    <UniqueColumn Name="name"></UniqueColumn>
+			</Unique>
+        </TableCreate>
+        <TableCreate  Name="autoticket_dynamic_field_value">
+            <Column Name="autoticket_id" Required="true" Type="SMALLINT"></Column>
+            <Column Name="dynamic_field" Size="200" Type="VARCHAR"></Column>
+            <Column Name="value" Size="20000" Type="VARCHAR"></Column>
+        </TableCreate>
+    </DatabaseInstall>
+    
+    <DatabaseUninstall>
+        <TableDrop Name="autoticket" />
+        <TableDrop Name="autoticket_dynamic_field_value" />
+    </DatabaseUninstall>
+</Migrations>

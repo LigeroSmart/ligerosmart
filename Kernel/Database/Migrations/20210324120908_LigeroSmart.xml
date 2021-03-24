@@ -1,0 +1,24 @@
+<Migrations>
+    <DatabaseInstall>
+        <TableAlter Name="ticket_history">
+            <IndexCreate Name="ligero_history_state_date">
+                <IndexColumn Name="ticket_id"/>
+                <IndexColumn Name="state_id"/>
+                <IndexColumn Name="create_time"/>
+                <IndexColumn Name="history_type_id"/>
+            </IndexCreate>
+        </TableAlter>
+    </DatabaseInstall>
+    <CodeInstall Type="post">
+        $Kernel::OM-&gt;Get('var::packagesetup::LigeroSmart')-&gt;CodeInstall();
+    </CodeInstall>
+    
+    <DatabaseUninstall>
+        <TableAlter Name="ticket_history">
+            <IndexDrop Name="ligero_history_state_date" />
+        </TableAlter>
+    </DatabaseUninstall>
+    <CodeUninstall Type="post">
+        $Kernel::OM-&gt;Get('var::packagesetup::LigeroSmart')-&gt;CodeUninstall();
+    </CodeUninstall>
+</Migrations>

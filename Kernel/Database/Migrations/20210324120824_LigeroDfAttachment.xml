@@ -1,0 +1,55 @@
+<Migrations>
+    <DatabaseInstall>
+        <TableCreate Name="df_attachment">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Size="20" Type="BIGINT" />
+            <Column Name="article_id" Required="true" Size="20" Type="BIGINT" />
+            <Column Name="filename" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="content_size" Required="true" Size="30" Type="INTEGER" />
+            <Column Name="content_type" Required="true" Size="255" Type="VARCHAR" />
+            <Column Name="content_id" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="content_alternative" Required="true" Size="50" Type="VARCHAR" />
+            <Column Name="content" Required="true" Type="LONGBLOB" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Size="11" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Size="11" Type="INTEGER" />
+            <Column Name="deleted" Required="true" Size="1" Type="SMALLINT" />
+            <Column Name="form_id" Required="true" Size="50" Type="VARCHAR" />
+            <Index Name="article_id">
+              <IndexColumn Name="article_id"/>
+            </Index>
+            <Index Name="content_id">
+              <IndexColumn Name="content_id"/>
+            </Index>
+            <Index Name="deleted">
+              <IndexColumn Name="deleted"/>
+            </Index>
+            <Index Name="form_id">
+              <IndexColumn Name="form_id"/>
+            </Index>
+        </TableCreate>
+    </DatabaseInstall>
+
+    <!-- ??? revisar - pode ir depois em outro migration -->
+    <DatabaseUpgrade Type="post">
+        <TableAlter Name="df_attachment" Type="post">
+            <ColumnChange NameOld="content_type" NameNew="content_type" Required="true" Size="255" Type="VARCHAR" />
+            <IndexCreate Name="article_id">
+                <IndexColumn Name="article_id"/>
+            </IndexCreate>
+            <IndexCreate Name="content_id">
+                <IndexColumn Name="content_id"/>
+            </IndexCreate>
+            <IndexCreate Name="deleted">
+                <IndexColumn Name="deleted"/>
+            </IndexCreate>
+            <IndexCreate Name="form_id">
+                <IndexColumn Name="form_id"/>
+            </IndexCreate>
+        </TableAlter>
+    </DatabaseUpgrade>
+
+    <DatabaseUninstall>
+        <TableDrop Name="df_attachment"/>
+    </DatabaseUninstall>
+</Migrations>
