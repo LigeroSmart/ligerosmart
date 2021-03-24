@@ -1,0 +1,1409 @@
+<Migrations>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="change_item">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_number" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="title" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="description" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="description_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="justification" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="justification_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="change_state_id" Required="true" Type="INTEGER" />
+            <Column Name="change_manager_id" Required="false" Type="INTEGER" />
+            <Column Name="change_builder_id" Required="true" Type="INTEGER" />
+            <Column Name="category_id" Required="true" Type="INTEGER" />
+            <Column Name="impact_id" Required="true" Type="INTEGER" />
+            <Column Name="priority_id" Required="true" Type="INTEGER" />
+            <Column Name="requested_time" Required="false" Type="DATE" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
+            <Unique Name="change_item_change_number">
+                <UniqueColumn Name="change_number" />
+            </Unique>
+            <Index Name="change_item_title">
+                <IndexColumn Name="title" />
+            </Index>
+            <Index Name="change_item_change_state_id">
+                <IndexColumn Name="change_state_id" />
+            </Index>
+            <Index Name="change_item_change_manager_id">
+                <IndexColumn Name="change_manager_id" />
+            </Index>
+            <Index Name="change_item_change_builder_id">
+                <IndexColumn Name="change_builder_id" />
+            </Index>
+            <Index Name="change_item_category_id">
+                <IndexColumn Name="category_id" />
+            </Index>
+            <Index Name="change_item_impact_id">
+                <IndexColumn Name="impact_id" />
+            </Index>
+            <Index Name="change_item_priority_id">
+                <IndexColumn Name="priority_id" />
+            </Index>
+            <Index Name="change_item_create_time">
+                <IndexColumn Name="create_time" />
+            </Index>
+            <Index Name="change_item_requested_time">
+                <IndexColumn Name="requested_time" />
+            </Index>
+            <Index Name="change_item_change_time">
+                <IndexColumn Name="change_time" />
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="change_state_id" Foreign="id" />
+                <Reference Local="category_id" Foreign="id" />
+                <Reference Local="impact_id" Foreign="id" />
+                <Reference Local="priority_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="change_manager_id" Foreign="id" />
+                <Reference Local="change_builder_id" Foreign="id" />
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_workorder">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="workorder_number" Required="true" Type="INTEGER" />
+            <Column Name="title" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="instruction" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="instruction_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="report" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="report_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="workorder_state_id" Required="true" Type="INTEGER" />
+            <Column Name="workorder_type_id" Required="true" Type="INTEGER" />
+            <Column Name="workorder_agent_id" Required="false" Type="INTEGER" />
+            <Column Name="planned_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="planned_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="actual_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="actual_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="planned_effort" Required="true" Default="0" Size="10,2" Type="DECIMAL" />
+            <Column Name="accounted_time" Required="true" Default="0" Size="10,2" Type="DECIMAL" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
+            <Index Name="change_workorder_change_id">
+                <IndexColumn Name="change_id" />
+            </Index>
+            <Index Name="change_workorder_title">
+                <IndexColumn Name="title" />
+            </Index>
+            <Index Name="change_workorder_workorder_state_id">
+                <IndexColumn Name="workorder_state_id" />
+            </Index>
+            <Index Name="change_workorder_workorder_type_id">
+                <IndexColumn Name="workorder_type_id" />
+            </Index>
+            <Index Name="change_workorder_workorder_agent_id">
+                <IndexColumn Name="workorder_agent_id" />
+            </Index>
+            <Index Name="change_workorder_planned_start_time">
+                <IndexColumn Name="planned_start_time" />
+            </Index>
+            <Index Name="change_workorder_planned_end_time">
+                <IndexColumn Name="planned_end_time" />
+            </Index>
+            <Index Name="change_workorder_actual_start_time">
+                <IndexColumn Name="actual_start_time" />
+            </Index>
+            <Index Name="change_workorder_actual_end_time">
+                <IndexColumn Name="actual_end_time" />
+            </Index>
+            <Index Name="change_workorder_create_time">
+                <IndexColumn Name="create_time" />
+            </Index>
+            <Index Name="change_workorder_change_time">
+                <IndexColumn Name="change_time" />
+            </Index>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="workorder_state_id" Foreign="id" />
+                <Reference Local="workorder_type_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="workorder_agent_id" Foreign="id" />
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_cab">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="user_id" Required="false" Type="INTEGER" />
+            <Column Name="customer_user_id" Required="false" Size="250" Type="VARCHAR" />
+            <Unique Name="change_cab_unique">
+                <UniqueColumn Name="change_id" />
+                <UniqueColumn Name="user_id" />
+                <UniqueColumn Name="customer_user_id" />
+            </Unique>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="user_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_history_type">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
+            <Unique Name="change_history_type_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+            <Index Name="change_history_type_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_history">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="workorder_id" Required="false" Type="BIGINT" />
+            <Column Name="type_id" Required="true" Type="INTEGER" />
+            <Column Name="content_new" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="content_old" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="fieldname" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Index Name="change_history_change_id">
+                <IndexColumn Name="change_id" />
+            </Index>
+            <Index Name="change_history_workorder_id">
+                <IndexColumn Name="workorder_id" />
+            </Index>
+            <Index Name="change_history_type_id">
+                <IndexColumn Name="type_id" />
+            </Index>
+            <Index Name="change_history_create_time">
+                <IndexColumn Name="create_time" />
+            </Index>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="change_history_type">
+                <Reference Local="type_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_template_type">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
+            <Unique Name="change_template_type_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+            <Index Name="change_template_type_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_template">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="content" Required="true" Type="LONGBLOB" />
+            <Column Name="type_id" Required="true" Type="INTEGER" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
+            <Unique Name="change_template_name_type_id">
+                <UniqueColumn Name="name" />
+                <UniqueColumn Name="type_id" />
+            </Unique>
+            <Index Name="change_template_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <Index Name="change_template_type_id">
+                <IndexColumn Name="type_id" />
+            </Index>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="change_template_type">
+                <Reference Local="type_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_cip_allocate">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="category_id" Required="true" Type="INTEGER" />
+            <Column Name="impact_id" Required="true" Type="INTEGER" />
+            <Column Name="priority_id" Required="true" Type="INTEGER" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Column Name="create_by" Required="false" Type="INTEGER" />
+            <Column Name="change_time" Required="false" Type="DATE" />
+            <Column Name="change_by" Required="false" Type="INTEGER" />
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Local="category_id" Foreign="id" />
+                <Reference Local="impact_id" Foreign="id" />
+                <Reference Local="priority_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_state_machine">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="state_id" Required="false" Type="INTEGER" />
+            <Column Name="next_state_id" Required="false" Type="INTEGER" />
+            <Unique Name="change_state_machine_unique">
+                <UniqueColumn Name="state_id" />
+                <UniqueColumn Name="next_state_id" />
+            </Unique>
+        </TableCreate>
+        <TableCreate Name="condition_object">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Unique Name="condition_object_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+        </TableCreate>
+        <TableCreate Name="condition_attribute">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Unique Name="condition_attribute_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+        </TableCreate>
+        <TableCreate Name="condition_operator">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Unique Name="condition_operator_name">
+                <UniqueColumn Name="name" />
+            </Unique>
+        </TableCreate>
+        <TableCreate Name="change_condition">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="expression_conjunction" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
+            <Index Name="change_condition_change_id">
+                <IndexColumn Name="change_id" />
+            </Index>
+            <Index Name="change_condition_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <Unique Name="condition_condition_change_id_name_unique">
+                <UniqueColumn Name="change_id" />
+                <UniqueColumn Name="name" />
+            </Unique>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="condition_expression">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="condition_id" Required="true" Type="BIGINT" />
+            <Column Name="object_id" Required="true" Type="SMALLINT" />
+            <Column Name="attribute_id" Required="true" Type="SMALLINT" />
+            <Column Name="operator_id" Required="true" Type="SMALLINT" />
+            <Column Name="selector" Required="false" Size="20" Type="VARCHAR" />
+            <Column Name="compare_value" Required="false" Size="250" Type="VARCHAR" />
+            <Index Name="condition_expression_condition_id">
+                <IndexColumn Name="condition_id" />
+            </Index>
+            <Index Name="condition_expression_object_id">
+                <IndexColumn Name="object_id" />
+            </Index>
+            <Index Name="condition_expression_attribute_id">
+                <IndexColumn Name="attribute_id" />
+            </Index>
+            <Index Name="condition_expression_operator_id">
+                <IndexColumn Name="operator_id" />
+            </Index>
+            <Index Name="condition_expression_selector">
+                <IndexColumn Name="selector" />
+            </Index>
+            <Index Name="condition_expression_compare_value">
+                <IndexColumn Name="compare_value" />
+            </Index>
+            <Unique Name="condition_expression_unique">
+                <UniqueColumn Name="condition_id" />
+                <UniqueColumn Name="object_id" />
+                <UniqueColumn Name="attribute_id" />
+                <UniqueColumn Name="operator_id" />
+                <UniqueColumn Name="selector" />
+                <UniqueColumn Name="compare_value" />
+            </Unique>
+            <ForeignKey ForeignTable="change_condition">
+                <Reference Local="condition_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="condition_object">
+                <Reference Local="object_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="condition_attribute">
+                <Reference Local="attribute_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="condition_operator">
+                <Reference Local="operator_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="condition_action">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="condition_id" Required="true" Type="BIGINT" />
+            <Column Name="action_number" Required="true" Type="INTEGER" />
+            <Column Name="object_id" Required="true" Type="SMALLINT" />
+            <Column Name="attribute_id" Required="true" Type="SMALLINT" />
+            <Column Name="operator_id" Required="true" Type="SMALLINT" />
+            <Column Name="selector" Required="false" Size="20" Type="VARCHAR" />
+            <Column Name="action_value" Required="false" Size="250" Type="VARCHAR" />
+            <Index Name="condition_action_condition_id">
+                <IndexColumn Name="condition_id" />
+            </Index>
+            <Index Name="condition_action_action_number">
+                <IndexColumn Name="action_number" />
+            </Index>
+            <Index Name="condition_action_object_id">
+                <IndexColumn Name="object_id" />
+            </Index>
+            <Index Name="condition_action_attribute_id">
+                <IndexColumn Name="attribute_id" />
+            </Index>
+            <Index Name="condition_action_operator_id">
+                <IndexColumn Name="operator_id" />
+            </Index>
+            <Index Name="condition_action_selector">
+                <IndexColumn Name="selector" />
+            </Index>
+            <Index Name="condition_action_action_value">
+                <IndexColumn Name="action_value" />
+            </Index>
+            <Unique Name="condition_action_unique">
+                <UniqueColumn Name="condition_id" />
+                <UniqueColumn Name="object_id" />
+                <UniqueColumn Name="attribute_id" />
+                <UniqueColumn Name="operator_id" />
+                <UniqueColumn Name="selector" />
+                <UniqueColumn Name="action_value" />
+            </Unique>
+            <Unique Name="condition_action_number_unique">
+                <UniqueColumn Name="condition_id" />
+                <UniqueColumn Name="action_number" />
+            </Unique>
+            <ForeignKey ForeignTable="change_condition">
+                <Reference Local="condition_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="condition_object">
+                <Reference Local="object_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="condition_attribute">
+                <Reference Local="attribute_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="condition_operator">
+                <Reference Local="operator_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_notification">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="item_attribute" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="event_id" Required="true" Type="INTEGER" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="notification_rule" Required="false" Size="250" Type="VARCHAR" />
+            <Index Name="change_notification_event_id">
+                <IndexColumn Name="event_id" />
+            </Index>
+            <Index Name="change_notification_valid_id">
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <Index Name="change_notification_event_valid_id">
+                <IndexColumn Name="event_id" />
+                <IndexColumn Name="valid_id" />
+            </Index>
+            <ForeignKey ForeignTable="change_history_type">
+                <Reference Local="event_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_notification_message">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="notification_id" Required="true" Type="BIGINT" />
+            <Column Name="subject" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="text" Required="true" Size="4000" Type="VARCHAR" />
+            <Column Name="content_type" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="language" Required="true" Size="60" Type="VARCHAR" />
+            <Column Name="notification_type" Required="true" Size="60" Type="VARCHAR" />
+            <ForeignKey ForeignTable="change_notification">
+                <Reference Foreign="id" Local="notification_id" />
+            </ForeignKey>
+            <Index Name="change_notification_message_notification_id">
+                <IndexColumn Name="notification_id" />
+            </Index>
+            <Index Name="change_notification_message_language">
+                <IndexColumn Name="language" />
+            </Index>
+            <Unique Name="change_notification_message_notification_id_language">
+                <UniqueColumn Name="notification_id" />
+                <UniqueColumn Name="language" />
+                <UniqueColumn Name="notification_type" />
+            </Unique>
+        </TableCreate>
+        <TableCreate Name="change_notification_grps">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+        </TableCreate>
+        <TableCreate Name="change_notification_rec">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="notification_id" Required="true" Type="BIGINT" />
+            <Column Name="group_id" Required="true" Type="BIGINT" />
+            <Index Name="change_notification_rec_group_id">
+                <IndexColumn Name="group_id" />
+            </Index>
+            <Index Name="change_notification_rec_notification_id">
+                <IndexColumn Name="notification_id" />
+            </Index>
+            <Index Name="change_notification_rec_group_notification">
+                <IndexColumn Name="group_id" />
+                <IndexColumn Name="notification_id" />
+            </Index>
+            <ForeignKey ForeignTable="change_notification">
+                <Reference Local="notification_id" Foreign="id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="change_notification_grps">
+                <Reference Local="group_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_number_counter">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="counter" Required="true" Type="BIGINT" />
+            <Column Name="counter_uid" Required="true" Size="32" Type="VARCHAR" />
+            <Column Name="create_time" Type="DATE" />
+            <Unique Name="change_number_counter_uid">
+                <UniqueColumn Name="counter_uid" />
+            </Unique>
+            <Index Name="change_number_counter_create_time">
+                <IndexColumn Name="create_time" />
+            </Index>
+        </TableCreate>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Impact</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">1 very low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">2 low</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">3 normal</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">4 high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Priority</Data>
+            <Data Key="name" Type="Quote">5 very high</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">requested</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">pending approval</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">rejected</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">approved</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">in progress</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">pending pir</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">successful</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">failed</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">canceled</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">retracted</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">created</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">accepted</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ready</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">in progress</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">closed</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
+            <Data Key="name" Type="Quote" Translatable="1">canceled</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">approval</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">workorder</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">backout</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">decision</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
+            <Data Key="name" Type="Quote" Translatable="1">pir</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeCABUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeCABDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeLinkAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeLinkDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeAttachmentAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeAttachmentDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderLinkAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderLinkDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderAttachmentAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderAttachmentDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderReportAttachmentAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderReportAttachmentDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangePlannedStartTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangePlannedEndTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeActualStartTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeActualEndTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderPlannedStartTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderPlannedEndTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderActualStartTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderActualEndTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeRequestedTimeReached</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ConditionAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ConditionUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ConditionDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ConditionDeleteAll</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ExpressionAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ExpressionUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ExpressionDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ExpressionDeleteAll</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ActionAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ActionUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ActionDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ActionDeleteAll</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ActionExecute</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">ChangeNotificationSent</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderNotificationSent</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">RfC</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="condition_object">
+            <Data Key="name" Type="Quote">ITSMChange</Data>
+        </Insert>
+        <Insert Table="condition_object">
+            <Data Key="name" Type="Quote">ITSMWorkOrder</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">ChangeStateID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">ChangeTitle</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">CategoryID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">ImpactID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">PriorityID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">ChangeManagerID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">ChangeBuilderID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">RequestedTime</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">PlannedStartTime</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">PlannedEndTime</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">ActualStartTime</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">ActualEndTime</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">PlannedEffort</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">AccountedTime</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderNumber</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderStateID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderTypeID</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderTitle</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderAgentID</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is not</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is empty</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is not empty</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is greater than</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is less than</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is before</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">is after</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">contains</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">not contains</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">begins with</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">ends with</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">set</Data>
+        </Insert>
+        <Insert Table="condition_operator">
+            <Data Key="name" Type="Quote" Translatable="1">lock</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeBuilder</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">OldChangeBuilder</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeManager</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">OldChangeManager</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">CABCustomers</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">CABAgents</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">WorkOrderAgents</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">WorkOrderAgent</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">OldWorkOrderAgent</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">ChangeInitiators</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">GroupITSMChange</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">GroupITSMChangeBuilder</Data>
+        </Insert>
+        <Insert Table="change_notification_grps">
+            <Data Key="name" Type="Quote">GroupITSMChangeManager</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">ITSMChange</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">ITSMWorkOrder</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">CAB</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_template_type">
+            <Data Key="name" Type="Quote">ITSMCondition</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>
+
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::ITSMIncidentProblemManagement')->CodeInstall();
+    ]]></CodeInstall>
+    
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="change_notification_rec" />
+        <TableDrop Name="change_notification_grps" />
+        <TableDrop Name="change_notification_message" />
+        <TableDrop Name="change_notification" />
+        <TableDrop Name="change_cab" />
+        <TableDrop Name="change_history" />
+        <TableDrop Name="change_history_type" />
+        <TableDrop Name="condition_expression" />
+        <TableDrop Name="condition_action" />
+        <TableDrop Name="condition_operator" />
+        <TableDrop Name="condition_attribute" />
+        <TableDrop Name="condition_object" />
+        <TableDrop Name="change_condition" />
+        <TableDrop Name="change_workorder" />
+        <TableDrop Name="change_item" />
+        <TableDrop Name="change_template" />
+        <TableDrop Name="change_template_type" />
+        <TableDrop Name="change_cip_allocate" />
+        <TableDrop Name="change_state_machine" />
+        <TableDrop Name="change_number_counter" />
+    </DatabaseUninstall>
+    <CodeUninstall Type="post"><![CDATA[
+        {
+            # cleanup stats list (only stats related to the given stat objects)
+            $Kernel::OM->Get('Kernel::System::Stats')->StatsCleanUp(
+                ObjectNames => [
+                    'ITSMChangeManagement',
+                    'ITSMChangeManagementChangesIncidents',
+                    'ITSMChangeManagementChangesPerCIClasses',
+                    'ITSMChangeManagementHistory',
+                    'ITSMChangeManagementRfcRequester',
+                ],
+                UserID => 1,
+            );
+        }
+    ]]></CodeUninstall>
+</Migrations>
