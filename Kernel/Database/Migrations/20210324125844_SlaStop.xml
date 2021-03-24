@@ -1,8 +1,0 @@
-<Migrations>
-    <CodeInstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::SlaStop')->CodeInstall();
-    ]]></CodeInstall>
-    <CodeUninstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::SlaStop')->CodeUninstall();
-    ]]></CodeUninstall>
-</Migrations>
