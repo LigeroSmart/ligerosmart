@@ -88,33 +88,17 @@ sub Run {
             my $XMLFile = XML::LibXML->load_xml(location => "$SourceDir/$migrationName");
             if ( !$XMLFile ) {
                 $Self->PrintError("Could not read $SourceDir/$migrationName");
-                return $Self->ExitCodeError();
-            }
-
-            my $XMLNode = $XMLFile->findnodes('/Migrations/CodeUninstall[@Type="pre"]');
-
-            if($ApplyList{$fileKey}->{CodeInstall}->{pre}) {
-                my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{pre};
-                my $test123 = $Kernel::OM->Get('var::packagesetup::Teste123')->CodeInstall();
-                if ( !eval $CodeContent. "\n1;" ) {    ## no critic
-                    $Kernel::OM->Get('Kernel::System::Log')->Log(
-                        Priority => 'error',
-                        Message  => "Code: $CodeContent",
-                    );
-                    return;
-                }
             }
 
             $Self->Print("Rollback $migrationName\n");
 
-            foreach my $XMLNode ($XMLFile->findnodes('/Migrations/CodeUninstall')) {
+            foreach my $XMLNode ($XMLFile->findnodes('/Migrations/CodeUninstall[@Type="pre"]')) {
                 my $CodeContent = $XMLNode->to_literal;
                 if ( !eval $CodeContent. "\n1;" ) {    ## no critic
                     $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message  => "Code: $CodeContent",
                     );
-                    return;
                 }
             }
 
@@ -127,10 +111,20 @@ sub Run {
                 for my $SQL (@SQL) {
                     $Result = $DBObject->Do( SQL => $SQL );
                     if ( ! $Result ) {
-                        $Self->PrintError("Error executing SQL: \n\t$SQL\n");
+                        $Self->PrintError("Error executing SQL:\n");
                         $DBObject->Error();
-                        return $Self->ExitCodeError();
+                        # return $Self->ExitCodeError();
                     }
+                }
+            }
+
+            foreach my $XMLNode ($XMLFile->findnodes('/Migrations/CodeUninstall[@Type="post"]')) {
+                my $CodeContent = $XMLNode->to_literal;
+                if ( !eval $CodeContent. "\n1;" ) {    ## no critic
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "Code: $CodeContent",
+                    );
                 }
             }
 
