@@ -1,8 +1,7 @@
 <Migrations>
-    <CodeInstall Type="post">
-        $Kernel::OM-&gt;Get('var::packagesetup::AccountedTime')-&gt;CodeInstall();
-    </CodeInstall>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::AccountedTime')->CodeInstall();
+    ]]></CodeInstall>
     <CodeUninstall Type="post">
-        $Kernel::OM-&gt;Get('var::packagesetup::AccountedTime')-&gt;CodeUninstall();
     </CodeUninstall>
 </Migrations>
