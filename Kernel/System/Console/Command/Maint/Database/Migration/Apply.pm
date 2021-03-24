@@ -23,6 +23,7 @@ use File::Basename;
 use XML::LibXML;
 use List::Util qw( min max );
 # use Syntax::Keyword::Try;
+use Try::Tiny;
 # TODO: remove before release
 use Data::Dumper;
 
@@ -64,6 +65,14 @@ sub Run {
     # print database information
     my $DatabaseDSN  = $DBObject->{DSN};
     my $DatabaseUser = $DBObject->{USER};
+
+    
+    # db error handler
+    # local $DBObject->{dbh}->{HandleError} = sub {
+    #     my (undef, $error) = @_;
+    # };
+    # $DBObject->{Backend}->{dbh}->{PrintError} = 0;
+    # $DBObject->{Backend}->{dbh}->{RaiseError} = 0;
 
     # Check for database state error.
     if ( !$DBObject ) {
@@ -184,11 +193,13 @@ sub Run {
             my @SQL = $DBObject->SQLProcessor( Database => \@XMLARRAY );
 
             for my $SQL (@SQL) {
-                $Result = $DBObject->Do( SQL => $SQL );
+                eval {
+                    $Result = $DBObject->Do( SQL => $SQL ) or die "Error";
+                };
                 if ( ! $Result ) {
                     $ApplyList{$fileKey}->{Output} = "Error executing DatabaseInstall";
-                    $Self->PrintError("Error executing SQL:\n");
-                    $DBObject->Error();
+                    $Self->PrintError("Error executing SQL:\n$SQL\n");
+                    # $DBObject->Error();
                     $ApplyList{$fileKey}->{Output} = $DBObject->Error();
                     # $Self->ExitCodeError();
                 }
@@ -210,6 +221,10 @@ sub Run {
 
         my $version = $ConfigObject->{Version};
         my $output = $ApplyList{$fileKey}->{Output} || 'OK';
+        $DBObject->Do(
+            SQL  => "DELETE FROM migrations WHERE name=?",
+            Bind => [ \$fileKey ],
+        );
         $DBObject->Do(
             SQL  => "INSERT INTO migrations (name, version, batch, output, create_time) VALUES (?, ?, ?, ?, NOW())",
             Bind => [ \$fileKey, \$version, \$NextBatchNumber, \$output ],
