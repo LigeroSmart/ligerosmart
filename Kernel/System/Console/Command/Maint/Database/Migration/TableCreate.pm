@@ -29,11 +29,13 @@ sub Run {
     my $XMLObject = $Kernel::OM->Get('Kernel::System::XML');
 
     my $XMLContentRef = '<DatabaseInstall>
+        <TableDrop Name="migrations" />
         <TableCreate Name="migrations">
 	   	    <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER" />
             <Column Name="name" Required="true" Size="60" Type="VARCHAR"/>
             <Column Name="version" Required="true" Size="20" Type="VARCHAR"/>
             <Column Name="batch" Type="INTEGER"/>
+            <Column Name="output" Type="VARCHAR" Size="10000"/>
             <Column Name="create_time" Type="DATE" />
             <Index Name="migrations_name_idx">
                 <IndexColumn Name="name"/>
@@ -48,11 +50,11 @@ sub Run {
 
     for my $SQL (@SQL) {
         $Result = $DBObject->Do( SQL => $SQL );
-        if ( ! $Result ) {
-            $Self->PrintError("Error executing SQL: \n\t$SQL\n");
-            $DBObject->Error();
-            return $Self->ExitCodeError();
-        }
+        # if ( ! $Result ) {
+        #     $Self->PrintError("Error executing SQL: \n\t$SQL\n");
+        #     $DBObject->Error();
+        #     return $Self->ExitCodeError();
+        # }
     }
 
     return $Self->ExitCodeOk();
