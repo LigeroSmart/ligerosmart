@@ -1,0 +1,9 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::ITSMServiceLevelManagement')->CodeInstall();
+    ]]></CodeInstall>
+    
+    <CodeUninstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::ITSMServiceLevelManagement')->CodeUninstall();
+    ]]></CodeUninstall>
+</Migrations>

@@ -1,0 +1,7 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::TrackSolutionTime')->CodeInstall();
+    ]]></CodeInstall>
+    <CodeUninstall Type="post">
+    </CodeUninstall>
+</Migrations>
