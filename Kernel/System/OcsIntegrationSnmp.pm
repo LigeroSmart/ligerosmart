@@ -197,7 +197,7 @@ sub SnmpTypeToOtrsClassList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData,{
+        push @{ $RetData },{
             ID            => $Data[0],
             OcsType          => $Data[1],
             OtrsClass     => $Data[2],
@@ -280,7 +280,7 @@ sub SnmpMappingAdd {
         $filterValues = [];
         if($Param{SnmpClassTypeId}){
             $filter = 'snmpClassTypeId = ?';
-            push $filterValues,\$Param{SnmpClassTypeId};
+            push @{ $filterValues },\$Param{SnmpClassTypeId};
         }
         else{
             $filter = 'snmpClassTypeId IS NULL';
@@ -300,11 +300,11 @@ sub SnmpMappingAdd {
     #Update ORDERS
     if($LastOrder > 0){
         $filterValues = [];
-        push $filterValues,\$LastOrder;
+        push @{ $filterValues },\$LastOrder;
         if($Param{SnmpClassTypeId}){
             $filter = 'snmpClassTypeId = ?';
             
-            push $filterValues,\$Param{SnmpClassTypeId};
+            push @{ $filterValues },\$Param{SnmpClassTypeId};
         }
         else{
             $filter = 'snmpClassTypeId IS NULL';
@@ -442,7 +442,7 @@ sub SnmpMappingDeleteByClass {
     my $filterValues = [];
     if($Param{SnmpClassTypeId}){
         $filter = 'snmpClassTypeId = ?';
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = 'snmpClassTypeId IS NULL';
@@ -519,12 +519,12 @@ sub SnmpMappingGetByPath {
     my $filterValues = [];
     if($Param{SnmpClassTypeId}){
         $filter = 'snmpClassTypeId = ?';
-        push $filterValues,\$Param{OcsPath};
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{OcsPath};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = 'snmpClassTypeId IS NULL';
-        push $filterValues,\$Param{OcsPath};
+        push @{ $filterValues },\$Param{OcsPath};
     }
 
     # sql
@@ -601,7 +601,7 @@ sub SnmpMappingList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -625,7 +625,7 @@ sub SnmpMappingListToFilter {
     my $filterValues = [];
     if($Param{SnmpClassTypeId}){
         $filter = 'snmpClassTypeId = ?';
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = 'snmpClassTypeId IS NULL';
@@ -634,7 +634,7 @@ sub SnmpMappingListToFilter {
     if($Param{ParentId}){
         $filter = $filter.' AND parentId = ?';
         
-        push $filterValues,\$Param{ParentId};
+        push @{ $filterValues },\$Param{ParentId};
     }
 
     return if !$Self->{DBObject}->Prepare(
@@ -656,7 +656,7 @@ sub SnmpMappingListToFilter {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -680,7 +680,7 @@ sub SnmpMappingActiveList {
     my $filterValues = [];
     if($Param{SnmpClassTypeId}){
         $filter = 'snmpClassTypeId = ?';
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = 'snmpClassTypeId IS NULL';
@@ -689,7 +689,7 @@ sub SnmpMappingActiveList {
     if($Param{ParentId}){
         $filter = $filter.' AND parentId = ?';
         
-        push $filterValues,\$Param{ParentId};
+        push @{ $filterValues },\$Param{ParentId};
     }
     else{
         $filter = $filter.' AND parentId IS NULL';
@@ -714,7 +714,7 @@ sub SnmpMappingActiveList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -738,7 +738,7 @@ sub SnmpMappingKeyFieldList {
     my $filterValues = [];
     if($Param{SnmpClassTypeId}){
         $filter = 'snmpClassTypeId = ?';
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = 'snmpClassTypeId IS NULL';
@@ -755,7 +755,7 @@ sub SnmpMappingKeyFieldList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , $Data[0];
+        push @{ $RetData } , $Data[0];
     }
 
     return $RetData;
@@ -783,7 +783,7 @@ sub SnmpMappingListByParent {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -830,7 +830,7 @@ sub SnmpFilterAdd {
     my $filterValues = [];
     if($Param{Field}){
         $filter = 'field = ?';
-        push $filterValues,\$Param{Field};
+        push @{ $filterValues },\$Param{Field};
     }
     else{
         $filter = 'field IS NULL';
@@ -839,7 +839,7 @@ sub SnmpFilterAdd {
     if($Param{OcsPathId}){
         $filter = $filter.' AND ocsPathId = ?';
         
-        push $filterValues,\$Param{OcsPathId};
+        push @{ $filterValues },\$Param{OcsPathId};
     }
     else{
         $filter = $filter.' AND ocsPathId IS NULL';
@@ -848,7 +848,7 @@ sub SnmpFilterAdd {
     if($Param{Type}){
         $filter = $filter.' AND type = ?';
         
-        push $filterValues,\$Param{Type};
+        push @{ $filterValues },\$Param{Type};
     }
     else{
         $filter = $filter.' AND type IS NULL';
@@ -857,7 +857,7 @@ sub SnmpFilterAdd {
     if($Param{Content}){
         $filter = $filter.' AND content = ?';
         
-        push $filterValues,\$Param{Content};
+        push @{ $filterValues },\$Param{Content};
     }
     else{
         $filter = $filter.' AND content IS NULL';
@@ -866,7 +866,7 @@ sub SnmpFilterAdd {
     if($Param{Condition}){
         $filter = $filter.' AND condition_filter = ?';
         
-        push $filterValues,\$Param{Condition};
+        push @{ $filterValues },\$Param{Condition};
     }
     else{
         $filter = $filter.' AND condition_filter IS NULL';
@@ -875,7 +875,7 @@ sub SnmpFilterAdd {
     if($Param{SnmpClassTypeId}){
         $filter = $filter.' AND snmpClassTypeId = ?';
         
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = $filter.' AND snmpClassTypeId IS NULL';
@@ -930,7 +930,7 @@ sub SnmpFilterUpdate {
     my $filterValues = [];
     if($Param{Field}){
         $filter = 'field = ?';
-        push $filterValues,\$Param{Field};
+        push @{ $filterValues },\$Param{Field};
     }
     else{
         $filter = 'field IS NULL';
@@ -939,7 +939,7 @@ sub SnmpFilterUpdate {
     if($Param{OcsPathId}){
         $filter = $filter.' AND ocsPathId = ?';
         
-        push $filterValues,\$Param{OcsPathId};
+        push @{ $filterValues },\$Param{OcsPathId};
     }
     else{
         $filter = $filter.' AND ocsPathId IS NULL';
@@ -948,7 +948,7 @@ sub SnmpFilterUpdate {
     if($Param{Type}){
         $filter = $filter.' AND type = ?';
         
-        push $filterValues,\$Param{Type};
+        push @{ $filterValues },\$Param{Type};
     }
     else{
         $filter = $filter.' AND type IS NULL';
@@ -957,7 +957,7 @@ sub SnmpFilterUpdate {
     if($Param{Content}){
         $filter = $filter.' AND content = ?';
         
-        push $filterValues,\$Param{Content};
+        push @{ $filterValues },\$Param{Content};
     }
     else{
         $filter = $filter.' AND content IS NULL';
@@ -966,7 +966,7 @@ sub SnmpFilterUpdate {
     if($Param{Condition}){
         $filter = $filter.' AND condition_filter = ?';
         
-        push $filterValues,\$Param{Condition};
+        push @{ $filterValues },\$Param{Condition};
     }
     else{
         $filter = $filter.' AND condition_filter IS NULL';
@@ -975,13 +975,13 @@ sub SnmpFilterUpdate {
     if($Param{SnmpClassTypeId}){
         $filter = $filter.' AND snmpClassTypeId = ?';
         
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = $filter.' AND snmpClassTypeId IS NULL';
     }
 
-    push $filterValues,\$Param{ID};
+    push @{ $filterValues },\$Param{ID};
 
     my $existName;
     return 0 if  !$Self->{DBObject}->Prepare(
@@ -1077,7 +1077,7 @@ sub SnmpFilterList {
     my $filterValues = [];
     if($Param{OcsPathId}){
         $filter = ' ocsPathId = ?';
-        push $filterValues,\$Param{OcsPathId};
+        push @{ $filterValues },\$Param{OcsPathId};
     }
     else{
         $filter = 'ocsPathId IS NULL';
@@ -1086,7 +1086,7 @@ sub SnmpFilterList {
     if($Param{Type}){
         $filter = $filter.' AND type = ?';
         
-        push $filterValues,\$Param{Type};
+        push @{ $filterValues },\$Param{Type};
     }
     else{
         #$filter = $filter.' AND type IS NULL';
@@ -1094,7 +1094,7 @@ sub SnmpFilterList {
 
     if($Param{SnmpClassTypeId}){
         $filter = $filter.' AND snmpClassTypeId = ?';
-        push $filterValues,\$Param{SnmpClassTypeId};
+        push @{ $filterValues },\$Param{SnmpClassTypeId};
     }
     else{
         $filter = $filter.' AND snmpClassTypeId IS NULL';
@@ -1116,7 +1116,7 @@ sub SnmpFilterList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Type            => $Data[1],
             Field           => $Data[2],

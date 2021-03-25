@@ -223,7 +223,7 @@ sub ComputerMappingListToFilter {
     if($Param{ParentId}){
         $filter = $filter.' and parentId = ?';
         
-        push $filterValues,\$Param{ParentId};
+        push @{ $filterValues },\$Param{ParentId};
     }
 
     return if !$Self->{DBObject}->Prepare(
@@ -244,7 +244,7 @@ sub ComputerMappingListToFilter {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -269,7 +269,7 @@ sub ComputerMappingActiveList {
     if($Param{ParentId}){
         $filter = $filter.' parentId = ?';
         
-        push $filterValues,\$Param{ParentId};
+        push @{ $filterValues },\$Param{ParentId};
     }
     else{
         $filter = $filter.' parentId IS NULL';
@@ -293,7 +293,7 @@ sub ComputerMappingActiveList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -330,7 +330,7 @@ sub ComputerMappingListByParent {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -407,7 +407,7 @@ sub ComputerMappingList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Active          => $Data[1],
             KeyField        => $Data[2],
@@ -452,7 +452,7 @@ sub ComputerFilterAdd {
     my $filterValues = [];
     if($Param{Field}){
         $filter = 'field = ?';
-        push $filterValues,\$Param{Field};
+        push @{ $filterValues },\$Param{Field};
     }
     else{
         $filter = 'field IS NULL';
@@ -461,7 +461,7 @@ sub ComputerFilterAdd {
     if($Param{OcsPathId}){
         $filter = $filter.' AND ocsPathId = ?';
         
-        push $filterValues,\$Param{OcsPathId};
+        push @{ $filterValues },\$Param{OcsPathId};
     }
     else{
         $filter = $filter.' AND ocsPathId IS NULL';
@@ -470,7 +470,7 @@ sub ComputerFilterAdd {
     if($Param{Type}){
         $filter = $filter.' AND type = ?';
         
-        push $filterValues,\$Param{Type};
+        push @{ $filterValues },\$Param{Type};
     }
     else{
         $filter = $filter.' AND type IS NULL';
@@ -479,7 +479,7 @@ sub ComputerFilterAdd {
     if($Param{Content}){
         $filter = $filter.' AND content = ?';
         
-        push $filterValues,\$Param{Content};
+        push @{ $filterValues },\$Param{Content};
     }
     else{
         $filter = $filter.' AND content IS NULL';
@@ -488,7 +488,7 @@ sub ComputerFilterAdd {
     if($Param{Condition}){
         $filter = $filter.' AND condition_filter = ?';
         
-        push $filterValues,\$Param{Condition};
+        push @{ $filterValues },\$Param{Condition};
     }
     else{
         $filter = $filter.' AND condition_filter IS NULL';
@@ -543,7 +543,7 @@ sub ComputerFilterUpdate {
     my $filterValues = [];
     if($Param{Field}){
         $filter = 'field = ?';
-        push $filterValues,\$Param{Field};
+        push @{ $filterValues },\$Param{Field};
     }
     else{
         $filter = 'field IS NULL';
@@ -552,7 +552,7 @@ sub ComputerFilterUpdate {
     if($Param{OcsPathId}){
         $filter = $filter.' AND ocsPathId = ?';
         
-        push $filterValues,\$Param{OcsPathId};
+        push @{ $filterValues },\$Param{OcsPathId};
     }
     else{
         $filter = $filter.' AND ocsPathId IS NULL';
@@ -561,7 +561,7 @@ sub ComputerFilterUpdate {
     if($Param{Type}){
         $filter = $filter.' AND type = ?';
         
-        push $filterValues,\$Param{Type};
+        push @{ $filterValues },\$Param{Type};
     }
     else{
         $filter = $filter.' AND type IS NULL';
@@ -570,7 +570,7 @@ sub ComputerFilterUpdate {
     if($Param{Content}){
         $filter = $filter.' AND content = ?';
         
-        push $filterValues,\$Param{Content};
+        push @{ $filterValues },\$Param{Content};
     }
     else{
         $filter = $filter.' AND content IS NULL';
@@ -579,13 +579,13 @@ sub ComputerFilterUpdate {
     if($Param{Condition}){
         $filter = $filter.' AND condition_filter = ?';
         
-        push $filterValues,\$Param{Condition};
+        push @{ $filterValues },\$Param{Condition};
     }
     else{
         $filter = $filter.' AND condition_filter IS NULL';
     }
 
-    push $filterValues,\$Param{ID};
+    push @{ $filterValues },\$Param{ID};
 
     my $existName;
     return 0 if  !$Self->{DBObject}->Prepare(
@@ -678,7 +678,7 @@ sub ComputerFilterList {
     my $filterValues = [];
     if($Param{OcsPathId}){
         $filter = 'ocsPathId = ? ';
-        push $filterValues,\$Param{OcsPathId};
+        push @{ $filterValues },\$Param{OcsPathId};
     }
     else{
         $filter = 'ocsPathId IS NULL ';
@@ -686,7 +686,7 @@ sub ComputerFilterList {
 
     if($Param{Type}){
         $filter = $filter.'and type = ? ';
-        push $filterValues,\$Param{Type};
+        push @{ $filterValues },\$Param{Type};
     }
 
     # sql
@@ -704,7 +704,7 @@ sub ComputerFilterList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , {
+        push @{ $RetData } , {
             ID              => $Data[0],
             Type            => $Data[1],
             Field           => $Data[2],
@@ -864,7 +864,7 @@ sub ComputerMappingKeyFieldList {
     my $RetData = [];
     
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        push $RetData , $Data[0];
+        push @{ $RetData } , $Data[0];
     }
 
     return $RetData;
