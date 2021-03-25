@@ -15,6 +15,9 @@ use File::Path;
 use utf8;
 use Encode ();
 
+use experimental 'smartmatch';
+no warnings 'experimental::smartmatch';
+
 use parent qw(
     Kernel::System::EventHandler
     Kernel::System::Ticket::TicketSearch
