@@ -50,10 +50,11 @@ sub Run {
 	
 	my @TicketIDs = $TicketObject->TicketSearch(
        # result (required)
-      Result => 'Array',
+          Result => 'Array',
 	  Limit  => $Limit,
+          CustomerUserLoginRaw => $Self->{UserID},
 	  CustomerUserID => $Param{UserID},
-		StateType => 'Open',
+          StateType => 'Open',
 	);
 
 	# Se não encontrou nada, retorna
