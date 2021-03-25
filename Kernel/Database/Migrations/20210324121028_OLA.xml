@@ -1,0 +1,19 @@
+<Migrations>
+    <DatabaseInstall>
+        <TableAlter Name="sla_preferences">
+            <ColumnChange NameNew="preferences_value" NameOld="preferences_value" Required="true" Size="8000" Type="VARCHAR" />
+        </TableAlter>
+    </DatabaseInstall>
+    <CodeInstall Type="post">
+        $Kernel::OM-&gt;Get('var::packagesetup::OLA')-&gt;CodeInstall();
+    </CodeInstall>
+
+    <DatabaseUninstall>
+        <TableAlter Name="sla_preferences">
+            <ColumnChange NameNew="preferences_value" NameOld="preferences_value" Required="true" Size="250" Type="VARCHAR" />
+        </TableAlter>
+    </DatabaseUninstall>
+    <CodeUninstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::OLA')->CodeUninstall();
+    ]]></CodeUninstall>
+</Migrations>
