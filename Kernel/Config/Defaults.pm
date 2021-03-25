@@ -1,5 +1,6 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2020-2021 Complemento https://complemento.net.br
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -1083,14 +1084,13 @@ sub LoadDefaults {
     # Package::RepositoryRoot
     # (get online repository list, use the fist availabe result)
     $Self->{'Package::RepositoryRoot'} = [
-        'https://ftp.otrs.org/pub/otrs/misc/packages/repository.xml',
     ];
 
     # Package::RepositoryList
     # (repository list)
-#    $Self->{'Package::RepositoryList'} = {
-#        'ftp://ftp.example.com/pub/otrs/misc/packages/' => '[Example] ftp://ftp.example.com/',
-#    };
+    $Self->{'Package::RepositoryList'} = {
+        'https://addons.ligerosmart.org/6' => 'LigeroSmart',
+    };
 
     # Package::Timeout
     # (http/ftp timeout to get packages)
