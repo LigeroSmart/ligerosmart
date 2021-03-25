@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>LigeroSmart</Name>
-    <Version>6.1.8</Version>
+    <Version>6.1.9</Version>
     <Framework>6.0.x</Framework>
     <Vendor>Ligero</Vendor>
     <URL>https://www.ligerosmart.com/</URL>
