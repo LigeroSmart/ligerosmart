@@ -38,7 +38,7 @@ sub Run {
     # REPLACE UNAUTHORIZED MESSAGE FOR LIGERO ADDONS
     my $ErrorText = $LayoutObject->{LanguageObject}->Translate('An error occurred.');
 
-    my $ErrorTextBack = $LayoutObject->{LanguageObject}->Translate('Back to your OTRS Package Manager');
+    my $ErrorTextBack = $LayoutObject->{LanguageObject}->Translate('Back to your LigeorSmart Package Manager');
     my $ErrorTextNew = $LayoutObject->{LanguageObject}->Translate('Your Ligero Account is not working yet!');
 
     my $ErrorMessage = $LayoutObject->{LanguageObject}->Translate('No such package!');
@@ -51,12 +51,12 @@ sub Run {
 
 	my $ref = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSubscriptionAffiliate');
     
-    if(${$Param{Data}} =~ /Can't perform GET on \E.*?addons.ligerosmart.com\/AddOns\/(.+?)\/.*Ligero\/(.*)\/.*?\Q401 Unauthorized\E/){
+    if(${$Param{Data}} =~ /Can't perform GET on \Ecom.*?addons.ligerosmart.org\/(.+?)\/.*Ligero\/(.*)\/.*?\Q401 Unauthorized\E/){
         ${$Param{Data}} = '<div style="width:100%;padding:20px;"><a href="?Action=AdminPackageManager" style="font-size:12pt;font-weight:normal;">'.$ErrorTextBack.'</a></div>
         <style type="text/css">
             #Footer,#ResponsiveFooter {display:none}
         </style>
-            <iframe src="http://addons.ligerosmart.com/AddOns/'.$1.'/AddOnsPages/'.$2."/$LanguagePage?ref=$ref".'" 
+            <iframe src="http://addons.ligerosmart.com/'.$1.'/AddOnsPages/'.$2."/$LanguagePage?ref=$ref".'" 
             frameborder="0" height="100%" width="100%" style="position: fixed"></iframe>';
     }
 

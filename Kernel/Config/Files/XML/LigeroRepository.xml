@@ -10,13 +10,6 @@
             </Hash>
         </Value>
     </Setting>
-    <!--Setting Name="LigeroSubscriptionAffiliate" Required="0" Valid="0">
-        <Description Translatable="1">Type your Affiliate Code of Ligero's Affiliate Program and start making extra money! Check more on http://ligero.online/affiliate</Description>
-        <Navigation>Enterprise::Subscription::AffiliateProgram</Navigation>
-        <Value>
-            <Item ValueType="String" ValueRegex=""></Item>
-        </Value>
-    </Setting-->
     <Setting Name="Frontend::Output::FilterElementPost###LigeroRepository" Required="1" Valid="1">
         <Description Translatable="1">This configuration registers a Output post-filter to extend package verification.</Description>
         <Navigation>Frontend::Base::OutputFilter</Navigation>
