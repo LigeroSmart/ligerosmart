@@ -287,13 +287,14 @@ body.Visible-ScreenXL #ToolBar li.UserAvatar div a:hover {
 
 #ToolBar .Extended.SearchFulltext:before {
     content: "\f002";
-    font-family: FontAwesome;
+    font-family: 'Font Awesome 5 Free';
     display: inline-block;
     position: absolute;
     left: 8px;
     z-index: 2;
     color: #777;
     top: 5px;
+    font-weight: 900 !important;
 }
 
 #ToolBar .Extended input[type=text]:focus {

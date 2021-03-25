@@ -405,7 +405,8 @@ div.TooltipErrorMessage {
     height: 100%;
     line-height: 14px;
     content: "\f1ce";
-    font-family: FontAwesome;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900 !important;
     font-size: 14px;
     color: #777;
 }
