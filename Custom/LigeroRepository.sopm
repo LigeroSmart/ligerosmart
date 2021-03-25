@@ -14,9 +14,9 @@
         <File Location="Kernel/Modules/AdminLigeroRepository.pm" Permission="644"></File>
         <File Location="var/httpd/htdocs/skins/Agent/default/img/ligero-verify-small.png" Permission="644"></File>
         <File Location="var/packagesetup/LigeroRepository.pm" Permission="644"></File>
-        <File Location="var/packagesetup/LigeroRepositoryRequiredPackages/Znuny4OTRS-Repo.opm" Permission="644"></File>
+        <!-- <File Location="var/packagesetup/LigeroRepositoryRequiredPackages/Znuny4OTRS-Repo.opm" Permission="644"></File> -->
         <File Location="Kernel/Config/Files/XML/LigeroRepository.xml" Permission="644"></File>
-        <File Location="Kernel/Config/Files/ZZZZZLigeroRepository.pm" Permission="644"></File>
+        <!-- <File Location="Kernel/Config/Files/ZZZZZLigeroRepository.pm" Permission="644"></File> -->
         <File Location="Kernel/Language/pt_BR_LigeroRepository.pm" Permission="644"></File>
     </Filelist>
     <CodeInstall Type="post"><![CDATA[
