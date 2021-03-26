@@ -23,10 +23,6 @@ use File::Basename;
 use XML::LibXML;
 use List::Util qw( min max );
 # use Syntax::Keyword::Try;
-use Try::Tiny;
-# TODO: remove before release
-use Data::Dumper;
-
 
 sub Configure {
     my ( $Self, %Param ) = @_;
