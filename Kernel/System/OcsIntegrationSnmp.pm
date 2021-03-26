@@ -261,7 +261,7 @@ sub SnmpMappingAdd {
 	}
 
     #GET LAST ORDER
-    my $filter;
+    my $filter = '';
     my $filterValues = [];
     my $LastOrder = 0;
     if($Param{ParentId}){

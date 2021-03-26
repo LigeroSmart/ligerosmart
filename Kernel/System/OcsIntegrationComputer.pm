@@ -263,7 +263,7 @@ sub ComputerMappingListToFilter {
 sub ComputerMappingActiveList {
     my ( $Self, %Param ) = @_;
 
-    my $filter;
+    my $filter = '';
     my $filterValues = [];
 
     if($Param{ParentId}){
