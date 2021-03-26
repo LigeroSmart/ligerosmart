@@ -151,7 +151,7 @@ sub Run {
         my $XmlStructure = [];
 
         for(my $u = 0; $u < (scalar @$parentNodes); $u++){
-            push $XmlStructure,GenerateClassStructureSNMPNode($parentNodes->[$u]);
+            push @{ $XmlStructure },GenerateClassStructureSNMPNode($parentNodes->[$u]);
         }
 
         my $ClassObj = $GeneralCatalogObject->ItemGet(
@@ -181,12 +181,19 @@ sub Run {
             Data => $XmlStructure,
         );
 
-
-        $ConfigItemObject->DefinitionAdd(
-            ClassID    => $ClassObj->{ItemID},
-            Definition => $YAMLStr,
-            UserID     => 1,
+        my $LastDefinition = $ConfigItemObject->DefinitionGet(
+            ClassID => $ClassObj->{ItemID},
         );
+
+        # stop add, if definition was not changed
+        if ( !$LastDefinition->{DefinitionID} || $LastDefinition->{Definition} ne $YAMLStr ) {
+            $ConfigItemObject->DefinitionAdd(
+                ClassID    => $ClassObj->{ItemID},
+                Definition => $YAMLStr,
+                UserID     => 1,
+            );
+        }
+        
 
         my $DefinitionID = $ConfigItemObject->DefinitionGet(
             ClassID => $ClassObj->{ItemID},
@@ -219,7 +226,7 @@ sub Run {
     my $XmlStructure = [];
 
     for(my $u = 0; $u < (scalar @$parentNodes); $u++){
-        push $XmlStructure,GenerateClassStructureSNMPNode($parentNodes->[$u]);
+        push @{ $XmlStructure },GenerateClassStructureSNMPNode($parentNodes->[$u]);
     }
 
     my $ClassObj = $GeneralCatalogObject->ItemGet(
@@ -249,11 +256,18 @@ sub Run {
         Data => $XmlStructure,
     );
 
-    $ConfigItemObject->DefinitionAdd(
-        ClassID    => $ClassObj->{ItemID},
-        Definition => $YAMLStr,
-        UserID     => 1,
+    my $LastDefinition = $ConfigItemObject->DefinitionGet(
+        ClassID => $ClassObj->{ItemID},
     );
+
+    # stop add, if definition was not changed
+    if ( !$LastDefinition->{DefinitionID} || $LastDefinition->{Definition} ne $YAMLStr ) {
+        $ConfigItemObject->DefinitionAdd(
+            ClassID    => $ClassObj->{ItemID},
+            Definition => $YAMLStr,
+            UserID     => 1,
+        );
+    }
 
     my $DefinitionID = $ConfigItemObject->DefinitionGet(
         ClassID => $ClassObj->{ItemID},
@@ -327,7 +341,7 @@ sub Run {
                         $ocsPath =~ s/::/\'}[%]{\'/ig; 
                         $ocsPath = "[%]{\'".$ocsPath."'}[%]{\'Content\'}";
                         #$Self->Print("<yellow>ocsPath ".$ocsPath."</yellow>\n");
-                        push $KeyFields, $ocsPath;
+                        push @{ $KeyFields }, $ocsPath;
                     }
                 }            
 
@@ -340,7 +354,7 @@ sub Run {
                     $searchPath =~ s/{/->{/ig;
                     $searchPath =~ s/\[/->\[/ig;
 
-                    push $searchPathArray, {$KeyFields->[$i] => (eval $searchPath)};
+                    push @{ $searchPathArray }, {$KeyFields->[$i] => (eval $searchPath)};
                 }
 
                 my $ConfigItemIDs = $ConfigItemObject->ConfigItemSearchExtended(
@@ -425,7 +439,7 @@ sub Run {
     my $XmlComputerStructure = [];
 
     for(my $u = 0; $u < (scalar @$parentComputerNodes); $u++){
-        push $XmlComputerStructure,GenerateClassStructureComputerNode($parentComputerNodes->[$u]);
+        push @{ $XmlComputerStructure },GenerateClassStructureComputerNode($parentComputerNodes->[$u]);
     }
 
     my $ClassComputerObj = $GeneralCatalogObject->ItemGet(
@@ -466,18 +480,25 @@ sub Run {
     #    $Self->Print("<green>Removed ConfigItem ".$ConfigItem->{ConfigItemID}.".</green>\n");
     #}
 
-    my $YAMLObject = $Kernel::OM->Get('Kernel::System::YAML');
-    my $YAMLStr = $YAMLObject->Dump(
+    $YAMLObject = $Kernel::OM->Get('Kernel::System::YAML');
+    $YAMLStr = $YAMLObject->Dump(
         Data => $XmlComputerStructure,
     );
 
     
-
-    my $return3 = $ConfigItemObject->DefinitionAdd(
-        ClassID    => $ClassComputerObj->{ItemID},
-        Definition => $YAMLStr,
-        UserID     => 1,
+    $LastDefinition = $ConfigItemObject->DefinitionGet(
+        ClassID => $ClassComputerObj->{ItemID},
     );
+
+    # stop add, if definition was not changed
+    my $return3;
+    if ( !$LastDefinition->{DefinitionID} || $LastDefinition->{Definition} ne $YAMLStr ) {
+        my $return3 = $ConfigItemObject->DefinitionAdd(
+            ClassID    => $ClassComputerObj->{ItemID},
+            Definition => $YAMLStr,
+            UserID     => 1,
+        );
+    }
 
     my $DefinitionComputerID = $ConfigItemObject->DefinitionGet(
         ClassID => $ClassComputerObj->{ItemID},
@@ -530,7 +551,7 @@ sub Run {
                         $ocsPath = "[%]{'".$ocsPath."'}[%]{'Content'}";
                         my $value = $ocsPath;
                         #$Self->Print("<yellow>ocsPath ".$value."</yellow>\n");
-                        push $KeyFields, $value;
+                        push @{ $KeyFields }, $value;
                     }
                 }
 
@@ -545,7 +566,7 @@ sub Run {
 
                     #$Self->Print("<yellow>searchPath ".$searchPath.(eval $searchPath)."</yellow>\n");
 
-                    push $searchPathArray, {$KeyFields->[$i] => (eval $searchPath)};
+                    push @{ $searchPathArray }, {$KeyFields->[$i] => (eval $searchPath)};
                 }
 
                 my $ConfigItemIDs = $ConfigItemObject->ConfigItemSearchExtended(
@@ -560,7 +581,8 @@ sub Run {
 
                     my %UpdateValues = $ConfigItemObject->_FindChangedXMLValues(
                         ConfigItemID => $ConfigItemID,
-                        NewXMLData   => $XmlData
+                        NewXMLData   => $XmlData,
+                        DefinitionID => $DefinitionComputerID
                     );
 
                     if(%UpdateValues){
@@ -800,7 +822,7 @@ sub GenerateClassStructureSNMPNode{
             };
 
             for(my $i = 0; $i < scalar(@$childList); $i++){
-                push $structure->{Sub}, GenerateClassStructureSNMPNode($childList->[$i]);
+                push @{ $structure->{Sub} }, GenerateClassStructureSNMPNode($childList->[$i]);
             }
 
             return $structure;
@@ -869,7 +891,7 @@ sub GenerateClassStructureSNMPNode{
             }; 
 
             for(my $i = 0; $i < scalar(@$childList); $i++){
-                push $structure->{Sub}, GenerateClassStructureSNMPNode($childList->[$i]);
+                push @{ $structure->{Sub} }, GenerateClassStructureSNMPNode($childList->[$i]);
             }
 
             return $structure;
@@ -923,7 +945,7 @@ sub GenerateDataSNMPNode{
             for(my $i = 0; $i < scalar(@$arrayData); $i++){
                 my $arrayItem = $arrayData->[$i];
 
-                push $object->{$structureItem->{Key}}, {'Content' => $arrayItem};
+                push @{ $object->{$structureItem->{Key}} }, {'Content' => $arrayItem};
             }
 
             #print $structureItem->{Key}.' is simplelist\n';
@@ -951,7 +973,7 @@ sub GenerateDataSNMPNode{
         }
     }
     $object->{'Content'} = '';
-    push $array,$object;
+    push @{ $array },$object;
 }
 
 sub GenerateClassStructureComputerNode{
@@ -987,7 +1009,7 @@ sub GenerateClassStructureComputerNode{
             };
 
             for(my $i = 0; $i < scalar(@$childList); $i++){
-                push $structure->{Sub}, GenerateClassStructureComputerNode($childList->[$i]);
+                push @{ $structure->{Sub} }, GenerateClassStructureComputerNode($childList->[$i]);
             }
 
             return $structure;
@@ -1055,7 +1077,7 @@ sub GenerateClassStructureComputerNode{
             }; 
 
             for(my $i = 0; $i < scalar(@$childList); $i++){
-                push $structure->{Sub}, GenerateClassStructureComputerNode($childList->[$i]);
+                push @{ $structure->{Sub} }, GenerateClassStructureComputerNode($childList->[$i]);
             }
 
             return $structure;
@@ -1109,7 +1131,7 @@ sub GenerateDataComputerNode{
             for(my $i = 0; $i < scalar(@$arrayData); $i++){
                 my $arrayItem = $arrayData->[$i];
 
-                push $object->{$structureItem->{Key}}, {'Content' => $arrayItem};
+                push @{ $object->{$structureItem->{Key}} }, {'Content' => $arrayItem};
             }
 
             #print $structureItem->{Key}.' is simplelist\n';
@@ -1137,7 +1159,7 @@ sub GenerateDataComputerNode{
         }
     }
     $object->{'Content'} = '';
-    push $array,$object;
+    push @{ $array },$object;
 }
 
 1;
