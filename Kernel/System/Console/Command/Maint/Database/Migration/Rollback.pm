@@ -21,8 +21,6 @@ our @ObjectDependencies = (
 );
 
 use XML::LibXML;
-# TODO: remove before release
-use Data::Dumper;
 
 
 sub Configure {
