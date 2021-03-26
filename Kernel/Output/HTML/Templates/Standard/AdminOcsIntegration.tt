@@ -1,0 +1,552 @@
+# --
+# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<!-- start form -->
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst" ng-app="ocsIntegration" ng-controller="configuration">
+    <h1>Configurações OCS Integration</h1>
+    <div class="SidebarColumn">
+[% RenderBlockStart("ActionList") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>Tipo de Integração</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a class="CallForAction Fullsize Center" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMP"><span><i class="fa fa-print"></i>SNMP</span></a>
+                    </li>
+                    <li>
+                        <a class="CallForAction Fullsize Center" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Computers"><span><i class="fa fa-laptop"></i>Computadores</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+[% RenderBlockEnd("ActionList") %]
+    </div>
+
+    <div class="ContentColumn">
+
+[% RenderBlockStart("AddClassSNMP") %]
+<div class="WidgetSimple">
+    <div class="Header">
+        <h2>Adionar Classe SNMP</h2>
+    </div>
+    <div class="Content">
+        <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+            <input type="hidden" name="Subaction" value="ActionAddClassSNMP"/>
+            <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+            <fieldset class="TableLike">
+                <label class="Mandatory" for="OcsType"><span class="Marker">*</span> [% Translate("Tipo OCS") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="OcsType" id="OcsType" value="[% Data.OcsType | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>                    
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="OtrsClass"><span class="Marker">*</span> [% Translate("Classe OTRS") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="OtrsClass" id="OtrsClass" value="[% Data.OtrsClass | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>                    
+                </div>
+                <div class="Clear"></div>
+
+                <div class="Field">
+                    <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                    [% Translate("or") | html %]
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMP">[% Translate("Cancel") | html %]</a>
+                </div>
+                <div class="Clear"></div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+[% RenderBlockEnd("AddClassSNMP") %]
+
+[% RenderBlockStart("AddItemMap") %]
+<div class="WidgetSimple">
+    <div class="Header">
+        <h2>Adionar Item SNMP OCS - [% Data.ParentDescription | html %] - Classe - [% Data.ClassDescription | html %]</h2>
+    </div>
+    <div class="Content">
+        <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+            <input type="hidden" name="Subaction" value="ActionAddItemMap"/>
+            <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+            <input type="hidden" name="ClassID" value="[% Data.ClassId | html %]"/>
+            <input type="hidden" name="ParentId" value="[% Data.ParentId | html %]"/>
+            <fieldset class="TableLike">
+                <label class="Mandatory" for="OcsTitle"><span class="Marker">*</span> [% Translate("Titulo OCS") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="OcsTitle" id="OcsTitle" value="[% Data.OcsTitle | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>                    
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="TypeOcsID"><span class="Marker">*</span> [% Translate("Tipo") | html %]:</label>
+                <div class="Field">
+                    [% Data.TypeOcsOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <div class="Field">
+                    <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                    [% Translate("or") | html %]
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMP">[% Translate("Cancel") | html %]</a>
+                </div>
+                <div class="Clear"></div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+[% RenderBlockEnd("AddItemMap") %]
+
+[% RenderBlockStart("AddSnmpFilter") %]
+<div class="WidgetSimple">
+    <div class="Header">
+        <h2>Adionar Filtro SNMP OCS - [% Data.Description | html %] - Classe - [% Data.ClassDescription | html %]</h2>
+    </div>
+    <div class="Content">
+        <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+            <input type="hidden" name="Subaction" value="SaveSnmpFilter"/>
+            <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+            <input type="hidden" name="ClassID" value="[% Data.ClassId | html %]"/>
+            <fieldset class="TableLike">
+                <label class="Mandatory" for="TypeFilter"><span class="Marker">*</span> [% Translate("Tipo") | html %]:</label>
+                <div class="Field">
+                    [% Data.TypeFilterOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="OcsField"><span class="Marker">*</span> [% Translate("Campo") | html %]:</label>
+                <div class="Field">
+                    [% Data.OcsFieldOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="Condition"><span class="Marker">*</span> [% Translate("Condição") | html %]:</label>
+                <div class="Field">
+                    [% Data.ConditionOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="Content"><span class="Marker">*</span> [% Translate("Conteudo") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="Content" id="Content" value="[% Data.Content | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>                    
+                </div>
+                <div class="Clear"></div>
+
+                <div class="Field">
+                    <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                    [% Translate("or") | html %]
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMP">[% Translate("Cancel") | html %]</a>
+                </div>
+                <div class="Clear"></div>
+
+            </fieldset>
+
+        </form>
+    </div>
+    <div class="Content">
+        <table class="DataTable">
+            <thead>
+                <tr>
+                    <th>[% Translate("Tipo") | html %]</th>
+                    <th>[% Translate("Campo") | html %]</th>
+                    <th>[% Translate("Condição") | html %]</th>
+                    <th>[% Translate("Conteudo") | html %]</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+[% RenderBlockStart("NoDataFoundFilterMsg") %]
+                <tr>
+                    <td colspan="5">
+                        [% Translate("No data found.") | html %]
+                    </td>
+                </tr>
+[% RenderBlockEnd("NoDataFoundFilterMsg") %]
+[% RenderBlockStart("FilterResultRow") %]
+                <tr>
+                    <td>[% Translate(Data.Type) | html %]</td>
+                    <td>[% Translate(Data.Field) | html %]</td>
+                    <td>[% Translate(Data.Condition) | html %]</td>
+                    <td>[% Translate(Data.Content) | html %]</td>
+                    <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveSnmpFilter;RemoveID=[% Data.ID | uri %];ID=[% Data.OcsPathId | uri %];ClassID=[% Data.ClassId | uri %]">Remove</a></td>
+                </tr>
+[% RenderBlockEnd("FilterResultRow") %]
+            </tbody>
+        </table>
+    </div>
+</div>
+[% RenderBlockEnd("AddSnmpFilter") %]
+
+[% RenderBlockStart("SNMP") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>SNMP</h2>
+            </div>
+            <div class="Content">
+                <form id="formSnmpStructure" action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="SaveMapSnmp"/>
+                    <input id="Structure" type="hidden" name="Structure" value=""/>
+                </form>
+                <form action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate PreventMultipleSubmits">
+                    <div class="WidgetSimple">
+                        <div class="Header">
+                            <h2>Dados Padrões</h2>
+                        </div>
+                        <div class="Content">
+                            <fieldset class="Right">
+                                <div class="Field SpacingTop">
+                                    <button ng-click="updateSnmp('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMPUpdateStructure',snmp)" class="Primary CallForAction" type="button" value="Atualizar Campos OCS"><span>Atualizar Campos OCS</span></button> 
+                                    <button class="Primary CallForAction" type="button" value="Adicionar Item Manual" onclick="window.location='[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddItemMap;ParentId=0'"><span>Adicionar Item Manual</span></button>   
+                                    <button class="Primary CallForAction" type="button" value="Adicionar Filtro" onclick="window.location='[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddSnmpFilter;ID=0;ClassID=0'"><span>Adicionar Filtro</span></button>                                
+                                </div>
+                                <div class="Clear"></div>
+                            </fieldset>
+                            <fieldset class="Left">
+                                <label for="OtrsClass">Classe OTRS:</label>
+                                <div class="Field">
+                                    <input type="text" name="OtrsClass" id="OtrsClass" ng-model="snmp.OtrsClass" disabled/>
+                                </div>
+                                <div class="Clear"></div>
+                            </fieldset>
+                            
+                            <table class="DataTable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Titulo OCS</th>
+                                        <th>Tipo</th>
+                                        <th>Titulo OTRS</th>
+                                        <th>Campo Chave</th>
+                                        <th></th>
+                                        <!--<th></th>-->
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="loading">
+                                        <td colspan="8">
+                                            <i class="fa fa-cog fa-spin"></i>
+                                            [% Translate("Loading...") | html %]
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="item in snmp.SnmpData | filter:{close:false||undefined}" ng-show="(item.close==false||item.close==undefined) &&!loading">
+                                        <td ng-if="item.Type != 'detail' && item.Type != 'simplelist' && (item.closed==false||item.closed==undefined)" class="Center"><i class="fa fa-minus" style="cursor:pointer;" ng-click="closeSnmp(item.ID,snmp.SnmpData)"></i></td>
+                                        <td ng-if="item.Type != 'detail' && item.Type != 'simplelist' && item.closed" class="Center"><i class="fa fa-plus" style="cursor:pointer;" ng-click="expandSnmp(item.ID,snmp.SnmpData)"></i></td>
+                                        <td ng-if="item.Type == 'detail' || item.Type == 'simplelist'" class="Center"><input type="checkbox" ng-model="item.Active" ng-true-value="'1'" ng-false-value="'0'" ng-change="changeSnmp(item.Active,item.ParentId,snmp.SnmpData)"/></td>
+                                        <td>{{item.OcsPath}}</td>
+                                        <td>{{item.Type}}</td>
+                                        <td><input type="text" ng-model="item.OtrsTranslate"/></td>
+                                        <td class="Center"><input ng-if="item.Type == 'detail' || item.Type == 'simplelist'" type="checkbox" ng-model="item.KeyField" ng-true-value="'1'" ng-false-value="'0'"/></td>
+                                        <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddItemMap;ParentId={{item.ID}}'" ng-if="item.Type === 'objectlist' || item.Type === 'master'">Adicionar Sub Item</a></td>
+                                        <!--<td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddSnmpFilter;ID={{item.ID}};ClassID=0" ng-if="item.Type === 'objectlist' || item.Type === 'master'">Adicionar Filtro</a></td>-->
+                                        <td><a href="#" ng-click="removeSnmpItem('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveItemMap;ID='+item.ID)">Remover</a></td>
+                                    </tr>
+                                    <tr ng-show="(snmp.SnmpData == undefined || snmp.SnmpData.length === 0) && !loading">
+                                        <td colspan="8">
+                                            [% Translate("No data found.") | html %]
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                            <fieldset class="Right">
+                                <div class="Field SpacingTop">
+                                    <button class="Primary CallForAction" type="button" value="Salvar" ng-click="saveSnmpStructure(snmp)"><span>Salvar</span></button>                                
+                                </div>
+                                <div class="Clear"></div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="WidgetSimple" ng-repeat="class in snmpClasses">
+                        <div class="Header">
+                            <h2>{{class.OcsType}}</h2>
+                        </div>
+                        <div class="Content">
+                            <fieldset class="Right">
+                                <div class="Field SpacingTop">
+                                    <button ng-click="updateSnmp('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMPUpdateStructure;ClassID='+class.ClassId,class)" class="Primary CallForAction" type="button" value="Atualizar Campos OCS"><span>Atualizar Campos OCS</span></button> 
+                                    <button class="Primary CallForAction" type="button" value="Adicionar Item Manual" ng-click="executeAction('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddItemMap;ParentId=0;ClassID='+class.ClassId)"><span>Adicionar Item Manual</span></button>   
+                                    <button class="Primary CallForAction" type="button" value="Adicionar Filtro" ng-click="executeAction('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddSnmpFilter;ID=0;ClassID='+class.ClassId)"><span>Adicionar Filtro</span></button>                                
+                                    <button class="Primary CallForAction" type="button" value="Remover Classe" ng-click="removeClass('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveClassSNMP;ClassID='+class.ClassId)"><span>Remover esta Classe</span></button>                                
+                                </div>
+                                <div class="Clear"></div>
+                            </fieldset>
+                            <fieldset class="Left">
+                                <label for="OtrsClass">Classe OTRS:</label>
+                                <div class="Field">
+                                    <input type="text" ng-model="class.OtrsClass" />
+                                </div>
+                            </fieldset>
+                            
+                            <table class="DataTable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Titulo OCS</th>
+                                        <th>Tipo</th>
+                                        <th>Titulo OTRS</th>
+                                        <th>Campo Chave</th>
+                                        <th></th>
+                                        <!--<th></th>-->
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="loading">
+                                        <td colspan="8">
+                                            <i class="fa fa-cog fa-spin"></i>
+                                            [% Translate("Loading...") | html %]
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="item in class.SnmpData | filter:{close:false||undefined}" ng-show="(item.close==false||item.close==undefined)&&!loading">
+                                        <td ng-if="item.Type != 'detail' && item.Type != 'simplelist' && (item.closed==false||item.closed==undefined)" class="Center"><i class="fa fa-minus" style="cursor:pointer;" ng-click="closeSnmp(item.ID,class.SnmpData)"></i></td>
+                                        <td ng-if="item.Type != 'detail' && item.Type != 'simplelist' && item.closed" class="Center"><i class="fa fa-plus" style="cursor:pointer;" ng-click="expandSnmp(item.ID,class.SnmpData)"></i></td>
+                                        <td ng-if="item.Type == 'detail' || item.Type == 'simplelist'" class="Center"><input type="checkbox" ng-model="item.Active" ng-true-value="'1'" ng-false-value="'0'" ng-change="changeSnmp(item.Active,item.ParentId,class.SnmpData)"/></td>
+                                        <td>{{item.OcsPath}}</td>
+                                        <td>{{item.Type}}</td>
+                                        <td><input type="text" ng-model="item.OtrsTranslate"/></td>
+                                        <td class="Center"><input ng-if="item.Type == 'detail' || item.Type == 'simplelist'" type="checkbox" ng-model="item.KeyField" ng-true-value="'1'" ng-false-value="'0'"/></td>
+                                        <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddItemMap;ParentId={{item.ID}};ClassID={{class.ClassId}}'" ng-if="item.Type === 'objectlist' || item.Type === 'master'">Adicionar Sub Item</a></td>
+                                        <!--<td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddSnmpFilter;ID={{item.ID}};ClassID={{class.ClassId}}" ng-if="item.Type === 'objectlist' || item.Type === 'master'">Adicionar Filtro</a></td>-->
+                                        <td><a href="#" ng-click="removeSnmpItem('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveItemMap;ID='+item.ID)">Remover</a></td>
+                                    </tr>
+                                    <tr ng-show="(class.SnmpData == undefined || class.SnmpData.length == 0) && !loading">
+                                        <td colspan="8">
+                                            [% Translate("No data found.") | html %]
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                            <fieldset class="Right">
+                                <div class="Field SpacingTop">
+                                    <button class="Primary CallForAction" type="button" value="Salvar" ng-click="saveSnmpStructure(class)"><span>Salvar</span></button>                                
+                                </div>
+                                <div class="Clear"></div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <fieldset class="Right">
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="button" value="Adicionar Tipo SNMP" onclick="window.location='[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddClassSNMP'"><span>Adicionar Tipo SNMP</span></button>                                
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </form>
+                
+            </div>
+        </div> 
+        <input id="hdnLoadClassesUrl" type="hidden" value="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMPGetClasses"/>
+        <input id="hdnLoadUrl" type="hidden" value="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SNMPGetStructure"/>
+        <input id="hdnType" type="hidden" value="Snmp"/>
+
+[% RenderBlockEnd("SNMP") %]
+
+[% RenderBlockStart("AddItemMapComputer") %]
+<div class="WidgetSimple">
+    <div class="Header">
+        <h2>Adionar Item Computer OCS - [% Data.ParentDescription | html %]</h2>
+    </div>
+    <div class="Content">
+        <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+            <input type="hidden" name="Subaction" value="ActionAddItemMapComputer"/>
+            <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+            <input type="hidden" name="ParentId" value="[% Data.ParentId | html %]"/>
+            <fieldset class="TableLike">
+                <label class="Mandatory" for="OcsTitle"><span class="Marker">*</span> [% Translate("Titulo OCS") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="OcsTitle" id="OcsTitle" value="[% Data.OcsTitle | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>                    
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="TypeOcsID"><span class="Marker">*</span> [% Translate("Tipo") | html %]:</label>
+                <div class="Field">
+                    [% Data.TypeOcsOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <div class="Field">
+                    <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                    [% Translate("or") | html %]
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Computers">[% Translate("Cancel") | html %]</a>
+                </div>
+                <div class="Clear"></div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+[% RenderBlockEnd("AddItemMapComputer") %]
+
+[% RenderBlockStart("AddComputerFilter") %]
+<div class="WidgetSimple">
+    <div class="Header">
+        <h2>Adionar Filtro Computer OCS - [% Data.Description | html %]</h2>
+    </div>
+    <div class="Content">
+        <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+            <input type="hidden" name="Subaction" value="SaveComputerFilter"/>
+            <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+            <fieldset class="TableLike">
+                <label class="Mandatory" for="TypeFilter"><span class="Marker">*</span> [% Translate("Tipo") | html %]:</label>
+                <div class="Field">
+                    [% Data.TypeFilterOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="OcsField"><span class="Marker">*</span> [% Translate("Campo") | html %]:</label>
+                <div class="Field">
+                    [% Data.OcsFieldOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="Condition"><span class="Marker">*</span> [% Translate("Condição") | html %]:</label>
+                <div class="Field">
+                    [% Data.ConditionOption %]
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="Content"><span class="Marker">*</span> [% Translate("Conteudo") | html %]:</label>
+                <div class="Field">
+                    <input type="text" name="Content" id="Content" value="[% Data.Content | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>                    
+                </div>
+                <div class="Clear"></div>
+
+                <div class="Field">
+                    <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                    [% Translate("or") | html %]
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Computers">[% Translate("Cancel") | html %]</a>
+                </div>
+                <div class="Clear"></div>
+
+            </fieldset>
+
+        </form>
+    </div>
+    <div class="Content">
+        <table class="DataTable">
+            <thead>
+                <tr>
+                    <th>[% Translate("Tipo") | html %]</th>
+                    <th>[% Translate("Campo") | html %]</th>
+                    <th>[% Translate("Condição") | html %]</th>
+                    <th>[% Translate("Conteudo") | html %]</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+[% RenderBlockStart("NoDataFoundFilterComputerMsg") %]
+                <tr>
+                    <td colspan="5">
+                        [% Translate("No data found.") | html %]
+                    </td>
+                </tr>
+[% RenderBlockEnd("NoDataFoundFilterComputerMsg") %]
+[% RenderBlockStart("FilterResultComputerRow") %]
+                <tr>
+                    <td>[% Translate(Data.Type) | html %]</td>
+                    <td>[% Translate(Data.Field) | html %]</td>
+                    <td>[% Translate(Data.Condition) | html %]</td>
+                    <td>[% Translate(Data.Content) | html %]</td>
+                    <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveComputerFilter;RemoveID=[% Data.ID | uri %];ID=[% Data.OcsPathId | uri %]">Remove</a></td>
+                </tr>
+[% RenderBlockEnd("FilterResultComputerRow") %]
+            </tbody>
+        </table>
+    </div>
+</div>
+[% RenderBlockEnd("AddComputerFilter") %]
+
+[% RenderBlockStart("Computers") %]
+        <form id="formComputerStructure" action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+            <input type="hidden" name="Subaction" value="SaveMapComputer"/>
+            <input id="Structure" type="hidden" name="Structure" value=""/>
+        </form>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>Computadores</h2>
+            </div>
+            <div class="Content">
+                <fieldset class="Right">
+                    <div class="Field SpacingTop">
+                        <button ng-click="updateComputer('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ComputerUpdateStructure',computer)" class="Primary CallForAction" type="button" value="Atualizar Campos OCS"><span>Atualizar Campos OCS</span></button> 
+                        <button class="Primary CallForAction" type="button" value="Adicionar Item Manual" onclick="window.location='[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddItemMapComputer;ParentId=0'"><span>Adicionar Item Manual</span></button>   
+                        <button class="Primary CallForAction" type="button" value="Adicionar Filtro" onclick="window.location='[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddComputerFilter;ID=0'"><span>Adicionar Filtro</span></button>                                
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+                <fieldset class="Left">
+                    <label for="OtrsClass">Classe OTRS:</label>
+                    <div class="Field">
+                        <input type="text" name="OtrsClass" id="OtrsClass" ng-model="computer.OtrsClass" disabled/>
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+                
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Titulo OCS</th>
+                            <th>Tipo</th>
+                            <th>Titulo OTRS</th>
+                            <th>Campo Chave</th>
+                            <th></th>
+                            <!--<th></th>-->
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="loading">
+                            <td colspan="8">
+                                <i class="fa fa-cog fa-spin"></i>
+                                [% Translate("Loading...") | html %]
+                            </td>
+                        </tr>
+                        <tr ng-repeat="item in computer.ComputerData | filter:{close:false||undefined}" ng-show="(item.close==false||item.close==undefined)&&!loading ">
+                            <td ng-if="item.Type != 'detail' && item.Type != 'simplelist' && (item.closed==false||item.closed==undefined)" class="Center"><i class="fa fa-minus" style="cursor:pointer;" ng-click="closeComputer(item.ID,computer.ComputerData)"></i></td>
+                            <td ng-if="item.Type != 'detail' && item.Type != 'simplelist' && item.closed" class="Center"><i class="fa fa-plus" style="cursor:pointer;" ng-click="expandComputer(item.ID,computer.ComputerData)"></i></td>
+                            <td ng-if="item.Type == 'detail' || item.Type == 'simplelist'" class="Center"><input type="checkbox" ng-model="item.Active" ng-true-value="'1'" ng-false-value="'0'" ng-change="changeComputer(item.Active,item.ParentId,computer.ComputerData)"/></td>
+                            <td>{{item.OcsPath}}</td>
+                            <td>{{item.Type}}</td>
+                            <td><input type="text" ng-model="item.OtrsTranslate"/></td>
+                            <td class="Center"><input ng-if="item.Type == 'detail' || item.Type == 'simplelist'" type="checkbox" ng-model="item.KeyField" ng-true-value="'1'" ng-false-value="'0'"/></td>
+                            <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddItemMapComputer;ParentId={{item.ID}}'" ng-if="item.Type === 'objectlist' || item.Type === 'master'">Adicionar Sub Item</a></td>
+                            <!--<td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AddComputerFilter;ID={{item.ID}}" ng-if="item.Type === 'objectlist' || item.Type === 'master'">Adicionar Filtro</a></td>-->
+                            <td><a href="#" ng-click="removeComputerItem('[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveItemMapComputer;ID='+item.ID)">Remover</a></td>
+                        </tr>
+                        <tr ng-show="(computer.ComputerData == undefined || computer.ComputerData.length === 0) && !loading">
+                            <td colspan="8">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>                                    
+                    </tbody>
+                </table>
+                <fieldset class="Right">
+                    <div class="Field SpacingTop">
+                        <button class="Primary CallForAction" type="button" value="Salvar" ng-click="saveComputerStructure(computer)"><span>Salvar</span></button>                                
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+            </div>
+        </div>        
+        <input id="hdnLoadUrl" type="hidden" value="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ComputerGetStructure"/>
+        <input id="hdnType" type="hidden" value="Computer"/>
+
+[% RenderBlockEnd("Computers") %]
+    </div>
+    <div class="Clear"></div>
+</div>
