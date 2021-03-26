@@ -12,3 +12,4 @@ build.log
 latest-build
 .gitconfig
 *.swp
+var/stats
