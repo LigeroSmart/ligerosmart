@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+	<Name>PublicTicket</Name>
+	<Version>6.0.0</Version>
+	<Vendor>LigeroSmart</Vendor>
+	<URL>http://ligerosmart.com</URL>
+	<License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+	<Description Lang="en">This package provides a public interface where customers can reopen their tickets as well as access tickets without logging in the system. KNOW ERROR: File upload in articles inside the process are not working right now.</Description>
+	<Description Lang="pt_BR">Este pacote adiciona uma interface publica que permite aos clientes reabrir seus chamados assim como acessar telas de processo sem precisar logar na ferramenta. ERRO CONHECIDO: neste momento, anexar arquivos em artigos do processo não está funcionando.</Description>
+	<Framework>6.0.x</Framework>
+	<ModuleRequired Version="2.52">Digest::MD5</ModuleRequired>
+	<Filelist>
+		<File Location="Custom/PublicTicket.sopm" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/PublicTicket.xml" Permission="644"></File>
+		<File Location="Kernel/Language/pt_BR_PublicTicket.pm" Permission="644"></File>
+		<!-- <File Location="Kernel/Modules/PublicTicketReopen.pm" Permission="644"></File>
+		<File Location="Kernel/Modules/PublicTicketProcess.pm" Permission="644"></File>
+		<File Location="Kernel/Modules/PublicTicketAttachment.pm" Permission="644"></File>
+		<File Location="Kernel/Output/HTML/Templates/Standard/PublicTicketReopen.tt" Permission="644"></File> -->
+		<File Location="Kernel/System/Ticket/Event/TicketKeyGenerator.pm" Permission="644"></File>
+		<File Location="var/packagesetup/PublicTicket.pm" Permission="644"></File>
+	</Filelist>
+	<CodeInstall Type="post">
+		my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+		$Kernel::OM-&gt;Get($CodeModule)-&gt;CodeInstall();
+	</CodeInstall>
+	<CodeUpgrade Type="post">
+		my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+		$Kernel::OM-&gt;Get($CodeModule)-&gt;CodeUpgrade();
+	</CodeUpgrade>
+</otrs_package>
