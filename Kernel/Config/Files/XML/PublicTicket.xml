@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="2.0" init="Config">
+    <Setting Name="PublicFrontend::Module###PictureUpload" Required="1" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Picture upload module.</Item>
+                    <Item Key="Title" Translatable="1">Picture-Upload</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
     <!-- Event Handler -->
     <Setting Name="Ticket::EventModulePost###001-TicketKeyGenerator" Required="1" Valid="1">
         <Description Translatable="1">Check if the given ticket has a valid Ticket Key and will create it if necessary.</Description>
