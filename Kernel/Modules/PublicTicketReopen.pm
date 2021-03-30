@@ -1,4 +1,3 @@
-
 package Kernel::Modules::PublicTicketReopen;
 
 use strict;
@@ -7,8 +6,6 @@ use warnings;
 use Kernel::System::VariableCheck qw(:all);
 use Kernel::Language qw(Translatable);
 use Data::Dumper;
-
-#our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,7 +50,9 @@ sub Run {
             UserID       => $Self->{UserID},
         );
     }
-
+    $LayoutObject->CustomerSetRichTextParameters(
+        Data => {},
+    );  
     # check needed stuff
     if ( !$Self->{TicketID} || !$Self->{TicketKey} ) {
         my $Output = $LayoutObject->CustomerHeader( Title => 'Error' );
@@ -107,6 +106,14 @@ sub Run {
         return $Output;
     }
     
+    # Verify if should close ticket
+
+    # Close Ticket
+
+    # Redirect to the Survey screen with special message
+
+
+
     # strip html and ascii attachments of content
     my $StripPlainBodyAsAttachment = 1;
 
@@ -114,16 +121,6 @@ sub Run {
     if ( !$LayoutObject->{BrowserRichText} ) {
         $StripPlainBodyAsAttachment = 2;
     }
-
-    # # get all articles of this ticket
-    # my @CustomerArticleTypes = $TicketObject->ArticleTypeList( Type => 'Customer' );
-    # my @ArticleBox = $TicketObject->ArticleContentIndex(
-    #     TicketID                   => $Self->{TicketID},
-    #     ArticleType                => \@CustomerArticleTypes,
-    #     StripPlainBodyAsAttachment => $StripPlainBodyAsAttachment,
-    #     UserID                     => $Self->{UserID},
-    #     DynamicFields              => 0,
-    # );
 
     my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
 
@@ -175,7 +172,7 @@ sub Run {
 
         push @ArticleBox, \%ArticleData;
     }
-    
+
     # get params
     my %GetParam;
     for my $Key (qw(Subject Body StateID PriorityID FromChatID FromChat)) {
@@ -186,27 +183,6 @@ sub Run {
     my %DynamicFieldValues;
 
     my $FollowUpDynamicFieldFilter = $Config->{FollowUpDynamicField};
-
-    if ( $GetParam{FromChatID} ) {
-        if ( !$ConfigObject->Get('ChatEngine::Active') ) {
-            return $LayoutObject->FatalError(
-                Message => Translatable('Chat is not active.'),
-            );
-        }
-
-        # Check chat participant
-        my %ChatParticipant = $Kernel::OM->Get('Kernel::System::Chat')->ChatParticipantCheck(
-            ChatID      => $GetParam{FromChatID},
-            ChatterType => 'Customer',
-            ChatterID   => $Self->{UserID},
-        );
-
-        if ( !%ChatParticipant ) {
-            return $LayoutObject->FatalError(
-                Message => Translatable('No permission.'),
-            );
-        }
-    }
 
     # get the dynamic fields for ticket object
     my $FollowUpDynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
@@ -257,7 +233,7 @@ sub Run {
         my $Lock = $QueueObject->GetFollowUpLockOption(
             QueueID => $Ticket{QueueID},
         );
-
+        my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
         my $StateObject = $Kernel::OM->Get('Kernel::System::State');
 
         # get ticket state details
@@ -417,34 +393,62 @@ sub Run {
             my $From = "$Customer{UserFirstname} $Customer{UserLastname} <$Customer{UserEmail}>";
 
         } else {
-            my @ArticleIndex = $TicketObject->ArticleContentIndex(
-                TicketID            => $Self->{TicketID},
-                ArticleSenderType   => 'customer',
-                UserID              => 1,
-                Limit               => 1,
-                Order               => 'ASC'
+            my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+
+            # get all articles of this ticket, that are visible for the customer
+            my @ArticleList = $ArticleObject->ArticleList(
+                TicketID             => $Self->{TicketID},
+                IsVisibleForCustomer => 1,
+                DynamicFields        => 0,
             );
 
-            if($ArticleIndex[0]->{From}){
-                $From = $ArticleIndex[0]->{From};
-            } else {
-                $From = '';
+            my @ArticleBox;
+            my $ArticleBackendObject;
+
+
+            ARTICLEMETADATA:
+            for my $ArticleMetaData (@ArticleList) {
+
+                next ARTICLEMETADATA if !$ArticleMetaData;
+                next ARTICLEMETADATA if !IsHashRefWithData($ArticleMetaData);
+
+                $ArticleBackendObject = $ArticleObject->BackendForArticle( %{$ArticleMetaData} );
+
+                my %ArticleData = $ArticleBackendObject->ArticleGet(
+                    TicketID  => $Self->{TicketID},
+                    ArticleID => $ArticleMetaData->{ArticleID},
+                    RealNames => 1,
+                );
+
+                # Get channel specific fields
+                # my %ArticleFields = $LayoutObject->ArticleFields(
+                #     TicketID  => $Self->{TicketID},
+                #     ArticleID => $ArticleMetaData->{ArticleID},
+                # );
+                if($ArticleData{From}){
+                    $From = $ArticleData{From};
+                } else {
+                    $From = '';
+                }
+                # $ArticleData{FromRealname} = $ArticleFields{Sender};
+
+                last;
             }
         }
 
 
-        # store the article
-        my $ArticleID = $TicketObject->ArticleCreate(
-            TicketID    => $Self->{TicketID},
-            ArticleType => $Config->{ArticleType},
-            SenderType  => $Config->{SenderType},
-            From        => $From,
-            Subject     => $GetParam{Subject},
-            Body        => $LayoutObject->RichText2Ascii( String => $GetParam{Body} ),
-            MimeType    => $MimeType,
-            Charset     => $LayoutObject->{UserCharset},
-            UserID      => $Self->{UserID},
-            OrigHeader  => {
+        # store the article    
+        my $ArticleID = $Kernel::OM->Get('Kernel::System::Ticket::Article::Backend::Internal')->ArticleCreate(
+            TicketID             => $Self->{TicketID},
+            IsVisibleForCustomer => 1,
+            SenderType           => $Config->{SenderType},
+            From                 => $From,
+            Subject              => $GetParam{Subject},
+            Body                 => $GetParam{Body},
+            MimeType             => $MimeType,
+            Charset              => $LayoutObject->{UserCharset},
+            UserID               => $ConfigObject->Get('CustomerPanelUserID'),
+            OrigHeader           => {
                 From    => $From,
                 To      => 'System',
                 Subject => $GetParam{Subject},
@@ -452,13 +456,61 @@ sub Run {
             },
             HistoryType      => $Config->{HistoryType},
             HistoryComment   => $Config->{HistoryComment} || '%%',
-            AutoResponseType => 'auto follow up',
+            AutoResponseType => ( $ConfigObject->Get('AutoResponseForWebTickets') ) ? 'auto follow up' : '',
         );
         if ( !$ArticleID ) {
-            my $Output = $LayoutObject->CustomerHeader( Title => 'Error' );
+            my $Output = $LayoutObject->CustomerHeader(
+                Title => Translatable('Error'),
+            );
             $Output .= $LayoutObject->CustomerError();
             $Output .= $LayoutObject->CustomerFooter();
             return $Output;
+        }
+
+        # get pre loaded attachment
+        my @AttachmentData = $UploadCacheObject->FormIDGetAllFilesData(
+            FormID => $Self->{FormID}
+        );
+
+        # get submit attachment
+        my %UploadStuff = $ParamObject->GetUploadAll(
+            Param => 'file_upload',
+        );
+        if (%UploadStuff) {
+            push @AttachmentData, \%UploadStuff;
+        }
+
+        # write attachments
+        ATTACHMENT:
+        for my $Attachment (@AttachmentData) {
+
+            my $ContentID = $Attachment->{ContentID};
+            if (
+                $ContentID
+                && ( $Attachment->{ContentType} =~ /image/i )
+                && ( $Attachment->{Disposition} eq 'inline' )
+                )
+            {
+                my $ContentIDHTMLQuote = $LayoutObject->Ascii2Html(
+                    Text => $ContentID,
+                );
+
+                # workaround for link encode of rich text editor, see bug#5053
+                my $ContentIDLinkEncode = $LayoutObject->LinkEncode($ContentID);
+                $GetParam{Body} =~ s/(ContentID=)$ContentIDLinkEncode/$1$ContentID/g;
+
+                # ignore attachment if not linked in body
+                if ( $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i ) {
+                    next ATTACHMENT;
+                }
+            }
+
+            # write existing file to backend
+            $ArticleBackendObject->ArticleWriteAttachment(
+                %{$Attachment},
+                ArticleID => $ArticleID,
+                UserID    => $ConfigObject->Get('CustomerPanelUserID'),
+            );
         }
 
         # # update ticket state
@@ -509,6 +561,9 @@ sub Run {
                 Bind => [ \$Self->{TicketID} ]
             );
         }
+
+        # remove pre submited attachments
+        $UploadCacheObject->FormIDRemove( FormID => $Self->{FormID} );
 
         # redirect to zoom view
         return $LayoutObject->Redirect(
@@ -1403,7 +1458,7 @@ sub _Mask {
                         );
                     }
                 #}
-=cut  
+
                 else {
                     my $SessionInformation;
 
@@ -1429,7 +1484,7 @@ sub _Mask {
                         );
                     }
                 }
-=cut
+
             }
             else {
                 $LayoutObject->Block(
@@ -1442,7 +1497,7 @@ sub _Mask {
             }
         }
 
-=cut
+
         # add attachment icon
         if ( $Article{Atms} && %{ $Article{Atms} } ) {
 
@@ -1481,7 +1536,7 @@ sub _Mask {
                 );
             }
         }
-=cut
+
     }
 
     # if there are no viewable articles show NoArticles message
@@ -1580,17 +1635,29 @@ sub _Mask {
         );
 
         # add rich text editor
-        if ( $LayoutObject->{BrowserRichText} ) {
+        # if ( $LayoutObject->{BrowserRichText} ) {
 
-            # use height/width defined for this screen
-            $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
-            $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 0;
+        #     # use height/width defined for this screen
+        #     $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
+        #     $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 0;
 
-            $LayoutObject->Block(
-                Name => 'RichText',
-                Data => \%Param,
-            );
-        }
+        #     $LayoutObject->Block(
+        #         Name => 'RichText',
+        #         Data => \%Param,
+        #     );
+        # }
+        # add rich text editor
+        # if ( $LayoutObject->{BrowserRichText} ) {
+
+        #     # use height/width defined for this screen
+        #     $Param{RichTextHeight} = $Config->{RichTextHeight} || 300;
+        #     $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 300;
+
+        #     # set up customer rich text editor
+        #     $LayoutObject->CustomerSetRichTextParameters(
+        #         Data => {},
+        #     );
+        # }
 
         # build next states string
         if ( $Config->{State} ) {
@@ -1676,18 +1743,6 @@ sub _Mask {
                 },
             );
         }
-
-        # if there are ChatMessages,
-        # show Chat protocol
-        if ( $Param{ChatMessages} ) {
-            $LayoutObject->Block(
-                Name => 'ChatProtocol',
-                Data => {
-                    %Param,
-                },
-            );
-        }
-
         # show attachments
         # get all attachments meta data
         my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
@@ -1705,11 +1760,10 @@ sub _Mask {
             {
                 next ATTACHMENT;
             }
-            $LayoutObject->Block(
-                Name => 'FollowUpAttachment',
-                Data => $Attachment,
-            );
+
+            push @{ $Param{AttachmentList} }, $Attachment;
         }
+
     }
 
     # select the output template
