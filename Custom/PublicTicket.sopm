@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
 	<Name>PublicTicket</Name>
-	<Version>6.0.0</Version>
+	<Version>6.0.1</Version>
 	<Vendor>LigeroSmart</Vendor>
 	<URL>http://ligerosmart.com</URL>
 	<License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -13,10 +13,10 @@
 		<File Location="Custom/PublicTicket.sopm" Permission="644"></File>
 		<File Location="Kernel/Config/Files/XML/PublicTicket.xml" Permission="644"></File>
 		<File Location="Kernel/Language/pt_BR_PublicTicket.pm" Permission="644"></File>
-		<!-- <File Location="Kernel/Modules/PublicTicketReopen.pm" Permission="644"></File>
-		<File Location="Kernel/Modules/PublicTicketProcess.pm" Permission="644"></File>
-		<File Location="Kernel/Modules/PublicTicketAttachment.pm" Permission="644"></File>
-		<File Location="Kernel/Output/HTML/Templates/Standard/PublicTicketReopen.tt" Permission="644"></File> -->
+		<File Location="Kernel/Modules/PublicTicketReopen.pm" Permission="644"></File>
+		<!--File Location="Kernel/Modules/PublicTicketProcess.pm" Permission="644"></File-->
+		<!--File Location="Kernel/Modules/PublicTicketAttachment.pm" Permission="644"></File-->
+		<File Location="Kernel/Output/HTML/Templates/Standard/PublicTicketReopen.tt" Permission="644"></File>
 		<File Location="Kernel/System/Ticket/Event/TicketKeyGenerator.pm" Permission="644"></File>
 		<File Location="var/packagesetup/PublicTicket.pm" Permission="644"></File>
 	</Filelist>
