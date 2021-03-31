@@ -114,6 +114,13 @@
         </Value>
     </Setting>
    <!-- Public Ticket Reopen interface configuration -->
+   <Setting Name="Ticket::Frontend::PublicTicketReopen###CloseState" Required="1" Valid="1">
+        <Description Translatable="1">Defines the state to be used for closing the ticket if user agrees with the solution.</Description>
+        <Navigation>Frontend::Public::Ticket::Reopen</Navigation>
+        <Value>
+            <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">closed successful</Item>
+        </Value>
+   </Setting>
    <Setting Name="Ticket::Frontend::PublicTicketReopen###StateAfterReopen" Required="1" Valid="1">
         <Description Translatable="1">Defines the next state for a ticket after been reopened by the customer in the Public Ticket Reopen interface.</Description>
         <Navigation>Frontend::Public::Ticket::Reopen</Navigation>
@@ -142,6 +149,13 @@
         <Navigation>Frontend::Public::Ticket::Reopen</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">The ticket has been successfully reopened.</Item>
+        </Value>
+   </Setting>
+   <Setting Name="Ticket::Frontend::PublicTicketReopen###SucessfullCloseMessage" Required="1" Valid="1">
+        <Description Translatable="1">Defines the message that will be shown to the customer after the ticket is closed in the Public Ticket Reopen interface.</Description>
+        <Navigation>Frontend::Public::Ticket::Reopen</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Thanks! We'd love to hear your feedback about the support experience. You will be redirected to a Survey in a few seconds...</Item>
         </Value>
    </Setting>
    <Setting Name="Ticket::Frontend::PublicTicketReopen###TicketReopenMessageGreeting" Required="1" Valid="1">
@@ -184,6 +198,13 @@
         <Navigation>Frontend::Public::Ticket::Reopen</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">Ticket Reopen</Item>
+        </Value>
+   </Setting>
+   <Setting Name="Ticket::Frontend::PublicTicketReopen###TicketClosePreffix" Required="1" Valid="1">
+        <Description Translatable="1">Defines the title preffix that will be used in the Public Ticket Reopen interface.</Description>
+        <Navigation>Frontend::Public::Ticket::Reopen</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Ticket has been closed</Item>
         </Value>
    </Setting>
    <Setting Name="Ticket::Frontend::PublicTicketReopen###TicketReopenCustomMessage" Required="1" Valid="1">

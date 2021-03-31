@@ -42,6 +42,7 @@ sub Run {
     $Self->{TicketID}      = $ParamObject->GetParam( Param => 'TicketID' );
     $Self->{TicketKey}     = $ParamObject->GetParam( Param => 'TicketKey' );
     $Self->{ReopenSuccess} = ($ParamObject->GetParam( Param => 'Reopen' ) eq "Success") ? 1 : 0;
+    $Self->{CloseTicket}   = ($ParamObject->GetParam( Param => 'CloseTicket' ) eq "1") ? 1 : 0;
 
     # ticket id lookup
     if ( !$Self->{TicketID} && $TicketNumber ) {
@@ -100,19 +101,87 @@ sub Run {
         my $Output = $LayoutObject->CustomerHeader( Title => 'Error' );
         $Output .= $LayoutObject->CustomerWarning(
             Message => Translatable('No permission.'),
-            Comment => Translatable('Ticket State now allowed to be reopened!')
+            Comment => Translatable('Ticket State now allowed to be reopened or closed!')
         );
         $Output .= $LayoutObject->CustomerFooter();
         return $Output;
     }
     
-    # Verify if should close ticket
+    ############################ Verify if should close ticket
+    if ( $Self->{CloseTicket} ){
 
-    # Close Ticket
+        my $Output = $LayoutObject->CustomerHeader( Value => $Ticket{TicketNumber} );
 
-    # Redirect to the Survey screen with special message
+        # Close Ticket
+        # my $Success = $TicketObject->TicketStateSet(
+        #     TicketID  => $Self->{TicketID},
+        #     State     => $Config->{CloseState},
+        #     UserID    => $Self->{UserID},
+        # );
 
+        # $Success = $TicketObject->HistoryAdd(
+        #     Name         => 'Ticket Closed using public reopen screen.',
+        #     HistoryType  => 'FollowUp',
+        #     TicketID     => $Self->{TicketID},
+        #     CreateUserID => $Self->{UserID},
+        # );
 
+        # # get database object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+        # get survey list
+        return if !$DBObject->Prepare(
+            SQL => 'SELECT public_survey_key FROM survey_request where ticket_id=? and valid_id=1',
+            Bind  => [ \$Self->{TicketID} ],
+            Limit => 1
+
+        );
+
+        my $SurveyKey;
+        while ( my @Data = $DBObject->FetchrowArray() ) {
+            $SurveyKey = $Data[0];
+        }
+
+        my %BlockData = (
+            %Ticket,
+            %Param,
+        );
+
+        if ($SurveyKey) {
+            $BlockData{SucessfullMessage} = 
+                $BlockData{Config}->{SucessfullCloseMessageWithSurvey}
+                    ||"Thanks! We'd love to hear your feedback about the support experience. You will be redirected to a Survey in a few seconds...";
+            $LayoutObject->Block(
+                Name => 'Redirect',
+                Data => {
+                    PublicSurveyKey=>$SurveyKey
+                },
+            );
+        } else {
+            $BlockData{SucessfullMessage} = 
+                $BlockData{Config}->{SucessfullCloseMessageWithoutSurvey}
+                    ||"Your ticket is has been closed. Thanks!";
+        }
+
+        # get priority
+        $LayoutObject->Block(
+            Name => 'PriorityFlag',
+            Data => \%Ticket,
+        );
+
+        $BlockData{Config} = $Config;
+        
+        $BlockData{Config}->{TicketReopenPreffix} = 
+            $BlockData{Config}->{TicketClosePreffix}||'Ticket has been closed';
+
+        $Param{Hook} = $ConfigObject->Get('Ticket::Hook') || 'Ticket#';
+        $Output .= $LayoutObject->Output(
+                TemplateFile => 'PublicTicketReopen',
+                Data         => \%BlockData,
+            );
+
+        # Redirect to the Survey screen with special message
+        return $Output;
+    } 
 
     # strip html and ascii attachments of content
     my $StripPlainBodyAsAttachment = 1;
@@ -133,7 +202,6 @@ sub Run {
 
     my @ArticleBox;
     my $ArticleBackendObject;
-
 
     ARTICLEMETADATA:
     for my $ArticleMetaData (@ArticleList) {
@@ -286,7 +354,7 @@ sub Run {
                         ReturnType     => 'Ticket',
                         ReturnSubType  => 'DynamicField_' . $DynamicFieldConfig->{Name},
                         Data           => \%AclData,
-                        CustomerUserID => $Self->{UserID},
+                        CustomerUserID => $Ticket{CustomerUserID} || 1,
                     );
                     if ($ACL) {
                         my %Filter = $TicketObject->TicketAclData();
@@ -1773,6 +1841,7 @@ sub _Mask {
     return $LayoutObject->Output(
         TemplateFile => 'PublicTicketReopen',
         Data         => {
+            SucessfullMessage => $Config->{SucessfullReopenMessage},
             %Article,
             %Param,
         },

@@ -30,7 +30,7 @@ sub Data {
     $Self->{Translation}->{'Dynamic fields shown in the Public Ticket Reopen interface. Possible settings: 0 = Disabled, 1 = Enabled.'} = 'Campos dinâmicos que serão exibidos na interface Public Ticket Reopen. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado).';
     $Self->{Translation}->{'Need TicketID and TicketKey!'} = 'É preciso informar o TicketID e a TicketKey!';
     $Self->{Translation}->{'Invalid Ticket Key!'} = 'TicketKey Inválida!';
-    $Self->{Translation}->{'Ticket State now allowed to be reopened!'} = 'O estado do chamado não permite ser reaberto!';
+    $Self->{Translation}->{'Ticket State now allowed to be reopened or closed!'} = 'O estado do chamado não permite ser reaberto ou fechado!';
     $Self->{Translation}->{'Defines the greeting that will be shown to the customer in the Public Ticket Reopen interface.'} = 'Define a saudação que será exibida para o usuário na interface Public Ticket Reopen.';
     $Self->{Translation}->{'Hello!'} = 'Olá!';
     $Self->{Translation}->{'Defines the message that will be shown to the customer in the Public Ticket Reopen interface.'} = 'Define a mensagem que será exibida para o usuário na interface Public Ticket Reopen.';
@@ -41,6 +41,10 @@ sub Data {
     $Self->{Translation}->{'Defines which states will display the custom messages in the Public Ticket Reopen interface.'} = 'Define quais estados dos tickets irão exibir a mensagem customizada na interface Public Ticket Reopen.';
     $Self->{Translation}->{'Defines the CSS that will be used in the custom message in the Public Ticket Reopen interface.'} = 'Define o estilo CSS que será usado na mensagem customizada na interface Public Ticket Reopen.';
     $Self->{Translation}->{'Defines if the non-delivered surveys will be removed after the ticket reopen (0 = Disabled, 1 = Enabled).'} = 'Define se as pesquisas de satisfação que ainda não foram entregues serão removidas quando o ticket for reaberto (0 = Desabilitado, 1 = Habilitado).';
+    $Self->{Translation}->{"Thanks! We'd love to hear your feedback about the support experience. You will be redirected to a Survey in a few seconds..."} = 'Agradecemos! Adoraríamos saber sua opinião sobre sua experiência com nosso atendimento. Estamos redirecionando para uma pesquisa em alguns segundos...';
+    $Self->{Translation}->{"Ticket has been closed"} = 'Chamado encerrado';
+    $Self->{Translation}->{"The ticket has been successfully reopened."} = 'Seu chamado foi reaberto.';
+
 }
 
 1;
