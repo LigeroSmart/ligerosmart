@@ -113,18 +113,18 @@ sub Run {
         my $Output = $LayoutObject->CustomerHeader( Value => $Ticket{TicketNumber} );
 
         # Close Ticket
-        # my $Success = $TicketObject->TicketStateSet(
-        #     TicketID  => $Self->{TicketID},
-        #     State     => $Config->{CloseState},
-        #     UserID    => $Self->{UserID},
-        # );
+        my $Success = $TicketObject->TicketStateSet(
+            TicketID  => $Self->{TicketID},
+            State     => $Config->{CloseState},
+            UserID    => $Self->{UserID},
+        );
 
-        # $Success = $TicketObject->HistoryAdd(
-        #     Name         => 'Ticket Closed using public reopen screen.',
-        #     HistoryType  => 'FollowUp',
-        #     TicketID     => $Self->{TicketID},
-        #     CreateUserID => $Self->{UserID},
-        # );
+        $Success = $TicketObject->HistoryAdd(
+            Name         => 'Ticket Closed using public reopen screen.',
+            HistoryType  => 'FollowUp',
+            TicketID     => $Self->{TicketID},
+            CreateUserID => $Self->{UserID},
+        );
 
         # # get database object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
