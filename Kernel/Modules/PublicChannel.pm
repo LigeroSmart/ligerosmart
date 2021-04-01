@@ -30,7 +30,7 @@ sub Run {
 	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 	$Param{SubAction} = $ParamObject->GetParam(Param => "SubAction") || "";
 
-	
+	$Param{embed} = $ParamObject->GetParam(Param => "embed") || "";
 	#Verifica se os requirementos mínimos para o módulo funcionar corretamente estão sendo atendidos, caso não, Pede para que o usuário configure nas config do Sistema
 	my $ConfigItens = $ConfigObject->Get("PublicFrontend::PublicCreateTicketOccurrence");
 	
@@ -55,6 +55,7 @@ sub Run {
 		# output header
 		my $Output 		=   $LayoutObject->CustomerHeader();
 		$Output .= $Self->_Overview(
+      %Param,
 			SubAction	=> "STEP3",
 		);
 
@@ -69,6 +70,7 @@ sub Run {
 
 		my $ConfigItens = $ConfigObject->Get("PublicFrontend::PublicCreateTicketOccurrence");
 		$Output .= $Self->_Overview(
+      %Param,
 			SubAction	=> "Termos",
 		);
 

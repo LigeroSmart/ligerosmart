@@ -49,6 +49,7 @@ sub Run {
 	$GetParam{SubAction} = $ParamObject->GetParam(Param => "SubAction") || "";
 	$GetParam{User} = $ParamObject->GetParam(Param	=> "User") || "";
 	$GetParam{Email} = $ParamObject->GetParam(Param	=> "Email") || "";
+  $GetParam{embed} = $ParamObject->GetParam(Param => "embed") || "";
 
 	my $ConfigItens = $ConfigObject->Get("PublicFrontend::PublicCreateOccurrence");
 
@@ -413,6 +414,7 @@ sub _Add{
 		SubAction     => "Message",
 		IsAssoc		  => $True,
 		Email			=> $Email,
+    embed => $Param{embed},
 	);
 	#--------------------------------------------#
 	# add footer
@@ -491,7 +493,6 @@ sub _Overview{
                 },
             );
         }
-
 		$Output .= $LayoutObject->Output(
 			TemplateFile => 'InformationMessage', 
 			Data         => {
