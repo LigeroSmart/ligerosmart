@@ -16,6 +16,7 @@
 		<form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
 			<input type="hidden" name="Action" value="PublicOccurrence"/>
 			<input type="hidden" name="SubAction" value="StoreNew"/>
+      <input type="hidden" name="embed" value="[% Data.embed | html %]"/>
 	    	<input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
 			<input type="hidden" name="User" id="User" value="[% Data.User %]" />
 			<input type="hidden" name="Email" id="Email" value="[% Data.Email %]" />
@@ -180,3 +181,11 @@
     width: 100%;
   }
 </style>
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    if([% Data.embed | html %] === 1){
+      $('#Header').hide();
+    }
+//]]></script>
+[% END %]

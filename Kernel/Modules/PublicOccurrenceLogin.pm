@@ -29,6 +29,8 @@ sub Run {
 	my $ConfigObject = $Kernel::OM->Get("Kernel::Config");
 	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 	$Param{SubAction} = $ParamObject->GetParam(Param => "SubAction") || "";
+
+  $Param{embed} = $ParamObject->GetParam(Param => "embed") || "";
 	
 	# output header
 	my $Output 		=   $LayoutObject->CustomerHeader();

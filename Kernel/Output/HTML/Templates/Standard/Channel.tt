@@ -12,11 +12,12 @@
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4 container-master" >
-			<h1 class="first-title">[% Data.Title | html %]</h1>
+			<h1 class="first-title">[% Data.Title | html %] [% Data.embed | html %]</h1>
 			<div class="ContentColumn">
 				<form action="[% Env("CGIHandle") %]" method="post" enctype="application/x-www-form-urlencoded" >
 					<input type="hidden" name="Action" value="PublicChannel"/>
 					<input type="hidden" name="SubAction" value="Agreements"/>
+          <input type="hidden" name="embed" value="[% Data.embed | html %]"/>
 					<input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
 					<div class="form-group">
 						<p id="content1">[% Data.Message %]</p>
@@ -45,6 +46,7 @@
 			<form action="[% Env("CGIHandle") %]" method="post" enctype="application/x-www-form-urlencoded" >
 			<input type="hidden" name="Action" value="PublicOccurrenceLogin"/>
 			<input type="hidden" name="SubAction" value="OccurrenceLogin"/>
+      <input type="hidden" name="embed" value="[% Data.embed | html %]"/>
 			<input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
 			[% Data.Message %]
 			<div class="channelActionButtons">
@@ -54,3 +56,11 @@
 		</div>
 </div>
 [% RenderBlockEnd("AgreementTerms") %]
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    if([% Data.embed | html %] === 1){
+      $('#Header').hide();
+    }
+//]]></script>
+[% END %]

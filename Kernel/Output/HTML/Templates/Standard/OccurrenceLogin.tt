@@ -10,6 +10,7 @@
 			<p>Caso deseje receber informações sobre a apuração de seu relato, é necessário fornecer seu nome e e-mail nos campos abaixo.</p>    
 		    <input type="hidden" name="Action" value="PublicOccurrence" />
 	        <input type="hidden" name="SubAction" value="NewTicket"/>
+          <input type="hidden" name="embed" value="[% Data.embed | html %]"/>
             <div class="form-group">          
 	            <div class="input-group" id="user-field">
 		            <span class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></span>
@@ -46,6 +47,14 @@
         Core.Form.Validate.DisableValidation($Form);
         $Form.trigger('submit');
     });
+//]]></script>
+[% END %]
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    if([% Data.embed | html %] === 1){
+      $('#Header').hide();
+    }
 //]]></script>
 [% END %]
 
