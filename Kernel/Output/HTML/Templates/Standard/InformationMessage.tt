@@ -1,0 +1,42 @@
+[% RenderBlockStart("Alert") %]
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+[% RenderBlockStart("Associative") %]
+	<div  id="alert-message"  class="alert alert-success">
+		<p> Sua comunicação foi associada  </p>
+	</div>	
+[% RenderBlockEnd("Associative") %]
+		
+[% RenderBlockStart("Unknown") %]
+        <div  id="alert-message"  class="alert alert-success">
+			<p>Sua comunicação foi registrada com sucesso.</p><p>Anote o número abaixo para consultar o andamento do seu processo:</p>	
+			<p>	Número da ocorrência: <strong> [% Data.Message  %] </strong></p>
+			<p> Usuário:<strong> [% Data.Login %] </strong>  </p>
+			<p> Senha: <strong> [% Data.Password%]  </strong> </p>
+
+		</div>
+
+[% RenderBlockEnd("Unknown") %]
+[% RenderBlockStart("Known") %]
+        <div  id="alert-message"  class="alert alert-success">
+			<p>Sua comunicação foi registrada com sucesso.</p><p>Anote o número abaixo para consultar o andamento do seu processo:</p>	
+			<p> Será enviado um email para [% Data.Email %]</p>
+			<p>	Número da ocorrência: <strong> [% Data.Message  %] </strong></p>
+			<p> Usuário:<strong> [% Data.Login %] </strong>  </p>
+[% RenderBlockStart("NewPassword") %]            
+			<p> Senha: <strong> [% Data.Password%]  </strong> </p>
+[% RenderBlockEnd("NewPassword") %]
+[% RenderBlockStart("OldPassword") %]
+			<p> Senha: <strong> Utilize a mesma senha informada nas comunicações anteriores.</strong> </p>
+[% RenderBlockEnd("OldPassword") %]		</div>
+
+[% RenderBlockEnd("Known") %]
+		<a href="[% Data.DefaultUrlReturn %]" class="btn btn-primary btn-lg " role="button">Voltar para o site</a>
+
+	</div>
+</div>
+<div class="col-md-4"></div>
+
+
+[% RenderBlockEnd("Alert") %]

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>ComplementoChannel</Name>
+    <Version>6.0.3</Version>
+    <Vendor>Complemento - Liberdade e Tecnologia</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog Date="2013-08-19 09:50:00" Version="0.8">First Release</ChangeLog>
+    <Description Lang="en">AccountedTimeComplemento</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+      <File Location="Custom/ComplementoChannel.sopm" Permission="644"></File>
+      <File Location="Kernel/Config/Files/XML/ComplementoChannel.xml" Permission="644"></File>
+      <File Location="Kernel/Modules/PublicChannel.pm"  Permission="644"></File>
+      <File Location="Kernel/Modules/PublicOccurrence.pm"  Permission="644"></File>
+      <File Location="Kernel/Modules/PublicOccurrenceLogin.pm"  Permission="644"></File>
+      <File Location="var/httpd/htdocs/js/Core.Util.Public.js" Permission="644"></File>
+      <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/bootstrap.min.js" Permission="644"></File>
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/affix.js" Permission="644"></File> 
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/alert.js" Permission="644"></File>      
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/button.js" Permission="644"></File>   
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/carousel.js" Permission="644"></File> 
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/collapse.js" Permission="644"></File> 
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/dropdown.js" Permission="644"></File>     
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/modal.js" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/popover.js" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/scrollspy.js" Permission="644"></File> 
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/tab.js" Permission="644"></File>       
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/tooltip.js" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/transition.js"  Permission="644"></File>
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/bootstrap.js" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/bootstrap.min.js" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/js/thirdparty/bootstrap/js/npm.js" Permission="644"></File>  
+      <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap.css" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap.css.map" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap.min.css" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap.min.css.map" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap-theme.css" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap-theme.css.map" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap-theme.min.css" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap-theme.min.css.map" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/fonts/glyphicons-halflings-regular.eot" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/fonts/glyphicons-halflings-regular.svg" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/fonts/glyphicons-halflings-regular.ttf" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/fonts/glyphicons-halflings-regular.woff" Permission="644"></File>  
+	    <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/fonts/glyphicons-halflings-regular.woff2" Permission="644"></File>  
+      <File Location="var/httpd/htdocs/skins/Customer/default/css/Core.PublicChannel.css" Permission="644"></File>
+      <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap.min.css" Permission="644"></File>
+      <File Location="var/httpd/htdocs/skins/Customer/default/css/thirdparty/bootstrap/css/bootstrap-theme.min.css" Permission="644"></File>
+      <File Location="Kernel/Output/HTML/Templates/Standard/Occurrence.tt" Permission="644"></File>
+      <File Location="var/httpd/htdocs/js/Core.Util.Public.js" Permission="644"></File>
+      <File Location="Kernel/Output/HTML/Templates/Standard/OccurrenceLogin.tt" Permission="644"></File>
+		  <File Location="Kernel/Output/HTML/Templates/Standard/Occurrence.tt" Permission="644"></File>
+      <File Location="Kernel/Output/HTML/Templates/Standard/Channel.tt" Permission="644"></File>
+		  <File Location="Kernel/Output/HTML/Templates/Standard/InformationMessage.tt" Permission="644"></File>
+    </Filelist>
+</otrs_package>
+                  

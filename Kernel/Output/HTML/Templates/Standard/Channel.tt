@@ -1,0 +1,56 @@
+# --
+# PublicFAQExplorer.tt - provides HTML for PublicFAQExplorer.pm
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("Terms") %]
+<div id="Step1" >
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4 container-master" >
+			<h1 class="first-title">[% Data.Title | html %]</h1>
+			<div class="ContentColumn">
+				<form action="[% Env("CGIHandle") %]" method="post" enctype="application/x-www-form-urlencoded" >
+					<input type="hidden" name="Action" value="PublicChannel"/>
+					<input type="hidden" name="SubAction" value="Agreements"/>
+					<input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
+					<div class="form-group">
+						<p id="content1">[% Data.Message %]</p>
+					</div>
+					<div class="form-group channelActionButtons">
+						<button type="submit"      class="btn btn-primary btn-sm"> Registrar comunicação</button>
+
+						<a href="/otrs/customer.pl"  class="btn btn-default btn-sm" role="button">Acompanhar um registro </a>
+					</div>
+				</div>
+		</div>
+		</form>
+	</div>
+</div>
+[% RenderBlockEnd("Terms") %]
+
+
+[% RenderBlockStart("AgreementTerms") %]
+<div id="Step1" >
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4 container-master">
+
+		<h1>Condições de Uso</h1>
+		<div class="ContentColumn">
+			<form action="[% Env("CGIHandle") %]" method="post" enctype="application/x-www-form-urlencoded" >
+			<input type="hidden" name="Action" value="PublicOccurrenceLogin"/>
+			<input type="hidden" name="SubAction" value="OccurrenceLogin"/>
+			<input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
+			[% Data.Message %]
+			<div class="channelActionButtons">
+				<button type="submit" class="btn btn-primary btn-sm" role="button" value="Registrar comunicação">Concordo</button>
+				<a href="[% Data.DefaultUrlReturn %]" class="btn btn-default btn-sm" role="button">Não concordo </a>
+			</div>
+		</div>
+</div>
+[% RenderBlockEnd("AgreementTerms") %]
