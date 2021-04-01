@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+	<Setting Name="PublicFrontend::Module###PublicChannel" Required="1" Valid="1">
+		<Description Translatable="1">FrontendModuleRegistration for PublicChannel Module </Description>
+		<Navigation>Frontend::Public::ModuleRegistration</Navigation>
+		<Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+    				<Item Key="Title">Occurrence Channel</Item>
+    				<Item Key="Description">Occurrence Channel</Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>User</Item>
+                        </Array>
+                    </Item>
+    			    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+	</Setting>
+    <Setting Name="Loader::Module::PublicChannel###002-ComplementoChannel" Required="1" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.PublicChannel.css</Item>
+                        <Item>thirdparty/bootstrap/css/bootstrap.min.css</Item>
+                        <Item>thirdparty/bootstrap/css/bootstrap-theme.min.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>thirdparty/bootstrap/js/bootstrap.min.js</Item>
+                        <Item>Core.Util.Public.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Navigation###PublicChannel###002-ComplementoChannel" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+ <Setting Name="PublicFrontend::Module###PublicOccurrence" Required="1" Valid="1">
+ 	<Description Translatable="1">FrontendModuleRegistration for Public Occurrence Module </Description>
+		<Navigation>Frontend::Public::ModuleRegistration</Navigation>
+		<Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+    				<Item Key="Title">Occurence</Item>
+    				<Item Key="Description">Occurence</Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>User</Item>
+                        </Array>
+                    </Item>
+    			    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+	</Setting>
+    <Setting Name="Loader::Module::PublicOccurrence###002-ComplementoChannel" Required="1" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.PublicChannel.css</Item>
+                        <Item>thirdparty/bootstrap/css/bootstrap.min.css</Item>
+                        <Item>thirdparty/bootstrap/css/bootstrap-theme.min.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>thirdparty/bootstrap/js/bootstrap.min.js</Item>
+                        <Item>Core.Util.Public.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Navigation###PublicOccurrence###002-ComplementoChannel" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+ <Setting Name="PublicFrontend::Module###PublicOccurrenceLogin" Required="1" Valid="1">
+ 	<Description Translatable="1">FrontendModuleRegistration for Occurrence Login Module </Description>
+		<Navigation>Frontend::Public::ModuleRegistration</Navigation>
+		<Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+    				<Item Key="Title">Occurence</Item>
+    				<Item Key="Description">Occurence</Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>User</Item>
+                        </Array>
+                    </Item>
+    			    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+	</Setting>
+    <Setting Name="Loader::Module::PublicOccurrenceLogin###002-ComplementoChannel" Required="1" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.PublicChannel.css</Item>
+                        <Item>thirdparty/bootstrap/css/bootstrap.min.css</Item>
+                        <Item>thirdparty/bootstrap/css/bootstrap-theme.min.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>thirdparty/bootstrap/js/bootstrap.min.js</Item>
+                        <Item>Core.Util.Public.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Navigation###PublicOccurrenceLogin###002-ComplementoChannel" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+
+    <Setting Name="PublicFrontend::Channel::Common###DefaultUrlReturn" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default URL to return in cancel buttons.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">http://localhost/otrs/public.pl</Item>
+        </Value>
+    </Setting>
+ 
+    <Setting Name="PublicFrontend::Channel::Terms###Title" Required="0" Valid="1">
+        <Description Translatable="1">Defines the title of channel terms.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Canal Ético do Ligero</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::Terms###Message" Required="0" Valid="1">
+        <Description Translatable="1">Defines the message of channel terms.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Este é um canal exclusivo do Ligero para comunicação de ações que conflitem com as políticas e boas práticas da entidade, previstas em seu &lt;strong&gt;Código de Conduta&lt;/strong&gt; ou que estejam em desacordo com a legislação vigente.</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::AgreementTerms###Message" Required="0" Valid="1">
+        <Description Translatable="1">Defines the message of channel terms.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">&lt;p&gt;Todas as informações aqui registradas serão recebidas e analisadas pelo Setor de Compliance ligado diretamente ao Comitê de Auditoria, Riscos e Integridade da Entidade, sendo assegurado o sigilo e o encaminhamento adequado de cada relato.&lt;/p&gt;&lt;p&gt;A veracidade das informações relatadas será verificada durante o processo de apuração e as ações decorrentes serão tomadas a critério exclusivo do Ligero.&lt;/p&gt;&lt;p&gt;Ao fazer um relato o autor assume a veracidade de seu conteúdo e demais informações sob as penas da lei.&lt;/p&gt;</Item>
+        </Value>
+    </Setting>
+	 <Setting Name="PublicFrontend::PublicCreateOccurrence###QueueID" Required="0" Valid="1">
+        <Description Translatable="1">Choose a QueueID to create a new Ticket by public interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">1 </Item>
+        </Value>
+    </Setting>
+	<Setting Name="PublicFrontend::PublicCreateOccurrence###StateID" Required="0" Valid="1">
+        <Description Translatable="1">Choose a StateID to create a new Ticket by public interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">1 </Item>
+        </Value>
+    </Setting>
+	<Setting Name="PublicFrontend::PublicCreateOccurrence###TypeID" Required="0" Valid="1">
+        <Description Translatable="1">Choose a TypeID to create a new Ticket by public interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">1 </Item>
+        </Value>
+    </Setting>
+	<Setting Name="PublicFrontend::PublicCreateOccurrence###PriorityID" Required="0" Valid="1">
+        <Description Translatable="1">Choose a StateID to create a new Ticket by public interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">1 </Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::PublicCreateOccurrence###CustomerID" Required="0" Valid="1">
+        <Description Translatable="1">Choose a CustomerID to create a new Ticket by public interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">1 </Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::PublicCreateOccurrence###DynamicFieldLocationID" Required="1" Valid="1">
+        <Description Translatable="1">Fill with dynamic field id that reference the dynamic field location.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::PublicCreateOccurrence###ProcessID" Required="1" Valid="1">
+        <Description Translatable="1">Optional ProcessID for the ticket</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::PublicCreateOccurrence###ActivityID" Required="1" Valid="1">
+        <Description Translatable="1">Optional ActivityID for the ticket</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+</otrs_config>

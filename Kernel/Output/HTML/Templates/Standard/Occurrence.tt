@@ -1,0 +1,182 @@
+# --
+# PublicFAQExplorer.tt - provides HTML for PublicFAQExplorer.pm
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+
+[% RenderBlockStart("NewOcurrence") %]
+<div class="row">
+	<div class="col-md-4"></div>
+    <div class="col-md-4">
+		<h1 class="TitleForm"><span class="glyphicon glyphicon-envelope"></span> [% Translate("Relato da Ocorrência") | html  %] </h1>
+		<form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+			<input type="hidden" name="Action" value="PublicOccurrence"/>
+			<input type="hidden" name="SubAction" value="StoreNew"/>
+	    	<input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
+			<input type="hidden" name="User" id="User" value="[% Data.User %]" />
+			<input type="hidden" name="Email" id="Email" value="[% Data.Email %]" />
+            <input type="hidden" name="FormID" value="[% Data.FormID | html %]" />
+			[% RenderBlockStart("DynamicField") %]
+				<div class="form-group">
+					<label for="[% Data.Label | html %]" class="Mandatory"> [% Data.Label | html %] </label>
+					[% Data.Field %]
+				</div>
+			[% RenderBlockEnd("DynamicField") %]
+			<div class="form-group"> 
+				<label class="Mandatory" for="RichText" style="white-space:nowrap" >[% Translate("Faça aqui o seu relato") | html %]</label>
+        <br>
+						<div id="RichTextField" class="RichTextField" style="width:100%;">
+							[% RenderBlockStart("RichText") %]
+								[% InsertTemplate("RichTextEditor.tt") %]
+							[% RenderBlockEnd("RichText") %]
+							<textarea id="OccurenceText" class="RichText Validate_Required [% Data.RichTextInvalid | html %] form-control" name="Body" title="Message body" rows="5" cols="20"  placeholder="Faça o relato detalhado da sua comunicação" >[% Data.Body | html %]</textarea>
+							<div id="RichTextError" class="TooltipErrorMessage">
+								<p>[% Translate("This field is required.") | html %]</p>
+							</div>
+							<div id="RichTextServerError" class="TooltipErrorMessage">
+								<p>[% Translate("This field is required.") | html %]</p>
+							</div>
+						</div>
+					</div>
+
+		  		    <div class="form-check"  style="white-space:nowrap">
+						<label class="form-check-label">
+					      <input type="checkbox"  name= "CheckAssoc" id="checkAssoc" class="form-check-input" [% Data.CheckAssoc %]>
+      						Este relato será ligado a outro registro?
+					    </label>
+				     </div>
+					<div class="form-group" style="display:none"> 
+						</br></br> 
+		    			<input type="text" id="Assoc" placeholder="Número do relato anterior"  name="Assoc"  class="form-control" value=[% Data.Assoc %]>
+[% RenderBlockStart("AssocNotFound") %]
+                        <span class="text-danger">Atenção: O relato informado não existe. Insira o número correto ou desmarque a opção de informar outro registro.</span>
+[% RenderBlockEnd("AssocNotFound") %]
+					</div>
+					<br><br>
+				  <div class="form-group">
+					  <input type="file" class="form-control-file"  name="file_upload" id="Attachment" aria-describedby="fileHelp">
+					    <small id="fileHelp" class="form-text text-muted">Caso disponha de fotos ou documentos que possam ajudar na sua comunicação, use o botão ao lado para anexá-las.Ao anexar o arquivo, o comunicante declara ser responsável pela veracidade de seu conteúdo e informações nele contidas.</small>
+				   </div>
+                 <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#Attachment').bind('change', function (Event) {
+        var $Form = $('#Attachment').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.find('#AttachmentUpload').val('1').end().submit();
+    });
+//]]></script>
+[% END %]
+[% RenderBlockStart("Attachment") %]
+	<div class= "form-group attach" title="[% Data.Filename | html %] - [% Data.Filesize | html %]">
+    	[% Data.Filename | html %] ([% Data.Filesize | html %])
+        <button type="button" class=" attachButton btn btn-default btn-xs" id="AttachmentDeleteButton[% Data.FileID | html %]" name="AttachmentDeleteButton[% Data.FileID | html %]" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
+         <input type="hidden"  id="AttachmentDelete[% Data.FileID | html %]" name="AttachmentDelete[% Data.FileID | html %]" />
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#AttachmentDeleteButton[% Data.FileID | html %]').bind('click', function () {
+        var $Form = $('#AttachmentDeleteButton[% Data.FileID | html %]').closest('form');
+        $('#AttachmentDelete[% Data.FileID | html %]').val(1);
+        Core.Form.Validate.DisableValidation($Form);
+        console.log("Success");
+        $Form.trigger('submit');
+    });
+//]]></script>
+[% END %]
+                    </div>
+[% RenderBlockEnd("Attachment") %]
+
+					 <button type="submit" class="btn btn-primary btn-lg">Salvar Relato</button>
+			 <button type="button" class="btn btn-default btn-lg" onclick="window.location='[% Data.DefaultUrlReturn %]'">Cancelar</button>
+			</form>
+	</div>
+</div>
+[% RenderBlockEnd("NewOcurrence") %]
+
+
+
+# --
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<script src="[% Config("Frontend::RichTextPath") %]ckeditor.js" type="text/javascript"></script>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+
+    // check if height/width has already been set in the current screen
+    var ScreenRichTextHeight = parseInt("[% Data.RichTextHeight | html %]", 10),
+        ScreenRichTextWidth  = parseInt("[% Data.RichTextWidth | html %]", 10);
+
+    Core.Config.Set('RichText.Height', '[% Config("Frontend::RichTextHeight") %]');
+    if (ScreenRichTextHeight > 0) {
+        Core.Config.Set('RichText.Height', ScreenRichTextHeight);
+    }
+
+    Core.Config.Set('RichText.Width', '[% Config("Frontend::RichTextWidth") %]');
+    if (ScreenRichTextWidth > 0) {
+        Core.Config.Set('RichText.Width', ScreenRichTextWidth);
+    }
+
+    Core.Config.Set('RichText.TextDir', '[% Env("TextDirection") %]');
+    Core.Config.Set('RichText.SpellChecker', '[% Env("BrowserSpellCheckerInline") %]');
+    Core.Config.Set('RichText.EditingAreaCSS', 'body.cke_editable { [% Config("Frontend::RichText::DefaultCSS") %] }');
+    Core.Config.Set('RichText.Lang.SplitQuote', '[% Translate('Split Quote') | html %]');
+    Core.Config.Set('RichText.Lang.RemoveQuote', '[% Translate('Remove Quote') | html %]');
+    Core.Config.Set('RichText.Lang.OpenLink', '[% Translate('Open link') | html %]');
+
+    // decide if we need to use the enhanced mode (with tables)
+    if ( '[% Config("Frontend::RichText::EnhancedMode") %]' === '1' ) {
+        Core.Config.Set('RichText.Toolbar', [
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Link', 'Unlink', 'Undo', 'Redo', 'SelectAll' ],
+            '/',
+            ['Image', 'HorizontalRule', 'PasteText', 'PasteFromWord', 'SplitQuote', 'RemoveQuote', '-', '-', 'Find', 'Replace', 'SpellCheck', 'TextColor', 'BGColor', 'RemoveFormat', '-', 'ShowBlocks', 'Source', 'SpecialChar', '-', 'Maximize'],
+            ['Format', 'Font', 'FontSize' ]
+        ]);
+        Core.Config.Set('RichText.ToolbarWithoutImage', [
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Link', 'Unlink', 'Undo', 'Redo', 'SelectAll' ],
+            '/',
+            ['HorizontalRule', 'PasteText', 'PasteFromWord', 'SplitQuote', 'RemoveQuote', '-', '-', 'Find', 'Replace', 'SpellCheck', 'TextColor', 'BGColor', 'RemoveFormat', '-', 'ShowBlocks', 'Source', 'SpecialChar', '-', 'Maximize'],
+            ['Format', 'Font', 'FontSize' ]
+        ]);
+    }
+    else {
+        Core.Config.Set('RichText.Toolbar', [
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Link', 'Unlink', '-', 'Image', 'HorizontalRule', '-', 'Undo', 'Redo', '-', 'Find', 'SpellCheck'],
+            '/',
+            ['Format', 'Font', 'FontSize', '-', 'TextColor', 'BGColor', 'RemoveFormat', '-', 'Source', 'SpecialChar', 'SplitQuote', 'RemoveQuote', '-', 'Maximize']
+        ]);
+        Core.Config.Set('RichText.ToolbarWithoutImage', [
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Link', 'Unlink', '-', 'HorizontalRule', '-', 'Undo', 'Redo', '-', 'Find', 'SpellCheck'],
+            '/',
+            ['Format', 'Font', 'FontSize', '-', 'TextColor', 'BGColor', 'RemoveFormat', '-', 'Source', 'SpecialChar', 'SplitQuote', 'RemoveQuote', '-', 'Maximize']
+        ]);
+    }
+    Core.Config.Set('RichText.PictureUploadAction', "[% Data.RichTextPictureUploadAction | html %]");
+
+    Core.UI.RichTextEditor.InitAllEditors();
+//]]></script>
+[% END %]
+
+<style>
+  .RichTextField {
+    width: 100% !important;
+  }
+
+  .cke_editor_OccurenceText {
+    width: 100% !important;
+  }
+
+  .cke_top {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+</style>

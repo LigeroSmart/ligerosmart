@@ -1,0 +1,60 @@
+* {
+   font-family: sans-serif !important;
+}   
+#greenMessage{
+    color: red;
+}
+#Footer{
+	display:none;
+}
+#Header{
+  height: 97px;
+}
+label {
+    color:	#666 !important;
+    font-weight: 100 !important;
+    text-align: left !important;
+}
+form label.Mandatory {
+    color:	#666 !important;
+    font-weight: 100 !important;
+    text-align: left !important;
+}
+.TitleForm{
+    padding-bottom: 7px;
+    border-bottom: 2px solid #7a7a7a;
+}
+#alert-message{
+    margin-top:20px;
+	
+}
+#user-field{
+    margin-bottom:10px;
+}
+.attach, .attachButton{
+    font-size:10px !important;
+}
+.channelActionButtons
+{
+	margin-top:30px;
+
+}
+.jumbotron h1{
+	font-size: 40px !important;
+}
+.container-master{
+	background-color: #eee;
+	margin-top: 20px;
+}
+.channelActionButtons
+{
+	text-align:right !important;
+	margin-bottom: 26px !important;
+	margin-right: 15px !important;
+}
+.channelActionButtons a{
+	margin-left: 5px !important;
+}
+.glyphicon-info-sign:before {
+    content: "\e209" !important;
+}
