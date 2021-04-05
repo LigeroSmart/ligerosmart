@@ -42,19 +42,19 @@
 
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
-    $('#b6').bind('click', function () {
-        var $Form = $('#b6').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.trigger('submit');
-    });
+    if([% Data.embed | html %] === 1){
+      $('#Header').hide();
+    }
 //]]></script>
 [% END %]
 
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
-    if([% Data.embed | html %] === 1){
-      $('#Header').hide();
-    }
+    $('#b6').bind('click', function () {
+        var $Form = $('#b6').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.trigger('submit');
+    });
 //]]></script>
 [% END %]
 
