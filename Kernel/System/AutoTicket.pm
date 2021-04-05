@@ -470,7 +470,7 @@ sub AutoTicketUpdate {
                     );
                 }
    	        }
-        }else{
+        }elsif(ref $Param{$df} ne 'ARRAY'){
     	    return if !$Self->{DBObject}->Do(
 	            SQL => 'insert into autoticket_dynamic_field_value '
         	        . 'values(?,?,?)',
