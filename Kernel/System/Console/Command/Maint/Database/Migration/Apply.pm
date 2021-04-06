@@ -10,6 +10,7 @@ package Kernel::System::Console::Command::Maint::Database::Migration::Apply;
 
 # use strict;
 # use warnings;
+#no warnings;
 
 use parent qw(Kernel::System::Console::BaseCommand);
 
@@ -179,7 +180,7 @@ sub Run {
                 return;
             }
         }
-
+        my $Stderr = STDERR;
         if($ApplyList{$fileKey}->{DatabaseInstall}) {
             my $XMLContentRef = $ApplyList{$fileKey}->{DatabaseInstall};
 
@@ -189,18 +190,15 @@ sub Run {
             my @SQL = $DBObject->SQLProcessor( Database => \@XMLARRAY );
 
             for my $SQL (@SQL) {
+
                 eval {
-                    $Result = $DBObject->Do( SQL => $SQL ) or die "Error";
+                    close(STDERR);
+                    $Result = $DBObject->Do( SQL => $SQL );
                 };
                 if ( ! $Result ) {
                     $ApplyList{$fileKey}->{Output} = "Error executing DatabaseInstall";
-                    $Self->PrintError("Error executing SQL:\n$SQL\n");
-                    # $DBObject->Error();
-                    $ApplyList{$fileKey}->{Output} = $DBObject->Error();
-                    # $Self->ExitCodeError();
                 }
             }
-
         }
         
         if($ApplyList{$fileKey}->{CodeInstall}->{post}) {
