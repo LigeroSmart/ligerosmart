@@ -121,6 +121,10 @@ sub Run {
         Directory => $SourceDir,
         Filter    => $Param{Options}->{File} || '*.xml',
     );
+    
+    if ( !@Files && -f $Param{Options}->{File} ) {
+        push @Files, $Param{Options}->{File};
+    }
 
     if ( !@Files ) {
         $Self->PrintError("No XML files found in $SourceDir.\n");

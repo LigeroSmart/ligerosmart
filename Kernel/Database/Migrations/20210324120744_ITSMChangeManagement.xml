@@ -1366,7 +1366,7 @@
     </DatabaseInstall>
 
     <CodeInstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::ITSMIncidentProblemManagement')->CodeInstall();
+        $Kernel::OM->Get('var::packagesetup::ITSMChangeManagement')->CodeInstall();
     ]]></CodeInstall>
     
     <DatabaseUninstall Type="pre">
