@@ -188,6 +188,9 @@ sub Run {
 
             my @SQL = $DBObject->SQLProcessor( Database => \@XMLARRAY );
 
+            # get post SQL commands (indexes, foreing keys, ...)
+            push @SQL, $DBObject->SQLProcessorPost();
+
             for my $SQL (@SQL) {
                 eval {
                     $Result = $DBObject->Do( SQL => $SQL ) or die "Error";
