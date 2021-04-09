@@ -12,13 +12,14 @@ use strict;
 use warnings;
 
 use base qw(Kernel::System::Console::BaseCommand);
+# COMPLEMENTO
 use MIME::Base64;
 use HTTP::Cookies;
 use LWP::UserAgent;
 use Date::Pcalc qw(Day_of_Week Day_of_Week_Abbreviation);
-use POSIX qw/ceil floor/;
-
 use Data::Dumper;
+# use Switch;
+use POSIX qw/ceil floor/;
 
 our @ObjectDependencies = (
     'Kernel::System::Loader',
@@ -33,6 +34,14 @@ sub Configure {
 
     $Self->Description('Add AutoTicket Future Tasks .');
 
+    $Self->AddOption(
+        Name        => 'id',
+        Description => 'AutoTicket ID.',
+        Required    => 0,
+        HasValue    => 1,
+        ValueRegex  => qr/.*/smx,
+    );
+
     return;
 }
 
@@ -41,12 +50,18 @@ sub Run {
 
 	$Self->Print("<yellow>Start read tasks...</yellow>\n");
 
-	#$TNSecuritySecs = 0;
+  my $AutoTicketID = $Self->GetOption('id');
+
+    #$TNSecuritySecs = 600000;
 
 	# Obtain the list of all valids AutoTickets
-	my %AutoTicketData = $Kernel::OM->Get('Kernel::System::AutoTicket')->AutoTicketList( Valid => 1 );
-	my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
-	my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+	my %AutoTicketData;
+  
+  if(!$AutoTicketID){
+      %AutoTicketData = $Kernel::OM->Get('Kernel::System::AutoTicket')->AutoTicketList( Valid => 1 );
+  } else {
+    $AutoTicketData{$AutoTicketID} = '';
+  }
 
 	# For each of AutoTickets Check if it needs to be created today and 
 	# store the correct time for the action
@@ -57,16 +72,6 @@ sub Run {
 		if ($AutoTicket{SLAID}){
 			%SLA = $Kernel::OM->Get("Kernel::System::SLA")->SLAGet(SLAID=> $AutoTicket{SLAID},UserID=>1);
 		}
-		my %Queue;
-		if ($AutoTicket{QueueID}){
-			%Queue = $Kernel::OM->Get("Kernel::System::Queue")->QueueGet( ID => $AutoTicket{QueueID} );
-		}
-
-		# Calculate time-shift based on SLA Calendar Time Zone > Queue Calendar Time Zone > System Calendar Time Zone
-		my $slaTimeZone        = (%SLA && defined($SLA{Calendar})) ? $ConfigObject->Get('TimeZone::Calendar' . $SLA{Calendar}) : undef;
-		my $queueTimeZone      = (%Queue && defined($Queue{Calendar})) ? $ConfigObject->Get('TimeZone::Calendar' . $Queue{Calendar}) : undef;
-		my $systemTimeZone     = $DateTimeObject->OTRSTimeZoneGet();
-		my $autoTicketTimeZone = $slaTimeZone || $queueTimeZone || $systemTimeZone;
 
 		# Check if it has weekly or daily repetition
 		my @weekdays = split(/;/, $AutoTicket{Weekday});
@@ -79,16 +84,20 @@ sub Run {
 			#     the next friday will be Aug 3th 2012.
 
 			# Get "today" o.O
-			my ( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday ) = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
-				SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime(),
+			my ( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday )
+			= $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
+			SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime(),
 			);
+
+      
 
 			# Search for the next occouring of this weekday (0 .. 6)
 			while ($wday!=$Wday){
 				# Increase one day on each repetition
 				$d++;
-				( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday ) = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
-					SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime() + $d * 60 * 60 * 24,
+				( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday )
+				= $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
+				SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime() + $d * 60 * 60 * 24,
 				);
 			}
 
@@ -96,12 +105,10 @@ sub Run {
 
 			# Make all verifications and see if it should be schedule.
 			# If yes, schedule it!
-			#print Dumper( "$Sec, $Min, $Hour, $Day, $Month, $Year, $Wday" );
 			_scheduleIt(
 				day        => $Kernel::OM->Get("Kernel::System::Time")->SystemTime() + $d * 60 * 60 * 24,
 				AutoTicket => \%AutoTicket,
 				SLA        => \%SLA,
-				TZ         => $autoTicketTimeZone
 			);
 
 		} # end of for each week day
@@ -122,36 +129,38 @@ sub Run {
 			for my $month (@months){
 				for my $mday (@mdays){
 
-					$mday = trim($mday);
+                    $mday = trim($mday);
+
 					my $y=0;
 
 					# Get "today" o.O
-					my ( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday ) = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
-						SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime(),
+					my ( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday )
+					= $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
+					SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime(),
 					);
+                    if($month eq "02" or $month eq "2" and $mday > 27){
+                        if($Year % 4 != 0) {
+                            $mday = 28
+                        }elsif($Year % 400 == 0) {
+                            $mday = 29;
+                        }elsif($Year % 100 == 0){
+                            $mday = 28;
+                        }else{
+                            $mday = 29;
+                        }
 
-					if($month eq "02" or $month eq "2" and $mday > 27){
-						if($Year % 4 != 0) {
-							$mday = 28
-						}elsif($Year % 400 == 0) {
-							$mday = 29;
-						}elsif($Year % 100 == 0){
-							$mday = 28;
-						}else{
-							$mday = 29;
-						}
-					}
+                    }
 
 					# Search for the next occouring of this monthday
 					my $nmday= $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-						String => _ConvertToTimeZone(Date => "$Year-$month-$mday $AutoTicket{Hour}:$AutoTicket{Minutes}:00", TZ => $autoTicketTimeZone),
+						String => "$Year-$month-$mday $AutoTicket{Hour}:$AutoTicket{Minutes}:00",
 					);
 
 					# Check if this month day passed this year
 					if ($nmday<$Kernel::OM->Get("Kernel::System::Time")->SystemTime()){
 						$Year++;
 						$nmday= $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-						String => _ConvertToTimeZone(Date => "$Year-$month-$mday $AutoTicket{Hour}:$AutoTicket{Minutes}:00", TZ => $autoTicketTimeZone),
+						String => "$Year-$month-$mday $AutoTicket{Hour}:$AutoTicket{Minutes}:00",
 						)
 					}	
 
@@ -159,14 +168,13 @@ sub Run {
 						day        => $nmday,
 						AutoTicket => \%AutoTicket,
 						SLA        => \%SLA,
-						TZ         => $autoTicketTimeZone
 					);            
 				}
 			}
 		}
 
-		# Increase security seconds:
-		$TNSecuritySecs = $TNSecuritySecs+2;
+        # Increase security seconds:
+        $TNSecuritySecs = $TNSecuritySecs+2;
         
 		# For Each one of the Monthday Repetions defined (day X Month matrix):
 		# 0 - Check the date of the next occourrency of this day, for example,
@@ -181,6 +189,8 @@ sub Run {
 
 	} 	# end for each AutoTicket
 
+
+
 	$Self->Print("<green>Done.</green>\n");
 
 	return $Self->ExitCodeOk();
@@ -189,54 +199,27 @@ sub Run {
 
 sub _scheduleIt{
     my %ParamObject = @_;
-
+ 
     my ( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday )
         = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
         SystemTime => $ParamObject{day},
     );
-
-    #
-    # Convert schedule timestamp to the correct TZ
-    #
-    my $TimeObject     = $Kernel::OM->Get('Kernel::System::Time');
-    my $DateTimeObject = $Kernel::OM->Create(
-        'Kernel::System::DateTime',
-        ObjectParams => {
-            Year     => $Year,
-            Month    => $Month,
-            Day      => $Day,
-            Hour     => $Hour,
-            Minute   => $Min,
-            Second   => $Sec,
-            TimeZone => Kernel::System::DateTime->OTRSTimeZoneGet()
-        }
-    );
-    $DateTimeObject->ToTimeZone( TimeZone => $ParamObject{TZ} );
-    #print Dumper( $ParamObject{TZ} . ": " . $ParamObject{day} . " to " . $TimeObject->TimeStamp2SystemTime( String => $DateTimeObject->ToString() ));
-
-    $ParamObject{day} = $TimeObject->TimeStamp2SystemTime( String => $DateTimeObject->ToString() );
-    ( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday )
-        = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
-        SystemTime => $ParamObject{day},
-    );
-
-    #
-    # Convert system time to the correct TZ
-    #
-    my $CurrentDateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
-    $CurrentDateTimeObject->ToTimeZone( TimeZone => $ParamObject{TZ} );
-    my $SystemTime     = $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime( String => $CurrentDateTimeObject->ToString() );
-    #print Dumper( $Kernel::OM->Get("Kernel::System::Time")->SystemTime() . " to $SystemTime" );
-
+        
     my $nonBday = $Kernel::OM->Get("Kernel::System::Time")->WorkingTime(
         StartTime => $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
             ) - 1,
         StopTime =>  $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
             ) + 1,
         Calendar => $ParamObject{SLA}->{Calendar}||''
     );
+    #print Dumper( "$Sec, $Min, $Hour, $Day, $Month, $Year, $Wday" );
+    #print "nonBday ".$nonBday;
+
+    #print "Teste ".Dumper($Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
+    #       String => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00",
+    #        )); 
     if (!$nonBday) {
     
         # It's not a business hour or day
@@ -259,10 +242,10 @@ sub _scheduleIt{
                     );
                     $wm = $Kernel::OM->Get("Kernel::System::Time")->WorkingTime(
                         StartTime => $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
                             ) - 1,
                         StopTime =>  $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
                             ) + 1,
                         Calendar => $ParamObject{SLA}->{Calendar}||''
                     );
@@ -288,11 +271,11 @@ sub _scheduleIt{
                         
                     $wm = $Kernel::OM->Get("Kernel::System::Time")->WorkingTime(
                         StartTime => $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
                             ) - 1,
                         StopTime =>  $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
-                            ),
+                           String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
+                            ) + 1,
                         Calendar => $ParamObject{SLA}->{Calendar}||''
                     );
                 }
@@ -330,10 +313,10 @@ sub _scheduleIt{
 		# Check First Run
 		my $WorkingSecs = $Kernel::OM->Get("Kernel::System::Time")->WorkingTime(
 			StartTime => $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-			   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+			   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
 				) - ( $secsToRewind ),
 			StopTime =>  $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-			   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+			   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
 				),
 			Calendar => $ParamObject{SLA}->{Calendar}||''
 		);
@@ -346,10 +329,10 @@ sub _scheduleIt{
 			$secsToRewind=$secsToRewind + 60 * 60;
 			$WorkingSecs = $Kernel::OM->Get("Kernel::System::Time")->WorkingTime(
 				StartTime => $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-				   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+				   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
 					) - ( $secsToRewind ),
 				StopTime =>  $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-				   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+				   String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
 					),
 				Calendar => $ParamObject{SLA}->{Calendar}||''
 			);
@@ -363,57 +346,34 @@ sub _scheduleIt{
     my ( $NSec, $NMin, $NHour, $NDay, $NMonth, $NYear, $NWday )
         = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
         SystemTime => $Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-               String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+               String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
                 ) - ( $secsToRewind ) + $TNSecuritySecs,
         );
 
     my $create_time_unix=$Kernel::OM->Get("Kernel::System::Time")->TimeStamp2SystemTime(
-               String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => $ParamObject{TZ}),
+               String => _ConvertToTimeZone(Date => "$Year-$Month-$Day $ParamObject{AutoTicket}->{Hour}:$ParamObject{AutoTicket}->{Minutes}:00", TZ => 'America/Sao_Paulo'),
                 ) - ( $secsToRewind );
                 
-    #print STDOUT "\n Ticket should be create on $NDay/$NMonth/$NYear $NHour:$NMin $NWday";
+    #print STDOUT "\n Ticket should be create on $NDay/$NMonth/$NYear $NHour:$NMin $NWday $secsToRewind $TNSecuritySecs";
 
     # Get "today" o.O again!
     ( $Sec, $Min, $Hour, $Day, $Month, $Year, $Wday )
         = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
-        #SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime(),
-        SystemTime => $SystemTime
+        SystemTime => $Kernel::OM->Get("Kernel::System::Time")->SystemTime(),
     );
     
     # Compare dates and check if it's today
     #if (($Year==$NYear) && ($Month==$NMonth) && ($Day==$NDay) && ($create_time_unix > $Kernel::OM->Get("Kernel::System::Time")->SystemTime())) {
-    if (($Year==$NYear) && ($Month==$NMonth) && ($Day==$NDay) && ($create_time_unix > $SystemTime)) {
+    if (($Year==$NYear) && ($Month==$NMonth) && ($Day==$NDay) ) {
         #print STDOUT "\n e isto é hoje!";
 #        my %CustomerIDs = $Kernel::OM->Get("Kernel::System::AutoTicket")->GetCustomerIDAutoTicket(
 #                                AutoTicketID=>$ParamObject{AutoTicket}->{ID},
 #                                );
 #        # Schedule on Ticket Creation for each Customer ID
 #        for (keys %CustomerIDs){
-            print STDOUT "\nScheduling $ParamObject{AutoTicket}->{Name} for $_ on $NHour:$NMin:$NSec $NDay/$NMonth/$NYear [$ParamObject{TZ}]\n\n";
+            print STDOUT "\nScheduling $ParamObject{AutoTicket}->{Name} for $_ on $NHour:$NMin:$NSec $NDay/$NMonth/$NYear\n\n";
 
-            #
-            # Convert create_time_unix back to system time
-            #
-            my $DateTimeObject = $Kernel::OM->Create(
-                'Kernel::System::DateTime',
-                ObjectParams => {
-                    Year     => $NYear,
-                    Month    => $NMonth,
-                    Day      => $NDay,
-                    Hour     => $NHour,
-                    Minute   => $NMin,
-                    Second   => $NSec,
-                    TimeZone => $ParamObject{TZ}
-                }
-            );
-            $DateTimeObject->ToTimeZone( TimeZone => Kernel::System::DateTime->OTRSTimeZoneGet() );
-            #print Dumper( $create_time_unix . " -> " . $TimeObject->TimeStamp2SystemTime( String => $DateTimeObject->ToString() ));
-            $create_time_unix = $TimeObject->TimeStamp2SystemTime( String => $DateTimeObject->ToString() );
-            ( $NSec, $NMin, $NHour, $NDay, $NMonth, $NYear, $NWday ) = $Kernel::OM->Get("Kernel::System::Time")->SystemTime2Date(
-                SystemTime => $create_time_unix
-            );
-
-	    my $TaskID = $Kernel::OM->Get("Kernel::System::Daemon::SchedulerDB")->FutureTaskAdd(    
+            my $TaskID = $Kernel::OM->Get("Kernel::System::Daemon::SchedulerDB")->FutureTaskAdd(    
                 Type => 'AutoTicket',
                 Data     => {
                     create_time   => $create_time_unix,
@@ -447,6 +407,7 @@ sub _scheduleIt{
             _checkTask(
                 TaskID => $TaskID,
             )
+
 
 #        } # end for each customer ID schedule ticket
 
