@@ -7,6 +7,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+<script type="text/javascript">
+    if([% Data.embed | html %] === 1){
+      document.getElementById("Header").style.display = "none";
+    }
+</script>
+
 [% RenderBlockStart("Terms") %]
 <div id="Step1" >
 	<div class="row">
@@ -56,11 +62,3 @@
 		</div>
 </div>
 [% RenderBlockEnd("AgreementTerms") %]
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    if([% Data.embed | html %] === 1){
-      $('#Header').hide();
-    }
-//]]></script>
-[% END %]

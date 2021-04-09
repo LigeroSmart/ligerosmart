@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    if([% Data.embed | html %] === 1){
+      document.getElementById("Header").style.display = "none";
+    }
+</script>
+
 [% RenderBlockStart("Login") %]
 <div id="">
 	
@@ -39,14 +45,6 @@
             </div>
         </div>          
 </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    if([% Data.embed | html %] === 1){
-      $('#Header').hide();
-    }
-//]]></script>
-[% END %]
 
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[

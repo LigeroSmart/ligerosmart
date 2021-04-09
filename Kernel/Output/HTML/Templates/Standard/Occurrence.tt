@@ -7,6 +7,11 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+<script type="text/javascript">
+    if([% Data.embed | html %] === 1){
+      document.getElementById("Header").style.display = "none";
+    }
+</script>
 
 [% RenderBlockStart("NewOcurrence") %]
 <div class="row">
@@ -27,7 +32,13 @@
 					[% Data.Field %]
 				</div>
 			[% RenderBlockEnd("DynamicField") %]
-			<div class="form-group"> 
+      [% RenderBlockStart("ServiceFieldArea") %]
+      <div class="form-group">
+        <label class="Mandatory" for="ServiceID"> [% Translate("Service") | html %]:</label>
+        [% Data.ServiceOption %]
+      </div>
+      [% RenderBlockEnd("ServiceFieldArea") %]
+			<div class="form-group">
 				<label class="Mandatory" for="RichText" style="white-space:nowrap" >[% Translate("Faça aqui o seu relato") | html %]</label>
         <br>
 						<div id="RichTextField" class="RichTextField" style="width:100%;">
@@ -182,10 +193,3 @@
   }
 </style>
 
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    if([% Data.embed | html %] === 1){
-      $('#Header').hide();
-    }
-//]]></script>
-[% END %]

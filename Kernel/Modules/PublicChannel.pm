@@ -30,7 +30,7 @@ sub Run {
 	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 	$Param{SubAction} = $ParamObject->GetParam(Param => "SubAction") || "";
 
-	$Param{embed} = $ParamObject->GetParam(Param => "embed") || "";
+	$Param{embed} = $ParamObject->GetParam(Param => "embed") || "0";
 	#Verifica se os requirementos mínimos para o módulo funcionar corretamente estão sendo atendidos, caso não, Pede para que o usuário configure nas config do Sistema
 	my $ConfigItens = $ConfigObject->Get("PublicFrontend::PublicCreateTicketOccurrence");
 	
