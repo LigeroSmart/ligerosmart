@@ -49,7 +49,7 @@ sub Run {
 	$GetParam{SubAction} = $ParamObject->GetParam(Param => "SubAction") || "";
 	$GetParam{User} = $ParamObject->GetParam(Param	=> "User") || "";
 	$GetParam{Email} = $ParamObject->GetParam(Param	=> "Email") || "";
-  $GetParam{embed} = $ParamObject->GetParam(Param => "embed") || "";
+  $GetParam{embed} = $ParamObject->GetParam(Param => "embed") || "0";
 
 	my $ConfigItens = $ConfigObject->Get("PublicFrontend::PublicCreateOccurrence");
 
@@ -58,7 +58,7 @@ sub Run {
    	);		
 
 	# get params
-    for my $Key (qw(User Email Body Lang CheckAssoc Assoc)) {
+    for my $Key (qw(User Email Body ServiceID Lang CheckAssoc Assoc)) {
         $GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
     }
 	$GetParam{$DynamicFieldConfig->{Name}} = $ParamObject->GetParam( Param =>  "DynamicField_".$DynamicFieldConfig->{Name});
@@ -170,6 +170,8 @@ sub _Add{
 	my $TypeID      =  $ConfigItens->{'TypeID"'} 	|| "1";
 	my $PriorityID  =  $ConfigItens->{'PriorityID'} || "5";
 	my $CustomerID	=  $ConfigItens->{'CustomerID'};
+
+  my $ShowServiceField	=  $ConfigItens->{'ShowServiceField'};
   
 	my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
 	        ID   => $ConfigItens->{DynamicFieldLocationID},             # ID or Name must be provided
@@ -244,8 +246,10 @@ sub _Add{
 	my $PriorityID  =  $ConfigItens->{'PriorityID'} || "5";
 	my $CustomerID	=  $ConfigItens->{'CustomerID'};
   my $CustomerID	=  $ConfigItens->{'CustomerID'};
-  my $ProcessID	=  $ConfigItens->{'ProcessID'} || "";
+  my $ProcessID	  =  $ConfigItens->{'ProcessID'} || "";
   my $ActivityID	=  $ConfigItens->{'ActivityID'} || "";
+  
+  my $ServiceID	  =  $Param{ServiceID};
 
 	my $NoAgentNotify = 0;
 
@@ -265,7 +269,7 @@ sub _Add{
 		OwnerID		 	=>  "1",
 		PriorityID 		=> "$PriorityID",
 		UserID		 	=>  "1",
-	
+    ServiceID   =>  $ServiceID,
 	);
 
   my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(ChannelName => 'Email');
@@ -548,7 +552,7 @@ sub _Overview{
             PossibleValuesFilter => $PossibleValuesFilter,
             ParamObject          => $ParamObject,
         );
-        if ( !IsHashRefWithData($ValidationResult) ) {
+        if ( !IsHashRefWithData($ValidationResult) && !!$DynamicFieldConfig) {
 	    	return $LayoutObject->ErrorScreen(
                         Message =>
                             $LayoutObject->{LanguageObject}
@@ -586,7 +590,7 @@ sub _Overview{
                 Label => $DynamicFieldConfig->{Label},
                 Field => $DynamicFieldHTML{$DynamicFieldConfig->{Name}}{Field},
             },
-        );
+        ) if !!$DynamicFieldConfig->{Name};
 	    # show attachments
 		ATTACHMENT:
 	    for my $Attachment ( @{ $Param{Attachments} } ) {
@@ -618,8 +622,28 @@ sub _Overview{
 				Data => \%Param,
 			);
 		}
-        
-        
+
+    if($ConfigItens->{ShowServiceField}) {
+      my $ServiceObject		= $Kernel::OM->Get('Kernel::System::Service');
+
+      my %ServiceList        = $ServiceObject->ServiceList(UserID => 1, Valid => 1);
+      my %ServiceListReverse = reverse %ServiceList;
+
+      $Param{ServiceOption} = $LayoutObject->BuildSelection(
+          Data       => \%ServiceList,
+          Name       => 'ServiceID',
+          SelectedID => $Param{ServiceID} || $ServiceListReverse{service},
+          Class      => 'form-control Modernize',
+          PossibleNone=> 1,
+      );
+
+      $LayoutObject->Block(
+				Name => "ServiceFieldArea",
+				Data => \%Param,
+			);
+    }
+
+    
 
 		$Output .= $LayoutObject->Output(
 			TemplateFile => 'Occurrence',

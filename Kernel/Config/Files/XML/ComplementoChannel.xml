@@ -237,6 +237,13 @@
             <Item ValueType="String" ValueRegex=""></Item>
         </Value>
     </Setting>
+    <Setting Name="PublicFrontend::PublicCreateOccurrence###ShowServiceField" Required="1" Valid="1">
+        <Description Translatable="1">Show Service Field on Public Channel Ticket Form (1 - show, 0 - hide).</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">1</Item>
+        </Value>
+    </Setting>
     <Setting Name="PublicFrontend::PublicCreateOccurrence###ProcessID" Required="1" Valid="1">
         <Description Translatable="1">Optional ProcessID for the ticket</Description>
         <Navigation>Frontend::Public</Navigation>

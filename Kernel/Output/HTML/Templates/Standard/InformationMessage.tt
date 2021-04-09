@@ -1,3 +1,10 @@
+
+<script type="text/javascript">
+    if([% Data.embed | html %] === 1){
+      document.getElementById("Header").style.display = "none";
+    }
+</script>
+
 [% RenderBlockStart("Alert") %]
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
 	<div class="col-md-4"></div>
@@ -41,10 +48,4 @@
 
 [% RenderBlockEnd("Alert") %]
 
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    if([% Data.embed | html %] === 1){
-      $('#Header').hide();
-    }
-//]]></script>
-[% END %]
+

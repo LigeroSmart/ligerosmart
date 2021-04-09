@@ -30,7 +30,7 @@ sub Run {
 	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 	$Param{SubAction} = $ParamObject->GetParam(Param => "SubAction") || "";
 
-  $Param{embed} = $ParamObject->GetParam(Param => "embed") || "";
+  $Param{embed} = $ParamObject->GetParam(Param => "embed") || "0";
 	
 	# output header
 	my $Output 		=   $LayoutObject->CustomerHeader();
