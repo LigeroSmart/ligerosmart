@@ -51,6 +51,14 @@ sub _Overview{
 
 	my $ParamObject = $Kernel::OM->Get("Kernel::System::Web::Request");
 	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+  my $ConfigObject = $Kernel::OM->Get("Kernel::Config");
+
+  my $ConfigItens = $ConfigObject->Get("PublicFrontend::Channel::PublicLogin");
+  $Param{TitleLoginPage}  =  $ConfigItens->{'TitleLoginPage'} 	|| '';
+  $Param{TextLoginPage}  =  $ConfigItens->{'TextLoginPage'} 	|| '';
+  $Param{ButtonLoginText}  =  $ConfigItens->{'ButtonLoginText'} 	|| '';
+  $Param{ButtonWithoutIdentifyText}  =  $ConfigItens->{'ButtonWithoutIdentifyText'} || '';
+  $Param{SkipLogin}  =  $ConfigItens->{'SkipLogin'} || '0';
 	
 	my $Output;
 	if($Param{SubAction} eq "OccurrenceLogin"){

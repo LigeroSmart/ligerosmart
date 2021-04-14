@@ -188,6 +188,20 @@
             <Item ValueType="String" ValueRegex="">Este é um canal exclusivo do Ligero para comunicação de ações que conflitem com as políticas e boas práticas da entidade, previstas em seu &lt;strong&gt;Código de Conduta&lt;/strong&gt; ou que estejam em desacordo com a legislação vigente.</Item>
         </Value>
     </Setting>
+    <Setting Name="PublicFrontend::Channel::Terms###RegisterCommunicationButtonText" Required="0" Valid="1">
+        <Description Translatable="1">Define the text of button register communication.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Registrar comunicação</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::Terms###FollowTicketButtonText" Required="0" Valid="1">
+        <Description Translatable="1">Define the text of button follow tickets.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Acompanhar solicitações</Item>
+        </Value>
+    </Setting>
     <Setting Name="PublicFrontend::Channel::AgreementTerms###Message" Required="0" Valid="1">
         <Description Translatable="1">Defines the message of channel terms.</Description>
         <Navigation>Frontend::Public</Navigation>
@@ -195,6 +209,120 @@
             <Item ValueType="String" ValueRegex="">&lt;p&gt;Todas as informações aqui registradas serão recebidas e analisadas pelo Setor de Compliance ligado diretamente ao Comitê de Auditoria, Riscos e Integridade da Entidade, sendo assegurado o sigilo e o encaminhamento adequado de cada relato.&lt;/p&gt;&lt;p&gt;A veracidade das informações relatadas será verificada durante o processo de apuração e as ações decorrentes serão tomadas a critério exclusivo do Ligero.&lt;/p&gt;&lt;p&gt;Ao fazer um relato o autor assume a veracidade de seu conteúdo e demais informações sob as penas da lei.&lt;/p&gt;</Item>
         </Value>
     </Setting>
+    <Setting Name="PublicFrontend::Channel::AgreementTerms###UserConditionTitle" Required="0" Valid="1">
+        <Description Translatable="1">Defines the title of channel terms.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Condições de Uso</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::AgreementTerms###AgreeUserConditionButton" Required="0" Valid="1">
+        <Description Translatable="1">Defines the agree button text of channel terms.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Concordo</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::AgreementTerms###DesagreeUserConditionButton" Required="0" Valid="1">
+        <Description Translatable="1">Defines the disagree button of channel terms.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Não concordo</Item>
+        </Value>
+    </Setting>
+
+    <Setting Name="PublicFrontend::Channel::PublicLogin###TitleLoginPage" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Identificação do Comunicante</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::PublicLogin###TextLoginPage" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Caso deseje receber informações sobre a apuração de seu relato, é necessário fornecer seu nome e e-mail nos campos abaixo.</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::PublicLogin###ButtonLoginText" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Prosseguir</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::PublicLogin###ButtonWithoutIdentifyText" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Prosseguir sem identificação</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::PublicLogin###SkipLogin" Required="0" Valid="1">
+        <Description Translatable="1">1 - Yes, 0 - No</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">0</Item>
+        </Value>
+    </Setting>
+
+    <Setting Name="PublicFrontend::Channel::NewTicket###OccurrenceTitle" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Relato da Ocorrência</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::NewTicket###OccurrenceServiceTitle" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Service</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::NewTicket###OccurrenceContentTitle" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Faça aqui o seu relato</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::NewTicket###ConnectTicketText" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Este relato será ligado a outro registro?</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::NewTicket###ButtonSaveTicketText" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Salvar Relato</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::NewTicket###ButtonCancelTicketText" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Cancelar</Item>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Channel::NewTicket###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket public screen of the agent interface.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+            </Hash>
+        </Value>
+    </Setting>
+
 	 <Setting Name="PublicFrontend::PublicCreateOccurrence###QueueID" Required="0" Valid="1">
         <Description Translatable="1">Choose a QueueID to create a new Ticket by public interface.</Description>
         <Navigation>Frontend::Public</Navigation>

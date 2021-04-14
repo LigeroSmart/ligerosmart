@@ -99,6 +99,8 @@ sub _Overview{
     my $ConfigItens = $ConfigObject->Get("PublicFrontend::Channel::Terms");
     $Param{Title}  =  $ConfigItens->{'Title'} 	|| '';
     $Param{Message}  =  $ConfigItens->{'Message'} 	|| '';
+    $Param{RegisterCommunicationButtonText}  =  $ConfigItens->{'RegisterCommunicationButtonText'} 	|| '';
+    $Param{FollowTicketButtonText}  =  $ConfigItens->{'FollowTicketButtonText'} 	|| '';
 
 		$LayoutObject->Block(
 			Name => 'Terms',
@@ -125,7 +127,10 @@ sub _Overview{
 	}elsif($Param{SubAction} eq "Agreements"){
 
     my $ConfigItens = $ConfigObject->Get("PublicFrontend::Channel::AgreementTerms");
-    $Param{Message}  =  $ConfigItens->{'Message'} 	|| ''; 
+    $Param{Message}  =  $ConfigItens->{'Message'} 	|| '';
+    $Param{UserConditionTitle}  =  $ConfigItens->{'UserConditionTitle'} 	|| '';
+    $Param{AgreeUserConditionButton}  =  $ConfigItens->{'AgreeUserConditionButton'} 	|| '';
+    $Param{DesagreeUserConditionButton}  =  $ConfigItens->{'DesagreeUserConditionButton'} 	|| ''; 
 
 		$LayoutObject->Block(
 			Name => 'AgreementTerms',

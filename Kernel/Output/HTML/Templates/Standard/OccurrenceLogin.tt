@@ -10,10 +10,10 @@
 	<div class="col-md-4"></div>
 	<div class="col-md-4">
 		<h1 class="TitleForm">
-			<span class="glyphicon glyphicon-envelope"></span> [% Translate("Identificação do Comunicante") | html  %] 
+			<span class="glyphicon glyphicon-envelope"></span>[% Translate(Data.TitleLoginPage) | html  %] 
 		</h1>
 		<form action="[% Env("CGIHandle") %]" method="post" name="compose"  enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
-			<p>Caso deseje receber informações sobre a apuração de seu relato, é necessário fornecer seu nome e e-mail nos campos abaixo.</p>    
+			<p>[% Data.TextLoginPage | html %]</p>    
 		    <input type="hidden" name="Action" value="PublicOccurrence" />
 	        <input type="hidden" name="SubAction" value="NewTicket"/>
           <input type="hidden" name="embed" value="[% Data.embed | html %]"/>
@@ -37,11 +37,11 @@
 	   
             <div class="col-md-1"></div>
             <div class="col-xs-4 text-left">  
-                <button type="submit" Class= "btn btn-primary" id="b5">Prosseguir</button>
+                <button type="submit" Class= "btn btn-primary" id="b5">[% Data.ButtonLoginText | html %]</button>
             </div>
             <div class="col-md-1"></div>            
             <div class="col-xs-4 text-right">
-                <button type="submit" Class= "btn btn-default" id="b6">Prosseguir sem identificação</button>
+                <button type="submit" Class= "btn btn-default" id="b6">[% Data.ButtonWithoutIdentifyText | html %]</button>
             </div>
         </div>          
 </div>
@@ -53,6 +53,9 @@
         Core.Form.Validate.DisableValidation($Form);
         $Form.trigger('submit');
     });
+    if([% Data.SkipLogin | html %] === 1){
+      $('#b6').trigger('click');
+    }
 //]]></script>
 [% END %]
 

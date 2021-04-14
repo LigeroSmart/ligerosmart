@@ -240,12 +240,12 @@ sub _Add{
 	
 	#-------------------------------------------
 	my $MimeType 	= 'text/html';
-	my $NewQueueID  =  $ConfigItens->{'QueueID'} 	|| '1';
-	my $StateID     =  $ConfigItens->{'StateID'} 	|| "1";
-	my $TypeID      =  $ConfigItens->{'TypeID'} 	|| "1";
-	my $PriorityID  =  $ConfigItens->{'PriorityID'} || "5";
-	my $CustomerID	=  $ConfigItens->{'CustomerID'};
-  my $CustomerID	=  $ConfigItens->{'CustomerID'};
+	$NewQueueID  =  $ConfigItens->{'QueueID'} 	|| '1';
+	$StateID     =  $ConfigItens->{'StateID'} 	|| "1";
+	$TypeID      =  $ConfigItens->{'TypeID'} 	|| "1";
+	$PriorityID  =  $ConfigItens->{'PriorityID'} || "5";
+	$CustomerID	=  $ConfigItens->{'CustomerID'};
+  $CustomerID	=  $ConfigItens->{'CustomerID'};
   my $ProcessID	  =  $ConfigItens->{'ProcessID'} || "";
   my $ActivityID	=  $ConfigItens->{'ActivityID'} || "";
   
@@ -321,7 +321,7 @@ sub _Add{
 		);
 	
 	}
-	my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+	$DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 	my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 	my $Success = $BackendObject->ValueSet(
 	    DynamicFieldConfig => $DynamicFieldConfig,      
@@ -346,7 +346,7 @@ sub _Add{
 	        Name   => "ProcessManagementActivityID",             # ID or Name must be provided
    	);
 
-     my $Success = $BackendObject->ValueSet(
+     $Success = $BackendObject->ValueSet(
 	    DynamicFieldConfig => $DynamicFieldActConfig,      
       ObjectID           => $TicketID,                
       Value              =>  $ActivityID,                   
@@ -408,7 +408,7 @@ sub _Add{
 
 
 
-	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+	$LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 	my $Output 		=   $LayoutObject->CustomerHeader();
 	
 	$Output .= $Self->_Overview(
@@ -578,6 +578,14 @@ sub _Overview{
     my $CommonConfigItens = $ConfigObject->Get("PublicFrontend::Channel::Common");
     $Param{DefaultUrlReturn}  =  $CommonConfigItens->{'DefaultUrlReturn'} 	|| 'http://localhost/otrs/public.pl';
 
+    my $ConfigItens2 = $ConfigObject->Get("PublicFrontend::Channel::NewTicket");
+    $Param{OccurrenceTitle}  =  $ConfigItens2->{'OccurrenceTitle'} 	|| '';
+    $Param{OccurrenceServiceTitle}  =  $ConfigItens2->{'OccurrenceServiceTitle'} 	|| '';
+    $Param{OccurrenceContentTitle}  =  $ConfigItens2->{'OccurrenceContentTitle'} 	|| '';
+    $Param{ConnectTicketText}  =  $ConfigItens2->{'ConnectTicketText'} 	|| '';
+    $Param{ButtonSaveTicketText}  =  $ConfigItens2->{'ButtonSaveTicketText'} 	|| '';
+    $Param{ButtonCancelTicketText}  =  $ConfigItens2->{'ButtonCancelTicketText'} 	|| '';
+
 		$LayoutObject->Block(
 			Name => 'NewOcurrence',
 			Data => \%Param,
@@ -642,6 +650,110 @@ sub _Overview{
 				Data => \%Param,
 			);
     }
+
+    #GET DYNAMIC FIELDS
+    my %GetParam;
+    my %ACLCompatGetParam;
+    my %SplitTicketParam;
+    my %Article;
+    my %UserPreferences;
+
+    my $AllDynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'Ticket', 'Article' ],
+        FieldFilter => $ConfigItens2->{'DynamicField'} || {},
+    );
+
+    for my $DynamicFieldConfig ( @{ $AllDynamicField } ) {
+      next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+      my $PossibleValuesFilter;
+
+      my $IsACLReducible = $DynamicFieldBackendObject->HasBehavior(
+          DynamicFieldConfig => $DynamicFieldConfig,
+          Behavior           => 'IsACLReducible',
+      );
+
+      if ($IsACLReducible) {
+
+          # get PossibleValues
+          my $PossibleValues = $DynamicFieldBackendObject->PossibleValuesGet(
+              DynamicFieldConfig => $DynamicFieldConfig,
+          );
+
+          # check if field has PossibleValues property in its configuration
+          if ( IsHashRefWithData($PossibleValues) ) {
+
+              # convert possible values key => value to key => key for ACLs using a Hash slice
+              my %AclData = %{$PossibleValues};
+              @AclData{ keys %AclData } = keys %AclData;
+
+              # set possible values filter from ACLs
+              my $ACL = $TicketObject->TicketAcl(
+                  %GetParam,
+                  %ACLCompatGetParam,
+                  %SplitTicketParam,
+                  Action        => $Self->{Action},
+                  ReturnType    => 'Ticket',
+                  ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
+                  Data          => \%AclData,
+                  UserID        => $Self->{UserID},
+              );
+              if ($ACL) {
+                  my %Filter = $TicketObject->TicketAclData();
+
+                  # convert Filer key => key back to key => value using map
+                  %{$PossibleValuesFilter} = map { $_ => $PossibleValues->{$_} }
+                      keys %Filter;
+              }
+          }
+      }
+
+      # to store dynamic field value from database (or undefined)
+      my $Value;
+
+      # in case of split a TicketID and ArticleID are always given, Get the value
+      # from DB this cases
+      if ( $Self->{TicketID} && $Article{ArticleID} ) {
+
+          # select TicketID or ArticleID to get the value depending on dynamic field configuration
+          my $ObjectID = $DynamicFieldConfig->{ObjectType} eq 'Ticket'
+              ? $Self->{TicketID}
+              : $Article{ArticleID};
+
+          # get value stored on the database (split)
+          $Value = $DynamicFieldBackendObject->ValueGet(
+              DynamicFieldConfig => $DynamicFieldConfig,
+              ObjectID           => $ObjectID,
+          );
+      }
+
+      # otherwise (on a new ticket). Check if the user has a user specific default value for
+      # the dynamic field, otherwise will use Dynamic Field default value
+      else {
+
+          # override the value from user preferences if is set
+          if ( $UserPreferences{ 'UserDynamicField_' . $DynamicFieldConfig->{Name} } ) {
+              $Value = $UserPreferences{ 'UserDynamicField_' . $DynamicFieldConfig->{Name} };
+          }
+      }
+
+      # get field html
+      $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } = $DynamicFieldBackendObject->EditFieldRender(
+          DynamicFieldConfig   => $DynamicFieldConfig,
+          PossibleValuesFilter => $PossibleValuesFilter,
+          Value                => $Value,
+          LayoutObject         => $LayoutObject,
+          ParamObject          => $ParamObject,
+          AJAXUpdate           => 1,
+          #UpdatableFields      => $Self->_GetFieldsToUpdate(),
+          Mandatory            => $ConfigItens2->{'DynamicField'}->{ $DynamicFieldConfig->{Name} } == 2,
+      );
+  }
+
+  use Data::Dumper;
+  die Dumper(\%DynamicFieldHTML);
+  #END GET DYNAMIC FIELDS
 
     
 
