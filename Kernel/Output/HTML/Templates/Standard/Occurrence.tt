@@ -17,7 +17,7 @@
 <div class="row">
 	<div class="col-md-4"></div>
     <div class="col-md-4">
-		<h1 class="TitleForm"><span class="glyphicon glyphicon-envelope"></span> [% Translate("Relato da Ocorrência") | html  %] </h1>
+		<h1 class="TitleForm"><span class="glyphicon glyphicon-envelope"></span> [% Translate(Data.OccurrenceTitle) | html  %] </h1>
 		<form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
 			<input type="hidden" name="Action" value="PublicOccurrence"/>
 			<input type="hidden" name="SubAction" value="StoreNew"/>
@@ -34,12 +34,12 @@
 			[% RenderBlockEnd("DynamicField") %]
       [% RenderBlockStart("ServiceFieldArea") %]
       <div class="form-group">
-        <label class="Mandatory" for="ServiceID"> [% Translate("Service") | html %]:</label>
+        <label class="Mandatory" for="ServiceID"> [% Translate(Data.OccurrenceServiceTitle) | html %]:</label>
         [% Data.ServiceOption %]
       </div>
       [% RenderBlockEnd("ServiceFieldArea") %]
 			<div class="form-group">
-				<label class="Mandatory" for="RichText" style="white-space:nowrap" >[% Translate("Faça aqui o seu relato") | html %]</label>
+				<label class="Mandatory" for="RichText" style="white-space:nowrap" >[% Translate(Data.OccurrenceContentTitle) | html %]</label>
         <br>
 						<div id="RichTextField" class="RichTextField" style="width:100%;">
 							[% RenderBlockStart("RichText") %]
@@ -58,14 +58,14 @@
 		  		    <div class="form-check"  style="white-space:nowrap">
 						<label class="form-check-label">
 					      <input type="checkbox"  name= "CheckAssoc" id="checkAssoc" class="form-check-input" [% Data.CheckAssoc %]>
-      						Este relato será ligado a outro registro?
+      						[% Data.ConnectTicketText | html %]
 					    </label>
 				     </div>
 					<div class="form-group" style="display:none"> 
 						</br></br> 
 		    			<input type="text" id="Assoc" placeholder="Número do relato anterior"  name="Assoc"  class="form-control" value=[% Data.Assoc %]>
 [% RenderBlockStart("AssocNotFound") %]
-                        <span class="text-danger">Atenção: O relato informado não existe. Insira o número correto ou desmarque a opção de informar outro registro.</span>
+                        <span class="text-danger">Atenção: O chamado informado não existe. Insira o número correto ou desmarque a opção de informar outro registro.</span>
 [% RenderBlockEnd("AssocNotFound") %]
 					</div>
 					<br><br>
@@ -102,8 +102,8 @@
                     </div>
 [% RenderBlockEnd("Attachment") %]
 
-					 <button type="submit" class="btn btn-primary btn-lg">Salvar Relato</button>
-			 <button type="button" class="btn btn-default btn-lg" onclick="window.location='[% Data.DefaultUrlReturn %]'">Cancelar</button>
+					 <button type="submit" class="btn btn-primary btn-lg">[% Data.ButtonSaveTicketText | html %]</button>
+			 <button type="button" class="btn btn-default btn-lg" onclick="window.location='[% Data.DefaultUrlReturn %]'">[% Data.ButtonCancelTicketText | html %]</button>
 			</form>
 	</div>
 </div>

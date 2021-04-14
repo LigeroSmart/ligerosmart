@@ -29,9 +29,9 @@
 						<p id="content1">[% Data.Message %]</p>
 					</div>
 					<div class="form-group channelActionButtons">
-						<button type="submit"      class="btn btn-primary btn-sm"> Registrar comunicação</button>
+						<button type="submit" class="btn btn-primary btn-sm"> [% Data.RegisterCommunicationButtonText | html %]</button>
 
-						<a href="/otrs/customer.pl"  class="btn btn-default btn-sm" role="button">Acompanhar um registro </a>
+						<a href="/otrs/customer.pl"  class="btn btn-default btn-sm" role="button">[% Data.FollowTicketButtonText | html %] </a>
 					</div>
 				</div>
 		</div>
@@ -47,7 +47,7 @@
 <div class="col-md-4"></div>
 <div class="col-md-4 container-master">
 
-		<h1>Condições de Uso</h1>
+		<h1>[% Data.UserConditionTitle | html %]</h1>
 		<div class="ContentColumn">
 			<form action="[% Env("CGIHandle") %]" method="post" enctype="application/x-www-form-urlencoded" >
 			<input type="hidden" name="Action" value="PublicOccurrenceLogin"/>
@@ -56,8 +56,8 @@
 			<input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
 			[% Data.Message %]
 			<div class="channelActionButtons">
-				<button type="submit" class="btn btn-primary btn-sm" role="button" value="Registrar comunicação">Concordo</button>
-				<a href="[% Data.DefaultUrlReturn %]" class="btn btn-default btn-sm" role="button">Não concordo </a>
+				<button type="submit" class="btn btn-primary btn-sm" role="button" value="Registrar comunicação">[% Data.AgreeUserConditionButton | html %]</button>
+				<a href="[% Data.DefaultUrlReturn %]" class="btn btn-default btn-sm" role="button">[% Data.DesagreeUserConditionButton | html %] </a>
 			</div>
 		</div>
 </div>

@@ -17,8 +17,8 @@
 		
 [% RenderBlockStart("Unknown") %]
         <div  id="alert-message"  class="alert alert-success">
-			<p>Sua comunicação foi registrada com sucesso.</p><p>Anote o número abaixo para consultar o andamento do seu processo:</p>	
-			<p>	Número da ocorrência: <strong> [% Data.Message  %] </strong></p>
+			<p>Seu chamado foi registrada com sucesso.</p><p>Anote o número abaixo para consultar o andamento do seu processo:</p>	
+			<p>	Número do chamado: <strong> [% Data.Message  %] </strong></p>
 			<p> Usuário:<strong> [% Data.Login %] </strong>  </p>
 			<p> Senha: <strong> [% Data.Password%]  </strong> </p>
 
@@ -27,9 +27,9 @@
 [% RenderBlockEnd("Unknown") %]
 [% RenderBlockStart("Known") %]
         <div  id="alert-message"  class="alert alert-success">
-			<p>Sua comunicação foi registrada com sucesso.</p><p>Anote o número abaixo para consultar o andamento do seu processo:</p>	
+			<p>Seu chamado foi registrada com sucesso.</p><p>Anote o número abaixo para consultar o andamento do seu processo:</p>	
 			<p> Será enviado um email para [% Data.Email %]</p>
-			<p>	Número da ocorrência: <strong> [% Data.Message  %] </strong></p>
+			<p>	Número do chamado: <strong> [% Data.Message  %] </strong></p>
 			<p> Usuário:<strong> [% Data.Login %] </strong>  </p>
 [% RenderBlockStart("NewPassword") %]            
 			<p> Senha: <strong> [% Data.Password%]  </strong> </p>
