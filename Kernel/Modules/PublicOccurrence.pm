@@ -61,8 +61,20 @@ sub Run {
     for my $Key (qw(User Email Body ServiceID Lang CheckAssoc Assoc)) {
         $GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
     }
-	$GetParam{$DynamicFieldConfig->{Name}} = $ParamObject->GetParam( Param =>  "DynamicField_".$DynamicFieldConfig->{Name});
-    my $TicketObject = $Kernel::OM->Get("Kernel::System::Ticket");
+
+    my $ConfigItens2 = $ConfigObject->Get("PublicFrontend::Channel::NewTicket");
+
+  my $AllDynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'Ticket', 'Article' ],
+        FieldFilter => $ConfigItens2->{'DynamicField'} || {},
+    );
+
+    for my $DynamicFieldConfigItem ( @{ $AllDynamicField } ) {
+      $GetParam{$DynamicFieldConfigItem->{Name}} = $ParamObject->GetParam( Param =>  "DynamicField_".$DynamicFieldConfigItem->{Name});
+      
+    }
+	my $TicketObject = $Kernel::OM->Get("Kernel::System::Ticket");
 
 	if ( $GetParam{SubAction} eq 'StoreNew' ) {
         
@@ -323,12 +335,23 @@ sub _Add{
 	}
 	$DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 	my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-	my $Success = $BackendObject->ValueSet(
-	    DynamicFieldConfig => $DynamicFieldConfig,      
-		ObjectID           => $TicketID,                
-		Value              =>  $Param{$DynamicFieldConfig->{Name}},                   
-		UserID             => 1,
-	);
+  my $ConfigItens2 = $ConfigObject->Get("PublicFrontend::Channel::NewTicket");
+
+  my $AllDynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'Ticket', 'Article' ],
+        FieldFilter => $ConfigItens2->{'DynamicField'} || {},
+    );
+
+    for my $DynamicFieldConfigItem ( @{ $AllDynamicField } ) {
+        my $Success = $BackendObject->ValueSet(
+          DynamicFieldConfig => $DynamicFieldConfigItem,      
+          ObjectID           => $TicketID,                
+          Value              =>  $Param{$DynamicFieldConfigItem->{Name}},                   
+          UserID             => 1,
+        );
+    }
+	
 
   if($ActivityID && $ProcessID) {
     my $DynamicFieldProConfig = $DynamicFieldObject->DynamicFieldGet(
@@ -641,7 +664,7 @@ sub _Overview{
           Data       => \%ServiceList,
           Name       => 'ServiceID',
           SelectedID => $Param{ServiceID} || $ServiceListReverse{service},
-          Class      => 'form-control Modernize',
+          Class      => 'form-control',
           PossibleNone=> 1,
       );
 
@@ -745,14 +768,43 @@ sub _Overview{
           Value                => $Value,
           LayoutObject         => $LayoutObject,
           ParamObject          => $ParamObject,
-          AJAXUpdate           => 1,
+          AJAXUpdate           => 0,
           #UpdatableFields      => $Self->_GetFieldsToUpdate(),
+          Class				 => "form-control",
           Mandatory            => $ConfigItens2->{'DynamicField'}->{ $DynamicFieldConfig->{Name} } == 2,
       );
+      $DynamicFieldHTML{$DynamicFieldConfig->{Name}}{Field} =~ s/Modernize//g;
+      $LayoutObject->Block(
+            Name => 'DynamicField',
+            Data => {
+                Name  => $DynamicFieldConfig->{Name},
+                Label => $DynamicFieldConfig->{Label},
+                Field => $DynamicFieldHTML{ $DynamicFieldConfig->{Name} }->{Field},
+            },
+        );
+
+        # example of dynamic fields order customization
+        $LayoutObject->Block(
+            Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
+            Data => {
+                Name  => $DynamicFieldConfig->{Name},
+                Label => $DynamicFieldHTML{ $DynamicFieldConfig->{Name} }->{Label},
+                Field => $DynamicFieldHTML{ $DynamicFieldConfig->{Name} }->{Field},
+            },
+        );
   }
 
-  use Data::Dumper;
-  die Dumper(\%DynamicFieldHTML);
+  if(%DynamicFieldHTML){
+    $LayoutObject->Block(
+      Name => "DynamicFieldArea",
+      Data => {
+        DynamicFieldHTML => \%DynamicFieldHTML,
+      },
+    );
+  }
+
+  #use Data::Dumper;
+  #die Dumper(\%DynamicFieldHTML);
   #END GET DYNAMIC FIELDS
 
     
