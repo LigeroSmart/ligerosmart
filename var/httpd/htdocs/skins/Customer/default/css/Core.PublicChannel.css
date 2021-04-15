@@ -14,7 +14,17 @@ label {
     color:	#666 !important;
     font-weight: 100 !important;
     text-align: left !important;
+    
 }
+
+.form-group label {
+  display: contents !important;
+}
+
+.form-group input {
+  width: 100% !important;
+}
+
 form label.Mandatory {
     color:	#666 !important;
     font-weight: 100 !important;
