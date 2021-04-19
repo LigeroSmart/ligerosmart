@@ -781,7 +781,7 @@ sub GetComputers{
     my $WebUserAgentObject = $Kernel::OM->Get('Kernel::System::WebUserAgent');
     my $JSONObject = $Kernel::OM->Get('Kernel::System::JSON');
 
-    my $url = "http://".$ServerAddress."/ocsapi/v1/computers?start=".$Start."&limit=".$PaginationSize;
+    my $url = $ServerAddress."/ocsapi/v1/computers?start=".$Start."&limit=".$PaginationSize;
 
     my %Response = $WebUserAgentObject->Request(
         URL => $url,
