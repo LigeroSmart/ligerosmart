@@ -8,6 +8,9 @@
 <!-- start form -->
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst" ng-app="ocsIntegration" ng-controller="configuration">
     <h1>Configurações OCS Integration</h1>
+    <input type="hidden" id="SessionName" value="[% Data.SessionName | html %]"/>
+    <input type="hidden" id="SessionUseCookie" value="[% Data.SessionUseCookie | html %]"/>
+    <input type="hidden" id="SessionID" value="[% Env("SessionID") %]"/>
     <div class="SidebarColumn">
 [% RenderBlockStart("ActionList") %]
         <div class="WidgetSimple">

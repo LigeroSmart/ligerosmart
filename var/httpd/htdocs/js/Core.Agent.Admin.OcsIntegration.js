@@ -13,6 +13,11 @@ app.controller('configuration', function ($scope, $http) {
         SnmpData: []
     };
 
+    const sessionName = $('#SessionName').val();
+    const sessionUseCookie = $('#SessionUseCookie').val() == 1;
+    const sessionID = $('#SessionID').val();
+    const containSessionUrl = window.location.href.indexOf(sessionName) > -1;
+
     $scope.snmpClasses = [];
 
     $scope.computer = {
@@ -23,17 +28,28 @@ app.controller('configuration', function ($scope, $http) {
     
     if($('#hdnType').val()==="Snmp"){
         $scope.loading = true;
-        
-        $http.get($('#hdnLoadUrl').val())
+        var url = $('#hdnLoadUrl').val();
+        if (!sessionUseCookie || containSessionUrl) {
+          url += ';' + encodeURIComponent(sessionName) + '=' + encodeURIComponent(sessionID);
+        }
+        $http.get(url)
             .then(function(response){
                 $scope.snmp = response.data.data;
                 $scope.closeAllSnmp($scope.snmp.SnmpData);
-                $http.get($('#hdnLoadClassesUrl').val())
+                url = $('#hdnLoadClassesUrl').val();
+                if (!sessionUseCookie || containSessionUrl) {
+                  url += ';' + encodeURIComponent(sessionName) + '=' + encodeURIComponent(sessionID);
+                }
+                $http.get(url)
                     .then(function(response){
                         $scope.loading = false;
                         for(var i = 0; i < response.data.data.length;i++){
                             $scope.loading = true;
-                            $http.get($('#hdnLoadUrl').val()+';ClassId='+response.data.data[i].ID)
+                            url = $('#hdnLoadUrl').val()+';ClassId='+response.data.data[i].ID;
+                            if (!sessionUseCookie || containSessionUrl) {
+                              url += ';' + encodeURIComponent(sessionName) + '=' + encodeURIComponent(sessionID);
+                            }
+                            $http.get(url)
 
                                 .then(function(response2){        
                                     $scope.snmpClasses.push(response2.data.data);
@@ -50,8 +66,11 @@ app.controller('configuration', function ($scope, $http) {
     }
     else if ($('#hdnType').val()==="Computer"){
         $scope.loading = true;
-        
-        $http.get($('#hdnLoadUrl').val())
+        var url = $('#hdnLoadUrl').val();
+        if (!sessionUseCookie || containSessionUrl) {
+          url += ';' + encodeURIComponent(sessionName) + '=' + encodeURIComponent(sessionID);
+        }
+        $http.get(url)
             .then(function(response){
                 $scope.computer = response.data.data;
                 $scope.closeAllSnmp($scope.computer.ComputerData);
@@ -63,7 +82,11 @@ app.controller('configuration', function ($scope, $http) {
     $scope.updateSnmp = function(event,snmp){
         if(confirm("Esta opção pode demorar um pouco para ser executada pois consiste em analisar todo o conteúdo do OCS para definir todos os itens da estrutura que podem ser utilizados. Deseja continuar?")){
             $scope.loading = true;
-            $http.get(event)
+            var url = event;
+            if (!sessionUseCookie || containSessionUrl) {
+              url += ';' + encodeURIComponent(sessionName) + '=' + encodeURIComponent(sessionID);
+            }
+            $http.get(url)
             .then(function(response){
                 snmp.SnmpData = response.data.data;
                 $scope.loading = false;
@@ -75,7 +98,11 @@ app.controller('configuration', function ($scope, $http) {
         if(confirm("Esta opção pode demorar um pouco para ser executada pois consiste em analisar todo o conteúdo do OCS para definir todos os itens da estrutura que podem ser utilizados. Deseja continuar?")){
             console.log("Iniciando");
             $scope.loading = true;
-            $http.get(event)
+            var url = event;
+            if (!sessionUseCookie || containSessionUrl) {
+              url += ';' + encodeURIComponent(sessionName) + '=' + encodeURIComponent(sessionID);
+            }
+            $http.get(url)
             .then(function(response){
                 $scope.computer.ComputerData = response.data.data;
                 $scope.loading = false;

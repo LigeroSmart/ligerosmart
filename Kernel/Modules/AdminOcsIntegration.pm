@@ -760,7 +760,9 @@ sub Run {
         Name => 'ActionList',
     );
     
-    
+    $Param{SessionName} = $ConfigObject->Get('SessionName');
+    $Param{SessionUseCookie} = $ConfigObject->Get('SessionUseCookie');
+    $Param{SessionID} = $ConfigObject->Get('SessionID');
 
     # generate search mask
     my $Output = $LayoutObject->Header();
