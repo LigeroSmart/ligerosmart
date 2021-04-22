@@ -1,0 +1,20 @@
+<div class="CompWidgetContainer" style="width:[% Data.Width %]%">
+    <div class="CompWidgetBorder">
+
+<div style="width:92%; padding:10px; text-align:center; font-size: 18px;color:#3E576F;border-bottom:1px solid #3E576F;
+margin-left:auto;margin-right:auto">[% Translate(Data.Title) | html %] ([% Data.Total %])</div>
+
+<br/> 
+
+[% RenderBlockStart("line") %]
+<div style="width:90%; padding:10px; font-size: 18px; background-color:[% Data.Bgcolor %];height:20px;border-top:1px solid #C0C0C0;
+    margin-left:auto;margin-right:auto;color:#333">
+    <div style="width:80%; float:left; text-align:left;">[% Data.Summary | truncate(40) | html %][% Translate(Data.TranslatableSummary) | html %]</div>
+    <div style="width:20%; float:left;  text-align:center;"><a href="[% Env("Baselink") %][% Data.Url %]">[% Data.Count %]</a></div>
+</div>
+[% RenderBlockEnd("line") %]
+
+    </div>
+</div>
+
+

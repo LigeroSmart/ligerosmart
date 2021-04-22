@@ -1,0 +1,143 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+[% RenderBlockStart("OverviewNavBar") %]
+<div class="OverviewBox ARIARoleMain [% Data.View | html %]">
+    <h1>[% Data.TitleName | html %]: [% Data.TitleValue | html %]</h1>
+
+    [% Data.DataInTheMiddle %]
+
+    <div class="OverviewControl" id="OverviewControl">
+        <div>
+            <div class="ControlRow">
+[% RenderBlockStart("OverviewNavBarFilter") %]
+                <ul class="Tabs">
+[% RenderBlockStart("OverviewNavBarFilterItem") %]
+[% RenderBlockStart("OverviewNavBarFilterItemSelected") %]
+                    <li class="Active [% Data.CSS | html %]">
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.FilterLink %]Filter=[% Data.Filter | uri %]">[% Translate(Data.Name) | html %]<span>[% Data.Count | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("OverviewNavBarFilterItemSelected") %]
+[% RenderBlockStart("OverviewNavBarFilterItemSelectedNot") %]
+                    <li class="[% Data.CSS | html %]">
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.FilterLink %]Filter=[% Data.Filter | uri %]">[% Translate(Data.Name) | html %]<span>[% Data.Count | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("OverviewNavBarFilterItemSelectedNot") %]
+[% RenderBlockStart("OverviewNavBarFilterItemSplit") %]
+                    -
+[% RenderBlockEnd("OverviewNavBarFilterItemSplit") %]
+[% RenderBlockEnd("OverviewNavBarFilterItem") %]
+                </ul>
+[% RenderBlockEnd("OverviewNavBarFilter") %]
+
+                <ul class="Tabs">
+                    <li>
+                        <a id="SurveySearch" href="#">[% Translate("Survey overview options") | html %]</a>
+                    </li>
+                </ul>
+
+                <div id="SurveyOverviewSettingsDialogContainer" class="Hidden">
+                    <form action="[% Env("CGIHandle") %]" method="post" id="SurveyOverviewSettingsDialog">
+                        <input type="hidden" name="Action" value="AgentSurveyOverview"/>
+                        <input type="hidden" name="Subaction" value="Change"/>
+                        <fieldset class="TableLike">
+
+                            <label for="Fulltext" id="LabelFulltext">[% Translate("Fulltext") | html %]:</label>
+                            <div class="Field">
+                                <input type="text" name="Fulltext" value="[% Data.Fulltext | html %]" class="W50pc" />
+                                <p class="FieldExplanation" style="width: 500px">
+                                    [% Translate("Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.") | html %]
+                                </p>
+                            </div>
+                            <div class="Clear"></div>
+
+                            <label for="States" id="LabelStates" >[% Translate("State") | html %]:</label>
+                            <div class="Field">
+                                [% Data.StateStr %]
+                            </div>
+                            <div class="Clear"></div>
+
+                            <label>[% Translate("Survey Create Time") | html %]:</label>
+                            <div class="Field">
+                                <input title="[% Translate("No time settings") | html %]" type="radio"  id="NoTimeSet" name="TimeSearchType" value="" [% Data.SurveySearch.NoRestrictionChecked | html %] [% Data.item("TimeSearchType::None") %] />
+                                <label for="NoTimeSet">[% Translate("No restriction") | html %]</label>
+                            </div>
+                            <div class="Clear"></div>
+                            <div class="Field">
+                                <input title="[% Translate("Date range") | html %]" type="radio" id="DateRange" name="TimeSearchType" value="TimeSlot" [% Data.SurveySearch.TimeSlotChecked | html %] [% Data.item("TimeSearchType::TimeSlot") %] />
+                                <label for="DateRange">[% Translate("Only surveys created between") | html %]</label>
+                                [% Data.SurveyCreateTimeStart %] [% Translate("and") | html %] [% Data.SurveyCreateTimeStop %]
+                            </div>
+                            <div class="Clear"></div>
+
+                        </fieldset>
+                    </form>
+                </div>
+
+[% RenderBlockStart("ContextSettings") %]
+
+                <ul class="ContextFunctions">
+                    <li class="ContextSettings">
+                        <a href="#" id="ShowContextSettingsDialog" title="[% Translate("Settings") | html %]"><i class="fa fa-cog"></i><span>[% Translate("Settings") | html %]</span></a>
+                    </li>
+                </ul>
+
+                <div id="ContextSettingsDialogContainer" class="Hidden">
+                    <form action="[% Env("CGIHandle") %]" method="post" id="ContextSettingsDialog">
+                        <input type="hidden" name="Action" value="AgentPreferences"/>
+                        <input type="hidden" name="Subaction" value="Update"/>
+                        <input type="hidden" name="Group" value="[% Data.Group | html %]"/>
+                        <input type="hidden" name="RedirectURL" value="[% Data.RequestedURL | html %]"/>
+                        <fieldset class="TableLike">
+                            <label for="[% Data.PreferencesKey | html %]">[% Translate("Max. shown surveys per page") | html %]:</label>
+                            <div class="Field">
+                                [% Data.PageShownString %]
+                            </div>
+                            <div class="Clear"></div>
+                        </fieldset>
+                    </form>
+                </div>
+[% RenderBlockEnd("ContextSettings") %]
+
+            </div>
+            <div class="ActionRow">
+                <div class="OverviewActions">
+                    [% Data.ActionRow %]
+                    <ul class="OverviewZoom">
+
+[% RenderBlockStart("OverviewNavBarViewMode") %]
+[% RenderBlockStart("OverviewNavBarViewModeSelected") %]
+                        <li class="Active">
+                            <a class="[% Data.Name | html %]" name="OverviewControl" href="[% Env("Baselink") %]Action=[% Env("Action") %];Filter=[% Data.Filter | uri %];View=[% Data.View | uri %];[% Data.LinkFilter %]" title="[% Translate(Data.Name) | html %]">
+                                [% Translate(Data.NameShort) | html %]
+                            </a>
+                        </li>
+[% RenderBlockEnd("OverviewNavBarViewModeSelected") %]
+[% RenderBlockStart("OverviewNavBarViewModeNotSelected") %]
+                        <li>
+                            <a class="[% Data.Name | html %]" name="OverviewControl" href="[% Env("Baselink") %]Action=[% Env("Action") %];Filter=[% Data.Filter | uri %];View=[% Data.View | uri %];[% Data.LinkFilter %]" title="[% Translate(Data.Name) | html %]">
+                                [% Translate(Data.NameShort) | html %]
+                            </a>
+                        </li>
+[% RenderBlockEnd("OverviewNavBarViewModeNotSelected") %]
+[% RenderBlockEnd("OverviewNavBarViewMode") %]
+                    </ul>
+                    <span class="Pagination">
+[% RenderBlockStart("OverviewNavBarPageNavBar") %]
+                        [% Data.ResultLong %]
+                        [% Data.SiteNavBarLong %]
+[% RenderBlockEnd("OverviewNavBarPageNavBar") %]
+                    </span>
+                    <div class="ClearLeft"></div>
+                </div>
+# sort order bar if needed
+                [% Data.SortOrderBar %]
+            </div>
+        </div>
+    </div>
+</div>
+[% RenderBlockEnd("OverviewNavBar") %]

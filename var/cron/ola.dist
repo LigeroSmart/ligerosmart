@@ -1,0 +1,2 @@
+# Rebuild OLA Escalation
+*/5 * * * *  $HOME/bin/otrs.RebuildOLAEscalationIndex.pl -o yes -b 20000 >> /dev/null

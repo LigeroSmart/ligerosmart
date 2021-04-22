@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Framework">
+    <Setting Name="Loader::Agent::Skin###001-ligero" Required="0" Valid="1">
+        <Description Translatable="1">Ligero Smart</Description>
+        <Navigation>Frontend::Base::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="InternalName">ligero</Item>
+                <Item Key="VisibleName" Translatable="1">Ligero Smart</Item>
+                <Item Key="Description" Translatable="1">Ligero Smart</Item>
+                <Item Key="HomePage">www.complemento.net.br</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Customer::Skin###000-ligero" Required="0" Valid="1">
+        <Description Translatable="1">Ligero Smart.</Description>
+        <Navigation>Frontend::Base::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="InternalName">ligero</Item>
+                <Item Key="VisibleName" Translatable="1">Ligero Smart</Item>
+                <Item Key="Description" Translatable="1">Ligero Smart</Item>
+                <Item Key="HomePage">www.complemento.net.br</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###002-IconesSkin" Required="0" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base::Loader</Navigation>
+        <Value>
+            <Array>
+                <Item>icones.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+</otrs_config>

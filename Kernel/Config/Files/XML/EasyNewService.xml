@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+	<Setting Name="ServicePreferences###T5001-SLA" Required="0" Valid="1">
+        <Description Translatable="1">Service Level Agreement. You can set default SLA IDs for new service creation so this SLAs will be default selected on new Service Screen on DefaultSLAIDs parameter, separating each SLA id by comma</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::SLA</Item>
+                <Item Key="Label" Translatable="1">Service Level Agreements</Item>
+                <Item Key="Desc" Translatable="1">Service Description - It's shown on customer interface</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">SLA</Item>
+                <Item Key="DefaultSLAIDs"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="ServicePreferences###T5000-DefaultService" Required="0" Valid="1">
+        <Description Translatable="1">Default Service sets if the service will be avaible as standard service for all customers. You don't need to enter on Customer User - Services relations to edit it anymore</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DefaultService</Item>
+                <Item Key="Label" Translatable="1">Default Service</Item>
+                <Item Key="Desc" Translatable="1">Make this service available for all customers</Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">DefaultService</Item>
+                <Item Key="DefaultSelected">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

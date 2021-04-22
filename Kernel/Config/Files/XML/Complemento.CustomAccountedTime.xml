@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Ticket::CustomModule###002-ComplementoCustomTicketTime" Required="0" Valid="1">
+        <Description Translatable="1">Carrega o módulo para reescrever a função TicketAccountedTimeGet.</Description>
+        <Navigation>Core::Ticket</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="">Kernel::System::Ticket::CustomAccountedTimeGet</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldStartID" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the start of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldEndID" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the end of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">21</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldAccredit" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the Accredit hours of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldSolutionTimeDestinationDate" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which will recieve the value from SolutionTimeDestinationDate Accredit hours of the task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+ 
+    <Setting Name="Ticket::Complemento::AccountedTime::GraphTitle" Required="0" Valid="1">
+        <Description Translatable="1">Set title for the graph in Customer Interface.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="">Horas utilizadas no mês</Item>
+			</Value>
+    </Setting>
+	    <Setting Name="Ticket::Complemento::AccountedTime::QtdeMonth" Required="0" Valid="1">
+        <Description Translatable="1">Set Month to show in the interface.</Description>                                                 
+        <Navigation>Configuration</Navigation>
+                        <Value>
+                                <Item ValueType="String" ValueRegex="^\d+$">11</Item>
+                        </Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::CustomerCountHours" Required="0" Valid="1">
+        <Description Translatable="1">Field used to defined Company hired hours. Ex: CustomerCompanyComment</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="">CustomerCompanyComment</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursStart" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the start of the work hours.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">20</Item>
+			</Value>
+    </Setting>
+    <Setting Name="Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursEnd" Required="0" Valid="1">
+        <Description Translatable="1">Numeric ID of Article Dynamic Field which marks the end of the work task.</Description>
+        <Navigation>Configuration</Navigation>
+			<Value>
+				<Item ValueType="String" ValueRegex="^\d+$">21</Item>
+			</Value>
+    </Setting>
+
+</otrs_config>

@@ -1,0 +1,634 @@
+# --
+# ShowMediaWikiSnippet.tt - provides HTML for ShowMediaWikiSnippet.pm
+# Copyright (C) 2011 - 2012 Perl-Services.de, http://www.perl-services.de 
+# --
+# $Id: ShowMediaWikiSnippet.dtl,v 1.33 2011/01/27 18:44:38 rb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+
+# --
+[% RenderBlockStart("BeginsFollowers") %]
+
+            <div class="WidgetSimple [% Data.Class_collapsed %]">
+
+[% RenderBlockEnd("BeginsFollowers") %]
+		    <div class="Header">
+                	    <div class="WidgetAction Toggle">
+                        	<a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
+	                    </div>
+	                    <h2>[% Translate("Followers") | html %]</h2>
+		     </div>
+
+                <div class="Content">
+                    <div class="Field">
+                        <input id="FromAgent" class="FollowersInput"  placeholder=[% Translate("Users") | html %] type="text" name="FromAgent" value="" class="AgentAutoComplete W100pc" autocomplete="off"/>
+                    </div>
+				
+
+					<div id="ContainerFollowUsers" class="followup" style="" >	
+                    <ul id="FollowerUser">
+		
+[% RenderBlockStart("Followers") %] 
+		
+						<li>
+							<input class="Checkbox"  type="checkbox" name='notifyChoose' id="[% Data.FollowerID %]">  <img src="[% Data.grav_url %]" /><span> [% Data.FollowerName | html %]</span>  <i id="[% Data.FollowerID %]" class="fa fa-minus-square-o"></i> 
+						</li>
+
+[% RenderBlockEnd("Followers") %] 
+	                    </ul>
+					</div>
+                    <div id="RichTextField" class="RichTextField">
+
+                        <textarea class="FastNote FollowersInput" placeholder="[% Translate("Add a note to the ticket. You can send notes to all agents or using the checkbox  to choose the recipients.") %]"  id="RichTexts" class="RichText" name="FastNote" title="[% Translate("Message body") | html %]" rows="4" cols="31" style="overflow:auto;" >[% Data.Body | html %]</textarea>
+                        <div id="RichTextError" class="TooltipErrorMessage">
+                            <p>[% Translate("This field is required.") | html %]</p>
+                        </div>
+                        <div id="RichTextServerError" class="TooltipErrorMessage">
+                            <p>[% Translate("This field is required.") | html %]</p>
+                        </div>
+                    </div>
+
+					<div id="FL-buttons"> <button style="align:right;" class="flbuttons" id="ButtonSend" title="[% Translate("Send") | html %]" value="[% Translate("Send") | html %]" type="button"><span>[% Translate("Send") | html %] </span>
+					<button style="align:left;" id="ButtonSelectAll"  class="flbuttons" title="[% Translate("Select All") | html %]" value="[% Translate("Select All") | html %]" type="button"><span>[% Translate("Select All") | html %] </span> 
+
+	 </button> 
+ 
+</div> 
+
+
+                </div>
+            </div>
+<style>
+	
+	#ContainerFollowUsers {
+	    max-height: 150px;
+	    overflow: auto;
+	}
+	#ContainerFollowUsers .fa-minus-square-o{
+		float:right;
+		padding-top: 7px;
+	}
+	#ContainerFollowUsers .fa-check-square-o{
+		font-size:1.2em;
+		
+	}
+	#ContainerFollowUsers .fa-comments-o{
+		font-size:1.2em;
+	}
+	#ContainerFollowUsers{
+		padding: 1px;
+	}
+	#ButtonSend {
+		float:right;
+		width: 40% !important;
+
+
+	}
+	#ButtonSelectAll {
+		float:right;
+		width: 60% !important;	
+		
+	}
+
+	.flbuttons{
+				padding: 4px !important;
+	}
+	#FollowerUser li {
+		margin: 1px !important;
+	}
+	#FollowerUser li checkbox{
+		margin-right: 5px !important;
+		float:left;
+	}
+	#FollowerUser li img{
+		margin-right: 5px !important;
+	
+	}
+	#FollowerUser li span{
+		margin-right: 5px !important;
+		vertical-align:super !important;
+	}
+	.FollowersInput, #ContainerFollowUsers li {
+		width: 241px;
+	}
+
+} </style>
+
+[% RenderBlockStart("JSAJAX") %] 
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+//AJAX para buscar 
+
+	$( function() {
+		//Ajax responsável por carregar a lista que será utilizada 
+
+		CheckTotalLi();	
+		var TicketID = $("[name=TicketID]").val();
+		var Data = {
+			Action: 'Followers',
+			Subaction: 'AgentUsersAjax',
+			TicketID: TicketID,	
+		};
+//		function complete(Users){
+			$( "#FromAgent" ).bind( "keydown", function( event ) {
+		        }).autocomplete({
+			     	minLength: 3,
+		    	  	source: function( request, response){
+						$.ajax({
+							url: Core.Config.Get('CGIHandle'),
+							dataType: "Json",
+							data:  {
+								Action: 'Followers',
+								Subaction: 'AgentUsersAjax',
+								TicketID: TicketID,
+								PartUser: $("#FromAgent").val(),
+							},
+							success: function(Datas){	
+ 								response(Datas);
+							},
+							error:  function(){	
+								response([]);
+							}
+	
+		
+						});	
+					},focus: function( event, ui){
+						$("#FromAgent").val(ui.item.label);
+						return false;
+					},
+					select: function (event, ui){
+					event.preventDefault();
+				    var followerUl = $("#FollowerUser");
+					//Adiciona um novo usuário
+					addNewMonitor(ui.item.value);
+					//Insere o usuario na UL
+					followerUl.append("<li> <input class='Checkbox' type='checkbox' name='notifyChoose' id='"+ui.item.value+ "' ><img src='"+ui.item.grav_url+"' style='margin-left:4px !important;'/><span>" +ui.item.label+ "</span>  <i id='"+ui.item.value+ "'  class='fa fa-minus-square-o'></i>  </li>");
+					//LIMPA o autocomplete
+					$("#FromAgent").val("");	
+					AddEventClickRemove();	
+				},
+			  });
+	  });
+	 AddEventClickRemove();
+	  //Event to Unsubscribe the user
+	  function AddEventClickRemove(){
+	  	$(".fa-minus-square-o").bind("click", function(){
+			var removeID = $(this).attr("id");
+			if(removeID != ""){
+				removeMonitor(removeID);
+				$(this).parent().remove();
+			}
+		});
+	  }
+
+	  //-----------------------------//
+		
+	  function addNewMonitor(id){
+		var TicketID = $("[name=TicketID]").val();
+		var Data = {
+						Action: 'Followers',
+	   				    Subaction: 'AddAgentMonitor',
+					 	AgentID:id ,
+					 	TicketID: TicketID ,
+				   };
+		
+		$.ajax({
+			type: 'Post',
+			url: Core.Config.Get('CGIHandleSelectAll'),
+			data: Data,
+			success: function (Response){
+#				console.log("Usuário agora faz parte da monitoração");
+				CheckTotalLi();
+			}
+		});
+	  }
+	  function removeMonitor(id){
+		var TicketID = $("[name=TicketID]").val();
+		
+		var Data = {
+					 Action: "Followers",
+					 Subaction: "RemoveAgentMonitor",
+					 AgentID:id,
+					 TicketID: TicketID,	
+	
+				   };
+		$.ajax({
+			type: "Post",
+			url: Core.Config.Get("CGIHanle"),
+			data: Data,
+			success: function(Response){
+#				console.log("Usuários não faz parte da monitoração");	
+				CheckTotalLi();
+			}
+		});
+
+	  }
+	// ENVIA A NOTA QUANDO O BOTÃO É CLICADO , 
+	// Pega todos os usuários que estão marcados e envia uma nota informando para os mesmos
+
+	 $("#ButtonSend").click(function(e){
+#		console.log(e);
+#
+		$(this).find("span").text("[% Translate("Loading") | html %]");
+		$(this).prop("disabled",true);
+		if($("#RichTexts").val() != ""){
+			addNote();
+		}else{
+			$("#RichTexts").attr("placeholder","[% Translate("Please fill the field.") | html %]");
+			
+			$(this).prop("disabled",false);
+			$(this).find("span").text("[% Translate("Send") | html %]");  
+			setCaretToPos($("#RichTexts")[0], 10);
+		}
+	 });
+	// Limpa o campo Text //
+	$("#ButtonSelectAll").click(function(){
+		if($(this).hasClass("mark")){
+			UncheckAll();
+			$(this).removeClass("mark");
+		}
+		else{
+			SelectAll();
+			$(this).addClass("mark");
+		}
+	});
+	function SelectAll(){
+		 $("[name=notifyChoose]").prop("checked", true);
+	 }
+	function UncheckAll(){
+		$("[name=notifyChoose]").prop("checked", false); 
+	}	
+	 function addNote(){	
+		var TicketID = $("[name=TicketID]").val();
+		var FastNote = $("[name=FastNote]").val();
+#		if(FastNote !== "" ){
+#			FastNote = FastNote.substring(0,FastNote.length-1);
+#		}
+#		console.log(FastNote);
+		
+		var AgentNotify = "";  
+		$("[name=notifyChoose]:checked").each(function(){
+
+			AgentNotify += $(this).attr("id") + ",";
+		});
+		var Data = {
+					 Action: "Followers",
+					 Subaction: "FastNote",
+					 TicketID: TicketID,
+					 FastNote: FastNote,
+					 AgentNotify: AgentNotify,	
+				   };
+		$.ajax({
+			type: "Post",
+			url: Core.Config.Get("CGIHanle"),
+			data: Data,
+			success: function(Response){
+#				console.log("Nota Adicionada com sucesso");
+				$("[name=FastNote]").val("");
+				location.reload();
+			}
+		});
+
+
+   	 } 
+	 function CheckTotalLi(){
+		if($("[name=notifyChoose]").length  < 2){
+			 $("#ButtonAll").hide()
+		}else{
+
+			 $("#ButtonAll").show()
+		}
+	 }
+	//Código Responsável pelo Mentions //
+	(function ( $, window, document, undefined ) {
+    	$.widget("ui.triggeredAutocomplete", $.extend(true, {}, $.ui.autocomplete.prototype, {
+        
+        	options: {
+	            trigger: "@",
+	            allowDuplicates: false,	
+    	    },
+
+	        _create:function() {
+
+    	        var self = this;
+	            this.id_map = new Object();
+	            this.stopIndex = -1;
+	            this.stopLength = -1;
+	            this.contents = '';
+	            this.cursorPos = 0;
+            
+    	        /** Fixes some events improperly handled by ui.autocomplete */
+	            this.element.bind('keydown.autocomplete.fix', function (e) {
+    	            switch (e.keyCode) {
+	                    case $.ui.keyCode.ESCAPE:
+	                    self.close(e);
+                        e.stopImmediatePropagation();
+                        break;
+	                    case $.ui.keyCode.UP:
+    	                case $.ui.keyCode.DOWN:
+                        if (!self.menu.element.is(":visible")) {
+                            e.stopImmediatePropagation();
+                        }
+    	            }
+    	        });
+
+	            // Check for the id_map as an attribute.  This is for editing.
+
+    	        var id_map_string = this.element.attr('id_map');
+	            if(id_map_string) this.id_map = jQuery.parseJSON(id_map_string);
+
+    	        this.ac = $.ui.autocomplete.prototype;
+	            this.ac._create.apply(this, arguments);
+
+	            this.updateHidden();
+
+    	        // Select function defined via options.
+	            this.options.select = function(event, ui) {
+    	            var contents = self.contents;
+    	            var cursorPos = self.cursorPos;
+
+
+	                // Save everything following the cursor (in case they went back to add a mention)
+	                // Separate everything before the cursor
+    	            // Remove the trigger and search
+    	            // Rebuild: start + result + end
+	
+    	            var end = contents.substring(cursorPos, contents.length);
+    	            var start = contents.substring(0, cursorPos);
+    	            start = start.substring(0, start.lastIndexOf(self.options.trigger));
+					var followerUl = $("#FollowerUser");
+					//Adiciona um novo usuário
+					addNewMonitor(ui.item.value);
+					//Insere o usuario na UL
+					followerUl.append("<li> <input class='Checkbox' type='checkbox' name='notifyChoose' checked='checked' id='"+ui.item.value+ "' ><img src='"+ui.item.grav_url+"' style='margin-left:4px !important;'/><span>" +ui.item.label+ "</span>  <i id='"+ui.item.value+ "'  class='fa fa-minus-square-o'></i>  </li>");
+					AddEventClickRemove();	
+
+    	            var top = self.element.scrollTop();
+    	            this.value = start + ui.item.label+' ' + end;
+        	        self.element.scrollTop(top);
+
+        	        // Create an id map so we can create a hidden version of this string with id's instead of labels.
+					
+	                self.id_map[ui.item.label] = ui.item.value;
+	                self.updateHidden();
+	
+    	            /** Places the caret right after the inserted item. */
+    	            var index = start.length + self.options.trigger.length + ui.item.label.length + 2;
+	                if (this.createTextRange) {
+	                    var range = this.createTextRange();
+    	                range.move('character', index);
+	                    range.select();
+    	            } else if (this.setSelectionRange) {
+	                    this.setSelectionRange(index, index);
+    	            }
+
+    	            return false;
+    	        };
+
+    	        // Don't change the input as you browse the results.
+	            this.options.focus = function(event, ui) { return false; }
+	            this.menu.options.blur = function(event, ui) { return false; }
+	
+    	        // Any changes made need to update the hidden field.
+    	        this.element.focus(function() { self.updateHidden(); });
+    	        this.element.change(function() { self.updateHidden(); });
+	        },
+
+    	    // If there is an 'img' then show it beside the label.
+
+	        _renderItem:  function( ul, item ) {
+	                return $( "<li></li>" )
+                    .data( "item.autocomplete", item )
+                    .append( "<a>" + "<img style='margin-left:4px !important;' src='" + item.grav_url + "' /><span>"+item.label+ "</span></a>" )
+                    .appendTo( ul );
+    	    },
+
+    	    // This stops the input box from being cleared when traversing the menu.
+
+    	    _move: function( direction, event ) {
+    	        if ( !this.menu.element.is(":visible") ) {
+    	            this.search( null, event );
+    	            return;
+    	        }
+    	        //if ( this.menu.first() && /^previous/.test(direction) || this.menu.last() && /^next/.test(direction) ) {
+//    	            this.menu.deactivate();
+  //  	            return;
+  //  	        }
+
+    	        this.menu[ direction ]( event );
+    	    },
+
+    	    search: function(value, event) {
+
+    	        var contents = this.element.val();
+    	        var cursorPos = this.getCursor();
+    	        this.contents = contents;
+    	        this.cursorPos = cursorPos;
+	
+    	        // Include the character before the trigger and check that the trigger is not in the middle of a word
+    	        // This avoids trying to match in the middle of email addresses when '@' is used as the trigger
+
+    	        var check_contents = contents.substring(contents.lastIndexOf(this.options.trigger) - 1, cursorPos);
+    	        var regex = new RegExp('\\B\\'+this.options.trigger+'([\\w\\-]+)');
+
+    	        if (contents.indexOf(this.options.trigger) >= 0 && check_contents.match(regex)) {
+
+    	            // Get the characters following the trigger and before the cursor position.
+    	            // Get the contents up to the cursortPos first then get the lastIndexOf the trigger to find the search term.
+
+    	            contents = contents.substring(0, cursorPos);
+    	            var term = contents.substring(contents.lastIndexOf(this.options.trigger) + 1, contents.length);
+
+    	            // Only query the server if we have a term and we haven't received a null response.
+    	            // First check the current query to see if it already returned a null response.
+	
+    	            if(this.stopIndex == contents.lastIndexOf(this.options.trigger) && term.length > this.stopLength) { term = ''; }
+            
+    	            if(term.length > 0) {
+    	                // Updates the hidden field to check if a name was removed so that we can put them back in the list.
+    	                this.updateHidden();
+		                return this._search(term);
+    	            }
+    	            else this.close();
+    	        }    
+    	    },
+
+    	    // Slightly altered the default ajax call to stop querying after the search produced no results.
+    	    // This is to prevent unnecessary querying.
+
+    	    _initSource: function() {
+
+    	        var self = this, array, url;
+    	        if ( $.isArray(this.options.source) ) {
+    	            array = this.options.source;
+    	            this.source = function( request, response ) {
+    	                response( $.ui.autocomplete.filter(array, request.term) );
+    	            };
+    	        } else if ( typeof this.options.source === "string" ) {
+    	            url = this.options.source;
+				
+    	            this.source = function( request, response ) {
+    	                if ( self.xhr ) {
+						
+    	                    self.xhr.abort();
+    	                }
+					
+    	                self.xhr = $.ajax({
+    	                    url: Core.Config.Get('CGIHandle'),
+							data:  {
+								Action: 'Followers',
+								Subaction: 'AgentUsersAjax',
+								TicketID: TicketID,
+								PartUser: request.term,
+							},
+    	                    dataType: 'json',
+    	                    success: function(data) {
+
+    	                        if(data != null) {
+    	                            response($.map(data, function(item) {
+																
+    	                                if (typeof item === "string") {
+    	                                    label = item;
+    	                                }
+    	                                else {
+    	                                   var label = item.label;
+    	                                }
+    	                                // If the item has already been selected don't re-include it.
+    	                                if(!self.id_map[label] || self.options.allowDuplicates) {
+    	                                    return item
+    	                                }
+    	                            }));
+    	                            self.stopLength = -1;
+    	                            self.stopIndex = -1;
+    	                        }
+    	                        else {
+    	                            // No results, record length of string and stop querying unless the length decreases
+    	                            self.stopLength = request.term.length;
+    	                            self.stopIndex = self.contents.lastIndexOf(self.options.trigger);
+    	                            self.close();
+    	                        }
+    	                    }
+    	                });
+    	            };
+    	        } else {
+    	            this.source = this.options.source;
+    	        }
+    	    },
+	
+	        destroy: function() {
+	            $.Widget.prototype.destroy.call(this);
+        	},
+
+	        // Gets the position of the cursor in the input box.
+
+    	    getCursor: function() {
+	            var i = this.element[0];
+
+    	        if(i.selectionStart) {
+	                return i.selectionStart;
+    	        }
+	            else if(i.ownerDocument.selection) {
+    	            var range = i.ownerDocument.selection.createRange();
+    	            if(!range) return 0;
+    	            var textrange = i.createTextRange();
+	                var textrange2 = textrange.duplicate();
+
+    	            textrange.moveToBookmark(range.getBookmark());
+	                textrange2.setEndPoint('EndToStart', textrange);
+	                return textrange2.text.length;
+    	        }
+    	    },
+	
+    	    // Populates the hidden field with the contents of the entry box but with 
+	        // ID's instead of usernames.  Better for storage.
+
+    	    updateHidden: function() {
+	            var trigger = this.options.trigger;
+    	        var top = this.element.scrollTop();
+	            var contents = this.element.val();
+    	        for(var key in this.id_map) {
+    	            var find = trigger+key;
+    	            find = find.replace(/[^a-zA-Z 0-9@]+/g,'\\$&');
+    	            var regex = new RegExp(find, "g");
+    	            var old_contents = contents;
+    	            contents = contents.replace(regex, trigger+'['+this.id_map[key]+']');
+    	            if(old_contents == contents) delete this.id_map[key];
+    	        }
+    	        $(this.options.hidden).val(contents);
+    	        this.element.scrollTop(top);
+    	    }
+	
+    	}));  
+	   })( jQuery, window , document );
+   		var TicketID = $("[name=TicketID]").val();
+		var Data = {
+			Action: 'Followers',
+			Subaction: 'AgentUsersAjax',
+			TicketID: TicketID,	
+		};
+		var otrsURL =   Core.Config.Get('CGIHandle')+"?AgentUsersAjax&TicketID="+TicketID;
+        $('#RichTexts').triggeredAutocomplete({
+		    hidden: '#hidden_inputbox',
+	  	    source: otrsURL,
+			trigger: "@" 
+	});
+	//Fim do Código Responsável pelo Mentions //
+	
+//Código responsável pelo atalho de teclas//
+	//	Configurar um tecla de atalho para dar foco na nota
+	//	Configurar Crtl Enter para enviar
+//
+	
+
+	var pressedCtrl = false; 
+
+	$(document).keyup(function (e) {
+		if(e.which == 17)
+			pressedCtrl=false; 
+	})
+
+	$(document).keydown(function (e) {
+		if(e.which == 17) 
+		pressedCtrl = true; 
+		if(e.which == 13 && pressedCtrl == true) { 
+			if($("#RichTexts").val() != ""){
+				$("#ButtonSend").trigger("click");
+				location.reload();
+			}else{
+				setCaretToPos($("#RichTexts")[0], 10);
+			}
+		}
+		if(e.which == 66 && pressedCtrl == true) { 
+			var widgetSimple = $("#ContainerFollowUsers").parent().parent();
+			if(widgetSimple.hasClass("Collapsed")){
+				widgetSimple.removeClass("Collapsed");
+				widgetSimple.addClass("Expanded");
+			}
+			setCaretToPos($("#RichTexts")[0], 10);
+		}
+	});
+ 
+	function setSelectionRange(input, selectionStart, selectionEnd) {
+		if (input.setSelectionRange) {
+    	input.focus();
+	    input.setSelectionRange(selectionStart, selectionEnd);
+	  } else if (input.createTextRange) {
+    	var range = input.createTextRange();
+	    range.collapse(true);
+	    range.moveEnd('character', selectionEnd);
+	    range.moveStart('character', selectionStart);
+	    range.select();
+	  }
+	}
+function setCaretToPos(input, pos) {
+  setSelectionRange(input, pos, pos);
+}
+
+//Código responsável pelo atalho de teclas//
+
+//]]></script>
+[% END %]
+
+[% RenderBlockEnd("JSAJAX") %] 

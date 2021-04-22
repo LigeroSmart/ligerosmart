@@ -1,0 +1,83 @@
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">
+	// Find the toolbar
+	var my_toolbar=document.getElementById('ToolBar');
+	
+	if (my_toolbar){
+		//Create the new item on the toolbar
+		var my_li=document.createElement("li");
+		my_li.className="Extended SearchFulltext Last";
+		my_toolbar.appendChild(my_li); 	
+	
+		var my_form=document.createElement("form");
+		my_form.name="SearchCi";
+		my_form.id="SearchCi";
+		my_form.action="[% Env("CGIHandle") %]";
+		my_form.onsubmit=function(){
+			document.forms['SearchCi'].Name.value='*'+document.forms['SearchCi'].Name.value+'*';
+			}
+		my_li.appendChild(my_form);
+
+		if ([% Data.Classes | html %]==1){
+			var my_input_ci5=document.createElement("input");
+			my_input_ci5.id="ClassID";
+			my_input_ci5.name="ClassID";
+			my_input_ci5.type="hidden";
+			my_input_ci5.value="[% Data.DefaultClassID | html %]";
+			my_form.appendChild(my_input_ci5);
+		} else {
+			var my_input_ci5=document.createElement("select");
+			my_input_ci5.id="ClassID";
+			my_input_ci5.name="ClassID";
+			my_form.appendChild(my_input_ci5);
+			var my_classesName="[% Data.ClassesName | html %]";
+			var my_classesID="[% Data.ClassesID | html %]";
+			my_classesName=my_classesName.split(",")
+			my_classesID=my_classesID.split(",")
+			var i=0;
+			for (i=0;i<[% Data.Classes | html %];i++){
+				my_input_ci5.options[my_input_ci5.options.length] = new Option(my_classesName[i], my_classesID[i]);
+				if(my_classesID[i]==[% Data.DefaultClassID | html %]){
+					my_input_ci5.selectedIndex=my_input_ci5.options.length-1;
+				}
+			}
+		}
+
+		var my_input_ci1=document.createElement("input");
+		my_input_ci1.id="Name";
+		my_input_ci1.name="Name";
+		my_input_ci1.title="[% Data.Hint | html %]";
+		my_input_ci1.size="[% Data.Size | html %]";
+		my_form.appendChild(my_input_ci1);
+		textboxHint("Name");	
+		
+		var my_input_ci2=document.createElement("input");
+		my_input_ci2.id="Subaction";
+		my_input_ci2.name="Subaction";
+		my_input_ci2.type="hidden";
+		my_input_ci2.value="Search";
+		my_form.appendChild(my_input_ci2);
+	
+		var my_input_ci3=document.createElement("input");
+		my_input_ci3.id="ResultForm";
+		my_input_ci3.name="ResultForm";
+		my_input_ci3.type="hidden";
+		my_input_ci3.value="Normal";
+		my_form.appendChild(my_input_ci3);
+	
+		var my_input_ci4=document.createElement("input");
+		my_input_ci4.id="SearchDialog";
+		my_input_ci4.name="SearchDialog";
+		my_input_ci4.type="hidden";
+		my_input_ci4.value="1";
+		my_form.appendChild(my_input_ci4);
+
+		var my_input_ci6=document.createElement("input");
+		my_input_ci6.id="Action";
+		my_input_ci6.name="Action";
+		my_input_ci6.type="hidden";
+		my_input_ci6.value="AgentITSMConfigItemSearch";
+		my_form.appendChild(my_input_ci6);
+	}
+</script>
+[% END %]

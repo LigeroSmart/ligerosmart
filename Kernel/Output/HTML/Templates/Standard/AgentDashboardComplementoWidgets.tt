@@ -1,0 +1,7 @@
+# --
+# --
+<div class="DataTable">
+[% RenderBlockStart("Widget") %]
+    [% Data.Content %]
+[% RenderBlockEnd("Widget") %]
+</div>

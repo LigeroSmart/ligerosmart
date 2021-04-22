@@ -1,0 +1,34 @@
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+    <div class="WidgetSimple [% Data.ContentClass | html %] LigeroFixWidget">
+        <div class="Content LigeroFix">
+	    <div class="clear"></div>
+            <div id='LigeroFixHolder'>
+                <div class="LigeroFixTable">
+[% RenderBlockStart("LigeroFixCard") %]
+                        
+                            <div class="LigeroFixCard" style="background-color: [% Data.BackgroundColor %]">
+                                <span class="LigeroFixValue"><a href="javascript:void(0)" onclick="LigeroFix.OpenModal(event,'[% Data.Module | html %]');" data-module="[% Data.Module %]" id="_lfw[% Data.Index | html %]">0</a></span>
+                                <span class="LigeroFixLabel">
+                                    [% Translate(Data.Label) %]
+                                </span>
+                                <div class="LigeroFixIcon"><i class="fa [% Data.BackgroundFontAwesomeIcon %]"></i></div>
+                                <a href="#" class="LigeroFixMore" onclick="LigeroFix.OpenModal(event,'[% Data.Module | html %]');">[% Translate("Visualize") %] <i class="fa fa-arrow-right"></i></a>
+                            </div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">      
+  LigeroFix.GetCounter([% Data.Index | html %],'[% Data.Module | html %]');
+</script>
+[% END %]
+[% RenderBlockEnd("LigeroFixCard") %]
+                </div>
+            </div>
+            <div id="ligeroFixContent">
+            
+            </div>
+        </div>
+    </div>

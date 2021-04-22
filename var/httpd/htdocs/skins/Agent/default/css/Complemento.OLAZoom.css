@@ -1,0 +1,93 @@
+.WidgetSimple > .Content.OlaWidget {
+    padding: 0px 0px 0px 0px !important;
+    overflow: hidden;
+}
+
+.runningOla {
+
+}
+.runningOla i {
+    font-size: 26pt;
+}
+
+.runningOla .OlaTitle {
+    font-size: 10.5pt;
+    margin-bottom: 5px;
+}
+
+.stoppedOla .OlaTitle {
+    font-size: 10pt;
+    margin-bottom: 2px;
+}
+
+.OlaTitle {
+    clear: both;
+    width: 100%;
+    display: table;
+    line-height: 13pt;
+    padding: 0px 0px 0px 10px;
+}
+.text-top,.divIcon {
+    display: table-cell;
+    vertical-align: middle;
+}
+.text-top{
+	width: 100%;
+	padding-right: 22px;
+}
+/* The alert message box */
+.alert {
+    padding: 5px 0px 10px 0px;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+}
+.alert.Progress {background-color: #36a31d;}
+.alert.Stopped {background-color: #095597;}
+.alert.Progress.Alert {background-color: #f59702;}
+.alert.Progress.Expired {background-color:#de1c01}
+.alert.Stopped.Expired{background-color:#9a3a01;}
+.alert div i{
+	margin-right: 10px;
+}
+.runningOla .DiffTime, .DueTime {
+    width: 100%;
+    text-align: center;    
+}
+
+.runningOla .DiffTime{
+    font-size:15pt !important;
+    margin: 0px 0px 8px 0px;
+}
+
+.stoppedOla .DiffTime {
+    margin-left: 32px;
+}
+
+.stoppedOla {
+    padding: 3px;
+    margin-top: 1px;
+    margin-bottom: 0px;
+    background-color: #f44336;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+}
+
+/*
+
+
+
+.State{
+	 padding-left:2px;
+}
+.OLAQueueName{
+	padding-bottom:2px !important;
+	margin-left: 10px;
+	font-size: 14px !important;
+	
+}
+.Icon{
+	padding:4px;
+}
+*/

@@ -1,0 +1,6 @@
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.DynamicFieldByService.Init();
+//]]></script>
+[% END %]
+

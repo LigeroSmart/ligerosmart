@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="SmsNotify::Gateway###Zenvia-01" Required="0" Valid="1">
+        <Description Translatable="1">Zenvia SMS Gateway.</Description>
+        <Navigation>SmsNotify::Gateways</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="user"></Item>
+                <Item Key="password"></Item>
+                <Item Key="Sender">OTRS</Item>
+                <Item Key="URL">https://api-rest.zenvia360.com.br/services/send-sms</Item>
+                <Item Key="Name">Zenvia</Item>
+                <Item Key="Module">Kernel::System::Ticket::Event::NotificationEvent::Transport::SmsNotifyGateways::Zenvia</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+</otrs_config>

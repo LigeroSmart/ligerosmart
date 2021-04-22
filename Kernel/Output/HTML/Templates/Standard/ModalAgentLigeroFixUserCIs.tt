@@ -1,0 +1,31 @@
+[% RenderBlockStart("CICardContent") %]
+<div id="LigeroFixModalHolder">
+    <div id="LigeroFixModalListFull" class="LigeroFixModalContent">
+[% RenderBlockStart("CICard") %]
+      <div id="ciDesc[% Data.ID %]" class="Need">
+        <a href="#">
+            [% Data.Name | html %]
+        </a>
+        <br>
+            <span >[% Data.Description %]</span>
+
+            <div id="LigeroFixModalZoomActions" style="margin-top:10px;">
+              <button value="Link to the Ticket" onclick="LigeroFix.LinkToTheTicket('AgentLigeroFixUserCIs', [% Data.ID %])">[% Translate("Link to the ticket") %]</button>
+              <button value="View" onclick="openCINewTab([% Data.ID %]);">[% Translate("Open in a new tab") %]</button>
+          </div>
+    </div>
+[% RenderBlockEnd("CICard") %]
+
+
+    </div>
+</div>
+[% RenderBlockEnd("CICardContent") %]
+
+<script>
+
+  function openCINewTab(id){
+    var win = window.open(Core.Config.Get('CGIHandle')+"?Action=AgentITSMConfigItemZoom;ConfigItemID="+id, '_blank');
+    win.focus();
+    LigeroFix.CloseModal();
+  }
+</script>

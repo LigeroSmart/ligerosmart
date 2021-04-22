@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="GenericInterface::Transport::Module###LigeroEasyConnector::REST" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the transport layer.</Description>
+        <Navigation>GenericInterface::Transport::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">REST</Item>
+                <Item Key="Protocol">HTTP</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceTransportLigeroEasyConnectorREST</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AdminGenericInterfaceTransportLigeroEasyConnectorREST" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title" Translatable="1">GenericInterface TransportHTTPREST GUI</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminGenericInterfaceTransportLigeroEasyConnectorREST###002-GenericInterface" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.Agent.Admin.GenericInterface.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.Admin.GenericInterfaceTransportHTTPREST.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###Ligero::LigeroEasyConnector" Required="0" Valid="1">
+        <Description Translatable="1">Object for update or create ticket.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">LigeroEasyConnector</Item>
+                <Item Key="Controller">Ligero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Invoker::Module###Ligero::LigeroEasyConnector" Required="0" Valid="1">
+        <Description Translatable="1">Send Ticket and Article to other System.</Description>
+        <Navigation>GenericInterface::Invoker::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">LigeroEasyConnector</Item>
+                <Item Key="Controller">Ligero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceInvokerLigero</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Invoker::Module###Ligero::ArticleSend" Required="0" Valid="1">
+        <Description Translatable="1">Send Article to Other OTRS System.</Description>
+        <Navigation>GenericInterface::Invoker::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">ArticleSend</Item>
+                <Item Key="Controller">Ligero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceInvokerDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Invoker::Module###Ligero::RemoteQueueUpdate" Required="0" Valid="1">
+        <Description Translatable="1">Updates remote queue based on RemoteQueue dynamic field update (you need to create this dynamic field as a dropdown).</Description>
+        <Navigation>GenericInterface::Invoker::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">RemoteQueueUpdate</Item>
+                <Item Key="Controller">Ligero</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceInvokerDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Invoker::Module###OTRS::RemoteTicketUpdate" Required="0" Valid="1">
+        <Description Translatable="1">Update remote ticket based on any event you want. You need to configure all the information on the invoker mapping, such as remote ticket ID and the remote information to be updated.</Description>
+        <Navigation>GenericInterface::Invoker::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">RemoteTicketUpdate</Item>
+                <Item Key="Controller">OTRS</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceInvokerDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Mapping::Module###LigeroEasyConnector" Required="1" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the mapping layer.</Description>
+        <Navigation>GenericInterface::Mapping::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ConfigDialog">AdminGenericInterfaceMappingSimple</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Mapping::Module###XSLTLigero" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the mapping layer.</Description>
+        <Navigation>GenericInterface::Mapping::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ConfigDialog">AdminGenericInterfaceMappingXSLT</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AdminGenericInterfaceInvokerLigero" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title" Translatable="1">GenericInterface Invoker GUI</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminGenericInterfaceInvokerLigero###003-GenericInterface" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.Agent.Admin.GenericInterface.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.Admin.GenericInterfaceInvoker.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OTRSIntegration::UserLogin" Required="1" Valid="1">
+        <Description Translatable="1">Agent conection user</Description>
+        <Navigation>Configuration</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">agentxyz</Item>
+        </Value>
+    </Setting>
+    <Setting Name="OTRSIntegration::Password" Required="1" Valid="1">
+        <Description Translatable="1">Agent conection Password</Description>
+        <Navigation>Configuration</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">passwordxyz</Item>
+        </Value>
+    </Setting>
+</otrs_config>
