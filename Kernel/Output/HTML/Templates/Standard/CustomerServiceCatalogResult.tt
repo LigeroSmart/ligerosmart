@@ -1,0 +1,34 @@
+
+[% RenderBlockStart("NumberOfRows") %]
+	<div class="NumberOfRows" > 
+		<span> [% Data.NumberOfRows | html %] </span> 
+		[% Translate("Results Found") | html %] 
+	</div>
+[% RenderBlockEnd("NumberOfRows") %]
+
+[% RenderBlockStart("Result") %]
+<div class="Need">
+  <a target="_self"  href="[% Data.URL %]">
+  [%Data.Title  %]
+  </a>
+  <br/><span class="BackgroundType" style="background-color: [% Data.backColor %] ">[% Translate(Data.Subtitle) | html %] </span> <span>[% Data.Description %] </span>
+</div> 
+#</div>
+[% RenderBlockEnd("Result") %]
+
+[% RenderBlockStart("ResultUrl") %]
+<div class="Need">
+  <a target="[% Data.UrlTarget | html %]"  href="[% Data.Url | html %]">
+  [%Data.Title  %]
+  </a>
+  <br/><span class="BackgroundType" style="background-color: [% Data.backColor %] ">[% Translate(Data.Subtitle) | html %] </span> <span>[% Data.Description %] </span>
+</div> 
+#</div>
+[% RenderBlockEnd("ResultUrl") %]
+
+[% RenderBlockStart("FilterFooter") %]
+     <div class="Tabs Pagination">
+            [% Data.SiteNavBar %]
+        </div>
+        <div class="Clear"></div>
+[% RenderBlockEnd("FilterFooter") %] 

@@ -1,0 +1,33 @@
+# --
+# AgentTicketQueue.tt - provides HTML QueueView for AgentTicketQueue
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentTicketQueue.dtl,v 1.14 2011/12/22 15:27:26 cg Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<style type="text/css">
+.FilterSelect{
+ width: 300px;
+}
+</style>
+<div class="WidgetSimple QueueOverview">
+    <div class="Content">
+        [% Data.MainContent %]
+    </div>
+    <div class="Clear"></div>
+</div>
+<div class="QueueOverviewSeparator"></div>
+
+
+<!--dtl:multiselect-->
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('.ui-multiselect-close').click(function(e){
+    $('#filters').submit();
+});
+//]]></script>
+[% END %]
+<!--dtl:multiselect-->

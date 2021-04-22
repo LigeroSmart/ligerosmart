@@ -1,0 +1,52 @@
+# Wtah = Was this article helpful =D
+
+<style type="text/css">
+.Wtah {
+    display: inline-block;
+    width: 100%;
+    background: #fafafa;
+    font-size: 14pt;
+}
+
+.WtahBody {
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.Wtahbuttons.WtahBody {
+    text-align:center;
+}
+
+.Wtahlinks.WtahBody {
+    margin-left: 30px;
+}
+.Wtahlinks.WtahBody a {
+    line-height: 28px;
+    color: #1783FD;
+    margin-left:25px;
+}
+
+.WtahButton {
+    font-size: 12pt;
+    padding: 6px 15px !important;
+    margin: 10px 10px;
+
+}
+</style>
+<div class="Wtah">
+    <div class="WtahBody [% Data.AdditionalClass %]">
+        <span class="">[% Translate(Data.WasThisArticleHelpfulText) | html %]</span>
+
+        <div class="SpacingTop"></div>
+[% RenderBlockStart("buttons") %]
+<button class="WtahButton" onclick="window.location.href='[% Data.Link %]'">[% Translate(Data.Option) %]</button>
+[% RenderBlockEnd("buttons") %]
+
+[% RenderBlockStart("links") %]
+<span class="WtahLink"><a href="[% Data.Link %]">[% Translate(Data.Option) %]</a></span><br/>
+[% RenderBlockEnd("links") %]
+
+        <div class="SpacingTop"></div>
+    </div>
+</div>

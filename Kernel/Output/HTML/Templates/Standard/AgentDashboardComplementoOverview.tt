@@ -1,0 +1,21 @@
+# --
+# --
+<div class="DataTable CompOverviewTable">
+<!--[% RenderBlockStart("Widget2") %]-->
+<!--    [% Data.Content %]-->
+<!--[% RenderBlockEnd("Widget2") %]-->
+<table style="width:100%">
+    <tr>
+
+[% RenderBlockStart("Item") %]
+        <td style="width:[% Data.Width %]%">
+            <span class="resumeLabel [% Data.Theme %]">
+            [% Translate(Data.Label) | html %]
+            </span>
+
+            <span class="resumeValue [% Data.Theme %]"><a href="[% Env("Baselink") %][% Data.URL %]">[% Data.Count %]</a></span>
+        </td>
+[% RenderBlockEnd("Item") %]
+    </tr>
+</table>
+</div>

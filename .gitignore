@@ -1,0 +1,15 @@
+js-cache
+css-cache
+var/run
+var/log
+var/tmp
+Kernel/Config/Files/ZZZAAuto.pm
+Kernel/Config/Files/ZZZACL.pm
+*.save
+.bash_history
+.viminfo
+build.log
+latest-build
+.gitconfig
+*.swp
+.vscode

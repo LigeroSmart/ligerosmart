@@ -1,0 +1,32 @@
+input.Blur {
+  color:#808080;
+}
+.NoShow {
+	display:none;
+}
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsubsection     ToolbarFulltextSearch
+ */
+#SearchCi #Name {
+    float: left;
+    height: 15px;
+    margin: 0;
+    padding: 4px 5px;
+    font: normal 12px/15px "Helvetica Neue",Helvetica,Arial,sans-serif;
+    border-color: #999;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    vertical-align: bottom;
+    background-color: #FFFFFF;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-top-width: 1px;
+
+}
+
+} /* end @media */

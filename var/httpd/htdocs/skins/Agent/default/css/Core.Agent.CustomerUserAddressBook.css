@@ -1,0 +1,47 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Customer User Address Book
+ */
+
+@media screen,projection,tv,handheld {
+
+.CustomerUserAdressBookSearch h1 {
+    margin: 10px 0px;
+    padding: 4px 0px 7px;
+}
+
+.CustomerUserAddressBookForm {
+    width: 100% !important;
+    padding-right: 0 !important;
+}
+
+.CustomerUserAdressBook h1 {
+    padding-left: 8px;
+}
+
+.CustomerUserAdressBook .FieldExplanation {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.CustomerUserAdressBook .Pagination {
+    height: 10px;
+    margin-top: 5px;
+    padding-right: 12px;
+}
+
+.CustomerUserAdressBookList .Disabled > td,
+.CustomerUserAdressBookList .Disabled > td span {
+    color: #AAAAAA !important;
+    opacity: 0.8;
+}
+
+} /* end @media */

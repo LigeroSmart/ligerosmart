@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+	<Setting Name="DynamicFieldTextMask::Masks" Required="1" Valid="1">
+        <Description Translatable="1">DynamicField masks.</Description>
+        <Navigation>Masks</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="AlphaNumeric">'regex': '[A-Za-z0-9 ]*'</Item>
+                <Item Key="NoAccents">'regex': '[^\u00C0-\u00C6\u00C8-\u00E6\u00E8-\u01FF]*'</Item>
+                <Item Key="Currency - BRL">'alias': 'currency','prefix':'R$ ','autoUnmask':false,'groupSeparator':'.','radixPoint':','</Item>
+                <Item Key="CEP">'mask': '99999-999', 'keepStatic': true</Item>
+                <Item Key="CNPJ">'mask': '99.999.999/9999-99', 'keepStatic': true</Item>
+                <Item Key="CPF">'mask': '999.999.999-99', 'keepStatic': true</Item>
+                <Item Key="CPFouCNPJ">'mask': ['999.999.999-99','99.999.999/9999-99'], 'keepStatic': true</Item>
+                <Item Key="Date">'alias': 'date'</Item>
+                <Item Key="Date Time BRL">'mask': '1/2/y h:s','placeholder': 'dd/mm/yyyy hh:mm','alias': 'datetime'</Item>
+                <Item Key="Brazillian Phone Number">'mask': ['(99) 9999-9999','(99) 99999-9999' ], 'keepStatic': true</Item>
+            </Hash>
+        </Value>
+    </Setting>
+	<Setting Name="DynamicFields::Driver###TextMask" Required="1" Valid="1">
+        <Description Translatable="1">DynamicField backend registration.</Description>
+        <Navigation>DynamicFields::Backend::Registration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="DisplayName" Translatable="1">TextMask</Item>
+                <Item Key="Module">Kernel::System::DynamicField::Driver::TextMask</Item>
+                <Item Key="ConfigDialog">AdminDynamicFieldTextMask</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AdminDynamicFieldTextMask" Required="1" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title" Translatable="1">Dynamic Fields Text Backend GUI</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminDynamicFieldTextMask###002-DynamicFieldTextMask" Required="1" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.Admin.DynamicField.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AdminDynamicFieldTextMask###002-DynamicFieldTextMask" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###237-Mask" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/jquery-mask/jquery.inputmask.bundle.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-be.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-nl.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-ru.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-uk.min.js</Item>
+                <Item>thirdparty/jquery-mask/inputmask.binding.min.js</Item>
+                <Item>Complemento.InputMaskDelayed.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Customer::CommonJS###237-Mask" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the customer interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>thirdparty/jquery-mask/jquery.inputmask.bundle.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-be.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-nl.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-ru.min.js</Item>
+                <Item>thirdparty/jquery-mask/phone-codes/phone-uk.min.js</Item>
+                <Item>thirdparty/jquery-mask/inputmask.binding.min.js</Item>
+                <Item>Complemento.InputMaskDelayed.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+</otrs_config>

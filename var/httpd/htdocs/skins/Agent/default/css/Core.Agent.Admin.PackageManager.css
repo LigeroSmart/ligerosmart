@@ -1,0 +1,74 @@
+/*
+Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+*/
+
+/**
+ * @package     Skin "Default"
+ * @section     Application
+ * @subsection  Admin
+ */
+
+@media screen,projection,tv,handheld {
+
+
+/**
+ * @subsection      Upgrade all
+ */
+
+.Dialog > .Content .InnerContent.UpgradeAllDialog {
+    width: 400px;
+    padding: 10px;
+}
+
+.UpgradeAllDialog i.Success,
+.UpgradeAllDialog td.Success,
+.UpgradeAllDialog span.Success {
+    color: green;
+}
+.UpgradeAllDialog td.Warning,
+.UpgradeAllDialog span.Warning {
+    color: #F7AE40;
+}
+.UpgradeAllDialog td.Fail,
+.UpgradeAllDialog span.Fail {
+    color: #E95F53;
+}
+
+.UpgradeAllDialog tr:hover > td {
+    color: #000;
+}
+
+.IntroInstall {
+    background: #eee;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    line-height: 150%;
+}
+
+.IntroInstall.NotVerifiedPackage {
+    margin-bottom: 0;
+}
+
+.IntroInstall h3 {
+    display: inline-block;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.IntroInstall ul {
+    list-style-type: square;
+    margin: 10px 0px;
+    padding-left: 15px;
+}
+
+.IntroInstall ul li {
+    margin-bottom: 5px;
+}
+
+
+} /* end @media */

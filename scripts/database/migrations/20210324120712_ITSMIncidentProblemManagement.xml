@@ -1,0 +1,55 @@
+<Migrations>
+    <DatabaseInstall Type="post">
+        <Insert Table="ticket_state">
+            <Data Key="name" Type="Quote" Translatable="1">closed with workaround</Data>
+            <Data Key="comments" Type="Quote">Ticket is closed with workaround.</Data>
+            <Data Key="type_id">3</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Incident</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Incident::Major</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">ServiceRequest</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="ticket_type">
+            <Data Key="name" Type="Quote">Problem</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::ITSMIncidentProblemManagement')->CodeInstall();
+    ]]></CodeInstall>
+    
+    <DatabaseUninstall Type="pre">
+    </DatabaseUninstall>
+    <CodeUninstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::ITSMIncidentProblemManagement')->CodeUninstall();
+    ]]></CodeUninstall>
+</Migrations>

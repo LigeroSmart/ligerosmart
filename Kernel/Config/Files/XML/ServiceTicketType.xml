@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="ServicePreferences###Z4001-TicketType" Required="0" Valid="1">
+        <Description Translatable="1">Service Type</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::Type</Item>
+                <Item Key="Label" Translatable="1">Ticket Type</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="PrefKey">TicketType</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###ServiceTicketType" Required="0" Valid="1">
+        <Description Translatable="1">Event module registration.</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::ServiceTicketType</Item>
+                <Item Key="Transaction">1</Item>
+                <Item Key="Event">TicketCreate|TicketServiceUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

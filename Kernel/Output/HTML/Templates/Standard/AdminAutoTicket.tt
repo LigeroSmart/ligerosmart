@@ -1,0 +1,492 @@
+# --
+# AdminAutoTicket.tt - provides HTML form for AdminAutoTicket
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# --
+# $Id: AdminAutoTicket.dtl,v 1.37 2012/03/01 12:50:13 mg Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("Overview") %]
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>[% Translate("Manage AutoTickets") | html %]</h1>
+
+    <div class="SidebarColumn">
+[% RenderBlockStart("ActionList") %]
+        <div class="WidgetSimple">
+            <div class="Header"><h2>[% Translate("Actions") | html %]</h2></div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionOverview") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionOverview") %]
+[% RenderBlockStart("ActionAdd") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction Plus"><span>[% Translate("Add AutoTicket") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionAdd") %]
+                </ul>
+            </div>
+        </div>
+[% RenderBlockStart("Filter") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2><label for="Filter">[% Translate("Filter") | html %]</label></h2>
+            </div>
+            <div class="Content">
+                <input type="text" id="Filter" class="W50pc" name="Filter" value="" title="[% Translate("Filter") | html %]" />
+            </div>
+        </div>
+[% RenderBlockEnd("Filter") %]
+[% RenderBlockEnd("ActionList") %]
+
+    </div>
+    <div class="ContentColumn">
+
+[% RenderBlockStart("OverviewResult") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("List") | html %]</h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable" id="AutoTickets">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Name") | html %]</th>
+#                            <th>[% Translate("Attachments") | html %]</th>
+                            <th>[% Translate("Comment") | html %]</th>
+                            <th>[% Translate("Validity") | html %]</th>
+                            <th>[% Translate("Changed") | html %]</th>
+                            <th>[% Translate("Created") | html %]</th>
+                            <th>[% Translate("Delete") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="FilterMessage Hidden">
+                            <td colspan="7">[% Translate("No matches found.") | html %]</td>
+                        </tr>
+[% RenderBlockStart("NoDataFoundMsg") %]
+                        <tr>
+                            <td colspan="7">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("NoDataFoundMsg") %]
+[% RenderBlockStart("OverviewResultRow") %]
+                        <tr>
+                            <td>
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Change;ID=[% Data.ID | uri %]">[% Data.Name | html %]</a>
+                            </td>
+#                            <td>[% Data.Attachments | html %]</td>
+                            <td title="[% Data.Comment | html %]">[% Data.Comment | truncate(26) | html %]</td>
+                            <td>[% Translate(Data.Valid) | html %]</td>
+                            <td>[% Data.ChangeTime | Localize("TimeShort") %]</td>
+                            <td>[% Data.CreateTime | Localize("TimeShort") %]</td>
+                            <td class="Center">
+                                <a class="TrashCan" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Delete;ID=[% Data.ID | uri %];[% Env("ChallengeTokenParam") | html %]" title="[% Translate("Delete this entry") | html %]">
+                                    [% Translate("Delete this entry") | html %]
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
+                            </td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultRow") %]
+                    </tbody>
+                </table>
+            </div>
+        </div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.UI.Table.InitTableFilter($('#Filter'), $('#AutoTickets'));
+//]]></script>
+[% END %]
+[% RenderBlockEnd("OverviewResult") %]
+[% RenderBlockStart("OverviewUpdate") %]
+
+[% RenderBlockStart("RichText") %]
+[% InsertTemplate("RichTextEditor.tt") %]
+[% RenderBlockEnd("RichText") %]
+
+        <div class="WidgetSimple">
+            <div class="Header">
+[% RenderBlockStart("HeaderAdd") %]
+                <h2>[% Translate("Add AutoTicket") | html %]</h2>
+[% RenderBlockEnd("HeaderAdd") %]
+[% RenderBlockStart("HeaderEdit") %]
+                <h2>[% Translate("Edit AutoTicket") | html %]</h2>
+[% RenderBlockEnd("HeaderEdit") %]
+            </div>
+            <div class="Content">
+                <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="[% Data.Action | uri %]Action"/>
+                    <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+                    <fieldset class="TableLike">
+                        <label class="Mandatory" for="Name"><span class="Marker">*</span> [% Translate("Name") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Name" id="Name" value="[% Data.Name | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>
+                            <div id="NameError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="NameServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="Mandatory" for="Title"><span class="Marker">*</span> [% Translate("Ticket Title") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Title" id="Title" value="[% Data.Title | html %]" class="W50pc Validate_Required [% Data.TitleInvalid | html %]" maxlength="200"/>
+                            <div id="TitleError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="TitleServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+
+                        <label for="Customer">[% Translate("Customer Login") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Customer" id="Customer" 
+                            value="[% Data.Customer | html %]" 
+                            class="W50pc  [% Data.CustomerInvalid | html %]" maxlength="255"/>
+                            <div id="TitleError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="TitleServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.AutoTicketCustomerSearch.Init( $('#Customer'), true );
+//]]></script>
+[% END %]
+
+                        <label for="CustomerID">[% Translate("Customer ID") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="CustomerID" id="CustomerID" value="[% Data.CustomerID | html %]" class="W50pc  [% Data.CustomerIDInvalid | html %]" maxlength="255"/>
+                            <div id="TitleError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="TitleServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.AutoTicketCustomerID.InitAutocomplete( $('#CustomerID'), "SearchCustomerID" );
+//]]></script>
+[% END %]
+                        
+                        <div class="Clear"></div>
+
+
+                        <label class="Mandatory" for="TypeID"><span class="Marker">*</span> [% Translate("Ticket Type") | html %]:</label>
+                        <div class="Field">
+                            [% Data.TypeOption %]
+                            <div id="TypeIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="TypeIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="Mandatory" for="ServiceID"><span class="Marker">*</span> [% Translate("Service") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ServiceOption %]
+                            <div id="ServiceIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="ServiceIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="Mandatory" for="QueueID"><span class="Marker">*</span> [% Translate("Queue") | html %]:</label>
+                        <div class="Field">
+                            [% Data.QueueOption %]
+                            <div id="QueueIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="QueueIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="Mandatory" for="StateID"><span class="Marker">*</span> [% Translate("State") | html %]:</label>
+                        <div class="Field">
+                            [% Data.StateOption %]
+                            <div id="StateIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="StateIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="Mandatory" for="PriorityID"><span class="Marker">*</span> [% Translate("Priority") | html %]:</label>
+                        <div class="Field">
+                            [% Data.PriorityOption %]
+                            <div id="PriorityIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="PriorityIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+
+
+                        <label for="RichText">[% Translate("First Article Text") | html %]:</label>
+                        <div class="RichTextField">
+                            <textarea id="RichText" class="RichText" rows="10" cols="60" name="Message">[% Data.Message | html %]</textarea>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="IsVisibleForCustomer">[% Translate("Is visible for customer") | html %]:</label>
+                        <div class="Field">
+				<input type="checkbox" name="IsVisibleForCustomer" id="IsVisibleForCustomer"
+					[% IF Data.IsVisibleForCustomer %]checked="checked" [% END %]/>
+			</div>
+			<div class="Clear"></div>
+
+
+#                        <label for="IDs">[% Translate("Attachments") | html %]:</label>
+#                        <div class="Field">
+#                            [% Data.AttachmentOption %]
+#                        </div>
+#                        <div class="Clear"></div>
+
+[% RenderBlockStart("NewDynamicField") %]
+                        <label>[% Translate("New Dynamic Field Values") | html %]</label>
+                        <div class="Clear"></div>
+[% RenderBlockStart("NewDynamicFieldElement") %]
+                        [% Data.Label %]
+                        <div class="Field">
+                            [% Data.Field %]
+                        </div>
+                        <div class="Clear"></div>
+[% RenderBlockEnd("NewDynamicFieldElement") %]
+[% RenderBlockEnd("NewDynamicField") %]
+
+
+
+<!--                        <label for="NoAgentNotify">[% Translate("Do not notify Agents") | html %]:</label>-->
+<!--                        <div class="Field">-->
+<!--                            <input type="checkbox" name="NoAgentNotify" id="NoAgentNotify" value="1" [% Data.NoAgentNotifyOption %] />-->
+<!--                        </div>-->
+<!--                        <div class="Clear"></div>-->
+
+
+                        <label class="SLAIDREQ Mandatory" for="SLAID"><span class="SLAIDREQ Marker">*</span> [% Translate("SLA") | html %]:</label>
+                        <div class="Field">
+                            [% Data.SLAOption %]
+                            <div id="SLAIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="SLAIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+
+                        <label class="Mandatory" for="Hour"><span class="Marker">*</span> [% Translate("Time") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Hour" id="Hour" value="[% Data.Hour | html %]" class="Validate_Required [% Data.HourInvalid | html %]" maxlength="2" size="2"/> [% Translate("hour") | html %]
+                            <div id="HourError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="HourServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+
+                            <input type="text" name="Minutes" id="Minutes" value="[% Data.Minutes | html %]" class="Validate_Required [% Data.MinutesInvalid | html %]" maxlength="2" size="2"/> [% Translate("minutes") | html %]
+                            <div id="MinutesError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="MinutesServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+<br/>
+
+                        <label class="Mandatory" for="Nwd"><span class="Marker">*</span> [% Translate("Creation Method") | html %]:</label>
+                        <div class="Field">
+                            [% Data.NwdOption %]
+                            <div id="NwdError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="NwdServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div>
+                                <b>[% Translate("NBD = Non Business Day") | html %]</b></br>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Weekday">[% Translate("Repeat On") | html %]:</label>
+                        <div class="Field">
+                            <input type="checkbox" name="Weekday" id="weekday0" value="0" [% Data.w0_Option %] />
+                            [% Translate("Sunday") | html %]
+                            <input type="checkbox" name="Weekday" id="weekday1" value="1" [% Data.w1_Option %] />
+                            [% Translate("Monday") | html %]
+                            <input type="checkbox" name="Weekday" id="weekday2" value="2" [% Data.w2_Option %] />
+                            [% Translate("Tuesday") | html %]
+                            <input type="checkbox" name="Weekday" id="weekday3" value="3" [% Data.w3_Option %] />
+                            [% Translate("Wednesday") | html %]
+                            <input type="checkbox" name="Weekday" id="weekday4" value="4" [% Data.w4_Option %] />
+                            [% Translate("Thursday") | html %]
+                            <input type="checkbox" name="Weekday" id="weekday5" value="5" [% Data.w5_Option %] />
+                            [% Translate("Friday") | html %]
+                            <input type="checkbox" name="Weekday" id="weekday6" value="6" [% Data.w6_Option %] />
+                            [% Translate("Saturday") | html %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Monthday">[% Translate("Month day (separated by ;)") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Monthday" id="Monthday" value="[% Data.Monthday | html %]" class="W50pc [% Data.MonthdayInvalid | html %]" maxlength="200"/>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="months">[% Translate("Months") | html %]:</label>
+                        <div class="Field">
+			    <input type="checkbox" name="Months" id="Months1" value="1" [% Data.m1_Option %] />
+			    [% Translate("Jan") | html %]
+			    <input type="checkbox" name="Months" id="Months2" value="2" [% Data.m2_Option %] />
+			    [% Translate("Feb") | html %]
+			    <input type="checkbox" name="Months" id="Months3" value="3" [% Data.m3_Option %] />
+			    [% Translate("Mar") | html %]
+			    <input type="checkbox" name="Months" id="Months4" value="4" [% Data.m4_Option %] />
+			    [% Translate("Apr") | html %]
+			    <input type="checkbox" name="Months" id="Months5" value="5" [% Data.m5_Option %] />
+			    [% Translate("May") | html %]
+			    <input type="checkbox" name="Months" id="Months6" value="6" [% Data.m6_Option %] />
+			    [% Translate("Jun") | html %]
+			    <input type="checkbox" name="Months" id="Months7" value="7" [% Data.m7_Option %] />
+			    [% Translate("Jul") | html %]
+			    <input type="checkbox" name="Months" id="Months8" value="8" [% Data.m8_Option %] />
+			    [% Translate("Aug") | html %]
+			    <input type="checkbox" name="Months" id="Months9" value="9" [% Data.m9_Option %] />
+			    [% Translate("Sep") | html %]
+			    <input type="checkbox" name="Months" id="Months10" value="10" [% Data.m10_Option %] />
+			    [% Translate("Oct") | html %]
+			    <input type="checkbox" name="Months" id="Months11" value="11" [% Data.m11_Option %] />
+			    [% Translate("Nov") | html %]
+			    <input type="checkbox" name="Months" id="Months12" value="12" [% Data.m12_Option %] />
+			    [% Translate("Dec") | html %]
+
+                        </div>
+                        <div class="Clear"></div>
+
+                        
+                        <label class="Mandatory" for="ValidID"><span class="Marker">*</span> [% Translate("Validity") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ValidOption %]
+                            <div id="ValidIDError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="ValidIDServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Comment">[% Translate("Comment") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Comment" id="Comment" value="[% Data.Comment | html %]" class="W50pc" maxlength="250"/>
+                        </div>
+                        <div class="Clear"></div>
+
+
+                        <div class="Field">
+                            <button class="Primary" type="submit" value="[% Translate("Submit") | html %]">[% Translate("Submit") | html %]</button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=AdminAutoTicket">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+                        
+                        
+                        
+                        
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="WidgetSimple SpacingTop">
+            <div class="Header">
+                <h2>[% Translate("Reference") | html %]</h2>
+            </div>
+            <div class="Content">
+
+                <p>[% Translate("You can use the following tags") | html %]:</p>
+                <dl>
+                    <dt><code>&lt;OTRS_OWNER_*&gt;</code></dt>
+                    <dd>
+                        [% Translate("Ticket owner options") | html %] ([% Translate("e. g.") | html %]
+                        <code>&lt;OTRS_OWNER_UserFirstname&gt;</code>).
+                    </dd>
+
+                    <dt><code>&lt;OTRS_RESPONSIBLE_*&gt;</code></dt>
+                    <dd>
+                        [% Translate("Ticket responsible options") | html %] ([% Translate("e. g.") | html %]
+                        <code>&lt;OTRS_RESPONSIBLE_UserFirstname&gt;</code>).
+                    </dd>
+
+                    <dt><code>&lt;OTRS_CURRENT_*&gt;</code></dt>
+                    <dd>
+                        [% Translate("Options of the current user who requested this action") | html %] ([% Translate("e. g.") | html %]
+                        <code>&lt;OTRS_CURRENT_UserFirstname&gt;</code>).
+                    </dd>
+
+                    <dt><code>&lt;OTRS_TICKET_*&gt;</code></dt>
+                    <dd>
+                        [% Translate("Options of the ticket data") | html %] ([% Translate("e. g.") | html %]
+                        <code>&lt;OTRS_TICKET_TicketNumber>, &lt;OTRS_TICKET_TicketID&gt;, &lt;OTRS_TICKET_Queue&gt;, &lt;OTRS_TICKET_State&gt;</code>).
+                    </dd>
+
+                    <dt><code>&lt;OTRS_CUSTOMER_DATA_*&gt;</code></dt>
+                    <dd>
+                        [% Translate("Options of the current customer user data") | html %] ([% Translate("e. g.") | html %]
+                        <code>&lt;OTRS_CUSTOMER_DATA_UserFirstname&gt;</code>).
+                    </dd>
+
+                    <dt><code>&lt;OTRS_CONFIG_*&gt;</code></dt>
+                    <dd>
+                        [% Translate("Config options") | html %] ([% Translate("e. g.") | html %] <code>&lt;OTRS_CONFIG_HttpType&gt;</code>).
+                    </dd>
+                </dl>
+
+                <p class="SpacingTop">
+                    [% Translate("Example AutoTicket") | html %]:
+                </p>
+                <textarea rows="5" cols="60" name="AutoTicket">
+[% Translate("The current ticket state is") | html %]: "&lt;OTRS_TICKET_State&gt;"
+
+[% Translate("Your email address is") | html %]: "&lt;OTRS_CUSTOMER_UserEmail&gt;"
+                </textarea>
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewUpdate") %]
+    </div>
+    <div class="Clear"></div>
+</div>
+[% RenderBlockEnd("Overview") %]
+
