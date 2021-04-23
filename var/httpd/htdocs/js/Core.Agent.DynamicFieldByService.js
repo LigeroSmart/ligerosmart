@@ -403,13 +403,11 @@ Core.Agent.DynamicFieldByService = (function (TargetNS) {
 				.attr('data-ligeroform', 'ok');
 		});
 
-    $("#ServiceID").on('change',() => {
-      cleanOldLigeroFormFields();
-      checkLigeroForms('DisplayActivityDialogAJAX');
-    })
+		$("#ServiceID").on('change',() => {
+		cleanOldLigeroFormFields();
+		checkLigeroForms('DisplayActivityDialogAJAX');
+		})
 
-		//console.log("CHEGUEI AQUI");
-		//checkLigeroForms('HideAndShowDynamicFields');
 	};
 
 	// Register Ligero Forms in the initialization of the Action
