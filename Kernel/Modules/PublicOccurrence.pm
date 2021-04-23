@@ -584,6 +584,7 @@ sub _Overview{
                    );
         }
         # get field html
+        
         $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } = $DynamicFieldBackendObject->EditFieldRender(
                 DynamicFieldConfig   => $DynamicFieldConfig,
                 LayoutObject         => $LayoutObject,
@@ -770,7 +771,7 @@ sub _Overview{
           ParamObject          => $ParamObject,
           AJAXUpdate           => 0,
           #UpdatableFields      => $Self->_GetFieldsToUpdate(),
-          Class				 => "form-control",
+          Class				 => "form-control ".$DynamicFieldConfig->{FieldType},
           Mandatory            => $ConfigItens2->{'DynamicField'}->{ $DynamicFieldConfig->{Name} } == 2,
       );
       $DynamicFieldHTML{$DynamicFieldConfig->{Name}}{Field} =~ s/Modernize//g;
@@ -780,6 +781,7 @@ sub _Overview{
                 Name  => $DynamicFieldConfig->{Name},
                 Label => $DynamicFieldConfig->{Label},
                 Field => $DynamicFieldHTML{ $DynamicFieldConfig->{Name} }->{Field},
+                Type => $DynamicFieldConfig->{FieldType}
             },
         );
 

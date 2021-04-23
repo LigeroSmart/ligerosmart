@@ -17,12 +17,66 @@ label {
     
 }
 
+.form-group+.DateTime{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group+.DateTime > div {
+  display: flex;
+  font-size: 20px;
+}
+
+.form-group+.DateTime > div input,
+.form-group+.DateTime > div select {
+  margin-right: 10px ;
+}
+
+.form-group+.DateTime > div select {
+  margin-left: 10px ;
+}
+
+.form-group+.Date{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group+.Date > div {
+  display: flex;
+  font-size: 20px;
+}
+
+.form-group+.Date > div input,
+.form-group+.Date > div select {
+  margin-right: 10px ;
+}
+
+.form-group+.Date > div select {
+  margin-left: 10px ;
+}
+
 .form-group label {
   display: contents !important;
 }
 
 .form-group input {
   width: 100% !important;
+}
+
+.form-group input.DateTime {
+  width: inherit !important;
+}
+
+.form-group select.DateTime {
+  width: inherit !important;
+}
+
+.form-group input.Date {
+  width: inherit !important;
+}
+
+.form-group select.Date {
+  width: inherit !important;
 }
 
 form label.Mandatory {

@@ -27,9 +27,11 @@
 			<input type="hidden" name="Email" id="Email" value="[% Data.Email %]" />
             <input type="hidden" name="FormID" value="[% Data.FormID | html %]" />
 			[% RenderBlockStart("DynamicField") %]
-				<div class="form-group">
+				<div class="form-group [% Data.Type | html %]">
 					<label for="[% Data.Label | html %]" class="Mandatory"> [% Data.Label | html %] </label>
-					[% Data.Field %]
+          <div>
+            [% Data.Field %]
+          </div>
 				</div>
 			[% RenderBlockEnd("DynamicField") %]
       [% RenderBlockStart("ServiceFieldArea") %]
