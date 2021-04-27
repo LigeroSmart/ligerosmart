@@ -79,6 +79,10 @@ label {
   width: inherit !important;
 }
 
+.form-group input.Checkbox {
+  width: inherit !important;
+}
+
 form label.Mandatory {
     color:	#666 !important;
     font-weight: 100 !important;
