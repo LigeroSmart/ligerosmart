@@ -1,0 +1,90 @@
+<Migrations>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="imexport_template">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="imexport_object" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="imexport_format" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="name" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="comments" Required="false" Size="200" Type="VARCHAR" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Column Name="create_by" Required="false" Type="INTEGER" />
+            <Column Name="change_time" Required="false" Type="DATE" />
+            <Column Name="change_by" Required="false" Type="INTEGER" />
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="imexport_object">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="template_id" Required="true" Type="BIGINT" />
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR" />
+            <Index Name="imexport_object_template_id">
+                <IndexColumn Name="template_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_format">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="template_id" Required="true" Type="BIGINT" />
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR" />
+            <Index Name="imexport_format_template_id">
+                <IndexColumn Name="template_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_mapping">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="template_id" Required="true" Type="BIGINT" />
+            <Column Name="position" Required="true" Type="INTEGER" />
+            <Index Name="imexport_mapping_template_id">
+                <IndexColumn Name="template_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_mapping_object">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="mapping_id" Required="true" Type="BIGINT" />
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR" />
+            <Index Name="imexport_mapping_object_mapping_id">
+                <IndexColumn Name="mapping_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_mapping_format">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="mapping_id" Required="true" Type="BIGINT" />
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR" />
+            <Index Name="imexport_mapping_format_mapping_id">
+                <IndexColumn Name="mapping_id" />
+            </Index>
+        </TableCreate>
+        <TableCreate Name="imexport_search">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="template_id" Required="true" Type="BIGINT" />
+            <Column Name="data_key" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="data_value" Required="true" Size="200" Type="VARCHAR" />
+            <Index Name="imexport_search_template_id">
+                <IndexColumn Name="template_id" />
+            </Index>
+        </TableCreate>
+    </DatabaseInstall>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::ImportExport')->CodeInstall();
+    ]]></CodeInstall>
+
+
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="imexport_template" />
+        <TableDrop Name="imexport_object" />
+        <TableDrop Name="imexport_format" />
+        <TableDrop Name="imexport_mapping" />
+        <TableDrop Name="imexport_mapping_object" />
+        <TableDrop Name="imexport_mapping_format" />
+        <TableDrop Name="imexport_search" />
+    </DatabaseUninstall>
+    <CodeUninstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::ImportExport')->CodeUninstall();
+    ]]></CodeUninstall>
+</Migrations>
