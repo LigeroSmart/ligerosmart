@@ -1528,6 +1528,13 @@
             <Item ValueType="String" ValueRegex="^\d+$">30</Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::LogViewedEnabled" Required="1" Valid="1">
+        <Description Translatable="1">Enables ticket watcher feature only for the listed groups.</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::BulkFeature" Required="1" Valid="1">
         <Description Translatable="1">Enables ticket bulk action feature for the agent frontend to work on more than one ticket at a time.</Description>
         <Navigation>Frontend::Agent::View::TicketBulk</Navigation>

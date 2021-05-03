@@ -826,7 +826,7 @@ sub Run {
         TicketID     => $Self->{TicketID},
         ArticleID    => $Self->{ArticleID} , # not required!
         CreateUserID =>  $Self->{UserID},
-    ) if $LastHistory == 0;
+    ) if $LastHistory == 0 && $ConfigObject->Get('Ticket::LogViewedEnabled');
 
     # generate output
     my $Output = $LayoutObject->Header(
