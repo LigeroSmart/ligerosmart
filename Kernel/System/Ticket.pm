@@ -5748,6 +5748,70 @@ sub HistoryGet {
     return @Lines;
 }
 
+sub HistoryGetByTypeInterval {
+    my ( $Self, %Param ) = @_;
+
+    my @Lines;
+
+    # check needed stuff
+    for my $Needed (qw(TicketID UserID HistoryType Interval)) {
+        if ( !$Param{$Needed} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
+            return;
+        }
+    }
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    return if !$DBObject->Prepare(
+        SQL => 'SELECT sh.name, sh.article_id, sh.create_time, sh.create_by, ht.name, '
+            . ' sh.queue_id, sh.owner_id, sh.priority_id, sh.state_id, sh.history_type_id, sh.type_id '
+            . ' FROM ticket_history sh, ticket_history_type ht WHERE '
+            . ' sh.ticket_id = ? AND ht.name = ? AND ht.id = sh.history_type_id AND'
+            . ' sh.create_time >= date_sub(NOW(), INTERVAL ? minute) AND'
+            . ' sh.create_by = ?'
+            . ' ORDER BY sh.create_time, sh.id',
+        Bind => [ \$Param{TicketID}, \$Param{HistoryType}, \$Param{Interval}, \$Param{UserID} ],
+    );
+
+    while ( my @Row = $DBObject->FetchrowArray() ) {
+        my %Data;
+        $Data{TicketID}      = $Param{TicketID};
+        $Data{ArticleID}     = $Row[1] || 0;
+        $Data{Name}          = $Row[0];
+        $Data{CreateBy}      = $Row[3];
+        $Data{CreateTime}    = $Row[2];
+        $Data{HistoryType}   = $Row[4];
+        $Data{QueueID}       = $Row[5];
+        $Data{OwnerID}       = $Row[6];
+        $Data{PriorityID}    = $Row[7];
+        $Data{StateID}       = $Row[8];
+        $Data{HistoryTypeID} = $Row[9];
+        $Data{TypeID}        = $Row[10];
+        push @Lines, \%Data;
+    }
+
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
+    # get user data
+    for my $Data (@Lines) {
+
+        my %UserInfo = $UserObject->GetUserData(
+            UserID => $Data->{CreateBy},
+        );
+
+        # merge result, put %Data last so that it "wins"
+        %{$Data} = ( %UserInfo, %{$Data} );
+    }
+
+    return @Lines;
+}
+
 =head2 HistoryDelete()
 
 delete a ticket history (from storage)
