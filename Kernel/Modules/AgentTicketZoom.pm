@@ -810,6 +810,24 @@ sub Run {
         );
     }
 
+    my $LastHistory = $TicketObject->HistoryGetByTypeInterval(
+        TicketID     => $Self->{TicketID},
+        UserID      =>  $Self->{UserID},
+        HistoryType =>  'TicketViewed',
+        Interval => ($ConfigObject->Get('Ticket::TimeLogViewed') || '30')
+    );
+
+    #use Data::Dumper;
+    #die Dumper($LastHistory);
+
+    my $SuccessHistory = $TicketObject->HistoryAdd(
+        Name         => "Ticket Viewed: ticket viewd for UserId $Self->{UserID}",
+        HistoryType  => 'TicketViewed', # see system tables
+        TicketID     => $Self->{TicketID},
+        ArticleID    => $Self->{ArticleID} , # not required!
+        CreateUserID =>  $Self->{UserID},
+    ) if $LastHistory == 0 && $ConfigObject->Get('Ticket::LogViewedEnabled');
+
     # generate output
     my $Output = $LayoutObject->Header(
         Value    => $Ticket{TicketNumber},
