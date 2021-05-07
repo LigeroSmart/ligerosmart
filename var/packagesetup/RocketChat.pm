@@ -230,7 +230,7 @@ Debugger:
   DebugThreshold: debug
   TestMode: '0'
 Description: ''
-FrameworkVersion: 6.0.x
+FrameworkVersion: 6.x.x
 Provider:
   Operation:
     Chat:
@@ -251,7 +251,7 @@ Provider:
             \\   </xsl:copy>\\r\\n  </xsl:template>\\r\\n<!--\\r\\n  Add \\"Queue\\",\\"Priority\\",\\"State\\"...
             nodes for new ticket creation\\r\\n  You can/have to make your adjustment
             here\\r\\n-->\\r\\n    <xsl:template match=\\"RootElement\\">\\r\\n        <xsl:copy>\\r\\n
-            \\           <NewTicketNotification>\\r\\n                <RocketChatAPIUrl>http://172.17.0.1:3000/api/v1/livechat/message</RocketChatAPIUrl>\\r\\n
+            \\           <NewTicketNotification>\\r\\n                <RocketChatAPIUrl>http://rocketchat.server.domain:3000/api/v1/livechat/message</RocketChatAPIUrl>\\r\\n
             \\               <Message>The following ticket was created for this chat:\\\\n\%s</Message>\\r\\n
             \\           </NewTicketNotification>\\r\\n            <NewChat>\\r\\n               <Queue>\\r\\n
             \\                  <xsl:value-of select=\\"\$deptotrans\\" />\\r\\n               </Queue>\\r\\n
@@ -289,7 +289,7 @@ _END_
     my $ID = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice')->WebserviceAdd(
         Name    => $Name,
         Config  => $Config,
-        ValidID => 1,
+        ValidID => 2, # Disabled by default because it needs XSLT configuration
         UserID  => 1,
     );
 
