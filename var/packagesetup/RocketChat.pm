@@ -230,7 +230,7 @@ Debugger:
   DebugThreshold: debug
   TestMode: '0'
 Description: ''
-FrameworkVersion: 6.0.x
+FrameworkVersion: 6.x.x
 Provider:
   Operation:
     Chat:
@@ -289,7 +289,7 @@ _END_
     my $ID = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice')->WebserviceAdd(
         Name    => $Name,
         Config  => $Config,
-        ValidID => 1,
+        ValidID => 2, # Disabled by default because it needs XSLT configuration
         UserID  => 1,
     );
 
