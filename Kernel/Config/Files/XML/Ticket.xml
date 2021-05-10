@@ -1802,6 +1802,15 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::CustomerCompanyEnabledForProfile" Required="0" Valid="0">
+        <Description Translatable="1">This option will deny the access to customer by atribute company tickets, which are not created by the customer user.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Hash>
+              <Item Key="UserGestor">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::CustomerTicketOverviewCustomEmptyText" Required="0" Valid="0">
         <Description Translatable="1">Custom text for the page shown to customers that have no tickets yet (if you need those text translated add them to a custom translation module).</Description>
         <Navigation>Frontend::Customer</Navigation>
