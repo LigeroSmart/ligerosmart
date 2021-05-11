@@ -679,6 +679,8 @@ sub ShowTicketStatus {
         Space => ' '
     ) || 0;
 
+    my $ShowAgeAsDate = $ConfigObject->Get('Ticket::Frontend::CustomerShowAgeAsDate');
+
     # return ticket information if there is no article
     if ( !IsHashRefWithData( \%Article ) ) {
         $Article{State}        = $Ticket{State};
@@ -702,6 +704,7 @@ sub ShowTicketStatus {
             %Ticket,
             Subject => $Subject,
             %Param,
+            ShowAgeAsDate => $ShowAgeAsDate
         },
     );
 
