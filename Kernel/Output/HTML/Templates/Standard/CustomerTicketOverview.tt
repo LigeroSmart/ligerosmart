@@ -161,7 +161,11 @@
 #                        </div>
 #                    </td>
 #[% RenderBlockEnd("RecordDynamicField_Field2") %]
+[% IF Data.ShowAgeAsDate != 1 %]
                     <td class="Age" title="[% Data.Created | Localize("TimeShort") | html %]">[% Data.CustomerAge | truncate(20) | html %]</td>
+[% ELSE %]
+                    <td class="Age" title="[% Data.Created | Localize("TimeShort") | html %]">[% Data.Created | Localize("Date") | html %]</td>
+[% END %]
                 </tr>
 [% RenderBlockEnd("Record") %]
             </tbody>
