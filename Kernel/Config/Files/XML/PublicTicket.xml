@@ -161,7 +161,7 @@
    <Setting Name="Ticket::Frontend::PublicTicketReopen###SucessfullCloseMessageWithoutSurvey" Required="1" Valid="1">
         <Description Translatable="1">Your ticket is has been closed. Thanks!</Description>
         <Navigation>Frontend::Public:Ticket::Reopen</Navigation>
-        <Value
+        <Value>
             <Item ValueType="String" ValueRegex="">Thanks! We'd love to hear your feedback about the support experience. You will be redirected to a Survey in a few seconds...</Item>
         </Value>
    </Setting>
