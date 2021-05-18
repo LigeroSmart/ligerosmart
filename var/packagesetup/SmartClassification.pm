@@ -74,7 +74,7 @@ sub _CreateACLs {
                   ]
               }
           }, # optional
-          ValidID        => 1,                    # mandatory
+          ValidID        => 2, # disabled by default because need configuration
           UserID         => 1,                  # mandatory
     );
         
