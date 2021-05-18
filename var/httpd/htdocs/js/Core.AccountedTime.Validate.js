@@ -45,7 +45,7 @@ Core.AccountedTime = (function (TargetNS) {
 	
 			$('form').find("[id^=DynamicField_"+Ini+"]").addClass("Validate_DateInFuture_Compare");
 
-			if($('form').find("#DynamicField_"+Ini+"Month").size() > 0 && $('form').find("#DynamicField_"+End+"Month").size()> 0 )
+			if($('form').find("#DynamicField_"+Ini+"Month").length > 0 && $('form').find("#DynamicField_"+End+"Month").size()> 0 )
 			{
 				 Core.Form.Validate.AddRule("Validate_DateInFuture_Compare",{Validate_DateInFuture_Compare:true});
 		
