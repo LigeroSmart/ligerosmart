@@ -384,7 +384,6 @@ sub GetTotalNonEscalationRelevantBusinessTime {
     # overwrite sub TicketEscalationIndexBuild to disable escalation under certain conditions
     sub Kernel::System::Ticket::TicketEscalationIndexBuild {
         my ( $Self, %Param ) = @_;
-
         # check needed stuff
         for my $Needed (qw(TicketID UserID)) {
             if ( !defined $Param{$Needed} ) {
@@ -557,6 +556,11 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             }
         }
 
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+          Priority => 'error',
+          Message  => "CHEGOU AQUI RICCARDO",
+        );
+
         # update update && do not escalate in "pending auto" for escalation update time
         if ( !$Escalation{UpdateTime} || $Ticket{StateType} =~ /^(pending)/i ) {
             $Kernel::OM->Get('Kernel::System::DB')->Do(
@@ -565,29 +569,30 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             );
         }
         else {
-
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+              Priority => 'error',
+              Message  => "ENTROU NO ELSE RICCARDO",
+            );
             # check if update escalation should be set
             my @SenderHistory;
             return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-                SQL => 'SELECT article_sender_type_id, create_time FROM '
-                    . 'article WHERE ticket_id = ? ORDER BY create_time ASC',
+                SQL => 'SELECT ast.name, a.is_visible_for_customer, a.create_time FROM article a '
+                        .'INNER JOIN article_sender_type ast on a.article_sender_type_id = ast.id '
+                        .'WHERE a.ticket_id = ? ORDER BY a.create_time ASC',
                 Bind => [ \$Param{TicketID} ],
             );
             while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
                 push @SenderHistory, {
-                    SenderTypeID  => $Row[0],
-                    ArticleTypeID => $Row[1],
+                    SenderType  => $Row[0],
+                    IsVisibleForCustomer => $Row[1],
                     Created       => $Row[2],
                 };
             }
-
-            # fill up lookups
-            for my $Row (@SenderHistory) {
-
-                # get sender type
-
-                # get article type
-            }
+            use Data::Dumper;
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+              Priority => 'error',
+              Message  => "OBTEVE A LISTA ".Dumper(\@SenderHistory),
+            );
 
             # get latest customer contact time
             my $LastSenderTime;
