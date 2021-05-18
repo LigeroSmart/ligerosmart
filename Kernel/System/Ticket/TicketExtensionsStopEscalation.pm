@@ -556,11 +556,6 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             }
         }
 
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-          Priority => 'error',
-          Message  => "CHEGOU AQUI RICCARDO",
-        );
-
         # update update && do not escalate in "pending auto" for escalation update time
         if ( !$Escalation{UpdateTime} || $Ticket{StateType} =~ /^(pending)/i ) {
             $Kernel::OM->Get('Kernel::System::DB')->Do(
@@ -569,10 +564,6 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             );
         }
         else {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-              Priority => 'error',
-              Message  => "ENTROU NO ELSE RICCARDO",
-            );
             # check if update escalation should be set
             my @SenderHistory;
             return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
@@ -588,11 +579,6 @@ sub GetTotalNonEscalationRelevantBusinessTime {
                     Created       => $Row[2],
                 };
             }
-            use Data::Dumper;
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-              Priority => 'error',
-              Message  => "OBTEVE A LISTA ".Dumper(\@SenderHistory),
-            );
 
             # get latest customer contact time
             my $LastSenderTime;
