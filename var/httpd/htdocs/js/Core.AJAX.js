@@ -329,7 +329,12 @@ Core.AJAX = (function (TargetNS) {
             return;
         }
         $.each(Data, function (DataKey, DataValue) {
-            var $Element = $('#' + DataKey);
+            var $Element 
+	    if(!DataKey) {
+		    console.error(`invalid DataKey ${DataKey} ${DataValue}`)
+		    return
+	    }
+	    $Element = $('#' + DataKey);
 
             // special case to update ticket attachments
             if (DataKey === 'TicketAttachments') {
