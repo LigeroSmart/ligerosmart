@@ -45,7 +45,7 @@ Core.AccountedTimeOneDay = (function (TargetNS) {
 	
 			$('form').find("[id^=DynamicField_"+End+"]").addClass("Validate_DateInSameDay_Compare");
 
-			if($('form').find("#DynamicField_"+Ini+"Month").size() > 0 && $('form').find("#DynamicField_"+End+"Month").size()> 0 )
+			if($('form').find("#DynamicField_"+Ini+"Month").length > 0 && $('form').find("#DynamicField_"+End+"Month").length > 0 )
 			{
 				 Core.Form.Validate.AddRule("Validate_DateInSameDay_Compare",{Validate_DateInSameDay_Compare:true});
 		
