@@ -146,6 +146,8 @@ sub Run {
             %Param,
         );
 
+        $BlockData{Config} = $Config;
+
         if ($SurveyKey) {
             $BlockData{SucessfullMessage} = 
                 $BlockData{Config}->{SucessfullCloseMessageWithSurvey}
@@ -167,8 +169,6 @@ sub Run {
             Name => 'PriorityFlag',
             Data => \%Ticket,
         );
-
-        $BlockData{Config} = $Config;
         
         $BlockData{Config}->{TicketReopenPreffix} = 
             $BlockData{Config}->{TicketClosePreffix}||'Ticket has been closed';
