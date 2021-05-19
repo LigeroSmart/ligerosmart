@@ -46,7 +46,14 @@ sub _CreatePortalServiceClass {
 
     my $GeneralCatalogObject              = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
     my $ConfigItemObject                  = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');
-    my $itemObj  = $GeneralCatalogObject->ItemGet( Class => 'ITSM::ConfigItem::Class', Name => 'PortalService' );
+
+    my $HashRef = $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class', Valid => 1 );
+    my $itemObj = undef;
+    foreach my $ItemID ( keys %{ $HashRef }) {
+        if ( $HashRef->{$ItemID} eq "PortalService" ) {
+            $itemObj = { ItemID => $ItemID };
+        }
+    }
     if (!defined($itemObj)) {
         $GeneralCatalogObject->ItemAdd(
             Class      => 'ITSM::ConfigItem::Class',
@@ -62,7 +69,7 @@ sub _CreatePortalServiceClass {
         );
     }
     my $DefinitionListRef = $ConfigItemObject->DefinitionList( ClassID => $itemObj->{ItemID} );
-    #if (scalar @{$DefinitionListRef} == 0) {
+    if (scalar @{$DefinitionListRef} == 0) {
         $ConfigItemObject->DefinitionAdd(
             ClassID    => $itemObj->{ItemID},
             UserID     => 1,
@@ -76,6 +83,6 @@ sub _CreatePortalServiceClass {
     Size: 50
     MaxLength: 50"
         );
-    #}
+    }
 
 }
