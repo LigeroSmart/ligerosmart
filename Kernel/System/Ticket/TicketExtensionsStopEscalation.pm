@@ -565,28 +565,21 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             );
         }
         else {
-
+            
             # check if update escalation should be set
             my @SenderHistory;
             return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-                SQL => 'SELECT article_sender_type_id, create_time FROM '
-                    . 'article WHERE ticket_id = ? ORDER BY create_time ASC',
+                SQL => 'SELECT ast.name, a.is_visible_for_customer, a.create_time FROM article a '
+                        .'INNER JOIN article_sender_type ast on a.article_sender_type_id = ast.id '
+                        .'WHERE a.ticket_id = ? ORDER BY a.create_time ASC',
                 Bind => [ \$Param{TicketID} ],
             );
             while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
                 push @SenderHistory, {
-                    SenderTypeID  => $Row[0],
-                    ArticleTypeID => $Row[1],
+                    SenderType  => $Row[0],
+                    IsVisibleForCustomer => $Row[1],
                     Created       => $Row[2],
                 };
-            }
-
-            # fill up lookups
-            for my $Row (@SenderHistory) {
-
-                # get sender type
-
-                # get article type
             }
 
             # get latest customer contact time
