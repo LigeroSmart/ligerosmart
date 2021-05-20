@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>SmsNotify</Name>
+    <Version>6.0.0</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, May 2017</License>
+    <Description Lang="en">Send SMS messages using Ticket Notification system. Include some SMS Gateways as Zenvia, Clickatell, Kannel and SMS Gateway Ultimate (An Android App that turns your mobile in a SMS Gateway).</Description>
+    <Description Lang="pt_BR">Envie SMS usando o sistema de notificações de chamados do OTRS. Já inclui alguns gateways como Zenvia, Clickatell, Kannel e o SMS Gateway Ultimate (aplicativo que transforma seu android um gateway)</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+		<File Location="Custom/SmsNotify.sopm" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/SmsNotify.Zenvia.xml" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/SmsNotify.IurdKaizala.xml" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/SmsNotify.Clickatell.xml" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/SmsNotify.Kannel.xml" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/SmsNotify.SmsGatewayUltimate.Android.xml" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/SmsNotify.PitchWink.xml" Permission="644"></File>
+		<File Location="Kernel/Config/Files/XML/SmsNotify.xml" Permission="644"></File>
+		<File Location="Kernel/Language/pt_BR_SmsNotify.pm" Permission="644"></File>
+		<File Location="Kernel/Output/HTML/Templates/Standard/AdminNotificationEventTransportSmsNotifySettings.tt" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/NotificationEvent/Transport/SmsNotify.pm" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/NotificationEvent/Transport/SmsNotifyGateways/Zenvia.pm" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/NotificationEvent/Transport/SmsNotifyGateways/IurdKaizala.pm" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/NotificationEvent/Transport/SmsNotifyGateways/Clickatell.pm" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/NotificationEvent/Transport/SmsNotifyGateways/Kannel.pm" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/NotificationEvent/Transport/SmsNotifyGateways/SmsGatewayUltimate.pm" Permission="644"></File>
+		<File Location="Kernel/System/Ticket/Event/NotificationEvent/Transport/SmsNotifyGateways/PitchWink.pm" Permission="644"></File>
+    </Filelist>
+</otrs_package>

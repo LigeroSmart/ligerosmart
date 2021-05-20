@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -8,15 +8,12 @@
 
 package Kernel::System::Ticket;
 
-use utf8;
 use strict;
 use warnings;
+
 use File::Path;
 use utf8;
 use Encode ();
-
-use experimental 'smartmatch';
-no warnings 'experimental::smartmatch';
 
 use parent qw(
     Kernel::System::EventHandler
@@ -859,7 +856,7 @@ sub TicketNumberLookup {
     if ( !$Param{TicketID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Need TicketID!'
+            Message  => 'Need TicketID!',
         );
         return;
     }
@@ -1191,8 +1188,6 @@ sub TicketGet {
         );
         return;
     }
-
-
     $Param{Extended} = $Param{Extended} ? 1 : 0;
 
     # Caching TicketGet() is a bit more complex than usual.
@@ -1322,28 +1317,6 @@ sub TicketGet {
             ObjectType => 'Ticket'
         );
 
-        # Complemento
-        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
-
-        my $ObjType = 'Ticket';
-
-        return if !$DBObject->Prepare(
-            SQL => '
-                SELECT DF.name
-                    FROM dynamic_field DF
-                    JOIN dynamic_field_value DFV
-                    ON DF.ID = DFV.FIELD_ID
-                WHERE DF.object_type = ? AND DFV.object_id = ?',
-            Bind  => [ \$ObjType, \$Param{TicketID} ],
-        );
-
-        my @DynamicFields;
-
-        while ( my @Row = $DBObject->FetchrowArray() ) {
-            push @DynamicFields, $Row[0];
-        }
-        # EO Complemento
-
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
 
@@ -1351,13 +1324,6 @@ sub TicketGet {
             next DYNAMICFIELD if !$DynamicFieldConfig;
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
             next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
-            
-            # Complemento
-            if( !($DynamicFieldConfig->{Name} ~~ @DynamicFields) ){
-              $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = undef;
-              next DYNAMICFIELD;        
-            }
-            # EO Complemento
 
             # get the current value for each dynamic field
             my $Value = $DynamicFieldBackendObject->ValueGet(
@@ -5384,7 +5350,7 @@ sub HistoryTicketGet {
             )
         {
             if (
-                $Row[0] =~ /^\%\%(.+?)\%\%(.+?)(\%\%|)$/
+                $Row[0]    =~ /^\%\%(.+?)\%\%(.+?)(\%\%|)$/
                 || $Row[0] =~ /^Old: '(.+?)' New: '(.+?)'/
                 || $Row[0] =~ /^Changed Ticket State from '(.+?)' to '(.+?)'/
                 )
@@ -5712,70 +5678,6 @@ sub HistoryGet {
             . ' sh.ticket_id = ? AND ht.id = sh.history_type_id'
             . ' ORDER BY sh.create_time, sh.id',
         Bind => [ \$Param{TicketID} ],
-    );
-
-    while ( my @Row = $DBObject->FetchrowArray() ) {
-        my %Data;
-        $Data{TicketID}      = $Param{TicketID};
-        $Data{ArticleID}     = $Row[1] || 0;
-        $Data{Name}          = $Row[0];
-        $Data{CreateBy}      = $Row[3];
-        $Data{CreateTime}    = $Row[2];
-        $Data{HistoryType}   = $Row[4];
-        $Data{QueueID}       = $Row[5];
-        $Data{OwnerID}       = $Row[6];
-        $Data{PriorityID}    = $Row[7];
-        $Data{StateID}       = $Row[8];
-        $Data{HistoryTypeID} = $Row[9];
-        $Data{TypeID}        = $Row[10];
-        push @Lines, \%Data;
-    }
-
-    # get user object
-    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
-
-    # get user data
-    for my $Data (@Lines) {
-
-        my %UserInfo = $UserObject->GetUserData(
-            UserID => $Data->{CreateBy},
-        );
-
-        # merge result, put %Data last so that it "wins"
-        %{$Data} = ( %UserInfo, %{$Data} );
-    }
-
-    return @Lines;
-}
-
-sub HistoryGetByTypeInterval {
-    my ( $Self, %Param ) = @_;
-
-    my @Lines;
-
-    # check needed stuff
-    for my $Needed (qw(TicketID UserID HistoryType Interval)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
-    }
-
-    # get database object
-    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
-
-    return if !$DBObject->Prepare(
-        SQL => 'SELECT sh.name, sh.article_id, sh.create_time, sh.create_by, ht.name, '
-            . ' sh.queue_id, sh.owner_id, sh.priority_id, sh.state_id, sh.history_type_id, sh.type_id '
-            . ' FROM ticket_history sh, ticket_history_type ht WHERE '
-            . ' sh.ticket_id = ? AND ht.name = ? AND ht.id = sh.history_type_id AND'
-            . ' sh.create_time >= date_sub(NOW(), INTERVAL ? minute) AND'
-            . ' sh.create_by = ?'
-            . ' ORDER BY sh.create_time, sh.id',
-        Bind => [ \$Param{TicketID}, \$Param{HistoryType}, \$Param{Interval}, \$Param{UserID} ],
     );
 
     while ( my @Row = $DBObject->FetchrowArray() ) {

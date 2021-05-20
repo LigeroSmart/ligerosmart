@@ -13,9 +13,6 @@ use warnings;
 
 use List::Util qw(first);
 use Mail::Address;
-use Data::Dumper;
-use MIME::Base64;
-use Encode;
 
 use Kernel::System::VariableCheck qw(:all);
 
@@ -175,30 +172,6 @@ sub Run {
                         next FILE_ID if !%Attachment;
                         push @Attachments, \%Attachment;
                     }
-                }
-            }
-        }
-
-        # Complemento - add attachments foreach DFAttachments tag
-        my ($firstLanguageKey) = keys %{ $Notification{Message} };
-        my $DynamicFieldFileValueObject = $Kernel::OM->Get('Kernel::System::DynamicFieldFileValue');
-        while ( $Notification{Message}{$firstLanguageKey}{Body} =~ m/OTRS_TICKET_DynamicField_(.*)_Attach/ig ) {
-            my $dnField = $1;
-            if ( $DynamicFieldConfigLookup{ $dnField }{FieldType} eq 'File' ) {
-                my $DFValue = $DynamicFieldFileValueObject->ValueGet(
-                        ObjectID => $Param{Data}->{TicketID},
-                        FieldID  => $DynamicFieldConfigLookup{ $dnField }{ID}
-                );
-                my %fileAttach = (
-                    Content     => Encode::encode_utf8($DFValue->[0]->{Content}),
-                    ContentType => $DFValue->[0]->{ContentType},
-                    Filename    => $DFValue->[0]->{Filename},
-                    Disposition => 'attachment'
-                );
-                push @Attachments, \%fileAttach;
-                # remove tag from notifications
-                foreach my $lngKey ( keys %{ $Notification{Message} } ) {
-                   $Notification{Message}{$lngKey}{Body} =~ s/&lt;OTRS_TICKET_DynamicField_$dnField\_Attach&gt;//ig;
                 }
             }
         }

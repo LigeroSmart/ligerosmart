@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>Dashboards</Name>
+    <Version>6.0.5</Version>
+    <Vendor>Ligero</Vendor>
+    <Framework>6.0.x</Framework>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog Version="6.0.1"   Date="2018-10-05 15:49:00">Migrated to OTRS 6.x</ChangeLog>
+    <ChangeLog Version="5.3.38"  Date="2017-10-13 12:35:00">Option ClosedThisMonth on Overview bars</ChangeLog>
+    <ChangeLog Version="5.3.33"  Date="2017-10-13 12:35:00">New CSS options for Overview bars</ChangeLog>
+    <ChangeLog Version="5.3.31"  Date="2017-05-31 12:35:00">Filters MyTickets and MyQueues have been fixed.</ChangeLog>
+    <ChangeLog Version="5.3.30"  Date="2017-05-31 12:35:00">New Dashboard (Hours by Agent).</ChangeLog>
+    <ChangeLog Version="5.3.18"  Date="2017-02-21 15:19:00">Adjust vendor and package name. Adjust Framework required.</ChangeLog>
+    <ChangeLog Version="5.3.17"  Date="2016-12-19 15:19:00">Fix problem with the last month of the Year.</ChangeLog>
+    <ChangeLog Version="5.3.13"  Date="2016-05-23 12:03:00">Overview tickets now have PercentageOf parameter that allows see the percentage of ocurrences of some kpi.</ChangeLog>
+    <ChangeLog Version="5.3.12"  Date="2016-05-20 12:03:00">Time point treat on widgets.pm. MyTickets and MyQueues new filter parameters.</ChangeLog>
+    <ChangeLog Version="5.3.11"  Date="2016-05-16 12:03:00">Improvements on pie chart links for ticket listing</ChangeLog>
+    <ChangeLog Version="5.3.6"   Date="2016-05-05 12:03:00">New Functions and filters Time</ChangeLog>
+    <ChangeLog Version="5.3.3"   Date="2016-04-25 10:59:55">Limit x Axis results on X Y dashboard</ChangeLog>
+    <ChangeLog Version="5.3.2"   Date="2016-04-25 10:59:55">Fix problem in javascript </ChangeLog>
+    <ChangeLog Version="5.3.1"   Date="2016-03-07 16:55:55">Fix problem in service that contains '. (error stop javascript in admin conf)</ChangeLog>
+    <ChangeLog Version="5.3.0"   Date="2016-03-05 16:55:55">Zabbix Graph Generator for Dashboards 5</ChangeLog>
+    <ChangeLog Version="5.0.1"   Date="2015-11-16 16:55:55">Migrated for version 5 OTRS </ChangeLog>
+    <ChangeLog Version="4.1.0"   Date="2015-09-10 18:41:51">Added Zabbix Graph Widget</ChangeLog>
+    <ChangeLog Version="4.0.1"   Date="2015-07-24 11:32:51">Dashboard lane with 3 widgets spaces (Triple)</ChangeLog>
+    <ChangeLog Version="3.1-2.1" Date="2013-10-29 11:32:51">First Production release</ChangeLog>
+    <ChangeLog Version="0.0.1"   Date="2012-10-10 11:32:51">First Release</ChangeLog>
+    <Description Lang="en">Nice Dashboards for OTRS. Professional support is available at http://www.complemento.net.br</Description>
+    <PackageRequired Version="6.x.x">HighCharts</PackageRequired>
+    <IntroInstall Type="pre" Lang="en" Title="Tutorial">Nice Dashboards for OTRS. Professional support is available at http://www.complemento.net.br</IntroInstall>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/OutputFilterConfigDashboards.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoPieDrilldown.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OutputFilterConfigDashboards.tt"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jQuery-tagEditor/jquery.caret.min.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jQuery-tagEditor/jquery.tag-editor.min.js"></File>
+        <File Permission="644" Location="Custom/Dashboards.sopm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/Complemento.Dashboards.xml"></File>
+        <File Permission="644" Location="Kernel/Language/pt_BR_ComplementoDashboards.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoCustomerAccountedTimeThisMonth.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoMonthlyTickets.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoOpenByOwner.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoOverview.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoQueuePie.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoPieDrilldown.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoSLAByQueue.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoStackedColumnXY.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoTodayResponsibles.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoAgentHours.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoWidgets.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoCustomerAccountedTimeThisMonth.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoWidgets.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoMonthlyTickets.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoOverview.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoQueuePie.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoSLAByQueue.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoTicketDigest.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoStakedColumn.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoAgentHours.tt"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/Complemento/Complemento.Dashboards.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Complemento.Dashboards.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/Complemento/delete.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/jQuery-tagEditor/jquery.tag-editor.css"></File>
+        <File Permission="755" Location="Kernel/System/Console/Command/Maint/Ligero/GenerateZabbixGraph.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardComplementoZabbixGraph.tt"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Ligero/DashboardComplementoZabbixGraph.pm"></File>
+        <File Permission="644" Location="Kernel/cpan-lib/Date/Pcalc.pm"></File>
+    </Filelist>
+</otrs_package>

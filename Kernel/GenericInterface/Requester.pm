@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -197,10 +197,6 @@ sub Run {
 
     my $FunctionResult = $InvokerObject->PrepareRequest(
         Data => $Param{Data},
-        # Complemento
-        WebserviceID => $WebserviceID,
-        Invoker => $Param{Invoker},
-        # EO Complemento
     );
 
     if ( !$FunctionResult->{Success} ) {
@@ -226,7 +222,7 @@ sub Run {
         };
     }
 
-    # Extend the data$FunctionResult include payload/
+    # Extend the data include payload/
     $DataInclude{RequesterRequestPrepareOutput} = $FunctionResult->{Data};
 
     #
@@ -441,11 +437,6 @@ sub Run {
     $FunctionResult = $InvokerObject->HandleResponse(
         ResponseSuccess => 1,
         Data            => $DataIn,
-        # COMPLEMENTO: INCLUDE ORIGINAL INFORMATION SUCH AS TICKET ID
-        DataInclude => \%DataInclude,
-        WebserviceID => $WebserviceID,
-        Invoker => $Param{Invoker},
-        # EO COMPLEMENTO
     );
 
     if ( !$FunctionResult->{Success} ) {

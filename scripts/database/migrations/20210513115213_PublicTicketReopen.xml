@@ -1,5 +1,0 @@
-<Migrations>
-    <CodeInstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::PublicTicket')->CodeInstall();
-    ]]></CodeInstall>
-</Migrations>

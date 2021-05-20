@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>LigeroDfAttachment</Name>
+    <Version>6.0.7</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">DynamicField of type File Module based on OTRS 365 great DynamicField File Add On available on www.otrs365.com</Description>
+    <Framework>6.0.x</Framework>
+    <Filelist>
+        <File Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldFile.tt" Permission="644"></File>
+        <File Location="Kernel/Modules/AdminDynamicFieldFile.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/AgentDFFileAttachment.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/CustomerDFFileAttachment.pm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/DFFile.xml" Permission="644"></File>
+        <File Location="Kernel/System/DynamicFieldFileValue.pm" Permission="644"></File>
+        <File Location="Kernel/System/DynamicField/Driver/File.pm" Permission="644"></File>
+        <File Location="Kernel/System/DynamicField/Driver/BaseFile.pm" Permission="644"></File>
+        <File Location="Kernel/System/DynamicField/Driver/BaseToFile.pm" Permission="644"></File>
+        <File Location="Custom/Kernel/System/Ticket/Event/NotificationEvent.pm" Permission="644"></File>
+        <File Location="Custom/LigeroDfAttachment.sopm" Permission="644"></File>
+    </Filelist>
+    <DatabaseInstall>
+        <TableCreate Name="df_attachment">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Size="20" Type="BIGINT" />
+            <Column Name="article_id" Required="true" Size="20" Type="BIGINT" />
+            <Column Name="filename" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="content_size" Required="true" Size="30" Type="INTEGER" />
+            <Column Name="content_type" Required="true" Size="255" Type="VARCHAR" />
+            <Column Name="content_id" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="content_alternative" Required="true" Size="50" Type="VARCHAR" />
+            <Column Name="content" Required="true" Type="LONGBLOB" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Size="11" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Size="11" Type="INTEGER" />
+            <Column Name="deleted" Required="true" Size="1" Type="SMALLINT" />
+            <Column Name="form_id" Required="true" Size="50" Type="VARCHAR" />
+            <Index Name="article_id">
+              <IndexColumn Name="article_id"/>
+            </Index>
+            <Index Name="content_id">
+              <IndexColumn Name="content_id"/>
+            </Index>
+            <Index Name="deleted">
+              <IndexColumn Name="deleted"/>
+            </Index>
+            <Index Name="form_id">
+              <IndexColumn Name="form_id"/>
+            </Index>
+        </TableCreate>
+    </DatabaseInstall>
+ 	<DatabaseUpgrade Type="post">
+		<TableAlter Name="df_attachment" Type="post">
+			<ColumnChange NameOld="content_type" NameNew="content_type" Required="true" Size="255" Type="VARCHAR"></ColumnChange>
+      <IndexCreate Name="article_id">
+        <IndexColumn Name="article_id"/>
+      </IndexCreate>
+      <IndexCreate Name="content_id">
+        <IndexColumn Name="content_id"/>
+      </IndexCreate>
+      <IndexCreate Name="deleted">
+        <IndexColumn Name="deleted"/>
+      </IndexCreate>
+      <IndexCreate Name="form_id">
+        <IndexColumn Name="form_id"/>
+      </IndexCreate>
+    </TableAlter>
+  </DatabaseUpgrade>
+  <DatabaseUninstall>
+      <TableDrop Name="df_attachment"/>
+  </DatabaseUninstall>
+</otrs_package>

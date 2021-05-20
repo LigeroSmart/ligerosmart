@@ -1,7 +1,5 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# Modified version of 2019 by Complemento
-# Fixed some performane issues
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -52,12 +50,6 @@ sub new {
         Valid      => 1,
         ObjectType => ['Ticket'],
     );
-
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-        next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
-        $Self->{DynamicFieldConfigs}->{$DynamicFieldConfig->{Name}} = $DynamicFieldConfig;
-    };
 
     return $Self;
 }
@@ -883,10 +875,10 @@ sub GetStatTable {
 
     # set default values if no sort or order attribute is given
     my $OrderRef = first { $_->{Element} eq 'OrderBy' } @{ $Param{ValueSeries} };
-    my $OrderBy = $OrderRef ? $OrderRef->{SelectedValues}[0] : 'Age';
-    my $SortRef = first { $_->{Element} eq 'SortSequence' } @{ $Param{ValueSeries} };
-    my $Sort    = $SortRef ? $SortRef->{SelectedValues}[0] : 'Down';
-    my $Limit   = $Param{Restrictions}{Limit};
+    my $OrderBy  = $OrderRef ? $OrderRef->{SelectedValues}[0] : 'Age';
+    my $SortRef  = first { $_->{Element} eq 'SortSequence' } @{ $Param{ValueSeries} };
+    my $Sort     = $SortRef ? $SortRef->{SelectedValues}[0] : 'Down';
+    my $Limit    = $Param{Restrictions}{Limit};
 
     # check if we can use the sort and order function of TicketSearch
     my $OrderByIsValueOfTicketSearchSort = $Self->_OrderByIsValueOfTicketSearchSort(
@@ -1342,24 +1334,23 @@ sub GetStatTable {
         $Ticket{EscalationTimeWorkingTime}   ||= 0;
         $Ticket{NumberOfArticles}            ||= 0;
 
-        PARAMETER:
         for my $ParameterName ( sort keys %Ticket ) {
             if ( $ParameterName =~ m{\A DynamicField_ ( [a-zA-Z\d]+ ) \z}xms ) {
-                my $DynamicFieldConfig = $Self->{DynamicFieldConfigs}->{$ParameterName};
-                # loop over the dynamic fields configured
-                # DYNAMICFIELD:
-                # for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-                #     next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-                #     next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
 
-                #     # skip all fields that does not match with current field name ($1)
-                #     # without the 'DynamicField_' prefix
-                #     next DYNAMICFIELD if $DynamicFieldConfig->{Name} ne $1;
+                # loop over the dynamic fields configured
+                DYNAMICFIELD:
+                for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+                    next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+                    next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+
+                    # skip all fields that does not match with current field name ($1)
+                    # without the 'DynamicField_' prefix
+                    next DYNAMICFIELD if $DynamicFieldConfig->{Name} ne $1;
 
                     # prevent unitilization errors
                     if ( !defined $Ticket{$ParameterName} ) {
                         $Ticket{$ParameterName} = '';
-                        next PARAMETER;
+                        next DYNAMICFIELD;
                     }
 
                     # convert from stored keys to values for certain Dynamic Fields like
@@ -1393,6 +1384,7 @@ sub GetStatTable {
                         }
 
                     }
+                }
             }
         }
 

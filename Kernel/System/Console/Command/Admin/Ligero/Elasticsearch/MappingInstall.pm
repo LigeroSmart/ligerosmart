@@ -124,7 +124,7 @@ sub Run {
 			Language => $Lang
 		);
 		$Self->Print("<yellow>Index created: $Result</yellow>\n");
-		$Result = $Kernel::OM->Get('Kernel::System::LigeroSmart')->IndexCreate(
+		my $Result = $Kernel::OM->Get('Kernel::System::LigeroSmart')->IndexCreate(
 			Index 	 => 'portallinks_'.$Index,
 			Language => $Lang
 		);

@@ -1,9 +1,9 @@
 # --
-# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::Modules::PublicSurvey;
@@ -11,7 +11,7 @@ package Kernel::Modules::PublicSurvey;
 use strict;
 use warnings;
 
-use Data::Dumper;
+use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
@@ -137,6 +137,21 @@ sub Run {
                     }
                     $Answers{ $Question->{QuestionID} } = $PublicSurveyVote4;
                 }
+                elsif ( $Question->{Type} eq 'NPS' ) {
+                    my $PublicSurveyVote5 = $ParamObject->GetParam(
+                        Param => "PublicSurveyVote5[$Question->{QuestionID}]"
+                    );
+
+                    if (
+                        $Question->{AnswerRequired}
+                        && ( !$PublicSurveyVote5 || !length $PublicSurveyVote5 )
+                        )
+                    {
+                        $Errors{ $Question->{QuestionID} }{'Answer required'} = 1;
+                    }
+
+                    $Answers{ $Question->{QuestionID} } = $PublicSurveyVote5;
+                }
             }
 
             # If we didn't have errors, just save the answers
@@ -182,162 +197,30 @@ sub Run {
                             VoteValue       => $Answers{ $Question->{QuestionID} },
                         );
                     }
-                }
-
-                # COMPLEMENTO
-                # ARMAZENA OS VALORES DOS VOTOS EM CAMPOS DINAMICOS DO CHAMADO! SENSACIONAL NÃO?
-                # get ticket
-                my %RequestData = $SurveyObject->RequestGet(
-                    PublicSurveyKey => $PublicSurveyKey,
-                );
-
-                my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-                
-                if ($ConfigObject->Get("Ligero::SurveyVotesToDynamicFields")){
-
-                    my %DynamicFieldMap = %{ $ConfigObject->Get("Ligero::SurveyVotesToDynamicFields")->{DynamicField} || {} };
-                    
-                    # PARA CADA VALOR, ARMAZENA NO CAMPO DINAMICO CORRESPONDENTE                    
-                    for my $Question (@QuestionList) {
-                        if ( $Question->{Type} eq 'YesNo' ) {
-                           # VERIFICA SE QUESTÃO EXISTE NO MAPEAMENTO
-                            if($DynamicFieldMap{$Question->{QuestionID}}){
-                                # Obtem configurações do campo dinamico
-                                my $DynamicFieldArray = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
-                                    Valid       => 1,
-                                    ObjectType  => 'Ticket',
-                                    FieldFilter => {
-                                        $DynamicFieldMap{$Question->{QuestionID}} => 1,
-                                    },
-                                );
-                                
-                                my $DynamicFieldConfig = $DynamicFieldArray->[0];
-
-
-
-                                my $Success = $DynamicFieldBackendObject->ValueSet(
-                                    DynamicFieldConfig => $DynamicFieldConfig,
-                                    ObjectID           => $RequestData{TicketID},
-                                    Value              => $Answers{ $Question->{QuestionID} },
-                                    UserID             => 1,
-                                );
-                            }
-                        }
-                        elsif ( $Question->{Type} eq 'Radio' ) {
-                           # VERIFICA SE QUESTÃO EXISTE NO MAPEAMENTO
-                            if($DynamicFieldMap{$Question->{QuestionID}}){
-                                # Obtem configurações do campo dinamico
-                                my $DynamicFieldArray = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
-                                    Valid       => 1,
-                                    ObjectType  => 'Ticket',
-                                    FieldFilter => {
-                                        $DynamicFieldMap{$Question->{QuestionID}} => 1,
-                                    },
-                                );
-                                
-                                my $DynamicFieldConfig = $DynamicFieldArray->[0];
-
-                                my %Answer = $SurveyObject->AnswerGet(
-                                    AnswerID => $Answers{ $Question->{QuestionID} },
-                                );
-                                
-                                # set the value
-                                my $Success = $DynamicFieldBackendObject->ValueSet(
-                                    DynamicFieldConfig => $DynamicFieldConfig,
-                                    ObjectID           => $RequestData{TicketID},
-                                    Value              => $Answer{Answer},
-                                    UserID             => 1,
-                                );
-                            }
-                        }
-                        elsif ( $Question->{Type} eq 'Checkbox' ) {
-                            if (
-                                $Answers{ $Question->{QuestionID} }
-                                && ref $Answers{ $Question->{QuestionID} } eq 'ARRAY'
-                                && @{ $Answers{ $Question->{QuestionID} } }
-                                )
-                            {
-                               # VERIFICA SE QUESTÃO EXISTE NO MAPEAMENTO
-                                if($DynamicFieldMap{$Question->{QuestionID}}){
-                                    # Obtem configurações do campo dinamico
-                                    my $DynamicFieldArray = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
-                                        Valid       => 1,
-                                        ObjectType  => 'Ticket',
-                                        FieldFilter => {
-                                            $DynamicFieldMap{$Question->{QuestionID}} => 1,
-                                        },
-                                    );
-                                    
-                                    my $DynamicFieldConfig = $DynamicFieldArray->[0];
-
-                                    my @Values;
-                                    for (@{ $Answers{ $Question->{QuestionID} } }) {
-                                        my %Answer = $SurveyObject->AnswerGet(
-                                            AnswerID => $_,
-                                        );
-                                        push @Values, $Answer{Answer};
-                                    }
-
-                                    # set the value
-                                    my $Success = $DynamicFieldBackendObject->ValueSet(
-                                        DynamicFieldConfig => $DynamicFieldConfig,
-                                        ObjectID           => $RequestData{TicketID},
-#                                        Value              => $Val,
-                                        Value              => \@Values,
-                                        UserID             => 1,
-                                    );
-                                }
-
-                            }
-                        }
-                        elsif ( $Question->{Type} eq 'Textarea' ) {
-                            # @TODO: LIMPAR HTML ----------------------
-                            if($DynamicFieldMap{$Question->{QuestionID}}){
-                                # Obtem configurações do campo dinamico
-                                my $DynamicFieldArray = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
-                                    Valid       => 1,
-                                    ObjectType  => 'Ticket',
-                                    FieldFilter => {
-                                        $DynamicFieldMap{$Question->{QuestionID}} => 1,
-                                    },
-                                );
-                                
-                                my $DynamicFieldConfig = $DynamicFieldArray->[0];
-
-                                $Answers{ $Question->{QuestionID} } =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
-                                $Answers{ $Question->{QuestionID} } = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
-                                    String => $Answers{ $Question->{QuestionID} },
-                                );
-
-                                my $Success = $DynamicFieldBackendObject->ValueSet(
-                                    DynamicFieldConfig => $DynamicFieldConfig,
-                                    ObjectID           => $RequestData{TicketID},
-                                    Value              => $Answers{ $Question->{QuestionID} },
-                                    UserID             => 1,
-                                );
-                            }
-                        }
+                    elsif ( $Question->{Type} eq 'NPS' ) {
+                        $SurveyObject->PublicAnswerSet(
+                            PublicSurveyKey => $PublicSurveyKey,
+                            QuestionID      => $Question->{QuestionID},
+                            VoteValue       => $Answers{ $Question->{QuestionID} },
+                        );
                     }
-
                 }
 
-                # EO COMPLEMENTO
-########################################################################################################################
                 # set survey request as invalid
                 $SurveyObject->PublicSurveyInvalidSet(
                     PublicSurveyKey => $PublicSurveyKey,
                 );
                 $Output = $LayoutObject->CustomerHeader(
-                    Title => 'Survey',
+                    Title => Translatable('Survey'),
                 );
 
                 # print the main table.
                 $LayoutObject->Block(
                     Name => 'PublicSurveyMessage',
                     Data => {
-                        MessageType   => 'Survey Information',
-                        MessageHeader => 'Thank you for your feedback.',
-                        Message       => 'The survey is finished.',
+                        MessageType   => Translatable('Survey Information'),
+                        MessageHeader => Translatable('Thank you for your feedback.'),
+                        Message       => Translatable('The survey is finished.'),
                     },
                 );
 
@@ -365,10 +248,11 @@ sub Run {
             $LayoutObject->Block(
                 Name => 'PublicSurveyMessage',
                 Data => {
-                    MessageType   => 'Survey Message!',
-                    MessageHeader => 'Module not enabled.',
-                    Message =>
-                        'This functionality is not enabled, please contact your administrator.',
+                    MessageType   => Translatable('Survey Message!'),
+                    MessageHeader => Translatable('Module not enabled.'),
+                    Message       => Translatable(
+                        'This functionality is not enabled, please contact your administrator.'
+                    ),
                 },
             );
 
@@ -412,10 +296,11 @@ sub Run {
             $LayoutObject->Block(
                 Name => 'PublicSurveyMessage',
                 Data => {
-                    MessageType   => 'Survey Error!',
-                    MessageHeader => 'Invalid survey key.',
-                    Message =>
-                        'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.',
+                    MessageType   => Translatable('Survey Error!'),
+                    MessageHeader => Translatable('Invalid survey key.'),
+                    Message       => Translatable(
+                        'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'
+                    ),
                 },
             );
 
@@ -428,7 +313,7 @@ sub Run {
         }
 
         $Output = $LayoutObject->CustomerHeader(
-            Title => 'Survey Vote',
+            Title => Translatable('Survey Vote'),
         );
 
         my %Survey = $SurveyObject->SurveyGet(
@@ -454,7 +339,7 @@ sub Run {
             Name => 'PublicSurveyVoteData',
             Data => {
                 %Survey,
-                MessageType => 'Survey Vote Data',
+                MessageType => Translatable('Survey Vote Data'),
             },
         );
         my @QuestionList = $SurveyObject->QuestionList(
@@ -482,7 +367,7 @@ sub Run {
                 },
             );
             my @Answers;
-            if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
+            if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' || $Question->{Type} eq 'NPS' ) {
                 my @AnswerList;
                 @AnswerList = $SurveyObject->VoteGet(
                     RequestID  => $RequestID,
@@ -545,7 +430,7 @@ sub Run {
     # ------------------------------------------------------------ #
     my $PublicSurveyKey = $ParamObject->GetParam( Param => 'PublicSurveyKey' );
     $Output = $LayoutObject->CustomerHeader(
-        Title => 'Survey',
+        Title => Translatable('Survey'),
     );
 
     my $UsedSurveyKey = $SurveyObject->PublicSurveyGet(
@@ -563,9 +448,9 @@ sub Run {
         $LayoutObject->Block(
             Name => 'PublicSurveyMessage',
             Data => {
-                MessageType   => 'Survey Information',
-                MessageHeader => 'Thank you for your feedback.',
-                Message       => 'You have already answered the survey.',
+                MessageType   => Translatable('Survey Information'),
+                MessageHeader => Translatable('Thank you for your feedback.'),
+                Message       => Translatable('You have already answered the survey.'),
             },
         );
 
@@ -676,7 +561,7 @@ sub Run {
                 $ErrorText = '<p>'
                     . (
                     join "</p>\n<p>",
-                    map { $LayoutObject->{LanguageObject}->Get($_) }
+                    map { $LayoutObject->{LanguageObject}->Translate($_) }
                         keys %{ $Errors{ $Question->{QuestionID} } }
                     )
                     . '</p>';
@@ -716,8 +601,8 @@ END
                     Data => {
                         %{$Question},
                         %Selected,
-                        ErrorText => $ErrorText || '',
-                        Class => $Class,
+                        ErrorText    => $ErrorText || '',
+                        Class        => $Class,
                         RequiredText => $RequiredText,
                     },
                 );
@@ -727,8 +612,8 @@ END
                     Name => 'PublicAnswerRadio',
                     Data => {
                         %{$Question},
-                        ErrorText => $ErrorText || '',
-                        Class => $Class,
+                        ErrorText    => $ErrorText || '',
+                        Class        => $Class,
                         RequiredText => $RequiredText,
                     },
                 );
@@ -759,8 +644,8 @@ END
                     Name => 'PublicAnswerCheckbox',
                     Data => {
                         %{$Question},
-                        ErrorText => $ErrorText || '',
-                        Class => $Class,
+                        ErrorText    => $ErrorText || '',
+                        Class        => $Class,
                         RequiredText => $RequiredText,
                     },
                 );
@@ -795,8 +680,8 @@ END
                     Name => 'PublicAnswerTextarea',
                     Data => {
                         %{$Question},
-                        ErrorText => $ErrorText || '',
-                        Class => $Class,
+                        ErrorText    => $ErrorText || '',
+                        Class        => $Class,
                         RequiredText => $RequiredText,
                         Value        => $Value,
                     },
@@ -804,7 +689,42 @@ END
 
                 # check if rich text is enabled
                 if ( $LayoutObject->{BrowserRichText} ) {
-                    $LayoutObject->Block( Name => 'RichText' );
+                    $LayoutObject->CustomerSetRichTextParameters(
+                        Data => {},
+                    );
+                }
+            }
+            elsif ( $Question->{Type} eq 'NPS' ) {
+
+                $LayoutObject->Block(
+                    Name => 'PublicAnswerNPS',
+                    Data => {
+                        %{$Question},
+                        ErrorText    => $ErrorText || '',
+                        Class        => $Class,
+                        RequiredText => $RequiredText,
+                    },
+                );
+                my @AnswerList = $SurveyObject->AnswerList(
+                    QuestionID => $Question->{QuestionID},
+                );
+                for my $Answer (@AnswerList) {
+
+                    my $Selected = '';
+                    if (
+                        defined $Answers{ $Question->{QuestionID} }
+                        && $Answers{ $Question->{QuestionID} } eq $Answer->{AnswerID}
+                        )
+                    {
+                        $Selected = 'checked="checked"';
+                    }
+                    $LayoutObject->Block(
+                        Name => 'PublicAnswerNPSb',
+                        Data => {
+                            %{$Answer},
+                            AnswerSelected => $Selected,
+                        },
+                    );
                 }
             }
         }
@@ -813,10 +733,11 @@ END
         $LayoutObject->Block(
             Name => 'PublicSurveyMessage',
             Data => {
-                MessageType   => 'Survey Error!',
-                MessageHeader => 'Invalid survey key.',
-                Message =>
-                    'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.',
+                MessageType   => Translatable('Survey Error!'),
+                MessageHeader => Translatable('Invalid survey key.'),
+                Message       => Translatable(
+                    'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'
+                ),
             },
         );
     }

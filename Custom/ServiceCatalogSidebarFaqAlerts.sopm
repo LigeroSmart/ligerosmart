@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>ServiceCatalogSidebarFaqAlerts</Name>
+    <Version>6.0.2</Version>
+    <Vendor>Complemento - Liberdade e Tecnologia</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">
+    	Add faqs alerts in the service catalog sidebar 
+	</Description>
+    <IntroInstall Lang="en" Title="Installation Information" Type="post">
+    </IntroInstall>    
+    <Framework>6.0.x</Framework>
+    <PackageRequired Version="6.x.x">FAQ</PackageRequired>
+    <PackageRequired Version="6.x.x">LigeroPortal</PackageRequired>
+    <Filelist>
+        <File Location="Custom/ServiceCatalogSidebarFaqAlerts.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/ServiceCatalogSidebarFaqAlerts.xml" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Ligero/ServiceCatalog/SidebarWidget/FaqAlerts.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/Ligero/ServiceCatalog/Sidebar/FaqAlerts.tt" Permission="644"></File>
+    </Filelist>
+</otrs_package>

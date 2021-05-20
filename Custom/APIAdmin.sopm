@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+    <Name>APIAdmin</Name>
+    <Version>6.0.1</Version>
+    <Vendor>Ligero</Vendor>
+    <URL>http://www.complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog Date="2017-02-21 15:58:00" Version="5.0.2">Package name, vendor and SOPM adjustments</ChangeLog>
+    <ChangeLog Date="2016-06-07 15:58:00" Version="0.8">First Release</ChangeLog>
+    <Description Lang="en">API that allows OTRS administration using Web Services</Description>
+    <Framework>6.0.x</Framework>
+    <BuildDate>2016-06-07 15:30:56</BuildDate>
+    <BuildHost>otrs5.localdomain</BuildHost>
+    <Filelist>
+        <File Location="Custom/APIAdmin.sopm" Permission="644"></File>
+        <File Location="Kernel/GenericInterface/Operation/Admin/Generic.pm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/GenericInterfaceAdminFunctions.xml" Permission="644"></File>
+    </Filelist>
+</otrs_package>
