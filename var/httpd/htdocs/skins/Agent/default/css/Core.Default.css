@@ -1784,8 +1784,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
     height: 100%;
     line-height: 14px;
     content: "\f1ce";
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900 !important;
+    font-family: FontAwesome;
     font-size: 14px;
     color: #777;
 }

@@ -1,12 +1,9 @@
 # --
-# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
-# --
-# $origin: otrs - 04139bf7d2feaf7631ce64edada6d19fea6a3328 - Kernel/System/UnitTest/Selenium/WebElement.pm
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::System::UnitTest::Selenium::WebElement;
@@ -56,6 +53,8 @@ click an element that causes a page get/reload/submit and wait for the page to b
 sub VerifiedClick {    ## no critic
     my $Self = shift;
 
+    $Self->driver()->execute_script('window.Core.App.PageLoadComplete = false;');
+
     $Self->SUPER::click(@_);
 
     $Self->driver()->WaitFor(
@@ -70,10 +69,10 @@ sub VerifiedClick {    ## no critic
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (L<http://otrs.org/>).
+This software is part of the OTRS project (L<https://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see L<https://www.gnu.org/licenses/gpl-3.0.txt>.
 
 =cut

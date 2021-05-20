@@ -199,7 +199,7 @@ Debugger:
   DebugThreshold: error
   TestMode: '0'
 Description: ''
-FrameworkVersion: 6.0.30
+FrameworkVersion: 6.0.18
 Provider:
   Operation:
     Search:
@@ -264,24 +264,6 @@ Provider:
 RemoteSystem: ''
 Requester:
   Invoker:
-    DeleteTicket:
-      Description: ''
-      Events:
-      - Asynchronous: '1'
-        Event: TicketDelete
-      MappingOutbound:
-        Config:
-          KeyMapDefault:
-            MapTo: ''
-            MapType: Ignore
-          KeyMapExact:
-            Index: Index
-            TicketID: TicketID
-          ValueMapDefault:
-            MapTo: ''
-            MapType: Keep
-        Type: Simple
-      Type: LigeroSmart::LigeroSmartIndexer
     LigeroTicketIndexer:
       Description: ''
       Events:
@@ -290,11 +272,9 @@ Requester:
       - Asynchronous: '1'
         Event: TicketTitleUpdate
       - Asynchronous: '1'
-        Event: ArticleCreate
-      - Asynchronous: '1'
         Event: TicketQueueUpdate
       - Asynchronous: '1'
-        Event: TicketCreate
+        Event: ArticleCreate
       MappingInbound:
         Type: Simple
       MappingOutbound:
@@ -305,12 +285,13 @@ Requester:
       DefaultCommand: PUT
       Host: http://elasticsearch:9200
       InvokerControllerMapping:
-        DeleteTicket:
-          Command: DELETE
-          Controller: /:Index/doc/:TicketID
         LigeroTicketIndexer:
           Command: PUT
           Controller: /:Index/doc/:TicketID?pipeline=:pipeline
+      Proxy:
+        UseProxy: No
+      SSL:
+        UseSSL: No
       Timeout: '300'
     Type: HTTP::REST
 _END_

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>Kanboard</Name>
+    <Version>6.0.4</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Ligero</Vendor>
+    <URL>http://complemento.net.br/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">Kanban visualization for ticket queues. Use part of Kanboard open source project</Description>
+    <IntroInstall Type="pre" Lang="en" Title="Tutorial">Kanban visualization for ticket queues. Usa part of Kanboard open source project. Commercial support is available at http://www.complemento.net.br</IntroInstall>
+    <Description Lang="pt_BR">Visualização Kanban para filas de tickets. Use parte do projeto de código aberto do Kanboard</Description>
+    <IntroInstall Type="pre" Lang="pt_BR" Title="Tutorial">Visualização Kanban para filas de tickets. Usa parte do projeto de código aberto do Kanboard. O suporte comercial está disponível em http://complemento.net.br</IntroInstall>
+    <Filelist>
+        <File Permission="644" Location="Custom/Kanboard.sopm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/Kanboard.xml"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/app.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/chosen.min.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/font-awesome.min.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/animated-overlay.gif"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_flat_0_aaaaaa_40x100.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_flat_75_ffffff_40x100.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_glass_55_fbf9ee_1x400.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_glass_65_ffffff_1x400.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_glass_75_dadada_1x400.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_glass_75_e6e6e6_1x400.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_glass_95_fef1ec_1x400.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-bg_highlight-soft_75_cccccc_1x100.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-icons_2e83ff_256x240.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-icons_222222_256x240.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-icons_454545_256x240.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-icons_888888_256x240.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/kanboard/images/ui-icons_cd0a0a_256x240.png"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/kanboard/app.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/kanboard/chosen.jquery.min.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/kanboard/jquery.ui.touch-punch.min.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/kanboard/jquery-ui-1.10.4.custom.min.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/kanboard/jquery-ui-1.10.4.custom.min.js"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketQueueKanban.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketQueueKanban.tt"></File>
+        <File Permission="644" Location="Kernel/Language/pt_BR_ComplementoKanboard.pm"></File>
+    </Filelist>
+</otrs_package>

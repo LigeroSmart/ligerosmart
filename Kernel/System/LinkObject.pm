@@ -552,11 +552,7 @@ sub LinkAdd {
             'Cache::LinkListRaw'
             . '::Direction' . $Direction
             . '::ObjectID' . $Param{ $Direction . 'ObjectID' }
-# Complemento - fix sub performane
-            . '::Key' . $Param{$Direction . 'Key'}
             . '::StateID' . $StateID;
-            # . '::TypeID' . $TypeID;
-# EO Complemento
         $CacheObject->Delete(
             Type => $Self->{CacheType},
             Key  => $CacheKey,
@@ -840,11 +836,7 @@ sub LinkDelete {
                     'Cache::LinkListRaw'
                     . '::Direction' . $Direction
                     . '::ObjectID' . $Param{ 'Object' . $DirectionNumber . 'ID' }
-# Complemento
-                    . '::Key' . $Param{ 'Key' . $DirectionNumber }
                     . '::StateID' . $StateID;
-                    # . '::TypeID' . $TypeID;
-# EO Complemento
                 $CacheObject->Delete(
                     Type => $Self->{CacheType},
                     Key  => $CacheKey,
@@ -2406,14 +2398,7 @@ sub _LinkListRaw {
         'Cache::LinkListRaw'
         . '::Direction' . $Param{Direction}
         . '::ObjectID' . $Param{ObjectID}
-# Complemento
-        . '::Key' . $Param{Key}
         . '::StateID' . $Param{StateID};
-
-    if ($Param{TypeID} && defined($Param{TypeID})){
-        $CacheKey .= '::TypeID' . $Param{TypeID};
-    }
-# EO COmplemento
     my $CachedLinks = $Kernel::OM->Get('Kernel::System::Cache')->Get(
         Type => $Self->{CacheType},
         Key  => $CacheKey,
@@ -2427,14 +2412,7 @@ sub _LinkListRaw {
 
         # prepare SQL statement
         my $TypeSQL = '';
-# Complemento
-        my @Bind    = ( \$Param{ObjectID}, \$Param{Key}, \$Param{StateID} );
-
-        # add type id to SQL statement
-        if ($Param{TypeID} && defined($Param{TypeID})){
-            $TypeSQL = ' AND type_id = ? ';
-            push @Bind, \$Param{TypeID};
-        }
+        my @Bind    = ( \$Param{ObjectID}, \$Param{StateID} );
 
         # get fields based on type
         my $SQL;
@@ -2442,17 +2420,14 @@ sub _LinkListRaw {
             $SQL =
                 'SELECT target_object_id, target_key, type_id, source_key'
                 . ' FROM link_relation'
-                . ' WHERE source_object_id = ?'
-                . ' and source_key = ? ';
+                . ' WHERE source_object_id = ?';
         }
         else {
             $SQL =
                 'SELECT source_object_id, source_key, type_id, target_key'
                 . ' FROM link_relation'
-                . ' WHERE target_object_id = ?'
-                . ' and target_key = ? ';
+                . ' WHERE target_object_id = ?';
         }
-# EO Complemento
         $SQL .= ' AND state_id = ?' . $TypeSQL;
 
         # get all links for object/state/type (for better caching)
@@ -2488,9 +2463,7 @@ sub _LinkListRaw {
     LINK:
     for my $Link (@Links) {
         next LINK if $Link->{RequestKey} ne $Param{Key};
-#Complemento
-        next LINK if defined($Param{TypeID}) && $Link->{TypeID} ne $Param{TypeID};
-# EO COmplemento
+        next LINK if $Param{TypeID} && $Link->{TypeID} ne $Param{TypeID};
         $List{ $Link->{ObjectID} }->{ $Link->{TypeID} }->{ $Link->{ResponseKey} } = 1;
     }
 

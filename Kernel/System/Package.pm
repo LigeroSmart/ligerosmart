@@ -1430,7 +1430,7 @@ sub PackageOnlineList {
     my $Filelist;
     if ( !$Param{FromCloud} ) {
 
-        my $XML = $Self->_Download( URL => $Param{URL} . '/index.xml' );
+        my $XML = $Self->_Download( URL => $Param{URL} . '/otrs.xml' );
         return if !$XML;
 
         my @XMLARRAY = $Kernel::OM->Get('Kernel::System::XML')->XMLParse( String => $XML );
@@ -1846,95 +1846,166 @@ or
 sub PackageVerify {
     my ( $Self, %Param ) = @_;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
-# Complemento - At this time, return verified
-    return 'verified';
-# ---
     # check needed stuff
-    # if ( !$Param{Package} ) {
-    #     $Kernel::OM->Get('Kernel::System::Log')->Log(
-    #         Priority => 'error',
-    #         Message  => "Need Package!",
-    #     );
+    if ( !$Param{Package} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need Package!",
+        );
 
-    #     return;
-    # }
-    # if ( !$Param{Structure} && !$Param{Name} ) {
-    #     $Kernel::OM->Get('Kernel::System::Log')->Log(
-    #         Priority => 'error',
-    #         Message  => 'Need Structure or Name!',
-    #     );
+        return;
+    }
+    if ( !$Param{Structure} && !$Param{Name} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Need Structure or Name!',
+        );
 
-    #     return;
-    # }
+        return;
+    }
 
-    # # prepare cloud service request
-    # my %RequestParams = (
-    #     RequestData => {
-    #         $CloudService => [
-    #             {
-    #                 Operation => $Operation,
-    #                 Data      => {
-    #                     Package => [
-    #                         {
-    #                             Name   => $Name,
-    #                             MD5sum => $Sum,
-    #                         }
-    #                     ],
-    #                 },
-    #             },
-    #         ],
-    #     },
-    # );
+    # Check if installation of packages, which are not verified by us, is possible.
+    my $PackageAllowNotVerifiedPackages = $Kernel::OM->Get('Kernel::Config')->Get('Package::AllowNotVerifiedPackages');
 
-    # # get cloud service object
-    # my $CloudServiceObject = $Kernel::OM->Get('Kernel::System::CloudService::Backend::Run');
+    # define package verification info
+    my $PackageVerifyInfo;
 
-    # # dispatch the cloud service request
-    # my $RequestResult = $CloudServiceObject->Request(%RequestParams);
+    if ($PackageAllowNotVerifiedPackages) {
 
-    # # as this is the only operation an unsuccessful request means that the operation was also
-    # # unsuccessful, in such case set the package as verified
-    # return 'unknown' if !IsHashRefWithData($RequestResult);
+        $PackageVerifyInfo = {
+            Description =>
+                Translatable(
+                "<p>If you continue to install this package, the following issues may occur:</p><ul><li>Security problems</li><li>Stability problems</li><li>Performance problems</li></ul><p>Please note that issues that are caused by working with this package are not covered by OTRS service contracts.</p>"
+                ),
+            Title =>
+                Translatable('Package not verified by the OTRS Group! It is recommended not to use this package.'),
+            PackageInstallPossible => 1,
+        };
+    }
+    else {
 
-    # my $OperationResult = $CloudServiceObject->OperationResultGet(
-    #     RequestResult => $RequestResult,
-    #     CloudService  => $CloudService,
-    #     Operation     => $Operation,
-    # );
+        $PackageVerifyInfo = {
+            Description =>
+                Translatable(
+                '<p>The installation of packages which are not verified by the OTRS Group is not possible by default. You can activate the installation of not verified packages via the "AllowNotVerifiedPackages" system configuration setting.</p>'
+                ),
+            Title =>
+                Translatable('Package not verified by the OTRS Group! It is recommended not to use this package.'),
+            PackageInstallPossible => 0,
+        };
+    }
 
-    # # if there was no result for this specific operation or the operation was not success, then
-    # # set the package as verified
-    # return 'unknown' if !IsHashRefWithData($OperationResult);
-    # return 'unknown' if !$OperationResult->{Success};
+    # return package as verified if cloud services are disabled
+    if ( $Self->{CloudServicesDisabled} ) {
 
-    # my $VerificationData = $OperationResult->{Data};
+        my $Verify = $PackageAllowNotVerifiedPackages ? 'verified' : 'not_verified';
 
-    # # extract response
-    # my $PackageVerify = $VerificationData->{$Name};
+        if ( $Verify eq 'not_verified' ) {
+            $PackageVerifyInfo->{VerifyCSSClass} = 'NotVerifiedPackage';
+        }
 
-    # return 'unknown' if !$PackageVerify;
-    # return 'unknown' if $PackageVerify ne 'not_verified' && $PackageVerify ne 'verified';
+        $Self->{PackageVerifyInfo} = $PackageVerifyInfo;
 
-    # # set package verification info
-    # if ( $PackageVerify eq 'not_verified' ) {
+        return $Verify;
+    }
 
-    #     $PackageVerifyInfo->{VerifyCSSClass} = 'NotVerifiedPackage';
+    # investigate name
+    my $Name = $Param{Structure}->{Name}->{Content} || $Param{Name};
 
-    #     $Self->{PackageVerifyInfo} = $PackageVerifyInfo;
-    # }
+    # correct any 'dos-style' line endings - http://bugs.otrs.org/show_bug.cgi?id=9838
+    $Param{Package} =~ s{\r\n}{\n}xmsg;
 
-    # # set cache
-    # $CacheObject->Set(
-    #     Type  => 'PackageVerification',
-    #     Key   => $Sum,
-    #     Value => $PackageVerify,
-    #     TTL   => 30 * 24 * 60 * 60,       # 30 days
-    # );
+    # create MD5 sum
+    my $Sum = $Kernel::OM->Get('Kernel::System::Main')->MD5sum( String => $Param{Package} );
 
-    # return $PackageVerify;
+    # get cache object
+    my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+
+    # lookup cache
+    my $CachedValue = $CacheObject->Get(
+        Type => 'PackageVerification',
+        Key  => $Sum,
+    );
+    if ($CachedValue) {
+
+        if ( $CachedValue eq 'not_verified' ) {
+
+            $PackageVerifyInfo->{VerifyCSSClass} = 'NotVerifiedPackage';
+        }
+
+        $Self->{PackageVerifyInfo} = $PackageVerifyInfo;
+
+        return $CachedValue;
+    }
+
+    my $CloudService = 'PackageManagement';
+    my $Operation    = 'PackageVerify';
+
+    # prepare cloud service request
+    my %RequestParams = (
+        RequestData => {
+            $CloudService => [
+                {
+                    Operation => $Operation,
+                    Data      => {
+                        Package => [
+                            {
+                                Name   => $Name,
+                                MD5sum => $Sum,
+                            }
+                        ],
+                    },
+                },
+            ],
+        },
+    );
+
+    # get cloud service object
+    my $CloudServiceObject = $Kernel::OM->Get('Kernel::System::CloudService::Backend::Run');
+
+    # dispatch the cloud service request
+    my $RequestResult = $CloudServiceObject->Request(%RequestParams);
+
+    # as this is the only operation an unsuccessful request means that the operation was also
+    # unsuccessful, in such case set the package as verified
+    return 'unknown' if !IsHashRefWithData($RequestResult);
+
+    my $OperationResult = $CloudServiceObject->OperationResultGet(
+        RequestResult => $RequestResult,
+        CloudService  => $CloudService,
+        Operation     => $Operation,
+    );
+
+    # if there was no result for this specific operation or the operation was not success, then
+    # set the package as verified
+    return 'unknown' if !IsHashRefWithData($OperationResult);
+    return 'unknown' if !$OperationResult->{Success};
+
+    my $VerificationData = $OperationResult->{Data};
+
+    # extract response
+    my $PackageVerify = $VerificationData->{$Name};
+
+    return 'unknown' if !$PackageVerify;
+    return 'unknown' if $PackageVerify ne 'not_verified' && $PackageVerify ne 'verified';
+
+    # set package verification info
+    if ( $PackageVerify eq 'not_verified' ) {
+
+        $PackageVerifyInfo->{VerifyCSSClass} = 'NotVerifiedPackage';
+
+        $Self->{PackageVerifyInfo} = $PackageVerifyInfo;
+    }
+
+    # set cache
+    $CacheObject->Set(
+        Type  => 'PackageVerification',
+        Key   => $Sum,
+        Value => $PackageVerify,
+        TTL   => 30 * 24 * 60 * 60,       # 30 days
+    );
+
+    return $PackageVerify;
 }
 
 =head2 PackageVerifyInfo()
@@ -1975,29 +2046,8 @@ returns:
 sub PackageVerifyAll {
     my ( $Self, %Param ) = @_;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
-    my @PackageList;
-    my %Result;
-# Complemento - At this time, return verified
-#    my $PackageVerification = $Kernel::OM->Get('Kernel::Config')->Get('PackageVerification');
-#   if ( !$PackageVerification ) {
-        # get installed package list
-        @PackageList = $Self->RepositoryList(
-            Result => 'Short',
-        );
-
-        # and take the short way ;)
-        for my $Package (@PackageList) {
-            $Result{ $Package->{Name} } = 'verified';
-        }
-
-        return %Result;
-#    }
-# ---
     # get installed package list
-    @PackageList = $Self->RepositoryList(
+    my @PackageList = $Self->RepositoryList(
         Result => 'Short',
     );
 
@@ -2009,6 +2059,7 @@ sub PackageVerifyAll {
     # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
+    my %Result;
     my @PackagesToVerify;
 
     # first check the cache for each package
@@ -5254,7 +5305,7 @@ framework version.
 Returns:
 
     %RepositoryList = (
-        'http://addons.ligerosmart.org/6.0/' => 'OTRS Freebie Features',
+        'http://ftp.otrs.org/pub/otrs/packages' => 'OTRS Freebie Features',
         # ...,
     );
 
@@ -5275,7 +5326,29 @@ sub _ConfiguredRepositoryDefinitionGet {
 
     return () if !%RepositoryList;
 
-    return %RepositoryList
+    # Make sure ITSM repository matches the current framework version.
+    my @Matches = grep { $_ =~ m{http://ftp\.otrs\.org/pub/otrs/itsm/packages\d+/}msxi } sort keys %RepositoryList;
+
+    return %RepositoryList if !@Matches;
+
+    my @FrameworkVersionParts = split /\./, $Self->{ConfigObject}->Get('Version');
+    my $FrameworkVersion      = $FrameworkVersionParts[0];
+
+    my $CurrentITSMRepository = "http://ftp.otrs.org/pub/otrs/itsm/packages$FrameworkVersion/";
+
+    # Delete all old ITSM repositories, but leave the current if exists
+    for my $Repository (@Matches) {
+        if ( $Repository ne $CurrentITSMRepository ) {
+            delete $RepositoryList{$Repository};
+        }
+    }
+
+    return %RepositoryList if exists $RepositoryList{$CurrentITSMRepository};
+
+    # Make sure that current ITSM repository is in the list.
+    $RepositoryList{$CurrentITSMRepository} = "OTRS::ITSM $FrameworkVersion Master";
+
+    return %RepositoryList;
 }
 
 =head2 _RepositoryCacheClear()

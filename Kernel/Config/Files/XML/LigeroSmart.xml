@@ -64,33 +64,25 @@
         <Value>
             <Item ValueType="Textarea">
 {
-    "bool": {
-        "should": [
-            {
-                "multi_match": {
-                    "query": "{{Query}}",
-                    "fields": [
-                        "Ticket.Title",
-                        "Ticket.Article.Subject",
-                        "Ticket.Article.Body"
-                    ],
-                    "type": "phrase_prefix",
-                    "boost": 10
-                }
-            },
-            {
-                "multi_match": {
-                    "query": "{{Query}}",
-                    "fields": [
-                        "Ticket.Title",
-                        "Ticket.Article.Subject",
-                        "Ticket.Article.Body"
-                    ],
-                    "type": "best_fields"
-                }
-            }
-        ]
-    }
+		    "bool": {
+		        "should": [
+		            {
+		                "prefix": {
+		                    "_all": {
+		                        "value":"{{Query}}",
+		                        "boost": 10
+		                    }
+		                }
+		            },
+		            {
+		                "match": {
+		                    "_all": {
+		                        "query":"{{Query}}"
+		                    }
+		                }
+		            }
+		        ]
+		    }
 }
 			</Item>
 		</Value>

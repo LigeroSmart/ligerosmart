@@ -131,7 +131,7 @@ sub Salutation {
     }
 
     # get list unsupported tags for standard template
-    my @ListOfUnSupportedTag = qw(OTRS_AGENT_SUBJECT OTRS_AGENT_BODY OTRS_AGENT_BODYHTML OTRS_CUSTOMER_BODY OTRS_CUSTOMER_BODYHTML OTRS_CUSTOMER_SUBJECT);
+    my @ListOfUnSupportedTag = qw(OTRS_AGENT_SUBJECT OTRS_AGENT_BODY OTRS_CUSTOMER_BODY OTRS_CUSTOMER_SUBJECT);
 
     my $SalutationText = $Self->_RemoveUnSupportedTag(
         Text                 => $Salutation{Text} || '',
@@ -240,7 +240,7 @@ sub Signature {
     }
 
     # get list unsupported tags for standard template
-    my @ListOfUnSupportedTag = qw(OTRS_AGENT_SUBJECT OTRS_AGENT_BODY OTRS_AGENT_BODYHTML OTRS_CUSTOMER_BODY OTRS_CUSTOMER_BODYHTML OTRS_CUSTOMER_SUBJECT);
+    my @ListOfUnSupportedTag = qw(OTRS_AGENT_SUBJECT OTRS_AGENT_BODY OTRS_CUSTOMER_BODY OTRS_CUSTOMER_SUBJECT);
 
     my $SignatureText = $Self->_RemoveUnSupportedTag(
         Text                 => $Signature{Text} || '',
@@ -442,7 +442,7 @@ sub Template {
     $Language //= $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage') || 'en';
 
     # get list unsupported tags for standard template
-    my @ListOfUnSupportedTag = qw(OTRS_AGENT_SUBJECT OTRS_AGENT_BODY OTRS_AGENT_BODYHTML OTRS_CUSTOMER_BODY OTRS_CUSTOMER_BODYHTML OTRS_CUSTOMER_SUBJECT);
+    my @ListOfUnSupportedTag = qw(OTRS_AGENT_SUBJECT OTRS_AGENT_BODY OTRS_CUSTOMER_BODY OTRS_CUSTOMER_SUBJECT);
 
     my %SupportedTypes = (
         Answer  => 1,
@@ -968,13 +968,6 @@ sub NotificationEvent {
             TicketID   => $ArticleData->{TicketID},
             ArticleID  => $ArticleData->{ArticleID},
             ResultType => 'plain',
-            UserID     => $Param{UserID},
-        );
-
-        $ArticleData->{Bodyhtml} = $LayoutObject->ArticlePreview(
-            TicketID   => $ArticleData->{TicketID},
-            ArticleID  => $ArticleData->{ArticleID},
-            ResultType => 'HTML',
             UserID     => $Param{UserID},
         );
 
@@ -1771,12 +1764,9 @@ sub _Replace {
             for my $Attribute ( sort keys %Data ) {
                 next ATTRIBUTE if !$Data{$Attribute};
 
-                if($Attribute ne 'Bodyhtml'){
-                    $Data{$Attribute} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
-                        String => $Data{$Attribute},
-                    );
-                }
-                
+                $Data{$Attribute} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
+                    String => $Data{$Attribute},
+                );
             }
         }
 

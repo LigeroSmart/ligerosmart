@@ -1,14 +1,10 @@
 # --
-# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
-# --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - Kernel/Output/HTML/Notification/AgentCloudServicesDisabled.pm
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
-## nofilter(TidyAll::Plugin::OTRS::Perl::PerlCritic)
 
 package Kernel::Output::HTML::Notification::AgentCloudServicesDisabled;
 
@@ -26,11 +22,6 @@ our @ObjectDependencies = (
 
 sub Run {
     my ( $Self, %Param ) = @_;
-# ---
-# Znuny4OTRS-Repo
-# ---
-    return '';
-# ---
 
     my $Output = '';
 
@@ -58,7 +49,7 @@ sub Run {
 
     my $Text = '<a href="'
         . $LayoutObject->{Baselink}
-        . 'Action=AdminSystemConfiguration;Subaction=Edit;SysConfigSubGroup=Core;SysConfigGroup=CloudService'
+        . 'Action=AdminSystemConfiguration;Subaction=View;Setting=CloudServices::Disabled'
         . '">';
     $Text .= $LayoutObject->{LanguageObject}->Translate('Enable cloud services to unleash all OTRS features!');
     $Text .= '</a>';

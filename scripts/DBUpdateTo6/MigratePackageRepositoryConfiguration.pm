@@ -39,40 +39,37 @@ sub Run {
 
     return 1 if !%RepositoryList;
 
-    # LigeroSmart do not need OTRS packages anymore
-    return 1;
+    my @FrameworkVersionParts = split /\./, $ConfigObject->Get('Version');
+    my $FrameworkVersion      = $FrameworkVersionParts[0];
 
-    # my @FrameworkVersionParts = split /\./, $ConfigObject->Get('Version');
-    # my $FrameworkVersion      = $FrameworkVersionParts[0];
+    my $CurrentITSMRepository = "http://ftp.otrs.org/pub/otrs/itsm/packages$FrameworkVersion/";
 
-    # my $CurrentITSMRepository = "http://ftp.otrs.org/pub/otrs/itsm/packages$FrameworkVersion/";
+    return 1 if $RepositoryList{$CurrentITSMRepository};
 
-    # return 1 if $RepositoryList{$CurrentITSMRepository};
+    # Make sure ITSM repository matches the current framework version.
+    my @Matches = grep { $_ =~ m{http://ftp\.otrs\.org/pub/otrs/itsm/packages\d+/}msxi } sort keys %RepositoryList;
 
-    # # Make sure ITSM repository matches the current framework version.
-    # my @Matches = grep { $_ =~ m{http://ftp\.otrs\.org/pub/otrs/itsm/packages\d+/}msxi } sort keys %RepositoryList;
+    return 1 if !@Matches;
 
-    # return 1 if !@Matches;
+    # Delete all old ITSM repositories, but leave the current if exists
+    for my $Repository (@Matches) {
+        if ( $Repository ne $CurrentITSMRepository ) {
+            delete $RepositoryList{$Repository};
+        }
+    }
 
-    # # Delete all old ITSM repositories, but leave the current if exists
-    # for my $Repository (@Matches) {
-    #     if ( $Repository ne $CurrentITSMRepository ) {
-    #         delete $RepositoryList{$Repository};
-    #     }
-    # }
+    # Make sure that current ITSM repository is in the list
+    $RepositoryList{$CurrentITSMRepository} = "OTRS::ITSM $FrameworkVersion Master";
 
-    # # Make sure that current ITSM repository is in the list
-    # $RepositoryList{$CurrentITSMRepository} = "OTRS::ITSM $FrameworkVersion Master";
+    my $ContinueOnModified = $Param{ContinueOnModified} // 0;
 
-    # my $ContinueOnModified = $Param{ContinueOnModified} // 0;
-
-    # return $Self->SettingUpdate(
-    #     Name               => $ConfigKey,
-    #     IsValid            => 1,
-    #     EffectiveValue     => \%RepositoryList,
-    #     ContinueOnModified => $ContinueOnModified,
-    #     Verbose            => $Verbose,
-    # );
+    return $Self->SettingUpdate(
+        Name               => $ConfigKey,
+        IsValid            => 1,
+        EffectiveValue     => \%RepositoryList,
+        ContinueOnModified => $ContinueOnModified,
+        Verbose            => $Verbose,
+    );
 }
 
 1;

@@ -1,25 +1,12 @@
 # --
-# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
-# --
-# $origin: otrs - 80c9a107bc2a5e197466b5efdbdfdeacc3484922 - Kernel/System/UnitTest/Helper.pm
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::System::UnitTest::Helper;
-## nofilter(TidyAll::Plugin::OTRS::Perl::Time)
-## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::TimeObject)
-## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::DateTime)
-# ---
-# Znuny4OTRS-Repo
-# ---
-## nofilter(TidyAll::Plugin::OTRS::Perl::ObjectDependencies)
-## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::CacheCleanup)
-## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::ZnunyTime)
-# ---
 
 use strict;
 use warnings;
@@ -31,12 +18,6 @@ use DateTime;
 
 use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::SysConfig;
-# ---
-# Znuny4OTRS-Repo
-# ---
-use utf8;
-use Kernel::System::PostMaster;
-# ---
 
 our @ObjectDependencies = (
     'Kernel::Config',
@@ -49,32 +30,12 @@ our @ObjectDependencies = (
     'Kernel::System::UnitTest::Driver',
     'Kernel::System::User',
     'Kernel::System::XML',
-# ---
-# Znuny4OTRS-Repo
-# ---
-    'Kernel::System::UnitTest',
-    'Kernel::System::Service',
-    'Kernel::System::SysConfig',
-    # There is a cause we don't have the
-    # 'Kernel::System::Ticket',
-    # as a dependency: Since we don't want to use
-    # $Kernel::OM->ObjectsDiscard in our UnitTests
-    # we have to load our TicketObject via the MainObject
-    # otherwise this object will get destroyed by the OM, too
-    # which causes a database and SysConfig rollback
-    'Kernel::System::ZnunyHelper',
-    'Kernel::System::PostMaster',
-    'Kernel::System::DynamicField',
-    'Kernel::System::DynamicField::Backend',
-    'Kernel::System::Encode',
-    'Kernel::System::Ticket::Article',
-    'Kernel::System::CommunicationLog',
-# ---
 );
 
 =head1 NAME
 
 Kernel::System::UnitTest::Helper - unit test helper functions
+
 
 =head2 new()
 
@@ -106,12 +67,10 @@ sub new {
 
     $Self->{Debug} = $Param{Debug} || 0;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
-#     $Self->{UnitTestDriverObject} = $Kernel::OM->Get('Kernel::System::UnitTest::Driver');
-    $Self->{UnitTestDriverObject} = $Self->UnitTestObjectGet();
-# ---
+    $Self->{UnitTestDriverObject} = $Kernel::OM->Get('Kernel::System::UnitTest::Driver');
+
+    # Override Perl's built-in time handling mechanism to set a fixed time if needed.
+    $Self->_MockPerlTimeHandling();
 
     # Remove any leftover custom files from aborted previous runs.
     $Self->CustomFileCleanup();
@@ -183,7 +142,7 @@ my %GetRandomNumberPrevious;
 sub GetRandomNumber {
 
     my $PIDReversed = reverse $$;
-    my $PID = reverse sprintf '%.6d', $PIDReversed;
+    my $PID         = reverse sprintf '%.6d', $PIDReversed;
 
     my $Prefix = $PID . substr time(), -5, 5;
 
@@ -199,11 +158,6 @@ the login name of the new user, the password is the same.
     my $TestUserLogin = $Helper->TestUserCreate(
         Groups => ['admin', 'users'],           # optional, list of groups to add this user to (rw rights)
         Language => 'de'                        # optional, defaults to 'en' if not set
-# ---
-# Znuny4OTRS-Repo
-# ---
-        KeepValid => 1, # optional, default 0
-# ---
     );
 
 =cut
@@ -211,75 +165,45 @@ the login name of the new user, the password is the same.
 sub TestUserCreate {
     my ( $Self, %Param ) = @_;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-# ---
-
-    # disable email checks to create new user
+    # Disable email checks to create new user.
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     local $ConfigObject->{CheckEmailAddresses} = 0;
 
-    # create test user
-# ---
-# Znuny4OTRS-Repo
-# ---
-#     my $TestUserID;
-#     my $TestUserLogin;
-#     COUNT:
-#     for my $Count ( 1 .. 10 ) {
+    # Create test user.
+    my $TestUserID;
+    my $TestUserLogin;
+    COUNT:
+    for ( 1 .. 10 ) {
 
-#         $TestUserLogin = $Self->GetRandomID();
+        $TestUserLogin = $Self->GetRandomID();
 
-#         $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserAdd(
-#             UserFirstname => $TestUserLogin,
-#             UserLastname  => $TestUserLogin,
-#             UserLogin     => $TestUserLogin,
-#             UserPw        => $TestUserLogin,
-#             UserEmail     => $TestUserLogin . '@localunittest.com',
-#             ValidID       => 1,
-#             ChangeUserID  => 1,
-#         );
+        $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserAdd(
+            UserFirstname => $TestUserLogin,
+            UserLastname  => $TestUserLogin,
+            UserLogin     => $TestUserLogin,
+            UserPw        => $TestUserLogin,
+            UserEmail     => $TestUserLogin . '@localunittest.com',
+            ValidID       => 1,
+            ChangeUserID  => 1,
+        );
 
-#         last COUNT if $TestUserID;
-#     }
+        last COUNT if $TestUserID;
+    }
 
-#     die 'Could not create test user login' if !$TestUserLogin;
-#     die 'Could not create test user'       if !$TestUserID;
-    my $TestUserLogin = $Self->GetRandomID();
-    my $TestUserID    = $ZnunyHelperObject->_UserCreateIfNotExists(
-        UserFirstname => $TestUserLogin,
-        UserLastname  => $TestUserLogin,
-        UserLogin     => $TestUserLogin,
-        UserPw        => $TestUserLogin,
-        UserEmail     => $TestUserLogin . '@localunittest.com',
-        ValidID       => 1,
-        ChangeUserID  => 1,
-        %Param,
-    );
-# ---
+    die 'Could not create test user login' if !$TestUserLogin;
+    die 'Could not create test user'       if !$TestUserID;
 
     # Remember UserID of the test user to later set it to invalid
     #   in the destructor.
     $Self->{TestUsers} ||= [];
     push( @{ $Self->{TestUsers} }, $TestUserID );
-# ---
-# Znuny4OTRS-Repo
-# ---
-    if ( $Param{KeepValid} ) {
-        $Self->{TestUsersKeepValid} ||= [];
-        push( @{ $Self->{TestUsersKeepValid} }, $TestUserID );
-    }
-# ---
 
     $Self->{UnitTestDriverObject}->True( 1, "Created test user $TestUserID" );
 
-    # Add user to groups
+    # Add user to groups.
     GROUP_NAME:
     for my $GroupName ( @{ $Param{Groups} || [] } ) {
 
-        # get group object
         my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
         my $GroupID = $GroupObject->GroupLookup( Group => $GroupName );
@@ -302,7 +226,7 @@ sub TestUserCreate {
         $Self->{UnitTestDriverObject}->True( 1, "Added test user $TestUserLogin to group $GroupName" );
     }
 
-    # set user language
+    # Set user language.
     my $UserLanguage = $Param{Language} || 'en';
     $Kernel::OM->Get('Kernel::System::User')->SetPreferences(
         UserID => $TestUserID,
@@ -311,7 +235,7 @@ sub TestUserCreate {
     );
     $Self->{UnitTestDriverObject}->True( 1, "Set user UserLanguage to $UserLanguage" );
 
-    return $TestUserLogin;
+    return wantarray ? ( $TestUserLogin, $TestUserID ) : $TestUserLogin;
 }
 
 =head2 TestCustomerUserCreate()
@@ -322,11 +246,6 @@ the login name of the new customer user, the password is the same.
 
     my $TestUserLogin = $Helper->TestCustomerUserCreate(
         Language => 'de',   # optional, defaults to 'en' if not set
-# ---
-# Znuny4OTRS-Repo
-# ---
-        KeepValid => 1, # optional, default 0
-# ---
     );
 
 =cut
@@ -334,73 +253,42 @@ the login name of the new customer user, the password is the same.
 sub TestCustomerUserCreate {
     my ( $Self, %Param ) = @_;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-# ---
-
-    # disable email checks to create new user
+    # Disable email checks to create new user.
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     local $ConfigObject->{CheckEmailAddresses} = 0;
 
-    # create test user
-# ---
-# Znuny4OTRS-Repo
-# ---
-#     my $TestUser;
-#     COUNT:
-#     for my $Count ( 1 .. 10 ) {
+    # Create test user.
+    my $TestUser;
+    COUNT:
+    for ( 1 .. 10 ) {
 
-#         my $TestUserLogin = $Self->GetRandomID();
+        my $TestUserLogin = $Self->GetRandomID();
 
-#         $TestUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserAdd(
-#             Source         => 'CustomerUser',
-#             UserFirstname  => $TestUserLogin,
-#             UserLastname   => $TestUserLogin,
-#             UserCustomerID => $TestUserLogin,
-#             UserLogin      => $TestUserLogin,
-#             UserPassword   => $TestUserLogin,
-#             UserEmail      => $TestUserLogin . '@localunittest.com',
-#             ValidID        => 1,
-#             UserID         => 1,
-#         );
+        $TestUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserAdd(
+            Source         => 'CustomerUser',
+            UserFirstname  => $TestUserLogin,
+            UserLastname   => $TestUserLogin,
+            UserCustomerID => $TestUserLogin,
+            UserLogin      => $TestUserLogin,
+            UserPassword   => $TestUserLogin,
+            UserEmail      => $TestUserLogin . '@localunittest.com',
+            ValidID        => 1,
+            UserID         => 1,
+        );
 
-#         last COUNT if $TestUser;
-#     }
+        last COUNT if $TestUser;
+    }
 
-#     die 'Could not create test user' if !$TestUser;
-    my $TestUserLogin = $Self->GetRandomID();
-    my $TestUser      = $ZnunyHelperObject->_CustomerUserCreateIfNotExists(
-        Source         => 'CustomerUser',
-        UserFirstname  => $TestUserLogin,
-        UserLastname   => $TestUserLogin,
-        UserCustomerID => $TestUserLogin,
-        UserLogin      => $TestUserLogin,
-        UserPassword   => $TestUserLogin,
-        UserEmail      => $TestUserLogin . '@localunittest.com',
-        ValidID        => 1,
-        UserID         => 1,
-        %Param,
-    );
-# ---
+    die 'Could not create test user' if !$TestUser;
 
     # Remember UserID of the test user to later set it to invalid
     #   in the destructor.
     $Self->{TestCustomerUsers} ||= [];
     push( @{ $Self->{TestCustomerUsers} }, $TestUser );
-# ---
-# Znuny4OTRS-Repo
-# ---
-    if ( $Param{KeepValid} ) {
-        $Self->{TestCustomerUsersKeepValid} ||= [];
-        push( @{ $Self->{TestCustomerUsersKeepValid} }, $TestUser );
-    }
-# ---
 
     $Self->{UnitTestDriverObject}->True( 1, "Created test customer user $TestUser" );
 
-    # set customer user language
+    # Set customer user language.
     my $UserLanguage = $Param{Language} || 'en';
     $Kernel::OM->Get('Kernel::System::CustomerUser')->SetPreferences(
         UserID => $TestUser,
@@ -505,32 +393,7 @@ sub FixedTimeSet {
         $FixedTime = $TimeToSave->ToEpoch();
     }
     else {
-        $FixedTime = $TimeToSave // CORE::time()
-    }
-
-    # This is needed to reload objects that directly use the native time functions
-    #   to get a hold of the overrides.
-    my @Objects = (
-        'Kernel::System::Time',
-        'Kernel::System::DB',
-        'Kernel::System::Cache::FileStorable',
-        'Kernel::System::PID',
-# ---
-# Znuny4OTRS-Repo
-# ---
-        'Kernel::System::ZnunyTime',
-# ---
-    );
-
-    for my $Object (@Objects) {
-        my $FilePath = $Object;
-        $FilePath =~ s{::}{/}xmsg;
-        $FilePath .= '.pm';
-        if ( $INC{$FilePath} ) {
-            no warnings 'redefine';    ## no critic
-            delete $INC{$FilePath};
-            $Kernel::OM->Get('Kernel::System::Main')->Require($Object);
-        }
+        $FixedTime = $TimeToSave // CORE::time();
     }
 
     return $FixedTime;
@@ -565,7 +428,10 @@ sub FixedTimeAddSeconds {
 }
 
 # See http://perldoc.perl.org/5.10.0/perlsub.html#Overriding-Built-in-Functions
-BEGIN {
+## nofilter(TidyAll::Plugin::OTRS::Perl::Time)
+## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::TimeObject)
+## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::DateTime)
+sub _MockPerlTimeHandling {
     no warnings 'redefine';    ## no critic
     *CORE::GLOBAL::time = sub {
         return defined $FixedTime ? $FixedTime : CORE::time();
@@ -598,6 +464,28 @@ BEGIN {
             @_
         );
     };
+
+    # This is needed to reload objects that directly use the native time functions
+    #   to get a hold of the overrides.
+    my @Objects = (
+        'Kernel::System::Time',
+        'Kernel::System::DB',
+        'Kernel::System::Cache::FileStorable',
+        'Kernel::System::PID',
+    );
+
+    for my $Object (@Objects) {
+        my $FilePath = $Object;
+        $FilePath =~ s{::}{/}xmsg;
+        $FilePath .= '.pm';
+        if ( $INC{$FilePath} ) {
+            no warnings 'redefine';    ## no critic
+            delete $INC{$FilePath};
+            require $FilePath;         ## nofilter(TidyAll::Plugin::OTRS::Perl::Require)
+        }
+    }
+
+    return 1;
 }
 
 =head2 DESTROY()
@@ -608,30 +496,6 @@ performs various clean-ups.
 
 sub DESTROY {
     my $Self = shift;
-# ---
-# Znuny4OTRS-Repo
-# ---
-    # some Users or CustomerUsers should be kept valid (development)
-    USERTYPE:
-    for my $UserType ( qw( User CustomerUser ) ) {
-
-        my $Key          = "Test$UserType";
-        my $KeyKeepValid = "${Key}KeepValid";
-
-        next USERTYPE if !IsArrayRefWithData( $Self->{$KeyKeepValid} );
-
-        my @SetInvalid;
-        USER:
-        for my $User ( @{ $Self->{$Key} } ) {
-
-            next USER if grep { $_ eq $User } @{ $Self->{$KeyKeepValid} };
-
-            push @SetInvalid, $User;
-        }
-
-        $Self->{$Key} = \@SetInvalid;
-    }
-# ---
 
     # reset time freeze
     FixedTimeUnset();
@@ -735,46 +599,6 @@ sub DESTROY {
             );
         }
     }
-# ---
-# Znuny4OTRS-Repo
-# ---
-    # Only manually delete created tickets and dynamic fields if RestoreDatabase flag is not set
-    # Otherwise the already deleted tickets will be tried to delete again, resulting
-    # in many error messages.
-    return if $Self->{RestoreDatabase};
-
-    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
-
-    my $TicketObjectLoaded = $MainObject->Require(
-        'Kernel::System::Ticket',
-    );
-
-    $Self->{UnitTestDriverObject}->True(
-        $TicketObjectLoaded,
-        'Loaded TicketObject via MainObject',
-    );
-
-    my $TicketObject      = $Kernel::OM->Get('Kernel::System::Ticket');
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-
-    if ( IsArrayRefWithData( $Self->{TestTickets} ) ) {
-
-        TICKET:
-        for my $TicketID ( sort @{ $Self->{TestTickets} } ) {
-
-            next TICKET if !$TicketID;
-
-            $TicketObject->TicketDelete(
-                TicketID => $TicketID,
-                UserID   => 1,
-            );
-        }
-    }
-
-    return if !IsArrayRefWithData( $Self->{TestDynamicFields} );
-
-    $ZnunyHelperObject->_DynamicFieldsDelete( @{ $Self->{TestDynamicFields} } );
-# ---
 
     return;
 }
@@ -824,7 +648,7 @@ sub ConfigSettingChange {
         $ValueDump =~ s/\$VAR1/$KeyDump/;
     }
     else {
-        $ValueDump = "delete $KeyDump;"
+        $ValueDump = "delete $KeyDump;";
     }
 
     my $PackageName = "ZZZZUnitTest$RandomNumber";
@@ -889,7 +713,7 @@ use warnings;
 sub CustomCodeActivate {
     my ( $Self, %Param ) = @_;
 
-    my $Code = $Param{Code};
+    my $Code       = $Param{Code};
     my $Identifier = $Param{Identifier} || $Self->GetRandomNumber();
 
     die "Need 'Code'" if !defined $Code;
@@ -1164,7 +988,7 @@ sub TestDatabaseCleanup {
 
     if ( scalar @Tables ) {
         my $TableList = join ', ', sort @Tables;
-        my $DBType = $DBObject->{'DB::Type'};
+        my $DBType    = $DBObject->{'DB::Type'};
 
         if ( $DBType eq 'mysql' ) {
 
@@ -1188,6 +1012,30 @@ sub TestDatabaseCleanup {
             for my $Table (@Tables) {
                 $DBObject->Do( SQL => "DROP TABLE $Table CASCADE CONSTRAINTS" );
             }
+
+            # Get complete list of user sequences.
+            my @Sequences;
+            return if !$DBObject->Prepare(
+                SQL => 'SELECT sequence_name FROM user_sequences ORDER BY sequence_name',
+            );
+            while ( my @Row = $DBObject->FetchrowArray() ) {
+                push @Sequences, $Row[0];
+            }
+
+            # Drop all found sequences as well.
+            for my $Sequence (@Sequences) {
+                $DBObject->Do( SQL => "DROP SEQUENCE $Sequence" );
+            }
+
+            # Check if all sequences have been dropped.
+            @Sequences = ();
+            return if !$DBObject->Prepare(
+                SQL => 'SELECT sequence_name FROM user_sequences ORDER BY sequence_name',
+            );
+            while ( my @Row = $DBObject->FetchrowArray() ) {
+                push @Sequences, $Row[0];
+            }
+            return if scalar @Sequences;
         }
 
         # Check if all tables have been dropped.
@@ -1281,1506 +1129,14 @@ sub DatabaseXMLExecute {
     return 1;
 }
 
-# ---
-# Znuny4OTRS-Repo
-# ---
-
-=head2 FixedTimeSetByDate()
-
-This function is a convenience wrapper around the FixedTimeSet function of this object which makes it
-possible to set a fixed time by using Year, Month, Day and optional Hour, Minute, Second parameters.
-
-    $HelperObject->FixedTimeSetByDate(
-        Year   => 2016,
-        Month  => 4,
-        Day    => 28,
-        Hour   => 10, # default 0
-        Minute => 0,  # default 0
-        Second => 0,  # default 0
-    );
-
-=cut
-
-sub FixedTimeSetByDate {
-    my ( $Self, %Param ) = @_;
-
-    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
-
-    # check needed stuff
-    NEEDED:
-    for my $Needed ( qw(Year Month Day) ) {
-
-        next NEEDED if defined $Param{ $Needed };
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter '$Needed' is needed!",
-        );
-        return;
-    }
-
-    for my $Default ( qw(Hour Minute Second) ) {
-        $Param{$Default} ||= 0;
-    }
-
-    my $DateTimeObject = $Kernel::OM->Create(
-        'Kernel::System::DateTime',
-        ObjectParams => \%Param,
-    );
-
-    $Self->FixedTimeSet($DateTimeObject->ToEpoch());
-
-    return 1;
-}
-
-=head2 FixedTimeSetByTimeStamp()
-
-This function is a convenience wrapper around the FixedTimeSet function of this object which makes it
-possible to set a fixed time by using parameters for the TimeObject TimeStamp2SystemTime function.
-
-    $HelperObject->FixedTimeSetByTimeStamp('2004-08-14 22:45:00');
-
-=cut
-
-sub FixedTimeSetByTimeStamp {
-    my ( $Self, $TimeStamp ) = @_;
-
-    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
-
-    # check needed stuff
-    if ( !$TimeStamp ) {
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "TimeStamp is needed!",
-        );
-        return;
-    }
-
-    my $DateTimeObject = $Kernel::OM->Create(
-        'Kernel::System::DateTime',
-        ObjectParams => {
-            String => $TimeStamp,
-        }
-    );
-
-    $Self->FixedTimeSet($DateTimeObject->ToEpoch());
-
-    return 1;
-}
-
-=head2 CheckNumberOfEventExecution()
-
-This function checks the number of executions of an Event via the TicketHistory
-
-    my $Result = $HelperObject->CheckNumberOfEventExecution(
-        TicketID => $TicketID,
-        Comment  => 'after article create',
-        Events   => {
-            AnExampleHistoryEntry      => 2,
-            AnotherExampleHistoryEntry => 0,
-        },
-    );
-
-=cut
-
-sub CheckNumberOfEventExecution {
-    my ( $Self, %Param ) = @_;
-
-    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
-
-    my $TicketObjectLoaded = $MainObject->Require(
-        'Kernel::System::Ticket',
-    );
-
-    $Self->{UnitTestDriverObject}->True(
-        $TicketObjectLoaded,
-        'Loaded TicketObject via MainObject',
-    );
-
-    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
-    my $Comment = $Param{Comment} || '';
-
-    my @Lines = $TicketObject->HistoryGet(
-        TicketID => $Param{TicketID},
-        UserID   => 1,
-    );
-
-    for my $Event ( sort keys %{ $Param{Events} } ) {
-
-        my $NumEvents = $Param{Events}->{$Event};
-
-        my @EventLines = grep { $_->{Name} =~ m{\s*\Q$Event\E$} } @Lines;
-
-        $Self->{UnitTestDriverObject}->Is(
-            scalar @EventLines,
-            $NumEvents,
-            "check num of $Event events, $Comment",
-        );
-
-        # keep current number for reference
-        $Param{Events}->{$Event} = scalar @EventLines;
-    }
-
-    return 1;
-}
-
-=head2 SetupTestEnvironment()
-
-This function calls a list of other helper functions to setup a test environment with various test data.
-
-    my $Result = $HelperObject->SetupTestEnvironment(
-        ... # Parameters get passed to the FillTestEnvironment and ConfigureViews function
-    );
-
-    $Result = {
-        ... # Combined result of the ActivateDefaultDynamicFields, FillTestEnvironment and ConfigureViews functions
-    }
-
-=cut
-
-sub SetupTestEnvironment {
-    my ( $Self, %Param ) = @_;
-
-    $Self->FullFeature();
-
-    my %Result;
-    $Result{DynamicFields} = $Self->ActivateDefaultDynamicFields();
-
-    my $TestSystemData = $Self->FillTestEnvironment(%Param);
-
-    if ( IsHashRefWithData($TestSystemData) ) {
-
-        %Result = (
-            %Result,
-            %{$TestSystemData},
-        );
-    }
-
-    my $ViewData = $Self->ConfigureViews(
-        AgentTicketNote => {
-            Note             => 1,
-            NoteMandatory    => 1,
-            Owner            => 1,
-            OwnerMandatory   => 1,
-            Priority         => 1,
-            PriorityDefault  => '3 normal',
-            Queue            => 1,
-            Responsible      => 1,
-            Service          => 1,
-            ServiceMandatory => 1,
-            SLAMandatory     => 1,
-            State            => 1,
-            StateType        => ['open', 'closed', 'pending reminder', 'pending auto'],
-            TicketType       => 1,
-            Title            => 1,
-        },
-        %Param
-    );
-
-    if ( IsHashRefWithData($ViewData) ) {
-
-        %Result = (
-            %Result,
-            %{$ViewData},
-        );
-    }
-
-    return \%Result;
-}
-
-=head2 ConfigureViews()
-
-Toggles settings for a given view like AgentTicketNote or CustomerTicketMessage.
-
-    my $Result = $HelperObject->ConfigureViews(
-        AgentTicketNote => {
-            Note             => 1,
-            NoteMandatory    => 1,
-            Owner            => 1,
-            OwnerMandatory   => 1,
-            Priority         => 1,
-            PriorityDefault  => '3 normal',
-            Queue            => 1,
-            Responsible      => 1,
-            Service          => 1,
-            ServiceMandatory => 1,
-            SLAMandatory     => 1,
-            State            => 1,
-            StateType        => ['open', 'closed', 'pending reminder', 'pending auto'],
-            TicketType       => 1,
-            Title            => 1,
-        },
-        CustomerTicketMessage => {
-            Priority         => 1,
-            Queue            => 1,
-            Service          => 1,
-            ServiceMandatory => 1,
-            SLA              => 1,
-            SLAMandatory     => 1,
-            TicketType       => 1,
-        },
-    );
-
-    $Result = {
-        AgentTicketNote => {
-            Note             => 1,
-            NoteMandatory    => 1,
-            Owner            => 1,
-            OwnerMandatory   => 1,
-            Priority         => 1,
-            PriorityDefault  => '3 normal',
-            Queue            => 1,
-            Responsible      => 1,
-            Service          => 1,
-            ServiceMandatory => 1,
-            SLAMandatory     => 1,
-            State            => 1,
-            StateType        => ['open', 'closed', 'pending reminder', 'pending auto'],
-            TicketType       => 1,
-            Title            => 1,
-            HistoryType      => 'Phone',
-            ...
-        },
-        CustomerTicketMessage => {
-            Priority         => 1,
-            Queue            => 1,
-            Service          => 1,
-            ServiceMandatory => 1,
-            SLA              => 1,
-            SLAMandatory     => 1,
-            TicketType       => 1,
-            ArticleType      => 'note-external',
-            ...
-        },
-    }
-
-=cut
-
-sub ConfigureViews {
-    my ( $Self, %Param ) = @_;
-
-    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-    return if !%Param;
-
-    my %Result;
-    my @Changes;
-    VIEW:
-    for my $View ( sort %Param ) {
-
-        next VIEW if !IsStringWithData($View);
-
-        my $ConfigKey = "Ticket::Frontend::$View";
-        my $OldConfig = $ConfigObject->Get($ConfigKey);
-        my $NewConfig = $Param{$View};
-
-        next VIEW if !IsHashRefWithData($OldConfig);
-        next VIEW if !IsHashRefWithData($NewConfig);
-
-        my %UpdatedConfig = (
-            %{$OldConfig},
-            %{$NewConfig},
-        );
-
-        for my $KeySuffix (sort keys %{ $NewConfig }) {
-            push(@Changes, {
-                Name           => $ConfigKey . '###'. $KeySuffix,
-                EffectiveValue => $NewConfig->{$KeySuffix},
-                IsValid        => 1,
-            });
-        }
-
-
-        $Result{$View} = \%UpdatedConfig;
-    }
-
-    $SysConfigObject->SettingsSet(
-        Settings => \@Changes,
-        UserID   => 1,
-    );
-
-    return \%Result;
-}
-
-=head2 ActivateDynamicFields()
-
-This function activates the given DynamicFields in each agent view.
-
-    $HelperObject->ActivateDynamicFields(
-        'UnitTestDropdown',
-        'UnitTestCheckbox',
-        'UnitTestText',
-        'UnitTestMultiSelect',
-        'UnitTestTextArea',
-        'UnitTestDate',
-        'UnitTestDateTime',
-    );
-
-=cut
-
-sub ActivateDynamicFields {
-    my ( $Self, @DynamicFields ) = @_;
-
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-
-    my %ActivateDynamicFields = map { $_ => 1 } @DynamicFields;
-
-    my %Screens = (
-        AgentTicketClose                              => \%ActivateDynamicFields,
-        AgentTicketFreeText                           => \%ActivateDynamicFields,
-        AgentTicketNote                               => \%ActivateDynamicFields,
-        AgentTicketOwner                              => \%ActivateDynamicFields,
-        AgentTicketPending                            => \%ActivateDynamicFields,
-        AgentTicketPriority                           => \%ActivateDynamicFields,
-        AgentTicketResponsible                        => \%ActivateDynamicFields,
-        AgentTicketBounce                             => \%ActivateDynamicFields,
-        AgentTicketCompose                            => \%ActivateDynamicFields,
-        AgentTicketCustomer                           => \%ActivateDynamicFields,
-        AgentTicketEmail                              => \%ActivateDynamicFields,
-        AgentTicketEmailOutbound                      => \%ActivateDynamicFields,
-        AgentTicketForward                            => \%ActivateDynamicFields,
-        AgentTicketMerge                              => \%ActivateDynamicFields,
-        AgentTicketMove                               => \%ActivateDynamicFields,
-        AgentTicketPhone                              => \%ActivateDynamicFields,
-        AgentTicketPhoneCommon                        => \%ActivateDynamicFields,
-        AgentTicketSearch                             => \%ActivateDynamicFields,
-        'AgentTicketSearch###Defaults###DynamicField' => \%ActivateDynamicFields,
-
-    );
-
-    $ZnunyHelperObject->_DynamicFieldsScreenEnable(%Screens);
-
-    return 1;
-}
-
-=head2 ActivateDefaultDynamicFields()
-
-This function adds one of each default dynamic fields to the system and activates them for each agent view.
-
-    my $Result = $HelperObject->ActivateDefaultDynamicFields();
-
-    $Result = [
-        {
-            Name          => 'UnitTestText',
-            Label         => "UnitTestText",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Text',
-            InternalField => 0,
-            Config        => {
-                DefaultValue => '',
-                Link         => '',
-            },
-        },
-        {
-            Name          => 'UnitTestCheckbox',
-            Label         => "UnitTestCheckbox",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Checkbox',
-            InternalField => 0,
-            Config        => {
-                DefaultValue => "0",
-            },
-        },
-        {
-            Name          => 'UnitTestDropdown',
-            Label         => "UnitTestDropdown",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Dropdown',
-            InternalField => 0,
-            Config        => {
-                PossibleValues => {
-                    Key  => "Value",
-                    Key1 => "Value1",
-                    Key2 => "Value2",
-                    Key3 => "Value3",
-                },
-                DefaultValue       => "Key2",
-                TreeView           => '0',
-                PossibleNone       => '0',
-                TranslatableValues => '0',
-                Link               => '',
-            },
-        },
-        {
-            Name          => 'UnitTestTextArea',
-            Label         => "UnitTestTextArea",
-            ObjectType    => 'Ticket',
-            FieldType     => 'TextArea',
-            InternalField => 0,
-            Config        => {
-                DefaultValue => '',
-                Rows         => '',
-                Cols         => '',
-            },
-        },
-        {
-            Name          => 'UnitTestMultiSelect',
-            Label         => "UnitTestMultiSelect",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Multiselect',
-            InternalField => 0,
-            Config        => {
-                PossibleValues => {
-                    Key  => "Value",
-                    Key1 => "Value1",
-                    Key2 => "Value2",
-                    Key3 => "Value3",
-                },
-                DefaultValue       => "Key2",
-                TreeView           => '0',
-                PossibleNone       => '0',
-                TranslatableValues => '0',
-            },
-        },
-        {
-            Name          => 'UnitTestDate',
-            Label         => "UnitTestDate",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Date',
-            InternalField => 0,
-            Config        => {
-                DefaultValue  => "0",
-                YearsPeriod   => "0",
-                YearsInFuture => "5",
-                YearsInPast   => "5",
-                Link          => '',
-            },
-        },
-        {
-            Name          => 'UnitTestDateTime',
-            Label         => "UnitTestDateTime",
-            ObjectType    => 'Ticket',
-            FieldType     => 'DateTime',
-            InternalField => 0,
-            Config        => {
-                DefaultValue  => "0",
-                YearsPeriod   => "0",
-                YearsInFuture => "5",
-                YearsInPast   => "5",
-                Link          => '',
-            },
-        },
-    ];
-
-=cut
-
-sub ActivateDefaultDynamicFields {
-    my ( $Self, %Param ) = @_;
-
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-
-    my @DynamicFields = (
-        {
-            Name          => 'UnitTestText',
-            Label         => "UnitTestText",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Text',
-            InternalField => 0,
-            Config        => {
-                DefaultValue => '',
-                Link         => '',
-            },
-        },
-        {
-            Name          => 'UnitTestCheckbox',
-            Label         => "UnitTestCheckbox",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Checkbox',
-            InternalField => 0,
-            Config        => {
-                DefaultValue => "0",
-            },
-        },
-        {
-            Name          => 'UnitTestDropdown',
-            Label         => "UnitTestDropdown",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Dropdown',
-            InternalField => 0,
-            Config        => {
-                PossibleValues => {
-                    Key  => "Value",
-                    Key1 => "Value1",
-                    Key2 => "Value2",
-                    Key3 => "Value3",
-                },
-                DefaultValue       => "Key2",
-                TreeView           => '0',
-                PossibleNone       => '0',
-                TranslatableValues => '0',
-                Link               => '',
-            },
-        },
-        {
-            Name          => 'UnitTestTextArea',
-            Label         => "UnitTestTextArea",
-            ObjectType    => 'Ticket',
-            FieldType     => 'TextArea',
-            InternalField => 0,
-            Config        => {
-                DefaultValue => '',
-                Rows         => '',
-                Cols         => '',
-            },
-        },
-        {
-            Name          => 'UnitTestMultiSelect',
-            Label         => "UnitTestMultiSelect",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Multiselect',
-            InternalField => 0,
-            Config        => {
-                PossibleValues => {
-                    Key  => "Value",
-                    Key1 => "Value1",
-                    Key2 => "Value2",
-                    Key3 => "Value3",
-                },
-                DefaultValue       => "Key2",
-                TreeView           => '0',
-                PossibleNone       => '0',
-                TranslatableValues => '0',
-            },
-        },
-        {
-            Name          => 'UnitTestDate',
-            Label         => "UnitTestDate",
-            ObjectType    => 'Ticket',
-            FieldType     => 'Date',
-            InternalField => 0,
-            Config        => {
-                DefaultValue  => "0",
-                YearsPeriod   => "0",
-                YearsInFuture => "5",
-                YearsInPast   => "5",
-                Link          => '',
-            },
-        },
-        {
-            Name          => 'UnitTestDateTime',
-            Label         => "UnitTestDateTime",
-            ObjectType    => 'Ticket',
-            FieldType     => 'DateTime',
-            InternalField => 0,
-            Config        => {
-                DefaultValue  => "0",
-                YearsPeriod   => "0",
-                YearsInFuture => "5",
-                YearsInPast   => "5",
-                Link          => '',
-            },
-        },
-    );
-
-    $ZnunyHelperObject->_DynamicFieldsCreateIfNotExists(@DynamicFields);
-
-    my @DynamicFieldNames = map { $_->{Name} } @DynamicFields;
-
-    $Self->{TestDynamicFields} ||= [];
-    for my $DynamicFieldName (@DynamicFieldNames) {
-        push @{ $Self->{TestDynamicFields} }, $DynamicFieldName;
-    }
-
-    $Self->ActivateDynamicFields(@DynamicFieldNames);
-
-    return \@DynamicFields;
-}
-
-=head2 FullFeature()
-
-Activates Type, Service and Responsible feature.
-
-    $HelperObject->FullFeature();
-
-=cut
-
-sub FullFeature {
-    my ( $Self, %Param ) = @_;
-
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-    return $SysConfigObject->SettingsSet(
-        Settings => [
-            {
-                Name           => 'Ticket::Type',
-                IsValid        => 1,
-                EffectiveValue => 1,
-            },
-            {
-                Name           => 'Ticket::Service',
-                IsValid        => 1,
-                EffectiveValue => 1,
-            },
-            {
-                Name           => 'Ticket::Responsible',
-                IsValid        => 1,
-                EffectiveValue => 1
-            },
-        ],
-        UserID => 1,
-    );
-}
-
-=head2 FillTestEnvironment()
-
-Fills the system with test data. Data creation can be manipulated with own parameters passed.
-Default parameters contain various special chars.
-
-    # would do nothing -> return an empty HashRef
-    my $Result = $HelperObject->FillTestEnvironment(
-        User         => 0, # optional, default 5
-        CustomerUser => 0, # optional, default 5
-        Service      => 0, # optional, default 1 (true)
-        SLA          => 0, # optional, default 1 (true)
-        Type         => 0, # optional, default 1 (true)
-        Queue        => 0, # optional, default 1 (true)
-    );
-
-    # create everything with defaults, except Type
-    my $Result = $HelperObject->FillTestEnvironment(
-        Type => {
-            'Type 1::Sub Type ÄÖÜ' => 1,
-            ...
-        }
-    );
-
-    # create everything with defaults, except 20 agents
-    my $Result = $HelperObject->FillTestEnvironment(
-        User => 20,
-    );
-
-    Return structure looks like this:
-
-    $Result = {
-        User => [
-        ],
-        CustomerUser => [
-        ],
-        Queue => [
-        ],
-        Service => [
-        ],
-        SLA => [
-        ],
-        Type => [
-        ]
-    };
-
-=cut
-
-sub FillTestEnvironment {
-    my ( $Self, %Param ) = @_;
-
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-    my $ServiceObject     = $Kernel::OM->Get('Kernel::System::Service');
-
-    # first the user creation
-    my %UserTypeCountsDefault = (
-        User         => 5,
-        CustomerUser => 5,
-    );
-
-    my %UserTypeCounts;
-    for my $UserType ( sort keys %UserTypeCountsDefault ) {
-
-        if (
-            !defined $Param{$UserType}
-            || !IsPositiveInteger( $Param{$UserType} )
-            )
-        {
-            $UserTypeCounts{$UserType} = $UserTypeCountsDefault{$UserType};
-        }
-        elsif ( IsPositiveInteger( $Param{$UserType} ) ) {
-            $UserTypeCounts{$UserType} = $Param{$UserType};
-        }
-    }
-
-    my %AdditionalUserCreateData = (
-        User => {
-            Groups => ['users'],
-            }
-    );
-
-    my %Result;
-    USERTYPE:
-    for my $UserType ( sort keys %UserTypeCounts ) {
-
-        my $UserTypeCount = $UserTypeCounts{$UserType};
-
-        next USERTYPE if !$UserTypeCount;
-
-        my $FunctionName = "Test${UserType}DataGet";
-        $Result{$UserType} = [];
-
-        my %CreateData;
-        if ( IsHashRefWithData( $AdditionalUserCreateData{$UserType} ) ) {
-            %CreateData = %{ $AdditionalUserCreateData{$UserType} };
-        }
-
-        for my $Counter ( 1 .. $UserTypeCount ) {
-
-            my %UserTypeData = $Self->$FunctionName(%CreateData);
-
-            push @{ $Result{$UserType} }, \%UserTypeData;
-        }
-    }
-
-    # now the ticket attributes
-    my %AttributeTestStructure = (
-        'A::Level - 1::A'  => 0,
-        'A::Level - 1::B'  => 0,
-        'A::Level - 2::Ä' => 0,
-        'A::Level - 2::Ö' => 0,
-        'B::Level - !::Ü' => 0,
-        'B::Level - !::ß' => 0,
-        'B::Level - ?::Y'  => 0,
-        'B::Level - ?::Z'  => 0,
-        'C::Level - &::%'  => 0,
-        'C::Level - &::$'  => 0,
-        'C::Level - "::^'  => 0,
-        'C::Level - "::\'' => 0,
-        'D::Level - #::>'  => 0,
-        'D::Level - #::<'  => 0,
-        'D::Level - "::+'  => 0,
-        'D::Level - "::='  => 0,
-        'E::Level - *::@'  => 0,
-        'E::Level - *::"'  => 0,
-        'E::Level - "::()' => 0,
-        'E::Level - "::{}' => 0,
-        'F'                => 0,
-    );
-
-    my %WantedTicketAttributes;
-    my @PossibleTicketAttributes = qw(Service SLA Type Queue);
-    for my $WantedTicketAttribute (@PossibleTicketAttributes) {
-
-        if (
-            !defined $Param{$WantedTicketAttribute}
-            || !IsHashRefWithData( $Param{$WantedTicketAttribute} )
-            )
-        {
-            my %TmpAttributeTestStructure = %AttributeTestStructure;
-            $WantedTicketAttributes{$WantedTicketAttribute} = \%TmpAttributeTestStructure;
-        }
-        elsif ( IsHashRefWithData( $Param{$WantedTicketAttribute} ) ) {
-            $WantedTicketAttributes{$WantedTicketAttribute} = $Param{$WantedTicketAttribute};
-        }
-    }
-
-    my %AdditionalAttributeCreateData = (
-        Queue => {
-            GroupID => 1,    # users
-        },
-        SLA => {
-            ServiceIDs => [],
-        },
-    );
-
-    ATTRIBUTE:
-    for my $Attribute (@PossibleTicketAttributes) {
-
-        next ATTRIBUTE if !IsHashRefWithData( $WantedTicketAttributes{$Attribute} );
-
-        my %AttributeCreateData = %{ $WantedTicketAttributes{$Attribute} };
-
-        my %AttributeResultData;
-        ITEM:
-        for my $AttributeCreateItem ( sort keys %AttributeCreateData ) {
-
-            my $AttributeEntry = "$Attribute $AttributeCreateItem";
-            my $FunctionName   = "_${Attribute}CreateIfNotExists";
-
-            my %CreateData = (
-                Name => $AttributeEntry,
-            );
-            if ( IsHashRefWithData( $AdditionalAttributeCreateData{$Attribute} ) ) {
-
-                %CreateData = (
-                    %CreateData,
-                    %{ $AdditionalAttributeCreateData{$Attribute} },
-                );
-            }
-
-            $AttributeResultData{$AttributeEntry} = $ZnunyHelperObject->$FunctionName(%CreateData);
-        }
-
-        $Result{$Attribute} = \%AttributeResultData;
-
-        next ATTRIBUTE if $Attribute ne 'Service';
-
-        my %ServiceList = $ServiceObject->ServiceList(
-            UserID => 1,
-        );
-        my @ServiceIDs = keys %ServiceList;
-
-        $AdditionalAttributeCreateData{SLA}->{ServiceIDs} = \@ServiceIDs;
-
-        # add services as defalut service for all customers
-        for my $ServiceID (@ServiceIDs) {
-
-            $ServiceObject->CustomerUserServiceMemberAdd(
-                CustomerUserLogin => '<DEFAULT>',
-                ServiceID         => $ServiceID,
-                Active            => 1,
-                UserID            => 1,
-            );
-        }
-    }
-
-    return \%Result;
-}
-
-=head2 TestUserDataGet()
-
-Calls TestUserCreate and returns the whole UserData instead only the Login.
-
-    my %UserData = $HelperObject->TestUserDataGet(
-        Groups => ['admin', 'users'],           # optional, list of groups to add this user to (rw rights)
-        Language => 'de'                        # optional, defaults to 'en' if not set
-    );
-
-    %UserData = {
-        UserID        => 2,
-        UserFirstname => $TestUserLogin,
-        UserLastname  => $TestUserLogin,
-        UserLogin     => $TestUserLogin,
-        UserPw        => $TestUserLogin,
-        UserEmail     => $TestUserLogin . '@localunittest.com',
-    }
-
-=cut
-
-sub TestUserDataGet {
-    my ( $Self, %Param ) = @_;
-
-    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
-
-    # create test user and login
-    $Self->TestUserCreate(%Param);
-
-    # return user data of last created user
-    return $UserObject->GetUserData(
-        UserID => $Self->{TestUsers}->[-1],
-    );
-}
-
-=head2 TestCustomerUserDataGet()
-
-Calls TestCustomerUserCreate and returns the whole CustomerUserData instead only the Login.
-
-    my %CustomerUserData = $HelperObject->TestCustomerUserDataGet(
-        Language => 'de' # optional, defaults to 'en' if not set
-    );
-
-    %CustomerUserData = {
-        CustomerUserID => 1,
-        Source         => 'CustomerUser',
-        UserFirstname  => $TestUserLogin,
-        UserLastname   => $TestUserLogin,
-        UserCustomerID => $TestUserLogin,
-        UserLogin      => $TestUserLogin,
-        UserPassword   => $TestUserLogin,
-        UserEmail      => $TestUserLogin . '@localunittest.com',
-        ValidID        => 1,
-    }
-
-=cut
-
-sub TestCustomerUserDataGet {
-    my ( $Self, %Param ) = @_;
-
-    my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
-
-    # create test user and login
-    $Self->TestCustomerUserCreate(%Param);
-
-    # return customer user data of last created customer user
-    return $CustomerUserObject->CustomerUserDataGet(
-        User => $Self->{TestCustomerUsers}->[-1],
-    );
-}
-
-=head2 TicketCreate()
-
-Creates a Ticket with dummy data and tests the creation. All Ticket attributes are optional.
-
-    my $TicketID = $HelperObject->TicketCreate();
-
-    is equals:
-
-    my $TicketID = $HelperObject->TicketCreate(
-        Title        => 'UnitTest ticket',
-        Queue        => 'Raw',
-        Lock         => 'unlock',
-        Priority     => '3 normal',
-        State        => 'new',
-        CustomerID   => 'UnitTestCustomer',
-        CustomerUser => 'customer@example.com',
-        OwnerID      => 1,
-        UserID       => 1,
-    );
-
-    To overwrite:
-
-    my $TicketID = $HelperObject->TicketCreate(
-        CustomerUser => 'another_customer@example.com',
-    );
-
-    Result:
-    $TicketID = 1337;
-
-=cut
-
-sub TicketCreate {
-    my ( $Self, %Param ) = @_;
-
-    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
-
-    my $TicketObjectLoaded = $MainObject->Require(
-        'Kernel::System::Ticket',
-    );
-
-    $Self->{UnitTestDriverObject}->True(
-        $TicketObjectLoaded,
-        'Loaded TicketObject via MainObject',
-    );
-
-    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
-    my %TicketAttributes = (
-        Title        => 'UnitTest ticket',
-        Queue        => 'Raw',
-        Lock         => 'unlock',
-        Priority     => '3 normal',
-        State        => 'new',
-        CustomerID   => 'UnitTestCustomer',
-        CustomerUser => 'customer@example.com',
-        OwnerID      => 1,
-        UserID       => 1,
-        %Param,
-    );
-
-    # create test ticket
-    my $TicketID = $TicketObject->TicketCreate(%TicketAttributes);
-
-    $Self->{UnitTestDriverObject}->True(
-        $TicketID,
-        "Ticket '$TicketAttributes{Title}' is created - ID $TicketID",
-    );
-
-    # store for later cleanup
-    $Self->{TestTickets} ||= [];
-    push @{ $Self->{TestTickets} }, $TicketID;
-
-    return $TicketID;
-}
-
-=head2 ArticleCreate()
-
-Creates an Article with dummy data and tests the creation. All Article attributes except the TicketID are optional.
-
-    my $ArticleID = $HelperObject->ArticleCreate(
-        TicketID => 1337,
-    );
-
-    is equals:
-
-    my $ArticleID = $HelperObject->ArticleCreate(
-        TicketID       => 1337,
-        ArticleType    => 'note-internal',
-        SenderType     => 'agent',
-        Subject        => 'UnitTest subject test',
-        Body           => 'UnitTest body test',
-        ContentType    => 'text/plain; charset=ISO-8859-15',
-        HistoryType    => 'OwnerUpdate',
-        HistoryComment => 'Some free text!',
-        UserID         => 1,
-        NoAgentNotify  => 1,
-    );
-
-    To overwrite:
-
-    my $ArticleID = $HelperObject->ArticleCreate(
-        TicketID   => 1337,
-        SenderType => 'customer',
-    );
-
-    Result:
-    $ArticleID = 1337;
-
-=cut
-
-sub ArticleCreate {
-    my ( $Self, %Param ) = @_;
-
-    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
-
-    my $TicketObjectLoaded = $MainObject->Require(
-        'Kernel::System::Ticket::Article',
-    );
-
-    $Self->{UnitTestDriverObject}->True(
-        $TicketObjectLoaded,
-        'Loaded ArticleObject via MainObject',
-    );
-
-    my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
-
-    my %ArticleAttributes = (
-        IsVisibleForCustomer => 0,
-        ChannelName          => 'Internal',
-        SenderType           => 'agent',
-        Subject              => 'UnitTest subject test',
-        Body                 => 'UnitTest body test',
-        ContentType          => 'text/plain; charset=ISO-8859-15',
-        HistoryType          => 'OwnerUpdate',
-        HistoryComment       => 'Some free text!',
-        UserID               => 1,
-        NoAgentNotify        => 1,
-        %Param,
-    );
-
-    # create test ticket
-    my $ArticleID = $ArticleObject->ArticleCreate(%ArticleAttributes);
-
-    $Self->{UnitTestDriverObject}->True(
-        $ArticleID,
-        "Article '$ArticleAttributes{Subject}' is created - ID $ArticleID",
-    );
-
-    return $ArticleID;
-}
-
-=head2 TestUserPreferencesSet()
-
-Sets preferences for a given Login or UserID
-
-    my $Success = $HelperObject->TestUserPreferencesSet(
-        UserID      => 123,
-        Preferences => {                  # "Preferences" hashref is required
-            OutOfOffice  => 1,            # example Key -> Value pair for User Preferences
-            UserMobile   => undef,        # example for deleting a UserPreferences Key's value
-            UserLanguage => '',           # example for deleting a UserPreferences Key's value
-        },
-    );
-
-=cut
-
-sub TestUserPreferencesSet {
-    my ( $Self, %Param ) = @_;
-
-    return if !$Param{UserID};
-    return if !IsHashRefWithData( $Param{Preferences} );
-
-    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
-
-    for my $Key ( sort keys %{ $Param{Preferences} } ) {
-
-        $UserObject->SetPreferences(
-            Key    => $Key,
-            Value  => $Param{Preferences}->{$Key} // '',
-            UserID => $Param{UserID},
-        );
-    }
-
-    return 1;
-};
-
-=head2 PostMaster()
-
-This functions reads in a given file and calls the PostMaster on it. It returns the result of the PostMaster.
-
-    my @Result = $HelperObject->PostMaster(
-        Location => $ConfigObject->Get('Home') . '/scripts/test/sample/Sample-1.box',
-    );
-
-    @Result = (1, $TicketID);
-
-=cut
-
-sub PostMaster {
-    my ( $Self, %Param ) = @_;
-
-    my $LogObject  = $Kernel::OM->Get('Kernel::System::Log');
-    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
-
-    # check needed stuff
-    NEEDED:
-    for my $Needed ( qw(Location) ) {
-
-        next NEEDED if defined $Param{ $Needed };
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter '$Needed' is needed!",
-        );
-        return;
-    }
-
-    my $FileArray = $MainObject->FileRead(
-        Location => $Param{Location},
-        Result   => 'ARRAY',
-    );
-
-    my $CommunicationLogObject = $Kernel::OM->Create(
-        'Kernel::System::CommunicationLog',
-        ObjectParams => {
-            Transport => 'Email',
-            Direction => 'Incoming',
-        },
-    );
-    $CommunicationLogObject->ObjectLogStart( ObjectLogType => 'Message' );
-
-    my $PostMasterObject = Kernel::System::PostMaster->new(
-        CommunicationLogObject => $CommunicationLogObject,
-        Email                  => $FileArray,
-    );
-
-    return $PostMasterObject->Run();
-}
-
-=head2 DatabaseXML()
-
-This function takes a file location of a XML file, generates and executes the SQL
-
-    my $Success = $HelperObject->DatabaseXML(
-        Location => $ConfigObject->Get('Home') . '/scripts/development/db/schema.xml',
-    );
-
-or string
-
-    my $Success = $HelperObject->DatabaseXML(
-        String => '...',
-    );
-
-Returns:
-
-    my $Success = 1;
-
-=cut
-
-sub DatabaseXML {
-    my ( $Self, %Param ) = @_;
-
-    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
-    my $LogObject  = $Kernel::OM->Get('Kernel::System::Log');
-    my $DBObject   = $Kernel::OM->Get('Kernel::System::DB');
-    my $XMLObject  = $Kernel::OM->Get('Kernel::System::XML');
-
-    # check needed stuff
-    if ( !$Param{String} && !$Param{Location} ) {
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter 'String' or 'Location' is needed!",
-        );
-        return;
-    }
-
-    my $XML;
-    if ( $Param{String} ) {
-
-        # use params as data
-        $XML = $Param{String};
-    }
-    else {
-
-        # read file
-        $XML = $MainObject->FileRead(
-            Location => $Param{Location},
-        );
-    }
-
-    # convert to array
-    my @XMLArray = $XMLObject->XMLParse( String => $XML );
-
-    my @SQL = $DBObject->SQLProcessor(
-        Database => \@XMLArray,
-    );
-
-    for my $SQL ( @SQL ) {
-        return if !$DBObject->Do( SQL => $SQL );
-    }
-
-    my @SQLPost = $DBObject->SQLProcessorPost();
-
-    for my $SQL ( @SQLPost ) {
-        return if !$DBObject->Do( SQL => $SQL );
-    }
-
-    return 1;
-}
-
-=head2 ConsoleCommand()
-
-This is a helper function for executing ConsoleCommands without the hassle.
-
-    my $Result = $HelperObject->ConsoleCommand(
-        CommandModule => 'Kernel::System::Console::Command::Maint::Cache::Delete',
-    );
-
-    # or
-
-    my $Result = $HelperObject->ConsoleCommand(
-        CommandModule => 'Kernel::System::Console::Command::Maint::Cache::Delete',
-        Parameter     => [ '--type', 'Znuny4OTRSIstCool' ],
-    );
-
-    # or
-
-    my $Result = $HelperObject->ConsoleCommand(
-        CommandModule => 'Kernel::System::Console::Command::Help',
-        Parameter     => 'Lis',
-    );
-
-    $Result = {
-        ExitCode => 0,      # or 1 in case of an error
-        STDOUT   => '...',
-        STDERR   => undef,
-    }
-
-=cut
-
-sub ConsoleCommand {
-    my ( $Self, %Param ) = @_;
-
-    my $EncodeObject = $Kernel::OM->Get('Kernel::System::Encode');
-
-    $Self->{UnitTestDriverObject}->True(
-        scalar IsStringWithData($Param{CommandModule}),
-        'Command module given.',
-    ) || return;
-
-    my $CommandObject = $Kernel::OM->Get( $Param{CommandModule} );
-
-    $Self->{UnitTestDriverObject}->Is(
-        ref $CommandObject,
-        $Param{CommandModule},
-        "CommandObject created from module name '$Param{CommandModule}'",
-    ) || return;
-
-    if ( IsStringWithData($Param{Parameter}) ) {
-        $Param{Parameter} = [ $Param{Parameter} ];
-    }
-    elsif ( !IsArrayRefWithData($Param{Parameter}) ) {
-        $Param{Parameter} = [];
-    }
-
-    my %Result;
-    {
-        local *STDOUT;
-        local *STDERR;
-        open STDOUT, '>:encoding(UTF-8)', \$Result{STDOUT};
-        open STDERR, '>:encoding(UTF-8)', \$Result{STDERR};
-
-        $Result{ExitCode} = $CommandObject->Execute( @{ $Param{Parameter} } );
-
-        $EncodeObject->EncodeInput( \$Result{STDOUT} );
-        $EncodeObject->EncodeInput( \$Result{STDERR} );
-    }
-
-    return \%Result;
-}
-
-=head2 ACLValuesGet()
-
-This is a helper function get shown values of fields or actions after ACL restrictions
-
-Examples:
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check    => 'Action',
-        UserID   => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check    => 'DynamicField_Test',
-        UserID   => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check  => 'Queue',
-        UserID => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check  => 'Type',
-        UserID => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check  => 'State',
-        UserID => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check  => 'Service',
-        UserID => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check  => 'Priority',
-        UserID => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-    my %Result = $HelperObject->ACLValuesGet(
-        Check  => 'SLA',
-        UserID => $UserID,
-        %TicketACLParams,   # see TicketACL.pm
-    );
-
-=cut
-
-sub ACLValuesGet {
-    my ( $Self, %Param ) = @_;
-
-    my $BackendObject      = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $TicketObject       = $Kernel::OM->Get('Kernel::System::Ticket');
-
-    my $Check = $Param{Check};
-
-    my %Result;
-    if ( $Check =~ m{\ADynamicField_}xmsi ) {
-
-        # get dynamic field config
-        my $Field = $Check;
-        $Field =~ s{\ADynamicField_}{}xmsi;
-
-        my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-            Name => $Field,
-        );
-
-        # get PossibleValues
-        my $PossibleValuesFilter;
-        my $PossibleValues = $BackendObject->PossibleValuesGet(
-            DynamicFieldConfig => $DynamicFieldConfig,
-        );
-
-        # check if field has PossibleValues property in its configuration
-        if ( IsHashRefWithData($PossibleValues) ) {
-
-            # convert possible values key => value to key => key for ACLs using a Hash slice
-            my %AclData = %{$PossibleValues};
-            @AclData{ keys %AclData } = keys %AclData;
-
-            # set possible values filter from ACLs
-            my $ACL = $TicketObject->TicketAcl(
-                %Param,
-                Data          => \%AclData,
-                ReturnType    => 'Ticket',
-                ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-            );
-
-            if ($ACL) {
-                my %Filter = $TicketObject->TicketAclData();
-
-                # convert Filer key => key back to key => value using map
-                %{$PossibleValuesFilter} = map { $_ => $PossibleValues->{$_} }
-                    keys %Filter;
-            }
-        }
-
-        if ( !IsHashRefWithData($PossibleValuesFilter) ) {
-            %Result = %{ $PossibleValues || {} } ;
-        }
-        else {
-            %Result = %{ $PossibleValuesFilter || {} };
-        }
-    }
-    elsif ( $Check eq 'Action' ) {
-
-        # get all registered Actions
-        my %PossibleActions;
-        my $Counter = 0;
-        if ( ref $ConfigObject->Get('Frontend::Module') eq 'HASH' ) {
-
-            my %Actions = %{ $ConfigObject->Get('Frontend::Module') };
-
-            # only use those Actions that stats with Agent
-            %PossibleActions = map { ++$Counter => $_ }
-                grep { substr( $_, 0, length 'Agent' ) eq 'Agent' }
-                sort keys %Actions;
-        }
-
-        my $ACL = $TicketObject->TicketAcl(
-            %Param,
-            Data          => \%PossibleActions,
-            ReturnType    => 'Action',
-            ReturnSubType => '-',
-        );
-
-        %Result = reverse %PossibleActions;
-        if ($ACL) {
-            %Result = reverse $TicketObject->TicketAclActionData();
-        }
-    }
-    elsif ( $Check eq 'Queue' ) {
-        %Result = reverse $TicketObject->TicketMoveList(%Param);
-    }
-    elsif ($Check eq 'Type') {
-        %Result = reverse $TicketObject->TicketTypeList(%Param);
-    }
-    elsif ($Check eq 'State') {
-        %Result = reverse $TicketObject->TicketStateList(%Param);
-    }
-    elsif ($Check eq 'Service') {
-        %Result = reverse $TicketObject->TicketServiceList(%Param);
-    }
-    elsif ($Check eq 'Priority') {
-        %Result = reverse $TicketObject->TicketPriorityList(%Param);
-    }
-    elsif ($Check eq 'SLA') {
-        %Result = reverse $TicketObject->TicketSLAList(%Param);
-    }
-
-    return %Result;
-}
-
-=head2 UnitTestObjectGet()
-
-Returns the correct unit test object.
-
-OTRS 4.0.27 introduced a new module Kernel::System::UnitTest::Driver.
-The unit test functions like True, False, etc. were moved to this module.
-
-=cut
-
-sub UnitTestObjectGet {
-    my ( $Self, %Param ) = @_;
-
-    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
-
-    my $UnitTestDriverAvailable = $MainObject->Require(
-        'Kernel::System::UnitTest::Driver',
-        Silent => 1,
-    );
-    if ($UnitTestDriverAvailable) {
-        return $Kernel::OM->Get('Kernel::System::UnitTest::Driver');
-    }
-
-    return $Kernel::OM->Get('Kernel::System::UnitTest');
-}
-# ---
-
-
 1;
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (L<http://otrs.org/>).
+This software is part of the OTRS project (L<https://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see L<https://www.gnu.org/licenses/gpl-3.0.txt>.
 
 =cut

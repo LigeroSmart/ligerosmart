@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>DynamicView</Name>
+    <Version>6.0.2</Version>
+    <Framework>6.0.x</Framework>
+    <Vendor>Complemento [Enterprise]</Vendor>
+    <URL>http://www.complemento.net.br/otrs</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <ChangeLog Version="5.0.5" Date="2016-12-12 15:33:25">Compatible with KIX4OTRS</ChangeLog>
+    <ChangeLog Version="4.0.0" Date="2015-08-06 11:33:51">Compatible with OTRS 4.</ChangeLog>
+    <ChangeLog Version="3.2.2" Date="2013-05-24 13:50:51">New filter layer. It's possible to choose increase filter adding new parameter to sysconfig. Filter by escalation, agent, tickets attributes and dynamic fields.</ChangeLog>
+    <ChangeLog Version="1.0.0" Date="2012-12-27 19:43:51">First Release</ChangeLog>
+    <Description Lang="en">Complemento View allows you to have a alternative filter screen for the attributes that reals imports to your company. Professional Support available at Complemento.net.br.</Description>
+    <IntroInstall Type="pre" Lang="en" Title="Tutorial">Don't use this package without testing exautivily on a devel server.</IntroInstall>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketComplementoView.tt"></File>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketComplementoView.pm"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/Complemento.Views.xml"></File>
+        <File Permission="644" Location="Custom/DynamicView.sopm"></File>
+        <File Permission="644" Location="Kernel/Language/pt_BR_ComplementoView.pm"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Complemento.View.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/jquery.multiselect/jquery.multiselect.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/jquery.multiselect/jquery.multiselect.filter.css"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery.multiselect/jquery.multiselect.filter.js"></File>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery.multiselect/jquery.multiselect.js"></File>
+    </Filelist>
+</otrs_package>

@@ -1,0 +1,214 @@
+  	<div class="WidgetSimple">
+	  <style>
+		.overlay {
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 2;
+			background-color: rgba(255,255,255,0.8);
+		}
+
+		.overlay-content {
+			position: absolute;
+			transform: translateY(-50%);
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			top: 50%;
+			left: 0;
+			right: 0;
+			text-align: center;
+			color: #555;
+		}
+	</style>
+	<div class="overlay" style="display:none;"><div class="overlay-content"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div></div>
+	  <div class="Header">
+        	<h2> [% Translate("Dynamic Field Allocation") | html %]</h2>
+        </div>
+        <div class="Content">
+	          <h4 class="SpacingTop SpacingBottom">[% Translate("Select system areas to allocate this Dynamic Field") | html %]</h4>
+			  <fieldset class="TableLike">
+			  	<label for="Areas">[% Translate("Areas") | html %]:</label>
+				<div class="Field">
+					[% Data.Areas %]
+				</div>
+				[% RenderBlockStart("Visibility") %]
+					<label class="[% Translate(Data.FieldName) | html %] Visibility" for="[% Translate(Data.FieldName) | html %]" style="white-space: nowrap;">[% Data.FieldLabel | html %]:</label>
+					<div class="Field [% Translate(Data.FieldName) | html %] Visibility">
+						[% Data.Visibilities %]
+					</div>
+				[% RenderBlockEnd("Visibility") %]
+			  </fieldset>
+			  [% RenderBlockStart("VisibilityWid") %]
+			  <h4 class="[% Translate(Data.FieldName) | html %] Visibility SpacingTop SpacingBottom">[% Translate("Dynamic Fields Process Widget Details") | html %]</h4>
+			  <div class="LayoutGrid ColumnsWithSpacing">
+			  	<div class="Size1of2">
+					<fieldset class="TableLike">
+						<label class="[% Translate(Data.FieldName) | html %] Visibility" for="[% Translate(Data.GroupFieldName) | html %]">[% Translate(Data.GroupFieldLabel) | html %]:</label>
+						<div class="Field [% Translate(Data.FieldName) | html %] Visibility">
+							[% Data.Groups %]
+						</div>
+					</fieldset>
+				</div>
+				<div class="Size1of2">
+					<fieldset class="TableLike">
+						<label class="[% Translate(Data.FieldName) | html %] Visibility" for="[% Translate(Data.FieldName) | html %]">[% Translate(Data.FieldLabel) | html %]:</label>
+						<div class="Field [% Translate(Data.FieldName) | html %] Visibility">
+							[% Data.Visibilities %]
+						</div>
+					</fieldset>
+				</div>
+			  </div>
+			  [% RenderBlockEnd("VisibilityWid") %]
+		</div>
+	</div>
+
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+	$(":submit").click(function(e) {
+		e.preventDefault();
+		var data = {};
+		data.areas = $("#Areas").val();
+		data.dynamicFieldName = $("#Name").val();
+		data.visibilities = {};
+		for (var item of $("#Areas").val()){
+			if(item){
+				var className = replaceAll(replaceAll(item,":",""),"#","");
+				data.visibilities[item] = $("#"+className).val();
+			}
+		}
+
+		data.widgetGroup = $("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").val();
+
+		var Data = {
+			Action: 'DynamicFieldsPlus',
+			Subaction: 'AllocateDynamicField',
+            Data: JSON.stringify(data)
+		};
+		$(".WidgetSimple .overlay").show();
+		Core.AJAX.FunctionCall(Core.Config.Get('CGIHandle'), Data, result => {
+			
+			$(".WidgetSimple .overlay").hide();
+			if(result == 1)
+				$("form").submit();
+		});
+		
+
+	});
+
+	$("#Areas").on("change",()=>{
+		VerifyVisibilities();
+	});
+
+	function VerifyVisibilities(){
+		$(".Visibility").hide();
+		for (var item of $("#Areas").val()){
+			if(item){
+				var className = replaceAll(replaceAll(item,":",""),"#","");
+				$("."+className).show();
+			}
+		}
+	}
+
+	function replaceAll(str, find, replace) {
+		return str.replace(new RegExp(find, 'g'), replace);
+	}
+
+	VerifyVisibilities();
+
+	function loadDynamicFieldPlusData(){
+
+		if($("#Name").val()){
+
+			var data = {};
+			data.dynamicFieldName = $("#Name").val();
+
+			var Data = {
+				Action: 'DynamicFieldsPlus',
+				Subaction: 'GetAllocateDynamicField',
+				Data: JSON.stringify(data)
+			};
+
+			$(".WidgetSimple .overlay").show();
+			Core.AJAX.FunctionCall(Core.Config.Get('CGIHandle'), Data, result => {
+				$(".WidgetSimple .overlay").hide();
+				$("#Areas").val(result.areas);
+				$("#Areas").trigger('redraw.InputField');
+				
+				VerifyVisibilities();
+
+				for (var item of result.areas){
+					var className = replaceAll(replaceAll(item,":",""),"#","");
+					$("#"+className).val(result.visibilities[item]);
+					$("#"+className).trigger('redraw.InputField');
+				}
+
+				$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").val(result.widgetGroup);
+				$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").trigger('redraw.InputField');
+			});
+
+		}
+	}
+	
+	var sel = document.getElementById('GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField');
+
+	var opt = document.createElement('option');
+
+	opt = document.createElement('option');
+
+	opt.appendChild( document.createTextNode("") );
+
+	opt.value = "";
+
+	sel.appendChild(opt);
+
+	$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").trigger('redraw.InputField');
+
+	$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField_Search").on("keyup",val=>{
+		var key = val.which || val.keyCode;
+		if (key == 13) { // codigo da tecla enter
+			// colocas aqui a tua função a rodar
+			var exists = false;
+			$('#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField > option').each(function() {
+				if($(this).val() === $("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField_Search").val()){
+					exists = true;
+				}
+			});
+			var dataAdd = $("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField_Search").val();
+			if(!exists){
+
+				sel.removeChild( sel.options[sel.options.length-1] );
+
+				opt = document.createElement('option');
+
+				opt.appendChild( document.createTextNode(dataAdd) );
+
+				opt.value = dataAdd;
+
+				sel.appendChild(opt);
+
+				$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").trigger('redraw.InputField');
+
+
+				$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").val(dataAdd);
+
+				$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").trigger('redraw.InputField');
+
+			}
+			else {
+				$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").val(dataAdd);
+
+				$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField").trigger('redraw.InputField');
+			}
+		}
+	})
+
+	loadDynamicFieldPlusData();
+
+	
+
+//]]>
+</script>
+[% END %]
