@@ -181,14 +181,15 @@ sub new {
     if ($ACL) {
         %AclAction = $TicketObject->TicketAclActionData();
         for my $CurrentField ( keys %AclAction ) {
+          my $DynamicFieldName = $1;
+          if exists $HashDosCampos{$DynamicFieldName} {
             if ( $AclAction{$CurrentField} =~ m{^DF_(.*)_Required}xms ) {
-                my $DynamicFieldName = $1;
                 $HashDosCampos{$DynamicFieldName} = '2';
             } elsif ( $AclAction{$CurrentField} =~ m{^DF_(.*)}xms ) {
-                my $DynamicFieldName = $1;
                 $HashDosCampos{$DynamicFieldName} = '1';
             }
-	    }
+          }
+	      }
     }
 
     # Exemplo:
