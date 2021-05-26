@@ -184,7 +184,14 @@ perform ConfigItemCreate Operation. This will return the created config item num
             "IPoverDHCP": "Yes",
             "NIC": "Teste"
           }
-      }
+      },
+      "Attachment": [
+        {
+          "Content": "test",
+          "ContentType": "plain/text",
+          "Filename": "text.txt"
+        }
+      ]
     }
   }
 
@@ -198,6 +205,10 @@ perform ConfigItemCreate Operation. This will return the created config item num
 @apiParam (Request body) {String} DeplState Cmdb deploy state.
 @apiParam (Request body) {String} InciState Cmdb incident state.
 @apiParam (Request body) {Object} [CIXMLData] Object with cmdb item configuration (depends on class configuration).
+@apiParam (Request body) {Array} [Attachment] Array of attachment objects.
+@apiParam (Request body) {String} Content Content of Attachment.
+@apiParam (Request body) {String} ContentType Attachment Content Type.
+@apiParam (Request body) {String} Filename Attachment File name.
 
 @apiErrorExample {json} Error example:
   HTTP/1.1 200 Success
@@ -214,7 +225,8 @@ perform ConfigItemCreate Operation. This will return the created config item num
     "ConfigItemID": "2"
   }
 
-@apiSuccess {Object} [Result] Depends on the method invocated.
+@apiSuccess {String} Number Cmdb item number.
+@apiSuccess {String} ConfigItemID Cmdb item ID.
 =cut
 sub Run {
     my ( $Self, %Param ) = @_;
