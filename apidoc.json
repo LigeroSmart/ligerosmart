@@ -1,0 +1,9 @@
+{
+  "name": "LIGERO API",
+  "version": "1.0.0",
+  "description": "API Ligero for integrations",
+  "title": "LIGERO API",
+  "url" : "/otrs/nph-genericinterface.pl/Webservice/v1.0",
+  "forceLanguage": "en",
+  "sampleUrl": null
+}
