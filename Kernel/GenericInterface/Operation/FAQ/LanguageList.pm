@@ -80,7 +80,45 @@ perform LanguageList Operation. This will return the current FAQ Languages.
     };
 
 =cut
+=pod
+@api {post} /faq/languages Return the list of languages enabled for FAQs.
+@apiName Languages
+@apiGroup FAQ
+@apiVersion 1.0.0
 
+@apiExample Example usge:
+  {
+  }
+
+@apiErrorExample {json} Error example:
+  HTTP/1.1 200 Success
+  {
+    "Error": {
+      "ErrorCode": "ConfigItemCreate.MissingParameter",
+      "ErrorMessage": "ConfigItemCreate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
+    }
+  }
+@apiSuccessExample {json} Success example:
+  HTTP/1.1 200 Success
+  {
+    "Language": [
+      {
+        "Name": "en",
+        "ID": "1"
+      },
+      {
+        "Name": "de",
+        "ID": "2"
+      },
+      {
+        "ID": "3",
+        "Name": "pt_BR"
+      }
+    ]
+  }
+
+@apiSuccess {Array} Language Language list array.
+=cut
 sub Run {
     my ( $Self, %Param ) = @_;
 

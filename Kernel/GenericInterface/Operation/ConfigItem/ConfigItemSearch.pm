@@ -222,7 +222,7 @@ perform ConfigItemCreate Operation. This will return the created config item num
 @apiParam (Request body) {Array} [ConfigItemChangeTimeNewerDate] config items with change time after.
 @apiParam (Request body) {Array} [ConfigItemChangeTimeOlderDate] config items with change time before then.
 @apiParam (Request body) {Object} [CIXMLData] it depends on the Configuration.
-@apiParam (Request body) {Integer="0,1"} [PreviousVersionSearch] default 0.
+@apiParam (Request body) {Integer="0","1"} [PreviousVersionSearch] default 0.
 @apiParam (Request body) {Array} [OrderBy] Fields ordenation list.
 @apiParam (Request body) {Array} [OrderByDirection] Fields ordenation list direction.
 @apiParam (Request body) {Integer} [Limit] Result limitation.

@@ -80,7 +80,41 @@ perform PublicCategoryList Operation. This will return the current FAQ Categorie
     };
 
 =cut
+=pod
+@api {post} /faq/categories Return the list of categories used in public faqs.
+@apiName Categories
+@apiGroup FAQ
+@apiVersion 1.0.0
 
+@apiExample Example usge:
+  {
+  }
+
+@apiErrorExample {json} Error example:
+  HTTP/1.1 200 Success
+  {
+    "Error": {
+      "ErrorCode": "ConfigItemCreate.MissingParameter",
+      "ErrorMessage": "ConfigItemCreate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
+    }
+  }
+@apiSuccessExample {json} Success example:
+  HTTP/1.1 200 Success
+  {
+    "Category": [
+      {
+        "Name": "Misc",
+        "ID": "1"
+      },
+      {
+        "ID": "2",
+        "Name": "Teste"
+      }
+    ]
+  }
+
+@apiSuccess {Array} Category Category list array.
+=cut
 sub Run {
     my ( $Self, %Param ) = @_;
 
