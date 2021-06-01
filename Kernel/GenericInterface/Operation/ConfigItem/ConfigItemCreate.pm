@@ -170,7 +170,7 @@ perform ConfigItemCreate Operation. This will return the created config item num
 @apiGroup Cmdb
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "SessionID": "lrtiisimxihdCrFDtyqSRXBtoyhjIQwe",
     "ConfigItem": {

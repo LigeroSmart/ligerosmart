@@ -322,7 +322,7 @@ if applicable the created ArticleID.
 @apiGroup Ticket
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "SessionID": "560b2vVuwffhpoADg5RcpZiqJHcxpM4I",
     "TicketID": "2",
@@ -422,6 +422,39 @@ if applicable the created ArticleID.
 @apiParam (Request body) {String} [Service] Service.
 @apiParam (Request body) {Integer} [SLAID] SLA ID.
 @apiParam (Request body) {String} [SLA] SLA.
+@apiParam (Request body) {Integer} [StateID] State ID.
+@apiParam (Request body) {String} [State] State.
+@apiParam (Request body) {Integer} [PriorityID] Priority ID.
+@apiParam (Request body) {String} [Priority] Priority.
+@apiParam (Request body) {Integer} [OwnerID] Owner ID.
+@apiParam (Request body) {String} [Owner] Owner.
+@apiParam (Request body) {Integer} [ResponsibleID] Responsible ID.
+@apiParam (Request body) {String} [Responsible] Responsible.
+@apiParam (Request body) {String} [CustomerUser] Customer user name.
+@apiParam (Request body) {String} Body Ticket Body.
+@apiParam (Request body) {Object} [PendingTime] Pending Time Object.
+@apiParam (Request body) {Object} [Article] Article Data Object.
+@apiParam (Request body) {String} CommunicationChannel Article communication channel.
+@apiParam (Request body) {Integer} [CommunicationChannelID] Article communication channel id.
+@apiParam (Request body) {Integer="0","1"} [IsVisibleForCustomer] Define if article is visible to customer.
+@apiParam (Request body) {String} SenderType Article sender type.
+@apiParam (Request body) {Integer} [SenderTypeID] Article dender type id.
+@apiParam (Request body) {String} [AutoResponseType] Article auto response type.
+@apiParam (Request body) {String} [From] Article from address.
+@apiParam (Request body) {String} [ContentType] Article body content type.
+@apiParam (Request body) {String} Body Article body content.
+@apiParam (Request body) {String} Subject Article Subject.
+@apiParam (Request body) {String} [MimeType] Article body Mime type.
+@apiParam (Request body) {String} [Charset] Article body Charset.
+@apiParam (Request body) {String} [HistoryType] Article history type.
+@apiParam (Request body) {String} [HistoryComment] Article history comment.
+@apiParam (Request body) {Integer} [TimeUnit] Article time unit.
+@apiParam (Request body) {Integer="0","1"} [NoAgentNotify] Article time unit.
+@apiParam (Request body) {Array} [ForceNotificationToUserID] Article Force notification users id.
+@apiParam (Request body) {Array} [ExcludeNotificationToUserID] Article Exclude notification users id.
+@apiParam (Request body) {Array} [ExcludeMuteNotificationToUserID] Article Exclude Mutate notification users id.
+@apiParam (Request body) {Array} [DynamicField] Article Dynamic Field data array.
+@apiParam (Request body) {Array} [Attachment] Article Attachment data array.
 
 @apiErrorExample {json} Error example:
   HTTP/1.1 200 Success
