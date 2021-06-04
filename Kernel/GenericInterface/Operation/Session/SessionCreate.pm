@@ -80,6 +80,36 @@ Retrieve a new session id value.
 
 =cut
 
+=pod
+@api {post} /session/create Create session.
+@apiName Create
+@apiGroup Session
+@apiVersion 1.0.0
+
+@apiExample Example usage:
+  {
+    "UserLogin": "root@localhost",
+    "Password": "ligero"
+  }
+
+@apiParam (Request body) {String} UserLogin User login to create sesssion.
+@apiParam (Request body) {String} Password Password to create session.
+
+@apiErrorExample {json} Error example:
+  HTTP/1.1 200 Success
+  {
+    "Error": {
+      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
+      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+    }
+  }
+@apiSuccessExample {json} Success example:
+  HTTP/1.1 200 Success
+  {
+    "UserID": 1,
+    "SessionID": "a0uShqmDGXkiSyPRjmFnPH2vRH4yPc8J"
+  }
+=cut
 sub Run {
     my ( $Self, %Param ) = @_;
 
