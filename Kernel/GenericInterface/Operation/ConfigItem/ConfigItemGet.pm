@@ -126,7 +126,7 @@ one or more ConfigItem entries in one call.
 =cut
 
 =pod
-@api {post} /cmdb/get Cmdb item get api
+@api {post} /cmdb/get Config item get api
 @apiName Get
 @apiGroup Cmdb
 @apiVersion 1.0.0

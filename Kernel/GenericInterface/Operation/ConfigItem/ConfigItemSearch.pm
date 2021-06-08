@@ -177,7 +177,7 @@ perform ConfigItemCreate Operation. This will return the created config item num
 
 =cut
 =pod
-@api {post} /cmdb/search Cmdb item search api
+@api {post} /cmdb/search Config item search api
 @apiName Search
 @apiGroup Cmdb
 @apiVersion 1.0.0
