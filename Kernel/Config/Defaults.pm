@@ -106,7 +106,7 @@ sub LoadDefaults {
 
     # ProductName
     # (Application name displayed in frontend.)
-    $Self->{ProductName} = 'OTRS 6';
+    $Self->{ProductName} = 'LigeroSmart 6';
 
     # --------------------------------------------------- #
     # database settings                                   #
@@ -383,7 +383,7 @@ sub LoadDefaults {
     # --------------------------------------------------- #
     # (Where is sendmail located and some options.
     # See 'man sendmail' for details. Or use the SMTP backend.)
-    $Self->{'SendmailModule'}      = 'Kernel::System::Email::Sendmail';
+    $Self->{'SendmailModule'}      = 'Kernel::System::Email::SMTP';
     $Self->{'SendmailModule::CMD'} = '/usr/sbin/sendmail -i -f';
 
 #    $Self->{'SendmailModule'} = 'Kernel::System::Email::SMTP';
@@ -1305,7 +1305,7 @@ You can log in via the following URL:
     # --------------------------------------------------- #
     # notification email about new password               #
     # --------------------------------------------------- #
-    $Self->{CustomerPanelSubjectLostPassword} = 'New OTRS password';
+    $Self->{CustomerPanelSubjectLostPassword} = 'New LigeroSmart password';
     $Self->{CustomerPanelBodyLostPassword}    = 'Hi <OTRS_USERFIRSTNAME>,
 
 
@@ -1317,10 +1317,10 @@ New password: <OTRS_NEWPW>
     # --------------------------------------------------- #
     # notification email about new account                #
     # --------------------------------------------------- #
-    $Self->{CustomerPanelSubjectNewAccount} = 'New OTRS Account!';
+    $Self->{CustomerPanelSubjectNewAccount} = 'New LigeroSmart Account!';
     $Self->{CustomerPanelBodyNewAccount}    = 'Hi <OTRS_USERFIRSTNAME>,
 
-You or someone impersonating you has created a new OTRS account for
+You or someone impersonating you has created a new LigeroSmart account for
 you.
 
 Full name: <OTRS_USERFIRSTNAME> <OTRS_USERLASTNAME>
