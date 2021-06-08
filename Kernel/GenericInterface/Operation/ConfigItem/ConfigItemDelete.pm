@@ -92,7 +92,7 @@ one or more ConfigItem entries in one call.
 =cut
 
 =pod
-@api {post} /cmdb/delete Cmdb item delete api
+@api {post} /cmdb/delete Config Item item delete api
 @apiName Delete
 @apiGroup Cmdb
 @apiVersion 1.0.0

@@ -167,7 +167,7 @@ perform ConfigItemUpdate Operation. This will return the updated config item num
 
 =cut
 =pod
-@api {post} /cmdb/update Cmdb item update api
+@api {post} /cmdb/update Config item update api
 @apiName Update
 @apiGroup Cmdb
 @apiVersion 1.0.0
