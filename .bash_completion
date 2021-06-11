@@ -32,4 +32,4 @@ fi
 COMP_WORDBREAKS=${COMP_WORDBREAKS//:/}
 
 # Configure bash completion
-complete -C "$(dirname $THIS_FILE)/bin/otrs.Console.pl" otrs.Console.pl
+complete -f -d -C "$(dirname $THIS_FILE)/bin/otrs.Console.pl" otrs.Console.pl
