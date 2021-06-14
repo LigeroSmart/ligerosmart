@@ -94,8 +94,8 @@ perform LanguageList Operation. This will return the current FAQ Languages.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "ConfigItemCreate.MissingParameter",
-      "ErrorMessage": "ConfigItemCreate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
+      "ErrorCode": "LanguageList.AuthFail",
+      "ErrorMessage": "LanguageList: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

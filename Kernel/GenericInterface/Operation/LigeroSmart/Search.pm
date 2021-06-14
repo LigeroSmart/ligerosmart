@@ -58,7 +58,7 @@ Search under Elastic Search Portal Links.
 
 =cut
 =pod
-@api {post} /kb/search Search ticket using elasticsearch indexes integrated with Ligero.
+@api {post} /kb/search Search ticket using elasticsearch indexes integrated with LigeroSmart.
 @apiName Search
 @apiGroup Kb
 @apiVersion 1.0.0
@@ -95,8 +95,8 @@ Search under Elastic Search Portal Links.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "LigeroSmartSearch.AuthFail",
+      "ErrorMessage": "LigeroSmartSearch: Authorization failing!"
     }
   }
 =cut

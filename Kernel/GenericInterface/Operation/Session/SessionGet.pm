@@ -99,8 +99,8 @@ Get session information.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "SessionGet.AuthFail",
+      "ErrorMessage": "SessionGet: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

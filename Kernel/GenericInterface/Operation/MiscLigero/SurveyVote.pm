@@ -86,8 +86,8 @@ sub new {
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "SurveyVote.AuthFail",
+      "ErrorMessage": "SurveyVote: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

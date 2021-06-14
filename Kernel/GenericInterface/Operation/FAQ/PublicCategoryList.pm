@@ -94,8 +94,8 @@ perform PublicCategoryList Operation. This will return the current FAQ Categorie
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "ConfigItemCreate.MissingParameter",
-      "ErrorMessage": "ConfigItemCreate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
+      "ErrorCode": "PublicCategoryList.AuthFail",
+      "ErrorMessage": "PublicCategoryList: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

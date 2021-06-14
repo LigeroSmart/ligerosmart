@@ -397,8 +397,8 @@ perform TicketSearch Operation. This will return a Ticket ID list.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "TicketSearch.AuthFail",
+      "ErrorMessage": "TicketSearch: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

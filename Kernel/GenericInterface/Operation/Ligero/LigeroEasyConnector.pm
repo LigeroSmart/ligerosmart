@@ -460,8 +460,8 @@ if applicable the created ArticleID.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "LigeroEasyConnector.AuthFail",
+      "ErrorMessage": "LigeroEasyConnector: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:
