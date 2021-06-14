@@ -441,8 +441,8 @@ if applicable the created ArticleID.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "TicketUpdate.AuthFail",
+      "ErrorMessage": "TicketUpdate: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

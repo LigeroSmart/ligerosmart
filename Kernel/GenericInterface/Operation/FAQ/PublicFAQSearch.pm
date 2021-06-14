@@ -131,8 +131,8 @@ perform PublicFAQSearch Operation. This will return a list of public FAQ entries
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "ConfigItemCreate.MissingParameter",
-      "ErrorMessage": "ConfigItemCreate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
+      "ErrorCode": "PublicFAQSearch.AuthFail",
+      "ErrorMessage": "PublicFAQSearch: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

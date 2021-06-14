@@ -180,8 +180,8 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "ConfigItemCreate.MissingParameter",
-      "ErrorMessage": "ConfigItemCreate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
+      "ErrorCode": "PublicFAQGet.AuthFail",
+      "ErrorMessage": "PublicFAQGet: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

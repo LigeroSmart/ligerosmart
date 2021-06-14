@@ -89,8 +89,8 @@ sub new {
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "LinkObject.AuthFail",
+      "ErrorMessage": "LinkObject: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

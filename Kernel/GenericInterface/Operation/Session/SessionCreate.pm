@@ -99,8 +99,8 @@ Retrieve a new session id value.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "SessionCreate.AuthFail",
+      "ErrorMessage": "SessionCreate: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

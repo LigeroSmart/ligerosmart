@@ -437,8 +437,8 @@ perform TicketCreate Operation. This will return the created ticket number.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "TicketCreate.AuthFail",
+      "ErrorMessage": "TicketCreate: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:

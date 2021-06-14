@@ -220,8 +220,8 @@ perform ConfigItemUpdate Operation. This will return the updated config item num
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "ConfigItemCreate.MissingParameter",
-      "ErrorMessage": "ConfigItemCreate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
+      "ErrorCode": "ConfigItemUpdate.MissingParameter",
+      "ErrorMessage": "ConfigItemUpdate: ConfigItem->CIXMLData->NIC parameter value is required and is missing!"
     }
   }
 @apiSuccessExample {json} Success example:

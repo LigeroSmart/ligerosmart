@@ -106,8 +106,8 @@ one or more ticket entries in one call.
   HTTP/1.1 200 Success
   {
     "Error": {
-      "ErrorCode": "GeneralCatalogGetValues.AuthFail",
-      "ErrorMessage": "GeneralCatalogGetValues: Authorization failing!"
+      "ErrorCode": "TicketHistoryGet.AuthFail",
+      "ErrorMessage": "TicketHistoryGet: Authorization failing!"
     }
   }
 @apiSuccessExample {json} Success example:
