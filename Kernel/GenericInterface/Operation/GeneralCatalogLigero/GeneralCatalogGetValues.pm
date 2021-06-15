@@ -65,7 +65,7 @@ sub new {
 @apiGroup General Catalog
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "SessionID": "560b2vVuwffhpoADg5RcpZiqJHcxpM4I",
     "ClassName": "ITSM::ConfigItem::Class"

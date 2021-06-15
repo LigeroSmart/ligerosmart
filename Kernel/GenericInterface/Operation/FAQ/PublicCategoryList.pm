@@ -86,7 +86,7 @@ perform PublicCategoryList Operation. This will return the current FAQ Categorie
 @apiGroup FAQ
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
   }
 

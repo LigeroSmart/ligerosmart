@@ -131,7 +131,7 @@ one or more ConfigItem entries in one call.
 @apiGroup Cmdb
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "SessionID": "PT24BIG8onB5D5J5nw7I3yPnLgAonxfn",
     "ConfigItemID": "1,3",
