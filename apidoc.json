@@ -1,8 +1,8 @@
 {
-  "name": "LIGERO API",
+  "name": "LigeroSmart API",
   "version": "1.0.0",
-  "description": "API Ligero for integrations",
-  "title": "LIGERO API",
+  "description": "LigeroSmart API for integrations",
+  "title": "LigeroSmart API",
   "url" : "/api/v1.0",
   "forceLanguage": "en",
   "sampleUrl": null
