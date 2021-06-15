@@ -752,11 +752,20 @@ sub Run {
             for my $TicketID (@ViewableTicketIDs) {
 
                 # get first article data
-                my %Data = $TicketObject->ArticleLastCustomerArticle(
-                    TicketID      => $TicketID,
-                    Extended      => 1,
-                    DynamicFields => 0,
+                #my %Data = $TicketObject->ArticleLastCustomerArticle(
+                #    TicketID      => $TicketID,
+                #    Extended      => 1,
+                #    DynamicFields => 0,
+                #);
+                my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
+
+                    TicketID               => $TicketID,
+                    SenderType             => 'customer',
                 );
+                my %Data = {};
+                for my $MetaArticle (@Articles) {
+                    %Data = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle( %{$MetaArticle} )->ArticleGet( %{$MetaArticle} );
+                }
 
                 if ( !%Data ) {
 
@@ -1122,11 +1131,20 @@ sub Run {
                 {
 
                     # get first article data
-                    my %Article = $TicketObject->ArticleLastCustomerArticle(
-                        TicketID      => $TicketID,
-                        Extended      => 1,
-                        DynamicFields => 1,
+                    #my %Article = $TicketObject->ArticleLastCustomerArticle(
+                    #    TicketID      => $TicketID,
+                    #    Extended      => 1,
+                    #    DynamicFields => 1,
+                    #);
+                    my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
+
+                        TicketID               => $TicketID,
+                        SenderType             => 'customer',
                     );
+                    my %Article = {};
+                    for my $MetaArticle (@Articles) {
+                        %Article = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle( %{$MetaArticle} )->ArticleGet( %{$MetaArticle} );
+                    }
 
                     my %Ticket = $TicketObject->TicketGet(
                         TicketID      => $TicketID,
@@ -1945,7 +1963,7 @@ sub _StopWordsServerErrorsGet {
     }
 
     my %StopWordsServerErrors;
-    if ( !$Kernel::OM->Get('Kernel::System::Ticket')->SearchStringStopWordsUsageWarningActive() ) {
+    if ( !$Kernel::OM->Get('Kernel::System::Ticket::Article')->SearchStringStopWordsUsageWarningActive() ) {
         return %StopWordsServerErrors;
     }
 
