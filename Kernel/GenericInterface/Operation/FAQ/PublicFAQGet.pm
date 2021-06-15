@@ -161,7 +161,82 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
     };
 
 =cut
+=pod
+@api {post} /faq/get Return data from a FAQ.
+@apiName Get
+@apiGroup FAQ
+@apiVersion 1.0.0
 
+@apiExample Example usge:
+  {
+    "ItemID": "1,2",
+    "GetAttachmentContents": 1
+  }
+
+@apiParam (Request body) {String} ItemID List of ItemID FAQ ID sepated by comma.
+@apiParam (Request body) {String="0","1"} [GetAttachmentContents] Default is 0.
+
+@apiErrorExample {json} Error example:
+  HTTP/1.1 200 Success
+  {
+    "Error": {
+      "ErrorCode": "PublicFAQGet.AuthFail",
+      "ErrorMessage": "PublicFAQGet: Authorization failing!"
+    }
+  }
+@apiSuccessExample {json} Success example:
+  HTTP/1.1 200 Success
+  {
+    "FAQItem": [
+      {
+        "Approved": 1,
+        "Name": "1622134347-3.0759061078669",
+        "State": "public (all)",
+        "Language": "pt_BR",
+        "ChangedBy": 1,
+        "Valid": "valid",
+        "Created": "2021-05-27 16:52:27",
+        "StateTypeID": "3",
+        "Votes": 0,
+        "Field5": "",
+        "Attachment": [
+          {
+            "Filename": "reportImg1.png",
+            "Content": "iVBORw0KGgoAAAANSUhEUgAAA...,
+            "ContentType": "image/png",
+            "Inline": 0,
+            "Filesize": "14079",
+            "FileID": 1
+          }
+        ],
+        "FAQID": "2",
+        "Field3": "",
+        "VoteResult": "0.00",
+        "Field2": "",
+        "StateTypeName": "public",
+        "CategoryName": "Teste",
+        "Number": "10002",
+        "ID": "2",
+        "Field1": "sdds",
+        "Field6": "",
+        "ValidID": "1",
+        "StateID": 3,
+        "Changed": "2021-05-27 16:55:11",
+        "CreatedBy": 1,
+        "CategoryShortName": "Teste",
+        "ItemID": "2",
+        "Keywords": "",
+        "Field4": "",
+        "ContentType": "text/html",
+        "Title": "Manutenção Preventiva Data Center da Praça P1",
+        "LanguageID": 3,
+        "CategoryID": "2"
+      }
+    ]
+  }
+
+@apiSuccess {Array} FAQItem FAQ list array.
+=cut
 sub Run {
     my ( $Self, %Param ) = @_;
 

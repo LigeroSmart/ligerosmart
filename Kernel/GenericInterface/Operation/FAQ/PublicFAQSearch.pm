@@ -100,7 +100,52 @@ perform PublicFAQSearch Operation. This will return a list of public FAQ entries
     };
 
 =cut
+=pod
+@api {post} /faq/search Return data found from a FAQ.
+@apiName Search
+@apiGroup FAQ
+@apiVersion 1.0.0
 
+@apiExample Example usge:
+  {
+    "Number": "10001",
+    "Title":"*",
+    "What":"*",
+    "Keyword":"*",
+    "LanguageIDs":[ 1, 2, 3 ],
+    "CategoryIDs": [ 1, 2, 3 ],
+    "OrderBy": [ "FAQID", "Title" ],
+    "OrderByDirection": "Down"
+  }
+
+@apiParam (Request body) {String} [Number] Faq number to search.
+@apiParam (Request body) {String} [Title] Faq title to search.
+@apiParam (Request body) {String} [What] Faq terms to search.
+@apiParam (Request body) {String} [Keyword] Faq keyword to search.
+@apiParam (Request body) {Array} [LanguageIDs] Faq language id to search.
+@apiParam (Request body) {Array} [CategoryIDs] Faq category id to search.
+@apiParam (Request body) {Array} [OrderBy] Faq fields to use for ordering.
+@apiParam (Request body) {Array} [OrderByDirection] Direction for order by.
+
+@apiErrorExample {json} Error example:
+  HTTP/1.1 200 Success
+  {
+    "Error": {
+      "ErrorCode": "PublicFAQSearch.AuthFail",
+      "ErrorMessage": "PublicFAQSearch: Authorization failing!"
+    }
+  }
+@apiSuccessExample {json} Success example:
+  HTTP/1.1 200 Success
+  {
+    "ID": [
+      2,
+      1
+    ]
+  }
+
+@apiSuccess {Array} ID FAQ list array.
+=cut
 sub Run {
     my ( $Self, %Param ) = @_;
 
