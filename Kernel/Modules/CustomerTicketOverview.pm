@@ -37,6 +37,31 @@ sub Run {
     # disable output of customer company tickets
     my $DisableCompanyTickets = $ConfigObject->Get('Ticket::Frontend::CustomerDisableCompanyTicketAccess');
 
+    my $CustomerCompanyEnabledForProfile = $ConfigObject->Get('Ticket::Frontend::CustomerCompanyEnabledForProfile');
+
+    if($CustomerCompanyEnabledForProfile) {
+        my %HashProfile = %{$CustomerCompanyEnabledForProfile};
+
+        my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+        my $CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
+
+        my %UsData = $UserObject->CustomerUserDataGet(
+            User => $Self->{UserID},
+        );
+
+         my %CustomerCompany = $CustomerCompanyObject->CustomerCompanyGet(
+            CustomerID => $UsData{UserCustomerID},
+        );
+
+        for(keys %HashProfile){
+          my $compativeU = $UsData{$_};
+
+          if($HashProfile{$_} ne $compativeU){
+            $DisableCompanyTickets = 1;
+          }
+        }
+    }
+
     # check subaction
     if ( !$Self->{Subaction} ) {
         return $LayoutObject->Redirect(
