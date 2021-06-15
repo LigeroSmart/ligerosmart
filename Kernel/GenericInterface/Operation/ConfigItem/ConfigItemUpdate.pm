@@ -172,7 +172,7 @@ perform ConfigItemUpdate Operation. This will return the updated config item num
 @apiGroup Cmdb
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "SessionID": "oBFGU9UDBV1Rv5cT6fTZpmUj6gmuFzIE",
     "ReplaceExistingData": 1,

@@ -69,7 +69,7 @@ sub new {
 @apiGroup Admin
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "SessionID": "BJtrQ23c0uMWVINuXEOk7FuVCq2xFhkN",
     "Object": "LinkObject",

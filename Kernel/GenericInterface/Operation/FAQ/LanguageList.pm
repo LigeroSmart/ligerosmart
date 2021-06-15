@@ -86,7 +86,7 @@ perform LanguageList Operation. This will return the current FAQ Languages.
 @apiGroup FAQ
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
   }
 

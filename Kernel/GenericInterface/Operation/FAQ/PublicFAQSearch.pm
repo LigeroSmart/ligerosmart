@@ -106,7 +106,7 @@ perform PublicFAQSearch Operation. This will return a list of public FAQ entries
 @apiGroup FAQ
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "Number": "10001",
     "Title":"*",

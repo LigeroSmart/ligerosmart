@@ -167,7 +167,7 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
 @apiGroup FAQ
 @apiVersion 1.0.0
 
-@apiExample Example usge:
+@apiExample Example usage:
   {
     "ItemID": "1,2",
     "GetAttachmentContents": 1
