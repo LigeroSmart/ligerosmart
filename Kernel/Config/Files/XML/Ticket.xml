@@ -1827,6 +1827,13 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::CustomerShowAgeAsDate" Required="1" Valid="1">
+        <Description Translatable="1">Define if the age will show as a date or as a number.</Description>
+        <Navigation>Frontend::Customer::View::TicketOverview</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::CustomerTicketOverview###ColumnHeader" Required="0" Valid="1">
         <Description Translatable="1">Shows either the last customer article's subject or the ticket title in the small format overview.</Description>
         <Navigation>Frontend::Customer::View::TicketOverview</Navigation>
