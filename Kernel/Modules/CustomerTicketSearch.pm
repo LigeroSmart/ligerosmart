@@ -469,6 +469,31 @@ sub Run {
         # disable output of customer company tickets
         my $DisableCompanyTickets = $ConfigObject->Get('Ticket::Frontend::CustomerDisableCompanyTicketAccess');
 
+        my $CustomerCompanyEnabledForProfile = $ConfigObject->Get('Ticket::Frontend::CustomerCompanyEnabledForProfile');
+
+        if($CustomerCompanyEnabledForProfile) {
+            my %HashProfile = %{$CustomerCompanyEnabledForProfile};
+
+            my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+            my $CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
+
+            my %UsData = $UserObject->CustomerUserDataGet(
+                User => $Self->{UserID},
+            );
+
+            my %CustomerCompany = $CustomerCompanyObject->CustomerCompanyGet(
+                CustomerID => $UsData{UserCustomerID},
+            );
+
+            for(keys %HashProfile){
+              my $compativeU = $UsData{$_};
+
+              if($HashProfile{$_} ne $compativeU){
+                $DisableCompanyTickets = 1;
+              }
+            }
+        }
+
         if ($DisableCompanyTickets) {
             $GetParam{CustomerUserLoginRaw} = $Self->{UserID};
         }
@@ -1663,17 +1688,25 @@ sub MaskForm {
     my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 
     my %ServiceList;
-    if ( $ConfigObject->Get('Customer::TicketSearch::AllServices') ) {
-        %ServiceList = $ServiceObject->ServiceList(
-            UserID => $Self->{UserID},
-            ),
-    }
-    else {
-        %ServiceList = $ServiceObject->CustomerUserServiceMemberList(
-            CustomerUserLogin => $Self->{UserID},
-            Result            => 'HASH',
-            ),
-    }
+    #if ( $ConfigObject->Get('Customer::TicketSearch::AllServices') ) {
+    #    %ServiceList = $ServiceObject->ServiceList(
+    #        UserID => $Self->{UserID},
+    #        ),
+    #}
+    #else {
+    #    %ServiceList = $ServiceObject->CustomerUserServiceMemberList(
+    #        CustomerUserLogin => $Self->{UserID},
+    #        Result            => 'HASH',
+    #        ),
+    #}
+    
+    $Param{QueueID} = 1;
+
+    %ServiceList = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
+      %Param,
+      Action => $Self->{Action},
+      CustomerUserID => $Self->{UserID},
+    );
 
     $Param{ServicesStrg} = $LayoutObject->BuildSelection(
         Data       => \%ServiceList,

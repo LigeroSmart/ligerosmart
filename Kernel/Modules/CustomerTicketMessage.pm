@@ -948,7 +948,7 @@ sub _GetServices {
     # get options for default services for unknown customers
     my $DefaultServiceUnknownCustomer
         = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Service::Default::UnknownCustomer');
-
+   
     # get service list
     if ( $Param{CustomerUserID} || $DefaultServiceUnknownCustomer ) {
         %Service = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
