@@ -207,10 +207,19 @@ sub SendNotification {
         my $QueueID;
 
         # get article
-        my %Article = $TicketObject->ArticleLastCustomerArticle(
-            TicketID      => $Param{TicketID},
-            DynamicFields => 0,
+        #my %Article = $TicketObject->ArticleLastCustomerArticle(
+        #    TicketID      => $Param{TicketID},
+        #    DynamicFields => 0,
+        #);
+        my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
+
+            TicketID               => $TicketID,
+            SenderType             => 'customer',
         );
+        my %Article = {};
+        for my $MetaArticle (@Articles) {
+            %Article = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle( %{$MetaArticle} )->ArticleGet( %{$MetaArticle} );
+        }
 
         # set "From" address from Article if exist, otherwise use ticket information, see bug# 9035
         if (%Article) {
