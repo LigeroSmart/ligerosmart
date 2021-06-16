@@ -1,40 +1,55 @@
 /**
- * @license Highcharts JS v6.0.2 (2017-10-20)
+ * @license Highcharts JS v9.1.2 (2021-06-16)
  *
- * (c) 2009-2017 Torstein Honsi
+ * (c) 2009-2021 Torstein Honsi
  *
  * License: www.highcharts.com/license
  */
 'use strict';
-(function(factory) {
+(function (factory) {
     if (typeof module === 'object' && module.exports) {
+        factory['default'] = factory;
         module.exports = factory;
+    } else if (typeof define === 'function' && define.amd) {
+        define('highcharts/themes/grid-light', ['highcharts'], function (Highcharts) {
+            factory(Highcharts);
+            factory.Highcharts = Highcharts;
+            return factory;
+        });
     } else {
-        factory(Highcharts);
+        factory(typeof Highcharts !== 'undefined' ? Highcharts : undefined);
     }
-}(function(Highcharts) {
-    (function(Highcharts) {
-        /**
-         * (c) 2010-2017 Torstein Honsi
+}(function (Highcharts) {
+    var _modules = Highcharts ? Highcharts._modules : {};
+    function _registerModule(obj, path, args, fn) {
+        if (!obj.hasOwnProperty(path)) {
+            obj[path] = fn.apply(null, args);
+        }
+    }
+    _registerModule(_modules, 'Extensions/Themes/GridLight.js', [_modules['Core/Globals.js'], _modules['Core/DefaultOptions.js'], _modules['Core/Utilities.js']], function (Highcharts, D, U) {
+        /* *
          *
-         * License: www.highcharts.com/license
-         * 
-         * Grid-light theme for Highcharts JS
-         * @author Torstein Honsi
-         */
-
+         *  (c) 2010-2021 Torstein Honsi
+         *
+         *  License: www.highcharts.com/license
+         *
+         *  Grid-light theme for Highcharts JS
+         *
+         *  !!!!!!! SOURCE GETS TRANSPILED BY TYPESCRIPT. EDIT TS FILE ONLY. !!!!!!!
+         *
+         * */
         /* global document */
+        var setOptions = D.setOptions;
+        var createElement = U.createElement;
         // Load the fonts
-        Highcharts.createElement('link', {
+        createElement('link', {
             href: 'https://fonts.googleapis.com/css?family=Dosis:400,600',
             rel: 'stylesheet',
             type: 'text/css'
         }, null, document.getElementsByTagName('head')[0]);
-
         Highcharts.theme = {
             colors: ['#7cb5ec', '#f7a35c', '#90ee7e', '#7798BF', '#aaeeee', '#ff0066',
-                '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'
-            ],
+                '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
             chart: {
                 backgroundColor: null,
                 style: {
@@ -54,6 +69,7 @@
                 shadow: false
             },
             legend: {
+                backgroundColor: '#F0F0EA',
                 itemStyle: {
                     fontWeight: 'bold',
                     fontSize: '13px'
@@ -84,16 +100,14 @@
                 candlestick: {
                     lineColor: '#404048'
                 }
-            },
-
-
-            // General
-            background2: '#F0F0EA'
-
+            }
         };
-
         // Apply the theme
-        Highcharts.setOptions(Highcharts.theme);
+        setOptions(Highcharts.theme);
 
-    }(Highcharts));
+    });
+    _registerModule(_modules, 'masters/themes/grid-light.src.js', [], function () {
+
+
+    });
 }));
