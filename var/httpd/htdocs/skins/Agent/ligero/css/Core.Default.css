@@ -251,8 +251,26 @@ a:hover, a:focus {
     width: 98%;
     height: 65px;
     overflow: hidden;
-	border-radius: 3px;
-	padding: 0px 0px 30px
+    border-radius: 3px;
+    padding: 0px 0px 30px
+}
+
+/* NavigationContainer position on desktop mode */
+@media only screen and (min-width: 1024px) {
+    #NavigationContainer {
+        left: 18px !important;
+    }
+}
+  
+/* icon position on responsive menu */
+@media only screen and (max-width: 1024px) {
+    #Navigation > li > a {
+        padding: 10px 60px !important;
+    }
+    #Navigation .iconemenu {
+        width: 0px;
+        padding: 7px 0px;
+    }
 }
 
 #NavigationContainer #Navigation {
