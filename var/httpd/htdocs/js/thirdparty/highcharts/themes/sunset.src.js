@@ -1,43 +1,58 @@
 /**
- * @license Highcharts JS v6.0.2 (2017-10-20)
+ * @license Highcharts JS v9.1.2 (2021-06-16)
  *
- * (c) 2009-2017 Highsoft AS
+ * (c) 2009-2021 Highsoft AS
  *
  * License: www.highcharts.com/license
  */
 'use strict';
-(function(factory) {
+(function (factory) {
     if (typeof module === 'object' && module.exports) {
+        factory['default'] = factory;
         module.exports = factory;
+    } else if (typeof define === 'function' && define.amd) {
+        define('highcharts/themes/sunset', ['highcharts'], function (Highcharts) {
+            factory(Highcharts);
+            factory.Highcharts = Highcharts;
+            return factory;
+        });
     } else {
-        factory(Highcharts);
+        factory(typeof Highcharts !== 'undefined' ? Highcharts : undefined);
     }
-}(function(Highcharts) {
-    (function(Highcharts) {
-        /**
-         * (c) 2010-2017 Highsoft AS
+}(function (Highcharts) {
+    var _modules = Highcharts ? Highcharts._modules : {};
+    function _registerModule(obj, path, args, fn) {
+        if (!obj.hasOwnProperty(path)) {
+            obj[path] = fn.apply(null, args);
+        }
+    }
+    _registerModule(_modules, 'Extensions/Themes/Sunset.js', [_modules['Core/Globals.js'], _modules['Core/DefaultOptions.js']], function (H, D) {
+        /* *
          *
-         * License: www.highcharts.com/license
-         * 
-         * Accessible high-contrast theme for Highcharts. Considers colorblindness and 
-         * monochrome rendering.
-         * @author Øystein Moseng
-         */
-
-        Highcharts.theme = {
+         *  (c) 2010-2021 Highsoft AS
+         *
+         *  Author: Øystein Moseng
+         *
+         *  License: www.highcharts.com/license
+         *
+         *  Accessible high-contrast theme for Highcharts. Considers colorblindness and
+         *  monochrome rendering.
+         *
+         *  !!!!!!! SOURCE GETS TRANSPILED BY TYPESCRIPT. EDIT TS FILE ONLY. !!!!!!!
+         *
+         * */
+        var setOptions = D.setOptions;
+        H.theme = {
             colors: ['#FDD089', '#FF7F79', '#A0446E', '#251535'],
-
             colorAxis: {
                 maxColor: '#60042E',
                 minColor: '#FDD089'
             },
-
             plotOptions: {
                 map: {
                     nullColor: '#fefefc'
                 }
             },
-
             navigator: {
                 series: {
                     color: '#FF7F79',
@@ -45,9 +60,12 @@
                 }
             }
         };
-
         // Apply the theme
-        Highcharts.setOptions(Highcharts.theme);
+        setOptions(H.theme);
 
-    }(Highcharts));
+    });
+    _registerModule(_modules, 'masters/themes/sunset.src.js', [], function () {
+
+
+    });
 }));
