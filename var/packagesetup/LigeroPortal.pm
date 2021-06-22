@@ -63,6 +63,10 @@ sub _UpdateConfig {
             ConfigItem => 'CustomerFrontend::CommonParam###Action',
             Value 	   => 'CustomerServiceCatalog'
         },
+        {
+            ConfigItem => 'PublicFrontend::CommonParam###Action',
+            Value 	   => 'PublicServiceCatalog'
+        },
     );
 
     CONFIGITEM:
@@ -812,6 +816,17 @@ sub _GetITSMDynamicFieldsDefinition {
             ObjectType => 'FAQ',
             Config     => {
                 DefaultValue   => '',
+            },
+        },
+
+        {
+            Name       => 'PublicService',
+            Label      => 'Servico Publico',
+            FieldType  => 'Checkbox',
+            ObjectType => 'Service',
+            Config     => {
+                DefaultValue   => '0',
+                Translatable   => 1,
             },
         },
     );
