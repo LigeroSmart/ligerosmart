@@ -14,6 +14,8 @@ use utf8;
 use Kernel::System::VariableCheck qw(:all);
 use JSON;
 use Data::Dumper;
+use Try::Tiny;
+
 sub new {
 	my ( $Type, %Param ) = @_;
 	# allocate new hash for object
@@ -37,16 +39,21 @@ sub Run {
         delete $GetParam{$Key} if (!$GetParam{$Key});
 	}
 
+  $Self->{isPublicInterface} = ($Kernel::OM->Get('Kernel::Output::HTML::Layout')->{Baselink} =~ m/public\.pl/ig) ? 1 : 0;
+
 	# Get all services that are visible by this customer
 	my %Services;
-	use Try::Tiny;
 
-	try {
-		$Kernel::OM->Get('Kernel::System::SubscriptionPlan');
-		%Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
-	} catch {
-		%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};
-	};
+	if ( $Self->{isPublicInterface} ) {
+		%Services = $Kernel::OM->Get('Kernel::System::Service')->ServiceList( UserID => 1);
+	} else {
+		try {
+			$Kernel::OM->Get('Kernel::System::SubscriptionPlan');
+			%Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
+		} catch {
+			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};
+		};
+	}
 	
 	my %DataParam = (
 		Name         => 'Service',
@@ -150,8 +157,13 @@ sub Run {
         }
 
         my $WtahConfig = $Kernel::OM->Get('Kernel::Config')->Get("WasThisArticleHelpful");
-        
         my %TicketAttributes = %{$WtahConfig->{SelfAnsweredTicketAttributes}};
+
+        if ($Self->{isPublicInterface}) {
+          $GetParam{CustomerUser} = $TicketAttributes{PublicCustomerUser};
+          $GetParam{CustomerID}   = $TicketAttributes{PublicCustomerID};
+        }
+        
         for my $Key(keys %TicketAttributes){
             for my $Param(keys %GetParam){
                 $TicketAttributes{$Key} =~ s/_${Param}_/$GetParam{$Param}/gm;
@@ -195,6 +207,7 @@ sub Run {
         # Create Article
         my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
         my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Phone' );
+        
         my $ArticleID = $ArticleBackendObject->ArticleCreate(
 
             TicketID => $TicketID,
@@ -204,8 +217,10 @@ sub Run {
         );
 
         # Redirect User to the Service Catalog
-        my $Redirect = $LayoutObject->{Baselink}
-                            . 'Action=CustomerServiceCatalog';
+        my $Redirect = $LayoutObject->{Baselink} . 'Action=CustomerServiceCatalog';
+        if ($Self->{isPublicInterface}) {
+          $Redirect = $LayoutObject->{Baselink} . 'Action=PublicServiceCatalog';
+        }
         return $LayoutObject->Redirect( OP => $Redirect );
 
     }
@@ -298,6 +313,13 @@ sub Run {
 			}
 
 			if($document->{_source}->{Object} eq "Service"){
+        my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet( Name => 'PublicService' );
+				my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
+					DynamicFieldConfig => $DynamicFieldConfig,
+					ObjectID => $document->{_source}->{ObjectID}
+				);
+				next if (!$Value && $Self->{isPublicInterface});
+
 				my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
 					Name   => 'ForwardToUrl',             # ID or Name must be provided
 				);
@@ -341,9 +363,9 @@ sub Run {
             StartHit  => $StartHit,
             PageShown => $PageShown,
             AllHits   => $AllHits,
-            Action    => 'Action=CustomerServiceCatalog',
+            Action    => ( $Self->{isPublicInterface} ) ? 'Action=CustomerServiceCatalog' : 'Action=PublicServiceCatalog',
             Link      => $Link,
-            IDPrefix  => 'CustomerServiceCatalog',
+            IDPrefix  => ( $Self->{isPublicInterface} ) ? 'CustomerServiceCatalog' : 'PublicServiceCatalog'
         );
         $LayoutObject->Block(
                 Name => 'FilterFooter',
@@ -356,7 +378,7 @@ sub Run {
        $SessionObject->UpdateSessionID(
                 SessionID => $Self->{SessionID},
                 Key       => "LastScreenOverview",
-                Value     => "Action=CustomerServiceCatalog;",
+                Value     => ( $Self->{isPublicInterface} ) ? 'Action=CustomerServiceCatalog;' : 'Action=PublicServiceCatalog;',
             );
 	
 	    ### GENERATE OUTPUT for search
@@ -505,7 +527,7 @@ sub Run {
 		}
 	
 		my $Output .= $LayoutObject->CustomerHeader();
-		$Output    .= $LayoutObject->CustomerNavigationBar();
+		$Output    .= $LayoutObject->CustomerNavigationBar() if ( !$Self->{isPublicInterface} );
 		$Output    .= $Self->_MaskNew(
 			%GetParam,
 			DataRef => $DataRef,
@@ -647,6 +669,20 @@ sub _MaskNew {
 		$Link = "#" if(!$Link);
 		my @Names =  split("::",$ServiceName);
 		my $LayoutServiceName = $Names[-1];
+
+    # Ignore non public services
+		if ( $Self->{isPublicInterface} ) {
+	                my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
+	                my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
+	                next if (!$Value);
+
+	                # Fix Service Link
+	                $Link =~ s/Action=;/Action=CustomerDFFileAttachment;/g;
+		} else {
+	                my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
+	                my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
+	                next if ($Value);
+		}
 
 		# Output Services categories and activities
 		my %Datas;
@@ -934,6 +970,11 @@ sub _MaskNew {
 			my $links = $LayoutObject->{Baselink}
 		        . 'Action=CustomerServiceCatalog'
 				. ';KeyPrimary='.$FullPrevService;
+      if ( $Self->{isPublicInterface} ) {
+				my $links = $LayoutObject->{Baselink}
+					. 'Action=PublicServiceCatalog'
+					. ';KeyPrimary='.$FullPrevService;
+			}
 			$LayoutObject->Block( Name => "BreadcrumbServices", Data=> { BreadcrumbLink => $links, BreadcrumbTitle => $crumbs });
 		}
 
@@ -980,7 +1021,7 @@ sub _MaskNew {
 
     ### GENERATE OUTPUT
     return $LayoutObject->Output(
-        TemplateFile => 'CustomerServiceCatalog',
+        TemplateFile => ( $Self->{isPublicInterface} ) ? 'PublicServiceCatalog' : 'CustomerServiceCatalog',
         Data         => \%Param,
     );
 }
