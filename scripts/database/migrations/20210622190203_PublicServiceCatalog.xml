@@ -1,8 +1,8 @@
 <Migrations>
     <CodeInstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::LigeroPortal')->CodeInstall();
+        $Kernel::OM->Get('var::packagesetup::PublicServiceCatalog')->CodeInstall();
     ]]></CodeInstall>
     <CodeUninstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::LigeroPortal')->CodeUpgrade();
+        $Kernel::OM->Get('var::packagesetup::PublicServiceCatalog')->CodeUpgrade();
     ]]></CodeUninstall>
 </Migrations>
