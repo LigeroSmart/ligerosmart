@@ -170,7 +170,7 @@ sub _GetITSMDynamicFieldsDefinition {
     my @DynamicFields = (
         {
             Name       => 'PublicService',
-            Label      => 'Servico Publico',
+            Label      => 'Public Service',
             FieldType  => 'Checkbox',
             ObjectType => 'Service',
             Config     => {
