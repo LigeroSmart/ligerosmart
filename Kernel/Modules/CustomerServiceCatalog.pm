@@ -284,10 +284,9 @@ sub Run {
 		my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 		my $SplitTimes = $ConfigObject->Get("ServiceCatalog::SplitFirstLvl") || 0;
 
-		$LayoutObject->Block( Name => "NumberOfRows", 
-							  Data =>{ NumberOfRows => $AllHits} 
-						    );
-	
+		
+    my $count = 0;
+
  		foreach my $document (@{$SearchResultsHash{hits}->{hits}}){
 
 			my $TruncateSizeDesc = $ConfigObject->Get("ServiceCatalog::CharLimiteSizeDescription") || 100;
@@ -351,8 +350,23 @@ sub Run {
 				$LayoutObject->Block( Name => "Result", 
 								  Data => $document->{_source}
 							    );
-			}			
+			}		
+
+      $count++; 	
 		}
+
+  if ($Self->{isPublicInterface}) {
+      $LayoutObject->Block( Name => "NumberOfRows", 
+							  Data =>{ NumberOfRows => $count} 
+						    );
+  }
+  else {
+    $LayoutObject->Block( Name => "NumberOfRows", 
+							  Data =>{ NumberOfRows => $AllHits} 
+						    );
+  }
+    
+
     	my $PageShown = 10;
         my $Link =  'Subaction=' . $LayoutObject->Ascii2Html( Text => $Self->{Subaction} )
 			.';Term=' . $LayoutObject->Ascii2Html( Text => $Term )
@@ -446,33 +460,47 @@ sub Run {
                     UserID => 1,
                 );
 
+                use Data::Dumper;
+                #die "ENTOUR AQUI ".$GetParam{ServiceID}. Dumper($Links);
+
                 my @FAQs;
                 # if we find some articles
                 if ($Links->{FAQ}){
+                   # die "FAQ ".$Links->{FAQ};
                     my %LinkedFaqIDs = %{$Links->{FAQ}->{ServiceArticle}->{Source}};
                     my @FaqIDs = keys %LinkedFaqIDs;
                     my $FAQObject = $Kernel::OM->Get("Kernel::System::FAQ") if @FaqIDs;
-                    
+                    #die "FAQ IDs ".Dumper(@FaqIDs);
                     foreach my $FaqID (@FaqIDs){
                         my %FAQ = $FAQObject->FAQGet(
                             ItemID => $FaqID,
                             UserID	=> 1,
                             ItemFields => 1,
                         );
-                        
-                        next if($FAQ{Language} ne $ENV{UserLanguage});
+                        #die "FAQ DATA ".Dumper(\%FAQ)." User Language ".Dumper($ENV{UserLanguage});
+                        next if($ENV{UserLanguage} && $FAQ{Language} ne $ENV{UserLanguage});
                         next if($FAQ{Valid} ne 'valid');
                         
                         push @FAQs, \%FAQ;
                     }
-                   
+                   #die "FAQs ".Dumper(@FAQs);
                     # If there is only one FAQ Attached, redirect user to it
                     if(scalar @FAQs == 1){
-                        my $Redirect = $LayoutObject->{Baselink}
-                        . 'Action=CustomerFAQZoom;ItemID='.$FAQs[0]->{ItemID}
-                        . ';ServiceID='.$GetParam{ServiceID}
-                        . ';KeyPrimary='.$GetParam{KeyPrimary};
-                        return $LayoutObject->Redirect( OP => $Redirect );
+                        if($Self->{isPublicInterface}){
+                          my $Redirect = $LayoutObject->{Baselink}
+                            . 'Action=PublicFAQZoom;ItemID='.$FAQs[0]->{ItemID}
+                            . ';ServiceID='.$GetParam{ServiceID}
+                            . ';KeyPrimary='.$GetParam{KeyPrimary};
+                            return $LayoutObject->Redirect( OP => $Redirect );
+                        }
+                        else {
+                          my $Redirect = $LayoutObject->{Baselink}
+                          . 'Action=CustomerFAQZoom;ItemID='.$FAQs[0]->{ItemID}
+                          . ';ServiceID='.$GetParam{ServiceID}
+                          . ';KeyPrimary='.$GetParam{KeyPrimary};
+                          return $LayoutObject->Redirect( OP => $Redirect );
+                        }
+                        
                         
                     } elsif (scalar @FAQs > 1){
 
@@ -484,10 +512,19 @@ sub Run {
                         for my $FAQ(@SortedFAQs){
                             my %Datas;
                             $Datas{KeyPrimary} = $GetParam{ServiceID};
-                            $Datas{LayoutServiceLink} = $LayoutObject->{Baselink}
+                            if ($Self->{isPublicInterface}) {
+                              $Datas{LayoutServiceLink} = $LayoutObject->{Baselink}
+                                . 'Action=PublicFAQZoom;ItemID='.$FAQ->{ItemID}
+                                . ';ServiceID='.$GetParam{ServiceID}
+                                . ';KeyPrimary='.$GetParam{KeyPrimary};
+                            }
+                            else {
+                              $Datas{LayoutServiceLink} = $LayoutObject->{Baselink}
                                 . 'Action=CustomerFAQZoom;ItemID='.$FAQ->{ItemID}
                                 . ';ServiceID='.$GetParam{ServiceID}
                                 . ';KeyPrimary='.$GetParam{KeyPrimary};
+                            }
+                            
                         
                             $Datas{LayoutServiceName} = $FAQ->{Title};
                             #$Datas{LayoutServiceID}	  = $ServiceID;
@@ -504,10 +541,20 @@ sub Run {
                         }
                     }
                 } else {
-                    my $Redirect = $LayoutObject->{Baselink}
-                    . 'Action=CustomerTicketMessage'
-                    . ';ServiceID='.$GetParam{ServiceID};
-                    return $LayoutObject->Redirect( OP => $Redirect );
+                  #die Dumper($Self);
+                    if($Self->{isPublicInterface}){
+                      my $Redirect = 'customer.pl'
+                      . 'Action=CustomerTicketMessage'
+                      . ';ServiceID='.$GetParam{ServiceID};
+                      return $LayoutObject->Redirect( ExtURL => $Redirect );
+                    }
+                    else {
+                      my $Redirect = $LayoutObject->{Baselink}
+                      . 'Action=CustomerTicketMessage'
+                      . ';ServiceID='.$GetParam{ServiceID};
+                      return $LayoutObject->Redirect( OP => $Redirect );
+                    }
+                    
                 }
 
 			}
@@ -971,10 +1018,12 @@ sub _MaskNew {
 		        . 'Action=CustomerServiceCatalog'
 				. ';KeyPrimary='.$FullPrevService;
       if ( $Self->{isPublicInterface} ) {
-				my $links = $LayoutObject->{Baselink}
+				$links = $LayoutObject->{Baselink}
 					. 'Action=PublicServiceCatalog'
 					. ';KeyPrimary='.$FullPrevService;
 			}
+      #use Data::Dumper;
+      #die Dumper($links);
 			$LayoutObject->Block( Name => "BreadcrumbServices", Data=> { BreadcrumbLink => $links, BreadcrumbTitle => $crumbs });
 		}
 
