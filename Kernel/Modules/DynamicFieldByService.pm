@@ -152,6 +152,7 @@ sub Run {
         my $Subaction = $Self->{Subaction} || '';	    
         
         my $DynamicFieldsByService = $DfByServiceObject->GetDynamicFieldByService(ServiceID => $ServiceID);
+        
         my %DynamicFieldsHash;
 
         if ($DynamicFieldsByService->{Config}){
@@ -579,7 +580,6 @@ sub Run {
 		    # add server error error class
 		    $Error{RequiredLockServerError} = 'ServerError';
 		}
-
 		# otherwise save configuration and return to overview screen
 		my $Success = $DfByServiceObject->DynamicTemplateUpdate(
 			ID          => $FormsData->{ID},
@@ -1449,6 +1449,7 @@ sub _OutputActivityDialog {
 		return;
 	}
 
+
 	my $Output='';
     my %RenderedFields = ();
 
@@ -1903,14 +1904,16 @@ sub _OutputActivityDialog {
 	}
 	my $JsonSubject = '';
 	my $JsonType = '';
+  my $JsonHideArticle = '';
 	my $JsonMessage = '';
    	my %JsonReturn;
 	my $AgentJsonFieldConfig;
 	my $CustomerJsonFieldConfig;	
 	my $JSONObject = $Kernel::OM->Get('Kernel::System::JSON');
+  
 	if($ActivityDialog->{HideArticle}){
 		%JsonReturn = ('HideArticle' => $ActivityDialog->{HideArticle});
-		$JsonType =  "@%@%@". $JSONObject->Encode(
+		$JsonHideArticle =  "@%@%@". $JSONObject->Encode(
 						Data => \%JsonReturn,
 		);
 	}
@@ -1951,7 +1954,7 @@ sub _OutputActivityDialog {
 	$Output .= $LayoutObject->Output(
 	     Template => '[% Data.JSON %]',
 	     Data         => {
-							JSON => ':$$:Add:$$:{"1":"1"} ' . $JsonType . " " . $JsonSubject . " " . $JsonMessage . " " . $AgentJsonFieldConfig. " " . $CustomerJsonFieldConfig ." ".  $AjaxResponseJson,
+							JSON => ':$$:Add:$$:{"1":"1"} ' . $JsonHideArticle . " "  . $JsonType . " " . $JsonSubject . " " . $JsonMessage . " " . $AgentJsonFieldConfig. " " . $CustomerJsonFieldConfig ." ".  $AjaxResponseJson,
 
 						},
 	 );
