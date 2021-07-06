@@ -347,6 +347,13 @@ sub Run {
 				}
 			}
 			else{
+        next if ($document->{_source}->{Visibility} ne 'public' && $Self->{isPublicInterface});
+        
+        
+        if($Self->{isPublicInterface}) {
+          $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerFAQZoom/PublicFAQZoom/r;
+          $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/customer.pl/public.pl/r;
+        }
 				$LayoutObject->Block( Name => "Result", 
 								  Data => $document->{_source}
 							    );
@@ -460,30 +467,23 @@ sub Run {
                     UserID => 1,
                 );
 
-                use Data::Dumper;
-                #die "ENTOUR AQUI ".$GetParam{ServiceID}. Dumper($Links);
-
                 my @FAQs;
                 # if we find some articles
                 if ($Links->{FAQ}){
-                   # die "FAQ ".$Links->{FAQ};
                     my %LinkedFaqIDs = %{$Links->{FAQ}->{ServiceArticle}->{Source}};
                     my @FaqIDs = keys %LinkedFaqIDs;
                     my $FAQObject = $Kernel::OM->Get("Kernel::System::FAQ") if @FaqIDs;
-                    #die "FAQ IDs ".Dumper(@FaqIDs);
                     foreach my $FaqID (@FaqIDs){
                         my %FAQ = $FAQObject->FAQGet(
                             ItemID => $FaqID,
                             UserID	=> 1,
                             ItemFields => 1,
                         );
-                        #die "FAQ DATA ".Dumper(\%FAQ)." User Language ".Dumper($ENV{UserLanguage});
                         next if($ENV{UserLanguage} && $FAQ{Language} ne $ENV{UserLanguage});
                         next if($FAQ{Valid} ne 'valid');
                         
                         push @FAQs, \%FAQ;
                     }
-                   #die "FAQs ".Dumper(@FAQs);
                     # If there is only one FAQ Attached, redirect user to it
                     if(scalar @FAQs == 1){
                         if($Self->{isPublicInterface}){
@@ -541,7 +541,6 @@ sub Run {
                         }
                     }
                 } else {
-                  #die Dumper($Self);
                     if($Self->{isPublicInterface}){
                       my $Redirect = 'customer.pl'
                       . 'Action=CustomerTicketMessage'
@@ -1022,8 +1021,6 @@ sub _MaskNew {
 					. 'Action=PublicServiceCatalog'
 					. ';KeyPrimary='.$FullPrevService;
 			}
-      #use Data::Dumper;
-      #die Dumper($links);
 			$LayoutObject->Block( Name => "BreadcrumbServices", Data=> { BreadcrumbLink => $links, BreadcrumbTitle => $crumbs });
 		}
 
