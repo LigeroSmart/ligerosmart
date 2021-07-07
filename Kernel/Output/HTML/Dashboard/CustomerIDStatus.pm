@@ -59,16 +59,33 @@ sub Run {
 
     # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
 
-    # escalated tickets
-    my $Count = $TicketObject->TicketSearch(
-        TicketEscalationTimeOlderMinutes => 1,
-        CustomerIDRaw                    => $CustomerIDRaw,
-        Result                           => 'COUNT',
-        Permission                       => $Self->{Config}->{Permission},
-        UserID                           => $Self->{UserID},
-        CacheTTL                         => $Self->{Config}->{CacheTTLLocal} * 60,
-    ) || 0;
+    my $Count;
+
+    if(!$ESActive){
+      # escalated tickets
+      $Count = $TicketObject->TicketSearch(
+          TicketEscalationTimeOlderMinutes => 1,
+          CustomerIDRaw                    => $CustomerIDRaw,
+          Result                           => 'COUNT',
+          Permission                       => $Self->{Config}->{Permission},
+          UserID                           => $Self->{UserID},
+          CacheTTL                         => $Self->{Config}->{CacheTTLLocal} * 60,
+      ) || 0;
+    } else {
+      # escalated tickets
+      $Count = $LigeroSmartObject->TicketSearch(
+          TicketEscalationTimeOlderMinutes => 1,
+          CustomerIDRaw                    => $CustomerIDRaw,
+          Result                           => 'COUNT',
+          Permission                       => $Self->{Config}->{Permission},
+          UserID                           => $Self->{UserID},
+          CacheTTL                         => $Self->{Config}->{CacheTTLLocal} * 60,
+          JustES => $Self->{Config}->{JustES}
+      ) || 0;
+    }
 
     # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
@@ -81,15 +98,28 @@ sub Run {
         },
     );
 
-    # open tickets
-    $Count = $TicketObject->TicketSearch(
-        StateType     => 'Open',
-        CustomerIDRaw => $CustomerIDRaw,
-        Result        => 'COUNT',
-        Permission    => $Self->{Config}->{Permission},
-        UserID        => $Self->{UserID},
-        CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
-    ) || 0;
+    if(!$ESActive){
+      # open tickets
+      $Count = $TicketObject->TicketSearch(
+          StateType     => 'Open',
+          CustomerIDRaw => $CustomerIDRaw,
+          Result        => 'COUNT',
+          Permission    => $Self->{Config}->{Permission},
+          UserID        => $Self->{UserID},
+          CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+      ) || 0;
+    } else {
+      # open tickets
+      $Count = $LigeroSmartObject->TicketSearch(
+          StateType     => 'Open',
+          CustomerIDRaw => $CustomerIDRaw,
+          Result        => 'COUNT',
+          Permission    => $Self->{Config}->{Permission},
+          UserID        => $Self->{UserID},
+          CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+          JustES => $Self->{Config}->{JustES}
+      ) || 0;
+    }
 
     $LayoutObject->Block(
         Name => 'ContentSmallCustomerIDStatusOpenTickets',
@@ -99,15 +129,28 @@ sub Run {
         },
     );
 
-    # closed tickets
-    $Count = $TicketObject->TicketSearch(
-        StateType     => 'Closed',
-        CustomerIDRaw => $CustomerIDRaw,
-        Result        => 'COUNT',
-        Permission    => $Self->{Config}->{Permission},
-        UserID        => $Self->{UserID},
-        CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
-    ) || 0;
+    if(!$ESActive){
+      # closed tickets
+      $Count = $TicketObject->TicketSearch(
+          StateType     => 'Closed',
+          CustomerIDRaw => $CustomerIDRaw,
+          Result        => 'COUNT',
+          Permission    => $Self->{Config}->{Permission},
+          UserID        => $Self->{UserID},
+          CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+      ) || 0;
+    } else {
+      # closed tickets
+      $Count = $LigeroSmartObject->TicketSearch(
+          StateType     => 'Closed',
+          CustomerIDRaw => $CustomerIDRaw,
+          Result        => 'COUNT',
+          Permission    => $Self->{Config}->{Permission},
+          UserID        => $Self->{UserID},
+          CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+          JustES => $Self->{Config}->{JustES}
+      ) || 0;
+    }
 
     $LayoutObject->Block(
         Name => 'ContentSmallCustomerIDStatusClosedTickets',
@@ -117,14 +160,26 @@ sub Run {
         },
     );
 
-    # all tickets
-    $Count = $TicketObject->TicketSearch(
-        CustomerIDRaw => $CustomerIDRaw,
-        Result        => 'COUNT',
-        Permission    => $Self->{Config}->{Permission},
-        UserID        => $Self->{UserID},
-        CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
-    ) || 0;
+    if(!$ESActive){
+      # all tickets
+      $Count = $TicketObject->TicketSearch(
+          CustomerIDRaw => $CustomerIDRaw,
+          Result        => 'COUNT',
+          Permission    => $Self->{Config}->{Permission},
+          UserID        => $Self->{UserID},
+          CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+      ) || 0;
+    } else {
+      # all tickets
+      $Count = $LigeroSmartObject->TicketSearch(
+          CustomerIDRaw => $CustomerIDRaw,
+          Result        => 'COUNT',
+          Permission    => $Self->{Config}->{Permission},
+          UserID        => $Self->{UserID},
+          CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+          JustES => $Self->{Config}->{JustES}
+      ) || 0;
+    }
 
     $LayoutObject->Block(
         Name => 'ContentSmallCustomerIDStatusAllTickets',
@@ -136,14 +191,26 @@ sub Run {
 
     # archived tickets
     if ( $Kernel::OM->Get('Kernel::Config')->Get('Ticket::ArchiveSystem') ) {
-        $Count = $TicketObject->TicketSearch(
-            CustomerIDRaw => $CustomerIDRaw,
-            ArchiveFlags  => ['y'],
-            Result        => 'COUNT',
-            Permission    => $Self->{Config}->{Permission},
-            UserID        => $Self->{UserID},
-            CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
-        ) || 0;
+        if(!$ESActive) {
+          $Count = $TicketObject->TicketSearch(
+              CustomerIDRaw => $CustomerIDRaw,
+              ArchiveFlags  => ['y'],
+              Result        => 'COUNT',
+              Permission    => $Self->{Config}->{Permission},
+              UserID        => $Self->{UserID},
+              CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+          ) || 0;
+        } else {
+          $Count = $LigeroSmartObject->TicketSearch(
+              CustomerIDRaw => $CustomerIDRaw,
+              ArchiveFlags  => ['y'],
+              Result        => 'COUNT',
+              Permission    => $Self->{Config}->{Permission},
+              UserID        => $Self->{UserID},
+              CacheTTL      => $Self->{Config}->{CacheTTLLocal} * 60,
+              JustES => $Self->{Config}->{JustES}
+          ) || 0;
+        }
 
         $LayoutObject->Block(
             Name => 'ContentSmallCustomerIDStatusArchivedTickets',
