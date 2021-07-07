@@ -474,6 +474,9 @@ sub FilterContent {
     my $HeaderColumn = $Param{FilterColumn};
     my @OriginalViewableTickets;
 
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
+
     if (
         $Kernel::OM->Get('Kernel::Config')->Get('OnlyValuesOnTicket')
         || $HeaderColumn eq 'CustomerID'
@@ -500,11 +503,22 @@ sub FilterContent {
         }
 
         if ( !$Self->{Config}->{IsProcessWidget} || IsArrayRefWithData( $Self->{ProcessList} ) ) {
+          if(!$ESActive){
             @OriginalViewableTickets = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
                 %TicketSearch,
                 %{ $TicketSearchSummary{ $Self->{Filter} } },
                 Result => 'ARRAY',
             );
+          } else {
+            @OriginalViewableTickets = $LigeroSmartObject->TicketSearch(
+                %TicketSearch,
+                %{ $TicketSearchSummary{ $Self->{Filter} } },
+                Result => 'ARRAY',
+                Source => 'TicketGeneric',
+                JustES => $Self->{Config}->{JustES},
+            );
+          }
+
         }
     }
 
@@ -568,6 +582,8 @@ sub Run {
     my @Columns             = @{ $SearchParams{Columns} };
     my %TicketSearch        = %{ $SearchParams{TicketSearch} };
     my %TicketSearchSummary = %{ $SearchParams{TicketSearchSummary} };
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
 
     # Add the additional filter to the ticket search param.
     if ( $Self->{AdditionalFilter} ) {
@@ -743,13 +759,27 @@ ENDJS
 
             # Execute search.
             else {
-                @TicketIDsArray = $TicketObject->TicketSearch(
-                    Result => 'ARRAY',
-                    %TicketSearch,
-                    %{ $TicketSearchSummary{ $Self->{Filter} } },
-                    %ColumnFilter,
-                    Limit => $Self->{PageShown} + $Self->{StartHit} - 1,
-                );
+                if(!$ESActive){
+                  @TicketIDsArray = $TicketObject->TicketSearch(
+                      Result => 'ARRAY',
+                      %TicketSearch,
+                      %{ $TicketSearchSummary{ $Self->{Filter} } },
+                      %ColumnFilter,
+                      Limit => $Self->{PageShown} + $Self->{StartHit} - 1,
+                  );
+                } else {
+                  @TicketIDsArray = $LigeroSmartObject->TicketSearch(
+                      Result => 'ARRAY',
+                      %TicketSearch,
+                      %{ $TicketSearchSummary{ $Self->{Filter} } },
+                      %ColumnFilter,
+                      Limit => $Self->{PageShown} + $Self->{StartHit} - 1,
+                      JustES => $Self->{Config}->{JustES},
+                      Source => 'TicketGeneric',
+                      JustES => $Self->{Config}->{JustES}
+                  );
+                }
+
             }
         }
         $TicketIDs = \@TicketIDsArray;
@@ -840,12 +870,25 @@ ENDJS
 
                 # Execute search.
                 else {
-                    $Summary->{$Type} = $TicketObject->TicketSearch(
-                        Result => 'COUNT',
-                        %TicketSearch,
-                        %{ $TicketSearchSummary{$Type} },
-                        %ColumnFilter,
-                    ) || 0;
+                    if(!$ESActive){
+                      $Summary->{$Type} = $TicketObject->TicketSearch(
+                          Result => 'COUNT',
+                          %TicketSearch,
+                          %{ $TicketSearchSummary{$Type} },
+                          %ColumnFilter,
+                      ) || 0;
+                    } else {
+                      $Summary->{$Type} = $LigeroSmartObject->TicketSearch(
+                          Result => 'COUNT',
+                          %TicketSearch,
+                          %{ $TicketSearchSummary{$Type} },
+                          %ColumnFilter,
+                          JustES => $Self->{Config}->{JustES},
+                          Source => 'TicketGeneric',
+                          JustES => $Self->{Config}->{JustES}
+                      ) || 0;
+                    }
+                    
                 }
             }
         }
