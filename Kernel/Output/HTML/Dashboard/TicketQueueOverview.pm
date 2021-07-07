@@ -78,6 +78,8 @@ ENDJS
 
     my $LimitGroup = $Self->{Config}->{QueuePermissionGroup} || 0;
     my $CacheKey   = 'User' . '-' . $Self->{UserID} . '-' . $LimitGroup;
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
 
     # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
@@ -166,6 +168,8 @@ ENDJS
     my %Results;
     for my $StateOrderID ( sort { $a <=> $b } keys %ConfiguredStates ) {
 
+      my @StateOrderTicketIDs;
+      if(!$ESActive) {  
         # Run ticket search for all Queues and appropriate available State.
         my @StateOrderTicketIDs = $TicketObject->TicketSearch(
             UserID   => $Self->{UserID},
@@ -174,6 +178,18 @@ ENDJS
             States   => [ $ConfiguredStates{$StateOrderID} ],
             Limit    => 100_000,
         );
+      } else {
+        # Run ticket search for all Queues and appropriate available State.
+        @StateOrderTicketIDs = $LigeroSmartObject->TicketSearch(
+            UserID   => $Self->{UserID},
+            Result   => 'ARRAY',
+            QueueIDs => \@QueueIDs,
+            States   => [ $ConfiguredStates{$StateOrderID} ],
+            Limit    => 100_000,
+            JustES => $Self->{Config}->{JustES}
+        );
+      }
+      
 
         # Count of tickets per QueueID.
         my $TicketCountByQueueID = $TicketObject->TicketCountByAttribute(
