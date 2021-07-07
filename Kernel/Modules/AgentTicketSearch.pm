@@ -732,7 +732,9 @@ sub Run {
 
         my @ViewableTicketIDs;
 
-        {
+        my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
+
+        if ( !$ESActive ) {
             local $Kernel::System::DB::UseSlaveDB = 1;
 
             # perform ticket search
@@ -749,6 +751,114 @@ sub Run {
                 %GetParam,
                 %DynamicFieldSearchParameters,
             );
+        }
+        else {
+
+          if ( ( defined $GetParam{Fulltext} ) ) {
+
+            my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+            my $ConfigFulltext  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("LigeroSmart::FullTextSearch")||{};
+
+            my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+
+            $Index .= "_*_search";
+
+            $Index = lc($Index);
+
+            my $Term = $GetParam{Fulltext};
+            my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ));
+            $StartHit = 0	if($StartHit == 1);
+
+            my $EndHit = $Self->{SearchLimit} || 10;
+            if($StartHit > 0){
+              $EndHit = $StartHit + 10;
+            } 
+
+            my %HashQuery;
+
+            $HashQuery{source}->{from} = $StartHit ;
+            $HashQuery{source}->{size} = $EndHit;
+
+            $HashQuery{params}->{Query}   = $Term;
+
+            $HashQuery{source}->{query} = 
+            $Kernel::OM->Get('Kernel::System::JSON')->Decode(Data => $ConfigFulltext->{InlineQueryTemplate});
+
+            #use Data::Dumper;
+            #$Kernel::OM->Get('Kernel::System::Log')->Log(
+            #    Priority => 'error',
+            #    Message  => "QUERY DO SEARCH ".Dumper($HashQuery{source}->{query})
+            #);
+
+            #$HashQuery{source}->{highlight} = {
+            #  require_field_match => JSON::false,
+            #  fields => {
+            #          Title => {
+            #              pre_tags => ["<mark class=\"elasticHightlightTitle\">"],
+            #              post_tags => ["</mark>"],
+            #              fragment_size=> 10000
+            #          },
+            #          Description =>{
+            #              pre_tags => ["<mark class=\"elasticHightlightDesc\">"],
+            #              post_tags => ["</mark>"],
+
+            #          fragment_size=> $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog::CharLimiteSizeDescription") || 100
+            #    }
+
+            #  }
+            #};
+            my %ViewableTicketIDs = $LigeroSmartObject->SearchTemplate(
+                    Indexes => $Index,
+                    Types   => 'ticket',
+                    Data    => \%HashQuery,
+            );
+
+		        my $AllHits = $ViewableTicketIDs{hits}{total};
+
+            foreach my $document (@{$ViewableTicketIDs{hits}->{hits}}){ 
+              push @ViewableTicketIDs, $document->{_source}->{Ticket}->{TicketID};
+            }
+
+            if (@ViewableTicketIDs){
+              @ViewableTicketIDs = $TicketObject->TicketSearch(
+                  Result              => 'ARRAY',
+                  SortBy              => $Self->{SortBy},
+                  OrderBy             => $Self->{OrderBy},
+                  TicketID            => [@ViewableTicketIDs],
+                  UserID              => $Self->{UserID},
+                  ConditionInline     => $Config->{ExtendedSearchCondition},
+                  ContentSearchPrefix => '*',
+                  ContentSearchSuffix => '*',
+                  FullTextIndex       => 1,
+                  %GetParam,
+                  %DynamicFieldSearchParameters,
+              );
+            }
+
+
+            #use Data::Dumper;
+            #die Dumper(@ViewableTicketIDs);
+            #$Kernel::OM->Get('Kernel::System::Log')->Log(
+            #    Priority => 'error',
+            #    Message  => "RESULTADO DO SEARCH ".Dumper(\@ViewableTicketIDs)
+            #);
+
+          } else {
+            @ViewableTicketIDs = $TicketObject->TicketSearch(
+                Result              => 'ARRAY',
+                SortBy              => $Self->{SortBy},
+                OrderBy             => $Self->{OrderBy},
+                Limit               => $Self->{SearchLimit},
+                UserID              => $Self->{UserID},
+                ConditionInline     => $Config->{ExtendedSearchCondition},
+                ContentSearchPrefix => '*',
+                ContentSearchSuffix => '*',
+                FullTextIndex       => 1,
+                %GetParam,
+                %DynamicFieldSearchParameters,
+            );
+          }
+
         }
 
         # get needed objects
