@@ -29,8 +29,14 @@ sub Kernel::System::Ticket::TicketAccountedTimeGet {
         return;
     }
 
-    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStartID');
-    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEndID');
+    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$End;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $Ini);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $End);
+    $Ini = $StartFieldDF->{ID};
+    $End = $EndFieldDF->{ID};
+
 	# get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 

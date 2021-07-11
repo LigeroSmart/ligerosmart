@@ -35,9 +35,14 @@ sub Run {
 	my $LayoutObject = $Kernel::OM->Get("Kernel::Output::HTML::Layout");
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 	my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');	
-	my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStartID');
-    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEndID');
-
+	my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$End;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $Ini);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $End);
+    $Ini = $StartFieldDF->{ID};
+    $End = $EndFieldDF->{ID};	
+	
     my $DynamicFieldIni = $DynamicFieldObject->DynamicFieldGet(
     	ID   => $Ini,             # ID or Name must be provided
     );

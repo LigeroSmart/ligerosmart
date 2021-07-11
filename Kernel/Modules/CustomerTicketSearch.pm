@@ -674,8 +674,10 @@ sub Run {
 				$Data{SolutionTimeDestinationDate}   =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g;
                 # get whole article (if configured!)
                 if ( $Config->{SearchArticleCSVTree} && $GetParam{ResultForm} eq 'CSV' ) {
+                    my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
                     my @Articles = $ArticleObject->ArticleList(
                         TicketID             => $TicketID,
+                        OnlyFirst            => 1,
                         IsVisibleForCustomer => 1,
                     );
                     if (@Articles) {
