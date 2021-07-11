@@ -47,8 +47,14 @@ sub Run {
     my $Total = 0;	
 	my $Text_c = 0;
  	$Self->{DSN}  = $Kernel::OM->Get('Kernel::Config')->Get('DatabaseDSN');
-    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursStart');
-    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursEnd');
+    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$End;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $Ini);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $End);
+    $Ini = $StartFieldDF->{ID};
+    $End = $EndFieldDF->{ID};
+	
 	my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
