@@ -104,8 +104,14 @@ sub CustomerReports {
     #Mês será utilizado de 0 a N.
     $QtdeMonth = ($QtdeMonth - 1);
 	#Busca no sysconfig ID dos campos Dynamicos utilizados
-    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStartID');
-    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEndID');
+    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$End;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $Ini);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $End);
+    $Ini = $StartFieldDF->{ID};
+    $End = $EndFieldDF->{ID};
+    
 	#Busca o nome dos campos dynamicos
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
     my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
@@ -806,8 +812,13 @@ sub ShowTicketStatus {
     my $TicketID     = $Param{TicketID} || return;
 	my $Smaller 	 = $Param{Smaller} || '';
 	my $Greater		 = $Param{Greater} || '';
-	my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStartID');
-    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEndID');
+	my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$End;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $Ini);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $End);
+    $Ini = $StartFieldDF->{ID};
+    $End = $EndFieldDF->{ID};
 
     # contains last article (non-internal)
     my %Article;

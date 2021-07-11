@@ -19,6 +19,10 @@ sub Data {
     $Self->{Translation}->{"SolutionTimeDestinationDate"} = "Prazo de solução";
     $Self->{Translation}->{"Under Contract"} = "Contrato";
     $Self->{Translation}->{"Extra Scope"} = "Extra Escopo";
+    $Self->{Translation}->{"Accredit Time"} = "Tempo abonado";
+    $Self->{Translation}->{"Task Start Time"} = "Início da Atividade";
+    $Self->{Translation}->{"Task Stop Time"} = "Fim da Atividade";
+
 }
 
 1;
