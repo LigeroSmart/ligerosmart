@@ -418,8 +418,14 @@ sub GetStatTable {
 
 	my $SQL = "";	
  	my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-	my $Ini = $ConfigObject->Get('Ticket::Complemento::AccountedTime::DynamicFieldStartID');
-	my $End = $ConfigObject->Get('Ticket::Complemento::AccountedTime::DynamicFieldEndID');
+	my $Ini = $ConfigObject->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+	my $End = $ConfigObject->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$End;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $Ini);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $End);
+    $Ini = $StartFieldDF->{ID};
+    $End = $EndFieldDF->{ID};
+
 	my $Accredit = $ConfigObject->Get("Ticket::Complemento::AccountedTime::DynamicFieldAccredit");
 	my $CustomerCompanyHiredHours = $ConfigObject->Get("Ticket::Complemento::AccountedTime::CustomerCountHours");	
 	    # get config data
