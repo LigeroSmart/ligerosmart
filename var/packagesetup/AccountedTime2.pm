@@ -131,6 +131,29 @@ sub _CreateDynamicFields {
     return 1;
 }
 
+# sub CodeUninstall {
+#     my ( $Self, %Param ) = @_;
+
+#     # get the definition for all dynamic fields for ITSM
+#     my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
+#     # create a dynamic fields lookup table
+#     my %DynamicFieldLookup;
+#     DYNAMICFIELD:
+#     for my $DynamicField ( @{$DynamicFieldList} ) {
+#         next DYNAMICFIELD if ref $DynamicField ne 'HASH';
+#         my $DynamicFieldSys = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+#             Name => $DynamicField->{Name},
+#         );
+#         $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldDelete(
+#             ID      => $DynamicFieldSys->{ID},
+#             UserID  => 1,
+#             Reorder => 1,               # or 0, to trigger reorder function, default 1
+#         );
+#     }
+
+#     return 1;
+# }
+
 
 sub _GetITSMDynamicFieldsDefinition {
     my ( $Self, %Param ) = @_;
@@ -151,6 +174,24 @@ sub _GetITSMDynamicFieldsDefinition {
             FieldType  => 'DateTime',
             ObjectType => 'Article',
             Config     => {
+            },
+        },
+        {
+            Name       => 'TaskType',
+            Label      => 'Task Type',
+            FieldType  => 'Dropdown',
+            ObjectType => 'Article',
+            Config     => {
+                DefaultValue => '',
+                PossibleNone => 1,
+                PossibleValues => {
+                    'Follow Up' => 'Follow Up',
+                    'Face-to-face Support' => 'Face-to-face Support',
+                    'Remote Support' => 'Remote Support',
+                    'Development' => 'Development',
+                    'Travel Time' => 'Travel Time',
+                    'Internal Activities' => 'Internal Activities',
+                }
             },
         },
         {
