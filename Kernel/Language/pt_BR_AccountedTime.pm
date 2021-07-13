@@ -22,6 +22,13 @@ sub Data {
     $Self->{Translation}->{"Accredit Time"} = "Tempo abonado";
     $Self->{Translation}->{"Task Start Time"} = "Início da Atividade";
     $Self->{Translation}->{"Task Stop Time"} = "Fim da Atividade";
+    $Self->{Translation}->{"Task Type"} = "Tipo de Atividade";
+    $Self->{Translation}->{"Development"} = "Desenvolvimento";
+    $Self->{Translation}->{"Face-to-face Support"} = "Suporte Presencial";
+    $Self->{Translation}->{"Follow Up"} = "Acompanahmento";
+    $Self->{Translation}->{"Internal Activities"} = "Atividades Internas";
+    $Self->{Translation}->{"Remote Support"} = "Suporte Remoto";
+    $Self->{Translation}->{"Travel Time"} = "Tempo em Deslocamento";
 
 }
 
