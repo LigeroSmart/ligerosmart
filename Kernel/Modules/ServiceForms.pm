@@ -62,7 +62,7 @@ sub new {
 	    }
     }
     # return $Self if(!%HashDosCampos);
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');   
+  my $ConfigObject = $Kernel::OM->Get('Kernel::Config');   
 	my $HashOld = $ConfigObject->Get("Ticket::Frontend::$Action"); 
 	foreach my $Keys (keys %{$HashOld->{DynamicField}}){
 		$HashDosCampos{$Keys} = $HashOld->{DynamicField}{$Keys};
@@ -180,9 +180,11 @@ sub new {
     my %AclAction = %PossibleActions;
     if ($ACL) {
         %AclAction = $TicketObject->TicketAclActionData();
-        for my $CurrentField ( keys %AclAction ) {
-          my $DynamicFieldName = $1;
-          if exists $HashDosCampos{$DynamicFieldName} {
+        my $CurrentField;
+        my $DynamicFieldName;
+        for $CurrentField ( keys %AclAction ) {
+          $DynamicFieldName = $1;
+          if (exists $HashDosCampos{$DynamicFieldName}) {
             if ( $AclAction{$CurrentField} =~ m{^DF_(.*)_Required}xms ) {
                 $HashDosCampos{$DynamicFieldName} = '2';
             } elsif ( $AclAction{$CurrentField} =~ m{^DF_(.*)}xms ) {
@@ -193,7 +195,7 @@ sub new {
     }
 
     # Exemplo:
-    # Altera o valor dos campos
+    # Altera o valor dos campos 
     $ConfigObject->Set(
         Key   => "Ticket::Frontend::$Action###DynamicField",
         Value => \%HashDosCampos
@@ -208,7 +210,7 @@ sub PreRun {
 }
 
 sub Run {
-    my ( $Self, %Param ) = @_;
+    #my ( $Self, %Param ) = @_;
     return;
 
 }
