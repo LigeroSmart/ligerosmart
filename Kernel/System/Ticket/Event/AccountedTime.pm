@@ -42,11 +42,10 @@ sub Run {
         );
         return;
     }
-
     
     my $StartField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
     my $EndField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
-    return 1 if !$EndField;
+    return 1 if (!$StartField || !$EndField);
     my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $StartField);
     my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $EndField);
     $StartField = $StartFieldDF->{ID};
@@ -78,6 +77,9 @@ sub Run {
 
     # Calcula o tempo contabilizado
     my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+    return 1 if (!$Article{"DynamicField_$DynamicFieldStart->{Name}"} 
+                    || !$Article{"DynamicField_$DynamicFieldEnd->{Name}"});
 
     my $Start = $TimeObject->TimeStamp2SystemTime(
         String => $Article{"DynamicField_$DynamicFieldStart->{Name}"},
