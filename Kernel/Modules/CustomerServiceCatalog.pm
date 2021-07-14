@@ -383,7 +383,7 @@ sub Run {
             Limit     => 10000,
             StartHit  => $StartHit,
             PageShown => $PageShown,
-            AllHits   => $AllHits,
+            AllHits   => $Self->{isPublicInterface} ? $count : $AllHits,
             Action    => ( $Self->{isPublicInterface} ) ? 'Action=CustomerServiceCatalog' : 'Action=PublicServiceCatalog',
             Link      => $Link,
             IDPrefix  => ( $Self->{isPublicInterface} ) ? 'CustomerServiceCatalog' : 'PublicServiceCatalog'
