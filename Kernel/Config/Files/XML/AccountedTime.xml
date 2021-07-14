@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_config version="2.0" init="Application">
-    <Setting Name="Ticket::CustomModule###002-ComplementoCustomTicketTime" Required="0" Valid="1">
-        <Description Translatable="1">Carrega o módulo para reescrever a função TicketAccountedTimeGet.</Description>
-        <Navigation>Core::Ticket</Navigation>
-            <Value>
-                <Item ValueType="String" ValueRegex="">Kernel::System::Ticket::CustomAccountedTimeGet</Item>
-            </Value>
-    </Setting>
     <Setting Name="Ticket::EventModulePost###221-AccountedTime" Required="1" Valid="1">
         <Description Translatable="1">Register Accounted Time for Accounted Time Fields.</Description>
         <Navigation>Core::Ticket</Navigation>

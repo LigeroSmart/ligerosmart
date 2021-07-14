@@ -184,6 +184,7 @@ sub _GetITSMDynamicFieldsDefinition {
             Config     => {
                 DefaultValue => '',
                 PossibleNone => 1,
+                TranslatableValues => 1,
                 PossibleValues => {
                     'Follow Up' => 'Follow Up',
                     'Face-to-face Support' => 'Face-to-face Support',
