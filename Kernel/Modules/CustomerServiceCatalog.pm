@@ -14,6 +14,8 @@ use utf8;
 use Kernel::System::VariableCheck qw(:all);
 use JSON;
 use Data::Dumper;
+use Try::Tiny;
+
 sub new {
 	my ( $Type, %Param ) = @_;
 	# allocate new hash for object
@@ -37,16 +39,21 @@ sub Run {
         delete $GetParam{$Key} if (!$GetParam{$Key});
 	}
 
+  $Self->{isPublicInterface} = ($Kernel::OM->Get('Kernel::Output::HTML::Layout')->{Baselink} =~ m/public\.pl/ig) ? 1 : 0;
+
 	# Get all services that are visible by this customer
 	my %Services;
-	use Try::Tiny;
 
-	try {
-		$Kernel::OM->Get('Kernel::System::SubscriptionPlan');
-		%Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
-	} catch {
-		%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};
-	};
+	if ( $Self->{isPublicInterface} ) {
+		%Services = $Kernel::OM->Get('Kernel::System::Service')->ServiceList( UserID => 1);
+	} else {
+		try {
+			$Kernel::OM->Get('Kernel::System::SubscriptionPlan');
+			%Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
+		} catch {
+			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};
+		};
+	}
 	
 	my %DataParam = (
 		Name         => 'Service',
@@ -150,8 +157,13 @@ sub Run {
         }
 
         my $WtahConfig = $Kernel::OM->Get('Kernel::Config')->Get("WasThisArticleHelpful");
-        
         my %TicketAttributes = %{$WtahConfig->{SelfAnsweredTicketAttributes}};
+
+        if ($Self->{isPublicInterface}) {
+          $GetParam{CustomerUser} = $TicketAttributes{PublicCustomerUser};
+          $GetParam{CustomerID}   = $TicketAttributes{PublicCustomerID};
+        }
+        
         for my $Key(keys %TicketAttributes){
             for my $Param(keys %GetParam){
                 $TicketAttributes{$Key} =~ s/_${Param}_/$GetParam{$Param}/gm;
@@ -195,6 +207,7 @@ sub Run {
         # Create Article
         my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
         my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Phone' );
+        
         my $ArticleID = $ArticleBackendObject->ArticleCreate(
 
             TicketID => $TicketID,
@@ -204,8 +217,10 @@ sub Run {
         );
 
         # Redirect User to the Service Catalog
-        my $Redirect = $LayoutObject->{Baselink}
-                            . 'Action=CustomerServiceCatalog';
+        my $Redirect = $LayoutObject->{Baselink} . 'Action=CustomerServiceCatalog';
+        if ($Self->{isPublicInterface}) {
+          $Redirect = $LayoutObject->{Baselink} . 'Action=PublicServiceCatalog';
+        }
         return $LayoutObject->Redirect( OP => $Redirect );
 
     }
@@ -269,10 +284,9 @@ sub Run {
 		my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 		my $SplitTimes = $ConfigObject->Get("ServiceCatalog::SplitFirstLvl") || 0;
 
-		$LayoutObject->Block( Name => "NumberOfRows", 
-							  Data =>{ NumberOfRows => $AllHits} 
-						    );
-	
+		
+    my $count = 0;
+
  		foreach my $document (@{$SearchResultsHash{hits}->{hits}}){
 
 			my $TruncateSizeDesc = $ConfigObject->Get("ServiceCatalog::CharLimiteSizeDescription") || 100;
@@ -298,6 +312,13 @@ sub Run {
 			}
 
 			if($document->{_source}->{Object} eq "Service"){
+        my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet( Name => 'PublicService' );
+				my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
+					DynamicFieldConfig => $DynamicFieldConfig,
+					ObjectID => $document->{_source}->{ObjectID}
+				);
+				next if (!$Value && $Self->{isPublicInterface});
+
 				my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
 					Name   => 'ForwardToUrl',             # ID or Name must be provided
 				);
@@ -326,11 +347,33 @@ sub Run {
 				}
 			}
 			else{
+        next if ($document->{_source}->{Visibility} ne 'public' && $Self->{isPublicInterface});
+        
+        
+        if($Self->{isPublicInterface}) {
+          $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerFAQZoom/PublicFAQZoom/r;
+          $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/customer.pl/public.pl/r;
+        }
 				$LayoutObject->Block( Name => "Result", 
 								  Data => $document->{_source}
 							    );
-			}			
+			}		
+
+      $count++; 	
 		}
+
+  if ($Self->{isPublicInterface}) {
+      $LayoutObject->Block( Name => "NumberOfRows", 
+							  Data =>{ NumberOfRows => $count} 
+						    );
+  }
+  else {
+    $LayoutObject->Block( Name => "NumberOfRows", 
+							  Data =>{ NumberOfRows => $AllHits} 
+						    );
+  }
+    
+
     	my $PageShown = 10;
         my $Link =  'Subaction=' . $LayoutObject->Ascii2Html( Text => $Self->{Subaction} )
 			.';Term=' . $LayoutObject->Ascii2Html( Text => $Term )
@@ -340,10 +383,10 @@ sub Run {
             Limit     => 10000,
             StartHit  => $StartHit,
             PageShown => $PageShown,
-            AllHits   => $AllHits,
-            Action    => 'Action=CustomerServiceCatalog',
+            AllHits   => $Self->{isPublicInterface} ? $count : $AllHits,
+            Action    => ( $Self->{isPublicInterface} ) ? 'Action=CustomerServiceCatalog' : 'Action=PublicServiceCatalog',
             Link      => $Link,
-            IDPrefix  => 'CustomerServiceCatalog',
+            IDPrefix  => ( $Self->{isPublicInterface} ) ? 'CustomerServiceCatalog' : 'PublicServiceCatalog'
         );
         $LayoutObject->Block(
                 Name => 'FilterFooter',
@@ -356,7 +399,7 @@ sub Run {
        $SessionObject->UpdateSessionID(
                 SessionID => $Self->{SessionID},
                 Key       => "LastScreenOverview",
-                Value     => "Action=CustomerServiceCatalog;",
+                Value     => ( $Self->{isPublicInterface} ) ? 'Action=CustomerServiceCatalog;' : 'Action=PublicServiceCatalog;',
             );
 	
 	    ### GENERATE OUTPUT for search
@@ -430,27 +473,34 @@ sub Run {
                     my %LinkedFaqIDs = %{$Links->{FAQ}->{ServiceArticle}->{Source}};
                     my @FaqIDs = keys %LinkedFaqIDs;
                     my $FAQObject = $Kernel::OM->Get("Kernel::System::FAQ") if @FaqIDs;
-                    
                     foreach my $FaqID (@FaqIDs){
                         my %FAQ = $FAQObject->FAQGet(
                             ItemID => $FaqID,
                             UserID	=> 1,
                             ItemFields => 1,
                         );
-                        
-                        next if($FAQ{Language} ne $ENV{UserLanguage});
+                        next if($ENV{UserLanguage} && $FAQ{Language} ne $ENV{UserLanguage});
                         next if($FAQ{Valid} ne 'valid');
                         
                         push @FAQs, \%FAQ;
                     }
-                   
                     # If there is only one FAQ Attached, redirect user to it
                     if(scalar @FAQs == 1){
-                        my $Redirect = $LayoutObject->{Baselink}
-                        . 'Action=CustomerFAQZoom;ItemID='.$FAQs[0]->{ItemID}
-                        . ';ServiceID='.$GetParam{ServiceID}
-                        . ';KeyPrimary='.$GetParam{KeyPrimary};
-                        return $LayoutObject->Redirect( OP => $Redirect );
+                        if($Self->{isPublicInterface}){
+                          my $Redirect = $LayoutObject->{Baselink}
+                            . 'Action=PublicFAQZoom;ItemID='.$FAQs[0]->{ItemID}
+                            . ';ServiceID='.$GetParam{ServiceID}
+                            . ';KeyPrimary='.$GetParam{KeyPrimary};
+                            return $LayoutObject->Redirect( OP => $Redirect );
+                        }
+                        else {
+                          my $Redirect = $LayoutObject->{Baselink}
+                          . 'Action=CustomerFAQZoom;ItemID='.$FAQs[0]->{ItemID}
+                          . ';ServiceID='.$GetParam{ServiceID}
+                          . ';KeyPrimary='.$GetParam{KeyPrimary};
+                          return $LayoutObject->Redirect( OP => $Redirect );
+                        }
+                        
                         
                     } elsif (scalar @FAQs > 1){
 
@@ -462,10 +512,19 @@ sub Run {
                         for my $FAQ(@SortedFAQs){
                             my %Datas;
                             $Datas{KeyPrimary} = $GetParam{ServiceID};
-                            $Datas{LayoutServiceLink} = $LayoutObject->{Baselink}
+                            if ($Self->{isPublicInterface}) {
+                              $Datas{LayoutServiceLink} = $LayoutObject->{Baselink}
+                                . 'Action=PublicFAQZoom;ItemID='.$FAQ->{ItemID}
+                                . ';ServiceID='.$GetParam{ServiceID}
+                                . ';KeyPrimary='.$GetParam{KeyPrimary};
+                            }
+                            else {
+                              $Datas{LayoutServiceLink} = $LayoutObject->{Baselink}
                                 . 'Action=CustomerFAQZoom;ItemID='.$FAQ->{ItemID}
                                 . ';ServiceID='.$GetParam{ServiceID}
                                 . ';KeyPrimary='.$GetParam{KeyPrimary};
+                            }
+                            
                         
                             $Datas{LayoutServiceName} = $FAQ->{Title};
                             #$Datas{LayoutServiceID}	  = $ServiceID;
@@ -482,10 +541,19 @@ sub Run {
                         }
                     }
                 } else {
-                    my $Redirect = $LayoutObject->{Baselink}
-                    . 'Action=CustomerTicketMessage'
-                    . ';ServiceID='.$GetParam{ServiceID};
-                    return $LayoutObject->Redirect( OP => $Redirect );
+                    if($Self->{isPublicInterface}){
+                      my $Redirect = 'customer.pl'
+                      . 'Action=CustomerTicketMessage'
+                      . ';ServiceID='.$GetParam{ServiceID};
+                      return $LayoutObject->Redirect( ExtURL => $Redirect );
+                    }
+                    else {
+                      my $Redirect = $LayoutObject->{Baselink}
+                      . 'Action=CustomerTicketMessage'
+                      . ';ServiceID='.$GetParam{ServiceID};
+                      return $LayoutObject->Redirect( OP => $Redirect );
+                    }
+                    
                 }
 
 			}
@@ -505,7 +573,7 @@ sub Run {
 		}
 	
 		my $Output .= $LayoutObject->CustomerHeader();
-		$Output    .= $LayoutObject->CustomerNavigationBar();
+		$Output    .= $LayoutObject->CustomerNavigationBar() if ( !$Self->{isPublicInterface} );
 		$Output    .= $Self->_MaskNew(
 			%GetParam,
 			DataRef => $DataRef,
@@ -647,6 +715,20 @@ sub _MaskNew {
 		$Link = "#" if(!$Link);
 		my @Names =  split("::",$ServiceName);
 		my $LayoutServiceName = $Names[-1];
+
+    # Ignore non public services
+		if ( $Self->{isPublicInterface} ) {
+	                my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
+	                my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
+	                next if (!$Value);
+
+	                # Fix Service Link
+	                $Link =~ s/Action=;/Action=CustomerDFFileAttachment;/g;
+		} else {
+	                my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
+	                my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
+	                next if ($Value);
+		}
 
 		# Output Services categories and activities
 		my %Datas;
@@ -934,6 +1016,11 @@ sub _MaskNew {
 			my $links = $LayoutObject->{Baselink}
 		        . 'Action=CustomerServiceCatalog'
 				. ';KeyPrimary='.$FullPrevService;
+      if ( $Self->{isPublicInterface} ) {
+				$links = $LayoutObject->{Baselink}
+					. 'Action=PublicServiceCatalog'
+					. ';KeyPrimary='.$FullPrevService;
+			}
 			$LayoutObject->Block( Name => "BreadcrumbServices", Data=> { BreadcrumbLink => $links, BreadcrumbTitle => $crumbs });
 		}
 
@@ -980,7 +1067,7 @@ sub _MaskNew {
 
     ### GENERATE OUTPUT
     return $LayoutObject->Output(
-        TemplateFile => 'CustomerServiceCatalog',
+        TemplateFile => ( $Self->{isPublicInterface} ) ? 'PublicServiceCatalog' : 'CustomerServiceCatalog',
         Data         => \%Param,
     );
 }

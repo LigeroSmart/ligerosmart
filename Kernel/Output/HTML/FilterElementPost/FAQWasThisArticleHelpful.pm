@@ -63,6 +63,8 @@ sub Run {
                                                             # must be linked to, e. g. TicketID
     );
 
+    $Self->{isPublicInterface} = ($Kernel::OM->Get('Kernel::Output::HTML::Layout')->{Baselink} =~ m/public\.pl/ig) ? 1 : 0;
+
     if(!$Value){
         if($KeyPrimary){
             # User came by browsing
@@ -85,6 +87,15 @@ sub Run {
             $Link =~ s/_FAQID_/$FAQID/;
             $Link =~ s/_ServiceID_/$ServiceID/;
             $Link =~ s/_Service_/$KeyPrimary/;
+
+            if ($Self->{isPublicInterface}) {
+                if ($Link =~ m/CustomerTicketMessage/ig) {
+                    $Link = "customer.pl$Link";
+                } else {
+                    $Link =~ s/CustomerServiceCatalog/PublicServiceCatalog/ig;
+                    $Link = "public.pl$Link";
+                }
+            }
             
             $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Block(
                 Name => $Block,
@@ -123,6 +134,15 @@ sub Run {
             $Link =~ s/_FAQID_/$FAQID/;
             $Link =~ s/_ServiceID_/$ServiceID/;
             $Link =~ s/_Service_/$KeyPrimary/;
+
+            if ($Self->{isPublicInterface}) {
+                if ($Link =~ m/CustomerTicketMessage/ig) {
+                    $Link = "customer.pl$Link";
+                } else {
+                    $Link =~ s/CustomerServiceCatalog/PublicServiceCatalog/ig;
+                    $Link = "public.pl$Link";
+                }
+            }
             
             $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Block(
                 Name => $Block,
