@@ -35,6 +35,7 @@ sub Run {
     # From Event or Generic Agent
     return if !$Param{Data}->{ArticleID};
     my $TicketID = $Param{Data}->{TicketID};
+
     if ( !$TicketID ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -42,59 +43,56 @@ sub Run {
         );
         return;
     }
-    
     my $StartField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
     my $EndField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
-    return 1 if (!$StartField || !$EndField);
-    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $StartField);
-    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $EndField);
-    $StartField = $StartFieldDF->{ID};
-    $EndField = $EndFieldDF->{ID};
+    return 1 if ((!$StartField || !$EndField) ||
+                     !(($Param{Data}->{FieldName} eq $StartField) || ($Param{Data}->{FieldName} eq $EndField)));
 
-    my $DynamicFieldObject        = $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-
-    # Obtain Data
-    my $DynamicFieldStart = $DynamicFieldObject->DynamicFieldGet(
-        ID   => $StartField,             # ID or Name must be provided
-    );
-
-    my $DynamicFieldEnd = $DynamicFieldObject->DynamicFieldGet(
-        ID   => $EndField,             # ID or Name must be provided
-    );
-
-    my @Fields = ("$DynamicFieldStart->{Name}","$DynamicFieldEnd->{Name}");
-    
-    return 1 if ! (grep /^$Param{Data}->{FieldName}$/, @Fields);
-
-    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     my %Article = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle( %{$Param{Data}} )->ArticleGet( 
         ArticleID     => $Param{Data}->{ArticleID},
         TicketID     => $Param{Data}->{TicketID},
         DynamicFields => 1,
         UserID        => $Param{UserID},
     );
+    $Kernel::OM->Get('Kernel::System::Log')->Log(
+        Priority => 'error',
+        Message  => "------------------ 1111111111111111 $Param{Data}->{FieldName}",
+    );
 
-    # Calcula o tempo contabilizado
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+use Data::Dumper;$Kernel::OM->Get('Kernel::System::Log')->Log(
+    Priority => 'error',
+    Message  => "------------------ ".Dumper(%Article),
+);
 
-    return 1 if (!$Article{"DynamicField_$DynamicFieldStart->{Name}"} 
-                    || !$Article{"DynamicField_$DynamicFieldEnd->{Name}"});
+    return 1 if (!$Article{"DynamicField_$StartField"} 
+                    || !$Article{"DynamicField_$EndField"});
 
-    my $Start = $TimeObject->TimeStamp2SystemTime(
-        String => $Article{"DynamicField_$DynamicFieldStart->{Name}"},
-    ) || 0;
-    my $End = $TimeObject->TimeStamp2SystemTime(
-        String => $Article{"DynamicField_$DynamicFieldEnd->{Name}"},
-    ) || 0 ;
-
-    if (!$Article{"DynamicField_$DynamicFieldStart->{Name}"} || !$Article{"DynamicField_$DynamicFieldEnd->{Name}"}){
-        # if one of the fields was not filled, we make both equal to zero, avoiding mistakes
-        $Start = 0;
-        $End = 0;
-    };
+$Kernel::OM->Get('Kernel::System::Log')->Log(
+    Priority => 'error',
+    Message  => "------------------ 3333333333333",
+);
+    # Calculate delta
+    my $StartObj = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String   => $Article{"DynamicField_$StartField"},
+            # TimeZone => 'Europe/Berlin',        # optional, defaults to setting of SysConfig OTRSTimeZone
+        }
+    );
+    my $EndObj = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String   => $Article{"DynamicField_$EndField"},
+            # TimeZone => 'Europe/Berlin',        # optional, defaults to setting of SysConfig OTRSTimeZone
+        }
+    );
     
-    my $AccountedTimeInMin = int(($End-$Start)/60);
+    my $AccountedTimeInMin = $StartObj->Delta(DateTimeObject => $EndObj)->{Minutes};
+
+    $Kernel::OM->Get('Kernel::System::Log')->Log(
+        Priority => 'error',
+        Message  => "------------------ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT $AccountedTimeInMin",
+    );
 
     # For Article Edit Addon
     # get database object
@@ -105,7 +103,7 @@ sub Run {
     );
 
     # Set new accounted time
-    $TicketObject->TicketAccountTime(
+    $Kernel::OM->Get('Kernel::System::Ticket')->TicketAccountTime(
         TicketID  => $TicketID,
         ArticleID => $Param{Data}->{ArticleID},
         TimeUnit  => $AccountedTimeInMin,
@@ -118,7 +116,7 @@ sub Run {
     #Update no campo create_time colocando a data do CampoDinamico "Start"
     return if !$DBObject->Do(
         SQL => 'UPDATE time_accounting set create_time = ? where article_id = ?',
-        Bind => [ \$Article{"DynamicField_$DynamicFieldStart->{Name}"}, \$Param{Data}->{ArticleID} ],
+        Bind => [ \$Article{"DynamicField_$StartField"}, \$Param{Data}->{ArticleID} ],
     );
 
     
