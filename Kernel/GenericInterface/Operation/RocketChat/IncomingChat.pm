@@ -322,14 +322,11 @@ sub Run {
             push @Messages, $Param{Data}->{messages};
         }
         
+        my $CustomerGravatar = md5_hex($Param{Data}->{visitor}->{email}) ||'00000000000000000000000000000000';
+        my $CustomerName = $Param{Data}->{visitor}->{name} || $Param{Data}->{visitor}->{username} || $LayoutObject->{LanguageObject}->Translate('Customer');
+
         my $LastDate=   '';
         my $LastAuthor='';
-
-        my $AgentGravatar = md5_hex($Param{Data}->{agent}->{email}) ||'00000000000000000000000000000000';
-        my $CustomerGravatar = md5_hex($Param{Data}->{visitor}->{email}) ||'00000000000000000000000000000000';
-        
-        my $AgentName = $Param{Data}->{agent}->{name} || $Param{Data}->{agent}->{username} || $LayoutObject->{LanguageObject}->Translate('Agent');
-        my $CustomerName = $Param{Data}->{visitor}->{name} || $Param{Data}->{visitor}->{username} || $LayoutObject->{LanguageObject}->Translate('Customer');
         
         my @Attachments;	
         for my $message (@Messages){
@@ -359,10 +356,21 @@ sub Run {
                 $LastAuthor = $message->{username};
                 my $Avatar;
                 my $Name;
-                if ($message->{username} =~ m/^guest/){
+
+
+
+                if ($message->{userType} eq 'unknown'){
                     $Name   = $CustomerName;
                     $Avatar = $CustomerGravatar;
+                } elsif ($message->{userType} eq 'user') {
+                    my $AgentGravatar = md5_hex($message->{u}->{email}) ||'00000000000000000000000000000000';
+                    my $AgentName = $message->{u}->{name} || $message->{u}->{username} || $LayoutObject->{LanguageObject}->Translate('Agent');
+                    $Name   = $AgentName;
+                    $Avatar = $AgentGravatar;            
                 } else {
+                    # Possible a bot
+                    my $AgentGravatar = '00000000000000000000000000000000';
+                    my $AgentName = $LayoutObject->{LanguageObject}->Translate('Bot');
                     $Name   = $AgentName;
                     $Avatar = $AgentGravatar;            
                 }
