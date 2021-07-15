@@ -181,7 +181,7 @@ sub DynamicTemplateUpdate{
             	);
             	return;
         	}
-	    if ( ref $Param{Config}->{FieldOrder} eq 'ARRAY' ) {
+	    if (!$Param{Config}->{FieldOrder} || ref $Param{Config}->{FieldOrder} eq 'ARRAY' ) {
 			$Param{Config}->{HideArticle} = $Param{HideArticle}||0;
         	$Config = $Kernel::OM->Get('Kernel::System::YAML')->Dump( Data => $Param{Config} );
     	}

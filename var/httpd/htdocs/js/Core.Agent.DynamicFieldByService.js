@@ -116,6 +116,8 @@ Core.Agent.DynamicFieldByService = (function (TargetNS) {
 							Response   = res[0];
 							arrayJSON  = res[1].split('@%@%@');
 
+              console.log("CHEGOU AQUI",res);
+
 							// Define some local variables in order to insert the form fields inside de DOM
 							var i;
 							reloadFields              = "";
@@ -127,6 +129,7 @@ Core.Agent.DynamicFieldByService = (function (TargetNS) {
 							// variable
 							for (i = 0; i < arrayJSON.length; i++) {
 								objectJSON = $.parseJSON(arrayJSON[i]);
+                
 								$.each(objectJSON, function (key, val) {
 									if (key && val) {
 										if (key === "Message" && val.trim().length) {
