@@ -76,6 +76,8 @@
                 <Item Key="Priority">1 very low</Item>
                 <Item Key="CustomerUser">_CustomerUser_</Item>
                 <Item Key="CustomerID">_CustomerID_</Item>
+                <Item Key="PublicCustomerUser">PublicCustomerUser</Item>
+                <Item Key="PublicCustomerID">PublicCustomerID</Item>
             </Hash>
         </Value>
     </Setting>
@@ -1425,6 +1427,20 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="ServicePreferences###Z5003-PublicService" Required="1" Valid="1">
+        <Description Translatable="1">Serviço</Description>
+        <Navigation>Core::Service</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
+                <Item Key="Label" Translatable="1">Serviço Público</Item>
+                <Item Key="Desc" Translatable="1"></Item>
+                <Item Key="Block">Option</Item>
+                <Item Key="DynamicField">PublicService</Item>
+                <Item Key="PrefKey">DynamicField_PublicService</Item>
+            </Hash>
+        </Value>
+    </Setting>
     <Setting Name="ServicePreferences###Z5004-ForwardToUrl" Required="1" Valid="1">
         <Description Translatable="1">Encaminhar para a URL</Description>
         <Navigation>Core::Service</Navigation>
@@ -1474,6 +1490,82 @@
                 <Item Key="Module">Kernel::System::Ticket::Event::ServiceProcess</Item>
                 <Item Key="Transaction">1</Item>
                 <Item Key="Event">TicketCreate|TicketServiceUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <!-- Public Interface -->
+    <Setting Name="PublicFrontend::Module###PublicServiceCatalog" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Service Catalog</Item>
+                    <Item Key="NavBarName">Service Catalog</Item>
+                    <Item Key="Title"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::PublicServiceCatalog###001-LigeroServiceCatalog" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Public.ServiceCatalog.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Public.ServiceCatalogSearch.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PublicFrontend::Module###CustomerDFFileAttachment" Required="1" Valid="1">
+        <Description Translatable="1">FrontendModuleRegistration for DFFile module.</Description>
+        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Title">CustomerDFFileAttachment</Item>
+                    <Item Key="Description">CustomerDFFileAttachment</Item>
+                    <Item Key="NavBarName">CustomerDFFileAttachment</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterFAQWasThisArticleHelpful" Required="0" Valid="1">
+        <Description Translatable="1">Output filter to add "Was this article helpful" at the end of FAQ Articles.</Description>
+        <Navigation>Frontend::Public</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQWasThisArticleHelpful</Item>
+                <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="PublicFAQZoom">1</Item>
+                    </Hash>
+                </Item>
             </Hash>
         </Value>
     </Setting>
