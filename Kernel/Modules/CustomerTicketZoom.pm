@@ -594,31 +594,36 @@ sub Run {
             );
         }
 
-        # set state
-        my $NextState = $Config->{StateDefault} || 'open';
-        if ( $GetParam{StateID} && $Config->{State} ) {
-            my %NextStateData = $StateObject->StateGet( ID => $GetParam{StateID} );
-            $NextState = $NextStateData{Name};
-        }
+        my @StatesBypass = @{ $ConfigObject->Get('Ticket::NextState::Bypass') };
 
-        # change state if
-        # customer set another state
-        # or the ticket is not new
-        if ( $Ticket{StateType} !~ /^new/ || $GetParam{StateID} ) {
-            $TicketObject->StateSet(
-                TicketID => $Self->{TicketID},
-                State    => $NextState,
-                UserID   => $ConfigObject->Get('CustomerPanelUserID'),
-            );
+        if(!(grep {$_ eq $Ticket{State}} @StatesBypass)) {
 
-            # set unlock on close state
-            if ( $NextState =~ /^close/i ) {
-                $TicketObject->TicketLockSet(
-                    TicketID => $Self->{TicketID},
-                    Lock     => 'unlock',
-                    UserID   => $ConfigObject->Get('CustomerPanelUserID'),
-                );
-            }
+          # set state
+          my $NextState = $Config->{StateDefault} || 'open';
+          if ( $GetParam{StateID} && $Config->{State} ) {
+              my %NextStateData = $StateObject->StateGet( ID => $GetParam{StateID} );
+              $NextState = $NextStateData{Name};
+          }
+
+          # change state if
+          # customer set another state
+          # or the ticket is not new
+          if ( $Ticket{StateType} !~ /^new/ || $GetParam{StateID} ) {
+              $TicketObject->StateSet(
+                  TicketID => $Self->{TicketID},
+                  State    => $NextState,
+                  UserID   => $ConfigObject->Get('CustomerPanelUserID'),
+              );
+
+              # set unlock on close state
+              if ( $NextState =~ /^close/i ) {
+                  $TicketObject->TicketLockSet(
+                      TicketID => $Self->{TicketID},
+                      Lock     => 'unlock',
+                      UserID   => $ConfigObject->Get('CustomerPanelUserID'),
+                  );
+              }
+          }
         }
 
         # set priority

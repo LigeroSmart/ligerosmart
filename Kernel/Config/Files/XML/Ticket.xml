@@ -13939,4 +13939,12 @@ Thanks for your help!
             <Item ValueType="Entity" ValueEntityType="Queue" ValueRegex="">Postmaster</Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::NextState::Bypass" Required="1" Valid="1" ConfigLevel="200">
+        <Description Translatable="1">State list to bypass automatic state changing</Description>
+        <Navigation>Core::Ticket</Navigation>
+        <Value>
+            <Array>
+            </Array>
+        </Value>
+    </Setting>
 </otrs_config>
