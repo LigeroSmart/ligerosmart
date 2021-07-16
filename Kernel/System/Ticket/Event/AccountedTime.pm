@@ -54,23 +54,10 @@ sub Run {
         DynamicFields => 1,
         UserID        => $Param{UserID},
     );
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
-        Priority => 'error',
-        Message  => "------------------ 1111111111111111 $Param{Data}->{FieldName}",
-    );
-
-use Data::Dumper;$Kernel::OM->Get('Kernel::System::Log')->Log(
-    Priority => 'error',
-    Message  => "------------------ ".Dumper(%Article),
-);
 
     return 1 if (!$Article{"DynamicField_$StartField"} 
                     || !$Article{"DynamicField_$EndField"});
 
-$Kernel::OM->Get('Kernel::System::Log')->Log(
-    Priority => 'error',
-    Message  => "------------------ 3333333333333",
-);
     # Calculate delta
     my $StartObj = $Kernel::OM->Create(
         'Kernel::System::DateTime',
@@ -87,12 +74,10 @@ $Kernel::OM->Get('Kernel::System::Log')->Log(
         }
     );
     
-    my $AccountedTimeInMin = $StartObj->Delta(DateTimeObject => $EndObj)->{Minutes};
-
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
-        Priority => 'error',
-        Message  => "------------------ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT $AccountedTimeInMin",
-    );
+    my $AccountedTimeInMin = $StartObj->Delta(DateTimeObject => $EndObj)->{AbsoluteSeconds};
+    if($AccountedTimeInMin != 0){
+        $AccountedTimeInMin = int($AccountedTimeInMin/60);
+    }
 
     # For Article Edit Addon
     # get database object
@@ -118,8 +103,6 @@ $Kernel::OM->Get('Kernel::System::Log')->Log(
         SQL => 'UPDATE time_accounting set create_time = ? where article_id = ?',
         Bind => [ \$Article{"DynamicField_$StartField"}, \$Param{Data}->{ArticleID} ],
     );
-
-    
 
     return 1;
 }
