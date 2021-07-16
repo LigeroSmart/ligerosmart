@@ -166,6 +166,13 @@ sub _GetITSMDynamicFieldsDefinition {
             FieldType  => 'DateTime',
             ObjectType => 'Article',
             Config     => {
+                DateRestriction => '',
+                DefaultValue => 0,
+                Link => '',
+                LinkPreview => '',
+                YearsInFuture => '5',
+                YearsInPast => '5',
+                YearsPeriod => '0'
             },
         },
         {
@@ -174,6 +181,13 @@ sub _GetITSMDynamicFieldsDefinition {
             FieldType  => 'DateTime',
             ObjectType => 'Article',
             Config     => {
+                DateRestriction => '',
+                DefaultValue => 0,
+                Link => '',
+                LinkPreview => '',
+                YearsInFuture => '5',
+                YearsInPast => '5',
+                YearsPeriod => '0'
             },
         },
         {
