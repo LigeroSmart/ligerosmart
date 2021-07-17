@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="2.0" init="Config">
     <Setting Name="DashboardBackend###0501-Complemento1" Required="0" Valid="1">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -52,7 +52,7 @@
         </Value>
     </Setting>
     <Setting Name="DashboardBackend###0502-Complemento2" Required="0" Valid="0">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -104,7 +104,7 @@
     </Setting>
  
     <Setting Name="DashboardBackend###0503-Complemento3" Required="0" Valid="0">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -157,7 +157,7 @@
  
 
     <Setting Name="DashboardBackend###0504-Complemento4" Required="0" Valid="0">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -209,7 +209,7 @@
     </Setting>
  
     <Setting Name="DashboardBackend###0505-Complemento5" Required="0" Valid="0">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -262,7 +262,7 @@
  
 
     <Setting Name="DashboardBackend###0506-Complemento6" Required="0" Valid="0">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -314,7 +314,7 @@
     </Setting>
  
     <Setting Name="DashboardBackend###0507-Complemento7" Required="0" Valid="0">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -367,7 +367,7 @@
  
 
     <Setting Name="DashboardBackend###0508-Complemento8" Required="0" Valid="0">
-        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Parameters for the dashboard backend of the new tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>GraphicalDashboards</Navigation>
         <Value>
             <Hash>
@@ -418,7 +418,7 @@
         </Value>
     </Setting>
     <Setting Name="DashboardBackend###001-ComplementoOverview" Required="0" Valid="1">
-        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>OverviewBars</Navigation>
         <Value>
             <Hash>
@@ -436,7 +436,7 @@
         </Value>
     </Setting>
     <Setting Name="DashboardBackend###002-ComplementoOverview" Required="0" Valid="0">
-        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>OverviewBars</Navigation>
         <Value>
             <Hash>
@@ -454,7 +454,7 @@
         </Value>
     </Setting>
     <Setting Name="DashboardBackend###003-ComplementoOverview" Required="0" Valid="0">
-        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>OverviewBars</Navigation>
         <Value>
             <Hash>
@@ -472,7 +472,7 @@
         </Value>
     </Setting>
     <Setting Name="DashboardBackend###004-ComplementoOverview" Required="0" Valid="0">
-        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
+        <Description Translatable="1">Overview of the tickets in specific queues. "CacheTTLLocal" is the cache time in minutes for the plugin. Async option makes dashboard load after page is loaded.</Description>
         <Navigation>OverviewBars</Navigation>
         <Value>
             <Hash>
