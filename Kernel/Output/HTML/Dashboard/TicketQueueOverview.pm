@@ -66,14 +66,13 @@ ENDJS
         $LayoutObject->AddJSOnDocumentComplete(
             Code => $JSAsync,
         );
-    return $LayoutObject->Output(
-        TemplateFile => 'AgentDashboardTicketQueueOverview',
-        Data         => {
-            %{ $Self->{Config} },
-            Name => $Self->{Name},
-        },
-        # AJAX => $Param{AJAX},
-    );
+        return $LayoutObject->Output(
+            TemplateFile => 'AgentDashboardTicketQueueOverview',
+            Data         => {
+                %{ $Self->{Config} },
+                Name => $Self->{Name},
+            },
+        );
     }
 
 

@@ -8,6 +8,7 @@
                 <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
                 <Item Key="Widgets">2</Item>
                 <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="Group"></Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
@@ -59,6 +60,7 @@
                 <Item Key="Widgets">2</Item>
                 <Item Key="Title">Graphical Dashboard 1</Item>
                 <Item Key="Block">ContentLarge</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Group"></Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
                 <Item Key="CacheTTLLocal">2</Item>
@@ -110,6 +112,7 @@
                 <Item Key="Widgets">2</Item>
                 <Item Key="Title">Graphical Dashboard 1</Item>
                 <Item Key="Block">ContentLarge</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Group"></Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
                 <Item Key="CacheTTLLocal">2</Item>
@@ -162,6 +165,7 @@
                 <Item Key="Widgets">2</Item>
                 <Item Key="Title">Graphical Dashboard 1</Item>
                 <Item Key="Block">ContentLarge</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Group"></Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
                 <Item Key="CacheTTLLocal">2</Item>
@@ -214,6 +218,7 @@
                 <Item Key="Title">Graphical Dashboard 1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="Group"></Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
                 <Item Key="CacheTTLLocal">2</Item>
                 <Item Key="CacheTTLLocalAddRandom">0</Item>
@@ -266,6 +271,7 @@
                 <Item Key="Title">Graphical Dashboard 1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="Group"></Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
                 <Item Key="CacheTTLLocal">2</Item>
                 <Item Key="CacheTTLLocalAddRandom">0</Item>
@@ -317,6 +323,7 @@
                 <Item Key="Title">Graphical Dashboard 1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="Group"></Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
                 <Item Key="CacheTTLLocal">2</Item>
                 <Item Key="CacheTTLLocalAddRandom">0</Item>
@@ -367,6 +374,7 @@
                 <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoWidgets</Item>
                 <Item Key="Widgets">2</Item>
                 <Item Key="Title">Graphical Dashboard 1</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="Group"></Item>
                 <Item Key="Description">Mostram Graficos especiais</Item>
@@ -417,6 +425,7 @@
                 <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
                 <Item Key="Title">Tickets Overview</Item>
                 <Item Key="Permission">rw</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="ConfigKey">ComplementoDashboardsOverview1</Item>
                 <Item Key="Group"></Item>
@@ -434,6 +443,7 @@
                 <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
                 <Item Key="Title">Another Overview Bar</Item>
                 <Item Key="Permission">rw</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="ConfigKey">ComplementoDashboardsOverview2</Item>
                 <Item Key="Group"></Item>
@@ -451,6 +461,7 @@
                 <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
                 <Item Key="Title">Another Overview Bar</Item>
                 <Item Key="Permission">rw</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="ConfigKey">ComplementoDashboardsOverview3</Item>
                 <Item Key="Group"></Item>
@@ -468,6 +479,7 @@
                 <Item Key="Module">Kernel::Output::HTML::Ligero::DashboardComplementoOverview</Item>
                 <Item Key="Title">Another Overview Bar</Item>
                 <Item Key="Permission">rw</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="ConfigKey">ComplementoDashboardsOverview4</Item>
                 <Item Key="Group"></Item>
