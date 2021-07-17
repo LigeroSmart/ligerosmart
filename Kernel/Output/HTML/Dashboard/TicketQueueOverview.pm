@@ -53,6 +53,30 @@ sub Config {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    
+    if ($Self->{Config}->{Async} && !$Param{AJAX}){
+        my $JSAsync = <<"ENDJS";
+\$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
+Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
+    \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
+});
+ENDJS
+        $LayoutObject->AddJSOnDocumentComplete(
+            Code => $JSAsync,
+        );
+    return $LayoutObject->Output(
+        TemplateFile => 'AgentDashboardTicketQueueOverview',
+        Data         => {
+            %{ $Self->{Config} },
+            Name => $Self->{Name},
+        },
+        # AJAX => $Param{AJAX},
+    );
+    }
+
+
     my $LimitGroup = $Self->{Config}->{QueuePermissionGroup} || 0;
     my $CacheKey   = 'User' . '-' . $Self->{UserID} . '-' . $LimitGroup;
 
@@ -170,9 +194,6 @@ sub Run {
     for my $StateOrder ( sort { $a <=> $b } keys %ConfiguredStates ) {
         push @Headers, $ConfiguredStates{$StateOrder};
     }
-
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     for my $HeaderItem (@Headers) {
         $LayoutObject->Block(
