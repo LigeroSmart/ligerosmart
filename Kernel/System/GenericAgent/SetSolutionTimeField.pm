@@ -323,7 +323,9 @@ sub Run {
             #If the ticket is open yet verify if it is in SLA stop
             my $notIsSLAStopped = ($TimeObject->TimeStamp2SystemTime(
                 String => $Ticket{SolutionTimeDestinationDate},
-            ) != 1767139200);
+            ) != 1767139200) && ($TimeObject->TimeStamp2SystemTime(
+                String => $Ticket{SolutionTimeDestinationDate},
+            ) != 100000000000000);
 
             #Get the time that the ticket was paused by SLA
             my $PendSumTime = $TicketObject->GetTotalNonEscalationRelevantBusinessTime(
