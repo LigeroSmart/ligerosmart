@@ -449,7 +449,8 @@ sub GetTotalNonEscalationRelevantBusinessTime {
         my $StatePend   = 0;
 
         if ( $RelevantStateNamesArrStrg =~ /(^|.*,)$Ticket{State}(,.*|$)/ ) {
-            $PendSumTime = 1767139200;
+            #$PendSumTime = 1767139200;
+            $PendSumTime = 100000000000000;
             $StatePend   = 1;
         }
         else {
