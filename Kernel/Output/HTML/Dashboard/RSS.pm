@@ -40,9 +40,10 @@ sub Config {
 
     return (
         %{ $Self->{Config} },
-        CacheKey => 'RSS'
-            . $Self->{Config}->{URL} . '-'
-            . $Kernel::OM->Get('Kernel::Output::HTML::Layout')->{UserLanguage},
+
+        # Don't cache this globally as it contains JS that is not inside of the HTML.
+        CacheTTL => undef,
+        CacheKey => undef,
     );
 }
 
