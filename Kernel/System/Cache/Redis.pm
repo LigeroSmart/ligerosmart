@@ -62,6 +62,8 @@ sub Set {
         }
     }
 
+    $Param{TTL} = int($Param{TTL});
+
     # Connect to Redis if not connected
     return if !$Self->{Redis} && !$Self->_Connect();
 
