@@ -567,11 +567,20 @@ sub Run {
             for my $TicketID (@ViewableTicketIDs) {
 
                 # get first article data
-                my %Data = $TicketObject->ArticleFirstArticle(
-                    TicketID      => $TicketID,
-                    Extended      => 1,
-                    DynamicFields => 1,
+                #my %Data = $TicketObject->ArticleFirstArticle(
+                #    TicketID      => $TicketID,
+                #    Extended      => 1,
+                #    DynamicFields => 1,
+                #);
+                my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
+
+                    TicketID               => $TicketID,
+                    SenderType             => 'customer',
                 );
+                my %Data = {};
+                for my $MetaArticle (@Articles) {
+                    %Data = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle( %{$MetaArticle} )->ArticleGet( %{$MetaArticle} );
+                }
 				#COMPLEMENTO ADICIONA A COLUNA 
 				#NO CSV
 				my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $Data{TicketID});
