@@ -7393,6 +7393,14 @@
             </Array>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::CustomerTicketSearch###CSVHeaderRewrite" Required="1" Valid="1">
+        <Description Translatable="1">Rewrite CSV Header Columns.</Description>
+        <Navigation>Frontend::Customer::View::TicketSearch</Navigation>
+        <Value>
+            <Hash>
+            </Hash>
+        </Value>
+    </Setting>
     <Setting Name="CustomerPreferencesGroups###ShownTickets" Required="0" Valid="1">
         <Description Translatable="1">Defines all the parameters for the ShownTickets object in the customer preferences of the customer interface.</Description>
         <Navigation>Frontend::Customer::View::Preferences</Navigation>
