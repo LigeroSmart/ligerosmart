@@ -526,8 +526,8 @@ sub UserUpdate {
         }
     }
 
-    # store old user login for later use
-    my $OldUserLogin = $Self->UserLookup(
+    # store old user information for later use
+    my %OldUserInformation = $Self->GetUserData(
         UserID => $Param{UserID},
     );
 
@@ -599,17 +599,25 @@ sub UserUpdate {
     }
 
     # update search profiles if the UserLogin changed
-    if ( lc $OldUserLogin ne lc $Param{UserLogin} ) {
+    if ( lc $OldUserInformation{UserLogin} ne lc $Param{UserLogin} ) {
         $Kernel::OM->Get('Kernel::System::SearchProfile')->SearchProfileUpdateUserLogin(
             Base         => 'TicketSearch',
-            UserLogin    => $OldUserLogin,
+            UserLogin    => $OldUserInformation{UserLogin},
             NewUserLogin => $Param{UserLogin},
         );
     }
 
     $Self->_UserCacheClear( UserID => $Param{UserID} );
 
-    # TODO Not needed to delete the cache if ValidID or Name was not changed
+    # Do not clean permission cache if userlogin and valid id is the same
+    if ( 
+        (lc $OldUserInformation{UserLogin} eq lc $Param{UserLogin})
+         &&
+        ($Param{ValidID} eq $OldUserInformation{ValidID})
+       )
+    {
+           return 1;
+    }
 
     my $CacheObject            = $Kernel::OM->Get('Kernel::System::Cache');
     my $SystemPermissionConfig = $Kernel::OM->Get('Kernel::Config')->Get('System::Permission') || [];
