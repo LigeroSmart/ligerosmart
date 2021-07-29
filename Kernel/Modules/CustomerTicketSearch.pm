@@ -569,8 +569,8 @@ sub Run {
         {
 
             # create head (actual head and head for data fill)
-            my @TmpCSVHead = @{ $Config->{SearchCSVData} };
-            my @CSVHead    = @{ $Config->{SearchCSVData} };
+            my @TmpCSVHead      = @{ $Config->{SearchCSVData} };
+            my @CSVHead         = @{ $Config->{SearchCSVData} };
 
             # get the ticket dynamic fields for CSV display
             my $CSVDynamicField = $DynamicFieldObject->DynamicFieldListGet(
@@ -774,9 +774,11 @@ sub Run {
                 TicketNumber => Translatable('Ticket Number'),
                 CustomerName => Translatable('Customer Realname'),
             );
+            my %CSVHeaderRewrite  = %{ $Config->{CSVHeaderRewrite} };
+            my @RewriteCSVHead = map {$CSVHeaderRewrite{$_} || $_} @CSVHead;
 
             my @CSVHeadTranslated = map { $LayoutObject->{LanguageObject}->Translate( $HeaderMap{$_} || $_ ); }
-                @CSVHead;
+                @RewriteCSVHead;
 
             # return csv to download
             my $CurSystemDateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
