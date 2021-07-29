@@ -7662,6 +7662,7 @@ via the Preferences button after logging in.
         <Navigation>Frontend::Agent::View::Dashboard</Navigation>
         <Value>
             <Hash>
+                <Item Key="Async">1</Item>
                 <Item Key="Module">Kernel::Output::HTML::Dashboard::UserOnline</Item>
                 <Item Key="Title" Translatable="1">Logged-In Users</Item>
                 <Item Key="Description" Translatable="1">Logged in users.</Item>
@@ -7700,6 +7701,7 @@ via the Preferences button after logging in.
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Dashboard::RSS</Item>
+                <Item Key="Async">1</Item>
                 <Item Key="Title" Translatable="1">LigeroSmart News</Item>
                 <Item Key="Description" Translatable="1">LigeroSmart News.</Item>
                 <Item Key="URL">https://news.ligerosmart.org/rss/en_US</Item>

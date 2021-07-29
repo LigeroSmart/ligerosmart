@@ -123,6 +123,27 @@ sub Config {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    
+    if ($Self->{Config}->{Async} && !$Param{AJAX}){
+        my $JSAsync = <<"ENDJS";
+\$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
+Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
+    \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
+});
+ENDJS
+        $LayoutObject->AddJSOnDocumentComplete(
+            Code => $JSAsync,
+        );
+        return $LayoutObject->Output(
+            TemplateFile => 'AgentDashboardUserOnline',
+            Data         => {
+                %{ $Self->{Config} },
+            },
+        );
+    }
+
     my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
     my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
     my $UserObject    = $Kernel::OM->Get('Kernel::System::User');

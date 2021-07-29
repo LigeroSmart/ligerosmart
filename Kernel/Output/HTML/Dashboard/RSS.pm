@@ -1,6 +1,4 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -42,14 +40,36 @@ sub Config {
 
     return (
         %{ $Self->{Config} },
-        CacheKey => 'RSS'
-            . $Self->{Config}->{URL} . '-'
-            . $Kernel::OM->Get('Kernel::Output::HTML::Layout')->{UserLanguage},
+
+        # Don't cache this globally as it contains JS that is not inside of the HTML.
+        CacheTTL => undef,
+        CacheKey => undef,
     );
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    
+    if ($Self->{Config}->{Async} && !$Param{AJAX}){
+        my $JSAsync = <<"ENDJS";
+\$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
+Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
+    \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
+});
+ENDJS
+        $LayoutObject->AddJSOnDocumentComplete(
+            Code => $JSAsync,
+        );
+        return $LayoutObject->Output(
+            TemplateFile => 'AgentDashboardRSSOverview',
+            Data         => {
+                %{ $Self->{Config} },
+            },
+        );
+    }
 
     # Default URL
     my $FeedURL = $Self->{Config}->{URL};

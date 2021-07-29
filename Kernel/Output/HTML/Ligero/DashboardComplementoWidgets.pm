@@ -52,6 +52,31 @@ sub Run {
     my $Title = $Self->{Config}->{Title} || '';
     $Title =~ s/\s/_/smx;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    if ($Self->{Config}->{Async} && !$Param{AJAX}){
+        my $JSAsync = <<"ENDJS";
+\$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
+Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
+    \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
+    \$.each(window.deferAfterjQueryLoaded, function(index, fn) {
+	    fn();
+	});
+});
+ENDJS
+        $LayoutObject->AddJSOnDocumentComplete(
+            Code => $JSAsync,
+        );
+        return $LayoutObject->Output(
+            TemplateFile => 'AgentDashboardComplementoWidgets',
+            Data         => {
+                %{ $Self->{Config} },
+                Title => $Title,
+            },
+        );
+    }
+
     my $CacheKey=$Self->{Name}."-".$Self->{UserID}."-";
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');

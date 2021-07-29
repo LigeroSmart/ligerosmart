@@ -640,11 +640,25 @@ sub Run {
     # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
+    my $TicketIDs;
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    # Add JS To async Load
+    if ($Self->{Config}->{Async} && !$Param{AJAX}){
+        my $JSAsync = <<"ENDJS";
+\$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
+Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
+    \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
+});
+ENDJS
+        $LayoutObject->AddJSOnDocumentComplete(
+            Code => $JSAsync,
+        );
+    }
     # check cache
-    my $TicketIDs = $CacheObject->Get(
+    $TicketIDs = $CacheObject->Get(
         Type => 'Dashboard',
         Key  => $CacheKey . '-' . $Self->{Filter} . '-List',
-    );
+    ) if(!$Self->{Config}->{Async} || ($Self->{Config}->{Async} && $Param{AJAX}));
 
     # find and show ticket list
     my $CacheUsed = 1;
@@ -652,7 +666,9 @@ sub Run {
     # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-    if ( !$TicketIDs ) {
+    if ( !$TicketIDs &&
+         (!$Self->{Config}->{Async} || ($Self->{Config}->{Async} && $Param{AJAX}))
+        ) {
 
         # quote all CustomerIDs
         if ( $TicketSearch{CustomerID} ) {
@@ -856,8 +872,6 @@ sub Run {
     if ( $Self->{AdditionalFilter} ) {
         $Summary->{ $Self->{AdditionalFilter} . '::Selected' } = 'Selected';
     }
-
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # get filter ticket counts
     $LayoutObject->Block(
