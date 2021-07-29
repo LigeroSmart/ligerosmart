@@ -4507,6 +4507,7 @@ sub _OutputShowHideDynamicFields {
 	my $DfByServiceObject = $Kernel::OM->Get('Kernel::System::DynamicFieldByService');
 
 	my $ActivityDialog = $DfByServiceObject->GetDynamicFieldByServiceAndInterface(ServiceID => $Param{GetParam}->{ServiceID},  InterfaceName   => $Param{InterfaceName} );
+  
 	my %Ticket;
 
 	my $Output='';
@@ -4564,6 +4565,8 @@ sub _OutputShowHideDynamicFields {
 
     for my $Field (sort { $a <=> $b } keys %FieldsOrder){
         my $DynamicFieldName = $FieldsOrder{$Field}->{Name};
+        my $DefaultValue = $ActivityDialog->{Config}->{Fields}->{'DynamicField_'.$DynamicFieldName}->{DefaultValue};
+        
         my %ActivityDialog;
         $ActivityDialog{Display}=$DynamicFieldsToShow->{$FieldsOrder{$Field}->{Name}};
         my $Response         = $Self->_RenderDynamicField(
@@ -4577,6 +4580,7 @@ sub _OutputShowHideDynamicFields {
             GetParam            => $Param{GetParam},
             AJAXUpdatableFields => $AJAXUpdatableFields,
             FormID              => $Self->{FormID},
+            DefaultValue        => $DefaultValue
         );
         
         if ( !$Response->{Success} ) {
