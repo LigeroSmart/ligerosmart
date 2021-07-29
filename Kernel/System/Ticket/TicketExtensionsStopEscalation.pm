@@ -449,6 +449,7 @@ sub GetTotalNonEscalationRelevantBusinessTime {
         my $StatePend   = 0;
 
         if ( $RelevantStateNamesArrStrg =~ /(^|.*,)$Ticket{State}(,.*|$)/ ) {
+            #$PendSumTime = 1767139200;
             $PendSumTime = 1767139200;
             $StatePend   = 1;
         }
@@ -735,7 +736,7 @@ sub GetTotalNonEscalationRelevantBusinessTime {
 	                    Calendar => $Escalation{Calendar},
 	                );
                 }
-
+                
                 # update solution time to $DestinationTime
                 $Kernel::OM->Get('Kernel::System::DB')->Do(
                     SQL => 'UPDATE ticket SET escalation_solution_time = ? WHERE id = ?',
