@@ -1,0 +1,36 @@
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <div class="WidgetAction Toggle">
+                        <a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
+                    </div>
+                    <h2>[% Translate(Data.WidgetTitle) | html %]</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabelSmall Narrow">
+[% RenderBlockStart("TotalAccountedTime") %]
+                        <label>[% Translate("Accounted time") | html %]:</label>
+                        <p class="Value">[% Data.TicketTimeUnits %]</p>
+                        <div class="Clear"></div>
+
+[% RenderBlockEnd("TotalAccountedTime") %]
+[% RenderBlockStart("TicketDynamicField") %]
+                        <label>[% Translate(Data.Label) | html %]:</label>
+                        <p class="Value">
+[% RenderBlockStart("TicketDynamicFieldLink") %]
+                            <span title="[% Data.Title %]"><a href="[% Data.Link | Interpolate %]"[% IF Data.LinkPreview %] data-trigger="floater" data-floater-url="[% Data.LinkPreview | Interpolate %]"[% END %] target="_blank" class="DynamicFieldLink">[% Data.Value %]</a></span>
+[% RenderBlockEnd("TicketDynamicFieldLink") %]
+[% RenderBlockStart("TicketDynamicFieldPlain") %]
+                            <span title="[% Data.Title %]">[% Data.Value %]</span>
+[% RenderBlockEnd("TicketDynamicFieldPlain") %]
+                        </p>
+                        <div class="Clear"></div>
+[% RenderBlockEnd("TicketDynamicField") %]
+                    </fieldset>
+                </div>
+            </div>

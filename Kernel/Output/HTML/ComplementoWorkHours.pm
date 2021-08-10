@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/SubscriptionPlanWidget.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerUserGeneric.pm,v 1.5 2009/07/01 07:31:38 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

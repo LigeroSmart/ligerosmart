@@ -269,4 +269,27 @@
             </Array>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketZoom###Widgets###0150-TimeAccount" Required="0" Valid="1">
+        <Description Translatable="1">Show time account information. You can enable additional Accounted Time information by setting z-ExtraInformation-01 Enabled to 1 and setting the start and end IDs of Article Dynamic Fields</Description>
+        <Navigation>Frontend::Agent::View::TicketZoom</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketZoom::TimeAccount</Item>
+                <Item Key="Location">Sidebar</Item>
+                <Item Key="ShowAccountedTime">1</Item>
+                <Item Key="ShowAlsoAccountedTimeInMinutes">0</Item>
+                <Item Key="ShowAlsoAccountedTimeInHourFormat">0</Item>
+                <Item Key="Location">Sidebar</Item>
+                <Item Key="WidgetTitle">Accounted Time</Item>
+                <Item Key="z-ExtraInformation01">
+                    <Hash>
+                        <Item Key="1-Enabled">0</Item>
+                        <Item Key="2-Label">Custom Ticket Accounted Time</Item>
+                        <Item Key="3-DynamicFieldIDWorkHoursStart">ID of the Article Dynamic Field with the task start</Item>
+                        <Item Key="4-DynamicFieldIDWorkHoursEnd">ID of the Article Dynamic Field with the task end</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
 </otrs_config>
