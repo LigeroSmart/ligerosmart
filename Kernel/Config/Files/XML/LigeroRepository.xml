@@ -27,13 +27,6 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="PreApplicationModule###AdminLigeroRepository" Required="0" Valid="1" ConfigLevel="300">
-        <Description Translatable="1">Defines Ligero Repository as default repository for admin.</Description>
-        <Navigation>Frontend::Agent</Navigation>
-        <Value>
-            <Item ValueType="String" ValueRegex="">Kernel::Modules::AdminLigeroRepository</Item>
-        </Value>
-    </Setting>
     <Setting Name="Frontend::Module###AdminLigeroSubscription" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
