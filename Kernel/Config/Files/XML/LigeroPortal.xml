@@ -1434,7 +1434,7 @@
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ServicePreferences::DynamicField</Item>
-                <Item Key="Label" Translatable="1">Serviço Público</Item>
+                <Item Key="Label" Translatable="1">Public Service</Item>
                 <Item Key="Desc" Translatable="1"></Item>
                 <Item Key="Block">Option</Item>
                 <Item Key="DynamicField">PublicService</Item>
