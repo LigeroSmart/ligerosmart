@@ -13279,14 +13279,17 @@
   "processors" : [
     {
       "foreach": {
+        "ignore_missing": true,
         "ignore_failure": true,
         "field": "Ticket.Article",
                 "processor": {
                     "foreach": {
                         "field":"_ingest._value.Attachment",
+                        "ignore_missing": true,
                         "ignore_failure": true,
                         "processor":{
                           "attachment": {
+                            "ignore_missing": true,
                             "ignore_failure": true,
                             "target_field": "_ingest._value.attachment",
                             "field": "_ingest._value.Content"
@@ -13298,14 +13301,17 @@
     },
     {
       "foreach": {
+        "ignore_missing": true,
         "ignore_failure": true,
         "field": "Ticket.Article",
         "processor": {
                     "foreach": {
+                        "ignore_missing": true,
                         "ignore_failure": true,
                         "field":"_ingest._value.Attachment",
                         "processor":{
                           "remove": {
+                            "ignore_missing": true,
                             "ignore_failure": true,
                             "field": "_ingest._value.Content"
                           }
@@ -13329,10 +13335,12 @@
   "processors" : [
     {
       "foreach": {
+        "ignore_missing": true,
         "ignore_failure": true,
         "field": "Attachments",
                         "processor":{
                           "attachment": {
+                            "ignore_missing": true,
                             "ignore_failure": true,
                             "target_field": "_ingest._value.AttachmentSearch",
                             "field": "_ingest._value.Content"
@@ -13349,6 +13357,7 @@
     },
     {
                           "remove": {
+                            "ignore_missing": true,
                             "ignore_failure": true,
                             "field": "Attachments"
                           }

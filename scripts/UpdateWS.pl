@@ -157,10 +157,10 @@ Requester:
       InvokerControllerMapping:
         DeleteTicket:
           Command: DELETE
-          Controller: /:Index/doc/:TicketID
+          Controller: /:Index/:doc/:TicketID
         LigeroTicketIndexer:
           Command: PUT
-          Controller: /:Index/doc/:TicketID?pipeline=:pipeline
+          Controller: /:Index/:doc/:TicketID?pipeline=:pipeline
       Proxy:
         UseProxy: No
       SSL:
