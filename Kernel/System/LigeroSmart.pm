@@ -161,7 +161,7 @@ sub Search {
     try {
         @SearchResults = $e->search(
             'index' => $Types.'_'.$Indexes,
-            'type'  => 'doc',
+            'type'  => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
             'body'  => {
                 %{$Param{Data}}
             }
@@ -179,6 +179,10 @@ sub Search {
     
     if(@SearchResults){
         %SearchResultsHash = %{ $SearchResults[0] };    
+    }
+
+    if($Self->{Config}->{ElasticSearchVersion} ne 'Older' && $SearchResultsHash{hits}{total}->{value}){
+      $SearchResultsHash{hits}{total} = $SearchResultsHash{hits}{total}->{value}
     }
 
     return %SearchResultsHash;
@@ -207,11 +211,11 @@ sub SearchTemplate {
     );
     
     my @SearchResults;
-    
     try {
+        
         @SearchResults = $e->search_template(
             'index' => $Types.'_'.$Indexes,
-            'type'  => 'doc',
+            'type'  => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
             'body'  => {
                 %{$Param{Data}}
             }
@@ -219,18 +223,22 @@ sub SearchTemplate {
     } catch {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "error"
-        );
-    
+            Message  => "error $_"
+      );
+     
     }
 
-    
+
     my %SearchResultsHash;
     
     if(@SearchResults){
         %SearchResultsHash = %{ $SearchResults[0] };    
     }
 
+    if($Self->{Config}->{ElasticSearchVersion} ne 'Older' && $SearchResultsHash{hits}{total}->{value}){
+      $SearchResultsHash{hits}{total} = $SearchResultsHash{hits}{total}->{value}
+    }
+    
     return %SearchResultsHash;
 }
 
@@ -301,7 +309,7 @@ sub DeleteByQuery {
     
     $DeletedInformation = $e->delete_by_query(
             'index' => $Types.'_'.$Indexes,
-            'type'  => 'doc',
+            'type'  => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
             'body'  => {
                 %{$Param{Body}}
             }
@@ -379,7 +387,7 @@ sub Index {
 #    try {
     $Result = $e->index(
         'index'    => $Type.'_'.$Index,
-        'type'     => 'doc',
+        'type'     => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
         'id'       => $Id,
         'body'     => {
             %{$Body}
@@ -435,6 +443,9 @@ sub IndexCreate {
 	
     # Connect
     my @Nodes = @{$Self->{Config}->{Nodes}};
+
+    use Data::Dumper;
+    print 'Nodes '.Dumper(@Nodes);
     
     my $e = Search::Elasticsearch->new(
         nodes => @Nodes,
@@ -471,6 +482,9 @@ sub IndexCreate {
 		);
 		return;
 	}
+  if($Self->{Config}->{ElasticSearchVersion} ne 'Older'){
+    $Body->{mappings} = $Body->{mappings}->{doc};
+  }
 
 	my $Result;
 	my $Error;
