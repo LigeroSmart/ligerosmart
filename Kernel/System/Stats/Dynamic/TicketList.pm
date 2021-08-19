@@ -1345,16 +1345,9 @@ sub GetStatTable {
         PARAMETER:
         for my $ParameterName ( sort keys %Ticket ) {
             if ( $ParameterName =~ m{\A DynamicField_ ( [a-zA-Z\d]+ ) \z}xms ) {
-                my $DynamicFieldConfig = $Self->{DynamicFieldConfigs}->{$ParameterName};
-                # loop over the dynamic fields configured
-                # DYNAMICFIELD:
-                # for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-                #     next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-                #     next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
-
-                #     # skip all fields that does not match with current field name ($1)
-                #     # without the 'DynamicField_' prefix
-                #     next DYNAMICFIELD if $DynamicFieldConfig->{Name} ne $1;
+                    my $DFName = $ParameterName;
+                    $DFName =~ s/^DynamicField_//;
+                    my $DynamicFieldConfig = $Self->{DynamicFieldConfigs}->{$DFName};
 
                     # prevent unitilization errors
                     if ( !defined $Ticket{$ParameterName} ) {
