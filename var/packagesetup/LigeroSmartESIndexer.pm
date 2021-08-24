@@ -168,6 +168,7 @@ sub _CreateWebServices {
     my %WebServiceLookup = reverse %{$List};
     my $Name = 'LigeroTicketIndexer';
     if ( $WebServiceLookup{$Name} ) {
+
         my $CurrentWebService = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice')->WebserviceGet(
             ID => $WebServiceLookup{$Name}
         );
@@ -183,6 +184,7 @@ sub _CreateWebServices {
             ID => $WebServiceLookup{$Name},
             UserID => 1,
         );
+
     }
 
     my $YAML = <<"_END_";
@@ -292,6 +294,26 @@ Requester:
       MappingOutbound:
         Type: Simple
       Type: LigeroSmart::LigeroSmartIndexer
+    LigeroArticleIndexer:
+      Description: ''
+      Events:
+      - Asynchronous: '1'
+        Event: ArticleCreate
+      MappingInbound:
+        Type: Simple
+      MappingOutbound:
+        Type: Simple
+      Type: LigeroSmart::LigeroSmartArticleIndexer
+    LigeroArticleDelete:
+      Description: ''
+      Events:
+      - Asynchronous: '1'
+        Event: TicketDelete
+      MappingInbound:
+        Type: Simple
+      MappingOutbound:
+        Type: Simple
+      Type: LigeroSmart::LigeroSmartArticleDelete
   Transport:
     Config:
       DefaultCommand: PUT
@@ -303,6 +325,12 @@ Requester:
         LigeroTicketIndexer:
           Command: PUT
           Controller: /:Index/doc/:TicketID?pipeline=:pipeline
+        LigeroArticleIndexer:
+          Command: PUT
+          Controller: /article/doc/:ArticleID
+        LigeroArticleDelete:
+          Command: POST
+          Controller: /article/_delete_by_query?pretty
       Timeout: '300'
     Type: HTTP::REST
 _END_

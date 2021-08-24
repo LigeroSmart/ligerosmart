@@ -106,4 +106,36 @@
             </Hash>
         </Value>
     </Setting>
+	
+    <!-- fix/AccountedTime branch -->
+    <Setting Name="GenericInterface::Invoker::Module###LigeroSmart::LigeroSmartArticleIndexer" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the invoker layer.</Description>
+        <Navigation>GenericInterface::Invoker::Module</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">LigeroSmartArticleIndexer</Item>
+                <Item Key="Controller">LigeroSmart</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceInvokerDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Invoker::Module###LigeroSmart::LigeroSmartArticleDelete" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the invoker layer.</Description>
+        <Navigation>GenericInterface::Invoker::Module</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">LigeroSmartArticleDelete</Item>
+                <Item Key="Controller">LigeroSmart</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceInvokerDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="LigeroSmart::ArticleIndex::Enabled" Required="0" Valid="1">
+        <Description Translatable="1">Field used to enable/disable article index on ES</Description>
+        <Navigation>Configuration</Navigation>
+            <Value>
+                <Item ValueType="String" ValueRegex="">0</Item>
+            </Value>
+    </Setting>
+	
  </otrs_config>
