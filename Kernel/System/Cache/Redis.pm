@@ -83,6 +83,7 @@ sub Set {
         );
 
         $Self->{Redis}->set( $Key, $Data, 'EX', $Param{TTL} );
+        $Self->{Redis}->sadd( "KeyIndex:" . $Param{Type}, $Key );
 
     };
     if ($@) {
@@ -155,6 +156,7 @@ sub Delete {
     my $Result;
     eval {
         $Result = $Self->{Redis}->del($Key);
+        $Self->{Redis}->srem( "KeyIndex:" . $Param{Type}, $Key );
     };
     if ($@) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -205,11 +207,16 @@ sub CleanUp {
         return 1 if !@ToBeDeletedTypes;
 
         for my $Type (@ToBeDeletedTypes) {
-            my ( $Cursor, $KeysRef ) = ( 0, [] );
-            do {
-                ( $Cursor, $KeysRef ) = $Self->{Redis}->scan( $Cursor, MATCH => "$Type:*" );
-                $Self->{Redis}->del( @{$KeysRef} ) if @{$KeysRef};
-            } while ($Cursor);
+            my @KeysToDelete = $Self->{Redis}->smembers( "KeyIndex:$Type" );
+	    if (@KeysToDelete) {
+		$Self->{Redis}->del( @KeysToDelete );
+	        $Self->{Redis}->del( "KeyIndex:$Type" );
+            }
+	    #my ( $Cursor, $KeysRef ) = ( 0, [] );
+	    #do {
+	    #    ( $Cursor, $KeysRef ) = $Self->{Redis}->scan( $Cursor, MATCH => "$Type:*" );
+	    #    $Self->{Redis}->del( @{$KeysRef} ) if @{$KeysRef};
+	    #} while ($Cursor);
         }
     };
     if ($@) {
