@@ -122,12 +122,12 @@
                         </p>
                         <div class="Clear"></div>
 
-[% RenderBlockStart("TotalAccountedTime") %]
-                        <label>[% Translate("Accounted time") | html %]:</label>
-                        <p class="Value">[% Data.TicketTimeUnits %]</p>
-                        <div class="Clear"></div>
-
-[% RenderBlockEnd("TotalAccountedTime") %]
+# [% RenderBlockStart("TotalAccountedTime") %]
+#                         <label>[% Translate("Accounted time") | html %]:</label>
+#                         <p class="Value">[% Data.TicketTimeUnits %]</p>
+#                         <div class="Clear"></div>
+# 
+# [% RenderBlockEnd("TotalAccountedTime") %]
 [% RenderBlockStart("Owner") %]
                         <label>[% Translate("Owner") | html %]:</label>
                         <p class="Value" title="[% Data.UserFullname | html %] ([% Data.UserLogin | html %])">

@@ -156,13 +156,13 @@ sub Run {
     }
 
     # show total accounted time if feature is active:
-    if ( $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {
-        $Ticket{TicketTimeUnits} = $TicketObject->TicketAccountedTimeGet(%Ticket);
-        $LayoutObject->Block(
-            Name => 'TotalAccountedTime',
-            Data => \%Ticket,
-        );
-    }
+    # if ( $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {
+    #     $Ticket{TicketTimeUnits} = $TicketObject->TicketAccountedTimeGet(%Ticket);
+    #     $LayoutObject->Block(
+    #         Name => 'TotalAccountedTime',
+    #         Data => \%Ticket,
+    #     );
+    # }
 
     # show pending until, if set:
     if ( $Ticket{UntilTime} ) {

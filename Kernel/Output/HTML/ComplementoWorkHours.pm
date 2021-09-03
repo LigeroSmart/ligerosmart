@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/SubscriptionPlanWidget.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerUserGeneric.pm,v 1.5 2009/07/01 07:31:38 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -47,8 +45,14 @@ sub Run {
     my $Total = 0;	
 	my $Text_c = 0;
  	$Self->{DSN}  = $Kernel::OM->Get('Kernel::Config')->Get('DatabaseDSN');
-    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursStart');
-    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldWorkHoursEnd');
+    my $Ini = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+    my $End = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$End;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $Ini);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $End);
+    $Ini = $StartFieldDF->{ID};
+    $End = $EndFieldDF->{ID};
+	
 	my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 

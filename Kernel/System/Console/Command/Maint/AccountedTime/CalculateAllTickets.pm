@@ -10,7 +10,7 @@ package Kernel::System::Console::Command::Maint::AccountedTime::CalculateAllTick
 
 use strict;
 use warnings;
-
+use Data::Dumper;
 use Time::HiRes();
 
 use base qw(Kernel::System::Console::BaseCommand);
@@ -40,6 +40,7 @@ sub Run {
 
     $Self->Print("<yellow>Recalculating ticket accounted time...</yellow>\n");
     my $TicketObject =  $Kernel::OM->Get('Kernel::System::Ticket');
+    my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
 
     # get all tickets
     my @TicketIDs = $TicketObject->TicketSearch(
@@ -52,8 +53,13 @@ sub Run {
     my $Count      = 0;
     my $MicroSleep = $Self->GetOption('micro-sleep');
 
-    my $StartField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStartID');
-    my $EndField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEndID');
+    my $StartField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldStart');
+    my $EndField = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Complemento::AccountedTime::DynamicFieldEnd');
+    return 1 if !$EndField;
+    my $StartFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $StartField);
+    my $EndFieldDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(Name => $EndField);
+    $StartField = $StartFieldDF->{ID};
+    $EndField = $EndFieldDF->{ID};
 
     my $DynamicFieldObject        = $Kernel::OM->Get('Kernel::System::DynamicField');
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
@@ -74,15 +80,22 @@ sub Run {
         $Count++;
 
         # Get all articles with dynamic fields
-        my @ArticleBox = $TicketObject->ArticleContentIndex(
-            TicketID                   => $TicketID,
-            UserID                     => 1,
-            DynamicFields              => 1,
+        my @Articles = $ArticleObject->ArticleList(
+            TicketID               => $TicketID,
         );
+
         #for each article, recalculate time accounting
         ARTICLE:
-        for my $Article(@ArticleBox){
-                next ARTICLE if (!$Article->{"DynamicField_$DynamicFieldStart->{Name}"} || !$Article->{"DynamicField_$DynamicFieldEnd->{Name}"});
+        for my $MetaArticle(@Articles){
+                my %ArticleHash = $ArticleObject->BackendForArticle(
+                     %{$MetaArticle} )->ArticleGet( %{$MetaArticle},
+                             DynamicFields => 1,
+                     );
+                my $Article = \%ArticleHash;
+
+                next ARTICLE if (
+                    !$Article->{"DynamicField_$DynamicFieldStart->{Name}"} ||
+                     !$Article->{"DynamicField_$DynamicFieldEnd->{Name}"});
 
                 # Calcula o tempo contabilizado
                 my $Start = $TimeObject->TimeStamp2SystemTime(
@@ -101,13 +114,13 @@ sub Run {
                     SQL => 'DELETE FROM time_accounting where article_id = ?',
                     Bind => [ \$Article->{ArticleID} ],
                 );
-
+                
                 # Set new accounted time
                 $TicketObject->TicketAccountTime(
                     TicketID  => $TicketID,
                     ArticleID => $Article->{ArticleID},
                     TimeUnit  => $AccountedTimeInMin,
-                    UserID    => $Article->{CreatedBy},
+                    UserID    => $Article->{CreateBy},
                 ) if $AccountedTimeInMin;
                 
                 #Update no campo create_time colocando a data do CampoDinamico "Start"
