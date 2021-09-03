@@ -70,6 +70,8 @@ sub Run {
 
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+    my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
 
     my $Queues = $ConfigObject->{DashboardEventsTicketCalendar}->{Queues};
 
@@ -117,14 +119,25 @@ sub Run {
 
     my %Tickets;
     if (%QueuesConfigured) {
-        %Tickets = $TicketObject->TicketSearch(
-            SortBy   => $ConfigObject->{'SortBy::Default'} || 'Age',
-            QueueIDs => [ sort keys %QueuesConfigured ],
-            UserID   => $Self->{UserID},
-            StateIDs => \@ViewableStateIDs,
-            Result   => 'HASH',
-            %DynamicFieldTimeSearch,
-        );
+        if(!$ESActive) {
+          %Tickets = $TicketObject->TicketSearch(
+              SortBy   => $ConfigObject->{'SortBy::Default'} || 'Age',
+              QueueIDs => [ sort keys %QueuesConfigured ],
+              UserID   => $Self->{UserID},
+              StateIDs => \@ViewableStateIDs,
+              Result   => 'HASH',
+              %DynamicFieldTimeSearch,
+          );
+        } else {
+          %Tickets = $LigeroSmartObject->TicketSearch(
+              SortBy   => $ConfigObject->{'SortBy::Default'} || 'Age',
+              QueueIDs => [ sort keys %QueuesConfigured ],
+              UserID   => $Self->{UserID},
+              StateIDs => \@ViewableStateIDs,
+              Result   => 'HASH',
+              %DynamicFieldTimeSearch,
+          );
+        }
     }
 
     my @EventsDisplayed;

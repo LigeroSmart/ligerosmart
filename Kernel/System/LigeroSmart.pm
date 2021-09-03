@@ -161,7 +161,7 @@ sub Search {
     try {
         @SearchResults = $e->search(
             'index' => $Types.'_'.$Indexes,
-            'type'  => 'doc',
+            'type'  => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
             'body'  => {
                 %{$Param{Data}}
             }
@@ -181,7 +181,368 @@ sub Search {
         %SearchResultsHash = %{ $SearchResults[0] };    
     }
 
+    if($Self->{Config}->{ElasticSearchVersion} ne 'Older' && $SearchResultsHash{hits}{total}->{value}){
+      $SearchResultsHash{hits}{total} = $SearchResultsHash{hits}{total}->{value}
+    }
+
     return %SearchResultsHash;
+}
+
+=item TicketSearch
+
+
+=cut
+
+sub TicketSearch {
+    my ( $Self, %Param ) = @_;
+
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+
+    my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+
+    $Index .= "_*_search";
+
+    $Index = lc($Index);
+
+    if (!$Self->{Config}->{Nodes}){
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "You must specify at least one node"
+        );
+        return;
+    }
+
+    my $Indexes = $Index || '';
+    my $Types   = 'ticket';
+
+    # Connect
+    my @Nodes = @{$Self->{Config}->{Nodes}};
+    
+    my $e = Search::Elasticsearch->new(
+        nodes => @Nodes,
+        # (trace_to => ['File','/opt/otrs/var/tmp/ligerosearch.log'])
+    );    
+    
+    my @SearchResults;
+
+    my %HashQuery;
+
+    my @Must;
+
+    if($Param{TicketCreateTimeNewerDate} || $Param{TicketCreateTimeOlderDate}) {
+      my $range = {}; 
+      if($Param{TicketCreateTimeNewerDate}) {
+        $range->{range}->{"Ticket.Created"}->{gte} = $Param{TicketCreateTimeNewerDate};
+      }
+      if($Param{TicketCreateTimeOlderDate}) {
+        $range->{range}->{"Ticket.Created"}->{lte} = $Param{TicketCreateTimeOlderDate};
+      }
+
+      push @Must, $range;
+    }
+
+    if($Param{TicketCloseTimeNewerDate} || $Param{TicketCloseTimeOlderDate}) {
+      my $range = {}; 
+      if($Param{TicketCloseTimeNewerDate}) {
+        $range->{range}->{"Ticket.Closed"}->{gte} = $Param{TicketCloseTimeNewerDate};
+      }
+      if($Param{TicketCloseTimeOlderDate}) {
+        $range->{range}->{"Ticket.Closed"}->{lte} = $Param{TicketCloseTimeOlderDate};
+      }
+
+      push @Must, $range;
+    }
+
+    if($Param{CustomerID} && ref($Param{CustomerID}) ne 'ARRAY'){
+      my $term = {};
+      $term->{term}->{"Ticket.CustomerID"} = $Param{CustomerID};
+      push @Must, $term;
+    }
+
+    if($Param{CustomerID} && ref($Param{CustomerID}) eq 'ARRAY'){
+      my $term = {};
+      $term->{terms}->{"Ticket.CustomerID"} = $Param{CustomerID};
+      push @Must, $term;
+    }
+
+    if($Param{Limit}){
+      $HashQuery{size} = $Param{Limit};
+    }
+
+    if($Param{TicketID} && ref($Param{TicketID}) ne 'ARRAY')
+    {
+      my $term = {};
+      $term->{term}->{"Ticket.TicketID"} = $Param{TicketID};
+      push @Must, $term;
+    }
+
+    if($Param{TicketID} && ref($Param{TicketID}) eq 'ARRAY')
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.TicketID"} = $Param{TicketID};
+      push @Must, $term;
+    }
+
+    if($Param{TicketNumber} && ref($Param{TicketNumber}) ne 'ARRAY')
+    {
+      my $term = {};
+      $Param{TicketNumber} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.TicketNumber"} = $Param{TicketNumber};
+      push @Must, $term;
+    }
+
+    if($Param{TicketNumber} && ref($Param{TicketNumber}) eq 'ARRAY')
+    {
+      my $term = {};
+      $Param{TicketNumber} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.TicketNumber"} = $Param{TicketNumber};
+      push @Must, $term;
+    }
+
+    if($Param{Title} && ref($Param{Title}) ne 'ARRAY')
+    {
+      my $term = {};
+      $Param{Title} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.Title"} = $Param{Title};
+      push @Must, $term;
+    }
+
+    if($Param{Title} && ref($Param{Title}) eq 'ARRAY')
+    {
+      my $term = {};
+      $Param{Title} =~ s/%/*/gi;
+      $term->{wildcard}->{"Ticket.TicketNumber"} = $Param{Title};
+      push @Must, $term;
+    }
+
+    if($Param{Queues})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Queue"} = $Param{Queues};
+      push @Must, $term;
+    }
+
+    if($Param{QueueIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.QueueID"} = $Param{QueueIDs};
+      push @Must, $term;
+    }
+
+    if($Param{Types} && ref($Param{Types}) eq 'ARRAY')
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Type"} = $Param{Types};
+      push @Must, $term;
+    }
+
+    if($Param{Types} && ref($Param{Types}) ne 'ARRAY')
+    {
+      my $term = {};
+      $term->{term}->{"Ticket.Type"} = $Param{Types};
+      push @Must, $term;
+    }
+
+    if($Param{TypeIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.TypeID"} = $Param{TypeIDs};
+      push @Must, $term;
+    }
+
+    if($Param{States})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.State"} = $Param{States};
+      push @Must, $term;
+    }
+
+    if($Param{StateIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.StateID"} = $Param{StateIDs};
+      push @Must, $term;
+    }
+
+    if($Param{StateType} && ref($Param{StateType}) ne 'ARRAY')
+    {
+      my $term = {};
+      $term->{term}->{"Ticket.StateType"} = $Param{StateType};
+      push @Must, $term;
+    }
+
+    if($Param{StateType} && ref($Param{StateType}) eq 'ARRAY')
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.StateType"} = $Param{StateType};
+      push @Must, $term;
+    }
+
+    if($Param{Priorities})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Priority"} = $Param{Priorities};
+      push @Must, $term;
+    }
+
+    if($Param{PriorityIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.PriorityID"} = $Param{PriorityIDs};
+      push @Must, $term;
+    }
+
+    if($Param{Services})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Service"} = $Param{Services};
+      push @Must, $term;
+    }
+
+    if($Param{ServiceIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.ServiceID"} = $Param{ServiceIDs};
+      push @Must, $term;
+    }
+
+    if($Param{SLAs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.SLA"} = $Param{SLAs};
+      push @Must, $term;
+    }
+
+    if($Param{SLAIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.SLAID"} = $Param{SLAIDs};
+      push @Must, $term;
+    }
+
+    if($Param{Locks})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.Lock"} = $Param{Locks};
+      push @Must, $term;
+    }
+
+    if($Param{LockIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.LockID"} = $Param{LockIDs};
+      push @Must, $term;
+    }
+
+    if($Param{OwnerIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.OwnerID"} = $Param{OwnerIDs};
+      push @Must, $term;
+    }
+
+    if($Param{ResponsibleIDs})
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.ResponsibleID"} = $Param{ResponsibleIDs};
+      push @Must, $term;
+    }
+
+    if($Param{CustomerUserLogin} && ref($Param{CustomerUserLogin}) ne 'ARRAY')
+    {
+      my $term = {};
+      $term->{term}->{"Ticket.CustomerUserID"} = $Param{ResponsibleIDs};
+      push @Must, $term;
+    }
+
+    if($Param{CustomerUserLogin} && ref($Param{CustomerUserLogin}) eq 'ARRAY')
+    {
+      my $term = {};
+      $term->{terms}->{"Ticket.CustomerUserID"} = $Param{ResponsibleIDs};
+      push @Must, $term;
+    }
+
+    if ( $Param{UserID} && $Param{UserID} != 1 ) {
+        my $term = {};
+        # get users groups
+        my %GroupList = $Kernel::OM->Get('Kernel::System::Group')->PermissionUserGet(
+            UserID => $Param{UserID},
+            Type   => $Param{Permission} || 'ro',
+        );
+
+        # return if we have no permissions
+        return if !%GroupList;
+
+        # add groups to query
+        $term->{terms}->{"Ticket.GroupID"} = [sort keys %GroupList];
+        #$SQLExt .= ' AND sq.group_id IN (' . join( ',', sort keys %GroupList ) . ') ';
+        push @Must, $term;
+    }
+
+    $HashQuery{query}->{bool}->{must} = [@Must];
+
+    if($Param{Source} eq 'TicketGeneric'){
+      use Data::Dumper;
+      #die Dumper(\%HashQuery);
+    }
+    
+    
+    try {
+        @SearchResults = $e->search(
+            'index' => $Types.'_'.$Indexes,
+            'type'  => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
+            'body'  => {
+                %HashQuery
+            }
+        );
+
+        my %SearchResultsHash;
+
+        my @ViewableTicketIDs;
+    
+        if(@SearchResults){
+            %SearchResultsHash = %{ $SearchResults[0] };
+
+            if($Param{JustES} && $Param{Result} eq 'COUNT'){
+              if($Self->{Config}->{ElasticSearchVersion} eq 'Older'){
+                return $SearchResultsHash{hits}->{total};
+              }
+              return $SearchResultsHash{hits}->{total}->{value};
+            }
+
+            foreach my $document (@{$SearchResultsHash{hits}->{hits}}){ 
+              push @ViewableTicketIDs, $document->{_source}->{Ticket}->{TicketID};
+            }  
+
+            if($Param{JustES} && $Param{Result} eq 'ARRAY'){
+              return @ViewableTicketIDs;
+            }
+        }
+        
+        if(@ViewableTicketIDs){
+          return $TicketObject->TicketSearch(
+
+              TicketID            => [@ViewableTicketIDs],
+              %Param
+          );
+        } else {
+          return undef;
+        }
+        
+
+        
+
+
+
+    } catch {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "error"
+        );
+    
+    }
+    
 }
 
 sub SearchTemplate {
@@ -207,11 +568,11 @@ sub SearchTemplate {
     );
     
     my @SearchResults;
-    
     try {
+        
         @SearchResults = $e->search_template(
             'index' => $Types.'_'.$Indexes,
-            'type'  => 'doc',
+            'type'  => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
             'body'  => {
                 %{$Param{Data}}
             }
@@ -219,18 +580,22 @@ sub SearchTemplate {
     } catch {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "error"
-        );
-    
+            Message  => "error $_"
+      );
+     
     }
 
-    
+
     my %SearchResultsHash;
     
     if(@SearchResults){
         %SearchResultsHash = %{ $SearchResults[0] };    
     }
 
+    if($Self->{Config}->{ElasticSearchVersion} ne 'Older' && $SearchResultsHash{hits}{total}->{value}){
+      $SearchResultsHash{hits}{total} = $SearchResultsHash{hits}{total}->{value}
+    }
+    
     return %SearchResultsHash;
 }
 
@@ -301,7 +666,7 @@ sub DeleteByQuery {
     
     $DeletedInformation = $e->delete_by_query(
             'index' => $Types.'_'.$Indexes,
-            'type'  => 'doc',
+            'type'  => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
             'body'  => {
                 %{$Param{Body}}
             }
@@ -379,7 +744,7 @@ sub Index {
 #    try {
     $Result = $e->index(
         'index'    => $Type.'_'.$Index,
-        'type'     => 'doc',
+        'type'     => $Self->{Config}->{ElasticSearchVersion} eq 'Older' ? 'doc' : '',
         'id'       => $Id,
         'body'     => {
             %{$Body}
@@ -435,6 +800,9 @@ sub IndexCreate {
 	
     # Connect
     my @Nodes = @{$Self->{Config}->{Nodes}};
+
+    use Data::Dumper;
+    print 'Nodes '.Dumper(@Nodes);
     
     my $e = Search::Elasticsearch->new(
         nodes => @Nodes,
@@ -471,6 +839,9 @@ sub IndexCreate {
 		);
 		return;
 	}
+  if($Self->{Config}->{ElasticSearchVersion} ne 'Older'){
+    $Body->{mappings} = $Body->{mappings}->{doc};
+  }
 
 	my $Result;
 	my $Error;

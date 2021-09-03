@@ -114,6 +114,12 @@ sub PrepareRequest {
     # WORKAROUND: this way we can set the end of URI with pipeline=attachment without modifying OTRS REST
     $Param{Data}->{pipeline} = 'attachment' ;
     $Param{Data}->{Index} = $Index;
+    if($Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart')->{ElasticSearchVersion} eq 'Older'){
+      $Param{Data}->{doc} = 'doc';
+    }
+    else {
+      $Param{Data}->{doc} = '_doc';
+    }
 
     return {
         Success => 1,

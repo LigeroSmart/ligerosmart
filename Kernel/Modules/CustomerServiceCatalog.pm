@@ -279,14 +279,15 @@ sub Run {
             Types   => 'portallinks',
             Data    => \%HashQuery,
 	    );
+    
 		my %ViewHash;
-		my $AllHits = $SearchResultsHash{hits}{total};
+		my $AllHits = $SearchResultsHash{hits}{total}; 
 		my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 		my $SplitTimes = $ConfigObject->Get("ServiceCatalog::SplitFirstLvl") || 0;
 
 		
     my $count = 0;
-
+    
  		foreach my $document (@{$SearchResultsHash{hits}->{hits}}){
 
 			my $TruncateSizeDesc = $ConfigObject->Get("ServiceCatalog::CharLimiteSizeDescription") || 100;
@@ -361,6 +362,8 @@ sub Run {
 
       $count++; 	
 		}
+
+    
 
   if ($Self->{isPublicInterface}) {
       $LayoutObject->Block( Name => "NumberOfRows", 

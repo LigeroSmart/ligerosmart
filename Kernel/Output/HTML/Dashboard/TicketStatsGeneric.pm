@@ -131,51 +131,106 @@ sub Run {
         my $TimeStart = $DateTimeObject->Format( Format => '%Y-%m-%d 00:00:00' );
         my $TimeStop  = $DateTimeObject->Format( Format => '%Y-%m-%d 23:59:59' );
 
-        my $CountCreated = $TicketObject->TicketSearch(
+        my $ESActive = $Kernel::OM->Get('Kernel::Config')->Get('Elasticsearch::Active') || 0;
 
-            # cache search result
-            CacheTTL => $CacheTTL,
+        if ( !$ESActive ) {
+          my $CountCreated = $TicketObject->TicketSearch(
 
-            # tickets with create time after ... (ticket newer than this date) (optional)
-            TicketCreateTimeNewerDate => $TimeStart,
+              # cache search result
+              CacheTTL => $CacheTTL,
 
-            # tickets with created time before ... (ticket older than this date) (optional)
-            TicketCreateTimeOlderDate => $TimeStop,
+              # tickets with create time after ... (ticket newer than this date) (optional)
+              TicketCreateTimeNewerDate => $TimeStart,
 
-            CustomerID => $Param{Data}->{UserCustomerID},
-            Result     => 'COUNT',
+              # tickets with created time before ... (ticket older than this date) (optional)
+              TicketCreateTimeOlderDate => $TimeStop,
 
-            # search with user permissions
-            Permission => $Self->{Config}->{Permission} || 'ro',
-            UserID     => $Self->{UserID},
-        ) || 0;
-        if ( $CountCreated && $CountCreated > $Max ) {
-            $Max = $CountCreated;
+              CustomerID => $Param{Data}->{UserCustomerID},
+              Result     => 'COUNT',
+
+              # search with user permissions
+              Permission => $Self->{Config}->{Permission} || 'ro',
+              UserID     => $Self->{UserID},
+          ) || 0;
+          if ( $CountCreated && $CountCreated > $Max ) {
+              $Max = $CountCreated;
+          }
+          push @TicketsCreated, $CountCreated;
+
+          my $CountClosed = $TicketObject->TicketSearch(
+
+              # cache search result
+              CacheTTL => $CacheTTL,
+
+              # tickets with create time after ... (ticket newer than this date) (optional)
+              TicketCloseTimeNewerDate => $TimeStart,
+
+              # tickets with created time before ... (ticket older than this date) (optional)
+              TicketCloseTimeOlderDate => $TimeStop,
+
+              CustomerID => $Param{Data}->{UserCustomerID},
+              Result     => 'COUNT',
+
+              # search with user permissions
+              Permission => $Self->{Config}->{Permission} || 'ro',
+              UserID     => $Self->{UserID},
+          ) || 0;
+          if ( $CountClosed && $CountClosed > $Max ) {
+              $Max = $CountClosed;
+          }
+          push @TicketsClosed, $CountClosed;
         }
-        push @TicketsCreated, $CountCreated;
+        else {
+          my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
 
-        my $CountClosed = $TicketObject->TicketSearch(
+          my $CountCreated = $LigeroSmartObject->TicketSearch(
+              # cache search result
+              CacheTTL => $CacheTTL,
 
-            # cache search result
-            CacheTTL => $CacheTTL,
+              # tickets with create time after ... (ticket newer than this date) (optional)
+              TicketCreateTimeNewerDate => $TimeStart,
 
-            # tickets with create time after ... (ticket newer than this date) (optional)
-            TicketCloseTimeNewerDate => $TimeStart,
+              # tickets with created time before ... (ticket older than this date) (optional)
+              TicketCreateTimeOlderDate => $TimeStop,
 
-            # tickets with created time before ... (ticket older than this date) (optional)
-            TicketCloseTimeOlderDate => $TimeStop,
+              CustomerID => $Param{Data}->{UserCustomerID},
+              Result     => 'COUNT',
 
-            CustomerID => $Param{Data}->{UserCustomerID},
-            Result     => 'COUNT',
+              # search with user permissions
+              Permission => $Self->{Config}->{Permission} || 'ro',
+              UserID     => $Self->{UserID},
+              JustES => $Self->{Config}->{JustES}
+          ) || 0;
 
-            # search with user permissions
-            Permission => $Self->{Config}->{Permission} || 'ro',
-            UserID     => $Self->{UserID},
-        ) || 0;
-        if ( $CountClosed && $CountClosed > $Max ) {
-            $Max = $CountClosed;
+          if ( $CountCreated && $CountCreated > $Max ) {
+              $Max = $CountCreated;
+          }
+          push @TicketsCreated, $CountCreated;
+
+          my $CountClosed = $LigeroSmartObject->TicketSearch(
+              # cache search result
+              CacheTTL => $CacheTTL,
+
+              # tickets with create time after ... (ticket newer than this date) (optional)
+              TicketCloseTimeNewerDate => $TimeStart,
+
+              # tickets with created time before ... (ticket older than this date) (optional)
+              TicketCloseTimeOlderDate => $TimeStop,
+
+              CustomerID => $Param{Data}->{UserCustomerID},
+              Result     => 'COUNT',
+
+              # search with user permissions
+              Permission => $Self->{Config}->{Permission} || 'ro',
+              UserID     => $Self->{UserID},
+              JustES => $Self->{Config}->{JustES}
+          ) || 0;
+          if ( $CountClosed && $CountClosed > $Max ) {
+              $Max = $CountClosed;
+          }
+          push @TicketsClosed, $CountClosed;
         }
-        push @TicketsClosed, $CountClosed;
+
     }
 
     unshift(

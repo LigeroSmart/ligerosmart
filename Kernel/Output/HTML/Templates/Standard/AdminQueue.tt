@@ -448,3 +448,15 @@
     <div class="Clear"></div>
 </div>
 [% RenderBlockEnd("Overview") %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">
+  const previous = $('#GroupID').val();
+
+  $('#EntityUpdate').on("submit",(e) => {
+    if(previous !== $('#GroupID').val()){
+
+      alert("[% Translate("When a group is changed in a queue, we recomend reindex the Elastic Search.") | html %]");
+    }
+  })
+</script>
+[% END %]
