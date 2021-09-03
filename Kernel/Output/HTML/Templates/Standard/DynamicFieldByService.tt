@@ -329,7 +329,7 @@
 
                 <label for="DefaultValue">[% Translate("Default value") | html %]:</label>
                 <div class="Field">
-                    <input type="text" name="DefaultValue" id="DefaultValue" value="" class="W50pc" />
+                    <textarea type="text" name="DefaultValue" id="DefaultValue" value="" class="W50pc" ></textarea>
                 </div>
                 <div class="Clear"></div>
             </fieldset>
