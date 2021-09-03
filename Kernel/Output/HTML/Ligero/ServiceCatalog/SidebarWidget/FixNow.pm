@@ -63,8 +63,8 @@ sub Run {
 	
 	my $Output='';
 
-        return '' if (ref(@{$Links->{FAQ}->{FixNow}->{Source}}) ne 'ARRAY');
-	my @FaqIDs = keys @{$Links->{FAQ}->{FixNow}->{Source}} || return '';
+  return '' if (ref($Links->{FAQ}->{FixNow}->{Source}) ne 'HASH');
+	my @FaqIDs = keys %{$Links->{FAQ}->{FixNow}->{Source}} || return '';
 	foreach my $FaqID (@FaqIDs){
 		my %FAQ = $FAQObject->FAQGet(
 			ItemID => $FaqID,
