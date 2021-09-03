@@ -324,10 +324,10 @@ Requester:
           Controller: /:Index/:doc/:TicketID
         LigeroTicketIndexer:
           Command: PUT
-          Controller: /:Index/doc/:TicketID?pipeline=:pipeline
+          Controller: /:Index/:doc/:TicketID?pipeline=:pipeline
         LigeroArticleIndexer:
           Command: PUT
-          Controller: /article/doc/:ArticleID
+          Controller: /article/:doc/:ArticleID
         LigeroArticleDelete:
           Command: POST
           Controller: /article/_delete_by_query?pretty

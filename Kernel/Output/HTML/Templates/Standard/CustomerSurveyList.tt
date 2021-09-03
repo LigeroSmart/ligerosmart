@@ -1,0 +1,69 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+<!-- TODO move before the merge the JS in the JS file -->
+## nofilter(TidyAll::Plugin::OTRS::TT::ScriptUsage)
+
+<div id="MainBox" class="TicketView ARIARoleMain [% Config("Ticket::Frontend::CustomerTicketOverviewSortable") %] ">
+
+    <div class="ActionRow">
+        <ul class="Filter Tabs">
+            <li>
+                <a class="[% Data.ClassA | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];Filter=[% Data.Filter | uri %];SortBy=[% Data.SortBy | uri %];OrderBy=[% Data.OrderBy | uri %][% Data.CustomerIDs %];">
+                    [% Translate(Data.Name) | html %] ([% Data.Count | html %])
+                </a>
+            </li>
+        [% IF Data.CustomerIDStrg %]
+            <li>
+                [% Data.CustomerIDStrg %]
+            </li>
+        [% END %]
+        </ul>
+        <div class="Tabs Pagination">
+            [% Data.SiteNavBar %]
+        </div>
+        <div class="Clear"></div>
+    </div>
+    <div class="Content">
+        <table class="Overview">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];SortBy=Ticket;OrderBy=[% Data.OrderBy | uri %];Filter=[% Data.Filter | uri %]">
+                            [% Translate("Ticket Number") | html %]
+                        </a>
+                    </th>
+                    <th class="Title [% Data.TitleSort | uri %]">
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];SortBy=Title;OrderBy=[% Data.OrderBy | uri %];Filter=[% Data.Filter | uri %]">
+                            [% Translate("Title") | html %]
+                        </a>
+                    </th>
+                    <th class="State [% Data.StateSort | uri %]">
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];SortBy=State;OrderBy=[% Data.OrderBy | uri %];Filter=[% Data.Filter | uri %]">
+                            [% Translate("Send Time") | html %]
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+[% RenderBlockStart("Record") %]
+                <tr class="MasterAction">
+                    <td class="Ticket">
+                        <a href="/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=[% Data.PublicSurveyKey | uri %]" target="_blank" class="MasterActionLink">[% Data.TicketNumber | html %]</a>
+                    </td>
+                    <td class="Title">
+                          [% Data.Title | html %]
+                    </td>
+                    <td class="SendTime">
+                      [% Data.SendTime | Localize("Date") | html %]
+                    </td>
+                </tr>
+[% RenderBlockEnd("Record") %]
+            </tbody>
+        </table>
+    </div>
+</div>
