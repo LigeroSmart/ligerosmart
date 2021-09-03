@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="CustomerFrontend::Navigation###CustomerServiceCatalog###004-SurveyCustomerList" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">View all Open Surveys</Item>
+                        <Item Key="Name" Translatable="1">Surveys</Item>
+                        <Item Key="Link">Action=CustomerSurveyList</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Surveys</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">s</Item>
+                        <Item Key="Prio">250</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerSurveyList" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Overview of surveys oppened.</Item>
+                    <Item Key="NavBarName">Surveys</Item>
+                    <Item Key="Title" Translatable="1">Overview</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+</otrs_config>
