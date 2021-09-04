@@ -224,6 +224,13 @@ sub RepositoryList {
         }
     }
 
+    # embbed list
+    my @EmbbedItems = ( 
+        [ Name => 'AccountedTime', Version => '6.0.3']
+    );
+
+    push (@Data, @EmbbedItems);
+
     # set cache
     $CacheObject->Set(
         Type  => 'RepositoryList',
