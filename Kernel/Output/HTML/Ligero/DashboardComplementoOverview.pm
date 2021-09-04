@@ -86,7 +86,6 @@ ENDJS
     # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $LocalConfig = $ConfigObject->Get($Self->{Config}->{ConfigKey});
     my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');

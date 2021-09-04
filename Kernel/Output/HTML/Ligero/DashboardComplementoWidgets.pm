@@ -80,7 +80,6 @@ ENDJS
     my $CacheKey=$Self->{Name}."-".$Self->{UserID}."-";
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
     my $QueueObject = $Kernel::OM->Get('Kernel::System::Queue');
     my $width=100/$Self->{Config}->{Widgets};
