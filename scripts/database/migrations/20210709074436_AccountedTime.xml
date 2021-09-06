@@ -1,0 +1,16 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::AccountedTime2')->CodeInstall();
+    ]]></CodeInstall>
+    <CodeUninstall Type="pre"><![CDATA[
+        for my $FieldName (qw(TaskStartTime TaskStopTime AccreditTime TaskType)){
+        my $DynamicFieldSys = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+            Name => $FieldName,
+        );
+        $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldDelete(
+            ID      => $DynamicFieldSys->{ID},
+            UserID  => 1,
+        );
+        }
+    ]]></CodeUninstall>
+</Migrations>

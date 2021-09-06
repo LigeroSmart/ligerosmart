@@ -3,8 +3,8 @@
 # LigeroSmart 2021
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::Modules::CustomerTicketSearch;
@@ -88,11 +88,11 @@ sub Run {
     my %GetParam;
 
     # get config data
-    my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
+    my $StartHit    = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
     my $SearchLimit = $ConfigObject->Get('Ticket::CustomerTicketSearch::SearchLimit')
         || 200;
     my $SearchPageShown = $ConfigObject->Get('Ticket::CustomerTicketSearch::SearchPageShown') || 40;
-    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
+    my $SortBy          = $ParamObject->GetParam( Param => 'SortBy' )
         || $ConfigObject->Get('Ticket::CustomerTicketSearch::SortBy::Default')
         || 'Age';
     my $CurrentOrder = $ParamObject->GetParam( Param => 'Order' )
@@ -657,25 +657,12 @@ sub Run {
                     Age   => $Data{Age},
                     Space => ' '
                 );
-				my $DynamicSolutionTimeDestinationDateID = $ConfigObject->Get("Ticket::Complemento::AccountedTime::DynamicFieldSolutionTimeDestinationDate");
-				
-			    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			        ID   => $DynamicSolutionTimeDestinationDateID,             # ID or Name must be provided
-			    );
-				my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-				my $Value = $BackendObject->ValueGet(
-			        DynamicFieldConfig => $DynamicFieldConfig,
-					ObjectID           => $TicketID,  
-				);
-				$Data{SolutionTimeDestinationDate} = $Value if(!$Data{SolutionTimeDestinationDate}); 
- 
-				$Data{Created} =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g;
-				$Data{Closed}  =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g;
-				$Data{SolutionTimeDestinationDate}   =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g;
+
                 # get whole article (if configured!)
                 if ( $Config->{SearchArticleCSVTree} && $GetParam{ResultForm} eq 'CSV' ) {
                     my @Articles = $ArticleObject->ArticleList(
                         TicketID             => $TicketID,
+                        OnlyFirst            => 1,
                         IsVisibleForCustomer => 1,
                     );
                     if (@Articles) {
@@ -886,8 +873,8 @@ sub Run {
                     %Data = ( %Ticket, %Article );
                 }
 
-   				 my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $Data{TicketID});
-				$Data{AccountedTime} = $AccountedTime || 0;
+                my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $Data{TicketID});
+                $Data{AccountedTime} = $AccountedTime || 0;
 
              # customer info
                 my %CustomerData;
@@ -924,6 +911,7 @@ sub Run {
                     'DateFormat',
                 );
 
+                my $Customer = "$Data{CustomerID} $Data{CustomerName}";
 
                 my $Customer = "$Data{CustomerID} $Data{CustomerName}";	
 				#Formata a data 
@@ -1284,8 +1272,8 @@ sub Run {
                         %Data = ( %Ticket, %Article );
                     }
 
-		#ADIÇÂO DO CAMPO DO ACCOUNTED TIME 
-		 my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $TicketID);
+                    my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $TicketID);
+
                     # customer info
                     my %CustomerData;
                     if ( $Data{CustomerUserID} ) {
@@ -1325,22 +1313,22 @@ sub Run {
                     if ( $Data{CustomerName} ) {
                         $Data{CustomerName} = '(' . $Data{CustomerName} . ')';
                     }
-					my $DynamicSolutionTimeDestinationDateID = $ConfigObject->Get("Ticket::Complemento::AccountedTime::DynamicFieldSolutionTimeDestinationDate");
-					
-				    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-				        ID   => $DynamicSolutionTimeDestinationDateID,             # ID or Name must be provided
-				    );
-					my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-					my $Value = $BackendObject->ValueGet(
-				        DynamicFieldConfig => $DynamicFieldConfig,
-						ObjectID           => $TicketID,  
-					);
-					$Ticket{SolutionTimeDestinationDate} = $Value if(!$Ticket{SolutionTimeDestinationDate}); 
- 
-					#COMPLEMENTO 
-					#Apresenta a informação do ACC Time
+			my $DynamicSolutionTimeDestinationDateID = $ConfigObject->Get("Ticket::Complemento::AccountedTime::DynamicFieldSolutionTimeDestinationDate");
+			
+		    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+		        ID   => $DynamicSolutionTimeDestinationDateID,             # ID or Name must be provided
+		    );
+                    my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+                    my $Value = $BackendObject->ValueGet(
+                        DynamicFieldConfig => $DynamicFieldConfig,
+                    	ObjectID           => $TicketID,  
+                    );
+                    $Data{SolutionTimeDestinationDate} = $Value if(!$Ticket{SolutionTimeDestinationDate}); 
+
+                    #COMPLEMENTO 
+                    #Apresenta a informação do ACC Time
                     # add blocks to template
-                    $Ticket{SolutionTimeDestinationDate} =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g;
+                    $Data{SolutionTimeDestinationDate} =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g;
                     $LayoutObject->Block(
                         Name => 'Record',
                         Data => {
@@ -1804,25 +1792,17 @@ sub MaskForm {
     my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 
     my %ServiceList;
-    #if ( $ConfigObject->Get('Customer::TicketSearch::AllServices') ) {
-    #    %ServiceList = $ServiceObject->ServiceList(
-    #        UserID => $Self->{UserID},
-    #        ),
-    #}
-    #else {
-    #    %ServiceList = $ServiceObject->CustomerUserServiceMemberList(
-    #        CustomerUserLogin => $Self->{UserID},
-    #        Result            => 'HASH',
-    #        ),
-    #}
-    
-    $Param{QueueID} = 1;
-
-    %ServiceList = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
-      %Param,
-      Action => $Self->{Action},
-      CustomerUserID => $Self->{UserID},
-    );
+    if ( $ConfigObject->Get('Customer::TicketSearch::AllServices') ) {
+        %ServiceList = $ServiceObject->ServiceList(
+            UserID => $Self->{UserID},
+        );
+    }
+    else {
+        %ServiceList = $ServiceObject->CustomerUserServiceMemberList(
+            CustomerUserLogin => $Self->{UserID},
+            Result            => 'HASH',
+        );
+    }
 
     $Param{ServicesStrg} = $LayoutObject->BuildSelection(
         Data       => \%ServiceList,
@@ -2100,17 +2080,6 @@ sub MaskForm {
                 },
             );
         }
-    }
-
-    if (
-        $ConfigObject->Get('Ticket::StorageModule') eq
-        'Kernel::System::Ticket::ArticleStorageDB'
-        )
-    {
-        $LayoutObject->Block(
-            Name => 'Attachment',
-            Data => \%Param
-        );
     }
 
     # html search mask output
