@@ -228,8 +228,6 @@ ENDJS
     my %Summary;
     $Summary{ $Self->{Filter} . '::Selected' } = 'Selected';
 
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
     # Generate the output block for the filter bar.
     $LayoutObject->Block(
         Name => 'ContentSmallUserOnlineFilter',

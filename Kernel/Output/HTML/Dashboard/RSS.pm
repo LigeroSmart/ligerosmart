@@ -74,9 +74,6 @@ ENDJS
     # Default URL
     my $FeedURL = $Self->{Config}->{URL};
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
     my $Language = $LayoutObject->{UserLanguage};
 
     # Check if URL for UserLanguage is available
