@@ -67,8 +67,7 @@ sub Run {
 			my $DateTimeInit = $Kernel::OM->Create(
 				'Kernel::System::DateTime',
 				ObjectParams => {
-					String   => $ValueIni,
-					TimeZone => 'UTC',        # optional, defaults to setting of SysConfig OTRSTimeZone
+					String   => $ValueIni
 				}
 			);
 			$DateTimeInit->ToTimeZone(TimeZone => $Self->{UserTimeZone});
@@ -78,8 +77,7 @@ sub Run {
 			my $DateTimeEnd = $Kernel::OM->Create(
 				'Kernel::System::DateTime',
 				ObjectParams => {
-					String   => $ValueEnd,
-					TimeZone => 'UTC',        # optional, defaults to setting of SysConfig OTRSTimeZone
+					String   => $ValueEnd
 				}
 			);
 			$DateTimeEnd->ToTimeZone(TimeZone => $Self->{UserTimeZone});
