@@ -59,7 +59,7 @@
 		[% RenderBlockStart("LayoutActivity") %]
 		<div class="Need">
 		  <a target="_self"  href="[% Env("Baselink") %]Action=PublicServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
-		  [%Data.LayoutServiceName | html %]
+		  [%Data.LayoutServiceName %]
 		  </a>
 		<br/><span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
 		</div> 
@@ -68,7 +68,7 @@
 		[% RenderBlockStart("LayoutActivityUrl") %]
 		<div class="Need">
 		  <a target="[% Data.UrlTarget | html %]"  href="[% Data.Url | html %]">
-		  [%Data.LayoutServiceName | html %]
+		  [%Data.LayoutServiceName %]
 		  </a>
 		<br/><span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
 		</div> 
@@ -77,7 +77,7 @@
 		[% RenderBlockStart("LayoutServiceArticle") %]
 		<div class="Need">
 		  <a target="_self"  href="[% Data.LayoutServiceLink| html %]">
-		  [%Data.LayoutServiceName | html %]
+		  [%Data.LayoutServiceName %]
 		  </a>
 		<br/><span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
 		</div> 
@@ -99,7 +99,7 @@
 			    <img src="[%Data.LayoutServiceLink | html %]" >
 		    </div>
 			<div class="desc">
-				<div>[%Data.LayoutServiceName | html %]</div>
+				<div>[%Data.LayoutServiceName %]</div>
 			</div>
 		</div>
 		</a>
@@ -107,13 +107,13 @@
 		<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=PublicServiceCatalog&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
 		<div class="Category primary" style="background-color:[% Data.Color %]">
 			<div class="desc" style="top: 0px;" >
-				<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName | html %]</div>
+				<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName %]</div>
 			</div>
 			<div class="img">
 				<img style="top: 60px;" src="[%Data.LayoutServiceLink | html %]" >
 			</div>
 			<div class="desc" style="bottom: -20px;">
-				<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription | html %]</div>
+				<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription %]</div>
 			</div>
 		</div>
 		</a>
@@ -122,10 +122,10 @@
 		<div class="Category secondary" style="background-color: transparent; border: 2px solid #2e91dd;">
 			<div>
 				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";><img src="[%Data.LayoutServiceLink | html %]" ></div>
-				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
 			</div>
 			<div>
-				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
 			</div>
 		</div>
 		</a>
@@ -134,10 +134,10 @@
 		<div class="Category tertiary" style="background-color: transparent; border: 2px solid #2e91dd;">
 			<div>
 				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";></div>
-				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
 			</div>
 			<div>
-				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
 			</div>
 		</div>
 		</a>
@@ -153,7 +153,7 @@
 			    <img src="[%Data.LayoutServiceLink | html %]" >
 		    </div>
 			<div class="desc">
-				<div>[%Data.LayoutServiceName | html %]</div>
+				<div>[%Data.LayoutServiceName %]</div>
 			</div>
 		</div>
 		</a>
@@ -161,13 +161,13 @@
 		<a target="[% Data.UrlTarget | html %]" class="CategoryLink"  href="[% Data.Url | html %]">
 		<div class="Category primary" style="background-color:[% Data.Color %]">
 			<div class="desc" style="top: 0px;" >
-				<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName | html %]</div>
+				<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName %]</div>
 			</div>
 			<div class="img">
 				<img style="top: 60px;" src="[%Data.LayoutServiceLink | html %]" >
 			</div>
 			<div class="desc" style="bottom: -20px;">
-				<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription | html %]</div>
+				<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription %]</div>
 			</div>
 		</div>
 		</a>
@@ -176,10 +176,10 @@
 		<div class="Category secondary" style="background-color: transparent; border: 2px solid #2e91dd;">
 			<div>
 				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";><img src="[%Data.LayoutServiceLink | html %]" ></div>
-				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
 			</div>
 			<div>
-				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
 			</div>
 		</div>
 		</a>
@@ -188,10 +188,10 @@
 		<div class="Category tertiary" style="background-color: transparent; border: 2px solid #2e91dd;">
 			<div>
 				<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";></div>
-				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName | html %]</div>
+				<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
 			</div>
 			<div>
-				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription | html %]</div>
+				<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
 			</div>
 		</div>
 		</a>
@@ -231,7 +231,7 @@
                             <img src="[%Data.LayoutServiceLink | html %]" >
                     </div>
                         <div class="desc">
-                                <div>[%Data.LayoutServiceName | html %]</div>
+                                <div>[%Data.LayoutServiceName %]</div>
                         </div>
                 </div>
                 </a>
