@@ -41,6 +41,9 @@ sub Load {
     # The password of database user. You also can use bin/otrs.Console.pl Maint::Database::PasswordCrypt
     # for crypted passwords
     $Self->{DatabasePw} = defined($ENV{APP_DatabasePw}) ? $ENV{APP_DatabasePw} : '';
+    
+    # system time zone
+    $Self->{OTRSTimeZone} = defined($ENV{TZ}) ? $ENV{TZ} : 'UTC';
 
     my $dbType = defined($ENV{APP_DatabaseType}) ? $ENV{APP_DatabaseType} : 'mysql';
 
