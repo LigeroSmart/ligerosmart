@@ -7,6 +7,16 @@
             <Array></Array>
         </Value>
     </Setting>
+    <Setting Name="LigeroSmart###ElasticSearchVersion" Required="0" Valid="1" ConfigLevel="100">
+        <Description Translatable="1">Elasticsearch Nodes</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Older">
+                <Item ValueType="Option" Value="Older" Translatable="1">Older</Item>
+                <Item ValueType="Option" Value="7" Translatable="1">7.*</Item>
+            </Item>
+        </Value>
+    </Setting>
 	<Setting Name="LigeroSmart::LigeroSearch" Required="1" Valid="1" ConfigLevel="100">>
         <Description Translatable="1">Ligero Smart Search.</Description>
         <Navigation>Core::Search::Templates</Navigation>
