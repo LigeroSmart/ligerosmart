@@ -20,9 +20,7 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    $Self->{Translation} = {
-        'Surveys' => 'Pesquisas',
-    };
+    $Self->{Translation}->{'My Surveys'} = 'Minhas Pesquisas';
 
     # $$STOP$$
     return;
