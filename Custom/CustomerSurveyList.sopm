@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <Name>CustomerSurveyList</Name>
+    <Version>6.0.1</Version>
+    <Vendor>LigeroSmart</Vendor>
+    <URL>https://www.ligerosmart.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+    <Description Lang="en">
+    </Description>
+    <IntroInstall Lang="en" Title="Installation Information" Type="post">
+    </IntroInstall>    
+    <Framework>6.x.x</Framework>
+    <Filelist>
+        <File Location="Custom/CustomerSurveyList.sopm" Permission="644"></File>
+        <File Location="Kernel/Config/Files/XML/LigeroCustomerSurveyList.xml" Permission="644"></File>
+        <File Location="Kernel/Language/pt_BR_LigeroSurveyCustomerList.pm" Permission="644"></File>
+        <File Location="Kernel/Modules/CustomerSurveyList.pm" Permission="644"></File>
+        <File Location="Kernel/Output/HTML/Templates/Standard/CustomerSurveyList.tt" Permission="644"></File>
+    </Filelist>
+</otrs_package>
