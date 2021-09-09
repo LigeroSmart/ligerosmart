@@ -47,6 +47,9 @@ sub Load {
 
     my $dbType = defined($ENV{APP_DatabaseType}) ? $ENV{APP_DatabaseType} : 'mysql';
 
+    # system time zone
+    $Self->{OTRSTimeZone} = defined($ENV{TZ}) ? $ENV{TZ} : 'UTC';
+
     # The database DSN for MySQL ==> more: "perldoc DBD::mysql"
     if($dbType eq 'mysql') {
         $Self->{'DatabaseDSN'} = "DBI:mysql:database=$Self->{Database};host=$Self->{DatabaseHost}";
