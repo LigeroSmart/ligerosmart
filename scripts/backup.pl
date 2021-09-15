@@ -243,7 +243,7 @@ if ( $DB =~ m/mysql/i ) {
     }
     if (
         !system(
-            "( $DBDump -u $DatabaseUser $DatabasePw -h $DatabaseHost $Database || touch $ErrorIndicationFileName ) | $CompressCMD > $Directory/DatabaseBackup.sql.$CompressEXT"
+            "( $DBDump --no-tablespaces -u $DatabaseUser $DatabasePw -h $DatabaseHost $Database || touch $ErrorIndicationFileName ) | $CompressCMD > $Directory/DatabaseBackup.sql.$CompressEXT"
         )
         && !-f $ErrorIndicationFileName
         )
