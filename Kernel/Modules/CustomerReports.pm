@@ -824,14 +824,18 @@ sub ShowTicketStatus {
     my %Article;
 
     # get whole article index
-    my @ArticleIDs = $TicketObject->ArticleIndex( TicketID => $Param{TicketID} );
+    my $ArticleObject        = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+
+    my @ArticleIDs = $ArticleObject->ArticleList( TicketID => $Param{TicketID}, UserID   => 1 );
 
     # get article data
     if (@ArticleIDs) {
         my %LastNonInternalArticle;
 
         ARTICLEID:
-        for my $ArticleID ( reverse @ArticleIDs ) {
+        for my $ArticleObj ( reverse @ArticleIDs ) {
+            my $ArticleID = $ArticleObj->{ArticleID};
+            
             my %CurrentArticle = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle( ArticleID => $ArticleID, TicketID => $Param{TicketID} )->ArticleGet( 
                 ArticleID     => $ArticleID,
                 TicketID     => $Param{TicketID},
