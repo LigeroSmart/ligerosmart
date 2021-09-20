@@ -148,7 +148,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td valign="top" class="bodyContent">
-                                                        <h1 style="background: #333333; border-bottom: 10px solid #FF9922; padding: 20px; line-height: 130%; color: #999; margin: 0px; font-size: 20px;">
+                                                        <h1 style="background: #492d77; border-bottom: 10px solid #FF9922; padding: 20px; line-height: 130%; color: #fff; margin: 0px; font-size: 20px;">
                                                             [% Data.Subject | html %]
                                                         </h1>
                                                     </td>

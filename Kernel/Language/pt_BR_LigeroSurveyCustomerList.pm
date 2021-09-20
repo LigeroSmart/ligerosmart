@@ -21,6 +21,7 @@ sub Data {
     my $Self = shift;
 
     $Self->{Translation}->{'My Surveys'} = 'Minhas Pesquisas';
+    $Self->{Translation}->{'Surveys'} = 'Minhas Pesquisas';
 
     # $$STOP$$
     return;
