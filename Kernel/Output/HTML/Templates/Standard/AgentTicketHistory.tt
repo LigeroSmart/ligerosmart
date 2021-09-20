@@ -75,7 +75,7 @@
                             </td>
                             <td class="Center">
                             [% IF Data.ArticleID != '0' %]
-                                <a class="LinkZoomView AsBlock" href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]"><i class="fa fa-search"></i></a>
+                                <a class="LinkZoomView AsBlock" href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %]#Article[% Data.ArticleID | uri %]"><i class="fa fa-search"></i></a>
                             [% END %]
                             </td>
                         </tr>
