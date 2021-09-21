@@ -11,13 +11,17 @@ function asyncDashboardLoad(dashboardName, options={}) {
 	let dashboardContent = $(`#Dashboard${dashboardName}`)
 	let dashboardPath = Core.Config.Get('Baselink') + window.location.search.replace(/^[?]/,'') + ';Subaction=Element;Name=' + dashboardName
 	dashboardBox.addClass('Loading');
-	Core.AJAX.ContentUpdate(dashboardContent, dashboardPath, () => {
-		dashboardBox.removeClass('Loading')
-		if(options.callDefer) {
-			$.each(window.deferAfterjQueryLoaded, function(index, fn) {
-				fn();
-			});
+	Core.AJAX.ContentUpdate(
+		dashboardContent, 
+		dashboardPath, 
+		() => {
+			dashboardBox.removeClass('Loading')
+			if(options.callDefer) {
+				$.each(window.deferAfterjQueryLoaded, function(index, fn) {
+					fn();
+				});
+			}
 		}
-	});
+	);
 }
 
