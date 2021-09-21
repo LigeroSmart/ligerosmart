@@ -100,12 +100,18 @@ sub PrepareRequest {
 	my $Index = 'ticket_'.$Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
 	$Index .= "_";
 
+    my $IndexLanguage = $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage');
+
 	my %QueuePreferences = $Kernel::OM->Get('Kernel::System::Queue')->QueuePreferencesGet(
                 QueueID => $Param{Data}->{Ticket}->{QueueID},
                 UserID       => '1',
 	);
-	delete $QueuePreferences{Language} if $QueuePreferences{Language} eq '_Default_';
-	$Index .= $QueuePreferences{Language} || $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage') || 'en';
+    
+	if (defined($QueuePreferences{Language}) && $QueuePreferences{Language} ne '_Default_') {
+        $IndexLanguage = $QueuePreferences{Language}
+    }
+
+	$Index .= $IndexLanguage || 'en';
 
 
 	$Index .= "_index";
