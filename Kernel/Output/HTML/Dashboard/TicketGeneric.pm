@@ -622,19 +622,24 @@ sub Run {
 
     $CacheKey .= '-' . $TicketSearch{OrderBy} if defined $TicketSearch{OrderBy};
 
+    my $JSAsyncFilter = '';
+
     # CustomerInformationCenter shows data per CustomerID
     if ( $Param{CustomerID} ) {
         $CacheKey .= '-' . $Param{CustomerID};
+        $JSAsyncFilter = $Param{CustomerID} ? ';CustomerID='.$Param{CustomerID} : '';
     }
 
     # CustomerUserInformationCenter shows data per CustomerUserID
     if ( $Param{CustomerUserID} ) {
         $CacheKey .= '-' . $Param{CustomerUserID};
+        $JSAsyncFilter = $Param{CustomerUserID} ? ';CustomerUserID='.$Param{CustomerUserID} : '';
     }
 
     # Add the additional filter always to the cache key, if a additional filter exists.
     if ( $Self->{AdditionalFilter} ) {
         $CacheKey .= '-' . $Self->{AdditionalFilter};
+        $JSAsyncFilter = $Param{AdditionalFilter} ? ';AdditionalFilter='.$Param{AdditionalFilter} : '';
     }
 
     # get cache object
@@ -644,10 +649,9 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     # Add JS To async Load
     if ($Self->{Config}->{Async} && !$Param{AJAX}){
-        my $filterCustomer = $Param{CustomerID} ? ';CustomerID='.$Param{CustomerID} : '';
         my $JSAsync = <<"ENDJS";
 \$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
-Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}' +  '$filterCustomer', function () {
+Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}' +  '$JSAsyncFilter', function () {
     \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
 });
 ENDJS
