@@ -627,19 +627,19 @@ sub Run {
     # CustomerInformationCenter shows data per CustomerID
     if ( $Param{CustomerID} ) {
         $CacheKey .= '-' . $Param{CustomerID};
-        $JSAsyncFilter .= $Param{CustomerID} ? ';CustomerID='.$Param{CustomerID} : '';
+        $JSAsyncFilter .= ';CustomerID='.$Param{CustomerID};
     }
 
     # CustomerUserInformationCenter shows data per CustomerUserID
     if ( $Param{CustomerUserID} ) {
         $CacheKey .= '-' . $Param{CustomerUserID};
-        $JSAsyncFilter .= $Param{CustomerUserID} ? ';CustomerUserID='.$Param{CustomerUserID} : '';
+        $JSAsyncFilter .= ';CustomerUserID='.$Param{CustomerUserID};
     }
 
     # Add the additional filter always to the cache key, if a additional filter exists.
     if ( $Self->{AdditionalFilter} ) {
         $CacheKey .= '-' . $Self->{AdditionalFilter};
-        $JSAsyncFilter .= $Param{AdditionalFilter} ? ';AdditionalFilter='.$Param{AdditionalFilter} : '';
+        $JSAsyncFilter .= ';AdditionalFilter='.$Param{AdditionalFilter};
     }
 
     # get cache object
