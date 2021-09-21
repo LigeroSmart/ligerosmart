@@ -645,9 +645,14 @@ sub Run {
     # Add JS To async Load
     if ($Self->{Config}->{Async} && !$Param{AJAX}){
         my $JSAsync = <<"ENDJS";
-\$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
-Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + window.location.search.replace(/^[?]/,'') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
-    \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
+document.addEventListener('load', () => {
+    let dashboardName = '$Self->{Name}'
+    let dashboardContent = \$('#Dashboard' + dashboardName)
+    let dashboardBox = \$('#Dashboard' + dashboardName + '-box')
+    let dashboardPath = Core.Config.Get('Baselink') + window.location.search.replace(/^[?]/,'') + ';Subaction=Element;Name=' + dashboardName
+    dashboardBox.addClass('Loading');
+    dashboardContent.html('<center><progress></progress></center>');
+    Core.AJAX.ContentUpdate(dashboardContent, dashboardPath, () => dashboardBox.removeClass('Loading'));
 });
 ENDJS
         $LayoutObject->AddJSOnDocumentComplete(
