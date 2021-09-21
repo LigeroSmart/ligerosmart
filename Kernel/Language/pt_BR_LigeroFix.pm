@@ -20,6 +20,7 @@ sub Data {
     $Self->{Translation}->{'Problems'} = 'Problemas';
     $Self->{Translation}->{'Link to the ticket'} = 'Associar ao ticket';
     $Self->{Translation}->{'Open in a new tab'} = 'Abrir em uma nova aba';
+    $Self->{Translation}->{'Assigned CIs'} = 'CIs associadas';
 
 }
 
