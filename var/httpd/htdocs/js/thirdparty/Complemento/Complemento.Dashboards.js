@@ -10,7 +10,6 @@ function asyncDashboardLoad(dashboardName, options={}) {
 	let dashboardBox = $(`#Dashboard${dashboardName}-box`)
 	let dashboardContent = $(`#Dashboard${dashboardName}`)
 	let dashboardPath = Core.Config.Get('Baselink') + window.location.search.replace(/^[?]/,'') + ';Subaction=Element;Name=' + dashboardName
-	dashboardContent.html('<center><progress></progress><center>')
 	dashboardBox.addClass('Loading');
 	Core.AJAX.ContentUpdate(dashboardContent, dashboardPath, () => {
 		dashboardBox.removeClass('Loading')
