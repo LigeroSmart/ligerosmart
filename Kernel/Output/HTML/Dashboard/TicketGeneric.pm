@@ -622,24 +622,19 @@ sub Run {
 
     $CacheKey .= '-' . $TicketSearch{OrderBy} if defined $TicketSearch{OrderBy};
 
-    my $JSAsyncFilter = '';
-
     # CustomerInformationCenter shows data per CustomerID
     if ( $Param{CustomerID} ) {
         $CacheKey .= '-' . $Param{CustomerID};
-        $JSAsyncFilter .= ';CustomerID='.$Param{CustomerID};
     }
 
     # CustomerUserInformationCenter shows data per CustomerUserID
     if ( $Param{CustomerUserID} ) {
         $CacheKey .= '-' . $Param{CustomerUserID};
-        $JSAsyncFilter .= ';CustomerUserID='.$Param{CustomerUserID};
     }
 
     # Add the additional filter always to the cache key, if a additional filter exists.
     if ( $Self->{AdditionalFilter} ) {
         $CacheKey .= '-' . $Self->{AdditionalFilter};
-        $JSAsyncFilter .= ';AdditionalFilter='.$Param{AdditionalFilter};
     }
 
     # get cache object
@@ -651,7 +646,7 @@ sub Run {
     if ($Self->{Config}->{Async} && !$Param{AJAX}){
         my $JSAsync = <<"ENDJS";
 \$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
-Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}' +  '$JSAsyncFilter', function () {
+Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + window.location.search.replace(/^[?]/,'') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
     \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
 });
 ENDJS
