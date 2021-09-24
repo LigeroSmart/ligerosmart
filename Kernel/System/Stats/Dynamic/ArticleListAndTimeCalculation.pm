@@ -520,11 +520,11 @@ sub GetStatTable {
     my $SQL = "";   
     if(lc $DatabaseType == 'oracle'){
         $SQL = "select t.id, t.tn, t.customer_id, t.title, ts.name, a.id, 
-                a.a_subject, i.inicio,  f.fim, ((f.fim-i.inicio)*24*60) as minutos, ac.time_unit, aco.login ";
+                ad.a_subject, i.inicio,  f.fim, ((f.fim-i.inicio)*24*60) as minutos, ac.time_unit, aco.login ";
     }
     else{
         $SQL = "select t.id, t.tn, t.customer_id, t.title, ts.name, a.id, 
-                a.a_subject, i.inicio,  f.fim, TIME_TO_SEC(TIMEDIFF(f.fim,i.inicio))/60 as minutos, ac.time_unit, aco.login ";
+                ad.a_subject, i.inicio,  f.fim, TIME_TO_SEC(TIMEDIFF(f.fim,i.inicio))/60 as minutos, ac.time_unit, aco.login ";
     }
    
     # COMPLEMENTO: Restrictions
