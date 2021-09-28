@@ -14,3 +14,4 @@ latest-build
 .gitconfig
 *.swp
 .vscode
+.local
