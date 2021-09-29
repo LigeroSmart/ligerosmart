@@ -222,6 +222,11 @@
                         <div class="Clear"></div>
 [% RenderBlockEnd("Password") %]
 [% RenderBlockEnd("Item") %]
+                        <label for="CustomerCompanyIDs">[% Translate("Customer") | html %]:</label>
+                        <div class="Field">
+                            [% Data.CustomerCompanyOptionStrg %]
+                        </div>
+                        <div class="Clear"></div>
                         <div class="Field SpacingTop">
                             [% IF Data.ServiceID != 'NEW' %]
                                 <button class="CallForAction Primary" id="SubmitAndContinue" type="button" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>

@@ -475,6 +475,22 @@ sub _MaskNew {
     $LayoutObject->Block( Name => 'ActionList' );
     $LayoutObject->Block( Name => 'ActionOverview' );
 
+    my %CustomerCompanyList = $Kernel::OM->Get('Kernel::System::CustomerCompany')->CustomerCompanyList(
+        Valid        => 1
+    );
+
+    # generate ServiceOptionStrg
+    $Param{CustomerCompanyOptionStrg} = $LayoutObject->BuildSelection(
+        Data        => \%CustomerCompanyList,
+        Name        => 'CustomerComapnyIDs',
+        SelectedID  => [],
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
+        Max         => 200,
+        Class       => 'Modernize',
+    );
+
     $LayoutObject->Block(
         Name => 'SLAEdit',
         Data => {

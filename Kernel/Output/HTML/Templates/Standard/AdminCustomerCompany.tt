@@ -199,6 +199,7 @@
 [% RenderBlockEnd("PreferencesGenericOptionRequired") %]
                             </div>
                             <div class="Clear"></div>
+                            
 
 [% RenderBlockEnd("PreferencesGenericOption") %]
 
@@ -213,6 +214,16 @@
 [% RenderBlockEnd("DynamicField") %]
 
 [% RenderBlockEnd("PreferencesGeneric") %]
+                            <label for="ServiceIDs">[% Translate("Service") | html %]:</label>
+                            <div class="Field">
+                                [% Data.ServiceOptionStrg %]
+                            </div>
+                            <div class="Clear"></div>
+                            <label for="SlaIDs">[% Translate("SLA") | html %]:</label>
+                            <div class="Field">
+                                [% Data.SlaOptionStrg %]
+                            </div>
+                            <div class="Clear"></div>
                             [% IF  Config(Data.Source).ReadOnly != 1 %]
                             <div class="Field SpacingTop">
                                 [% IF Data.Action == 'Change' %]

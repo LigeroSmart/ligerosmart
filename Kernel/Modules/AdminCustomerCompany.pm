@@ -527,6 +527,7 @@ sub _Edit {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     $LayoutObject->Block(
         Name => 'Overview',
@@ -537,6 +538,44 @@ sub _Edit {
     $LayoutObject->Block(
         Name => 'ActionOverview',
         Data => \%Param,
+    );
+
+    my $ListType = $ConfigObject->Get('Ticket::Frontend::ListType');
+
+    my %ServiceList = $Kernel::OM->Get('Kernel::System::Service')->ServiceList(
+        Valid        => 1,
+        KeepChildren => $ConfigObject->Get('Ticket::Service::KeepChildren') // 0,
+        UserID       => $Self->{UserID},
+    );
+
+    # generate ServiceOptionStrg
+    $Param{ServiceOptionStrg} = $LayoutObject->BuildSelection(
+        Data        => \%ServiceList,
+        Name        => 'ServiceIDs',
+        SelectedID  => [],
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
+        TreeView    => ( $ListType eq 'tree' ) ? 1 : 0,
+        Max         => 200,
+        Class       => 'Modernize',
+    );
+
+    my %SlaList = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
+        Valid        => 1,
+        UserID       => $Self->{UserID},
+    );
+
+    # generate ServiceOptionStrg
+    $Param{SlaOptionStrg} = $LayoutObject->BuildSelection(
+        Data        => \%SlaList,
+        Name        => 'SlaIDs',
+        SelectedID  => [],
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
+        Max         => 200,
+        Class       => 'Modernize',
     );
 
     $LayoutObject->Block(
