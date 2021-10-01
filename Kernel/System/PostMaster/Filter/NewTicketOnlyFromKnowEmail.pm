@@ -83,7 +83,7 @@ sub Run {
     # if there is no customer id found!
     if ( !$CustomerData{UserLogin} ) {
 	# RETURN IF NO CUSTOMER ID
-	$Kernel::OM->Get('Kernel::System::Log')->Log( Priority => 'info', Message => "$_ not in database ". $Param{GetParam}->{SenderEmailAddress} );
+	$Kernel::OM->Get('Kernel::System::Log')->Log( Priority => 'info', Message => $Param{GetParam}->{SenderEmailAddress} . " not in database" );
 
 		# get ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');		
