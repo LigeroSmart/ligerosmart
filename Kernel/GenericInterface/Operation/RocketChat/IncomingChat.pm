@@ -402,6 +402,13 @@ sub Run {
                         Filename    => $message->{file}->{name}
                     };
                     push @Attachments, $aObj;
+                } else {
+                    $Self->{DebuggerObject}->Debug(
+                        Summary => "Error downloading image from Rocket",
+                        Data    => {
+                            Status => $resp->status_line
+                        },
+                    );
                 }
 
                 if ($message->{file}->{type} =~ m/image/ig) {
