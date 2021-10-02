@@ -284,6 +284,16 @@ sub Run {
             },
         };
 
+    } elsif($Param{Data}->{type} eq 'LivechatRoomTransferred'){
+        # Update the ticket that was created by Rocket.Chat
+        my ( $UserID, $UserType ) = $Self->Auth(%Param);
+        my $Update = $Param{Data}->{ChatTransfer} || $Param{Data}->{NewChat};
+        $Self->_TicketUpdate(
+			TicketID         => $MainTicket,
+			Ticket           => $Update,
+			UserID           => $UserID,
+			UserType         => $UserType,
+		);
     } elsif($Param{Data}->{type} eq 'LivechatSession'){
 
         use LWP::UserAgent;
