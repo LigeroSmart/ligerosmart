@@ -1,4 +1,4 @@
-package Kernel::System::CustomerCompanySla;
+package Kernel::System::CustomerCompanySLA;
 
 use strict;
 use warnings;
@@ -101,229 +101,59 @@ sub new {
     return $Self;
 }
 
-=item ServiceList()
-
-return a hash list of services
-
-    my %ServiceList = $ServiceObject->ServiceList(
-        Valid  => 0,   # (optional) default 1 (0|1)
-        UserID => 1,
-    );
-
-=cut
-
-sub ServiceList {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => 'Need UserID!',
-        );
-        return;
-    }
-
-    # check valid param
-    if ( !defined $Param{Valid} ) {
-        $Param{Valid} = 1;
-    }
-
-    # read cache
-    my $CacheKey = 'ServiceList::Valid::' . $Param{Valid};
-
-    if ( $Param{Valid} && defined $Param{KeepChildren} && $Param{KeepChildren} eq '1' ) {
-        $CacheKey .= '::KeepChildren::' . $Param{KeepChildren};
-    }
-# COMPLEMENTO
-    $CacheKey .= "::$Self->{EnvUserLanguage}";
-# EO COMPLEMENTO
-
-    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
-        Type => $Self->{CacheType},
-        Key  => $CacheKey,
-    );
-    return %{$Cache} if ref $Cache eq 'HASH';
-
-    # ask database
-    $Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, name, valid_id FROM service',
-    );
-
-    # fetch the result
-    my %ServiceList;
-    my %ServiceValidList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ServiceList{ $Row[0] }      = $Row[1];
-        $ServiceValidList{ $Row[0] } = $Row[2];
-    }
-
-    if ( !$Param{Valid} ) {
-        $Kernel::OM->Get('Kernel::System::Cache')->Set(
-            Type  => $Self->{CacheType},
-            TTL   => $Self->{CacheTTL},
-            Key   => $CacheKey,
-            Value => \%ServiceList,
-        );
-        return %ServiceList if !$Param{Valid};
-    }
-
-    # get valid ids
-    my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
-
-    # duplicate service list
-    my %ServiceListTmp = %ServiceList;
-
-    # add suffix for correct sorting
-    for my $ServiceID ( sort keys %ServiceListTmp ) {
-        $ServiceListTmp{$ServiceID} .= '::';
-    }
-
-    my %ServiceInvalidList;
-    SERVICEID:
-    for my $ServiceID ( sort { $ServiceListTmp{$a} cmp $ServiceListTmp{$b} } keys %ServiceListTmp )
-    {
-
-        my $Valid = scalar grep { $_ eq $ServiceValidList{$ServiceID} } @ValidIDs;
-
-        next SERVICEID if $Valid;
-
-        $ServiceInvalidList{ $ServiceList{$ServiceID} } = 1;
-        delete $ServiceList{$ServiceID};
-    }
-
-    # delete invalid services and children
-    if ( !defined $Param{KeepChildren} || !$Param{KeepChildren} ) {
-        for my $ServiceID ( sort keys %ServiceList ) {
-
-            INVALIDNAME:
-            for my $InvalidName ( sort keys %ServiceInvalidList ) {
-
-                if ( $ServiceList{$ServiceID} =~ m{ \A \Q$InvalidName\E :: }xms ) {
-                    delete $ServiceList{$ServiceID};
-                    last INVALIDNAME;
-                }
-            }
-        }
-    }
-# COMPLEMENTO
-    # Translate Services
-	for my $ServiceID (keys %ServiceList){
-		$ServiceList{$ServiceID} = $Self->ServiceLookup(ServiceID=>$ServiceID);
-	}
-# EO COMPLEMENTO
-    # set cache
-    $Kernel::OM->Get('Kernel::System::Cache')->Set(
-        Type  => $Self->{CacheType},
-        TTL   => $Self->{CacheTTL},
-        Key   => $CacheKey,
-        Value => \%ServiceList,
-    );
-
-    return %ServiceList;
-}
-
-=item ServiceListGet()
+=item CustomerSLAListGet()
 
 return a list of services with the complete list of attributes for each service
 
-    my $ServiceList = $ServiceObject->ServiceListGet(
-        Valid  => 0,   # (optional) default 1 (0|1)
-        UserID => 1,
+    my $CustomerSLAList = $CustomerSLAObject->CustomerSLAListGet(
+        CustomerID  => 0,   # (optional)
+        SLAID => 1,     # (optional)
     );
 
     returns
 
-    $ServiceList = [
+    $SLAList = [
         {
-            ServiceID  => 1,
-            ParentID   => 0,
-            Name       => 'MyService',
-            NameShort  => 'MyService',
-            ValidID    => 1,
-            Comment    => 'Some Comment'
-            CreateTime => '2011-02-08 15:08:00',
-            ChangeTime => '2011-06-11 17:22:00',
-            CreateBy   => 1,
-            ChangeBy   => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID           => 16,
-            Type             => 'Backend',
-            Criticality      => '3 normal',
-            CurInciStateID   => 1,
-            CurInciState     => 'Operational',
-            CurInciStateType => 'operational',
-# ---
+            CustomerID  => 1,
+            SLAID   => 1,
         },
         {
             ServiceID  => 2,
-            ParentID   => 1,
-            Name       => 'MyService::MySubService',
-            NameShort  => 'MySubService',
-            ValidID    => 1,
-            Comment    => 'Some Comment'
-            CreateTime => '2011-02-08 15:08:00',
-            ChangeTime => '2011-06-11 17:22:00',
-            CreateBy   => 1,
-            ChangeBy   => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID           => 16,
-            Type             => 'Backend',
-            Criticality      => '3 normal',
-            CurInciStateID   => 1,
-            CurInciState     => 'Operational',
-            CurInciStateType => 'operational',
-# ---
+            SLAID   => 1,
         },
         # ...
     ];
 
 =cut
 
-sub ServiceListGet {
+sub CustomerSLAListGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => 'Need UserID!',
-        );
-        return;
+    if ( !$Param{CustomerID} && !$Param{SLAID} ) {
+      return;
     }
-
-    # check valid param
-    if ( !defined $Param{Valid} ) {
-        $Param{Valid} = 1;
-    }
-
-    # check cached results
-    my $CacheKey = 'Cache::ServiceListGet::Valid::' . $Param{Valid};
-    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
-        Type => $Self->{CacheType},
-        Key  => $CacheKey,
-    );
-    return $Cache if defined $Cache;
 
     # create SQL query
-    my $SQL = 'SELECT id, name, valid_id, comments, create_time, create_by, change_time, change_by '
-# ---
-# ITSMCore
-# ---
-        . ", type_id, criticality "
-# ---
-        . 'FROM service';
+    my $SQL = 'SELECT customer_id, sla_id '
+        . 'FROM customer_company_sla';
 
-    if ( $Param{Valid} ) {
-        $SQL .= ' WHERE valid_id IN (' . join ', ',
-            $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet() . ')';
+    if ( $Param{CustomerID} || $Param{SLAID} ) {
+        $SQL .= ' WHERE ';
+
+        if ( $Param{CustomerID} ) {
+            $SQL .= ' customer_id = \'' . $Param{CustomerID} . '\''
+        }
+
+        if ( $Param{CustomerID} && $Param{SLAID} ) {
+            $SQL .= ' AND '
+        }
+
+        if ( $Param{SLAID} ) {
+            $SQL .= ' sla_id = ' . $Param{SLAID}
+        }
     }
 
-    $SQL .= ' ORDER BY name';
+    $SQL .= ' ORDER BY customer_id';
 
     # ask database
     $Self->{DBObject}->Prepare(
@@ -331,80 +161,15 @@ sub ServiceListGet {
     );
 
     # fetch the result
-    my @ServiceList;
-    my %ServiceName2ID;
+    my @CustomerSLAList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        my %ServiceData;
-        $ServiceData{ServiceID}  = $Row[0];
-        $ServiceData{Name}       = $Row[1];
-        $ServiceData{ValidID}    = $Row[2];
-        $ServiceData{Comment}    = $Row[3] || '';
-        $ServiceData{CreateTime} = $Row[4];
-        $ServiceData{CreateBy}   = $Row[5];
-        $ServiceData{ChangeTime} = $Row[6];
-        $ServiceData{ChangeBy}   = $Row[7];
-# ---
-# ITSMCore
-# ---
-        $ServiceData{TypeID}      = $Row[8];
-        $ServiceData{Criticality} = $Row[9] || '';
-# ---
-
-        # add service data to service list
-        push @ServiceList, \%ServiceData;
-
-        # build service id lookup hash
-        $ServiceName2ID{ $ServiceData{Name} } = $ServiceData{ServiceID};
+        my %CustomerSLAData;
+        $CustomerSLAData{CustomerID}  = $Row[0];
+        $CustomerSLAData{SLAID}       = $Row[1];
+        push @CustomerSLAList, \%CustomerSLAData;
     }
 
-    for my $ServiceData (@ServiceList) {
-
-        # create short name and parentid
-        $ServiceData->{NameShort} = $ServiceData->{Name};
-        if ( $ServiceData->{Name} =~ m{ \A (.*) :: (.+?) \z }xms ) {
-            my $ParentName = $1;
-            $ServiceData->{NameShort} = $2;
-            $ServiceData->{ParentID}  = $ServiceName2ID{$ParentName};
-        }
-
-        # get service preferences
-        my %Preferences = $Self->ServicePreferencesGet(
-            ServiceID => $ServiceData->{ServiceID},
-        );
-
-        # merge hash
-        if (%Preferences) {
-            %{$ServiceData} = ( %{$ServiceData}, %Preferences );
-        }
-# ---
-# ITSMCore
-# ---
-#### Deep
-        # get current incident state, calculated from related config items and child services
-        if(!$Param{IncidentState}) { # This if avoids deep recursion for multilanguage service catalog
-            my %NewServiceData = $Self->_ServiceGetCurrentIncidentState(
-                ServiceData => $ServiceData,
-                Preferences => \%Preferences,
-                UserID      => $Param{UserID},
-            );
-    #### Deep
-            $ServiceData = \%NewServiceData;
-        }
-# ---
-    }
-
-    if (@ServiceList) {
-
-        # set cache
-        $Kernel::OM->Get('Kernel::System::Cache')->Set(
-            Type  => $Self->{CacheType},
-            TTL   => $Self->{CacheTTL},
-            Key   => $CacheKey,
-            Value => \@ServiceList,
-        );
-    }
-
-    return \@ServiceList;
+    return \@CustomerSLAList;
 }
 
 =item ServiceGet()

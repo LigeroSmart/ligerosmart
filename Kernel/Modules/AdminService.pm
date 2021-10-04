@@ -418,11 +418,21 @@ sub _MaskNew {
         Valid        => 1
     );
 
+    my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
+        ServiceID  =>  $Param{ServiceID},
+    );
+
+    my @SelectedCustomerIDs;
+
+    foreach my $Item ( @{$CustomerServiceList} ) {
+        push @SelectedCustomerIDs, $Item->{CustomerID};
+    }
+
     # generate ServiceOptionStrg
     $Param{CustomerCompanyOptionStrg} = $LayoutObject->BuildSelection(
         Data        => \%CustomerCompanyList,
         Name        => 'CustomerComapnyIDs',
-        SelectedID  => [],
+        SelectedID  => \@SelectedCustomerIDs || [],
         Multiple    => 1,
         Size        => 5,
         Translation => 0,

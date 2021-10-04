@@ -548,11 +548,21 @@ sub _Edit {
         UserID       => $Self->{UserID},
     );
 
+    my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
+        CustomerID  =>  $Param{CustomerID},
+    );
+
+    my @SelectedServiceIDs;
+
+    foreach my $Item ( @{$CustomerServiceList} ) {
+        push @SelectedServiceIDs, $Item->{ServiceID};
+    }
+
     # generate ServiceOptionStrg
     $Param{ServiceOptionStrg} = $LayoutObject->BuildSelection(
         Data        => \%ServiceList,
         Name        => 'ServiceIDs',
-        SelectedID  => [],
+        SelectedID  => \@SelectedServiceIDs || [],
         Multiple    => 1,
         Size        => 5,
         Translation => 0,
@@ -566,11 +576,21 @@ sub _Edit {
         UserID       => $Self->{UserID},
     );
 
+    my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAListGet(
+        CustomerID  =>  $Param{CustomerID},
+    );
+
+    my @SelectedSLAIDs;
+
+    foreach my $Item ( @{$CustomerSLAList} ) {
+        push @SelectedSLAIDs, $Item->{SLAID};
+    }
+
     # generate ServiceOptionStrg
     $Param{SlaOptionStrg} = $LayoutObject->BuildSelection(
         Data        => \%SlaList,
         Name        => 'SlaIDs',
-        SelectedID  => [],
+        SelectedID  => \@SelectedSLAIDs || [],
         Multiple    => 1,
         Size        => 5,
         Translation => 0,
@@ -766,6 +786,9 @@ sub _Edit {
             }
         }
     }
+
+    #die $Param{CustomerID};
+
     return 1;
 }
 
