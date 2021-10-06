@@ -158,6 +158,19 @@ sub Run {
 
             if ( !%Error ) {
 
+                #Delete Service
+                $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceRemove(
+                    ServiceID  =>  $GetParam{ServiceID}
+                );
+                #Add Services
+                my @CustomerComapnyIDs = $ParamObject->GetArray( Param => "CustomerComapnyIDs" );
+                foreach my $CustomerComapnyID ( @CustomerComapnyIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceAdd(
+                        CustomerID  =>  $CustomerComapnyID,
+                        ServiceID => $GetParam{ServiceID},
+                    );
+                }
+
                 # update preferences
                 my %ServiceData = $ServiceObject->ServiceGet(
                     ServiceID => $GetParam{ServiceID},
@@ -419,7 +432,7 @@ sub _MaskNew {
     );
 
     my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
-        ServiceID  =>  $Param{ServiceID},
+        ServiceID  =>  $ServiceData{ServiceID},
     );
 
     my @SelectedCustomerIDs;

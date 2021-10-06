@@ -166,6 +166,31 @@ sub Run {
             my $Update = $CustomerCompanyObject->CustomerCompanyUpdate( %GetParam, UserID => $Self->{UserID} );
 
             if ($Update) {
+                #Delete Service
+                $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceRemove(
+                    CustomerID  =>  $GetParam{CustomerID}
+                );
+                #Add Services
+                my @ServicesIDs = $ParamObject->GetArray( Param => "ServiceIDs" );
+                foreach my $ServiceID ( @ServicesIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        ServiceID => $ServiceID,
+                    );
+                }
+
+                #Delete SLA
+                $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLARemove(
+                    CustomerID  =>  $GetParam{CustomerID}
+                );
+                #Add SLAs
+                my @SLAIDs = $ParamObject->GetArray( Param => "SlaIDs" );
+                foreach my $SLAID ( @SLAIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        SLAID => $SLAID,
+                    );
+                }
 
                 my $SetDFError;
 
@@ -393,7 +418,7 @@ sub Run {
 
         # if no errors occurred
         if ( !%Errors ) {
-
+            
             # add company
             if (
                 $CustomerCompanyObject->CustomerCompanyAdd(
@@ -402,7 +427,23 @@ sub Run {
                 )
                 )
             {
+                #Add Services
+                my @ServicesIDs = $ParamObject->GetArray( Param => "ServiceIDs" );
+                foreach my $ServiceID ( @ServicesIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        ServiceID => $ServiceID,
+                    );
+                }
 
+                #Add SLAs
+                my @SLAIDs = $ParamObject->GetArray( Param => "SlaIDs" );
+                foreach my $SLAID ( @SLAIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        SLAID => $SLAID,
+                    );
+                }
                 $Self->_Overview(
                     Nav    => $Nav,
                     Search => $Search,

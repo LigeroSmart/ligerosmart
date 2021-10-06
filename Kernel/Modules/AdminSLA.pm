@@ -127,6 +127,19 @@ sub Run {
 
             if ( !%Error ) {
 
+                #Delete SLA
+                $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLARemove(
+                    SLAID  =>  $GetParam{ServiceID}
+                );
+                #Add Services
+                my @CustomerComapnyIDs = $ParamObject->GetArray( Param => "CustomerComapnyIDs" );
+                foreach my $CustomerComapnyID ( @CustomerComapnyIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAAdd(
+                        CustomerID  =>  $CustomerComapnyID,
+                        SLAID => $GetParam{SLAID},
+                    );
+                }
+
                 # update preferences
                 my %SLAData = $SLAObject->SLAGet(
                     SLAID  => $GetParam{SLAID},
@@ -480,7 +493,7 @@ sub _MaskNew {
     );
 
     my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAListGet(
-        SLAID  =>  $Param{SLAID},
+        SLAID  =>  $SLAData{SLAID},
     );
 
     my @SelectedCustomerIDs;
