@@ -13968,4 +13968,38 @@ Thanks for your help!
             </Array>
         </Value>
     </Setting>
+    <!-- Limit customer access to tickets based on Dynamic Field value -->
+    <Setting Name="CustomerTicket::EnableDynamicFieldCheck" Required="0" Valid="1">
+        <Description Translatable="1">Checks the Ticket Dynamic Field Value in order to allow customer access.</Description>
+        <Navigation>Core::Ticket::CustomerPermission</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerTicket::DynamicFieldNameToCheck" Required="0" Valid="1">
+        <Description Translatable="1">Define the Ticket Dynamic Field used to check customer permission.</Description>
+        <Navigation>Core::Ticket::CustomerPermission</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerTicket::DynamicFieldValueToAllowAccess" Required="0" Valid="1">
+        <Description Translatable="1">Define the Ticket Dynamic Field value that must be set to allow customer access.</Description>
+        <Navigation>Core::Ticket::CustomerPermission</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerTicket::Permission###0-TicketDynamicFieldCheck" Required="0" Valid="1">
+        <Description Translatable="1">Module to check ticket's dynamic field to allow customer access.</Description>
+        <Navigation>Core::Ticket::Permission</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck</Item>
+                <Item Key="Required">1</Item>
+                <Item Key="Granted">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
 </otrs_config>
