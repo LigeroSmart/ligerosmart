@@ -73,11 +73,11 @@ sub CheckPreviousRequirement {
         return;
     }
 
-    # if ( $ProductName ne 'OTRS' ) {
-    #     print "    Error:    No OTRS system found.\n";
-    #     return;
-    # }
-    if ( $Version !~ /^6\.0(.*)$/ ) {
+    if ( $ProductName ne 'LigeroSmart' ) {
+        print "    Error:    No LigeroSmart system found.\n";
+        return;
+    }
+    if ( $Version !~ /^6\.1(.*)$/ ) {
 
         print "\n    Error: You are trying to run this script on the wrong framework version $Version!\n";
         return;

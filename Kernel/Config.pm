@@ -42,9 +42,6 @@ sub Load {
     # for crypted passwords
     $Self->{DatabasePw} = defined($ENV{APP_DatabasePw}) ? $ENV{APP_DatabasePw} : '';
     
-    # system time zone
-    $Self->{OTRSTimeZone} = defined($ENV{TZ}) ? $ENV{TZ} : 'UTC';
-
     my $dbType = defined($ENV{APP_DatabaseType}) ? $ENV{APP_DatabaseType} : 'mysql';
 
     # The database DSN for MySQL ==> more: "perldoc DBD::mysql"
