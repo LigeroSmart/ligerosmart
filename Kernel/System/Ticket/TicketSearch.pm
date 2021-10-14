@@ -1443,7 +1443,7 @@ sub TicketSearch {
                 next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # skip validation for empty values
-                if ( $Operator ne 'Empty' ) {
+                if ( $Operator ne 'Empty' && $Operator ne 'RawSQL' ) {
 
                     # validate data type
                     my $ValidateSuccess = $DynamicFieldBackendObject->ValueValidate(
@@ -1479,6 +1479,18 @@ sub TicketSearch {
                         SearchTerm         => $Text,
                     );
                     $QueryForEmptyValues = 1;
+                }
+                elsif ( $Operator eq 'RawSQL' && $Text ) {
+		    # get dynamic field value column for reference
+		    my $DynamicFieldColumnName = $DynamicFieldBackendObject->SearchSQLOrderFieldGet(
+                        DynamicFieldConfig => $DynamicField,
+                        TableAlias         => "dfv$DynamicFieldJoinCounter",
+                    );
+		    # Replace tags ( if exists ) on Raw
+		    $Text =~ s/\%\%FIELD\%\%/$DynamicFieldColumnName/igx;
+
+                    # Apply Raw SQL
+                    $SQLExtSub .= "$Text";
                 }
                 else {
                     $SQLExtSub .= $DynamicFieldBackendObject->SearchSQLGet(

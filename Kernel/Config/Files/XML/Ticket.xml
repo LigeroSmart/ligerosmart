@@ -13970,7 +13970,7 @@ Thanks for your help!
     </Setting>
     <!-- Limit customer access to tickets based on Dynamic Field value -->
     <Setting Name="CustomerTicket::EnableDynamicFieldCheck" Required="0" Valid="1">
-        <Description Translatable="1">Checks the Ticket Dynamic Field Value in order to allow customer access.</Description>
+	    <Description Translatable="1">Checks the Ticket Dynamic Field Value in order to check customer access.</Description>
         <Navigation>Core::Ticket::CustomerPermission</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
@@ -13983,15 +13983,15 @@ Thanks for your help!
             <Item ValueType="String" ValueRegex=""></Item>
         </Value>
     </Setting>
-    <Setting Name="CustomerTicket::DynamicFieldValueToAllowAccess" Required="0" Valid="1">
-        <Description Translatable="1">Define the Ticket Dynamic Field value that must be set to allow customer access.</Description>
+    <Setting Name="CustomerTicket::DynamicFieldValueToDenyAccess" Required="0" Valid="1">
+        <Description Translatable="1">Define the Ticket Dynamic Field value that must be set to deny customer access.</Description>
         <Navigation>Core::Ticket::CustomerPermission</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex=""></Item>
         </Value>
     </Setting>
     <Setting Name="CustomerTicket::Permission###0-TicketDynamicFieldCheck" Required="0" Valid="1">
-        <Description Translatable="1">Module to check ticket's dynamic field to allow customer access.</Description>
+        <Description Translatable="1">Module to check ticket's dynamic field to check customer access.</Description>
         <Navigation>Core::Ticket::Permission</Navigation>
         <Value>
             <Hash>

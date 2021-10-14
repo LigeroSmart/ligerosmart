@@ -58,8 +58,8 @@ sub Run {
 
     # check dynamic field value
     my $DynamicFieldName  = $ConfigObject->Get('CustomerTicket::DynamicFieldNameToCheck');
-    my $DynamicFieldValue = $ConfigObject->Get('CustomerTicket::DynamicFieldValueToAllowAccess');
-    return 1 if ( $Ticket{"DynamicField_$DynamicFieldName"} =~ m/$DynamicFieldValue/ig );
+    my $DynamicFieldValue = $ConfigObject->Get('CustomerTicket::DynamicFieldValueToDenyAccess');
+    return 1 if ( $Ticket{"DynamicField_$DynamicFieldName"} !~ m/$DynamicFieldValue/ig );
  
     return;
 
@@ -75,9 +75,11 @@ sub GetTicketSearchFilter {
     return undef if (!$EnableDynamicFieldCheck);
 
     my $DynamicFieldName  = $ConfigObject->Get('CustomerTicket::DynamicFieldNameToCheck');
-    my $DynamicFieldValue = $ConfigObject->Get('CustomerTicket::DynamicFieldValueToAllowAccess');
+    my $DynamicFieldValue = $ConfigObject->Get('CustomerTicket::DynamicFieldValueToDenyAccess');
     my %DynamicFieldFilter = (
-        "DynamicField_$DynamicFieldName" => { Equals => $DynamicFieldValue }
+        "DynamicField_$DynamicFieldName" => {
+            RawSQL => "%%FIELD%% IS NULL OR %%FIELD%% != '$DynamicFieldValue'"
+        }
     );
 
     return %DynamicFieldFilter;
