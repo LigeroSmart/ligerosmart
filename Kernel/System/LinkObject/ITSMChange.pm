@@ -90,6 +90,8 @@ sub LinkListWithData {
                     UserID   => $Param{UserID},
                 );
 
+                $ChangeData->{LinkCreatedDate} = $Param{LinkList}->{$LinkType}->{$Direction}->{$ChangeID};
+
                 # remove id from hash if ChangeGet() returns no results
                 if ( !$ChangeData ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$ChangeID};

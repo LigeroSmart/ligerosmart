@@ -100,6 +100,8 @@ sub LinkListWithData {
                     UserID     => $Param{UserID},
                 );
 
+                $FAQData{LinkCreatedDate} = $Param{LinkList}->{$LinkType}->{$Direction}->{$ItemID};
+
                 # remove id from hash if no FAQ data was found
                 if ( !%FAQData ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$ItemID};

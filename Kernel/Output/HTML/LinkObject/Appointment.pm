@@ -178,6 +178,7 @@ sub TableCreateComplex {
 
     my @TimeLongTypes = (
         "Created",
+        "LinkCreatedDate",
         "Changed",
         "StartTime",
         "EndTime",
@@ -291,6 +292,9 @@ sub TableCreateComplex {
         }
         elsif ( $Column eq 'NotificationTime' ) {
             $ColumnTranslate = Translatable('Notification');
+        }
+        elsif ( $Column eq 'LinkCreatedDate' ) {
+            $ColumnTranslate = Translatable('Link Created Date');
         }
 
         push @AllColumns, {

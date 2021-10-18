@@ -99,6 +99,8 @@ sub LinkListWithData {
                     AppointmentID => $AppointmentID,
                 );
 
+                $Appointment{LinkCreatedDate} = $Param{LinkList}->{$LinkType}->{$Direction}->{$AppointmentID};
+
                 # remove id from hash if no service data was found
                 if ( !%Appointment ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$AppointmentID};
