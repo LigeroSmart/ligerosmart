@@ -1481,11 +1481,13 @@ sub TicketSearch {
                     $QueryForEmptyValues = 1;
                 }
                 elsif ( $Operator eq 'RawSQL' && $Text ) {
+
 		    # get dynamic field value column for reference
 		    my $DynamicFieldColumnName = $DynamicFieldBackendObject->SearchSQLOrderFieldGet(
                         DynamicFieldConfig => $DynamicField,
-                        TableAlias         => "dfv$DynamicFieldJoinCounter",
+                        TableAlias         => "dfvEmpty$DynamicFieldJoinCounter",
                     );
+                    $QueryForEmptyValues = 1;
 		    # Replace tags ( if exists ) on Raw
 		    $Text =~ s/\%\%FIELD\%\%/$DynamicFieldColumnName/igx;
 
