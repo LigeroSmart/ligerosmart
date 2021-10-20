@@ -1588,6 +1588,46 @@ sub ObjectLookup {
     }
 }
 
+
+=head2 GetLastTicketLinkDate()
+
+
+=cut
+
+sub GetLastTicketLinkDate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ObjectID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Need ObjectID!',
+        );
+        return;
+    }
+
+    if ( $Param{ObjectID} ) {
+
+        # get database object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+        # ask the database
+        return if !$DBObject->Prepare(
+            SQL => 'select max(create_time) from link_relation where source_object_id = 1 and target_key = ?',
+            Bind  => [ \$Param{ObjectID} ],
+            Limit => 1,
+        );
+
+        # fetch the result
+        my $Date;
+        while ( my @Row = $DBObject->FetchrowArray() ) {
+            $Date = $Row[0];
+        }
+
+        return $Date;
+    }
+}
+
 =head2 TypeLookup()
 
 lookup a link type
