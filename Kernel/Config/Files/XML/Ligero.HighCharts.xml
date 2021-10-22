@@ -8,7 +8,7 @@
                 <Item>thirdparty/highcharts/highcharts.js</Item>
                 <Item>thirdparty/highcharts/highcharts-more.js</Item>
                 <Item>thirdparty/highcharts/modules/exporting.js</Item>
-                <Item>thirdparty/highcharts/modules/no-data-to-display-src.js</Item>
+                <Item>thirdparty/highcharts/modules/no-data-to-display.js</Item>
                 <Item>thirdparty/highcharts/modules/drilldown.js</Item>
             </Array>
         </Value>
@@ -21,7 +21,7 @@
                 <Item>thirdparty/highcharts/highcharts.js</Item>
                 <Item>thirdparty/highcharts/highcharts-more.js</Item>
                 <Item>thirdparty/highcharts/modules/exporting.js</Item>
-                <Item>thirdparty/highcharts/modules/no-data-to-display-src.js</Item>
+                <Item>thirdparty/highcharts/modules/no-data-to-display.js</Item>
                 <Item>thirdparty/highcharts/modules/drilldown.js</Item>
             </Array>
         </Value>
