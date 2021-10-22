@@ -66,10 +66,7 @@ sub Run {
 
     if ($Self->{Config}->{Async} && !$Param{AJAX}){
         my $JSAsync = <<"ENDJS";
-\$('#Dashboard' + '$Self->{Name}' + '-box').addClass('Loading');
-Core.AJAX.ContentUpdate(\$('#Dashboard' + '$Self->{Name}'), Core.Config.Get('Baselink') + 'Action=' + Core.Config.Get('Action') + ';Subaction=Element;Name=' + '$Self->{Name}', function () {
-    \$('#Dashboard' + '$Self->{Name}' + '-box').removeClass('Loading');
-});
+asyncDashboardLoad('$Self->{Name}')
 ENDJS
         $LayoutObject->AddJSOnDocumentComplete(
             Code => $JSAsync,

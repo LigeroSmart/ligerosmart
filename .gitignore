@@ -3,6 +3,7 @@ css-cache
 var/run
 var/log
 var/tmp
+var/article
 Kernel/Config/Files/ZZZAAuto.pm
 Kernel/Config/Files/ZZZACL.pm
 *.save
@@ -13,3 +14,4 @@ latest-build
 .gitconfig
 *.swp
 .vscode
+.local

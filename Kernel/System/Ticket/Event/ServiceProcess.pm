@@ -77,7 +77,7 @@ sub Run {
     my $DFProcess = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
    		Name => 'ProcessManagementProcessID',
 	);
-	my $Success = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
+	my $SuccessDFProcess = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
 		DynamicFieldConfig	=> $DFProcess,
 		ObjectID			=> $Param{Data}->{TicketID}, 
 		Value				=> $Preferences{Process} || '',
@@ -86,7 +86,7 @@ sub Run {
 	my $DFActivity = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
    		Name => 'ProcessManagementActivityID',
 	);
-	my $Success = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
+	my $SuccessDFActivity = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
 		DynamicFieldConfig	=> $DFActivity,
 		ObjectID			=> $Param{Data}->{TicketID}, 
 		Value				=> $Start->{Activity} || '',
