@@ -87,7 +87,7 @@ sub PrepareRequest {
     my $IndexEnabled = $ConfigObject->Get("LigeroSmart::ArticleIndex::Enabled");
     if ($IndexEnabled == 0) {
         return {
-            Success      => 0,
+            Success      => 1,
             ErrorMessage => "This web service will run only if LigeroSmart::ArticleIndex::Enabled = 1"
         };
     }
