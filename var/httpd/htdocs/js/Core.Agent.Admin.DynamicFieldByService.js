@@ -1198,7 +1198,10 @@ Core.Agent.Admin.AddDynamicFieldByService = (function (TargetNS) {
 
         // Init handling of closing popup with the OS functionality ("X")
         $(window).unbind("beforeunload.PMPopup").bind("beforeunload.PMPopup", function () {
-            window.opener.Core.Agent.Admin.ProcessManagement.HandlePopupClose();
+            if(window.opener){
+                console.log( 'aqui')
+                window.opener.Core.Agent.Admin.ProcessManagement.HandlePopupClose();
+            }
         });
 
         $('.ClosePopup').bind("click", function () {
