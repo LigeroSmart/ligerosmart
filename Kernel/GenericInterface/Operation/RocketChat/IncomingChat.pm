@@ -284,6 +284,16 @@ sub Run {
             },
         };
 
+    } elsif($Param{Data}->{type} eq 'LivechatRoomTransferred'){
+        # Update the ticket that was created by Rocket.Chat
+        my ( $UserID, $UserType ) = $Self->Auth(%Param);
+        my $Update = $Param{Data}->{ChatTransfer} || $Param{Data}->{NewChat};
+        $Self->_TicketUpdate(
+			TicketID         => $MainTicket,
+			Ticket           => $Update,
+			UserID           => $UserID,
+			UserType         => $UserType,
+		);
     } elsif($Param{Data}->{type} eq 'LivechatSession'){
 
         use LWP::UserAgent;
@@ -402,6 +412,13 @@ sub Run {
                         Filename    => $message->{file}->{name}
                     };
                     push @Attachments, $aObj;
+                } else {
+                    $Self->{DebuggerObject}->Debug(
+                        Summary => "Error downloading image from Rocket",
+                        Data    => {
+                            Status => $resp->status_line
+                        },
+                    );
                 }
 
                 if ($message->{file}->{type} =~ m/image/ig) {
