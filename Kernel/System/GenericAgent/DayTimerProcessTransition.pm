@@ -50,15 +50,21 @@ sub Run {
     # Input Parameters
     # - Days
     # - ProcessActivityID
-    
 
-    # Get All params
-    my $ParamsString;
-    for my $Params ( grep {$_ =~ "^ParamValue"} keys %{$Param{New}}){
-        $ParamsString .= $Param{New}->{$Params}.';' if $Param{New}->{$Params};
+    my $Days;
+    if($Param{New}->{'Days'}){
+      $Days = $Param{New}->{'Days'};
+    } else {
+        return 1;
     }
 
-    return if !$ParamsString;
+    my $ProcessActivityID;
+    if($Param{New}->{'ProcessActivityID'}){
+      $ProcessActivityID = $Param{New}->{'ProcessActivityID'};
+    } else {
+        return 1;
+    }
+    
 
     my $TemplateGeneratorObject = $Kernel::OM->Get('Kernel::System::TemplateGenerator');
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -69,22 +75,6 @@ sub Run {
             DynamicFields => 1,
             UserID        => 1,
         );
-
-    my $GetParam = URI->new( CGI::url() );
-    $GetParam->query( $ParamsString );
-
-    my %Parameters;
-    for my $P ( qw(Days ProcessActivityID)){
-        $Parameters{$P} = $GetParam->query_param( $P );
-        $Parameters{$P} = $TemplateGeneratorObject->_Replace(
-            RichText   => 0,
-            Text       => $Parameters{$P},
-            Data       => {},
-            TicketData => \%Ticket,
-            UserID     => 1,
-        ) if $Parameters{$P};        
-    };
-    return if !$Parameters{Days} || !$Parameters{ProcessActivityID};
 
     # create datetime object
     my $NowObj = $Kernel::OM->Create('Kernel::System::DateTime');
@@ -106,7 +96,7 @@ sub Run {
         DateTimeObject => $NowObj,
     );
 
-    return if ($DeltaObj->{Days} < $Parameters{Days});
+    return if ($DeltaObj->{Days} < $Days);    
 
     my $DFActivity = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
         Name => 'ProcessManagementActivityID',
@@ -114,7 +104,7 @@ sub Run {
     my $Success = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
       DynamicFieldConfig	=> $DFActivity,
       ObjectID			=> $Param{TicketID}, 
-      Value				=> $Parameters{ProcessActivityID} || '',
+      Value				=> $ProcessActivityID || '',
       UserID				=> 1,
     );
 
@@ -122,7 +112,7 @@ sub Run {
         Event => 'TicketDynamicFieldUpdate_ProcessManagementActivityID',
         Data  => {
             FieldName => 'ProcessManagementActivityID',
-            Value     => $Parameters{ProcessActivityID},
+            Value     => $ProcessActivityID,
             OldValue  => '',
             TicketID  => $Param{TicketID},
             UserID    => 1,
