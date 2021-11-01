@@ -98,6 +98,7 @@ sub Run {
         PastExecutionData => $Param{Data}->{PastExecutionData},
     );
     return 1 if $Result->{Success};
+    return 1 if $Result->{DisableLog};
 
     my $Webservice = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice')->WebserviceGet(
         ID => $Param{Data}->{WebserviceID},
