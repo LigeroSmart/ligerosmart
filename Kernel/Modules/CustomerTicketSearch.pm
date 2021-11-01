@@ -541,6 +541,9 @@ sub Run {
             $GetParam{CustomerUserLoginRaw} = $Self->{UserID};
         }
 
+        # get dynamic-field based filter if CustomerTicket::EnableDynamicFieldCheck is enabled
+        my %CustomerDynamicFieldFilter = $Kernel::OM->Get('Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck')->GetTicketSearchFilter();
+
         # perform ticket search
         my @ViewableTicketIDs = $TicketObject->TicketSearch(
             Result              => 'ARRAY',
@@ -554,6 +557,7 @@ sub Run {
             FullTextIndex       => 1,
             %GetParam,
             %DynamicFieldSearchParameters,
+	    %CustomerDynamicFieldFilter
         );
 
         # get needed objects

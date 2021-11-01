@@ -94,6 +94,9 @@ sub CustomerReports {
 
         },
     );
+
+    # get dynamic-field based filter if CustomerTicket::EnableDynamicFieldCheck is enabled
+    my %CustomerDynamicFieldFilter = $Kernel::OM->Get('Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck')->GetTicketSearchFilter();
     
     $LayoutObject->Block(
         Name => 'Body',
@@ -402,6 +405,7 @@ sub CustomerReports {
         my $Count = $TicketObject->TicketSearch(
             %{ $Filters{ $Self->{Subaction} }->{$Filter}->{Search} },
             %SearchInArchive,
+	    %CustomerDynamicFieldFilter,
             Result => 'COUNT',
         );
 
@@ -734,6 +738,7 @@ sub CustomerReports {
         my @ViewableTickets = $TicketObject->TicketSearch(
             %{ $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search} },
             %SearchInArchive,
+	    %CustomerDynamicFieldFilter,
             Result => 'ARRAY',
         );
 
