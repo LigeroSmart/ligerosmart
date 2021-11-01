@@ -11,6 +11,7 @@ use warnings;
 
 use Kernel::System::VariableCheck qw(:all);
 use Data::Dumper;
+use Safe;
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
@@ -75,7 +76,10 @@ sub Validate {
         }
     }
 
-    my $Return = eval $Param{FieldName};
+    $cpt = new Safe;
+    $cpt->share('%Ticket');
+    #my $Return = eval $Param{FieldName};
+    my $Return = $cpt->reval($Param{FieldName});
     return $Return;
 }
 
