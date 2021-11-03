@@ -1,0 +1,247 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::CustomerContracts')->CodeInstall();
+    ]]></CodeInstall>
+    <CodeUpgrade Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::CustomerContracts')->CodeUpgrade();
+    ]]></CodeUpgrade>
+    <DatabaseInstall Type="post">
+        <TableCreate Type="post" Name="customer_contract">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="customer_id" Required="true" Size="150" Type="VARCHAR"></Column>
+            <Column Name="number" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="period_closing" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="start_time" Required="false" Type="DATE"/>
+            <Column Name="end_time" Required="false" Type="DATE"/>
+            <Column Name="related_to" Required="false" Type="INTEGER"></Column>
+            <Column Name="related_to_period" Required="false" Size="250" Type="VARCHAR"></Column>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"></Column>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="customer_company">
+                <Reference Local="customer_id" Foreign="customer_id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="contract_price_rule">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="value" Required="true" Size="40" Type="VARCHAR"></Column>
+            <Column Name="value_total" Required="true" Size="40" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="customer_contract">
+                <Reference Local="contract_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="registry_contract_price">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_price_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="article_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="date" Required="false" Type="DATE"></Column>
+            <Column Name="value" Required="true" Size="40" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="contract_price_rule">
+                <Reference Local="contract_price_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="ticket">
+                <Reference Local="ticket_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="article">
+                <Reference Local="article_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="price_rule_ticket_type">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_price_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_type_id" Required="true" Type="SMALLINT"></Column>
+            <ForeignKey ForeignTable="contract_price_rule">
+                <Reference Local="contract_price_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="ticket_type">
+                <Reference Local="ticket_type_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="price_rule_ticket_type">
+                <UniqueColumn Name="contract_price_rule_id"/>
+                <UniqueColumn Name="ticket_type_id"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="price_rule_treatment_type">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_price_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="treatment_type" Required="true" Size="250" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="contract_price_rule">
+                <Reference Local="contract_price_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="price_rule_treatment_type">
+                <UniqueColumn Name="contract_price_rule_id"/>
+                <UniqueColumn Name="treatment_type"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="price_rule_sla">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_price_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="sla_id" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="contract_price_rule">
+                <Reference Local="contract_price_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="sla">
+                <Reference Local="sla_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="price_rule_sla">
+                <UniqueColumn Name="contract_price_rule_id"/>
+                <UniqueColumn Name="sla_id"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="price_rule_service">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_price_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="service_id" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="contract_price_rule">
+                <Reference Local="contract_price_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="service">
+                <Reference Local="service_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="price_rule_service">
+                <UniqueColumn Name="contract_price_rule_id"/>
+                <UniqueColumn Name="service_id"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="price_rule_hour_type">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_price_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="hour_type" Required="true" Size="250" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="contract_price_rule">
+                <Reference Local="contract_price_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="price_rule_hour_type">
+                <UniqueColumn Name="contract_price_rule_id"/>
+                <UniqueColumn Name="hour_type"/>
+            </Unique>
+        </TableCreate>
+
+        <TableCreate Type="post" Name="contract_franchise_rule">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="recurrence" Required="true" Size="40" Type="VARCHAR"></Column>
+            <Column Name="hours" Required="true" Size="40" Type="VARCHAR"></Column>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"></Column>
+            <ForeignKey ForeignTable="valid">
+                <Reference Local="valid_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="customer_contract">
+                <Reference Local="contract_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="registry_contract_franchise">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_franchise_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="article_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="date" Required="false" Type="DATE"></Column>
+            <Column Name="time" Required="true" Size="40" Type="VARCHAR"></Column>
+            <Column Name="value" Required="true" Size="40" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="contract_franchise_rule">
+                <Reference Local="contract_franchise_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="ticket">
+                <Reference Local="ticket_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="article">
+                <Reference Local="article_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="franchise_rule_ticket_type">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_franchise_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_type_id" Required="true" Type="SMALLINT"></Column>
+            <ForeignKey ForeignTable="contract_franchise_rule">
+                <Reference Local="contract_franchise_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="ticket_type">
+                <Reference Local="ticket_type_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="franchise_rule_ticket_type">
+                <UniqueColumn Name="contract_franchise_rule_id"/>
+                <UniqueColumn Name="ticket_type_id"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="franchise_rule_treatment_type">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_franchise_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="treatment_type" Required="true" Size="250" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="contract_franchise_rule">
+                <Reference Local="contract_franchise_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="franchise_rule_treatment_type">
+                <UniqueColumn Name="contract_franchise_rule_id"/>
+                <UniqueColumn Name="treatment_type"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="franchise_rule_sla">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_franchise_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="sla_id" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="contract_franchise_rule">
+                <Reference Local="contract_franchise_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="sla">
+                <Reference Local="sla_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="franchise_rule_sla">
+                <UniqueColumn Name="contract_franchise_rule_id"/>
+                <UniqueColumn Name="sla_id"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="franchise_rule_service">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_franchise_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="service_id" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="contract_franchise_rule">
+                <Reference Local="contract_franchise_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="service">
+                <Reference Local="service_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="franchise_rule_service">
+                <UniqueColumn Name="contract_franchise_rule_id"/>
+                <UniqueColumn Name="service_id"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="franchise_rule_hour_type">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="contract_franchise_rule_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="hour_type" Required="true" Size="250" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="contract_franchise_rule">
+                <Reference Local="contract_franchise_rule_id" Foreign="id"/>
+            </ForeignKey>
+            <Unique Name="franchise_rule_hour_type">
+                <UniqueColumn Name="contract_franchise_rule_id"/>
+                <UniqueColumn Name="hour_type"/>
+            </Unique>
+        </TableCreate>
+        <TableCreate Type="post" Name="time_franchise_rule">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="time_accounting_id" Required="true" Type="BIGINT"></Column>
+            <Column Name="franchise_rule_id" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="time_accounting">
+                <Reference Local="time_accounting_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="contract_franchise_rule">
+                <Reference Local="franchise_rule_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="time_price_rule">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="time_accounting_id" Required="true" Type="BIGINT"></Column>
+            <Column Name="price_rule_id" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="time_accounting">
+                <Reference Local="time_accounting_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="contract_price_rule">
+                <Reference Local="price_rule_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseInstall>
+</Migrations>
