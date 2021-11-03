@@ -76,7 +76,7 @@ sub Validate {
         }
     }
 
-    $cpt = new Safe;
+    my $cpt = new Safe;
     $cpt->share('%Ticket');
     #my $Return = eval $Param{FieldName};
     my $Return = $cpt->reval($Param{FieldName});
