@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <otrs_config version="2.0" init="Application">
-    <Setting Name="PostMaster::PreFilterModule###4-NewTicketOnlyFromKnowEmail" Required="0" Valid="1">
+    <Setting Name="PostMaster::PreFilterModule###4-NewTicketOnlyFromKnowEmail" Required="0" Valid="0">
         <Description Translatable="1">Blocks all the incoming emails that do not have a correspondent email registered as customer on our system.</Description>
         <Navigation>Core::Email::PostMaster</Navigation>
         <Value>
