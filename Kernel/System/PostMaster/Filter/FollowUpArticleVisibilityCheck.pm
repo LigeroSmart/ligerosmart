@@ -66,8 +66,9 @@ sub Run {
     }
 
     my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
-        TicketID => $Param{TicketID},
-        UserID   => $Param{UserID},
+        TicketID      => $Param{TicketID},
+        UserID        => $Param{UserID},
+        DynamicFields => 1
     );
 
     # Check if it is a known customer, otherwise use email address from CustomerUserID field of the ticket.
@@ -90,6 +91,27 @@ sub Run {
     # check if current sender is customer (do nothing)
     if ( $CustomerEmailAddress && $SenderAddress ) {
         return 1 if lc $CustomerEmailAddress eq lc $SenderAddress;
+    }
+
+    # check if $Param{JobConfig}->{TicketAttribute} is defined
+    # Expected format: <Field1>=<Value>;<Field2>=<Value1>,<Value2>
+    # Ex: TicketNumber=20101027000001
+    #     State=new;Queue=junk
+    if ($Param{JobConfig}->{TicketAttribute}) {
+        my @ConfigParts = split(/;/, $Param{JobConfig}->{TicketAttribute});
+        my $ConfigMatch = 0;
+        foreach my $Part (@ConfigParts) {
+            my ( $Key, $Value ) = split(/=/, $Part);
+            my @Values = split(/\,/, $Value );
+            if ( $Ticket{ $Key } && grep $_ eq $Ticket{ $Key }, @Values ) {
+                $ConfigMatch = 1;
+            }
+        }
+	if ($ConfigMatch) {
+            $Param{GetParam}->{'X-OTRS-FollowUp-IsVisibleForCustomer'} = $Param{JobConfig}->{IsVisibleForCustomer} || 0;
+            $Param{GetParam}->{'X-OTRS-FollowUp-SenderType'}           = $Param{JobConfig}->{SenderType} || 'customer';
+            return 1;
+        }
     }
 
     my @References = $Self->{ParserObject}->GetReferences();
@@ -137,6 +159,9 @@ sub Run {
                 $IsInternalForward = 1;
                 last ARTICLE;
             }
+	    # @TODO: Brainstorm about this check
+	    # This part forces the article to be visible if the "Reply-To" header points to 
+	    # any recipient (to/cc) in previous articles 
             if ( $ReplyToAddress && lc $Recipient eq lc $ReplyToAddress ) {
                 $IsInternalForward = 1;
                 last ARTICLE;
@@ -154,7 +179,7 @@ sub Run {
 
     return 1 if !$IsInternalForward;
 
-    $Param{GetParam}->{'X-OTRS-FollowUp-IsVisibleForCustomer'} = $Param{JobConfig}->{IsVisibleForCustomer} // 0;
+    $Param{GetParam}->{'X-OTRS-FollowUp-IsVisibleForCustomer'} = $Param{JobConfig}->{IsVisibleForCustomer} || 0;
     $Param{GetParam}->{'X-OTRS-FollowUp-SenderType'}           = $Param{JobConfig}->{SenderType} || 'customer';
 
     return 1;
