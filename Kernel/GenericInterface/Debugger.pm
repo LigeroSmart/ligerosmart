@@ -164,6 +164,9 @@ sub DebugLog {
         return;
     }
 
+    # Check if DisableLog == 1
+    my $DisableLog = ( $Param{Data}->{DisableLog} && $Param{Data}->{DisableLog} == 1 ) ? 1 : 0;
+
     # if DebugLevel is not set DebugLevel from constructor is used
     $Param{DebugLevel} = $Param{DebugLevel} || $Self->{DebugLevel};
 
@@ -207,7 +210,7 @@ sub DebugLog {
                 Summary           => $Param{Summary},
                 WebserviceID      => $Self->{WebserviceID},
                 DebugLevel        => $Param{DebugLevel},
-                Data              => $DataString,
+                Data              => ( $DisableLog ) ? $Param{Summary} : $DataString,
             );
         }
         return 1 if $Param{DebugLevel} ne 'error';
@@ -219,7 +222,7 @@ DebugLog $Param{DebugLevel}:
   Data   : $DataString.
 EOF
 
-    if ( $Param{DebugLevel} eq 'error' ) {
+    if ( $Param{DebugLevel} eq 'error' && !$DisableLog ) {
         $LogMessage =~ s/\n//g;
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',

@@ -133,7 +133,7 @@ sub Run {
     
     my %Data;
     $Data{UserLogin}         = $Param{Data}->{agent}->{username} || '';
-    $Data{CustomerUserLogin} = $Param{Data}->{visitor}->{customFields}->{username} || '';
+    $Data{CustomerUserLogin} = $Param{Data}->{visitor}->{livechatData}->{username} || '';
     $Data{CustomerUserName}  = $Param{Data}->{visitor}->{name} || '';
     $Data{CustomerUserEmail} = $Param{Data}->{visitor}->{email} || '';
     $Data{Queue}  = $Param{Data}->{visitor}->{department} || '';
@@ -194,7 +194,7 @@ sub Run {
         }
         # Se não encontrou chamado associado, significa que é a primeira mensagem do Chat
         # Cria então um chamado
-        my $CustomerUser = $Param{Data}->{visitor}->{customFields}->{username} || 'rocketchat';
+        my $CustomerUser = $Param{Data}->{visitor}->{livechatData}->{username} || 'rocketchat';
         my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
             User => $CustomerUser,
         );
@@ -284,6 +284,16 @@ sub Run {
             },
         };
 
+    } elsif($Param{Data}->{type} eq 'LivechatRoomTransferred'){
+        # Update the ticket that was created by Rocket.Chat
+        my ( $UserID, $UserType ) = $Self->Auth(%Param);
+        my $Update = $Param{Data}->{ChatTransfer} || $Param{Data}->{NewChat};
+        $Self->_TicketUpdate(
+			TicketID         => $MainTicket,
+			Ticket           => $Update,
+			UserID           => $UserID,
+			UserType         => $UserType,
+		);
     } elsif($Param{Data}->{type} eq 'LivechatSession'){
 
         use LWP::UserAgent;
@@ -334,7 +344,7 @@ sub Run {
             my $time = str2time($message->{ts});
             # the following field is set by javascript as a customfield on RocketChat. We need that to calculate
             # customer time of the message
-            my $tz = $Param{Data}->{visitor}->{customFields}->{timezone} || 0; 
+            my $tz = $Param{Data}->{visitor}->{livechatData}->{timezone} || 0; 
             $time += ($tz*60);
             # Clean Time string Epoch
             $time =~ s/\..*//;
@@ -402,6 +412,13 @@ sub Run {
                         Filename    => $message->{file}->{name}
                     };
                     push @Attachments, $aObj;
+                } else {
+                    $Self->{DebuggerObject}->Debug(
+                        Summary => "Error downloading image from Rocket",
+                        Data    => {
+                            Status => $resp->status_line
+                        },
+                    );
                 }
 
                 if ($message->{file}->{type} =~ m/image/ig) {

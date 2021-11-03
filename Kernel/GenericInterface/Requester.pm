@@ -206,6 +206,10 @@ sub Run {
     if ( !$FunctionResult->{Success} ) {
 
         my $Summary = $FunctionResult->{ErrorMessage} // 'InvokerObject returned an error, cancelling Request';
+        if ( $FunctionResult->{DisableLog} == 1 ) {
+            $FunctionResult->{Data}->{DisableLog} = 1;
+        }
+
         return $Self->_HandleError(
             %HandleErrorData,
             DataInclude => \%DataInclude,
@@ -546,6 +550,7 @@ sub _HandleError {
         Success      => 0,
         ErrorMessage => $ErrorHandlingResult->{ErrorMessage} || $Param{Summary},
         Data         => $ErrorHandlingResult->{ReScheduleData},
+	DisableLog   => ( $Param{Data}->{DisableLog} && $Param{Data}->{DisableLog} == 1 ) ? 1 : 0
     };
 
     return $ReturnData if !$Param{InvokerObject}->{BackendObject}->can('HandleError');
