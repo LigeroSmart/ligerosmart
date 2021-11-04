@@ -5,7 +5,7 @@
     <CodeUpgrade Type="post"><![CDATA[
         $Kernel::OM->Get('var::packagesetup::CustomerContracts')->CodeUpgrade();
     ]]></CodeUpgrade>
-    <DatabaseInstall Type="post">
+    <DatabaseInstall>
         <TableCreate Type="post" Name="customer_contract">
             <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
             <Column Name="customer_id" Required="true" Size="150" Type="VARCHAR"></Column>
@@ -36,8 +36,8 @@
         <TableCreate Type="post" Name="registry_contract_price">
             <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
             <Column Name="contract_price_rule_id" Required="true" Type="INTEGER"></Column>
-            <Column Name="ticket_id" Required="true" Type="INTEGER"></Column>
-            <Column Name="article_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_id" Required="true" Type="BIGINT"></Column>
+            <Column Name="article_id" Required="true" Type="BIGINT"></Column>
             <Column Name="date" Required="false" Type="DATE"></Column>
             <Column Name="value" Required="true" Size="40" Type="VARCHAR"></Column>
             <ForeignKey ForeignTable="contract_price_rule">
@@ -137,8 +137,8 @@
         <TableCreate Type="post" Name="registry_contract_franchise">
             <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
             <Column Name="contract_franchise_rule_id" Required="true" Type="INTEGER"></Column>
-            <Column Name="ticket_id" Required="true" Type="INTEGER"></Column>
-            <Column Name="article_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="ticket_id" Required="true" Type="BIGINT"></Column>
+            <Column Name="article_id" Required="true" Type="BIGINT"></Column>
             <Column Name="date" Required="false" Type="DATE"></Column>
             <Column Name="time" Required="true" Size="40" Type="VARCHAR"></Column>
             <Column Name="value" Required="true" Size="40" Type="VARCHAR"></Column>

@@ -1425,6 +1425,8 @@ sub _Edit {
         $Recurrence{ 'diario' } = 'diario';
         $Recurrence{ 'semanal' } = 'semanal';
         $Recurrence{ 'mensal' } = 'mensal';
+        $Recurrence{ 'anual' } = 'anual';
+        $Recurrence{ 'ilimitado' } = 'ilimitado';
 
         $Param{RecurrenceStrgFranchise} = $LayoutObject->BuildSelection(
             Data        => \%Recurrence,
