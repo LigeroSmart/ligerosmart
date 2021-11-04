@@ -1874,7 +1874,11 @@ sub CalculateContract {
         $FranchiseAvailable = scalar($FranchiseInUse->{Seconds})-scalar($FranchiseInUse->{TotalMonthUsed});
       }
 
-      if($FranchiseAvailable >= $TimeUsedInSeconds){
+      elsif($FranchiseInUse->{Recurrence} eq 'anual'){
+        $FranchiseAvailable = scalar($FranchiseInUse->{Seconds})-scalar($FranchiseInUse->{TotalYearUsed});
+      }
+
+      if($FranchiseAvailable >= $TimeUsedInSeconds || $FranchiseInUse->{Recurrence} eq 'ilimitado'){
         #Do the save
         $Self->RegistryContractFranchiseAdd(
           ContractFranchiseRuleID   => $FranchiseInUse->{ID},
@@ -1960,6 +1964,7 @@ sub GetFranchaseRulesAvaliable {
         Second   => 00,
     );
     my $startDayDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
+    
     $Param{StartDate}->Set(
         Year     => $Param{StartDate}->Get()->{Year},
         Month    => $Param{StartDate}->Get()->{Month},
@@ -2023,6 +2028,33 @@ sub GetFranchaseRulesAvaliable {
     );
     my $endMonthDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
     
+    #AQUI CALCULA YEAR
+
+    $Param{StartDate}->Subtract(
+        Days      => $LastDayOfMonth->{Day}-1,
+    );
+
+    $Param{StartDate}->Set(
+        Year     => $Param{StartDate}->Get()->{Year},
+        Month    => $Param{StartDate}->Get()->{Month},
+        Day      => $Param{StartDate}->Get()->{Day},
+        Hour     => 00,
+        Minute   => 00,
+        Second   => 00,
+    );
+    my $startYearDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
+    $Param{StartDate}->Add(
+        Days      => 365,
+    );
+    $Param{StartDate}->Set(
+        Year     => $Param{StartDate}->Get()->{Year},
+        Month    => $Param{StartDate}->Get()->{Month},
+        Day      => $Param{StartDate}->Get()->{Day},
+        Hour     => 23,
+        Minute   => 59,
+        Second   => 59,
+    );
+    my $endYearDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
     
     return if !$Self->{DBObject}->Prepare(
         SQL => 'select distinct * from
@@ -2030,7 +2062,8 @@ sub GetFranchaseRulesAvaliable {
                 (ifnull(CAST(cfr.hours AS UNSIGNED),0)*60*60) as seconds,
                 ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_day_used,
                 ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_week_used,
-                ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_month_used
+                ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_month_used,
+                ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_year_used
                 from customer_contract cc
                 inner join contract_franchise_rule cfr on cfr.contract_id = cc.id
                 left join franchise_rule_ticket_type frtt on frtt.contract_franchise_rule_id = cfr.id
@@ -2055,6 +2088,8 @@ sub GetFranchaseRulesAvaliable {
           \$endWeekDate,
           \$startMonthDate,
           \$endMonthDate,
+          \$startYearDate,
+          \$endYearDate,
           \$actualDate,
           \$actualDate,
           \$Param{CustomerID},
@@ -2078,7 +2113,8 @@ sub GetFranchaseRulesAvaliable {
             Seconds        => $Data[5],
             TotalDayUsed   => $Data[6],
             TotalWeekUsed  => $Data[7],
-            TotalMonthUsed => $Data[8]
+            TotalMonthUsed => $Data[8],
+            TotalYearUsed  => $Data[9]
         };
     }
     
