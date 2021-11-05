@@ -2371,6 +2371,76 @@ sub GetFranchiseRulesRegistry {
     return $Data;
 }
 
+sub CustomerServiceListGet {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{CustomerID} ) {
+      return;
+    }
+
+    # create SQL query
+    my $SQL = 'select distinct s.id 
+                from service s
+                inner join franchise_rule_service frs on frs.service_id = s.id
+                inner join contract_franchise_rule cfr on frs.contract_franchise_rule_id = cfr.id
+                inner join customer_contract cc on cfr.contract_id = cc.id and cc.valid_id = 1 and cc.start_time <= now() and cc.end_time >= now()
+                inner join price_rule_service prs on prs.service_id = s.id
+                inner join contract_price_rule cpr on prs.contract_price_rule_id = cpr.id
+                inner join customer_contract cc1 on cpr.contract_id = cc1.id and cc1.valid_id = 1 and cc1.start_time <= now() and cc1.end_time >= now()
+                where cc.customer_id = \'' . $Param{CustomerID} . '\' and cc1.customer_id = \'' . $Param{CustomerID} . '\'';
+
+    # ask database
+    $Self->{DBObject}->Prepare(
+        SQL => $SQL,
+    );
+
+    # fetch the result
+    my @CustomerServiceList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        my %CustomerServiceData;
+        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+        $CustomerServiceData{ServiceID}   = $Row[0];
+        push @CustomerServiceList, \%CustomerServiceData;
+    }
+
+    return \@CustomerServiceList;
+}
+
+sub CustomerSLAListGet {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{CustomerID} ) {
+      return;
+    }
+
+    # create SQL query
+    my $SQL = 'select distinct s.id 
+                from sla s
+                inner join franchise_rule_sla frs on frs.sla_id = s.id
+                inner join contract_franchise_rule cfr on frs.contract_franchise_rule_id = cfr.id
+                inner join customer_contract cc on cfr.contract_id = cc.id and cc.valid_id = 1 and cc.start_time <= now() and cc.end_time >= now()
+                inner join price_rule_sla prs on prs.sla_id = s.id
+                inner join contract_price_rule cpr on prs.contract_price_rule_id = cpr.id
+                inner join customer_contract cc1 on cpr.contract_id = cc1.id and cc1.valid_id = 1 and cc1.start_time <= now() and cc1.end_time >= now()
+                where cc.customer_id = \'' . $Param{CustomerID} . '\' and cc1.customer_id = \'' . $Param{CustomerID} . '\'';
+
+    # ask database
+    $Self->{DBObject}->Prepare(
+        SQL => $SQL,
+    );
+
+    # fetch the result
+    my @CustomerServiceList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        my %CustomerServiceData;
+        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+        $CustomerServiceData{SLAID}   = $Row[0];
+        push @CustomerServiceList, \%CustomerServiceData;
+    }
+
+    return \@CustomerServiceList;
+}
+
 sub DESTROY {
     my $Self = shift;
 
