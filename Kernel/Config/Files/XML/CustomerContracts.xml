@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="2.0" init="Application">
+    <Setting Name="ShowServiceSLAByContract" Required="0" Valid="1" ConfigLevel="200">
+        <Description Translatable="1">Defines if the access of Services and SLAs is controlled by contract.</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
     <Setting Name="CustomerContracts::DynamicField::TreatmentType" Required="1" Valid="1">
         <Description Translatable="1">Dynamic field name of Treatment Type field.</Description>
         <Navigation>Core</Navigation>
