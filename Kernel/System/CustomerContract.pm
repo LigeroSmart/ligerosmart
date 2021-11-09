@@ -253,10 +253,12 @@ sub CustomerContractsSearch {
                 cc.period_closing,
                 cc.customer_id,
                 cc.start_time,
-                cc.end_time
+                cc.end_time,
+                cc.order_number 
             	FROM customer_contract cc 
                 INNER JOIN customer_company cco on cc.customer_id = cco.customer_id
-                WHERE cc.customer_id like ?', 
+                WHERE cc.customer_id like ? 
+                ORDER BY order_number', 
         Bind => [\('%'.$Param{Search}.'%')]               
     );
 
@@ -271,6 +273,7 @@ sub CustomerContractsSearch {
             Customer => $Data[4],
             StartTime => $Data[5],
             EndTime => $Data[6],
+            OrderNumber => $Data[7],
         };
     }
     
@@ -292,9 +295,11 @@ sub ContactPriceRuleList {
                 contract_id,
                 name,
                 value,
-                value_total
+                value_total,
+                order_number 
             	FROM contract_price_rule
-                where contract_id = ?', 
+                where contract_id = ? 
+                ORDER BY order_number', 
         Bind => [\$Param{ContractID}]               
     );
 
@@ -307,6 +312,7 @@ sub ContactPriceRuleList {
             Name          => $Data[2],
             Value => $Data[3],
             ValueTotal => $Data[4],
+            OrderNumber => $Data[5],
         };
     }
     
@@ -497,9 +503,11 @@ sub ContactFranchiseRuleList {
                 contract_id,
                 name,
                 recurrence,
-                hours
+                hours,
+                order_number 
             	FROM contract_franchise_rule
-                where contract_id = ?', 
+                where contract_id = ? 
+                ORDER BY order_number ', 
         Bind => [\$Param{ContractID}]               
     );
 
@@ -511,7 +519,8 @@ sub ContactFranchiseRuleList {
             ContractID          => $Data[1],
             Name          => $Data[2],
             Recurrence => $Data[3],
-            Hours => $Data[4]
+            Hours => $Data[4],
+            OrderNumber => $Data[5]
         };
     }
     
@@ -826,7 +835,8 @@ sub CustomerContractDataGet {
 				end_time,
                 related_to,
                 related_to_period,
-                valid_id
+                valid_id,
+                order_number
             	FROM customer_contract WHERE id = ?',
         Bind => [ \$Param{ID} ],
     );
@@ -844,6 +854,7 @@ sub CustomerContractDataGet {
             RelatedTo           => $Data[5],
             RelatedToPeriod     => $Data[6],
             ValidID             => $Data[7],
+            OrderNumber         => $Data[8],
         };
     }
 
@@ -894,10 +905,10 @@ sub CustomerContractAdd {
 
     return if !$Self->{DBObject}->Do(
         SQL => 'insert into customer_contract  ('
-            . ' customer_id, number, start_time, end_time, related_to, related_to_period, valid_id, period_closing )'
-            . ' VALUES (?,?,?,?,?,?,?,?)',
+            . ' customer_id, number, start_time, end_time, related_to, related_to_period, valid_id, period_closing, order_number )'
+            . ' VALUES (?,?,?,?,?,?,?,?, (SELECT ifnull(MAX(c.order_number),0)+1 FROM customer_contract c where c.customer_id = ?))',
         Bind => [
-            \$Param{CustomerID},\$Param{Number},\$Param{StartTime},\$Param{EndTime},\$Param{RelatedTo},\$Param{RelatedToPeriod},\$Param{ValidID},\$Param{PeriodClosing},
+            \$Param{CustomerID},\$Param{Number},\$Param{StartTime},\$Param{EndTime},\$Param{RelatedTo},\$Param{RelatedToPeriod},\$Param{ValidID},\$Param{PeriodClosing},\$Param{CustomerID},
         ],
     );
 
@@ -940,10 +951,10 @@ sub PriceRuleAdd {
 
     return if !$Self->{DBObject}->Do(
         SQL => 'insert into contract_price_rule  ('
-            . ' contract_id, name, value, value_total )'
-            . ' VALUES (?,?,?,?)',
+            . ' contract_id, name, value, value_total, order_number )'
+            . ' VALUES (?,?,?,?, (SELECT ifnull(MAX(c.order_number),0)+1 FROM contract_price_rule c where c.contract_id = ?))',
         Bind => [
-            \$Param{ContractID},\$Name,\$Param{Value},\0,
+            \$Param{ContractID},\$Name,\$Param{Value},\0,\$Param{ContractID},
         ],
     );
     
@@ -1131,10 +1142,10 @@ sub FranchiseRuleAdd {
 
     return if !$Self->{DBObject}->Do(
         SQL => 'insert into contract_franchise_rule  ('
-            . ' contract_id, name, recurrence, hours,valid_id )'
-            . ' VALUES (?,?,?,?,1)',
+            . ' contract_id, name, recurrence, hours,valid_id, order_number )'
+            . ' VALUES (?,?,?,?,1, (SELECT ifnull(MAX(c.order_number),0)+1 FROM contract_franchise_rule c where c.contract_id = ?))',
         Bind => [
-            \$Param{ContractID},\$Name,\$Param{Recurrence},\$Param{Hours},
+            \$Param{ContractID},\$Name,\$Param{Recurrence},\$Param{Hours},\$Param{ContractID},
         ],
     );
     
@@ -1381,6 +1392,27 @@ sub CustomerContractPriceRuleRemove {
         ],
     );
 
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_price_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_price_rule set order_number = order_number - 1 where contract_id = ? and order_number > ?;',
+        Bind => [
+            \$RetData->{ContractID},\$RetData->{OrderNumber},
+        ],
+    );
+
     return if !$Self->{DBObject}->Do(
         SQL => ' delete from price_rule_treatment_type where contract_price_rule_id = ?',
         Bind => [
@@ -1435,6 +1467,27 @@ sub CustomerContractFranchiseRuleRemove {
             return;
         }
     }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_franchise_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_franchise_rule set order_number = order_number - 1 where contract_id = ? and order_number > ?;',
+        Bind => [
+            \$RetData->{ContractID},\$RetData->{OrderNumber},
+        ],
+    );
 
     return if !$Self->{DBObject}->Do(
         SQL => ' delete from franchise_rule_ticket_type where contract_franchise_rule_id = ?',

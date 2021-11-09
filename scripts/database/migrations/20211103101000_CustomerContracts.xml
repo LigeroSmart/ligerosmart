@@ -16,6 +16,7 @@
             <Column Name="related_to" Required="false" Type="INTEGER"></Column>
             <Column Name="related_to_period" Required="false" Size="250" Type="VARCHAR"></Column>
             <Column Name="valid_id" Required="true" Type="SMALLINT"></Column>
+            <Column Name="order_number" Required="true" Type="INTEGER"></Column>
             <ForeignKey ForeignTable="valid">
                 <Reference Local="valid_id" Foreign="id"/>
             </ForeignKey>
@@ -29,6 +30,7 @@
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"></Column>
             <Column Name="value" Required="true" Size="40" Type="VARCHAR"></Column>
             <Column Name="value_total" Required="true" Size="40" Type="VARCHAR"></Column>
+            <Column Name="order_number" Required="true" Type="INTEGER"></Column>
             <ForeignKey ForeignTable="customer_contract">
                 <Reference Local="contract_id" Foreign="id"/>
             </ForeignKey>
@@ -127,6 +129,7 @@
             <Column Name="recurrence" Required="true" Size="40" Type="VARCHAR"></Column>
             <Column Name="hours" Required="true" Size="40" Type="VARCHAR"></Column>
             <Column Name="valid_id" Required="true" Type="SMALLINT"></Column>
+            <Column Name="order_number" Required="true" Type="INTEGER"></Column>
             <ForeignKey ForeignTable="valid">
                 <Reference Local="valid_id" Foreign="id"/>
             </ForeignKey>
