@@ -1535,6 +1535,306 @@ sub CustomerContractFranchiseRuleRemove {
 
 }
 
+=item UpPriceRule()
+
+#
+
+=cut
+
+sub UpPriceRule {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_price_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    my $LastOrderNumber = $RetData->{OrderNumber}-1;
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_price_rule set order_number = order_number + 1 where contract_id = ? and order_number = ?;',
+        Bind => [
+            \$RetData->{ContractID},\$LastOrderNumber,
+        ],
+    );
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_price_rule set order_number = order_number - 1 where id = ?;',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
+=item DownPriceRule()
+
+#
+
+=cut
+
+sub DownPriceRule {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_price_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    my $LastOrderNumber = $RetData->{OrderNumber}+1;
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_price_rule set order_number = order_number - 1 where contract_id = ? and order_number = ?;',
+        Bind => [
+            \$RetData->{ContractID},\$LastOrderNumber,
+        ],
+    );
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_price_rule set order_number = order_number + 1 where id = ?;',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
+=item UpFranchiseRule()
+
+#
+
+=cut
+
+sub UpFranchiseRule {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_franchise_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    my $LastOrderNumber = $RetData->{OrderNumber}-1;
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_franchise_rule set order_number = order_number + 1 where contract_id = ? and order_number = ?;',
+        Bind => [
+            \$RetData->{ContractID},\$LastOrderNumber,
+        ],
+    );
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_franchise_rule set order_number = order_number - 1 where id = ?;',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
+=item DownFranchiseRule()
+
+#
+
+=cut
+
+sub DownFranchiseRule {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_franchise_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    my $LastOrderNumber = $RetData->{OrderNumber}+1;
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_franchise_rule set order_number = order_number - 1 where contract_id = ? and order_number = ?;',
+        Bind => [
+            \$RetData->{ContractID},\$LastOrderNumber,
+        ],
+    );
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE contract_franchise_rule set order_number = order_number + 1 where id = ?;',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
+=item UpContract()
+
+#
+
+=cut
+
+sub UpContract {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT customer_id, order_number from customer_contract where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            CustomerID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    my $LastOrderNumber = $RetData->{OrderNumber}-1;
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE customer_contract set order_number = order_number + 1 where customer_id = ? and order_number = ?;',
+        Bind => [
+            \$RetData->{CustomerID},\$LastOrderNumber,
+        ],
+    );
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE customer_contract set order_number = order_number - 1 where id = ?;',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
+=item DownContract()
+
+#
+
+=cut
+
+sub DownContract {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT customer_id, order_number from customer_contract where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            CustomerID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    my $LastOrderNumber = $RetData->{OrderNumber}+1;
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE customer_contract set order_number = order_number - 1 where customer_id = ? and order_number = ?;',
+        Bind => [
+            \$RetData->{CustomerID},\$LastOrderNumber,
+        ],
+    );
+
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE customer_contract set order_number = order_number + 1 where id = ?;',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
 =item SetPassword()
 
 to set customer users passwords
@@ -2130,7 +2430,7 @@ sub GetFranchaseRulesAvaliable {
                 (frs.sla_id is null or frs.sla_id = ?) and
                 (frse.service_id is null or frse.service_id = ?) and
                 (frht.hour_type is null or frht.hour_type = ?)
-                order by cfr.id desc) as result
+                order by cc.order_number, cfr.order_number) as result
                 where (result.recurrence = \'mensal\' and seconds > total_month_used) or
                 (result.recurrence = \'semanal\' and seconds > total_week_used) or
                 (result.recurrence = \'diario\' and seconds > total_day_used)', 
@@ -2212,7 +2512,7 @@ sub GetPriceRulesAvaliable {
                 (frs.sla_id is null or frs.sla_id = ?) and
                 (frse.service_id is null or frse.service_id = ?) and
                 (frht.hour_type is null or frht.hour_type = ?)
-                order by cfr.id desc', 
+                order by cc.order_number, cfr.order_number', 
         Bind => [
           \$actualDate,
           \$actualDate,

@@ -558,6 +558,155 @@ sub Run {
         return $Output;
     }
 
+
+    elsif ( $Self->{Subaction} eq 'UpPriceRole' ) {
+
+        my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
+        my $RuleID = $ParamObject->GetParam( Param => 'RuleID' ) || '';
+
+        $CustomerContractObject->UpPriceRule( ID => $RuleID );
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_Edit(
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }
+
+    elsif ( $Self->{Subaction} eq 'DownPriceRole' ) {
+
+        my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
+        my $RuleID = $ParamObject->GetParam( Param => 'RuleID' ) || '';
+
+        $CustomerContractObject->DownPriceRule( ID => $RuleID );
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_Edit(
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }
+
+    elsif ( $Self->{Subaction} eq 'UpFranchiseRole' ) {
+
+        my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
+        my $RuleID = $ParamObject->GetParam( Param => 'RuleID' ) || '';
+
+        $CustomerContractObject->UpFranchiseRule( ID => $RuleID );
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_Edit(
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }
+
+    elsif ( $Self->{Subaction} eq 'DownFranchiseRole' ) {
+
+        my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
+        my $RuleID = $ParamObject->GetParam( Param => 'RuleID' ) || '';
+
+        $CustomerContractObject->DownFranchiseRule( ID => $RuleID );
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_Edit(
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }
+
     elsif ( $Self->{Subaction} eq 'RemoveFranchiseRole' ) {
 
         my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
@@ -597,6 +746,62 @@ sub Run {
 
     elsif ( $Self->{Subaction} eq 'ViewContracts' ) {
         my $CustomerID = $ParamObject->GetParam( Param => 'CustomerID' )  || '';
+
+        $Self->_OverviewCustomer(
+            Nav    => $Nav,
+            Search => $Search,
+            CustomerID => $CustomerID
+        );
+        my $Output = $NavBar;
+        $Output .= $LayoutObject->Output(
+            TemplateFile => 'AdminCustomerContract',
+            Data         => \%Param,
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }
+
+        return $Output;
+
+    }
+
+    elsif ( $Self->{Subaction} eq 'UpContract' ) {
+        my $CustomerID = $ParamObject->GetParam( Param => 'CustomerID' )  || '';
+        my $ContractID = $ParamObject->GetParam( Param => 'ID' )  || '';
+
+        $CustomerContractObject->UpContract( ID => $ContractID );
+
+        $Self->_OverviewCustomer(
+            Nav    => $Nav,
+            Search => $Search,
+            CustomerID => $CustomerID
+        );
+        my $Output = $NavBar;
+        $Output .= $LayoutObject->Output(
+            TemplateFile => 'AdminCustomerContract',
+            Data         => \%Param,
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }
+
+        return $Output;
+
+    }
+
+    elsif ( $Self->{Subaction} eq 'DownContract' ) {
+        my $CustomerID = $ParamObject->GetParam( Param => 'CustomerID' )  || '';
+        my $ContractID = $ParamObject->GetParam( Param => 'ID' )  || '';
+
+        $CustomerContractObject->DownContract( ID => $ContractID );
 
         $Self->_OverviewCustomer(
             Nav    => $Nav,
@@ -857,6 +1062,8 @@ sub _OverviewCustomer {
                         StartTime => $UserData->{StartTime},
                         EndTime => $UserData->{EndTime},
                         ID => $UserData->{ID},
+                        OrderNumber => $UserData->{OrderNumber},
+                        IsTheLast => $UserData->{OrderNumber} == @$List,
                     },
                 );
             }
@@ -1502,6 +1709,8 @@ sub _Edit {
                         ValueTiotal => $PriceRule->{ValueTotal},
                         RuleID => $PriceRule->{ID},
                         ContractID => $Param{ID},
+                        OrderNumber => $PriceRule->{OrderNumber},
+                        IsTheLast => $PriceRule->{OrderNumber} == @$ContractPriceRules,
                     }
                 );
             }            
@@ -1567,6 +1776,8 @@ sub _Edit {
                         ValueHours => $FranchiseRule->{Hours},
                         RuleID => $FranchiseRule->{ID},
                         ContractID => $Param{ID},
+                        OrderNumber => $FranchiseRule->{OrderNumber},
+                        IsTheLast => $FranchiseRule->{OrderNumber} == @$ContractFranchiseRules,
                     }
                 );
             }            
