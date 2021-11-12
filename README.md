@@ -21,3 +21,8 @@ Build a relationship of friendship and trust with your customers. Provide resour
 ## Instructions for running LigeroSmart
 
 See https://github.com/LigeroSmart/ligerosmart-stack
+
+
+## Instructions for developers
+
+See https://www.youtube.com/watch?v=xDq4-Mb9trY&list=PLRWVfxypDIYScfNPrf3TkhLAm26QlxPPI
