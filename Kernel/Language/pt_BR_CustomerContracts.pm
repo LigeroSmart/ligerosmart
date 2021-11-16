@@ -20,6 +20,7 @@ sub Data {
     $Self->{Translation}->{'Customer Contract Management'} = 'Gerenciamento de Contratos de Clientes';
     $Self->{Translation}->{'Search for customer name.'} = 'Procure pelo nome do cliente.';
     $Self->{Translation}->{'Add customer contract'} = 'Adicionar um contrato de cliente';
+    $Self->{Translation}->{'Edit Customer Contract'} = 'Editar um contrato de cliente';
     $Self->{Translation}->{'Customer contacts are needed to have a customer costs history.'} = 'Os contatos do cliente são necessários para ter um histórico de custos do cliente.';
     $Self->{Translation}->{'Add Customer Contract'} = 'Adicionar um contrato de cliente';
     $Self->{Translation}->{'Contract Type'} = 'Tipo de Contrato';
@@ -38,6 +39,15 @@ sub Data {
     $Self->{Translation}->{'Hour / Value Used'} = 'Horas / Valor Utilizados';
     $Self->{Translation}->{'Recurrence'} = 'Recorrência';
     $Self->{Translation}->{'Value Hours'} = 'Valor Horas';
+    $Self->{Translation}->{'Contracts'} = 'Contratos';
+    $Self->{Translation}->{'Customer Data'} = 'Dados do Cliente';
+    $Self->{Translation}->{'Contract Data'} = 'Dados do Contrato';
+    $Self->{Translation}->{'Start Date'} = 'Data de início';
+    $Self->{Translation}->{'End Date'} = 'Data de fim';
+    $Self->{Translation}->{'Contract Rules and Registries'} = 'Regras contratuais e registros';
+    $Self->{Translation}->{'Price Rule'} = 'Regra de preço';
+    $Self->{Translation}->{'Franchise Rule'} = 'Regra de franquia';
+    $Self->{Translation}->{'Hour Types'} = 'Tipos de horas';
 
     return;
 }
