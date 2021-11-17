@@ -429,12 +429,12 @@
                             <td>[% Translate(Data.Valid) | html %]</td>
                             <td>
                               [% IF Data.OrderNumber > 1 %]
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpContract;ID=[% Data.ID | uri %];CustomerID=[% Data.CustomerID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Up") | html %]</a>
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpContract;ID=[% Data.ID | uri %];CustomerID=[% Data.CustomerID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
                               [% END %]
                             </td>
                             <td>
                               [% IF !Data.IsTheLast %]
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownContract;ID=[% Data.ID | uri %];CustomerID=[% Data.CustomerID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Down") | html %]</a>
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownContract;ID=[% Data.ID | uri %];CustomerID=[% Data.CustomerID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
                               [% END %]
                             </td>
                             <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Details;ID=[% Data.ID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Details") | html %]</a></td>
@@ -658,15 +658,15 @@
                             <td>[% Data.Value | html %]</td>
                             <td>
                               [% IF Data.OrderNumber > 1 %]
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Up") | html %]</a>
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
                               [% END %]
                             </td>
                             <td>
                               [% IF !Data.IsTheLast %]
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Down") | html %]</a>
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
                               [% END %]
                             </td>
-                            <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemovePriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Remove") | html %]</a></td>
+                            <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemovePriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
                         </tr>
                     [% RenderBlockEnd("PriceRuleRow") %]
                     </tbody>
@@ -767,15 +767,15 @@
                                 <td>[% Data.ValueHours | html %]</td>
                                 <td>
                                   [% IF Data.OrderNumber > 1 %]
-                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Up") | html %]</a>
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
                                   [% END %]
                                 </td>
                                 <td>
                                   [% IF !Data.IsTheLast %]
-                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Down") | html %]</a>
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
                                   [% END %]
                                 </td>
-                                <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Remove") | html %]</a></td>
+                                <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
                             </tr>
                         [% RenderBlockEnd("FranchiseRuleRow") %]
                     </tbody>
