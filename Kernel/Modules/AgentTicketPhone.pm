@@ -2394,10 +2394,12 @@ sub _GetServices {
             push @SelectedServiceIDs, $Item->{ServiceID};
         }
 
-        foreach my $key (keys %Service)
-        {
-            if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
-                delete $Service{$key};
+        if (@SelectedServiceIDs > 0) {
+            foreach my $key (keys %Service)
+            {
+                if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
+                    delete $Service{$key};
+                }
             }
         }
     }
@@ -2437,10 +2439,12 @@ sub _GetSLAs {
             push @SelectedSLAIDs, $Item->{SLAID};
         }
 
-        foreach my $key (keys %SLA)
-        {
-            if ( !grep( /^$key$/, @SelectedSLAIDs ) ) {
-                delete $SLA{$key};
+        if (@SelectedSLAIDs > 0) {
+            foreach my $key (keys %SLA)
+            {
+                if ( !grep( /^$key$/, @SelectedSLAIDs ) ) {
+                    delete $SLA{$key};
+                }
             }
         }
     }
@@ -2462,10 +2466,12 @@ sub _GetSLAs {
             push @SelectedSLAIDs, $Item->{SLAID};
         }
 
-        foreach my $key (keys %SLA)
-        {
-            if ( !grep( /^$key$/, @SelectedSLAIDs ) ) {
-                delete $SLA{$key};
+        if (@SelectedSLAIDs > 0) {
+            foreach my $key (keys %SLA)
+            {
+                if ( !grep( /^$key$/, @SelectedSLAIDs ) ) {
+                    delete $SLA{$key};
+                }
             }
         }
     }
