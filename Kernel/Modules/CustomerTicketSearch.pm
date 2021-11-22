@@ -1796,18 +1796,14 @@ sub MaskForm {
     my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 
     my %ServiceList;
-    if ( $ConfigObject->Get('Customer::TicketSearch::AllServices') ) {
-        %ServiceList = $ServiceObject->ServiceList(
-            UserID => $Self->{UserID},
-        );
-    }
-    else {
-        %ServiceList = $ServiceObject->CustomerUserServiceMemberList(
-            CustomerUserLogin => $Self->{UserID},
-            Result            => 'HASH',
-        );
-    }
+    $Param{QueueID} = 1;
 
+    %ServiceList = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
+      %Param,
+      Action => $Self->{Action},
+      CustomerUserID => $Self->{UserID},
+    );
+    
     $Param{ServicesStrg} = $LayoutObject->BuildSelection(
         Data       => \%ServiceList,
         Name       => 'ServiceIDs',
