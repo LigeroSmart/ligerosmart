@@ -261,7 +261,7 @@ ENDJS
 
                     @{ $TicketSearch{'QueueIDs'} } = $Kernel::OM->Get('Kernel::System::Queue')->GetAllCustomQueues( UserID => $Self->{UserID}, );
 
-                     $Data{Filter} = $RowQueueString;
+                     $Data{Filter} .= ";".$RowQueueString;
             }
 
             elsif ( $Key =~ m{\A (DynamicField_.+?) _ (.+?) \z}sxm ) {
