@@ -13,6 +13,7 @@ use warnings;
 
 use Kernel::System::CheckItem;
 use Kernel::Language qw(Translatable);
+use Data::Dumper;
 
 our $ObjectManagerDisabled = 1;
 
@@ -1035,7 +1036,7 @@ sub _OverviewCustomer {
         my $Limit = 400;
         
         my $List = $CustomerContractObject->CustomerContractsSearch(
-            Search => $Param{Search},
+            Search => ($Param{CustomerID} ne '') ? $Param{CustomerID} : $Param{Search},
             Valid  => 0,
         );
 
@@ -1156,45 +1157,57 @@ sub _Details {
 
     if($ContractPriceRules && (scalar @$ContractPriceRules) > 0){
       for my $PriceRule (@$ContractPriceRules){
+
         my $PriceRuleTicketTypes = $CustomerContractObject->PriceRuleTicketTypeList(ContractPriceRuleID => $PriceRule->{ID});
-
-        my $TicketTypesStr = '';
-
-        for my $PriceRuleTicketType (@$PriceRuleTicketTypes){
-            $TicketTypesStr .= $PriceRuleTicketType->{TicketTypeName}.', ';
-        }
+        my $TicketTypesStr = '*';
+	if (scalar @$PriceRuleTicketTypes > 0) {
+		my @arr;
+		foreach my $x ( @$PriceRuleTicketTypes ) {
+			push @arr, $x->{TicketTypeName};
+		}
+		$TicketTypesStr = join(', ', @arr);
+	}
 
         my $PriceRuleTreatmentTypes = $CustomerContractObject->PriceRuleTreatmentTypeList(ContractPriceRuleID => $PriceRule->{ID});
-
-        my $TreatmentTypesStr = '';
-
-        for my $PriceRuleTreatmentType (@$PriceRuleTreatmentTypes){
-            $TreatmentTypesStr .= $PriceRuleTreatmentType->{TreatmentType}.', ';
-        }
+        my $TreatmentTypesStr = '*';
+	if (scalar @$PriceRuleTreatmentTypes > 0 ) {
+		my @arr;
+		foreach my $x ( @$PriceRuleTreatmentTypes ) {
+			push @arr, $x->{TreatmentType};
+		}
+		$TreatmentTypesStr = join(', ', @arr);
+	}
 
         my $PriceRuleSLAs = $CustomerContractObject->PriceRuleSLAList(ContractPriceRuleID => $PriceRule->{ID});
-
-        my $SLAsStr = '';
-
-        for my $PriceRuleSLA (@$PriceRuleSLAs){
-            $SLAsStr .= $PriceRuleSLA->{SLAName}.', ';
-        }
+        my $SLAsStr = '*';
+	if (scalar @$PriceRuleSLAs > 0 ) {
+		my @arr;
+		foreach my $x ( @$PriceRuleSLAs ) {
+			push @arr, $x->{SLAName};
+		}
+		$SLAsStr = join(', ', @arr);
+	}
 
         my $PriceRuleServices = $CustomerContractObject->PriceRuleServiceList(ContractPriceRuleID => $PriceRule->{ID});
-
-        my $ServicesStr = '';
-
-        for my $PriceRuleService (@$PriceRuleServices){
-            $ServicesStr .= $PriceRuleService->{ServiceName}.', ';
-        }
+        my $ServicesStr = '*';
+	if (scalar @$PriceRuleServices > 0 ) {
+		my @arr;
+		foreach my $x ( @$PriceRuleServices ) {
+			push @arr, $x->{ServiceName};
+		}
+		$ServicesStr = join(', ', @arr);
+	}
 
         my $PriceRuleHourTypes = $CustomerContractObject->PriceRuleHourTypeList(ContractPriceRuleID => $PriceRule->{ID});
+        my $HourTypesStr = '*';
+	if (scalar @$PriceRuleHourTypes > 0 ) {
+		my @arr;
+		foreach my $x ( @$PriceRuleHourTypes ) {
+			push @arr, $x->{HourType};
+		}
+		$HourTypesStr = join(', ', @arr);
+	}
 
-        my $HourTypesStr = '';
-
-        for my $PriceRuleHourType (@$PriceRuleHourTypes){
-            $HourTypesStr .= $PriceRuleHourType->{HourType}.', ';
-        }
         $LayoutObject->Block(
             Name => 'PriceRuleReg',
             Data => {
@@ -1232,12 +1245,26 @@ sub _Details {
           my $Total = 0;
 
           for my $PriceReg (@$PriceRegistries){
+
+            my %TicketData = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
+              'TicketID' => $PriceReg->{TicketID},
+	      'UserID'   => 1
+            );
+            my %ArticleData = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle(
+              'TicketID'  => $PriceReg->{TicketID},
+	      'ArticleID' => $PriceReg->{ArticleID}
+	    )->ArticleGet(
+              'TicketID'  => $PriceReg->{TicketID},
+	      'ArticleID' => $PriceReg->{ArticleID}
+	    );
             $LayoutObject->Block(
               Name => 'PriceRuleRegResultRow',
               Data => {
                 TicketID => $PriceReg->{TicketID},
                 TicketNumber => $PriceReg->{TicketNumber},
                 ArticleID => $PriceReg->{ArticleID},
+		TicketData => \%TicketData,
+		ArticleData => \%ArticleData,
                 Date => $PriceReg->{Date},
                 Value => $PriceReg->{Value}
               }
@@ -1262,45 +1289,76 @@ sub _Details {
 
     if($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0){
       for my $FranchiseRule (@$ContractFranchiseRules){
+
         my $FranchiseRuleTicketTypes = $CustomerContractObject->FranchiseRuleTicketTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-
-        my $TicketTypesStr = '';
-
-        for my $FranchiseRuleTicketType (@$FranchiseRuleTicketTypes){
-            $TicketTypesStr .= $FranchiseRuleTicketType->{TicketTypeName}.', ';
-        }
+	my $TicketTypesStr = '*';
+	if (scalar @$FranchiseRuleTicketTypes > 0) {
+		my @arr;
+		foreach my $x ( @$FranchiseRuleTicketTypes ) {
+			push @arr, $x->{TicketTypeName};
+		}
+		$TicketTypesStr = join(', ', @arr);
+	}
 
         my $FranchiseRuleTreatmentTypes = $CustomerContractObject->FranchiseRuleTreatmentTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-
-        my $TreatmentTypesStr = '';
-
-        for my $FranchiseRuleTreatmentType (@$FranchiseRuleTreatmentTypes){
-            $TreatmentTypesStr .= $FranchiseRuleTreatmentType->{TreatmentType}.', ';
-        }
+        my $TreatmentTypesStr = '*';
+	if (scalar @$FranchiseRuleTreatmentTypes > 0) {
+		my @arr;
+		foreach my $x ( @$FranchiseRuleTreatmentTypes ) {
+			push @arr, $x->{TreatmentType};
+		}
+		$TreatmentTypesStr = join(', ', @arr);
+	}
 
         my $FranchiseRuleSLAs = $CustomerContractObject->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-
-        my $SLAsStr = '';
-
-        for my $FranchiseRuleSLA (@$FranchiseRuleSLAs){
-            $SLAsStr .= $FranchiseRuleSLA->{SLAName}.', ';
-        }
+        my $SLAsStr = '*';
+	if (scalar @$FranchiseRuleSLAs> 0) {
+		my @arr;
+		foreach my $x ( @$FranchiseRuleSLAs ) {
+			push @arr, $x->{SLAName};
+		}
+		$SLAsStr = join(', ', @arr);
+	}
 
         my $FranchiseRuleServices = $CustomerContractObject->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-
-        my $ServicesStr = '';
-
-        for my $FranchiseRuleService (@$FranchiseRuleServices){
-            $ServicesStr .= $FranchiseRuleService->{ServiceName}.', ';
-        }
+        my $ServicesStr = '*';
+	if (scalar @$FranchiseRuleServices> 0) {
+		my @arr;
+		foreach my $x ( @$FranchiseRuleServices ) {
+			push @arr, $x->{ServiceName};
+		}
+		$ServicesStr = join(', ', @arr);
+	}
 
         my $FranchiseRuleHourTypes = $CustomerContractObject->FranchiseRuleHourTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+        my $HourTypesStr = '*';
+	if (scalar @$FranchiseRuleHourTypes > 0) {
+		my @arr;
+		foreach my $x ( @$FranchiseRuleHourTypes ) {
+			push @arr, $x->{HourType};
+		}
+		$HourTypesStr = join(', ', @arr);
+	}
 
-        my $HourTypesStr = '';
+	my $AvailableTime = $FranchiseRule->{Hours} * 3600;
+	my $FranchiseRegistries = $CustomerContractObject->GetFranchiseRulesRegistry(
+		ContractFranchiseRuleID => $FranchiseRule->{ID},
+		FromSearch => '',
+		ToSearch => '',
+	);
+        if (scalar @$FranchiseRegistries && $FranchiseRule->{Recurrence} ne 'ilimitado'){
+		for my $FranchiseReg (@$FranchiseRegistries) {
+			$AvailableTime -= $FranchiseReg->{Value};
+		}
+		my $secondsT = $AvailableTime;
+		my $hoursT = int( $secondsT / (60*60) );
+		my $minsT = ( $secondsT / 60 ) % 60;
+		my $secsT = $secondsT % 60;
+		$AvailableTime = sprintf("%02d:%02d:%02d", $hoursT,$minsT,$secsT);
+	} else {
+		$AvailableTime = '-';
+	}
 
-        for my $FranchiseRuleHourType (@$FranchiseRuleHourTypes){
-            $HourTypesStr .= $FranchiseRuleHourType->{HourType}.', ';
-        }
         $LayoutObject->Block(
             Name => 'FranchiseRuleReg',
             Data => {
@@ -1312,6 +1370,7 @@ sub _Details {
               SLAsStr => $SLAsStr,
               ServicesStr => $ServicesStr,
               HourTypesStr => $HourTypesStr,
+              AvailableTime => $AvailableTime
             },
         );
 
@@ -1343,11 +1402,24 @@ sub _Details {
             my $mins = ( $seconds / 60 ) % 60;
             my $secs = $seconds % 60;
 
+            my %TicketData = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
+              'TicketID' => $FranchiseReg->{TicketID},
+	      'UserID'   => 1
+            );
+            my %ArticleData = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle(
+              'TicketID'  => $FranchiseReg->{TicketID},
+	      'ArticleID' => $FranchiseReg->{ArticleID}
+	    )->ArticleGet(
+              'TicketID'  => $FranchiseReg->{TicketID},
+	      'ArticleID' => $FranchiseReg->{ArticleID}
+	    );
             $LayoutObject->Block(
               Name => 'FranchiseRuleRegResultRow',
               Data => {
                 TicketID => $FranchiseReg->{TicketID},
                 TicketNumber => $FranchiseReg->{TicketNumber},
+		TicketData => \%TicketData,
+		ArticleData => \%ArticleData,
                 ArticleID => $FranchiseReg->{ArticleID},
                 Date => $FranchiseReg->{Date},
                 Value => sprintf("%02d:%02d:%02d", $hours,$mins,$secs),
@@ -1657,45 +1729,55 @@ sub _Edit {
         if($ContractPriceRules && (scalar @$ContractPriceRules) > 0){
             for my $PriceRule (@$ContractPriceRules){
 
-                my $PriceRuleTicketTypes = $CustomerContractObject->PriceRuleTicketTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $PriceRuleTicketTypes = $CustomerContractObject->PriceRuleTicketTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $TicketTypesStr = '*';
+		if (scalar @$PriceRuleTicketTypes > 0) {
+			my @arr;
+			foreach my $x ( @$PriceRuleTicketTypes ) {
+				push @arr, $x->{TicketTypeName};
+			}
+			$TicketTypesStr = join(', ', @arr);
+		}
 
-                my $TicketTypesStr = '';
+		my $PriceRuleTreatmentTypes = $CustomerContractObject->PriceRuleTreatmentTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $TreatmentTypesStr = '*';
+		if (scalar @$PriceRuleTreatmentTypes > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleTreatmentTypes ) {
+				push @arr, $x->{TreatmentType};
+			}
+			$TreatmentTypesStr = join(', ', @arr);
+		}
 
-                for my $PriceRuleTicketType (@$PriceRuleTicketTypes){
-                    $TicketTypesStr .= $PriceRuleTicketType->{TicketTypeName}.', ';
-                }
+		my $PriceRuleSLAs = $CustomerContractObject->PriceRuleSLAList(ContractPriceRuleID => $PriceRule->{ID});
+		my $SLAsStr = '*';
+		if (scalar @$PriceRuleSLAs > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleSLAs ) {
+				push @arr, $x->{SLAName};
+			}
+			$SLAsStr = join(', ', @arr);
+		}
 
-                my $PriceRuleTreatmentTypes = $CustomerContractObject->PriceRuleTreatmentTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $PriceRuleServices = $CustomerContractObject->PriceRuleServiceList(ContractPriceRuleID => $PriceRule->{ID});
+		my $ServicesStr = '*';
+		if (scalar @$PriceRuleServices > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleServices ) {
+				push @arr, $x->{ServiceName};
+			}
+			$ServicesStr = join(', ', @arr);
+		}
 
-                my $TreatmentTypesStr = '';
-
-                for my $PriceRuleTreatmentType (@$PriceRuleTreatmentTypes){
-                    $TreatmentTypesStr .= $PriceRuleTreatmentType->{TreatmentType}.', ';
-                }
-
-                my $PriceRuleSLAs = $CustomerContractObject->PriceRuleSLAList(ContractPriceRuleID => $PriceRule->{ID});
-
-                my $SLAsStr = '';
-
-                for my $PriceRuleSLA (@$PriceRuleSLAs){
-                    $SLAsStr .= $PriceRuleSLA->{SLAName}.', ';
-                }
-
-                my $PriceRuleServices = $CustomerContractObject->PriceRuleServiceList(ContractPriceRuleID => $PriceRule->{ID});
-
-                my $ServicesStr = '';
-
-                for my $PriceRuleService (@$PriceRuleServices){
-                    $ServicesStr .= $PriceRuleService->{ServiceName}.', ';
-                }
-
-                my $PriceRuleHourTypes = $CustomerContractObject->PriceRuleHourTypeList(ContractPriceRuleID => $PriceRule->{ID});
-
-                my $HourTypesStr = '';
-
-                for my $PriceRuleHourType (@$PriceRuleHourTypes){
-                    $HourTypesStr .= $PriceRuleHourType->{HourType}.', ';
-                }
+		my $PriceRuleHourTypes = $CustomerContractObject->PriceRuleHourTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $HourTypesStr = '*';
+		if (scalar @$PriceRuleHourTypes > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleHourTypes ) {
+				push @arr, $x->{HourType};
+			}
+			$HourTypesStr = join(', ', @arr);
+		}
 
                 $LayoutObject->Block( 
                     Name => 'PriceRuleRow',
@@ -1724,45 +1806,55 @@ sub _Edit {
         if($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0){
             for my $FranchiseRule (@$ContractFranchiseRules){
 
-                my $FranchiseRuleTicketTypes = $CustomerContractObject->FranchiseRuleTicketTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+		my $FranchiseRuleTicketTypes = $CustomerContractObject->FranchiseRuleTicketTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+		my $TicketTypesStr = '*';
+		if (scalar @$FranchiseRuleTicketTypes > 0) {
+			my @arr;
+			foreach my $x ( @$FranchiseRuleTicketTypes ) {
+				push @arr, $x->{TicketTypeName};
+			}
+			$TicketTypesStr = join(', ', @arr);
+		}
 
-                my $TicketTypesStr = '';
+		my $FranchiseRuleTreatmentTypes = $CustomerContractObject->FranchiseRuleTreatmentTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+		my $TreatmentTypesStr = '*';
+		if (scalar @$FranchiseRuleTreatmentTypes > 0) {
+			my @arr;
+			foreach my $x ( @$FranchiseRuleTreatmentTypes ) {
+				push @arr, $x->{TreatmentType};
+			}
+			$TreatmentTypesStr = join(', ', @arr);
+		}
 
-                for my $FranchiseRuleTicketType (@$FranchiseRuleTicketTypes){
-                    $TicketTypesStr .= $FranchiseRuleTicketType->{TicketTypeName}.', ';
-                }
+		my $FranchiseRuleSLAs = $CustomerContractObject->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+		my $SLAsStr = '*';
+		if (scalar @$FranchiseRuleSLAs> 0) {
+			my @arr;
+			foreach my $x ( @$FranchiseRuleSLAs ) {
+				push @arr, $x->{SLAName};
+			}
+			$SLAsStr = join(', ', @arr);
+		}
 
-                my $FranchiseRuleTreatmentTypes = $CustomerContractObject->FranchiseRuleTreatmentTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+		my $FranchiseRuleServices = $CustomerContractObject->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+		my $ServicesStr = '*';
+		if (scalar @$FranchiseRuleServices> 0) {
+			my @arr;
+			foreach my $x ( @$FranchiseRuleServices ) {
+				push @arr, $x->{ServiceName};
+			}
+			$ServicesStr = join(', ', @arr);
+		}
 
-                my $TreatmentTypesStr = '';
-
-                for my $FranchiseRuleTreatmentType (@$FranchiseRuleTreatmentTypes){
-                    $TreatmentTypesStr .= $FranchiseRuleTreatmentType->{TreatmentType}.', ';
-                }
-
-                my $FranchiseRuleSLAs = $CustomerContractObject->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-
-                my $SLAsStr = '';
-
-                for my $FranchiseRuleSLA (@$FranchiseRuleSLAs){
-                    $SLAsStr .= $FranchiseRuleSLA->{SLAName}.', ';
-                }
-
-                my $FranchiseRuleServices = $CustomerContractObject->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-
-                my $ServicesStr = '';
-
-                for my $FranchiseRuleService (@$FranchiseRuleServices){
-                    $ServicesStr .= $FranchiseRuleService->{ServiceName}.', ';
-                }
-
-                my $FranchiseRuleHourTypes = $CustomerContractObject->FranchiseRuleHourTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-
-                my $HourTypesStr = '';
-
-                for my $FranchiseRuleHourType (@$FranchiseRuleHourTypes){
-                    $HourTypesStr .= $FranchiseRuleHourType->{HourType}.', ';
-                }
+		my $FranchiseRuleHourTypes = $CustomerContractObject->FranchiseRuleHourTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+		my $HourTypesStr = '*';
+		if (scalar @$FranchiseRuleHourTypes > 0) {
+			my @arr;
+			foreach my $x ( @$FranchiseRuleHourTypes ) {
+				push @arr, $x->{HourType};
+			}
+			$HourTypesStr = join(', ', @arr);
+		}
 
                 $LayoutObject->Block( 
                     Name => 'FranchiseRuleRow',

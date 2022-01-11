@@ -221,9 +221,8 @@
                 <table class="DataTable" id="CustomerTable">
                     <thead>
                         <tr>
-                            <th>[% Translate("TicketID") | html %]</th>
-                            <th>[% Translate("TicketNumber") | html %]</th>
-                            <th>[% Translate("ArticleID") | html %]</th>
+                            <th>Ticket#</th>
+                            <th>[% Translate("Article") | html %]</th>
                             <th>[% Translate("Date") | html %]</th>
                             <th>[% Translate("Value") | html %]</th>
                         </tr>
@@ -239,10 +238,17 @@
 
 [% RenderBlockStart("PriceRuleRegResultRow") %]
                         <tr>
-                            <td>[% Data.TicketID | html %]</td>
-                            <td>[% Data.TicketNumber | html %]</td>
-                            <td>[% Data.ArticleID | html %]</td>
-                            <td>[% Data.Date | Localize("Date") %]</td>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %]" title="[% Data.TicketData.Title %]" target="_blank">
+                                    [% Data.TicketNumber | html %]
+                                </a>
+                            </td>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %];ArticleID=[% Data.ArticleID %]" title="[% Data.ArticleData.Subject %]" target="_blank">
+                                    [% Data.ArticleData.Subject | html %]
+                                </a>
+                            </td>
+                            <td>[% Data.ArticleData.CreateTime | Localize("TimeLong") %]</td>
                             <td>[% Data.Value | html %]</td>
                         </tr>
 [% RenderBlockEnd("PriceRuleRegResultRow") %]
@@ -251,7 +257,6 @@
 [% RenderBlockStart("PriceRuleRegResultTotal") %]
                     <tfooter>
                       <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td><strong>Total</strong></td>
@@ -301,17 +306,29 @@
                     <div class="Size1of3">
                         <fieldset class="TableLike">
                             <label>[% Translate("Value") | html %]</label>
-                            <p class="Value">[% Data.Value | html %] Hrs / [% Data.Recurrence | html %] </p>
+                            [% IF Data.Recurrence == 'ilimitado' %]
+                                <p class="Value">[% Data.Recurrence | html %] </p>
+                            [% ELSE %]
+                                <p class="Value">[% Data.Value | html %] Hrs / [% Data.Recurrence | html %] </p>
+                            [% END %]
                         </fieldset>
                     </div>
                 </div>
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Available Time") | html %]</label>
+                            <p class="Value">[% Data.AvailableTime | html %]</p>
+                        </fieldset>
+                    </div>
+                </div>
+
 [% RenderBlockStart("FranchiseRuleRegResult") %]
                 <table class="DataTable" id="CustomerTable">
                     <thead>
                         <tr>
-                            <th>[% Translate("TicketID") | html %]</th>
-                            <th>[% Translate("TicketNumber") | html %]</th>
-                            <th>[% Translate("ArticleID") | html %]</th>
+                            <th>Ticket#</th>
+                            <th>[% Translate("Article") | html %]</th>
                             <th>[% Translate("Date") | html %]</th>
                             <th>[% Translate("Value") | html %]</th>
                         </tr>
@@ -319,7 +336,7 @@
                     <tbody>
 [% RenderBlockStart("FranchiseRuleRegResultNoData") %]
                         <tr>
-                            <td colspan="[% Data.ColSpan | html %]">
+                            <td colspan="4">
                                 [% Translate("No data found.") | html %]
                             </td>
                         </tr>
@@ -327,10 +344,17 @@
 
 [% RenderBlockStart("FranchiseRuleRegResultRow") %]
                         <tr>
-                            <td>[% Data.TicketID | html %]</td>
-                            <td>[% Data.TicketNumber | html %]</td>
-                            <td>[% Data.ArticleID | html %]</td>
-                            <td>[% Data.Date | Localize("Date") %]</td>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %]" title="[% Data.TicketData.Title %]" target="_blank">
+                                    [% Data.TicketNumber | html %]
+                                </a>
+                            </td>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %];ArticleID=[% Data.ArticleID %]" title="[% Data.ArticleData.Subject %]" target="_blank">
+                                    [% Data.ArticleData.Subject | html %]
+                                </a>
+                            </td>
+                            <td>[% Data.ArticleData.CreateTime | Localize("TimeLong") %]</td>
                             <td>[% Data.Value | html %]</td>
                         </tr>
 [% RenderBlockEnd("FranchiseRuleRegResultRow") %]
@@ -338,7 +362,6 @@
 [% RenderBlockStart("FranchiseRuleRegResultTotal") %]
                     <tfooter>
                       <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td><strong>Total</strong></td>
