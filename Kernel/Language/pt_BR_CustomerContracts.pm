@@ -48,6 +48,7 @@ sub Data {
     $Self->{Translation}->{'Price Rule'} = 'Regra de preço';
     $Self->{Translation}->{'Franchise Rule'} = 'Regra de franquia';
     $Self->{Translation}->{'Hour Types'} = 'Tipos de horas';
+    $Self->{Translation}->{'Available Time'} = 'Tempo Disponível';
 
     return;
 }

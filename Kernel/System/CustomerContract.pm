@@ -10,6 +10,7 @@ package Kernel::System::CustomerContract;
 
 use strict;
 use warnings;
+use Data::Dumper;
 
 use base qw(Kernel::System::EventHandler);
 
@@ -2095,8 +2096,6 @@ sub CalculateContract {
     my $UserObject = $Kernel::OM->Get('Kernel::System::User');
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
-    use Data::Dumper;
-
     my $DynamicFieldStart = $DynamicFieldObject->DynamicFieldGet(
         Name   => $DynamicFieldStartName,
     );
@@ -2206,6 +2205,7 @@ sub CalculateContract {
         ServiceID       => $ServiceID,
         HourType        => $TimeType,
     );
+    $Self->{LogObject}->Log( Priority => 'error', Message => Dumper( $ListFranchise ) );
 
     #subtrair tempo gasto de franquia
     my $QtFranchise = scalar(@$ListFranchise);
@@ -2433,7 +2433,8 @@ sub GetFranchaseRulesAvaliable {
                 order by cc.order_number, cfr.order_number) as result
                 where (result.recurrence = \'mensal\' and seconds > total_month_used) or
                 (result.recurrence = \'semanal\' and seconds > total_week_used) or
-                (result.recurrence = \'diario\' and seconds > total_day_used)', 
+                (result.recurrence = \'diario\' and seconds > total_day_used) or 
+		(result.recurrence = \'ilimitado\') ', 
         Bind => [
           \$startDayDate,
           \$endDayDate,
@@ -2731,6 +2732,7 @@ sub CustomerServiceListGet {
       return;
     }
 
+=cut
     # create SQL query
     my $SQL = 'select distinct s.id 
                 from service s
@@ -2755,8 +2757,67 @@ sub CustomerServiceListGet {
         $CustomerServiceData{ServiceID}   = $Row[0];
         push @CustomerServiceList, \%CustomerServiceData;
     }
+=cut
 
-    return \@CustomerServiceList;
+	my $CustomerContract = $Self->CustomerContractsSearch( Search => $Param{CustomerID} );
+	if ( scalar @{$CustomerContract} ) {
+
+		my @CustomerServiceList;
+		foreach my $Contract ( @{$CustomerContract} ) {
+			my $ContractFranchiseRules = $Self->ContactFranchiseRuleList(ContractID => $Contract->{ID});
+			if ($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0) {
+				for my $FranchiseRule (@$ContractFranchiseRules) {
+					my $FranchiseRuleServices = $Self->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+					if (scalar @$FranchiseRuleServices> 0) {
+						my @arr;
+						foreach my $x ( @$FranchiseRuleServices ) {
+        						my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $x->{ServiceName};
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					} else {
+						foreach my $n ( 1..9999 ) {
+	        					my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $n;
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					}
+				}
+			}
+			my $ContractPriceRules = $Self->ContactPriceRuleList(ContractID => $Contract->{ID});
+			if($ContractPriceRules && (scalar @$ContractPriceRules) > 0){
+				for my $PriceRule (@$ContractPriceRules) {
+					my $PriceRuleServices = $Self->PriceRuleServiceList(ContractPriceRuleID => $PriceRule->{ID});
+					if (scalar @$PriceRuleServices > 0 ) {
+						my @arr;
+						foreach my $x ( @$PriceRuleServices ) {
+        						my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $x->{ServiceName};
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					} else {
+						foreach my $n ( 1..9999 ) {
+	        					my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $n;
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					}
+				}
+			}
+		} 
+		
+		return \@CustomerServiceList;
+
+	} else {
+	
+		my @CustomerServiceList;
+		return \@CustomerServiceList;
+
+	}
 }
 
 sub CustomerSLAListGet {
@@ -2766,6 +2827,7 @@ sub CustomerSLAListGet {
       return;
     }
 
+=cut
     # create SQL query
     my $SQL = 'select distinct s.id 
                 from sla s
@@ -2792,6 +2854,68 @@ sub CustomerSLAListGet {
     }
 
     return \@CustomerServiceList;
+
+=cut
+
+	my $CustomerContract = $Self->CustomerContractsSearch( Search => $Param{CustomerID} );
+	if ( scalar @{$CustomerContract} ) {
+
+		my @CustomerServiceList;
+		foreach my $Contract ( @{$CustomerContract} ) {
+			my $ContractFranchiseRules = $Self->ContactFranchiseRuleList(ContractID => $Contract->{ID});
+			if ($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0) {
+				for my $FranchiseRule (@$ContractFranchiseRules) {
+					my $FranchiseRuleSLAs = $Self->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+					if (scalar @$FranchiseRuleSLAs > 0) {
+						my @arr;
+						foreach my $x ( @$FranchiseRuleSLAs ) {
+        						my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $x->{SLAName};
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					} else {
+						foreach my $n ( 1..9999 ) {
+	        					my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $n;
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					}
+				}
+			}
+			my $ContractPriceRules = $Self->ContactPriceRuleList(ContractID => $Contract->{ID});
+			if($ContractPriceRules && (scalar @$ContractPriceRules) > 0){
+				for my $PriceRule (@$ContractPriceRules) {
+					my $PriceRuleSLAs = $Self->PriceRuleSLAList(ContractPriceRuleID => $PriceRule->{ID});
+					if (scalar @$PriceRuleSLAs > 0 ) {
+						my @arr;
+						foreach my $x ( @$PriceRuleSLAs ) {
+        						my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $x->{SLAName};
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					} else {
+						foreach my $n ( 1..9999 ) {
+	        					my %CustomerServiceData;
+						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
+						        $CustomerServiceData{ServiceID}   = $n;
+						        push @CustomerServiceList, \%CustomerServiceData;
+						}
+					}
+				}
+			}
+		} 
+		
+		return \@CustomerServiceList;
+
+	} else {
+	
+		my @CustomerServiceList;
+		return \@CustomerServiceList;
+
+	}
 }
 
 sub DESTROY {
