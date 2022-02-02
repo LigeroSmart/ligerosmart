@@ -3069,6 +3069,12 @@ sub _GetSLAs {
 
     if ($AllowAccessServiceSlaByCustomer) {
         my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
+		my $TicketID = $Param{TicketID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' );
+
+        if( $CustomerID eq '' ) {
+                my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet( TicketID => $TicketID );
+                $CustomerID = $Ticket{CustomerID};
+        }
 
         my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAListGet(
             CustomerID  =>  $CustomerID,
