@@ -165,7 +165,7 @@ sub DebugLog {
     }
 
     # Check if DisableLog == 1
-    my $DisableLog = ( $Param{Data}->{DisableLog} && $Param{Data}->{DisableLog} == 1 ) ? 1 : 0;
+    my $DisableLog = ( ref($Param{Data}) eq 'HASH' && $Param{Data}->{DisableLog} && $Param{Data}->{DisableLog} == 1 ) ? 1 : 0;
 
     # if DebugLevel is not set DebugLevel from constructor is used
     $Param{DebugLevel} = $Param{DebugLevel} || $Self->{DebugLevel};
