@@ -24,9 +24,10 @@ sub Data {
     $Self->{Translation}->{'Customer contacts are needed to have a customer costs history.'} = 'Os contatos do cliente são necessários para ter um histórico de custos do cliente.';
     $Self->{Translation}->{'Add Customer Contract'} = 'Adicionar um contrato de cliente';
     $Self->{Translation}->{'Contract Type'} = 'Tipo de Contrato';
-    $Self->{Translation}->{'Closing Period'} = 'Periodo de Fechamento';
-    $Self->{Translation}->{'Absolut Period'} = 'Periodo Absoluto';
-    $Self->{Translation}->{'Relative Period'} = 'Periodo Relativo';
+    $Self->{Translation}->{'Closing Period'} = 'Periodo de Cobrança';
+    $Self->{Translation}->{'Validity Period'} = 'Periodo de Validade';
+    $Self->{Translation}->{'Absolut Period'} = 'Absoluto';
+    $Self->{Translation}->{'Relative Period'} = 'Relativo';
     $Self->{Translation}->{'Price Rules'} = 'Regras de Preço';
     $Self->{Translation}->{'Franchise Rules'} = 'Regras de Franquia';
     $Self->{Translation}->{'Treatment Types'} = 'Tipos de Tratamentos';

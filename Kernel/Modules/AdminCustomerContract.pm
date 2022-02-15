@@ -1704,6 +1704,9 @@ sub _Edit {
         $Recurrence{ 'diario' } = 'diario';
         $Recurrence{ 'semanal' } = 'semanal';
         $Recurrence{ 'mensal' } = 'mensal';
+        $Recurrence{ 'bimestral' } = 'bimestral';
+        $Recurrence{ 'trimestral' } = 'trimestral';
+        $Recurrence{ 'semestral' } = 'semestral';
         $Recurrence{ 'anual' } = 'anual';
         $Recurrence{ 'ilimitado' } = 'ilimitado';
 

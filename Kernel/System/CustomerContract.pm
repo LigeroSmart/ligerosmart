@@ -2140,6 +2140,8 @@ sub CalculateContract {
         }
     );
 
+    #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \%Param ));
+    #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \%Preferences ));
     $CreateTime->ToTimeZone(
         TimeZone => $UserTimeZone,
     );
@@ -2205,7 +2207,6 @@ sub CalculateContract {
         ServiceID       => $ServiceID,
         HourType        => $TimeType,
     );
-    $Self->{LogObject}->Log( Priority => 'error', Message => Dumper( $ListFranchise ) );
 
     #subtrair tempo gasto de franquia
     my $QtFranchise = scalar(@$ListFranchise);
@@ -2225,6 +2226,18 @@ sub CalculateContract {
 
       elsif($FranchiseInUse->{Recurrence} eq 'mensal'){
         $FranchiseAvailable = scalar($FranchiseInUse->{Seconds})-scalar($FranchiseInUse->{TotalMonthUsed});
+      }
+
+      elsif($FranchiseInUse->{Recurrence} eq 'bimestral'){
+        $FranchiseAvailable = scalar($FranchiseInUse->{Seconds})-scalar($FranchiseInUse->{Total2MonthUsed});
+      }
+
+      elsif($FranchiseInUse->{Recurrence} eq 'trimestral'){
+        $FranchiseAvailable = scalar($FranchiseInUse->{Seconds})-scalar($FranchiseInUse->{Total3MonthUsed});
+      }
+
+      elsif($FranchiseInUse->{Recurrence} eq 'semestral'){
+        $FranchiseAvailable = scalar($FranchiseInUse->{Seconds})-scalar($FranchiseInUse->{Total6MonthUsed});
       }
 
       elsif($FranchiseInUse->{Recurrence} eq 'anual'){
@@ -2380,7 +2393,22 @@ sub GetFranchaseRulesAvaliable {
         Second   => 59,
     );
     my $endMonthDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
-    
+
+    # Get the start of 6 months ago
+    $Param{StartDate}->Subtract( Months => 5 ); # Current month - 5 = 6 months
+    my $start6MonthDate = $Param{StartDate}->Format( Format => '%Y-%m-01 00:00:00' );
+
+    # Get the start of 3 months ago
+    $Param{StartDate}->Add( Months => 3 );
+    my $start3MonthDate = $Param{StartDate}->Format( Format => '%Y-%m-01 00:00:00' );
+
+    # Get the start of 2 months ago
+    $Param{StartDate}->Add( Months => 1 );
+    my $start2MonthDate = $Param{StartDate}->Format( Format => '%Y-%m-01 00:00:00' );
+
+    # Reset date object
+    $Param{StartDate}->Add( Months => 1 );
+
     #AQUI CALCULA YEAR
 
     $Param{StartDate}->Subtract(
@@ -2416,6 +2444,9 @@ sub GetFranchaseRulesAvaliable {
                 ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_day_used,
                 ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_week_used,
                 ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_month_used,
+                ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_2month_used,
+                ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_3month_used,
+                ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_6month_used,
                 ifnull((select sum(CAST(rcf.value AS UNSIGNED)) from registry_contract_franchise rcf where rcf.date between ? and ? and rcf.contract_franchise_rule_id = cfr.id),0) as total_year_used
                 from customer_contract cc
                 inner join contract_franchise_rule cfr on cfr.contract_id = cc.id
@@ -2434,6 +2465,10 @@ sub GetFranchaseRulesAvaliable {
                 where (result.recurrence = \'mensal\' and seconds > total_month_used) or
                 (result.recurrence = \'semanal\' and seconds > total_week_used) or
                 (result.recurrence = \'diario\' and seconds > total_day_used) or 
+                (result.recurrence = \'bimestral\' and seconds > total_2month_used) or 
+                (result.recurrence = \'trimestral\' and seconds > total_3month_used) or 
+                (result.recurrence = \'semestral\' and seconds > total_6month_used) or 
+                (result.recurrence = \'anual\' and seconds > total_year_used) or 
 		(result.recurrence = \'ilimitado\') ', 
         Bind => [
           \$startDayDate,
@@ -2441,6 +2476,12 @@ sub GetFranchaseRulesAvaliable {
           \$startWeekDate,
           \$endWeekDate,
           \$startMonthDate,
+          \$endMonthDate,
+          \$start2MonthDate,
+          \$endMonthDate,
+          \$start3MonthDate,
+          \$endMonthDate,
+          \$start6MonthDate,
           \$endMonthDate,
           \$startYearDate,
           \$endYearDate,
@@ -2468,7 +2509,10 @@ sub GetFranchaseRulesAvaliable {
             TotalDayUsed   => $Data[6],
             TotalWeekUsed  => $Data[7],
             TotalMonthUsed => $Data[8],
-            TotalYearUsed  => $Data[9]
+            Total2MonthUsed => $Data[9],
+            Total3MonthUsed => $Data[10],
+            Total6MonthUsed => $Data[11],
+            TotalYearUsed  => $Data[12]
         };
     }
     
