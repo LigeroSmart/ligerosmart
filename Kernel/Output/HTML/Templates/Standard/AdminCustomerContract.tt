@@ -505,36 +505,32 @@
                         <div class="Clear"></div>
                         
                         [% RenderBlockStart("AddMode") %]
+                            <label class="Mandatory"><span class="Marker">*</span> [% Translate("Validity Period") | html %]:</label>
                             <div class="Field">
-                                <p>
+                                <p style="margin-top: 5px;">
                                     <input type="radio" name="DateType" id="AbsolutPeriod" value="0" [% Data.AbsolutPeriod %] />
                                     <label class="Mandatory" for="AbsolutPeriod">[% Translate("Absolut Period") | html %]</label>
-                                </p>
-                            </div>
-                            <div class="Clear"></div>
-                            <label class="Mandatory absolutPeriodContent"><span class="Marker">*</span>[% Translate("From") | html %]:</label>
-                            <div class="Field absolutPeriodContent">                            
-                                [% Data.FromDateString %]
-                                <div id="DayError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
-                                <div id="HourError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
-                            </div>                        
-                            <div class="Clear absolutPeriodContent"></div>                        
-                            <label class="Mandatory absolutPeriodContent"><span class="Marker">*</span>[% Translate("To") | html %]:</label>
-                            <div class="Field absolutPeriodContent">
-                                [% Data.ToDateString %]
-                                <div id="DayError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
-                                <div id="HourError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
-                            </div>
-                            <div class="Clear absolutPeriodContent"></div>
-                            <div class="Field">
-                                <p>
                                     <input type="radio" name="DateType" id="RelativePeriod" value="1" [% Data.RelativePeriod %] />
                                     <label class="Mandatory" for="RelativePeriod">[% Translate("Relative Period") | html %]</label>
                                 </p>
                             </div>
                             <div class="Clear"></div>
-                            <label class="Mandatory relativePeriodContent" for="RelatedTo"><span class="Marker">*</span> [% Translate("The Last") | html %]:</label>
-                            <div class="Field relativePeriodContent">
+                            <label class="Mandatory absolutPeriodContent" style="margin-left: 45px;"><span class="Marker">*</span>[% Translate("From") | html %]:</label>
+                            <div class="Field absolutPeriodContent" style="padding-left: 50px;">                            
+                                [% Data.FromDateString %]
+                                <div id="DayError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                                <div id="HourError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                            </div>                        
+                            <div class="Clear absolutPeriodContent"></div>                        
+                            <label class="Mandatory absolutPeriodContent" style="margin-left: 55px;"><span class="Marker">*</span>[% Translate("To") | html %]:</label>
+                            <div class="Field absolutPeriodContent" style="padding-left: 60px;">
+                                [% Data.ToDateString %]
+                                <div id="DayError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                                <div id="HourError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                            </div>
+                            <div class="Clear absolutPeriodContent"></div>
+                            <label class="Mandatory relativePeriodContent" for="RelatedTo" style="margin-left: 83px;"><span class="Marker">*</span> [% Translate("The Last") | html %]:</label>
+                            <div class="Field relativePeriodContent" style="padding-left: 90px;">
                                 <input type="text" id="RelatedTo" name="RelatedTo" class="W10pc Validate_Required" value="[% Data.RelatedTo | html %]"/>
                                 [% Data.RelatedToPeriodOption %]
                             </div>
