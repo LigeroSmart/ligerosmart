@@ -77,7 +77,7 @@ sub Run {
 
         foreach my $key (keys %Services)
         {
-            if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
+            if ( !grep( /^$Services{$key}$/, @SelectedServiceIDs ) && !grep(/^$key$/, @SelectedServiceIDs) ) {
                 delete $Services{$key};
             }
         }

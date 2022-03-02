@@ -1548,7 +1548,7 @@ sub _Edit {
     $Param{ValidOption} = $LayoutObject->BuildSelection(
         Data       => { $Kernel::OM->Get('Kernel::System::Valid')->ValidList(), },
         Name       => "ValidID",
-        SelectedID => 1,
+        SelectedID => $Param{ValidID} || 1,
         Class      => "$Param{RequiredClass} Modernize " . $Param{Errors}->{ 'ValidIdInvalid' },
     );
 

@@ -3016,7 +3016,7 @@ sub _GetServices {
 
         foreach my $key (keys %Service)
         {
-            if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
+            if ( !grep( /^$Service{$key}$/, @SelectedServiceIDs ) && !grep(/^$key$/, @SelectedServiceIDs) ) {
                 delete $Service{$key};
             }
         }
@@ -3060,8 +3060,10 @@ sub _GetSLAs {
     if($ShowServiceSLAByContract) {
         my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
 
+	%SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAList( UserID => 1 );
         my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerSLAListGet(
             CustomerID  =>  $CustomerID,
+	    %Param
         );
 
         my @SelectedSLAIDs;
@@ -3072,7 +3074,7 @@ sub _GetSLAs {
 
         foreach my $key (keys %SLA)
         {
-            if ( !grep( /^$key$/, @SelectedSLAIDs ) ) {
+            if ( !grep( /^$SLA{$key}$/, @SelectedSLAIDs ) && !grep( /^$key$/, @SelectedSLAIDs ) ) {
                 delete $SLA{$key};
             }
         }
