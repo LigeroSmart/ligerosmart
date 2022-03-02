@@ -46,16 +46,13 @@ sub Run {
     # get all articles of this ticket
     my @ArticleList = $ArticleObject->ArticleList(
         TicketID             => $Param{TicketID},
-        IsVisibleForCustomer => 0,
-        DynamicFields        => 0,
-        OnlyLast             => 1,
     );
 
     ARTICLEMETADATA:
     for my $ArticleMetaData (@ArticleList) {
 
         next ARTICLEMETADATA if !$ArticleMetaData;
-        next ARTICLEMETADATA if !IsHashRefWithData($ArticleMetaData);
+	next ARTICLEMETADATA if !IsHashRefWithData($ArticleMetaData);
 
         $ArticleBackendObject = $ArticleObject->BackendForArticle( %{$ArticleMetaData} );
 

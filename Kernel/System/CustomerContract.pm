@@ -91,8 +91,9 @@ sub new {
     );
 
     #NEW CODE
-    $Self->{DBObject} = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{DBObject}       = $Kernel::OM->Get('Kernel::System::DB');
     $Self->{LogObject}      = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{DateTimeObject} = $Kernel::OM->Create('Kernel::System::DateTime');
 
     return $Self;
 }
@@ -1386,14 +1387,7 @@ sub CustomerContractPriceRuleRemove {
         }
     }
 
-    return if !$Self->{DBObject}->Do(
-        SQL => ' delete from price_rule_ticket_type where contract_price_rule_id = ?',
-        Bind => [
-            \$Param{ID},
-        ],
-    );
-
-    return if !$Self->{DBObject}->Prepare(
+   return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT contract_id, order_number from contract_price_rule where id = ?',
         Bind => [ \$Param{ID} ],
     );
@@ -1407,42 +1401,56 @@ sub CustomerContractPriceRuleRemove {
         };
     }
 
-    return if !$Self->{DBObject}->Do(
+    $Self->{DBObject}->Do(
         SQL => 'UPDATE contract_price_rule set order_number = order_number - 1 where contract_id = ? and order_number > ?;',
         Bind => [
             \$RetData->{ContractID},\$RetData->{OrderNumber},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
+    $Self->{DBObject}->Do(
+        SQL => ' delete from registry_contract_price where contract_price_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
         SQL => ' delete from price_rule_treatment_type where contract_price_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
+    $Self->{DBObject}->Do(
         SQL => ' delete from price_rule_sla where contract_price_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
+    $Self->{DBObject}->Do(
         SQL => ' delete from price_rule_service where contract_price_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
+    $Self->{DBObject}->Do(
+        SQL => ' delete from price_rule_ticket_type where contract_price_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+ 
+    $Self->{DBObject}->Do(
         SQL => ' delete from price_rule_hour_type where contract_price_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
+    $Self->{DBObject}->Do(
         SQL => ' delete from contract_price_rule where id = ?',
         Bind => [
             \$Param{ID},
@@ -1483,50 +1491,57 @@ sub CustomerContractFranchiseRuleRemove {
         };
     }
 
-    return if !$Self->{DBObject}->Do(
+    $Self->{DBObject}->Do(
         SQL => 'UPDATE contract_franchise_rule set order_number = order_number - 1 where contract_id = ? and order_number > ?;',
         Bind => [
             \$RetData->{ContractID},\$RetData->{OrderNumber},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
-        SQL => ' delete from franchise_rule_ticket_type where contract_franchise_rule_id = ?',
+    $Self->{DBObject}->Do(
+        SQL => 'delete from registry_contract_franchise where contract_franchise_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
-        SQL => ' delete from franchise_rule_treatment_type where contract_franchise_rule_id = ?',
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_ticket_type where contract_franchise_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
-        SQL => ' delete from franchise_rule_sla where contract_franchise_rule_id = ?',
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_treatment_type where contract_franchise_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
-        SQL => ' delete from franchise_rule_service where contract_franchise_rule_id = ?',
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_sla where contract_franchise_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
-        SQL => ' delete from franchise_rule_hour_type where contract_franchise_rule_id = ?',
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_service where contract_franchise_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],
     );
 
-    return if !$Self->{DBObject}->Do(
-        SQL => ' delete from contract_franchise_rule where id = ?',
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_hour_type where contract_franchise_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => 'delete from contract_franchise_rule where id = ?',
         Bind => [
             \$Param{ID},
         ],
@@ -2142,8 +2157,9 @@ sub CalculateContract {
 
     #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \%Param ));
     #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \%Preferences ));
+    #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \$UserTimeZone ));
     $CreateTime->ToTimeZone(
-        TimeZone => $UserTimeZone,
+        TimeZone => $UserTimeZone || $Self->{DateTimeObject}->OTRSTimeZoneGet() || $Self->{DateTimeObject}->SystemTimeZoneGet(),
     );
     
     my $CreateTimeSettings = $CreateTime->Get();
@@ -2162,6 +2178,8 @@ sub CalculateContract {
     }
     
     #Pegar tempo gasto no artigo criado - OK
+    return 1 if (!$Article{"DynamicField_".$DynamicFieldStart->{Name}});
+    return 1 if (!$Article{"DynamicField_".$DynamicFieldEnd->{Name}});
 
     my $ArticleStartDate = $Kernel::OM->Create(
         'Kernel::System::DateTime',
@@ -2269,6 +2287,12 @@ sub CalculateContract {
     }
 
     #repetir enquanto houver tempo gasto e franquia disponível
+    $CreateTime = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String   => $Article{CreateTime},
+        }
+    );
 
     #buscar regra de preço disponivel
     my $ListPrice = $Self->GetPriceRulesAvaliable(
@@ -2541,7 +2565,6 @@ sub GetPriceRulesAvaliable {
 
     my $actualDate = $Param{StartDate}->Format( Format => '%Y-%m-%d' );
     
-    
     return if !$Self->{DBObject}->Prepare(
         SQL => 'select cfr.id, cfr.contract_id, cfr.name, cfr.value, cfr.value_total
                 from customer_contract cc
@@ -2808,6 +2831,12 @@ sub CustomerServiceListGet {
 
 		my @CustomerServiceList;
 		foreach my $Contract ( @{$CustomerContract} ) {
+			next if $Contract->{ValidID} != 1;
+			my $CurrentDateTime = $Kernel::OM->Create('Kernel::System::DateTime');
+			my $ContractStart   = $Kernel::OM->Create('Kernel::System::DateTime', ObjectParams => { String => $Contract->{StartTime} });
+			my $ContractEnd     = $Kernel::OM->Create('Kernel::System::DateTime', ObjectParams => { String => $Contract->{EndTime} });
+			next if ($CurrentDateTime->Compare( DateTimeObject => $ContractStart ) < 0);
+			next if ($CurrentDateTime->Compare( DateTimeObject => $ContractEnd ) > 0);
 			my $ContractFranchiseRules = $Self->ContactFranchiseRuleList(ContractID => $Contract->{ID});
 			if ($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0) {
 				for my $FranchiseRule (@$ContractFranchiseRules) {
@@ -2904,25 +2933,80 @@ sub CustomerSLAListGet {
 	my $CustomerContract = $Self->CustomerContractsSearch( Search => $Param{CustomerID} );
 	if ( scalar @{$CustomerContract} ) {
 
+		my $FilterByService = ($Param{ServiceID}) ? 1 : 0;
+		my %FranchiseIgnore;
+		my %PriceIgnore;
+		if ($FilterByService) {
+
+			foreach my $Contract ( @{$CustomerContract} ) {
+				next if $Contract->{ValidID} != 1;
+				my $CurrentDateTime = $Kernel::OM->Create('Kernel::System::DateTime');
+				my $ContractStart   = $Kernel::OM->Create('Kernel::System::DateTime', ObjectParams => { String => $Contract->{StartTime} });
+				my $ContractEnd     = $Kernel::OM->Create('Kernel::System::DateTime', ObjectParams => { String => $Contract->{EndTime} });
+				next if ($CurrentDateTime->Compare( DateTimeObject => $ContractStart ) < 0);
+				next if ($CurrentDateTime->Compare( DateTimeObject => $ContractEnd ) > 0);
+
+				# Filter franchise rules
+				my $ContractFranchiseRules = $Self->ContactFranchiseRuleList(ContractID => $Contract->{ID});
+				if ($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0) {
+					for my $FranchiseRule (@$ContractFranchiseRules) {
+						my $FranchiseRuleServices = $Self->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+						foreach my $x ( @$FranchiseRuleServices ) {
+							if ($x->{ServiceID} != $Param{ServiceID}) {
+									$FranchiseIgnore{ $x->{ContractFranchiseRuleID} } = 1;
+							} else {
+									delete $FranchiseIgnore{ $x->{ContractFranchiseRuleID} };
+							}
+						}	
+					}
+				}
+
+				# Filter price rules
+				my $ContractPriceRules = $Self->ContactPriceRuleList(ContractID => $Contract->{ID});
+				if($ContractPriceRules && (scalar @$ContractPriceRules) > 0){
+					for my $PriceRule (@$ContractPriceRules) {
+						my $PriceRuleServices = $Self->PriceRuleServiceList(ContractPriceRuleID => $PriceRule->{ID});
+						foreach my $x ( @$PriceRuleServices ) {
+							if ($x->{ServiceID} != $Param{ServiceID}) {
+									$PriceIgnore{ $x->{ContractPriceRuleID} } = 1;
+							} else {
+									delete $PriceIgnore{ $x->{ContractPriceRuleID} };
+							}
+						}
+					}
+				}
+
+			}
+		}
+		#$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \%FranchiseIgnore ));
+		#$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \%PriceIgnore ));
+
 		my @CustomerServiceList;
 		foreach my $Contract ( @{$CustomerContract} ) {
+			next if $Contract->{ValidID} != 1;
+			my $CurrentDateTime = $Kernel::OM->Create('Kernel::System::DateTime');
+			my $ContractStart   = $Kernel::OM->Create('Kernel::System::DateTime', ObjectParams => { String => $Contract->{StartTime} });
+			my $ContractEnd     = $Kernel::OM->Create('Kernel::System::DateTime', ObjectParams => { String => $Contract->{EndTime} });
+			next if ($CurrentDateTime->Compare( DateTimeObject => $ContractStart ) < 0);
+			next if ($CurrentDateTime->Compare( DateTimeObject => $ContractEnd ) > 0);
 			my $ContractFranchiseRules = $Self->ContactFranchiseRuleList(ContractID => $Contract->{ID});
 			if ($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0) {
 				for my $FranchiseRule (@$ContractFranchiseRules) {
+					next if ( $FilterByService && $FranchiseIgnore{ $FranchiseRule->{ID} } == 1);
 					my $FranchiseRuleSLAs = $Self->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
 					if (scalar @$FranchiseRuleSLAs > 0) {
 						my @arr;
 						foreach my $x ( @$FranchiseRuleSLAs ) {
-        						my %CustomerServiceData;
+	       						my %CustomerServiceData;
 						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
-						        $CustomerServiceData{ServiceID}   = $x->{SLAName};
+						        $CustomerServiceData{SLAID}   = $x->{SLAName};
 						        push @CustomerServiceList, \%CustomerServiceData;
 						}
 					} else {
 						foreach my $n ( 1..9999 ) {
 	        					my %CustomerServiceData;
 						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
-						        $CustomerServiceData{ServiceID}   = $n;
+						        $CustomerServiceData{SLAID}   = $n;
 						        push @CustomerServiceList, \%CustomerServiceData;
 						}
 					}
@@ -2931,20 +3015,21 @@ sub CustomerSLAListGet {
 			my $ContractPriceRules = $Self->ContactPriceRuleList(ContractID => $Contract->{ID});
 			if($ContractPriceRules && (scalar @$ContractPriceRules) > 0){
 				for my $PriceRule (@$ContractPriceRules) {
+					next if ( $FilterByService && $PriceIgnore{ $PriceRule->{ID} } == 1);
 					my $PriceRuleSLAs = $Self->PriceRuleSLAList(ContractPriceRuleID => $PriceRule->{ID});
 					if (scalar @$PriceRuleSLAs > 0 ) {
 						my @arr;
 						foreach my $x ( @$PriceRuleSLAs ) {
         						my %CustomerServiceData;
 						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
-						        $CustomerServiceData{ServiceID}   = $x->{SLAName};
+						        $CustomerServiceData{SLAID}   = $x->{SLAName};
 						        push @CustomerServiceList, \%CustomerServiceData;
 						}
 					} else {
 						foreach my $n ( 1..9999 ) {
 	        					my %CustomerServiceData;
 						        $CustomerServiceData{CustomerID}  = $Param{CustomerID};
-						        $CustomerServiceData{ServiceID}   = $n;
+						        $CustomerServiceData{SLAID}   = $n;
 						        push @CustomerServiceList, \%CustomerServiceData;
 						}
 					}

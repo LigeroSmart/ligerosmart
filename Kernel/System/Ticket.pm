@@ -2198,7 +2198,7 @@ sub TicketServiceList {
 
         foreach my $key (keys %Services)
         {
-            if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
+            if ( !grep( /^$Services{$key}$/, @SelectedServiceIDs ) && !grep(/^$key$/, @SelectedServiceIDs) ) {
                 delete $Services{$key};
             }
         }
@@ -2984,8 +2984,10 @@ sub TicketSLAList {
         = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
 
     if ($Param{CustomerID} && $ShowServiceSLAByContract == 1){
+	%SLAs = $Kernel::OM->Get('Kernel::System::SLA')->SLAList( UserID => 1 );
         my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerSLAListGet(
             CustomerID  =>  $Param{CustomerID},
+	    %Param
         );
 
         my @SelectedSLAIDs;
@@ -2996,7 +2998,7 @@ sub TicketSLAList {
 
         foreach my $key (keys %SLAs)
         {
-            if ( !grep( /^$key$/, @SelectedSLAIDs ) ) {
+            if ( !grep( /^$SLAs{$key}$/, @SelectedSLAIDs ) && !grep( /^$key$/, @SelectedSLAIDs ) ) {
                 delete $SLAs{$key};
             }
         }                                                                     
