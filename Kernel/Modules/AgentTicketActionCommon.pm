@@ -3004,7 +3004,11 @@ sub _GetServices {
         = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
 
     if($ShowServiceSLAByContract) {
-        my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
+
+        my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
+		TicketID => $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' )
+	);
+	my $CustomerID = $Ticket{'CustomerID'};
 
         my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerServiceListGet(
             CustomerID  =>  $CustomerID,
@@ -3059,12 +3063,16 @@ sub _GetSLAs {
     my $ShowServiceSLAByContract
         = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
 
-    if($ShowServiceSLAByContract) {
-        my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
+    if ($ShowServiceSLAByContract) {
+
+        my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
+		TicketID => $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' )
+	);
+	my $CustomerID = $Ticket{'CustomerID'};
 
 	%SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAList( UserID => 1 );
         my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerSLAListGet(
-            CustomerID  =>  $CustomerID,
+            CustomerID  => $CustomerID,
 	    %Param
         );
 
