@@ -174,6 +174,48 @@ Core.Customer.TicketZoom = (function (TargetNS) {
     }
 
     /**
+     * @name IframeAutoHeight
+     * @memberof Core.Agent.TicketZoom
+     * @function
+     * @param {jQueryObject} $Iframe - The iframe which should be auto-heighted
+     * @description
+     *      Set iframe height automatically based on real content height and default config setting.
+     */
+     TargetNS.IframeAutoHeight = function ($Iframe) {
+
+        var NewHeight,
+            IframeBodyHeight,
+            ArticleHeightMax = Core.Config.Get('Ticket::Frontend::HTMLArticleHeightMax');
+
+        if (isJQueryObject($Iframe)) {
+            IframeBodyHeight = $Iframe.contents().find('body').height();
+            NewHeight = $Iframe.contents().height();
+            if (!NewHeight || isNaN(NewHeight)) {
+                NewHeight = Core.Config.Get('Ticket::Frontend::HTMLArticleHeightDefault');
+            }
+            else {
+                if (IframeBodyHeight > ArticleHeightMax
+                    || NewHeight > ArticleHeightMax) {
+                    NewHeight = ArticleHeightMax;
+                }
+                else if (IframeBodyHeight > NewHeight) {
+                    NewHeight = IframeBodyHeight;
+                }
+            }
+
+            // add delta for scrollbar
+            NewHeight = parseInt(NewHeight, 10) + 25;
+
+            // make sure the minimum height is in line with the avatar images
+            if (NewHeight < 46) {
+                NewHeight = 46;
+            }
+
+            $Iframe.height(NewHeight + 'px');
+        }
+    };
+
+    /**
      * @name Init
      * @memberof Core.Customer.TicketZoom
      * @function
