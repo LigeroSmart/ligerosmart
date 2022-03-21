@@ -260,7 +260,7 @@ sub CustomerContractsSearch {
             	FROM customer_contract cc 
                 INNER JOIN customer_company cco on cc.customer_id = cco.customer_id
                 WHERE cc.customer_id like ? 
-                ORDER BY order_number', 
+                GROUP BY cc.id ORDER BY order_number', 
         Bind => [\('%'.$Param{Search}.'%')]               
     );
 
