@@ -6,6 +6,7 @@ var/tmp
 var/article
 Kernel/Config/Files/ZZZAAuto.pm
 Kernel/Config/Files/ZZZACL.pm
+Kernel/Config/Files/ZZZProcessManagement.pm
 *.save
 .bash_history
 .viminfo
@@ -15,3 +16,4 @@ latest-build
 *.swp
 .vscode
 .local
+.ssh
