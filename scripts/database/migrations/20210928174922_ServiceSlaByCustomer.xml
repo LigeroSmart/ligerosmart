@@ -41,6 +41,9 @@
             </ForeignKey>
         </TableCreate>
     </DatabaseInstall>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('Kernel::System::Console::Command::Maint::Config::Rebuild')->Execute();
+    ]]></CodeInstall>
     <DatabaseUninstall>
         <TableDrop Name="customer_company_service" />
         <TableDrop Name="customer_company_sla" />
