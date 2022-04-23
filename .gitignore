@@ -26,7 +26,7 @@ latest-build
 *~
 .profile
 .vstags
-.vscode
+.vscode*
 
 .procmailrc
 /ARCHIVE
