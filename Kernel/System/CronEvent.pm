@@ -109,7 +109,7 @@ sub NextEventGet {
             Hour     => $Hour,
             Minute   => $Min,
             Second   => $Sec,
-            TimeZone => 'UTC'
+            TimeZone => $ENV{'TZ'} || 'UTC',
         },
     );
 
@@ -203,7 +203,7 @@ sub NextEventList {
                 Hour     => $Hour,
                 Minute   => $Min,
                 Second   => $Sec,
-                TimeZone => 'UTC',
+                TimeZone => $ENV{'TZ'} || 'UTC',
             },
         );
 
@@ -285,7 +285,7 @@ sub PreviousEventGet {
             Hour     => $Hour,
             Minute   => $Min,
             Second   => $Sec,
-            TimeZone => 'UTC',
+            TimeZone => $ENV{'TZ'} || 'UTC',
         },
     );
 
