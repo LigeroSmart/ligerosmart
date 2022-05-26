@@ -542,7 +542,7 @@ sub Run {
                     }
                 } else {
                     if($Self->{isPublicInterface}){
-                      my $Redirect = 'customer.pl'
+                      my $Redirect = 'customer.pl?'
                       . 'Action=CustomerTicketMessage'
                       . ';ServiceID='.$GetParam{ServiceID};
                       return $LayoutObject->Redirect( ExtURL => $Redirect );
