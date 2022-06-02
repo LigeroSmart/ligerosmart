@@ -10,7 +10,7 @@ build.log
 latest-build
 .gitconfig
 *.swp
-.vscode
+.vscode*
 .local
 .ssh
 
