@@ -8829,6 +8829,9 @@ Obrigado pela ajuda!
         'responsible' => 'responsável',
         'reverse' => 'reverso',
         'stats' => 'estatísticas',
+        'Force send queued messages' => 'Forçar envio de mensagens na fila',
+        'SMTP Options' => 'Opções de SMTP',
+        'IMAP/POP3 Options' => 'Opções de IMAP/POP3',
 
     };
 

@@ -22,6 +22,45 @@
 
     <div class="SidebarColumn">
 
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <script>
+            const forceResendAction = (element) => {
+                const url = '[% Env("Baselink") %]Action=[% Env("Action") %]&Subaction=MailQueueResend'
+                refreshStatusIcon.classList.add('fa-spin')
+                fetch(url)
+                    .then(e => e.json())
+                    .then(commandOutput)
+                    .catch(commandErrorMessage)
+            }
+
+            function commandOutput (e) {
+                refreshStatusIcon.classList.remove('fa-spin')
+                alert(e.message)
+            }
+
+            function commandErrorMessage(e){
+                refreshStatusIcon.classList.remove('fa-spin')
+                alert('Error sending command: ' + e);
+            }
+            </script>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="#" onclick="forceResendAction(this)" class="CallForAction Fullsize Center Create"><span><i id="refreshStatusIcon"  class="fa fa-refresh"></i>[% Translate("Force send queued messages") | html %]</span></a>
+                    </li>
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=AdminSystemConfigurationGroup;RootNavigation=Core%3A%3AEmail" class="CallForAction Fullsize Center Create"><span><i class="fa fa-gear"></i>[% Translate("SMTP Options") | html %]</span></a>
+                    </li>
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=AdminMailAccount" class="CallForAction Fullsize Center Create"><span><i class="fa fa-gear"></i>[% Translate("IMAP/POP3 Options") | html %]</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
 [% RenderBlockStart("TimeRange") %]
         <div class="WidgetSimple">
             <div class="Header">
