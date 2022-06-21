@@ -1598,10 +1598,17 @@ sub Run {
                 }
                 elsif ( $TicketColumn eq 'PendingTime' ) {
                     $BlockType = 'Escalation';
-                    $DataValue = $LayoutObject->CustomerAge(
+					my $UntilDateAsDate = $ConfigObject->Get("Ticket::UntilDateAsDate");
+					my $TimeObject = $LayoutObject->CustomerAge(
                         Age   => $Article{'UntilTime'},
                         Space => ' '
                     );
+					if($UntilDateAsDate) {
+						$TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+						$DataValue = $TimeObject->SystemTime2TimeStamp(
+							SystemTime => ( $Article{UntilTime} + $TimeObject->SystemTime() ),
+						);
+					}
                     if ( defined $Article{UntilTime} && $Article{UntilTime} < -1 ) {
                         $CSSClass = 'Warning';
                     }
