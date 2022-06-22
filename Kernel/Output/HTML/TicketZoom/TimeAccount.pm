@@ -42,7 +42,10 @@ sub Run {
 
 	# show total accounted time if feature is active:
 	if ($Param{Config}->{ShowAccountedTime} &&  $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {
-		$Ticket{TicketTimeUnits} = $TicketObject->TicketAccountedTimeGet(%Ticket);
+		$Ticket{TicketTimeUnits} = $LayoutObject->CustomerAge(
+                         Age   => $TicketObject->TicketAccountedTimeGet(%Ticket) * 60,
+						 Space => ' '
+                     );
 		$LayoutObject->Block(
 			Name => 'TotalAccountedTime',
 			Data => \%Ticket,
