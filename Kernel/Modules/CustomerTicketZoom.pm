@@ -1007,6 +1007,10 @@ sub _Mask {
 
     # ticket accounted time
     if ( $Config->{ZoomTimeDisplay} ) {
+		$Param{TicketTimeUnits} = $LayoutObject->CustomerAge(
+			Age   => $Param{TicketTimeUnits} * 60,
+			Space => ' '
+		);
         $LayoutObject->Block(
             Name => 'TicketTimeUnits',
             Data => \%Param,
