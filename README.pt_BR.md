@@ -36,3 +36,7 @@ mais fácil.
 ## Instruções para instanciar o LigeroSmart
 
 Veja em https://github.com/LigeroSmart/ligerosmart-stack
+
+## Instruções para importar dados para ticket
+
+Veja em https://github.com/alderpinto/importticketca
