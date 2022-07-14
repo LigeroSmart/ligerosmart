@@ -2227,6 +2227,8 @@ sub CalculateContract {
     );
 
     #subtrair tempo gasto de franquia
+    #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \$ListFranchise ));
+    #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( \$TimeUsedInSeconds ));
     my $QtFranchise = scalar(@$ListFranchise);
     my $FranchiseIndex = 0;
     while($TimeUsedInSeconds > 0 && $QtFranchise > 0 && $FranchiseIndex < $QtFranchise){
@@ -2447,19 +2449,22 @@ sub GetFranchaseRulesAvaliable {
         Minute   => 00,
         Second   => 00,
     );
-    my $startYearDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
-    $Param{StartDate}->Add(
-        Days      => 365,
-    );
-    $Param{StartDate}->Set(
-        Year     => $Param{StartDate}->Get()->{Year},
-        Month    => $Param{StartDate}->Get()->{Month},
-        Day      => $Param{StartDate}->Get()->{Day},
-        Hour     => 23,
-        Minute   => 59,
-        Second   => 59,
-    );
-    my $endYearDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
+    #my $startYearDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
+    my $startYearDate = $Param{StartDate}->Format( Format => '%Y-01-01 00:00:00' );
+    #$Param{StartDate}->Add(
+    #    Days      => 365,
+    #);
+    #$Param{StartDate}->Set(
+    #    Year     => $Param{StartDate}->Get()->{Year},
+    #    Month    => $Param{StartDate}->Get()->{Month},
+    #    Day      => $Param{StartDate}->Get()->{Day},
+    #    Hour     => 23,
+    #    Minute   => 59,
+    #    Second   => 59,
+    #);
+    #my $endYearDate = $Param{StartDate}->Format( Format => '%Y-%m-%d %H:%M:%S' );
+    my $endYearDate = $Param{StartDate}->Format( Format => '%Y-12-31 23:59:59' );
+    #$Self->{LogObject}->Log( Priority => 'error', Message => Dumper( "$startYearDate - $endYearDate" ));
     
     return if !$Self->{DBObject}->Prepare(
         SQL => 'select distinct * from
