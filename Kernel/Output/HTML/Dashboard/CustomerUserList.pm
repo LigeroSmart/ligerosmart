@@ -13,6 +13,8 @@ use warnings;
 
 use Kernel::Language qw(Translatable);
 
+use Data::Dumper;
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -209,18 +211,45 @@ sub Run {
             Name => 'OverviewResultNewAgentTicketEmail',
         );
     }
-
+    #Alder
+    #print STDERR Dumper(%{$CustomerIDs});
+    #Alder
     my @CustomerKeys = sort { lc( $CustomerIDs->{$a} ) cmp lc( $CustomerIDs->{$b} ) } keys %{$CustomerIDs};
     @CustomerKeys = splice @CustomerKeys, $Self->{StartHit} - 1, $Self->{PageShown};
 
     for my $CustomerKey (@CustomerKeys) {
+
+        #Alder
+        my %CustomerUser = $CustomerUserObject->CustomerUserDataGet(
+            User => $CustomerKey,
+        );
+        print STDERR Dumper(%CustomerUser);
+        my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+        my $DynamicFieldConfigs = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+            ObjectType => 'CustomerUser',
+        );
+        my %DynamicFieldLookup = map { $_->{Name} => $_ } @{$DynamicFieldConfigs};
+        my $DynamicFieldConfig = $DynamicFieldLookup{ userType };
+        my $RenderedValue = $DynamicFieldBackendObject->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $CustomerUser{DynamicField_userType},
+            HTMLOutput         => 0,
+            LayoutObject       => $LayoutObject,
+        );        
+        #Alder
+
+
+
         $LayoutObject->Block(
             Name => 'ContentLargeCustomerUserListRow',
             Data => {
                 %Param,
-                EditCustomerPermission => $Self->{EditCustomerPermission},
-                CustomerKey            => $CustomerKey,
-                CustomerListEntry      => $CustomerIDs->{$CustomerKey},
+                EditCustomerPermission  => $Self->{EditCustomerPermission},
+                CustomerKey             => $CustomerKey,
+                CustomerListEntry       => $CustomerIDs->{$CustomerKey},
+                CustomerTypeListEntry   => $RenderedValue->{Value},
+                CustomerPhoneListEntry  => $CustomerUser{UserPhone},
+                CustomerMobileListEntry => $CustomerUser{UserMobile},
             },
         );
 

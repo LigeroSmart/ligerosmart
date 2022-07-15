@@ -18,8 +18,11 @@
 <table class="DataTable">
     <thead>
         <tr>
+            <th>[% Translate("Customer user type") | html %]</th>    
             <th>[% Translate("Customer User ID") | html %]</th>
-            <th>[% Translate("Customer user information") | html %]</th>
+            <th>[% Translate("Customer user information") | html %]</th>         
+            <th>[% Translate("Phone") | html %]</th>
+            <th>[% Translate("Mobile") | html %]</th>
             <th>[% Translate("Open") | html %]</th>
             <th>[% Translate("Closed") | html %]</th>
 [% RenderBlockStart("OverviewResultNewAgentTicketPhone") %]
@@ -39,6 +42,9 @@
     <tbody>
 [% RenderBlockStart("ContentLargeCustomerUserListRow") %]
         <tr>
+            <td>
+                [% Data.CustomerTypeListEntry | html %]
+            </td>          
             <td>
 [% RenderBlockStart("ContentLargeCustomerUserListRowUserStatus") %]
                 <span class="UserStatusIcon Inline [% Data.UserState | html %]">
@@ -66,7 +72,13 @@
             </td>
             <td>
                 [% Data.CustomerListEntry | html %]
-            </td>
+            </td>     
+            <td>
+                [% Data.CustomerPhoneListEntry | html %]
+            </td>   
+            <td>
+                [% Data.CustomerMobileListEntry | html %]
+            </td>        
 [% RenderBlockStart("ContentLargeCustomerUserListRowCustomerUserTicketsOpen") %]
             <td>
                 <a href="[% Env("Baselink") %]Action=AgentTicketSearch;Subaction=Search;StateType=Open;CustomerUserLoginRaw=[% Data.CustomerKeySQL | uri %]" title="[% Translate("%s open ticket(s) of %s", Data.Count, Data.CustomerKey) | html %]" class="AsBlock">

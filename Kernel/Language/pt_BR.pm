@@ -2387,6 +2387,7 @@ sub Data {
 
         # Template: AgentDashboardCustomerUserList
         'Customer user information' => 'Informações do Usuário Cliente',
+        'Customer user type' => 'Tipo de Usuário Cliente',
         'Phone ticket' => 'Chamado Fone',
         'Email ticket' => 'Chamado E-mail',
         'New phone ticket from %s' => 'Novo chamado via fone de %s',

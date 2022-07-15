@@ -8344,7 +8344,11 @@ msgstr "Nota: Usuário Cliente é inválido!"
 
 #. Template: AgentDashboardCustomerUserList
 msgid "Customer user information"
-msgstr "Informações do Usuário Cliente"
+msgstr "Informações de Usuário Cliente"
+
+#. Template: AgentDashboardCustomerUserList
+msgid "Customer user type"
+msgstr "Tipo do Usuário Cliente"
 
 #. Template: AgentDashboardCustomerUserList
 msgid "Phone ticket"
