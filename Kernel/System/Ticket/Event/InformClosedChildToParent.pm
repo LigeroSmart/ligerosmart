@@ -99,25 +99,35 @@ sub Run {
 
             # create article for the parent
             my $ChildTicketNumber = $TicketHook.$TicketHookDivider.$Ticket{TicketNumber};
-            my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Phone' );
+            my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
             $ParentArticleID = $ArticleBackendObject->ArticleCreate(
-                TicketID       => $TicketID,
-                SenderType     => 'system',
-                ArticleTypeID  => 11,   # note-report
-                Subject        => $LayoutObject->{LanguageObject}->Translate(
-                    'Child ticket closed: %s',
-                    $ChildTicketNumber
-                ),
-                Body           => $LayoutObject->{LanguageObject}
+                IsVisibleForCustomer => 0,
+                MimeType => 'text/plain',
+                From => 'root@localhost',
+                InReplyTo => '',
+                NoAgentNotify => 0,
+                ReplyTo => '',
+                Body => $LayoutObject->{LanguageObject}
                                     ->Translate('A child ticket has been closed, please check it: %s.',
                                     $ChildTicketNumber),
-                From           => 'root@localhost',
-                ContentType    => 'text/plain; charset=UTF-8',
-                UserID         => 1,
-                HistoryType    => 'AddNote',
+                Charset => 'utf-8',
+                UserID => 1,
+                Subject => $LayoutObject->{LanguageObject}->Translate(
+                    'Child ticket closed: %s',
+                    $ChildTicketNumber,
+                ),
+                Cc => '',
+                To => '',
+                ContentType => 'text/plain; charset=utf-8',
                 HistoryComment => "Child ticket $Ticket{TicketNumber} closed.",
+                SenderTypeID => '2',
+                References => '',
+                Bcc => '',
+                SenderType => 'system',
+                MessageID => '',
+                HistoryType => 'AddNote',
+                TicketID => $TicketID         
              );
-             
              if ( !$ParentArticleID ) {
                  return $LayoutObject->ErrorScreen();
              }
