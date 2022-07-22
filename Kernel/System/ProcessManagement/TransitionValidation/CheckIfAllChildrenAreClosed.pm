@@ -9,8 +9,6 @@ package Kernel::System::ProcessManagement::TransitionValidation::CheckIfAllChild
 use strict;
 use warnings;
 
-use Data::Dumper;
-
 use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
