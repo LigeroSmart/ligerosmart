@@ -13,10 +13,10 @@
 
  @font-face {
 			font-family: 'Roboto';
-			src: url('fonts/Roboto-Light.ttf');
-			src: url('fonts/Roboto-Light.ttf?#iefix') format('embedded-opentype'),
-				url('fonts/Roboto-Light.ttf') format('woff'),
-				url('fonts/Roboto-Light.ttf') format('truetype');
+			src: url('../fonts/Roboto-Light.ttf');
+			src: url('../fonts/Roboto-Light.ttf?#iefix') format('embedded-opentype'),
+				url('../fonts/Roboto-Light.ttf') format('woff'),
+				url('../fonts/Roboto-Light.ttf') format('truetype');
 			font-weight: normal;
 			font-style: normal;
 		}
