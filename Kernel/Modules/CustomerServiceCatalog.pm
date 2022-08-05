@@ -13,7 +13,6 @@ use warnings;
 use utf8;
 use Kernel::System::VariableCheck qw(:all);
 use JSON;
-use Data::Dumper;
 use Try::Tiny;
 
 sub new {
@@ -50,18 +49,8 @@ sub Run {
 		try {
 			$Kernel::OM->Get('Kernel::System::SubscriptionPlan');
 			%Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
-
-			$Kernel::OM->Get('Kernel::System::Log')->Log(
-    		    Priority => 'error',
-    		    Message  => "CHEGOU AQUI  ".Dumper(\%Services),
-    		);
-
 		} catch {
-			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};
-			$Kernel::OM->Get('Kernel::System::Log')->Log(
-    		    Priority => 'error',
-    		    Message  => "CHEGOU AQUI  ".Dumper(\%Services),
-    		);			
+			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};		
 		};
 	}
 	
@@ -852,15 +841,10 @@ sub _MaskNew {
 	####MOUNT FOOTER######
 	my @ServicesFooter = $Kernel::OM->Get("Kernel::System::ServiceDF")->ServiceListFooter(UserID=>1);
 
-	#$Kernel::OM->Get('Kernel::System::Log')->Log(
-    #    Priority => 'error',
-    #    Message  => "CHEGOU AQUI  ".Dumper(@ServicesFooter),
-    #);
-
 	foreach my $dataKey ( @ServicesFooter){
 
 		next if (!$ServicesIDs{$dataKey->{ServiceID}});
-		
+
 		my $ServiceName = $dataKey->{Name};
 		my $ServiceID = $dataKey->{ServiceID};
 		if(!$ServiceID or $ServiceID eq "-"){
