@@ -1,9 +1,17 @@
 // --
-// Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+// OTOBO is a web-based ticketing system for service organisations.
 // --
-// This software comes with ABSOLUTELY NO WARRANTY. For details, see
-// the enclosed file COPYING for license information (GPL). If you
-// did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+// Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+// Copyright (C) 2019-2021 Rother OSS GmbH, https://otobo.de/
+// --
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later version.
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
 // --
 
 "use strict";
@@ -15,7 +23,7 @@ Core.Agent.Admin = Core.Agent.Admin || {};
 /**
  * @namespace Core.Agent.Admin.MailAccount
  * @memberof Core.Agent.Admin
- * @author OTRS AG
+ * @author
  * @description
  *      This namespace contains the special module functions for MailAccount module.
  */
@@ -86,7 +94,39 @@ Core.Agent.Admin = Core.Agent.Admin || {};
             else {
                 $('.Row_IMAPFolder').hide();
             }
+// Rother OSS / eyazi@efflux / MailAccount-OAuth2
+            if (/OAuth2/.test($(this).val())) {
+                $('.Row_Profile').show();
+                Core.UI.InputFields.Activate();
+                $('#Profile').addClass('Validate_Required');
+                $('.Row_Password, .Row_Host').hide();
+                $('#PasswordAdd, #PasswordUpdate, #HostAdd, #HostUpdate').removeClass('Validate_Required');
+            }
+            else {
+                $('.Row_Profile').hide();
+                $('#Profile').removeClass('Validate_Required');
+                $('.Row_Password, .Row_Host').show();
+                $('#PasswordAdd, #PasswordUpdate, #HostAdd, #HostUpdate').addClass('Validate_Required');
+            }
+// EO MailAccount-OAuth2
         }).trigger('change');
+
+// Rother OSS / eyazi@efflux / MailAccount-OAuth2
+        let QueryString = window.location.search;
+        if (/&state=|&code=|&error=|&error_description=/.test(QueryString)) {
+            const ChallengeToken = Core.Config.Get('ChallengeToken');
+            QueryString = QueryString.replace(/&/g, ';');  // Turn query strings into params.
+            QueryString += ';ChallengeToken=' + ChallengeToken + ';Subaction=ProcessActionOAuth2';
+            window.location.search = QueryString;
+        }
+
+        // Prevent resending on reload by remove all params. Fixme: Don't even show response in URL (no security issue).
+        if (/;state=|;code=|;error|;error_description/.test(QueryString)) {
+            const Seperator = 'AdminMailAccount';
+            const ClearURL = window.location.href.split(Seperator)[0] + Seperator;
+            window.history.pushState("", "", ClearURL);
+        }
+// EO MailAccount-OAuth2
 
         // Show Queue field only if Dispatch By Queue is selected
         $('select#DispatchingBy').on('change', function(){

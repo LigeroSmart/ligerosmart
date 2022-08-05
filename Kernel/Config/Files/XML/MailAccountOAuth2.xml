@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="OAuth2::Settings" Required="1" Valid="1">
+        <Description Translatable="1">General OAuth2 settings. TTL in seconds.</Description>
+        <Navigation>Core::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="StateNonceLength">22</Item>
+                <Item Key="StateNonceTTL">900</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Providers###MicrosoftAzure" Required="1" Valid="1">
+        <Description Translatable="1">Authorization server settings for Microsoft Azure/Microsoft 365.</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">MicrosoftAzure</Item>
+                <Item Key="AuthURL">https://login.microsoftonline.com/common/oauth2/v2.0/authorize</Item>
+                <Item Key="TokenURL">https://login.microsoftonline.com/common/oauth2/v2.0/token</Item>
+                <Item Key="IMAP">
+                    <Hash>
+                        <Item Key="Host">outlook.office365.com</Item>
+                        <Item Key="Scope">offline_access https://outlook.office.com/IMAP.AccessAsUser.All</Item>
+                    </Hash>
+                </Item>
+                <Item Key="POP3">
+                    <Hash>
+                        <Item Key="Host">outlook.office365.com</Item>
+                        <Item Key="Scope">offline_access https://outlook.office.com/POP.AccessAsUser.All</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Providers###GoogleWorkspace" Required="1" Valid="1">
+        <Description Translatable="1">Authorization server settings for Google Workspace.</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">GoogleWorkspace</Item>
+                <Item Key="AuthURL">https://accounts.google.com/o/oauth2/v2/auth</Item>
+                <Item Key="TokenURL">https://accounts.google.com/o/oauth2/token</Item>
+                <Item Key="IMAP">
+                    <Hash>
+                        <Item Key="Host">imap.gmail.com</Item>
+                        <Item Key="Scope">https://mail.google.com/</Item>
+                    </Hash>
+                </Item>
+                <Item Key="POP3">
+                    <Hash>
+                        <Item Key="Host">pop.gmail.com</Item>
+                        <Item Key="Scope">https://mail.google.com/</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Providers###Custom1" Required="0" Valid="0">
+        <Description Translatable="1">Custom authorization server settings.</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">Custom1</Item>
+                <Item Key="AuthURL"></Item>
+                <Item Key="TokenURL"></Item>
+                <Item Key="IMAP">
+                    <Hash>
+                        <Item Key="Host"></Item>
+                        <Item Key="Scope"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="POP3">
+                    <Hash>
+                        <Item Key="Host"></Item>
+                        <Item Key="Scope"></Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Providers###Custom2" Required="0" Valid="0">
+        <Description Translatable="1">Custom authorization server settings.</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">Custom2</Item>
+                <Item Key="AuthURL"></Item>
+                <Item Key="TokenURL"></Item>
+                <Item Key="IMAP">
+                    <Hash>
+                        <Item Key="Host"></Item>
+                        <Item Key="Scope"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="POP3">
+                    <Hash>
+                        <Item Key="Host"></Item>
+                        <Item Key="Scope"></Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Providers###Custom3" Required="0" Valid="0">
+        <Description Translatable="1">Custom authorization server settings.</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">Custom3</Item>
+                <Item Key="AuthURL"></Item>
+                <Item Key="TokenURL"></Item>
+                <Item Key="IMAP">
+                    <Hash>
+                        <Item Key="Host"></Item>
+                        <Item Key="Scope"></Item>
+                    </Hash>
+                </Item>
+                <Item Key="POP3">
+                    <Hash>
+                        <Item Key="Host"></Item>
+                        <Item Key="Scope"></Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Profiles###Custom1" Required="0" Valid="0">
+        <Description Translatable="1">Configure custom OAuth 2 application profiles. "Name" should be unique and will be displayed on the Mail Account Management screen. "ProviderName" can be "MicrosoftAzure", "GoogleWorkspace" or a custom provider like "Custom1" (see OAuth2::MailAccount::Providers).</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">contoso.com</Item>
+                <Item Key="ClientID">client_id</Item>
+                <Item Key="ClientSecret" ValueType="Password">client_secret</Item>
+                <Item Key="ProviderName">MicrosoftAzure</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Profiles###Custom2" Required="0" Valid="0">
+        <Description Translatable="1">Configure custom OAuth 2 application profiles. "Name" should be unique and will be displayed on the Mail Account Management screen. "ProviderName" can be "MicrosoftAzure", "GoogleWorkspace" or a custom provider like "Custom1" (see OAuth2::MailAccount::Providers).</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">contoso.com</Item>
+                <Item Key="ClientID">client_id</Item>
+                <Item Key="ClientSecret" ValueType="Password">client_secret</Item>
+                <Item Key="ProviderName">MicrosoftAzure</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OAuth2::MailAccount::Profiles###Custom3" Required="0" Valid="0">
+        <Description Translatable="1">Configure custom OAuth 2 application profiles. "Name" should be unique and will be displayed on the Mail Account Management screen. "ProviderName" can be "MicrosoftAzure", "GoogleWorkspace" or a custom provider like "Custom1" (see OAuth2::MailAccount::Providers).</Description>
+        <Navigation>Core::Email::OAuth2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">contoso.com</Item>
+                <Item Key="ClientID">client_id</Item>
+                <Item Key="ClientSecret" ValueType="Password">client_secret</Item>
+                <Item Key="ProviderName">MicrosoftAzure</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>
