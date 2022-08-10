@@ -46,7 +46,8 @@ sub Param {
     
     #my %Types = $Kernel::OM->Get('Kernel::System::Type')->TypeList();
     my $Processes = $Kernel::OM->Get('Kernel::System::ProcessManagement::Process')->ProcessList(
-        ProcessState => ['Active']
+        ProcessState => ['Active'],
+        Silent       => 1
     );
     my $OptionHtml   = $LayoutObject->BuildSelection(
         Data         => $Processes||[],

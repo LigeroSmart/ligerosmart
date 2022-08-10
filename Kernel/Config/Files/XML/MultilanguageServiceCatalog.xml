@@ -29,7 +29,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_ar_SA" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_ar_SA" Required="0" Valid="0">
         <Description Translatable="1">Service Name Arabic (Saudi Arabia)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -44,7 +44,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_bg" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_bg" Required="0" Valid="0">
         <Description Translatable="1">Service Name Bulgarian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -59,7 +59,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_ca" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_ca" Required="0" Valid="0">
         <Description Translatable="1">Service Name Catalan</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -74,7 +74,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_cs" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_cs" Required="0" Valid="0">
         <Description Translatable="1">Service Name Czech</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -89,7 +89,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_da" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_da" Required="0" Valid="0">
         <Description Translatable="1">Service Name Danish</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -104,7 +104,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_de" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_de" Required="0" Valid="0">
         <Description Translatable="1">Service Name German</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -134,7 +134,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_en_CA" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_en_CA" Required="0" Valid="0">
         <Description Translatable="1">Service Name English (Canada)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -149,7 +149,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_en_GB" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_en_GB" Required="0" Valid="0">
         <Description Translatable="1">Service Name English (United Kingdom)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -164,7 +164,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_es" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_es" Required="0" Valid="0">
         <Description Translatable="1">Service Name Spanish</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -179,7 +179,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_es_CO" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_es_CO" Required="0" Valid="0">
         <Description Translatable="1">Service Name Spanish (Colombia)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -194,7 +194,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_es_MX" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_es_MX" Required="0" Valid="0">
         <Description Translatable="1">Service Name Spanish (Mexico)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -209,7 +209,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_et" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_et" Required="0" Valid="0">
         <Description Translatable="1">Service Name Estonian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -224,7 +224,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_el" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_el" Required="0" Valid="0">
         <Description Translatable="1">Service Name Greek</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -239,7 +239,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_fa" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_fa" Required="0" Valid="0">
         <Description Translatable="1">Service Name Persian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -254,7 +254,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_fi" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_fi" Required="0" Valid="0">
         <Description Translatable="1">Service Name Finnish</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -269,7 +269,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_fr" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_fr" Required="0" Valid="0">
         <Description Translatable="1">Service Name French</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -284,7 +284,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_fr_CA" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_fr_CA" Required="0" Valid="0">
         <Description Translatable="1">Service Name French (Canada)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -299,7 +299,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_gl" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_gl" Required="0" Valid="0">
         <Description Translatable="1">Service Name Galician</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -314,7 +314,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_he" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_he" Required="0" Valid="0">
         <Description Translatable="1">Service Name Hebrew</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -329,7 +329,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_hi" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_hi" Required="0" Valid="0">
         <Description Translatable="1">Service Name Hindi</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -344,7 +344,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_hr" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_hr" Required="0" Valid="0">
         <Description Translatable="1">Service Name Croatian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -359,7 +359,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_hu" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_hu" Required="0" Valid="0">
         <Description Translatable="1">Service Name Hungarian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -374,7 +374,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_id" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_id" Required="0" Valid="0">
         <Description Translatable="1">Service Name Indonesian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -389,7 +389,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_it" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_it" Required="0" Valid="0">
         <Description Translatable="1">Service Name Italian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -404,7 +404,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_ja" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_ja" Required="0" Valid="0">
         <Description Translatable="1">Service Name Japanese</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -419,7 +419,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_lt" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_lt" Required="0" Valid="0">
         <Description Translatable="1">Service Name Lithuanian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -434,7 +434,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_lv" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_lv" Required="0" Valid="0">
         <Description Translatable="1">Service Name Latvian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -449,7 +449,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_ms" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_ms" Required="0" Valid="0">
         <Description Translatable="1">Service Name Malay</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -464,7 +464,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_nl" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_nl" Required="0" Valid="0">
         <Description Translatable="1">Service Name Nederlands</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -479,7 +479,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_nb_NO" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_nb_NO" Required="0" Valid="0">
         <Description Translatable="1">Service Name Norwegian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -509,7 +509,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_pt" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_pt" Required="0" Valid="0">
         <Description Translatable="1">Service Name Portuguese</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -524,7 +524,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_pl" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_pl" Required="0" Valid="0">
         <Description Translatable="1">Service Name Polish</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -539,7 +539,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_ru" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_ru" Required="0" Valid="0">
         <Description Translatable="1">Service Name Russian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -554,7 +554,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_sl" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_sl" Required="0" Valid="0">
         <Description Translatable="1">Service Name Slovenian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -569,7 +569,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_sr_Latn" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_sr_Latn" Required="0" Valid="0">
         <Description Translatable="1">Service Name Serbian Latin</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -584,7 +584,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_sr_Cyrl" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_sr_Cyrl" Required="0" Valid="0">
         <Description Translatable="1">Service Name Serbian Cyrillic</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -599,7 +599,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_sk_SK" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_sk_SK" Required="0" Valid="0">
         <Description Translatable="1">Service Name Slovak</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -614,7 +614,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_sv" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_sv" Required="0" Valid="0">
         <Description Translatable="1">Service Name Swedish</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -629,7 +629,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_sw" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_sw" Required="0" Valid="0">
         <Description Translatable="1">Service Name Swahili</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -644,7 +644,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_th_TH" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_th_TH" Required="0" Valid="0">
         <Description Translatable="1">Service Name Thai</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -659,7 +659,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_tr" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_tr" Required="0" Valid="0">
         <Description Translatable="1">Service Name Turkish</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -674,7 +674,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_uk" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_uk" Required="0" Valid="0">
         <Description Translatable="1">Service Name Ukrainian</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -689,7 +689,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_vi_VN" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_vi_VN" Required="0" Valid="0">
         <Description Translatable="1">Service Name Vietnam</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -704,7 +704,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_zh_CN" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_zh_CN" Required="0" Valid="0">
         <Description Translatable="1">Service Name Chinese (Simplified)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
@@ -719,7 +719,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="ServicePreferences###name_zh_TW" Required="1" Valid="1">
+    <Setting Name="ServicePreferences###name_zh_TW" Required="0" Valid="0">
         <Description Translatable="1">Service Name Chinese (Traditional)</Description>
         <Navigation>MultilanguageServiceCatalog</Navigation>
         <Value>
