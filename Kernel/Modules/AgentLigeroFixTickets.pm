@@ -270,7 +270,7 @@ sub _SearchParamsGet {
     # get column names from Preferences
     my $PreferencesColumn = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
         Data => $Preferences{ $Self->{PrefKeyColumns} },
-    ) if defined $Self->{PrefKeyColumns} && defined  $Preferences{ $Self->{PrefKeyColumns} };
+    ) if defined $Self->{PrefKeyColumns} && defined $Preferences{ $Self->{PrefKeyColumns} };
 
     # check for default settings
     my @Columns;
