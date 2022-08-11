@@ -51,7 +51,6 @@ sub Run {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
    
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
    # Mostra widget central com iframe da pagina
 	my $iFrame = $LayoutObject->Output(
    		TemplateFile => 'ShowCustomFields',
