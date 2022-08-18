@@ -30,7 +30,7 @@ sub Run {
     my $Self = shift;
 
     # table check
-    my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/scripts/database/otrs-schema.xml';
+    my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/scripts/database/migrations/20210324110000_schema.xml';
     if ( !-f $File ) {
         $Self->AddResultProblem(
             Label   => Translatable('Table Presence'),
