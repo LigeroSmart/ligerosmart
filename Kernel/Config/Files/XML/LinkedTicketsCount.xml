@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Ticket::EventModulePost###041-TicketLinkCount" Required="0" Valid="1">
+        <Description Translatable="1">Stores the number of linked tickets and it's number in DynamicFields.</Description>
+        <Navigation>Core::Event::Ticket</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::TicketLinkCount</Item>
+                <Item Key="Event">HistoryAdd</Item>
+                <Item Key="DynamicFieldCount">LinkedTicketsCount</Item>
+                <Item Key="DynamicFieldList">LinkedTicketsList</Item>
+                <Item Key="DynamicFieldListSeparator">\n</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>
