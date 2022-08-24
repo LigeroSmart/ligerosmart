@@ -131,7 +131,7 @@
         <Navigation>Frontend::Base</Navigation>
         <Value>
             <Hash>
-                <Item Key="ar_SA" Translatable="1">Arabic (Saudi Arabia)</Item>
+                <!-- run on all events <Item Key="ar_SA" Translatable="1">Arabic (Saudi Arabia)</Item>
                 <Item Key="bg" Translatable="1">Bulgarian</Item>
                 <Item Key="ca" Translatable="1">Catalan</Item>
                 <Item Key="cs" Translatable="1">Czech</Item>
@@ -180,7 +180,9 @@
                 <Item Key="uk" Translatable="1">Ukrainian</Item>
                 <Item Key="vi_VN" Translatable="1">Vietnam</Item>
                 <Item Key="zh_CN" Translatable="1">Chinese (Simplified)</Item>
-                <Item Key="zh_TW" Translatable="1">Chinese (Traditional)</Item>
+                <Item Key="zh_TW" Translatable="1">Chinese (Traditional)</Item> -->
+                <Item Key="pt_BR" Translatable="1">Portuguese (Brasil)</Item>
+                <Item Key="en" Translatable="1">English (United States)</Item>
             </Hash>
         </Value>
     </Setting>
