@@ -6,7 +6,7 @@
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
-package Kernel::System::Console::Command::Maint::Deploy::ACL;
+package Kernel::System::Console::Command::Maint::Deploy::Process;
 
 use strict;
 use warnings;
@@ -15,13 +15,14 @@ use parent qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::ACL::DB::ACL',
+    'Kernel::System::ProcessManagement::DB::Process',
+    'Kernel::System::ProcessManagement::DB::Entity',
 );
 
 sub Configure {
     my ( $Self, %Param ) = @_;
 
-    $Self->Description('Synchronize ACL file with the latest deployment in the database.');
+    $Self->Description('Synchronize Process file with the latest deployment in the database.');
 
     return;
 }
@@ -29,24 +30,26 @@ sub Configure {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    $Self->Print("<yellow>Synchronizing ACLs...</yellow>\n");
+    $Self->Print("<yellow>Synchronizing Process...</yellow>\n");
 
-    my $Location = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/Kernel/Config/Files/ZZZACL.pm';
+    my $Location = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/Kernel/Config/Files/ZZZProcessManagement.pm';
 
-    my $ACLDump = $Kernel::OM->Get('Kernel::System::ACL::DB::ACL')->ACLDump(
+    my $ProcessDump = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::Process')->ProcessDump(
         ResultType => 'FILE',
         Location   => $Location,
         UserID     => 1,
     );
 
-    if ( !$ACLDump ) {
-        $Self->print("\t<red> - There was an error synchronizing the ACLs.</red>\n\n");
+    if ( !$ProcessDump ) {
+        $Self->Print("\t<red> - There was an error synchronizing the processes.</red>\n\n");
         return $Self->ExitCodeError();
     }
 
-    my $Success = $Kernel::OM->Get('Kernel::System::ACL::DB::ACL')->ACLsNeedSyncReset();
+    my $Success = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::Entity')->EntitySyncStatePurge(
+        UserID => 1,
+    );
     if ( !$Success ) {
-        $Self->print("\t<red> - There was an error setting the entity sync status.</red>\n\n");
+        $Self->Print("\t<red> - There was an error setting the entity sync status.</red>\n\n");
         return $Self->ExitCodeError();
     }
 
