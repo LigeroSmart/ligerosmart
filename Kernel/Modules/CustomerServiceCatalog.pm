@@ -13,7 +13,6 @@ use warnings;
 use utf8;
 use Kernel::System::VariableCheck qw(:all);
 use JSON;
-use Data::Dumper;
 use Try::Tiny;
 
 sub new {
@@ -51,7 +50,7 @@ sub Run {
 			$Kernel::OM->Get('Kernel::System::SubscriptionPlan');
 			%Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
 		} catch {
-			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};
+			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};		
 		};
 	}
 	
@@ -671,6 +670,7 @@ sub _MaskNew {
 	my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 	my $Config  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
 	my $Services;
+	my %ServicesIDs;
 
 	if ( !$Param{KeyPrimary} ) {
 		$Services = _GetParents($Param{DataRef});
@@ -685,6 +685,7 @@ sub _MaskNew {
 	foreach my $dataKey ( @{$Services}){
 		my $ServiceName = $dataKey->{Value};
 		my $ServiceID = $dataKey->{Key};
+		$ServicesIDs{$ServiceID} = 1;
 		if(!$ServiceID or $ServiceID eq "-"){
 			 $ServiceID = $ServiceObject->ServiceLookup(
 		        Name => $ServiceName,
@@ -716,7 +717,7 @@ sub _MaskNew {
 		my @Names =  split("::",$ServiceName);
 		my $LayoutServiceName = $Names[-1];
 
-    # Ignore non public services
+    	# Ignore non public services
 		if ( $Self->{isPublicInterface} ) {
 	                my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
 	                my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
@@ -840,12 +841,10 @@ sub _MaskNew {
 	####MOUNT FOOTER######
 	my @ServicesFooter = $Kernel::OM->Get("Kernel::System::ServiceDF")->ServiceListFooter(UserID=>1);
 
-	#$Kernel::OM->Get('Kernel::System::Log')->Log(
-    #    Priority => 'error',
-    #    Message  => "CHEGOU AQUI  ".Dumper(@ServicesFooter),
-    #);
-
 	foreach my $dataKey ( @ServicesFooter){
+
+		next if (!$ServicesIDs{$dataKey->{ServiceID}});
+
 		my $ServiceName = $dataKey->{Name};
 		my $ServiceID = $dataKey->{ServiceID};
 		if(!$ServiceID or $ServiceID eq "-"){
