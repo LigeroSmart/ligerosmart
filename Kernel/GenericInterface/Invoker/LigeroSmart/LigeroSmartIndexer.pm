@@ -121,9 +121,13 @@ sub PrepareRequest {
     $Param{Data}->{pipeline} = 'attachment' ;
     $Param{Data}->{Index} = $Index;
 
+    my $ElasticHash = $Self->_recurse_hash(
+        Data => $Param{Data},
+    );
+
     return {
         Success => 1,
-        Data    => $Param{Data},
+        Data    => $ElasticHash,
     };
 }
 
@@ -187,6 +191,67 @@ sub HandleResponse {
         Success => 1,
         Data    => $Param{Data},
     };
+}
+
+sub _recurse_hash {
+    # Arguments are a hash ref and a list of keys to find
+    my ( $Self, %Param ) = @_;
+    
+    my $hash_return;
+
+    my $OTRSTimeZone = Kernel::System::DateTime->OTRSTimeZoneGet();
+
+    ## Loop over the keys in the hash
+    foreach my $ItemKey (sort keys %{$Param{Data}}) {
+        
+        # Get the value for the current key
+        my $value = $Param{Data}->{$ItemKey};
+
+        # See if the value is a hash reference
+        if (ref($value) eq 'HASH') {
+            # If it is call this function for that hash
+            $hash_return->{$ItemKey} = $Self->_recurse_hash(
+                Data => $value,
+            );                        
+        }
+        elsif (ref($value) eq 'ARRAY'){
+            foreach ( @{ $value } ) {
+                if (ref($_) eq 'HASH') {
+                    # If it is call this function for that hash
+                    my $returnItemArrValue = $Self->_recurse_hash(
+                        Data => $_,
+                    ); 
+                    push @{$hash_return->{$ItemKey}}, $returnItemArrValue;                     
+                }
+            }
+        }        
+        else {
+            if ($value =~ /(\d\d\d\d)-(\d?\d)-(\d?\d) (\d?\d):(\d?\d):(\d?\d)/) {
+                
+                my $CreatedDateTimeObject = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        TimeZone => $OTRSTimeZone,
+                        String => $value,
+                    },
+                );
+
+                $CreatedDateTimeObject->ToTimeZone( TimeZone => 'UTC' );
+
+                my $CreatedDateTimeString = $CreatedDateTimeObject->Format( Format => '%Y-%m-%d %H:%M:%S' );
+                
+                $hash_return->{$ItemKey} = $CreatedDateTimeString;
+
+            }
+            else {
+                $hash_return->{$ItemKey} = $value;
+            }
+
+        }
+
+    }
+
+    return $hash_return;
 }
 
 1;
