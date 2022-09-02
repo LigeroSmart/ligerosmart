@@ -71,6 +71,8 @@ sub new {
 sub Validate {
     my ( $Self, %Param ) = @_;
 
+    my $LinkObject   = $Kernel::OM->Get('Kernel::System::LinkObject');
+
     for my $Needed (qw(Data)) {
         if ( !defined $Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -90,15 +92,15 @@ sub Validate {
         return;
     }
 
-    # linked tickets
-    my $Links = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
-        Object => 'Ticket',
-        Object2 => 'Ticket',
-        Key    => $Param{Data}{TicketID},
-        State  => 'Valid',
-        Type   => 'ParentChild',
-        UserID => 1,
-    );
+    my $Links = $LinkObject->LinkList(
+        Object    => 'Ticket',
+        Key       => $Param{Data}{TicketID},
+        Object2   => 'Ticket',         # (optional)
+        State     => 'Valid',
+        #Type      => ''ParentChild'', # (optional)
+        Direction => 'Target',      # (optional) default Both (Source|Target|Both)
+        UserID    => 1,
+    );  
 
     if (    $Links 
          && $Links->{Ticket}
