@@ -120,7 +120,7 @@ sub Run {
 
 			return $LayoutObject->Attachment(
 				ContentType => 'application/json; charset=utf8',
-				Content     => @TicketIDs[0],
+				Content     => $TicketIDs[0],
 				Type        => 'inline',
 				NoCache     => 1,
 			) if(scalar(@TicketIDs) > 0);
@@ -318,7 +318,7 @@ sub Run {
 				);
 				next if (!$Value && $Self->{isPublicInterface});
 
-				my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+				$DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
 					Name   => 'ForwardToUrl',             # ID or Name must be provided
 				);
 				my $ForwardToUrl = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
@@ -785,7 +785,7 @@ sub _MaskNew {
 		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
 			Name   => 'ServiceDescription',             # ID or Name must be provided
 		);
-		my $Value = $BackendObject->ValueGet(
+		$Value = $BackendObject->ValueGet(
 			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
 			ObjectID           => $ServiceID,                # ID of the current object that the field
 																# must be linked to, e. g. TicketID
@@ -930,7 +930,7 @@ sub _MaskNew {
 		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
 			Name   => 'ServiceDescription',             # ID or Name must be provided
 		);
-		my $Value = $BackendObject->ValueGet(
+		$Value = $BackendObject->ValueGet(
 			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
 			ObjectID           => $ServiceID,                # ID of the current object that the field
 																# must be linked to, e. g. TicketID

@@ -43,7 +43,7 @@ sub Run {
             ServiceID     => $ServiceID,
             IncidentState => 1,
             UserID        => $Self->{UserID},
-        );
+        ) if ($ServiceID);
 
         # build empty response hash
         my %Response = (
