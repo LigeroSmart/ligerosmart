@@ -64,7 +64,7 @@ sub new {
 }
 
 =pod
-@api {post} /admin/execute Execute requests for any internal LigeroSmart framework functions. This method is acessible for admin accounts.
+@api {post} /admin Execute requests for any internal LigeroSmart framework functions. This method is acessible for admin accounts.
 @apiName Execute
 @apiGroup Admin
 @apiVersion 1.0.0
