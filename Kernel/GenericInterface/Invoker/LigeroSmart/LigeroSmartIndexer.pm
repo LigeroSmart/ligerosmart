@@ -226,7 +226,7 @@ sub _recurse_hash {
             }
         }        
         else {
-            if ($value =~ /(\d\d\d\d)-(\d?\d)-(\d?\d) (\d?\d):(\d?\d):(\d?\d)/) {
+            if ($value =~ /^(\d\d\d\d)-(\d?\d)-(\d?\d) (\d?\d):(\d?\d):(\d?\d)$/) {
                 
                 my $CreatedDateTimeObject = $Kernel::OM->Create(
                     'Kernel::System::DateTime',
