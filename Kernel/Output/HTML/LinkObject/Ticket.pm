@@ -204,6 +204,7 @@ sub TableCreateComplex {
 
     my @TimeLongTypes = (
         "Created",
+        "LinkCreatedDate",
         "Changed",
         "EscalationDestinationDate",
         "FirstResponseTimeDestinationDate",
@@ -332,6 +333,9 @@ sub TableCreateComplex {
         }
         elsif ( $Column eq 'CustomerUserID' ) {
             $ColumnTranslate = Translatable('Customer User ID');
+        }
+        elsif ( $Column eq 'LinkCreatedDate' ) {
+            $ColumnTranslate = Translatable('Link Created Date');
         }
         elsif ( $Column =~ m{ \A DynamicField_ }xms ) {
             my $DynamicFieldConfig;
