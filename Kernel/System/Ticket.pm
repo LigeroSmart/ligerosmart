@@ -5665,6 +5665,9 @@ sub HistoryAdd {
             Event => 'HistoryAdd',
             Data  => {
                 TicketID => $Param{TicketID},
+                HistoryType => $Param{HistoryType},
+                Name => $Param{Name}, #Adicionado para implementação do módulo de evnto TicketLinkCount
+                Direction => $Param{Direction} || '', #Adicionado para implementação do módulo de evnto TicketLinkCount
             },
             UserID => $Param{CreateUserID},
         );

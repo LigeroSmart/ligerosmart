@@ -423,12 +423,13 @@ sub LinkAddPost {
             UserID   => $Param{UserID},
         );
 
-        # add ticket history entry
+        # add ticket history entry - Chamados FILHOS apontam para PAIS
         $TicketObject->HistoryAdd(
             TicketID     => $Param{Key},
             CreateUserID => $Param{UserID},
             HistoryType  => 'TicketLinkAdd',
-            Name         => "\%\%$TicketNumber\%\%$Param{SourceKey}\%\%$Param{Key}",
+            Name         => "\%\%$TicketNumber\%\%$Param{SourceKey}\%\%$Param{Key}", #Adicionado para implementação do módulo de evnto TicketLinkCount
+            Direction    => 'Source', #Adicionado para implementação do módulo de evnto TicketLinkCount
         );
 
         return 1;
@@ -442,12 +443,13 @@ sub LinkAddPost {
             UserID   => $Param{UserID},
         );
 
-        # add ticket history entry
+        # add ticket history entry - Chamados PAI apontam para FILHOS
         $TicketObject->HistoryAdd(
             TicketID     => $Param{Key},
             CreateUserID => $Param{UserID},
             HistoryType  => 'TicketLinkAdd',
-            Name         => "\%\%$TicketNumber\%\%$Param{TargetKey}\%\%$Param{Key}",
+            Name         => "\%\%$TicketNumber\%\%$Param{TargetKey}\%\%$Param{Key}", #Adicionado para implementação do módulo de evnto TicketLinkCount
+            Direction    => 'Target', #Adicionado para implementação do módulo de evnto TicketLinkCount
         );
 
         return 1;
