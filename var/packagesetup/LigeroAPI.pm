@@ -145,6 +145,10 @@ Provider:
       Description: ''
       IncludeTicketData: '0'
       Type: LigeroSmart::Search
+    MiscLigero::QueueByGroupSearch:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: MiscLigero::QueueByGroupSearch
     MiscLigero::LinkObject:
       Description: ''
       IncludeTicketData: '0'
