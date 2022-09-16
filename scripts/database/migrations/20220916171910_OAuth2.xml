@@ -1,0 +1,21 @@
+<Migrations>
+    <DatabaseInstall Type="post">
+        <TableAlter Type="post" Name="mail_account">
+            <ColumnAdd Default="0" Name="oauth2_profile" Required="false" Size="45" Type="VARCHAR"></ColumnAdd>
+        </TableAlter>
+        <TableCreate Type="post" Name="auth_token">
+            <Column Name="account_type" Required="true" Size="25" Type="VARCHAR"></Column>
+            <Column Name="account_id" Required="true" Size="150" Type="VARCHAR"></Column>
+            <Column Name="token_type" Required="true" Size="20" Type="VARCHAR"></Column>
+            <Column Name="token" Required="true" Type="TEXT"></Column>
+        </TableCreate>
+    </DatabaseInstall>
+
+    <DatabaseUninstall Type="pre">
+        <TableAlter Type="pre" Name="mail_account">
+            <ColumnDrop Name="oauth2_profile"></ColumnDrop>
+        </TableAlter>
+        <TableDrop Type="pre" Name="auth_token">
+        </TableDrop>
+    </DatabaseUninstall>
+</Migrations>
