@@ -166,6 +166,31 @@ sub Run {
             my $Update = $CustomerCompanyObject->CustomerCompanyUpdate( %GetParam, UserID => $Self->{UserID} );
 
             if ($Update) {
+                #Delete Service
+                $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceRemove(
+                    CustomerID  =>  $GetParam{CustomerID}
+                );
+                #Add Services
+                my @ServicesIDs = $ParamObject->GetArray( Param => "ServiceIDs" );
+                foreach my $ServiceID ( @ServicesIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        ServiceID => $ServiceID,
+                    );
+                }
+
+                #Delete SLA
+                $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLARemove(
+                    CustomerID  =>  $GetParam{CustomerID}
+                );
+                #Add SLAs
+                my @SLAIDs = $ParamObject->GetArray( Param => "SlaIDs" );
+                foreach my $SLAID ( @SLAIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        SLAID => $SLAID,
+                    );
+                }
 
                 my $SetDFError;
 
@@ -393,7 +418,7 @@ sub Run {
 
         # if no errors occurred
         if ( !%Errors ) {
-
+            
             # add company
             if (
                 $CustomerCompanyObject->CustomerCompanyAdd(
@@ -402,7 +427,23 @@ sub Run {
                 )
                 )
             {
+                #Add Services
+                my @ServicesIDs = $ParamObject->GetArray( Param => "ServiceIDs" );
+                foreach my $ServiceID ( @ServicesIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        ServiceID => $ServiceID,
+                    );
+                }
 
+                #Add SLAs
+                my @SLAIDs = $ParamObject->GetArray( Param => "SlaIDs" );
+                foreach my $SLAID ( @SLAIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAAdd(
+                        CustomerID  =>  $GetParam{CustomerID},
+                        SLAID => $SLAID,
+                    );
+                }
                 $Self->_Overview(
                     Nav    => $Nav,
                     Search => $Search,
@@ -527,6 +568,7 @@ sub _Edit {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     $LayoutObject->Block(
         Name => 'Overview',
@@ -537,6 +579,64 @@ sub _Edit {
     $LayoutObject->Block(
         Name => 'ActionOverview',
         Data => \%Param,
+    );
+
+    my $ListType = $ConfigObject->Get('Ticket::Frontend::ListType');
+
+    my %ServiceList = $Kernel::OM->Get('Kernel::System::Service')->ServiceList(
+        Valid        => 1,
+        KeepChildren => $ConfigObject->Get('Ticket::Service::KeepChildren') // 0,
+        UserID       => $Self->{UserID},
+    );
+
+    my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
+        CustomerID  =>  $Param{CustomerID},
+    );
+
+    my @SelectedServiceIDs;
+
+    foreach my $Item ( @{$CustomerServiceList} ) {
+        push @SelectedServiceIDs, $Item->{ServiceID};
+    }
+
+    # generate ServiceOptionStrg
+    $Param{ServiceOptionStrg} = $LayoutObject->BuildSelection(
+        Data        => \%ServiceList,
+        Name        => 'ServiceIDs',
+        SelectedID  => \@SelectedServiceIDs || [],
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
+        TreeView    => ( $ListType eq 'tree' ) ? 1 : 0,
+        Max         => 200,
+        Class       => 'Modernize',
+    );
+
+    my %SlaList = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
+        Valid        => 1,
+        UserID       => $Self->{UserID},
+    );
+
+    my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAListGet(
+        CustomerID  =>  $Param{CustomerID},
+    );
+
+    my @SelectedSLAIDs;
+
+    foreach my $Item ( @{$CustomerSLAList} ) {
+        push @SelectedSLAIDs, $Item->{SLAID};
+    }
+
+    # generate ServiceOptionStrg
+    $Param{SlaOptionStrg} = $LayoutObject->BuildSelection(
+        Data        => \%SlaList,
+        Name        => 'SlaIDs',
+        SelectedID  => \@SelectedSLAIDs || [],
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
+        Max         => 200,
+        Class       => 'Modernize',
     );
 
     $LayoutObject->Block(
@@ -727,6 +827,9 @@ sub _Edit {
             }
         }
     }
+
+    #die $Param{CustomerID};
+
     return 1;
 }
 

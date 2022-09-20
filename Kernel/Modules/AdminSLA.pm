@@ -127,6 +127,19 @@ sub Run {
 
             if ( !%Error ) {
 
+                #Delete SLA
+                $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLARemove(
+                    SLAID  =>  $GetParam{ServiceID}
+                );
+                #Add Services
+                my @CustomerComapnyIDs = $ParamObject->GetArray( Param => "CustomerComapnyIDs" );
+                foreach my $CustomerComapnyID ( @CustomerComapnyIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAAdd(
+                        CustomerID  =>  $CustomerComapnyID,
+                        SLAID => $GetParam{SLAID},
+                    );
+                }
+
                 # update preferences
                 my %SLAData = $SLAObject->SLAGet(
                     SLAID  => $GetParam{SLAID},
@@ -474,6 +487,32 @@ sub _MaskNew {
 
     $LayoutObject->Block( Name => 'ActionList' );
     $LayoutObject->Block( Name => 'ActionOverview' );
+
+    my %CustomerCompanyList = $Kernel::OM->Get('Kernel::System::CustomerCompany')->CustomerCompanyList(
+        Valid        => 1
+    );
+
+    my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAListGet(
+        SLAID  =>  $SLAData{SLAID},
+    );
+
+    my @SelectedCustomerIDs;
+
+    foreach my $Item ( @{$CustomerSLAList} ) {
+        push @SelectedCustomerIDs, $Item->{CustomerID};
+    }
+
+    # generate ServiceOptionStrg
+    $Param{CustomerCompanyOptionStrg} = $LayoutObject->BuildSelection(
+        Data        => \%CustomerCompanyList,
+        Name        => 'CustomerComapnyIDs',
+        SelectedID  => \@SelectedCustomerIDs || [],
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
+        Max         => 200,
+        Class       => 'Modernize',
+    );
 
     $LayoutObject->Block(
         Name => 'SLAEdit',

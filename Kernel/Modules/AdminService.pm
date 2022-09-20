@@ -158,6 +158,19 @@ sub Run {
 
             if ( !%Error ) {
 
+                #Delete Service
+                $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceRemove(
+                    ServiceID  =>  $GetParam{ServiceID}
+                );
+                #Add Services
+                my @CustomerComapnyIDs = $ParamObject->GetArray( Param => "CustomerComapnyIDs" );
+                foreach my $CustomerComapnyID ( @CustomerComapnyIDs ) {
+                    $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceAdd(
+                        CustomerID  =>  $CustomerComapnyID,
+                        ServiceID => $GetParam{ServiceID},
+                    );
+                }
+
                 # update preferences
                 my %ServiceData = $ServiceObject->ServiceGet(
                     ServiceID => $GetParam{ServiceID},
@@ -412,6 +425,32 @@ sub _MaskNew {
         Name       => 'ValidID',
         SelectedID => $ServiceData{ValidID} || $ValidListReverse{valid},
         Class      => 'Modernize',
+    );
+
+    my %CustomerCompanyList = $Kernel::OM->Get('Kernel::System::CustomerCompany')->CustomerCompanyList(
+        Valid        => 1
+    );
+
+    my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
+        ServiceID  =>  $ServiceData{ServiceID},
+    );
+
+    my @SelectedCustomerIDs;
+
+    foreach my $Item ( @{$CustomerServiceList} ) {
+        push @SelectedCustomerIDs, $Item->{CustomerID};
+    }
+
+    # generate ServiceOptionStrg
+    $Param{CustomerCompanyOptionStrg} = $LayoutObject->BuildSelection(
+        Data        => \%CustomerCompanyList,
+        Name        => 'CustomerComapnyIDs',
+        SelectedID  => \@SelectedCustomerIDs || [],
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
+        Max         => 200,
+        Class       => 'Modernize',
     );
 
     # output service edit

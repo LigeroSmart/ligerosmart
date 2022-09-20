@@ -1,0 +1,51 @@
+<Migrations>
+    <DatabaseInstall>
+        <TableCreate Name="customer_company_service">
+            <Column Name="customer_id" Required="true" Type="VARCHAR" Size="150" />
+            <Column Name="service_id" Required="true" Type="INTEGER" />
+            <Unique Name="survey_queue_view">
+                <UniqueColumn Name="customer_id" />
+                <UniqueColumn Name="service_id" />
+            </Unique>
+            <Index Name="customer_company_service_customer_id">
+                <IndexColumn Name="customer_id" />
+            </Index>
+            <Index Name="customer_company_service_service_id">
+                <IndexColumn Name="service_id" />
+            </Index>
+            <ForeignKey ForeignTable="customer_company">
+                <Reference Local="customer_id" Foreign="customer_id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="service">
+                <Reference Local="service_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="customer_company_sla">
+            <Column Name="customer_id" Required="true" Type="VARCHAR" Size="150" />
+            <Column Name="sla_id" Required="true" Type="INTEGER" />
+            <Unique Name="survey_queue_view">
+                <UniqueColumn Name="customer_id" />
+                <UniqueColumn Name="sla_id" />
+            </Unique>
+            <Index Name="customer_company_sla_customer_id">
+                <IndexColumn Name="customer_id" />
+            </Index>
+            <Index Name="customer_company_sla_sla_id">
+                <IndexColumn Name="sla_id" />
+            </Index>
+            <ForeignKey ForeignTable="customer_company">
+                <Reference Local="customer_id" Foreign="customer_id" />
+            </ForeignKey>
+            <ForeignKey ForeignTable="sla">
+                <Reference Local="sla_id" Foreign="id" />
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseInstall>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('Kernel::System::Console::Command::Maint::Config::Rebuild')->Execute();
+    ]]></CodeInstall>
+    <DatabaseUninstall>
+        <TableDrop Name="customer_company_service" />
+        <TableDrop Name="customer_company_sla" />
+    </DatabaseUninstall>
+</Migrations>
