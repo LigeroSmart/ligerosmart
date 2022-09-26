@@ -1,0 +1,1119 @@
+<html><head>
+  
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="services_arquivos/materialize.min.css">
+  
+      <script src="services_arquivos/xlsx.full.min.js"></script>
+  
+      <!-- Compiled and minified JavaScript -->
+      <script src="services_arquivos/materialize.min.js"></script>
+         
+          <style>
+              * {
+                  margin: 0;
+                  padding: 0;
+              }
+  
+              h2 {
+                  font-size: 25px;
+              }
+  
+              body {
+                  overflow-y: hidden;
+              }
+              .ServiceList.Root {
+                  display: block;
+                  min-height: 30px;
+                  width: 100%;
+                  padding: 15px;
+                  position: sticky;
+                  top: 0;
+              }
+              .ServiceList li {
+                  padding: 10px;
+                  padding-left: 45px;
+                  /* margin-bottom: 1px; */
+                  background: url('img/pathL.png') 5px 5px no-repeat rgb(237, 239, 242);
+              }
+  
+              #ServiceList1, #ServiceList2 {
+                  height: 77%;
+                  overflow-y: scroll;
+              }
+  
+              /* .ServiceList .copy {
+                  background-color: rgb(149, 197, 185);
+              } */
+  
+              .ServiceActions button {
+                  display: block;
+                  width: 100%;
+                  padding: 5px;
+              }
+  
+              .dragOver {
+                  outline: 2px dotted blue;
+              }
+  
+              .selected {
+                  outline: 2px solid green;
+              }
+  
+              .hasEqualIn1, .hasEqualIn2 {
+                  background-color: rgb(175, 206, 198) !important;
+              }
+  
+              /* The Modal (background) */
+              .modal {
+                  display: none; /* Hidden by default */
+                  position: fixed; /* Stay in place */
+                  margin-bottom: -100%;
+                  z-index: 1; /* Sit on top */
+                  padding-top : 12%; /* Location of the box */
+                  left: 0;
+                  top: 0;
+                  width: 100%; /* Full width */
+                  height: 100%; /* Full height */
+                  max-height: 100% !important; /* Full height */
+                  overflow: auto; /* Enable scroll if needed */
+                  background-color: rgb(0,0,0); /* Fallback color */
+                  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+              }
+  
+              /* Modal Content */
+              .modal-content {
+                  background-color: #fefefe;
+                  margin: auto;
+                  padding: 50px;
+                  border: 1px solid #888;
+                  width: 40%;
+              }
+  
+              /* The Close Button */
+              .close {
+                  color: #aaaaaa;
+                  float: right;
+                  font-size: 28px;
+                  font-weight: bold;
+              }
+  
+              .close:hover,
+              .close:focus {
+                  color: #000;
+                  text-decoration: none;
+                  cursor: pointer;
+              }
+              .progressBar {
+                  width: 100%;
+                  display: none;
+              }
+  
+              .progressBar.show {
+                  display: inline !important;
+              }
+  
+              #file {
+                  display: none;
+              }
+  
+          </style>
+      </head>
+      <body class="keyboard-focused">
+          
+          <div id="Services" class="row">
+              <div class="col s5">
+                  <nav class="navbar navbar-dark default-color">
+                      <ul id="Menu1Actions" class="navbar-nav mr-auto">
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="connectionModal1(serverInfo1)"> Conectar </a></li>
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="loadSpreadSheet()"> Carregar planilha</a></li>
+                          <!-- <li class="navbar-item"><a href="#" class="navbar-link" onclick="loadServicesFromFile()"> Carregar planilha</a></li> -->
+                          <!-- <li class="navbar-item"><a href="#" class="navbar-link" onclick="testResult()"> testResult </a></li> -->
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="sortList(ServiceList1)"> Ordenar </a></li>
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="cleanCache(serverInfo1)"> Limpar cache </a></li>
+                      </ul> 
+                  </nav>
+                  <h2 id="ServiceList1URL"></h2>
+                  <progress id="ServiceList1ProgressBar" class="progressBar"></progress>
+                  <ul id="ServiceList1" class="ServiceList Root"></ul> 
+              </div>
+              <div class="col s1 ServiceActions">
+                  <!-- <nav class="navbar flex-column nav-pills" aria-orientation="vertical"> -->
+                      <ul id="MenuActions">
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="getAllServices()">Get Services</a></li>
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="copyTo2(event)"> &gt;&gt; copiar </a></li>
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="copyTo1(event)"> &lt;&lt; copiar </a></li>
+                          <input type="checkbox" id="copySubServiceTree" name="copySubServiceTree">
+                      </ul> 
+                  <!-- </nav> -->
+              </div>
+              <div class="col s5">    
+                  <nav class="navbar navbar-dark default-color">
+                      <ul id="Menu2Actions">
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="connectionModal2(serverInfo2)"> Conectar </a></li>
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="sortList(ServiceList2)"> Ordenar </a></li>
+                          <li class="navbar-item"><a href="#" class="navbar-link" onclick="cleanCache(serverInfo2)"> Limpar cache </a></li>
+                      </ul> 
+                  </nav>
+                  <h2 id="ServiceList2URL"></h2>
+                  <progress id="ServiceList2ProgressBar" class="progressBar"></progress>
+                  <ul id="ServiceList2" class="ServiceList Root"></ul> 
+              </div>
+          </div>
+  
+      <!-- The Login Modal -->
+      <div id="myModal" class="modal">
+  
+          <!-- Modal content -->
+          <div class="modal-content">
+          <span class="close">×</span>
+          <form onsubmit="return false" action="" method="POST" data-bitwarden-watching="1">
+              <div>
+                  URL: <input type="text" name="url">
+                  Usuário: <input type="text" name="user">
+                  Senha: <input type="text" name="password">
+                  <button class="testConnection">Conectar</button>
+              </div>
+          </form>
+          </div>
+      
+      </div>
+  
+  
+  
+      <!-- The Login Modal -->
+      <div id="loginModal1" class="modal">
+  
+          <!-- Modal content -->
+          <div class="modal-content">
+              <span class="close">×</span>
+              <h2>Service List 1</h2>
+              <form id="formConnection1" onsubmit="return false" action="" method="POST" data-bitwarden-watching="1">
+                  <div>
+                      URL: <input type="text" name="url" id="loginConnection1URL">
+                      Usuário: <input type="text" name="user" id="loginConnection1UserLogin" value="root@localhost">
+                      Senha: <input type="password" name="password" id="loginConnection1UserPassword">
+                      <button class="testConnection">Conectar</button>
+                  </div>
+                  <progress class="progressBar"></progress>
+              </form>
+          </div>
+      
+      </div>
+  
+      <!-- The Login Modal -->
+      <div id="loginModal2" class="modal">
+  
+          <!-- Modal content -->
+          <div class="modal-content">
+              <span class="close">×</span>
+              <h2>Service List 2</h2>
+              <form id="formConnection2" onsubmit="return false" action="" method="POST" data-bitwarden-watching="1">
+                  <div>
+                      URL: <input type="text" name="url" id="loginConnection2URL">
+                      Usuário: <input type="text" name="user" id="loginConnection2UserLogin" value="root@localhost">
+                      Senha: <input type="password" name="password" id="loginConnection2UserPassword">
+                      <button class="testConnection">Conectar</button>
+                  </div>
+                  <progress class="progressBar"></progress>
+              </form>
+          </div>
+      
+      </div>
+      
+      <input type="file" id="file">
+      <div id="result"></div>    
+      
+      <script>
+  
+          var serverInfo1 = {
+              id: 1,
+              url: "",
+              userLogin: "root@localhost",
+              Password: "ligero",
+              FillServiceList: (data) => {
+                  if(data.Error) {
+                      console.error(data.Error)
+                      if(data.Error.ErrorCode == "TicketCreate.AuthFail") {
+                          sessionStorage.removeItem(`ServiceList1SessionID`)
+                      }
+                  }
+                  data.Result[0].forEach(createServiceItem1)
+                  compareServices()
+              }
+          }
+  
+          var serverInfo2 = {
+              id: 2,
+              url: "",
+              userLogin: "",
+              Password: "",
+              FillServiceList: async (data) => {
+                  if(data.Error) {
+                      console.error(data.Error)
+                      if(data.Error.ErrorCode == "TicketCreate.AuthFail") {
+                          sessionStorage.removeItem(`ServiceList2SessionID`)
+                      }
+                  }
+                  data.Result[0].forEach(await createServiceItem2)
+                  compareServices()
+              }
+          }
+  
+  
+          const saveSession1 = (data) => {
+              let { SessionID, UserID } = data
+              sessionStorage.setItem(`ServiceList1URL`, serverInfo1.url || '')
+              sessionStorage.setItem(`ServiceList1SessionID`, SessionID)
+              sessionStorage.setItem(`ServiceList1UserID`, UserID)
+              console.info('session1 created', data)
+              loginModal1.querySelector('.progressBar').style.display = 'none';
+          }
+  
+          const saveSession2 = (data) => {
+              let { SessionID, UserID } = data
+              sessionStorage.setItem(`ServiceList2URL`, serverInfo2.url || '')
+              sessionStorage.setItem(`ServiceList2SessionID`, SessionID)
+              sessionStorage.setItem(`ServiceList2UserID`, UserID)
+              console.info('session2 created', data)
+              loginModal2.querySelector('.progressBar').style.display = 'none';
+          }
+  
+          const LigeroAPICreteSession = async (serverInfo,saveSession) => {
+              var AuthValues = {}
+              AuthValues.UserLogin = serverInfo.userLogin
+              AuthValues.Password = serverInfo.Password
+              AuthValues.SessionID = await fetch(`${serverInfo.url}/api/v1.0/session/create`, { 
+                          method: "POST",
+                          // headers: {"Content-type": "application/json; charset=UTF-8"},
+                          body: JSON.stringify(AuthValues),
+                      })
+                  .then(e => e.json())
+                  .then(saveSession)
+                  .catch(e => console.error(e))
+
+                  if (AuthValues.SessionID) {
+                    console.log(AuthValues.SessionID);
+                    return AuthValues.SessionID                    
+                  }
+                  
+          }
+  
+          const LigeroAPICall = (serverInfo, action, data) => {
+              let urlField = `ServiceList${serverInfo.id}URL`
+              let sessionField = `ServiceList${serverInfo.id}SessionID`
+              data.SessionID = sessionStorage.getItem(sessionField)
+              serverInfo.url = sessionStorage.getItem(urlField)
+              return fetch(`${serverInfo.url}${action}`, {
+                          method: "POST",
+                          // headers: {"Content-type": "application/json; charset=UTF-8"}, // CORS header error
+                          body: JSON.stringify(data),
+                      })
+                      .then(e => e.json());
+          }
+  
+          if(!sessionStorage.getItem('ServiceList1SessionID')) {
+              LigeroAPICreteSession(serverInfo1,saveSession1) 
+          }
+  
+          if(!sessionStorage.getItem('ServiceList2SessionID')) {
+              LigeroAPICreteSession(serverInfo2,saveSession2)
+          }
+  
+          const createServiceItem1 = (Service) => {
+              let id = `ServiceList1Service${Service.ServiceID}`
+              if(window[id]) return window[id]
+              let li = document.createElement('li')
+              li.id = id
+              let ulChildService = document.createElement('ul')
+              ulChildService.classList.add(`ChildService`)
+              ulChildService.classList.add(`ChildService${Service.ServiceID}`)
+              ulChildService.id = `ServiceList1ChildService${Service.ServiceID}`
+              // li.innerHTML = JSON.stringify(Service)
+              for (var key in Service) {
+                  li.dataset[key] = Service[key]
+              }
+              li.dataset.dataFrom = 'ServiceList1'
+              li.innerHTML = Service.NameShort
+              li.title = Service.Name
+              // li.title = Service.Name
+              li.draggable = true
+              if(Service.ParentID) {
+                  li.classList.add(`ChildService`)
+                  li.classList.add(`ParentService${Service.ParentID}`)
+              } else {
+                  li.classList.add('RootService')
+              }
+              li.addEventListener('dragstart', ServiceDragStart)
+              li.addEventListener('dragover', ServiceDragOver)
+              li.addEventListener('dragleave', ServiceDragLeave)
+              li.addEventListener('drop', ServiceDrop)
+              li.addEventListener('dblclick', ShowService)
+              li.addEventListener('click', ToggleSelectService)
+              li.append(ulChildService)
+              let parentServiceList = document.querySelector(`#ServiceList1 .ChildService${Service.ParentID}`)
+              if(parentServiceList) {
+                  parentServiceList.append(li)
+              } else {
+                  ServiceList1.append(li)
+              }
+              return li
+          }
+  
+          const createServiceItem2 = (Service) => {
+              let id = `ServiceList2Service${Service.ServiceID}`
+              if(window[id]) return window[id]
+              let li = document.createElement('li')
+              li.id = id
+              let ulChildService = document.createElement('ul')
+              ulChildService.classList.add(`ChildService`)
+              ulChildService.classList.add(`ChildService${Service.ServiceID}`)
+              ulChildService.id = `ServiceList2ChildService${Service.ServiceID}`
+              li.id = id
+              for (var key in Service) {
+                  li.dataset[key] = Service[key]
+              }
+              li.dataset.dataFrom = 'ServiceList2'
+              li.innerHTML = Service.NameShort
+              li.title = Service.Name
+              // li.innerHTML = Service.Name
+              li.draggable = true
+              if(Service.ParentID) {
+                  li.classList.add(`ChildService`)
+                  li.classList.add(`ParentService${Service.ParentID}`)
+              } else {
+                  li.classList.add('RootService')
+              }
+              li.addEventListener('dragstart', ServiceDragStart)
+              li.addEventListener('dragover', ServiceDragOver)
+              li.addEventListener('dragleave', ServiceDragLeave)
+              li.addEventListener('drop', ServiceDrop)
+              li.addEventListener('dblclick', ShowService)
+              li.addEventListener('click', ToggleSelectService)
+              li.append(ulChildService)
+              let parentServiceList = document.querySelector(`#ServiceList2 .ChildService${Service.ParentID}`)
+              if(parentServiceList) {
+                  parentServiceList.append(li)
+              } else {
+                  ServiceList2.append(li)
+              }
+              return li
+          }
+  
+          const saveService = async (serverInfo, obj) => {
+  
+              let Service = obj.dataset ? Object.assign({}, obj.dataset) : obj
+              var saveService
+  
+              //mandatory fields
+              Service.TypeID = 1
+              Service.UserID = sessionStorage.getItem(`ServiceList${serverInfo.id}UserID`)
+              if(!Service.ParentID) {
+                  Service.ParentID = 0;
+              }
+              console.log(Service)
+            //  if (!Service.Name) { 
+            //    console.error('No servie name!')
+            //    return false
+            //}
+              let ServiceNameArray = Service.Name.split('::')
+              Service.Name = ServiceNameArray.pop()
+
+
+                    var awaitSaveService
+                    awaitSaveService = await LigeroAPICall(serverInfo, '/api/v1.0/admin', {
+                        Object: 'Service',
+                        Method: 'ServiceAdd',
+                        ReturnType: "ARRAY",
+                        Params: Service,
+                    })
+                    await new Promise((resolve) => setTimeout(() => resolve(), 5000));
+                    awaitSaveService = await awaitSaveService;
+
+              
+              return awaitSaveService
+          }
+  
+  
+          const saveServicePreferencesGet = (serverInfo, Params) => {
+  
+              // Params {
+              // ServiceID => 123,
+              // UserID    => 123,
+              // }
+  
+              //mandatory fields
+              Params.UserID = sessionStorage.getItem(`ServiceList${serverInfo.id}UserID`)
+  
+              return LigeroAPICall(serverInfo, '/api/v1.0/admin', {
+                  Object: 'Service',
+                  Method: 'ServicePreferencesGet',
+                  ReturnType: "ARRAY",
+                  Params,
+              })
+          }
+  
+          const saveServicePreferencesSet = (serverInfo, Params) => {
+  
+              // Params {
+              // ServiceID => 123,
+              // Key       => 'UserComment',
+              // Value     => 'some comment',
+              // UserID    => 123,
+              // }
+  
+              //mandatory fields
+              Params.UserID = sessionStorage.getItem(`ServiceList${serverInfo.id}UserID`)
+  
+              return LigeroAPICall(serverInfo, '/api/v1.0/admin', {
+                  Object: 'Service',
+                  Method: 'ServicePreferencesSet',
+                  ReturnType: "ARRAY",
+                  Params,
+              })
+          }
+  
+          const updateService = (serverInfo, obj) => {
+  
+              let Service = Object.assign({}, obj.dataset)
+  
+              //mandatory fields
+              Service.TypeID = 1
+              Service.UserID = sessionStorage.getItem(`ServiceList${serverInfo.id}UserID`)
+              if(!Service.ParentID) {
+                  Service.ParentID = 0;
+              }
+              let ServiceNameArray = Service.Name.split('::')
+              Service.Name = ServiceNameArray.pop()
+  
+              return LigeroAPICall(serverInfo, '/api/v1.0/admin', {
+                  Object: 'Service',
+                  Method: 'ServiceUpdate',
+                  ReturnType: "ARRAY",
+                  Params: Service,
+              })
+          }
+  
+          const cleanCache = (serverInfo) => {
+              return LigeroAPICall(serverInfo, '/api/v1.0/admin', {
+                  Object: 'Console::Command::Maint::Cache::Delete',
+                  Method: 'Run',
+                  ReturnType: "ARRAY",
+                  Params: {
+                      UserID: sessionStorage.getItem(`ServiceList${serverInfo.id}UserID`)
+                  }
+              }).then(e => console.info(e))
+          }
+  
+          const LigeroAPIGetServices = async (serverInfo) => {
+                var ListAwait;
+              window[`ServiceList${serverInfo.id}URL`].innerHTML = sessionStorage.getItem(`ServiceList${serverInfo.id}URL`)
+              ListAwait = await LigeroAPICall(serverInfo, '/api/v1.0/admin', {
+                  Object: 'Service',
+                  Method: 'ServiceListGet',
+                  ReturnType: "ARRAY",
+                  Params: {
+                      UserID: sessionStorage.getItem(`ServiceList${serverInfo.id}UserID`)
+                  }
+              }).then(serverInfo.FillServiceList)
+
+              return await ListAwait
+          }
+  
+  
+          const LigeroAPIFindService = (serverInfo, ServiceObjectSearch) => {
+              window[`ServiceList${serverInfo.id}URL`].innerHTML = sessionStorage.getItem(`ServiceList${serverInfo.id}URL`)
+              ServiceObjectSearch.UserID = sessionStorage.getItem(`ServiceList${serverInfo.id}UserID`)
+              
+              list = Array.from(window[`ServiceList${serverInfo.id}`].querySelectorAll('li.RootService, li.ChildService'))
+              service = list.find(item => item.dataset.Name.trim() === ServiceObjectSearch.Name.trim() && item.ServiceID)
+              // service = {}
+  
+              return service 
+                      ? Object.assign({}, service.dataset)
+                      : LigeroAPICall(serverInfo, '/api/v1.0/admin', {
+                              Object: 'Service',
+                              Method: 'ServiceGet',
+                              ReturnType: "HASH",
+                              Params: ServiceObjectSearch
+                          }).then(response => response.Result)
+          }
+  
+  
+          const ServiceDragStart = (event) =>  {
+              dragged = event.target
+          }
+          const ServiceListDrop = async (event) => {
+              event.preventDefault();
+  
+              event.target.classList.remove('dragOver')
+              // liClone = dragged.cloneNode(true)
+  
+              if(event.target == dragged) {
+                  return false
+              }
+  
+              dropList = event.target.id == 'ServiceList1' 
+                              ? event.target
+                              : event.target.querySelector(`ul.ChildService`)
+  
+              dragged.dataset.ParentID = event.target.dataset.ServiceID
+              dragged.dataset.Name = event.target.dataset.Name 
+                                      ? event.target.dataset.Name + '::' + dragged.dataset.NameShort
+                                      : dragged.dataset.NameShort
+              
+  
+              if(dropList) {
+                  if(dropList.id == 'ServiceList1') {
+                      delete dragged.dataset.ParentID
+                  }
+                  if(dragged.dataset.dataFrom == 'ServiceList1') {
+  
+                      updateService(serverInfo1, dragged)
+                          .then( (data) => {
+                              if(data.Error) {
+                                  console.error(data.Error)
+                                  if(!data.Error.match('Need Value')) {
+                                      alert(data.Error)
+                                      return false
+                                  }
+                              }
+                              dragged.classList.add('copy')
+                              dropList.appendChild(dragged)
+                              sortList(dropList)
+                              compareServices()
+                              dragged.scrollIntoView({block: "center", behavior: "smooth"})
+                          })
+                  }
+                  if(dragged.dataset.dataFrom == 'ServiceList2') {
+                      let liClone = dragged.cloneNode(true)
+                      liClone.dataset.dataFrom = 'ServiceList1'
+                      console.log(liClone)
+                      await saveService(serverInfo1, liClone)
+                          .then( async (data) => {
+                              var dataAwait = await data;
+                              console.log(dataAwait);
+                              if(dataAwait.Error) {
+                                  let message = `${dataAwait.Error} (${liClone.dataset.NameShort})`
+                                  console.error(message)
+                                  alert(message)
+                                  return false
+                              }
+                              let [ id ] = dataAwait.Result
+                              liClone.id = `Service${id}`
+                              liClone.dataset.ServiceID = id
+                              liClone.addEventListener('dragstart', ServiceDragStart)
+                              liClone.addEventListener('dragover', ServiceDragOver)
+                              liClone.addEventListener('drop', ServiceDrop)
+                              dragged.classList.add('copy')
+                              liClone.classList.add('copy')
+                              dropList.appendChild(liClone)
+                              sortList(dropList)
+                              compareServices()
+                              liClone.scrollIntoView({block: "center", behavior: "smooth"})
+                              return liClone.dataset
+                            })                              
+                        .then ( async (data) => {
+                            console.log(copySubServiceTree.value)
+                            console.log(data);
+                            dragged.querySelectorAll('.ChildService').forEach(childService => {
+                                console.log(childService);
+                            })
+  
+                            /**if(copySubServiceTree.value) {
+                                dragged.querySelectorAll('.ChildService').forEach(childService => {
+                                    if (!childService.dataset.Name) { 
+                                        //console.error('No servie name!')
+                                        return false
+                                    }                                    
+                                    childService.dataset.ParentID = liClone.dataset.ServiceID
+                                    console.log(childService);
+                                    saveService(serverInfo1, childService)
+                                        .then( async (dataAwait) => {
+                                            var childdata = await dataAwait;
+                                            console.log(childdata);
+                                            if(childdata.Error) {
+                                                let message = `${childdata.Error} (${liClone.dataset.NameShort})`
+                                                console.error(message)
+                                                alert(message)
+                                                return false
+                                            }
+                                            let [ id ] = childdata.Result
+                                            liClone.id = `Service${id}`
+                                            liClone.dataset.ServiceID = id
+                                            liClone.addEventListener('dragstart', ServiceDragStart)
+                                            liClone.addEventListener('dragover', ServiceDragOver)
+                                            liClone.addEventListener('drop', ServiceDrop)
+                                            dragged.classList.add('copy')
+                                            liClone.classList.add('copy')
+                                            dropList.appendChild(liClone)
+                                            sortList(dropList)
+                                            compareServices()
+                                            liClone.scrollIntoView({block: "center", behavior: "smooth"})
+                                        })
+                                })
+                            }**/                            
+                        }) 
+                  }
+  
+              }
+              return true
+          }
+  
+          const ServiceDrop = (event) => {
+              event.preventDefault();
+              // event.target.before(dragged)
+              return false
+          }
+  
+          const ServiceListDragOver = (event) => {
+              event.target.classList.add('dragOver')
+              event.preventDefault();
+          }
+  
+          const ServiceListDragLeave = (event) => {
+              event.preventDefault();
+              event.target.classList.remove('dragOver')
+          }
+  
+          const ServiceDragOver = (event) => {
+              event.preventDefault();
+              event.target.classList.add('dragOver')
+          }
+  
+          const ServiceDragLeave = (event) => {
+              event.preventDefault();
+              event.target.classList.remove('dragOver')
+          }
+  
+  
+          function sortList(element) {
+              var list, i, switching, b, shouldSwitch;
+              list = element;
+              switching = true;
+              /* Make a loop that will continue until
+              no switching has been done: */
+              while (switching) {
+                  // start by saying: no switching is done:
+                  switching = false;
+                  // b = list.querySelectorAll(`li`);
+                  b = document.querySelectorAll(`#${element.id} > li`) || document.querySelectorAll(`#${element.id} ul.ChildService > li`);
+                  // Loop through all list-items:
+                  for (i = 0; i < (b.length - 1); i++) {
+                  // start by saying there should be no switching:
+                  shouldSwitch = false;
+                  /* check if the next item should
+                  switch place with the current item: */
+                  if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+                      /* if next item is alphabetically
+                      lower than current item, mark as a switch
+                      and break the loop: */
+                      shouldSwitch = true;
+                      break;
+                  }
+                  }
+                  if (shouldSwitch) {
+                  /* If a switch has been marked, make the switch
+                  and mark the switch as done: */
+                  b[i].parentNode.insertBefore(b[i + 1], b[i]);
+                  switching = true;
+                  }
+              }
+          }
+  
+          const copyTo1 = (event) => {
+              ServiceList2.querySelectorAll('li').forEach(li => {
+                  if(ServiceList1.querySelector(`#${li.id}`)) {
+                      console.error(`${li.id} already exists`)
+                      // do update
+                      return false
+                  }
+                  let liClone = li.cloneNode(true)
+                  liClone.addEventListener('dragstart', ServiceDragStart)
+                  liClone.addEventListener('dragover', ServiceDragOver)
+                  liClone.addEventListener('drop', ServiceDrop)
+                  li.classList.add('copy')
+                  liClone.classList.add('copy')
+                  ServiceList1.append(liClone)
+                  sortList(ServiceList1)
+              })
+              compareServices()
+          }
+  
+          const copyTo2 = (event) => {
+              ServiceList1.querySelectorAll('li').forEach(li => {
+                  if(ServiceList2.querySelector(`#${li.id}`)) {
+                      console.error(`${li.id} already exists`)
+                      // do update
+                      return false
+                  }
+                  let liClone = li.cloneNode(true)
+                  liClone.addEventListener('dragstart', ServiceDragStart)
+                  liClone.addEventListener('dragover', ServiceDragOver)
+                  liClone.addEventListener('drop', ServiceDrop)
+                  li.classList.add('copy')
+                  liClone.classList.add('copy')
+                  ServiceList2.append(liClone)
+                  sortList(ServiceList2)
+              })
+              compareServices()
+          }
+  
+          const ShowService = (event) => {
+              // alert(JSON.stringify(event.target.dataset, null, 2))
+              let id = event.target.dataset.ServiceID
+              let url = sessionStorage.getItem(`${event.target.dataset.dataFrom}URL`)
+              if(url) {
+                  window.open(`${url}/otrs/index.pl?Action=AdminService;Subaction=ServiceEdit;ServiceID=${id}`)
+              }
+              event.stopPropagation()
+          }
+          const ToggleSelectService = (event) => {
+              if(event.target.classList.contains('selected')) {
+                  event.target.classList.remove('selected')
+              } else {
+                  event.target.classList.add('selected')
+              }
+          }
+  
+          let dragged = null;
+  
+          ServiceList1.addEventListener('drop', ServiceListDrop)
+          ServiceList1.addEventListener('dragover', ServiceListDragOver)
+          ServiceList1.addEventListener('dragleave', ServiceListDragLeave)
+  
+          ServiceList2.addEventListener('drop', ServiceListDrop)
+          ServiceList2.addEventListener('dragover', ServiceListDragOver)
+          ServiceList2.addEventListener('dragleave', ServiceListDragLeave)
+  
+  
+  
+          // Get the modal
+          function connectionModal1(serverInfo) {
+  
+              // Get the button that opens the modal
+              // var btn = document.getElementById("myBtn");
+  
+              // Get the <span> element that closes the modal
+              var span = loginModal1.querySelector(".close");
+              var testConnection = loginModal1.querySelector(".testConnection");
+  
+              // When the user clicks the button, open the modal 
+              // btn.onclick = function() {
+              loginModal1.style.display = "block";
+              // }
+  
+              // When the user clicks on <span> (x), close the modal
+              span.onclick = function() {
+                  loginModal1.style.display = "none";
+              }
+              testConnection.onclick = async function() {
+                  loginModal1.querySelector('.progressBar').style.display = 'inline';
+                  serverInfo1.url = loginConnection1URL.value
+                  serverInfo1.userLogin = loginConnection1UserLogin.value
+                  serverInfo1.Password = loginConnection1UserPassword.value
+                  await LigeroAPICreteSession(serverInfo1,saveSession1)
+                  span.click()
+                  console.log(serverInfo1)
+                  await LigeroAPIGetServices(serverInfo1)
+              }
+  
+  
+  
+              // When the user clicks anywhere outside of the modal, close it
+              window.onclick = function(event) {
+                  if (event.target == loginModal1) {
+                      loginModal1.style.display = "none";
+                  }
+              }
+          }
+  
+  
+          // Get the modal
+          function connectionModal2(serverInfo) {
+  
+              // Get the button that opens the modal
+              // var btn = document.getElementById("myBtn");
+  
+              // Get the <span> element that closes the modal
+              var span = loginModal2.querySelector(".close");
+              var testConnection = loginModal2.querySelector(".testConnection");
+  
+              // When the user clicks the button, open the modal 
+              // btn.onclick = function() {
+              loginModal2.style.display = "block";
+              // }
+  
+              // When the user clicks on <span> (x), close the modal
+              span.onclick = function() {
+                  loginModal2.style.display = "none";
+              }
+              testConnection.onclick = async function() {
+                  loginModal2.querySelector('.progressBar').style.display = 'inline';
+                  serverInfo2.url = loginConnection2URL.value
+                  serverInfo2.userLogin = loginConnection2UserLogin.value
+                  serverInfo2.Password = loginConnection2UserPassword.value
+                  await LigeroAPICreteSession(serverInfo2,saveSession2)
+                  span.click()
+                  console.log(serverInfo2)
+                  await LigeroAPIGetServices(serverInfo2)
+              }
+  
+  
+  
+              // When the user clicks anywhere outside of the modal, close it
+              window.onclick = function(event) {
+                  if (event.target == loginModal2) {
+                      loginModal2.style.display = "none";
+                  }
+              }
+          }
+  
+          const getAllServices = async () => {
+              ServiceList1.innerHTML = ''
+              ServiceList2.innerHTML = ''
+              await LigeroAPIGetServices(serverInfo1)
+              await LigeroAPIGetServices(serverInfo2)
+          }
+  
+          const compareServices = () => {
+              document.querySelectorAll('.hasEqualIn1, .hasEqualIn2').forEach(li => {
+                  li.classList.remove('hasEqualIn1', 'hasEqualIn2')
+              })
+              ServiceList1.querySelectorAll('li').forEach(li1 => {
+                  ServiceList2.querySelectorAll('li').forEach(li2 => {
+                      if(li1.dataset.Name == li2.dataset.Name) {
+                          li2.classList.add('hasEqualIn1')
+                          li1.classList.add('hasEqualIn2')
+                      }
+                  })
+              })
+          }
+  
+          window.addEventListener('load',() => {
+              getAllServices()
+              if(sessionStorage.getItem('SessionID1')) {
+                  LigeroAPIGetServices(serverInfo1)
+              }
+              if(sessionStorage.getItem('SessionID2')) {
+                  LigeroAPIGetServices(serverInfo2)
+              }
+          })
+  
+          ServiceList2.addEventListener('drop', (event) => {
+              event.stopPropagation()
+              event.preventDefault()
+              alert('read-only side')
+              dragged = undefined
+              return false
+          })
+  
+      </script>
+  
+  <script>
+      
+      // Set custom key if the file is structured to array of objects
+      let jrexKeyName = 'Aplicação'
+      // This variable will contain xlsx data
+      let jrexXlsData = []
+  
+      // jrexInitialize(document.getElementById('file').files[0])
+  
+      /**
+       * Initialize JREX and load XLS file from the specified file.
+       * 
+       * @return void
+       */
+      async function jrexInitialize() {
+          const file = document.getElementById('file').files[0]
+          const reader = new FileReader
+          reader.addEventListener('load', (event) => {
+              console.log(event.target.result)
+              const jrexRequestData = new Uint8Array(event.target.result)
+              const jrexWorkbook = XLSX.read(jrexRequestData, { type: 'array' })
+  
+              jrexWorkbook.SheetNames.forEach(function (sheetName) {
+                  jrexXlsData = XLSX.utils.sheet_to_row_object_array(jrexWorkbook.Sheets[sheetName])
+              })
+  
+              loadServicesFromFile()
+          })
+          reader.readAsArrayBuffer(file)
+      }
+      /**
+       * Handle jrex input change.
+       * 
+       * @param {DomEvent} e
+       * @return void
+       */
+      function jrexInputChanged(e) {
+          const jrexInputValue = e.target.value
+          let jrexFinds = jrexXlsData.find(item => item[jrexKeyName].toString().match(jrexInputValue))
+  
+          if (jrexFinds !== undefined) {
+              jrexOutput.innerText = JSON.stringify(jrexFinds)
+              // Logic
+          } else {
+              jrexOutput.innerText = 'not found'
+          }
+      }
+  
+      async function testResult() {
+  
+          try {
+              if(document.querySelector('#file').files.length === 0) {
+                  console.error('File not loaded')
+                  throw('File not loaded')
+                  return false
+              }
+      
+              await jrexInitialize()
+              alert(JSON.stringify(jrexXlsData[0],null,'\t'))
+              // alert(JSON.stringify(serviceTemplate,null,'\t'))
+              
+          } catch (error) {
+              alert(error)
+          }
+      }
+  
+      var serviceTemplate = {
+          "Name": "Let",
+          "NameShort": "Let",
+          "Criticality": "1 very low",
+          "TicketQueue": "",
+          "Forms": "",
+          "CurInciStateType": "operational",
+          "Icons": "fas fa-cog",
+          "CurInciState": "Operational",
+          "Type": "Back End",
+          "CreateTime": "2022-07-13 11:26:15",
+          "ChangeTime": "2022-07-13 11:27:51",
+          "ServiceID": "",
+          "ValidID": "1",
+          "TicketType": "",
+          "ServiceImageBackground": "",
+          "ChangeBy": "1",
+          "CreateBy": "1",
+          "TicketQueueExpression": "",
+          "CurInciStateTypeFromCIs": "operational",
+          "CurInciStateID": "1",
+          "TypeID": "6",
+          "DefaultService": "1",
+          "Icons": "fas fa-cog",
+      }
+  
+  
+  async function loadServicesFromFile() {
+  
+      try {
+          
+  
+          if(document.querySelector('#file').files.length === 0) {
+              console.error('File not loaded')
+              alert('File not loaded')
+              return false
+          }
+  
+          let reload = false
+          let ServicesByName = []
+          Array.from(window[`ServiceList1`]
+              .querySelectorAll('li.RootService, li.ChildService')).forEach(item => {
+                  let service = Object.assign({}, item.dataset)
+                  ServicesByName.push(service)
+              })
+  
+          ServiceList1ProgressBar.classList.add('show')
+  
+          ServiceList1ProgressBar.max = jrexXlsData.length
+  
+          for(let item of jrexXlsData) {
+  
+              if(reload) {
+                  await LigeroAPIGetServices(serverInfo1)
+                  reload = false
+              }
+  
+              console.log(item['__rowNum__'])
+  
+              ServiceList1ProgressBar.value = item['__rowNum__']
+  
+              let ParentID = null
+              let lastValue = null
+              serviceTemplate.Name = ''
+              serviceTemplate.NameShort = ''
+  
+  
+              for(let [key,value] of Object.entries(item)) {
+                  console.log({ key,value })
+  
+                  // if(value == '')   continue
+                  if(!value)           continue
+                  if(value == 'N/A')   continue
+                  if(key == 'Cliente') continue
+                  // if(lastValue !== null && value === lastValue) continue
+  
+                  serviceTemplate.NameShort = value.trim()
+                  lastValue = value.trim()
+                  if(serviceTemplate.Name === '') {
+                      serviceTemplate.Name = value.trim()
+                  } else {
+                      serviceTemplate.Name += '::' + value.trim()
+                  }
+                  serviceTemplate.ParentID = ParentID
+                  // service = ServicesByName.find(e => e.Name === serviceTemplate.Name && e.ServiceID) || await LigeroAPIFindService(serverInfo1, { Name: serviceTemplate.Name.trim() })
+                  service = await LigeroAPIFindService(serverInfo1, { Name: serviceTemplate.Name.trim() })
+                  if(service.ServiceID) {
+                      ParentID = service.ServiceID
+                  } else {
+                    //(async () => {
+                    //    var responseAwait;
+                    //    responseAwait = await saveService(serverInfo1, serviceTemplate);
+                    //    await new Promise((resolve) => setTimeout(() => resolve(), 5000));
+                    //    response = await responseAwait;
+                    //})();
+                    
+                      response = await saveService(serverInfo1, serviceTemplate)
+                      reload = Boolean(response.Result && response.Result.length)
+                      ServicesByName.push({
+                          ServiceID: response.Result[0],
+                          Name: serviceTemplate.Name,
+                      })
+                      ParentID = response.Result[0]
+                      if(!ParentID) { 
+                          console.warn({ ParentID, response, serviceTemplate })
+                          // debugger
+                          // return false
+                      }
+                  }
+  
+              }
+                  
+          }
+     
+      } catch (error) {
+          console.error(error)
+          file = document.querySelector('#file').files[0].name
+          line = ServiceList1ProgressBar.value
+          alert(`Planilha: ${file}\nLinha: ${line}\nErro: ${error}`)
+      }
+  
+      ServiceList1ProgressBar.classList.remove('show')
+  
+      await LigeroAPIGetServices(serverInfo1)
+  
+  }
+  
+  
+  const loadSpreadSheet = () => {
+      document.getElementById('file').click()
+  }
+  
+  document.querySelector('#file').addEventListener('input', async () => {
+      await jrexInitialize()
+  })
+  
+  
+  
+  
+  </script>
+  </body></html>

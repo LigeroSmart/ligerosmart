@@ -116,7 +116,9 @@ sub ReturnError {
 
     $Self->{DebuggerObject}->Error(
         Summary => $Param{ErrorCode},
-        Data    => $Param{ErrorMessage},
+        Data    => {
+            ErrorMessage => $Param{ErrorMessage},
+        },
     );
 
     # return structure

@@ -277,7 +277,9 @@ sub ProviderProcessRequest {
     # Send received data to debugger.
     $Self->{DebuggerObject}->Debug(
         Summary => 'Received data by provider from remote system',
-        Data    => $Content,
+        Data    => {
+            Status => $Content,
+        },
     );
 
     my $ContentDecoded = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
@@ -982,7 +984,7 @@ sub _Output {
     $Self->{DebuggerObject}->DebugLog(
         DebugLevel => $DebugLevel,
         Summary    => "Returning provider data to remote system (HTTP Code: $Param{HTTPCode})",
-        Data       => $Param{Content},
+        Data       => {$Param{Content},},
     );
 
     # Set keep-alive.
