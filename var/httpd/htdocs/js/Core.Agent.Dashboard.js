@@ -618,7 +618,10 @@ Core.Agent.Dashboard = (function (TargetNS) {
      *      Initializes User Online dashboard widget.
      */
     TargetNS.InitUserOnline = function() {
-        var UserOnline = Core.Config.Get('UserOnline');
+        var UserOnline = Core.Config.Get('UserOnline',{
+            "Name": "0400-UserOnline",
+            "NameHTML": "0400_UserOnline"
+        });
 
         // Initializes User Online event functionality
         if (typeof UserOnline !== 'undefined') {
