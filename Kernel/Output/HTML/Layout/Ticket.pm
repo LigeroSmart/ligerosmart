@@ -599,6 +599,7 @@ sub AgentQueueListOption {
                 $SelectedID eq $_
                 || $Selected eq $Param{Data}->{$_}
                 || $Param{SelectedIDRefArrayOK}->{$_}
+                || $Param{Action} =~ m{ ^AgentTicket.*$ }xmsi
                 )
             {
                 $Param{MoveQueuesStrg}

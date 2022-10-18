@@ -2128,7 +2128,9 @@ sub _Mask {
 
         # set move queues
         $Param{QueuesStrg} = $LayoutObject->AgentQueueListOption(
+            Action   => $Self->{Action},
             Data     => { %MoveQueues, '' => '-' },
+            #Data     => { %MoveQueues},
             Multiple => 0,
             Size     => 0,
             Class    => 'NewQueueID Modernize '
