@@ -357,8 +357,12 @@ sub FormatTimeString {
             $Config ne 'DateFormatShort'
             && $Self->{TimeZone}
             && $Self->{TimeZone} ne Kernel::System::DateTime->OTRSTimeZoneGet()
+            && $Kernel::OM->Get('Kernel::Config')->Get('DoNotShowUserTimeZone')
             )
         {
+            return $ReturnString;
+        }
+        else {
             return $ReturnString . " ($Self->{TimeZone})";
         }
 

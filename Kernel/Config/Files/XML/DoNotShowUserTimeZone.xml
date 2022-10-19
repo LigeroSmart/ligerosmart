@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="DoNotShowUserTimeZone" Required="1" Valid="1">
+        <Description Translatable="1">If enabled, users who have selected a time zone will not be presented in date and time values.</Description>
+        <Navigation>Core::Time</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+</otrs_config>
