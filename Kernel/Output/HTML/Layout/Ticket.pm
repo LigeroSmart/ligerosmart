@@ -598,9 +598,10 @@ sub AgentQueueListOption {
                 ReplaceDoubleSpace => 0,
             );
             if (
-                $SelectedID eq $DataKey
-                || $Selected eq $Param{Data}->{$DataKey}
-                || $Param{SelectedIDRefArrayOK}->{$DataKey}
+                $SelectedID eq $_
+                || $Selected eq $Param{Data}->{$_}
+                || $Param{SelectedIDRefArrayOK}->{$_}
+                || $Param{Action} =~ m{ ^AgentTicket.*$ }xmsi
                 )
             {
                 $Param{MoveQueuesStrg}
