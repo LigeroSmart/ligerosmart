@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/ProcessManagement/Process.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -28,7 +27,7 @@ $Kernel::OM->ObjectParamAdd(
         UseTmpArticleDir => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # create common objects to be used in ActivityDialog object creation
 my %CommonObject;
@@ -39,7 +38,7 @@ $CommonObject{TransitionActionObject} = $Kernel::OM->Get('Kernel::System::Proces
 $CommonObject{TicketObject}           = $Kernel::OM->Get('Kernel::System::Ticket');
 
 # define needed variables
-my $RandomID = $Helper->GetRandomID();
+my $RandomID = $HelperObject->GetRandomID();
 
 # create some queues in the system
 my %QueueData1 = (
@@ -102,39 +101,13 @@ $Self->IsNot(
     "QueueAdd() - Added queue '$QueueData3{Name}' for ACL check - should not be undef"
 );
 
-my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate();
+my $TestCustomerUserLogin = $HelperObject->TestCustomerUserCreate();
 
 # Get ServiceObject.
 my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
-# ---
-# ITSMCore
-# ---
-
-# get the list of service types from general catalog
-my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::Service::Type',
-);
-
-# build a lookup hash
-my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
-
-# get the list of sla types from general catalog
-my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::SLA::Type',
-);
-
-# build a lookup hash
-my %SLATypeName2ID = reverse %{ $SLATypeList };
-# ---
 
 my $ServiceID = $ServiceObject->ServiceAdd(
     Name    => $RandomID,
-# ---
-# ITSMCore
-# ---
-    TypeID      => $ServiceTypeName2ID{Training},
-    Criticality => '3 normal',
-# ---
     ValidID => 1,
     UserID  => 1,
 );
@@ -148,11 +121,6 @@ $ServiceObject->CustomerUserServiceMemberAdd(
 
 my $SLAID = $Kernel::OM->Get('Kernel::System::SLA')->SLAAdd(
     ServiceIDs => [$ServiceID],
-# ---
-# ITSMCore
-# ---
-    TypeID     => $SLATypeName2ID{Other},
-# ---
     Name       => $RandomID,
     ValidID    => 1,
     UserID     => 1,

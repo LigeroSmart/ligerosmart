@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -11,7 +12,7 @@ package Kernel::GenericInterface::Debugger;
 use strict;
 use warnings;
 
-use Kernel::System::VariableCheck qw(IsString IsStringWithData IsHashRefWithData);
+use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
 
@@ -164,9 +165,6 @@ sub DebugLog {
         return;
     }
 
-    # Check if DisableLog == 1
-    my $DisableLog = ( ref($Param{Data}) eq 'HASH' && $Param{Data}->{DisableLog} && $Param{Data}->{DisableLog} == 1 ) ? 1 : 0;
-
     # if DebugLevel is not set DebugLevel from constructor is used
     $Param{DebugLevel} = $Param{DebugLevel} || $Self->{DebugLevel};
 
@@ -188,7 +186,11 @@ sub DebugLog {
 
     # create log message
     my $DataString = '';
-    if ( IsHashRefWithData( $Param{Data} ) ) {
+    if (
+        IsHashRefWithData( $Param{Data} )
+        || IsArrayRefWithData( $Param{Data} )
+        )
+    {
         $DataString = $Kernel::OM->Get('Kernel::System::Main')->Dump( $Param{Data} );
     }
     elsif ( IsStringWithData( $Param{Data} ) ) {
@@ -207,10 +209,13 @@ sub DebugLog {
                 CommunicationID   => $Self->{CommunicationID},
                 CommunicationType => $Self->{CommunicationType},
                 RemoteIP          => $Self->{RemoteIP},
-                Summary           => $Param{Summary},
-                WebserviceID      => $Self->{WebserviceID},
-                DebugLevel        => $Param{DebugLevel},
-                Data              => ( $DisableLog ) ? $Param{Summary} : $DataString,
+
+                # Database table gi_debugger_entry_content limits subject column
+                # value length in which the summary will be stored to 255 characters.
+                Summary      => substr( $Param{Summary}, 0, 255 ),
+                WebserviceID => $Self->{WebserviceID},
+                DebugLevel   => $Param{DebugLevel},
+                Data         => $DataString,
             );
         }
         return 1 if $Param{DebugLevel} ne 'error';
@@ -222,7 +227,7 @@ DebugLog $Param{DebugLevel}:
   Data   : $DataString.
 EOF
 
-    if ( $Param{DebugLevel} eq 'error' && !$DisableLog ) {
+    if ( $Param{DebugLevel} eq 'error' ) {
         $LogMessage =~ s/\n//g;
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',

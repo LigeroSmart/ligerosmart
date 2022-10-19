@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Output/HTML/Templates/Standard/AdminService.tt
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -93,7 +92,7 @@
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("OverviewListRow") %]
                         <tr [% IF Data.ValidID != 1%]class="Invalid"[% END %]>
-                            <td title="[% Data.Name | html %]">[% Data.LevelSpace | html %]<a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ServiceEdit;ServiceID=[% Data.ServiceID | uri %]">[% Data.Name | html %]</a></td>
+                            <td title="[% Data.Name | html %]">[% Data.LevelSpace | html %]<a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ServiceEdit;ServiceID=[% Data.ServiceID | uri %]">[% Data.Name | truncate(80) | html %]</a></td>
                             <td title="[% Data.Comment | html %]">[% Data.Comment | truncate(20) | html %]</td>
                             <td>[% Translate(Data.Valid) | html %]</td>
                             <td>[% Data.ChangeTime | Localize("TimeShort") %]</td>
@@ -146,21 +145,6 @@
                             [% Data.ParentOptionStrg %]
                         </div>
                         <div class="Clear"></div>
-# ---
-# ITSMCore
-# ---
-                        <label for="TypeID">[% Translate("Type") | html %]: </label>
-                        <div class="Field">
-                            [% Data.TypeOptionStrg %]
-                        </div>
-                        <div class="Clear"></div>
-
-                        <label for="Criticality">[% Translate("Criticality") | html %]: </label>
-                        <div class="Field">
-                            [% Data.CriticalityOptionStrg %]
-                        </div>
-                        <div class="Clear"></div>
-# ---
 
                         <label class="Mandatory" for="ValidID"><span class="Marker">*</span> [% Translate("Validity") | html %]:</label>
                         <div class="Field">

@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,14 +21,14 @@ $Kernel::OM->ObjectParamAdd(
         RestoreDatabase => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 $ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
 );
 
-my $UserRandom = 'unittest-' . $Helper->GetRandomID();
+my $UserRandom = 'unittest-' . $HelperObject->GetRandomID();
 my $UserID     = $UserObject->UserAdd(
     UserFirstname => 'John',
     UserLastname  => 'Doe',
@@ -53,6 +54,13 @@ for my $Key ( sort keys %UserData ) {
     next KEY if $Key =~ m/UserEmail$/smx;
     next KEY if $Key =~ m/UserMobile$/smx;
 
+    # Skip out-of-office status (will always be set dynamically in Kernel::System::User
+    # and cannot be set/changed by SetPreferences()).
+    next KEY if $Key eq 'LoggedStatusMessage';
+
+    # Skip dropdown-values of last views
+    next KEY if $Key =~ m{\AUserLastViews};
+
     $Self->False(
         $UserObject->SetPreferences(
             Key    => $Key,
@@ -65,6 +73,7 @@ for my $Key ( sort keys %UserData ) {
     my %NewUserData = $UserObject->GetUserData(
         UserID => $UserID,
     );
+
     $Self->Is(
         $NewUserData{$Key},
         $UserData{$Key},

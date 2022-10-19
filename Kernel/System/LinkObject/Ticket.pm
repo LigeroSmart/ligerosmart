@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -290,6 +291,20 @@ sub ObjectSearch {
     # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
+    if ( !$Param{InitialSearch} || $Param{InitialSearch} ne 'n' ) {
+
+        # get ticket data
+        my %TicketData = $TicketObject->TicketGet(
+            TicketID      => $Param{SourceKey},
+            UserID        => $Param{UserID},
+            DynamicFields => 0,
+        );
+
+        return {} if !$TicketData{CustomerID};
+
+        $Param{SearchParams}->{CustomerID} = $TicketData{CustomerID};
+    }
+
     # search the tickets
     my @TicketIDs = $TicketObject->TicketSearch(
         %{ $Param{SearchParams} },
@@ -423,13 +438,12 @@ sub LinkAddPost {
             UserID   => $Param{UserID},
         );
 
-        # add ticket history entry - Chamados FILHOS apontam para PAIS
+        # add ticket history entry
         $TicketObject->HistoryAdd(
             TicketID     => $Param{Key},
             CreateUserID => $Param{UserID},
             HistoryType  => 'TicketLinkAdd',
-            Name         => "\%\%$TicketNumber\%\%$Param{SourceKey}\%\%$Param{Key}", #Adicionado para implementação do módulo de evnto TicketLinkCount
-            Direction    => 'Source', #Adicionado para implementação do módulo de evnto TicketLinkCount
+            Name         => "\%\%$TicketNumber\%\%$Param{SourceKey}\%\%$Param{Key}",
         );
 
         return 1;
@@ -443,13 +457,12 @@ sub LinkAddPost {
             UserID   => $Param{UserID},
         );
 
-        # add ticket history entry - Chamados PAI apontam para FILHOS
+        # add ticket history entry
         $TicketObject->HistoryAdd(
             TicketID     => $Param{Key},
             CreateUserID => $Param{UserID},
             HistoryType  => 'TicketLinkAdd',
-            Name         => "\%\%$TicketNumber\%\%$Param{TargetKey}\%\%$Param{Key}", #Adicionado para implementação do módulo de evnto TicketLinkCount
-            Direction    => 'Target', #Adicionado para implementação do módulo de evnto TicketLinkCount
+            Name         => "\%\%$TicketNumber\%\%$Param{TargetKey}\%\%$Param{Key}",
         );
 
         return 1;

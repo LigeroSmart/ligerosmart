@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Ticket/TicketServiceList.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,14 +18,14 @@ $Kernel::OM->ObjectParamAdd(
         RestoreDatabase => 1,
     },
 );
-my $Helper        = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject  = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $TicketObject  = $Kernel::OM->Get('Kernel::System::Ticket');
 my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 my $TypeObject    = $Kernel::OM->Get('Kernel::System::Type');
 
-my $TestUserLogin = $Helper->TestCustomerUserCreate();
+my $TestUserLogin = $HelperObject->TestCustomerUserCreate();
 
-my $Random = $Helper->GetRandomNumber();
+my $Random = $HelperObject->GetRandomNumber();
 
 my $TypeID1 = $TypeObject->TypeAdd(
     Name    => 'TestType1' . $Random,
@@ -47,27 +46,9 @@ $Self->True(
     $TypeID2,
     'Type 2 created.',
 );
-# ---
-# ITSMCore
-# ---
-
-# get the list of service types from general catalog
-my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::Service::Type',
-);
-
-# build a lookup hash
-my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
-# ---
 
 my $ServiceID1 = $ServiceObject->ServiceAdd(
     Name    => 'TestService1' . $Random,
-# ---
-# ITSMCore
-# ---
-    TypeID      => $ServiceTypeName2ID{Training},
-    Criticality => '3 normal',
-# ---
     ValidID => 1,
     UserID  => 1,
 );
@@ -77,12 +58,6 @@ $Self->True(
 );
 my $ServiceID2 = $ServiceObject->ServiceAdd(
     Name    => 'TestService2' . $Random,
-# ---
-# ITSMCore
-# ---
-    TypeID      => $ServiceTypeName2ID{Training},
-    Criticality => '3 normal',
-# ---
     ValidID => 1,
     UserID  => 1,
 );

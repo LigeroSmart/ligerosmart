@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,13 +20,10 @@ use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::Cache',
-    'Kernel::System::Calendar',
     'Kernel::System::Calendar::Appointment',
     'Kernel::System::Calendar::Plugin',
     'Kernel::System::Calendar::Team',
     'Kernel::System::DateTime',
-    'Kernel::System::DB',
     'Kernel::System::Encode',
     'Kernel::System::Log',
     'Kernel::System::Main',
@@ -698,11 +696,14 @@ sub Import {
 
                 # add links
                 for my $PluginData ( @{ $LinkedObjects{$PluginKey} } ) {
-                    my $LinkSuccess = $PluginObject->PluginLinkAdd(
-                        AppointmentID => $Success,
-                        PluginKey     => $PluginKey,
-                        PluginData    => $PluginData,
-                        UserID        => $Param{UserID},
+                    my $LinkSuccess = $PluginObject->PluginFunction(
+                        PluginKey      => $PluginKey,
+                        PluginFunction => 'LinkAdd',
+                        PluginData     => {
+                            TargetKey => $PluginData,      # TicketID, depends on TargetObject
+                            SourceKey => $Success,         # AppointmentID
+                            UserID    => $Param{UserID},
+                        }
                     );
 
                     if ( !$LinkSuccess ) {

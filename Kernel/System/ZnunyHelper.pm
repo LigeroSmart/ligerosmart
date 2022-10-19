@@ -1,11 +1,13 @@
 # --
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
-## nofilter(TidyAll::Plugin::OTRS::Legal::OTRSAGCopyright)
+
+## nofilter("TidyAll::Plugin::OTRS::Perl::Pod::SpellCheck")
 
 package Kernel::System::ZnunyHelper;
 
@@ -28,6 +30,7 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::NotificationEvent',
+    'Kernel::System::Package',
     'Kernel::System::PostMaster::Filter',
     'Kernel::System::Priority',
     'Kernel::System::ProcessManagement::DB::Entity',
@@ -49,17 +52,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ZnunyHelper
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All ZnunyHelper functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object. Do not use it directly, instead use:
 
@@ -79,7 +78,7 @@ sub new {
     return $Self;
 }
 
-=item _ItemReverseListGet()
+=head2 _ItemReverseListGet()
 
 checks if a item (for example a service name) is in a reverse item list (for example reverse %ServiceList)
 with case sensitive check
@@ -115,7 +114,7 @@ sub _ItemReverseListGet {
     return $ItemID;
 }
 
-=item _PostmasterXHeaderAdd()
+=head2 _PostmasterXHeaderAdd()
 
 This function adds a Postmaster X-Header to the list of Postmaster X-Headers to the SysConfig.
 
@@ -191,7 +190,7 @@ sub _PostmasterXHeaderAdd {
     );
 }
 
-=item _PostmasterXHeaderRemove()
+=head2 _PostmasterXHeaderRemove()
 
 This function removes a Postmaster X-Header from the list of Postmaster X-Headers in the SysConfig.
 
@@ -267,7 +266,7 @@ sub _PostmasterXHeaderRemove {
     );
 }
 
-=item _EventAdd()
+=head2 _EventAdd()
 
 This function adds an Event to the list of Events of an Object to the SysConfig.
 
@@ -349,7 +348,7 @@ sub _EventAdd {
     );
 }
 
-=item _EventRemove()
+=head2 _EventRemove()
 
 This function removes an Event to the list of Events of an Object to the SysConfig.
 
@@ -430,7 +429,7 @@ sub _EventRemove {
     );
 }
 
-=item _ValidDynamicFieldScreenListGet()
+=head2 _ValidDynamicFieldScreenListGet()
 
 Returns a list of valid screens for dynamic fields.
 
@@ -473,7 +472,8 @@ Returns as ARRAY:
 sub _ValidDynamicFieldScreenListGet {
     my ( $Self, %Param ) = @_;
 
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
+    my $PackageObject = $Kernel::OM->Get('Kernel::System::Package');
 
     $Param{Result} = lc( $Param{Result} // 'array' );
 
@@ -484,7 +484,14 @@ sub _ValidDynamicFieldScreenListGet {
         $ValidScreens->{$Screen} = {};
         my $ScreenRegistrations = $ConfigObject->Get($Screen);
 
+        REGISTRATION:
         for my $Registration ( sort keys %{$ScreenRegistrations} ) {
+            if ( $Registration =~ m{^ITSM.*}xmsi ) {
+                my $IsInstalled = $PackageObject->PackageIsInstalled(
+                    Name => $Registration,
+                );
+                next REGISTRATION if !$IsInstalled;
+            }
 
             %{ $ValidScreens->{$Screen} } = (
                 %{ $ValidScreens->{$Screen} },
@@ -509,7 +516,7 @@ sub _ValidDynamicFieldScreenListGet {
     return $ValidScreens;
 }
 
-=item _DefaultColumnsGet()
+=head2 _DefaultColumnsGet()
 
 This function returns the DefaultColumn Attributes of the requested SysConfigs.
 
@@ -578,7 +585,7 @@ sub _DefaultColumnsGet {
             $FrontendPath = "Ticket::Frontend::$View";
         }
 
-        my @Keys = split '###', $FrontendPath;
+        my @Keys   = split '###', $FrontendPath;
         my $Config = $ConfigObject->Get( $Keys[0] );
 
         # check if config has DefaultColumns attribute and set it
@@ -609,7 +616,7 @@ sub _DefaultColumnsGet {
     return %Configs;
 }
 
-=item _DefaultColumnsEnable()
+=head2 _DefaultColumnsEnable()
 
 This function enables the given Attributes for the requested DefaultColumns.
 
@@ -681,7 +688,7 @@ sub _DefaultColumnsEnable {
             $FrontendPath = "Ticket::Frontend::$View";
         }
 
-        my @Keys = split '###', $FrontendPath;
+        my @Keys   = split '###', $FrontendPath;
         my $Config = $ConfigObject->Get( $Keys[0] );
 
         # check if config has DefaultColumns attribute and set it
@@ -757,7 +764,7 @@ sub _DefaultColumnsEnable {
     return 1;
 }
 
-=item _DefaultColumnsDisable()
+=head2 _DefaultColumnsDisable()
 
 This function disables the given Attributes for the requested DefaultColumns.
 
@@ -822,7 +829,7 @@ sub _DefaultColumnsDisable {
             $FrontendPath = "Ticket::Frontend::$View";
         }
 
-        my @Keys = split '###', $FrontendPath;
+        my @Keys   = split '###', $FrontendPath;
         my $Config = $ConfigObject->Get( $Keys[0] );
 
         # check if config has DefaultColumns attribute and set it
@@ -881,7 +888,7 @@ sub _DefaultColumnsDisable {
     return 1;
 }
 
-=item _DynamicFieldsDefaultColumnsGet()
+=head2 _DynamicFieldsDefaultColumnsGet()
 
 Returns the DefaultColumn attributes of the requested SysConfigs, reduced to dynamic fields.
 
@@ -971,7 +978,7 @@ sub _DynamicFieldsDefaultColumnsGet {
     return %Config;
 }
 
-=item _DynamicFieldsScreenGet()
+=head2 _DynamicFieldsScreenGet()
 
 This function returns the defined dynamic fields in the screens.
 
@@ -1051,7 +1058,7 @@ sub _DynamicFieldsScreenGet {
     return %Config;
 }
 
-=item _DynamicFieldsScreenEnable()
+=head2 _DynamicFieldsScreenEnable()
 
 This function enables the defined dynamic fields in the needed screens.
 
@@ -1198,7 +1205,7 @@ sub _DynamicFieldsScreenEnable {
     return 1;
 }
 
-=item _DynamicFieldsScreenDisable()
+=head2 _DynamicFieldsScreenDisable()
 
 This function disables the defined dynamic fields in the needed screens.
 
@@ -1334,7 +1341,7 @@ sub _DynamicFieldsScreenDisable {
     return 1;
 }
 
-=item _DynamicFieldsDelete()
+=head2 _DynamicFieldsDelete()
 
 This function delete the defined dynamic fields
 
@@ -1399,7 +1406,7 @@ sub _DynamicFieldsDelete {
     return 1;
 }
 
-=item _DynamicFieldsDisable()
+=head2 _DynamicFieldsDisable()
 
 This function disables the defined dynamic fields
 
@@ -1464,7 +1471,7 @@ sub _DynamicFieldsDisable {
     return 1;
 }
 
-=item _DynamicFieldsCreateIfNotExists()
+=head2 _DynamicFieldsCreateIfNotExists()
 
 creates all dynamic fields that are necessary
 
@@ -1535,7 +1542,7 @@ sub _DynamicFieldsCreateIfNotExists {
     return $Self->_DynamicFieldsCreate(@DynamicFieldExistsNot);
 }
 
-=item _DynamicFieldsCreate()
+=head2 _DynamicFieldsCreate()
 
 creates all dynamic fields that are necessary
 
@@ -1559,12 +1566,13 @@ Usable Snippets (SublimeTextAdjustments):
             },
         },
         {
-            Name          => 'TestDynamicField2',
-            Label         => "TestDynamicField2",
-            InternalField => 0,                     # optional, 0 or 1, internal fields are protected
-            ObjectType    => 'Ticket',
-            FieldType     => 'Text',
-            Config        => {
+            Name                 => 'TestDynamicField2',
+            Label                => "TestDynamicField2",
+            InternalField        => 0,                     # optional, 0 or 1, internal fields are protected
+            ObjectType           => 'Ticket',
+            FieldType            => 'Text',
+            FieldOrderAfterField => 'TestDynamicField1',   # special feature to order fields at a specific point. Can be also used for fields which are getting created in the same array before this dynamic field
+            Config               => {
                 DefaultValue => "",
             },
         },
@@ -1619,6 +1627,10 @@ sub _DynamicFieldsCreate {
         $DynamicFieldLookup{ $DynamicField->{Name} } = $DynamicField;
     }
 
+    # performance improvement for the FieldOrderAfterField functionality
+    my $FieldOrderAfterFieldActive
+        = grep { $_->{FieldOrderAfterField} || $_->{FieldOrderAfterFieldUpdate} } @DynamicFields;
+
     # create or update dynamic fields
     DYNAMICFIELD:
     for my $NewDynamicField (@DynamicFields) {
@@ -1652,10 +1664,14 @@ sub _DynamicFieldsCreate {
         else {
             my %OldDynamicFieldConfig = %{ $DynamicFieldLookup{ $NewDynamicField->{Name} } };
 
+            my $FieldOrderUpdate = $Self->DynamicFieldFieldOrderAfterFieldGet(
+                Name => $NewDynamicField->{FieldOrderAfterFieldUpdate},
+            ) || $OldDynamicFieldConfig{FieldOrder};
+
             my $Success = $DynamicFieldObject->DynamicFieldUpdate(
                 %{$NewDynamicField},
                 ID         => $OldDynamicFieldConfig{ID},
-                FieldOrder => $OldDynamicFieldConfig{FieldOrder},
+                FieldOrder => $FieldOrderUpdate,
                 ValidID    => $NewDynamicField->{ValidID} || $ValidID,
                 Reorder    => 0,
                 UserID     => 1,
@@ -1665,11 +1681,15 @@ sub _DynamicFieldsCreate {
         # check if new field has to be created
         next DYNAMICFIELD if !$CreateDynamicField;
 
+        my $FieldOrderAdd = $Self->DynamicFieldFieldOrderAfterFieldGet(
+            Name => $NewDynamicField->{FieldOrderAfterField},
+        ) || $NextOrderNumber;
+
         # create a new field
         my $FieldID = $DynamicFieldObject->DynamicFieldAdd(
             Name          => $NewDynamicField->{Name},
             Label         => $NewDynamicField->{Label},
-            FieldOrder    => $NextOrderNumber,
+            FieldOrder    => $FieldOrderAdd,
             FieldType     => $NewDynamicField->{FieldType},
             ObjectType    => $NewDynamicField->{ObjectType},
             Config        => $NewDynamicField->{Config},
@@ -1686,7 +1706,43 @@ sub _DynamicFieldsCreate {
     return 1;
 }
 
-=item DynamicFieldValueCreate()
+=head2 DynamicFieldFieldOrderAfterFieldGet()
+
+This function will return the field order after a specific dynamic field field name.
+
+e.g.
+
+TestDynamicField has the field order 100.
+
+
+    my $FieldOrder = $ZnunyHelperObject->DynamicFieldFieldOrderAfterFieldGet(
+        Name => 'TestDynamicField1',
+    );
+
+Returns:
+
+    my $FieldOrder = 101;
+
+=cut
+
+sub DynamicFieldFieldOrderAfterFieldGet {
+    my ( $Self, %Param ) = @_;
+
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    return if !$Param{Name};
+
+    my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
+        Valid => 0,
+    );
+
+    my ($DynamicFieldFieldOrder) = grep { $_->{Name} eq $Param{Name} } @{ $DynamicFieldList || [] };
+
+    return if !IsHashRefWithData($DynamicFieldFieldOrder);
+    return $DynamicFieldFieldOrder->{FieldOrder} + 1;
+}
+
+=head2 DynamicFieldValueCreate()
 
 Add a new dropdown value to a dynamic field. This function
 will extended the possible values for the field.
@@ -1750,12 +1806,12 @@ sub DynamicFieldValueCreate {
     return;
 }
 
-=item _DynamicFieldsConfigExport()
+=head2 _DynamicFieldsConfigExport()
 
 exports configuration of all dynamic fields
 
     my $Configs = $ZnunyHelperObject->_DynamicFieldsConfigExport(
-        Format                => 'perl|yml|var', # defaults to perl. var returns the
+        Format                => 'perl|yml|yaml|var', # defaults to perl. var returns the
         IncludeInternalFields => 1, # defaults to 1, also includes dynamic fields with flag 'InternalField',
         IncludeAllConfigKeys  => 1, # defaults to 1, also includes config keys ChangeTime, CreateTime, ID, InternalField, ValidID
         Result                => 'ARRAY', # HASH or ARRAY, defaults to ARRAY
@@ -1825,7 +1881,8 @@ sub _DynamicFieldsConfigExport {
     my $StorableObject     = $Kernel::OM->Get('Kernel::System::Storable');
 
     my $Format = lc( $Param{Format} // 'perl' );
-    if ( $Format ne 'yml' && $Format ne 'perl' && $Format ne 'var' ) {
+
+    if ( $Format !~ m{\A(ya?ml|perl|var)\z} ) {
         $LogObject->Log(
             Priority => 'error',
             Message  => "Invalid value $Format for parameter Format.",
@@ -1863,9 +1920,15 @@ sub _DynamicFieldsConfigExport {
     # Remove hash keys
     my $IncludeAllConfigKeys = $Param{IncludeAllConfigKeys} // 1;
     if ( !$IncludeAllConfigKeys ) {
-        for my $DynamicField (@DynamicFieldConfigs) {
+        for my $DynamicFieldConfig (@DynamicFieldConfigs) {
+
+            KEY:
             for my $Key (qw(ChangeTime CreateTime ID InternalField ValidID)) {
-                delete $DynamicField->{$Key};
+
+                # Leave key InternalField in hash if it's an internal field.
+                next KEY if $Key eq 'InternalField' && $DynamicFieldConfig->{InternalField};
+
+                delete $DynamicFieldConfig->{$Key};
             }
         }
     }
@@ -1884,14 +1947,14 @@ sub _DynamicFieldsConfigExport {
     if ( $Format eq 'perl' ) {
         $ConfigString = $MainObject->Dump($Data);
     }
-    elsif ( $Format eq 'yml' ) {
+    elsif ( $Format =~ m{\Aya?ml\z} ) {
         $ConfigString = $YAMLObject->Dump( Data => $Data );
     }
 
     return $ConfigString;
 }
 
-=item _DynamicFieldsScreenConfigExport()
+=head2 _DynamicFieldsScreenConfigExport()
 
 exports all configured screens of one ore more dynamic fields
 
@@ -1978,7 +2041,7 @@ sub _DynamicFieldsScreenConfigExport {
     return %Config;
 }
 
-=item _DynamicFieldsScreenConfigImport()
+=head2 _DynamicFieldsScreenConfigImport()
 
 imports all configured screens of one ore more dynamic fields
 
@@ -2062,7 +2125,7 @@ sub _DynamicFieldsScreenConfigImport {
     return 1;
 }
 
-=item _PostMasterFilterCreateIfNotExists()
+=head2 _PostMasterFilterCreateIfNotExists()
 
 creates all postmaster filter that are necessary
 
@@ -2112,7 +2175,7 @@ sub _PostMasterFilterCreateIfNotExists {
     return $Self->_PostMasterFilterCreate(@PostMasterFilterExistsNot);
 }
 
-=item _PostMasterFilterCreate()
+=head2 _PostMasterFilterCreate()
 
 creates all postmaster filter that are necessary
 
@@ -2186,7 +2249,7 @@ sub _PostMasterFilterCreate {
     return 1;
 }
 
-=item _PostMasterFilterConfigExport()
+=head2 _PostMasterFilterConfigExport()
 
 exports configuration of all postmaster filter
 
@@ -2205,7 +2268,7 @@ sub _PostMasterFilterConfigExport {
     my $YAMLObject     = $Kernel::OM->Get('Kernel::System::YAML');
 
     my $Format = lc( $Param{Format} // 'perl' );
-    if ( $Format ne 'yml' && $Format ne 'perl' ) {
+    if ( $Format !~ m{\A(ya?ml|perl)\z} ) {
         $LogObject->Log(
             Priority => 'error',
             Message  => "Invalid value $Format for parameter Format.",
@@ -2227,14 +2290,66 @@ sub _PostMasterFilterConfigExport {
     if ( $Format eq 'perl' ) {
         $ConfigString = $MainObject->Dump( \@Filters );
     }
-    elsif ( $Format eq 'yml' ) {
+    elsif ( $Format =~ m{\Aya?ml\z} ) {
         $ConfigString = $YAMLObject->Dump( Data => \@Filters );
     }
 
     return $ConfigString;
 }
 
-=item _GroupCreateIfNotExists()
+# todo this should be merged to
+# '_PostMasterFilterCreateIfNotExists' and '_PostMasterFilterCreate'
+# while OTRS 7 porting
+
+=head2 _PostMasterFilterConfigImport()
+
+imports configuration of postmaster filter via yml
+
+    my $Success = $ZnunyHelperObject->_PostMasterFilterConfigImport(
+        Filter => $Filter,
+        Format => 'yml',        # optional - default
+    );
+
+    $Filter = "---
+- Match:
+  - Key: Body
+    Value: '123'
+  Name: 'PostmasterFilter'
+  Not:
+  - Key: Body
+    Value: ~
+  Set:
+  - Key: X-OTRS-DynamicField-test
+    Value: '123'
+  StopAfterMatch: 0
+";
+
+
+Returns:
+
+    my $Success = 1;
+
+=cut
+
+sub _PostMasterFilterConfigImport {
+    my ( $Self, %Param ) = @_;
+
+    my $YAMLObject = $Kernel::OM->Get('Kernel::System::YAML');
+
+    my $Format = lc( $Param{Format} // 'yml' );
+
+    my $Filter;
+    if ( $Format =~ m{\Aya?ml\z}i ) {
+        $Filter = $YAMLObject->Load(
+            Data => ${ $Param{Filter} },
+        );
+    }
+    return if !IsArrayRefWithData($Filter);
+
+    return $Self->_PostMasterFilterCreateIfNotExists( @{$Filter} );
+}
+
+=head2 _GroupCreateIfNotExists()
 
 creates group if not exists
 
@@ -2282,7 +2397,7 @@ sub _GroupCreateIfNotExists {
     );
 }
 
-=item _RoleCreateIfNotExists()
+=head2 _RoleCreateIfNotExists()
 
 creates role if not exists
 
@@ -2330,7 +2445,7 @@ sub _RoleCreateIfNotExists {
     );
 }
 
-=item _TypeCreateIfNotExists()
+=head2 _TypeCreateIfNotExists()
 
 creates Type if not exists
 
@@ -2378,7 +2493,7 @@ sub _TypeCreateIfNotExists {
     );
 }
 
-=item _PriorityCreateIfNotExists()
+=head2 _PriorityCreateIfNotExists()
 
 creates Priority if not exists
 
@@ -2426,7 +2541,7 @@ sub _PriorityCreateIfNotExists {
     );
 }
 
-=item _StateCreateIfNotExists()
+=head2 _StateCreateIfNotExists()
 
 creates State if not exists
 
@@ -2479,7 +2594,7 @@ sub _StateCreateIfNotExists {
     );
 }
 
-=item _StateDisable()
+=head2 _StateDisable()
 
 disables a given state
 
@@ -2534,7 +2649,7 @@ sub _StateDisable {
     return $Success;
 }
 
-=item _StateTypeCreateIfNotExists()
+=head2 _StateTypeCreateIfNotExists()
 
 creates state types if not exists
 
@@ -2605,7 +2720,7 @@ sub _StateTypeCreateIfNotExists {
     return $ID;
 }
 
-=item _ServiceCreateIfNotExists()
+=head2 _ServiceCreateIfNotExists()
 
 creates Service if not exists
 
@@ -2720,7 +2835,7 @@ sub _ServiceCreateIfNotExists {
     return $ServiceID;
 }
 
-=item _SLACreateIfNotExists()
+=head2 _SLACreateIfNotExists()
 
 creates SLA if not exists
 
@@ -2785,7 +2900,7 @@ sub _SLACreateIfNotExists {
     return $SLAID;
 }
 
-=item _UserCreateIfNotExists()
+=head2 _UserCreateIfNotExists()
 
 creates user if not exists
 
@@ -2847,7 +2962,7 @@ sub _UserCreateIfNotExists {
     return $UserID;
 }
 
-=item _CustomerUserCreateIfNotExists()
+=head2 _CustomerUserCreateIfNotExists()
 
 creates CustomerUser if not exists
 
@@ -2917,7 +3032,7 @@ sub _CustomerUserCreateIfNotExists {
     return $CustomerUserID;
 }
 
-=item _QueueCreateIfNotExists()
+=head2 _QueueCreateIfNotExists()
 
 creates Queue if not exists
 
@@ -2954,7 +3069,8 @@ sub _QueueCreateIfNotExists {
     my $Name = $Param{Name};
 
     my %QueueReversed = $QueueObject->QueueList(
-        UserID => 1
+        UserID => 1,
+        Valid  => 0,
     );
     %QueueReversed = reverse %QueueReversed;
 
@@ -3008,7 +3124,7 @@ sub _QueueCreateIfNotExists {
     return $QueueID;
 }
 
-=item _GeneralCatalogItemCreateIfNotExists()
+=head2 _GeneralCatalogItemCreateIfNotExists()
 
 adds a general catalog item if it does not exist
 
@@ -3082,13 +3198,13 @@ sub _GeneralCatalogItemCreateIfNotExists {
         UserID  => 1,
     );
 
-    return if !$ItemID;
+    return         if !$ItemID;
     return $ItemID if !$Param{PermissionGroup};
 
     my $GroupID = $GroupObject->GroupLookup(
         Group => $Param{PermissionGroup},
     );
-    return $ItemID if $GroupID;
+    return $ItemID if !$GroupID;
 
     $GeneralCatalogObject->GeneralCatalogPreferencesSet(
         ItemID => $ItemID,
@@ -3099,7 +3215,7 @@ sub _GeneralCatalogItemCreateIfNotExists {
     return $ItemID;
 }
 
-=item _ITSMConfigItemDefinitionCreate()
+=head2 _ITSMConfigItemDefinitionCreate()
 
 adds or updates a definition for a ConfigItemClass. You need to provide the configuration
 of the CMDB class in the following directory:
@@ -3127,6 +3243,7 @@ sub _ITSMConfigItemDefinitionCreate {
     my $MainObject       = $Kernel::OM->Get('Kernel::System::Main');
     my $ConfigObject     = $Kernel::OM->Get('Kernel::Config');
     my $ConfigItemObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');
+    my $YAMLObject       = $Kernel::OM->Get('Kernel::System::YAML');
 
     # check needed stuff
     NEEDED:
@@ -3166,23 +3283,78 @@ sub _ITSMConfigItemDefinitionCreate {
         return $DefinitionListRef->[-1]->{DefinitionID} if IsArrayRefWithData($DefinitionListRef);
     }
 
+    # check which type of import file is present (Perl structure or YAML).
+    my $BaseClassFilePath = $Home . '/scripts/cmdb_classes/' . ( $Param{ClassFile} || $Param{Class} );
+
+    my $ClassFilePath   = $BaseClassFilePath . '.yml';
+    my $ClassFileIsYAML = 1;
+    if ( !-f $ClassFilePath ) {
+        $ClassFilePath   = $BaseClassFilePath . '.config';
+        $ClassFileIsYAML = 0;
+    }
+    return if !-f $ClassFilePath;
+
     # get configuration from the file system
     my $ContentSCALARRef = $MainObject->FileRead(
-        Location => $Home . '/scripts/cmdb_classes/' . ( $Param{ClassFile} || $Param{Class} ) . '.config',
+        Location => $ClassFilePath,
         Mode     => 'utf8',
         Result   => 'SCALAR',
     );
     return if !$ContentSCALARRef;
 
     my $Content = ${$ContentSCALARRef};
-    return if !$Content;
+    return if !defined $Content || !length $Content;
+
+    # ITSMConfigurationManagement 6.0.18 switched format of config item definitions from Perl
+    # to YAML. Check which one is needed by checking if the new console command
+    # Kernel::System::Console::Command::Maint::ITSM::Configitem::DefinitionPerl2YAML
+    # exists.
+    my $DefinitionPerl2YAMLFilePath = $Home
+        . '/Kernel/System/Console/Command/Maint/ITSM/Configitem/DefinitionPerl2YAML.pm';
+    my $YAMLConfigItemDefinitionExpected = ( -f $DefinitionPerl2YAMLFilePath ) ? 1 : 0;
+
+    if (
+        !$ClassFileIsYAML
+        && $YAMLConfigItemDefinitionExpected
+        )
+    {
+        # Turn Perl config item file into Perl structure.
+        $Content = eval $Content;    ## no critic
+        return if !defined $Content;
+
+        # Turn Perl structure into YAML.
+        $Content = $YAMLObject->Dump(
+            Data => $Content,
+        );
+    }
+    elsif (
+        $ClassFileIsYAML
+        && !$YAMLConfigItemDefinitionExpected
+        )
+    {
+        # Turn YAML config item file into Perl structure.
+        $Content = $YAMLObject->Load(
+            Data => $Content,
+        );
+        return if !defined $Content;
+
+        # Turn Perl structure into string.
+        $Content = $MainObject->Dump(
+            $Content,
+        );
+
+        # Remove leading '$VAR1 =' from dump.
+        $Content =~ s{\A\$VAR1 = }{};
+    }
+
+    return if !defined $Content || !length $Content;
 
     # get last definition
     my $LastDefinition = $ConfigItemObject->DefinitionGet(
         ClassID => $ClassID,
     );
 
-    # stop add, if definition was not changed
+    # stop add if definition was not changed
     return $LastDefinition->{DefinitionID}
         if IsHashRefWithData($LastDefinition) && $LastDefinition->{Definition} eq $Content;
 
@@ -3195,7 +3367,7 @@ sub _ITSMConfigItemDefinitionCreate {
     return $DefinitionID;
 }
 
-=item _ITSMConfigItemDefinitionCreateIfNotExists()
+=head2 _ITSMConfigItemDefinitionCreateIfNotExists()
 
 add if not exists a definition for a ConfigItemClass. You need to provide the configuration
 of the CMDB class in the following directory:
@@ -3204,7 +3376,7 @@ of the CMDB class in the following directory:
 
 The required general catalog item will be created automatically.
 
-    my $DefinitionID = $ZnunyHelperObject->_ITSMConfigItemDefinitionCreate(
+    my $DefinitionID = $ZnunyHelperObject->_ITSMConfigItemDefinitionCreateIfNotExists(
         Class           => 'Private Endgeraete',
         ClassFile       => 'Private_Endgeraete',  # optional
         PermissionGroup => 'itsm-configitem',     # optional
@@ -3225,312 +3397,11 @@ sub _ITSMConfigItemDefinitionCreateIfNotExists {
     );
 }
 
-=item _NotificationEventCreate()
-
-create or update notification event
-
-    my @NotificationList = (
-        {
-            Name => 'Agent::CustomerVIPPriorityUpdate',
-            Data => {
-                Events => [
-                    'TicketPriorityUpdate',
-                ],
-                ArticleAttachmentInclude => [
-                    '0'
-                ],
-                LanguageID => [
-                    'en',
-                    'de'
-                ],
-                NotificationArticleTypeID => [
-                    1,
-                ],
-                Recipients => [
-                    'Customer',
-                ],
-                TransportEmailTemplate => [
-                    'Default',
-                ],
-                Transports => [
-                    'Email',
-                ],
-                VisibleForAgent => [
-                    '0',
-                ],
-            },
-            Message => {
-                en => {
-                    Subject     => 'Priority for your ticket changed',
-                    ContentType => 'text/html',
-                    Body        => '...',
-                },
-                de => {
-                    Subject     => 'Die Prioritaet Ihres Tickets wurde geaendert',
-                    ContentType => 'text/html',
-                    Body        => '...',
-                },
-            },
-        },
-        # ...
-    );
-
-    my $Success = $ZnunyHelperObject->_NotificationEventCreate( @NotificationList );
-
-Returns:
-
-    my $Success = 1;
-
-=cut
-
-sub _NotificationEventCreate {
-    my ( $Self, @NotificationEvents ) = @_;
-
-    my $LogObject               = $Kernel::OM->Get('Kernel::System::Log');
-    my $NotificationEventObject = $Kernel::OM->Get('Kernel::System::NotificationEvent');
-    my $ValidObject             = $Kernel::OM->Get('Kernel::System::Valid');
-
-    my $Success = 1;
-    NOTIFICATIONEVENT:
-    for my $NotificationEvent (@NotificationEvents) {
-        next NOTIFICATIONEVENT if !IsHashRefWithData($NotificationEvent);
-
-        # check needed stuff
-        NEEDED:
-        for my $Needed (qw(Name)) {
-
-            next NEEDED if defined $NotificationEvent->{$Needed};
-
-            $LogObject->Log(
-                Priority => 'error',
-                Message  => "Parameter '$Needed' is needed!",
-            );
-            return;
-        }
-
-        my %NotificationEventReversed = $NotificationEventObject->NotificationList(
-            UserID => 1
-        );
-        %NotificationEventReversed = reverse %NotificationEventReversed;
-
-        my $ItemID = $Self->_ItemReverseListGet( $NotificationEvent->{Name}, %NotificationEventReversed );
-        my $ValidID = $NotificationEvent->{ValidID} // $ValidObject->ValidLookup(
-            Valid => 'valid',
-        );
-
-        if ($ItemID) {
-            my $UpdateSuccess = $NotificationEventObject->NotificationUpdate(
-                %{$NotificationEvent},
-                ID      => $ItemID,
-                ValidID => $ValidID,
-                UserID  => 1,
-            );
-
-            if ( !$UpdateSuccess ) {
-                $Success = 0;
-            }
-        }
-        else {
-            my $CreateID = $NotificationEventObject->NotificationAdd(
-                %{$NotificationEvent},
-                ValidID => $ValidID,
-                UserID  => 1,
-            );
-
-            if ( !$CreateID ) {
-                $Success = 0;
-            }
-        }
-    }
-
-    return $Success;
-}
-
-=item _NotificationEventCreateIfNotExists()
-
-creates notification event if not exists
-
-    my $NotificationID = $ZnunyHelperObject->_NotificationEventCreateIfNotExists(
-        Name => 'Agent::CustomerVIPPriorityUpdate',
-        Data => {
-            Events => [
-                'TicketPriorityUpdate',
-            ],
-            ArticleAttachmentInclude => [
-                '0'
-            ],
-            LanguageID => [
-                'en',
-                'de'
-            ],
-            NotificationArticleTypeID => [
-                1,
-            ],
-            Recipients => [
-                'Customer',
-            ],
-            TransportEmailTemplate => [
-                'Default',
-            ],
-            Transports => [
-                'Email',
-            ],
-            VisibleForAgent => [
-                '0',
-            ],
-        },
-        Message => {
-            en => {
-                Subject     => 'Priority for your ticket changed',
-                ContentType => 'text/html',
-                Body        => '...',
-            },
-            de => {
-                Subject     => 'Die Prioritaet Ihres Tickets wurde geaendert',
-                ContentType => 'text/html',
-                Body        => '...',
-            },
-        },
-    );
-
-Returns:
-
-    my $NotificationID = 123;
-
-=cut
-
-sub _NotificationEventCreateIfNotExists {
-    my ( $Self, %Param ) = @_;
-
-    my $LogObject               = $Kernel::OM->Get('Kernel::System::Log');
-    my $NotificationEventObject = $Kernel::OM->Get('Kernel::System::NotificationEvent');
-    my $ValidObject             = $Kernel::OM->Get('Kernel::System::Valid');
-
-    # check needed stuff
-    NEEDED:
-    for my $Needed (qw(Name)) {
-
-        next NEEDED if defined $Param{$Needed};
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter '$Needed' is needed!",
-        );
-        return;
-    }
-
-    my %NotificationEventReversed = $NotificationEventObject->NotificationList(
-        UserID => 1
-    );
-    %NotificationEventReversed = reverse %NotificationEventReversed;
-
-    my $ItemID = $Self->_ItemReverseListGet( $Param{Name}, %NotificationEventReversed );
-    return $ItemID if $ItemID;
-
-    my $ValidID = $Param{ValidID} // $ValidObject->ValidLookup(
-        Valid => 'valid',
-    );
-    my $NotificationEventID = $NotificationEventObject->NotificationAdd(
-        %Param,
-        ValidID => $ValidID,
-        UserID  => 1,
-    );
-
-    return $NotificationEventID;
-}
-
-=item _StandardTemplateCreate()
-
-create or update standard template
-
-    my @StandardTemplateList = (
-        {
-            Name         => 'New Standard Template',
-            Template     => 'Thank you for your email.',
-            ContentType  => 'text/plain; charset=utf-8',
-            TemplateType => 'Answer',                     # 'Answer', 'Create', 'Email', 'Forward', 'Note', 'PhoneCall'
-            Comment      => '',                           # optional
-            ValidID      => 1,
-            UserID       => 1,
-        },
-    );
-
-    my $Success = $ZnunyHelperObject->_StandardTemplateCreate( @StandardTemplateList );
-
-Returns:
-
-    my $Success = 1;
-
-=cut
-
-sub _StandardTemplateCreate {
-    my ( $Self, @StandardTemplateList ) = @_;
-
-    my $LogObject              = $Kernel::OM->Get('Kernel::System::Log');
-    my $ValidObject            = $Kernel::OM->Get('Kernel::System::Valid');
-    my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
-
-    my $Success = 1;
-
-    NOTIFICATIONEVENT:
-    for my $StandardTemplate (@StandardTemplateList) {
-        next StandardTemplate if !IsHashRefWithData($StandardTemplate);
-
-        # check needed stuff
-        NEEDED:
-        for my $Needed (qw(Name)) {
-
-            next NEEDED if defined $StandardTemplate->{$Needed};
-
-            $LogObject->Log(
-                Priority => 'error',
-                Message  => "Parameter '$Needed' is needed!",
-            );
-            return;
-        }
-
-        my %StandardTemplateReversed = $StandardTemplateObject->StandardTemplateList();
-        %StandardTemplateReversed = reverse %StandardTemplateReversed;
-
-        my $ItemID = $Self->_ItemReverseListGet( $StandardTemplate->{Name}, %StandardTemplateReversed );
-
-        my $ValidID = $StandardTemplate->{ValidID} // $ValidObject->ValidLookup(
-            Valid => 'valid',
-        );
-
-        if ($ItemID) {
-            my $UpdateSuccess = $StandardTemplateObject->StandardTemplateUpdate(
-                %{$StandardTemplate},
-                ID      => $ItemID,
-                ValidID => $ValidID,
-                UserID  => 1,
-            );
-
-            if ( !$UpdateSuccess ) {
-                $Success = 0;
-            }
-        }
-        else {
-            my $CreateID = $StandardTemplateObject->StandardTemplateAdd(
-                %{$StandardTemplate},
-                ValidID => $ValidID,
-                UserID  => 1,
-            );
-
-            if ( !$CreateID ) {
-                $Success = 0;
-            }
-        }
-    }
-
-    return $Success;
-}
-
-=item _ITSMVersionAdd()
+=head2 _ITSMConfigItemVersionAdd()
 
 adds or updates a ConfigItem version.
 
-    my $VersionID = $ZnunyHelperObject->_ITSMVersionAdd(
+    my $VersionID = $ZnunyHelperObject->_ITSMConfigItemVersionAdd(
         ConfigItemID  => 12345,
         Name          => 'example name',
 
@@ -3581,7 +3452,7 @@ adds or updates a ConfigItem version.
     );
 
     # create new version of ConfigItem
-    my $VersionID = $ZnunyHelperObject->_ITSMVersionAdd(
+    my $VersionID = $ZnunyHelperObject->_ITSMConfigItemVersionAdd(
         ConfigItemID  => $ConfigItemID,
         Name          => 'blub',
         ClassName     => 'Computer',
@@ -3616,7 +3487,7 @@ Returns:
 
 =cut
 
-sub _ITSMVersionAdd {
+sub _ITSMConfigItemVersionAdd {
     my ( $Self, %Param ) = @_;
 
     my $LogObject  = $Kernel::OM->Get('Kernel::System::Log');
@@ -3678,7 +3549,7 @@ sub _ITSMVersionAdd {
     my $ValidObject          = $Kernel::OM->Get('Kernel::System::Valid');
 
     my $ConfigItemID = $Param{ConfigItemID};
-    my %ConfigItem = %{ $Param{XMLData} || {} };
+    my %ConfigItem   = %{ $Param{XMLData} || {} };
 
     my %Version = $Self->_ITSMVersionGet(
         ConfigItemID => $ConfigItemID,
@@ -3780,18 +3651,18 @@ sub _ITSMVersionAdd {
     return $VersionID;
 }
 
-=item _ITSMVersionExists()
+=head2 _ITSMConfigItemVersionExists()
 
 checks if a version already exists without returning a error.
 
 
-    my $Found = $ZnunyHelperObject->_ITSMVersionExists(
+    my $Found = $ZnunyHelperObject->_ITSMConfigItemVersionExists(
         VersionID  => 123,
     );
 
     or
 
-    my $Found = $ZnunyHelperObject->_ITSMVersionExists(
+    my $Found = $ZnunyHelperObject->_ITSMConfigItemVersionExists(
         ConfigItemID => 123,
     );
 
@@ -3802,7 +3673,7 @@ Returns:
 
 =cut
 
-sub _ITSMVersionExists {
+sub _ITSMConfigItemVersionExists {
     my ( $Self, %Param ) = @_;
 
     my $LogObject  = $Kernel::OM->Get('Kernel::System::Log');
@@ -3862,11 +3733,11 @@ sub _ITSMVersionExists {
     return $Found;
 }
 
-=item _ITSMVersionGet()
+=head2 _ITSMConfigItemVersionGet()
 
 get a ConfigItem version.
 
-    my %Version = $ZnunyHelperObject->_ITSMVersionGet(
+    my %Version = $ZnunyHelperObject->_ITSMConfigItemVersionGet(
         ConfigItemID    => 12345,
         XMLDataMultiple => 1,      # default: 0, This option will return a more complex XMLData structure with multiple element data! Makes sense if you are using CountMin, CountMax etc..
     );
@@ -3891,7 +3762,7 @@ Returns:
 
 =cut
 
-sub _ITSMVersionGet {
+sub _ITSMConfigItemVersionGet {
     my ( $Self, %Param ) = @_;
 
     my $MainObject           = $Kernel::OM->Get('Kernel::System::Main');
@@ -3913,7 +3784,7 @@ sub _ITSMVersionGet {
     );
 
     return if !$ITSMConfigItemLoaded;
-    return if !$Self->_ITSMVersionExists(%Param);
+    return if !$Self->_ITSMConfigItemVersionExists(%Param);
 
     my $VersionRef = $ConfigItemObject->VersionGet(
         %Param,
@@ -3939,7 +3810,43 @@ sub _ITSMVersionGet {
     return %VersionConfigItem;
 }
 
-=item _ParseXML2Data()
+=head2 _ITSMVersionAdd()
+
+DEPRECATED, use $Self->_ITSMConfigItemVersionAdd instead.
+
+=cut
+
+sub _ITSMVersionAdd {
+    my ( $Self, %Param ) = @_;
+
+    return $Self->_ITSMConfigItemVersionAdd(%Param);
+}
+
+=head2 _ITSMVersionExists()
+
+DEPRECATED, use $Self->_ITSMConfigItemVersionExists instead.
+
+=cut
+
+sub _ITSMVersionExists {
+    my ( $Self, %Param ) = @_;
+
+    return $Self->_ITSMConfigItemVersionExists(%Param);
+}
+
+=head2 _ITSMVersionGet()
+
+DEPRECATED, use $Self->_ITSMConfigItemVersionGet instead.
+
+=cut
+
+sub _ITSMVersionGet {
+    my ( $Self, %Param ) = @_;
+
+    return $Self->_ITSMConfigItemVersionGet(%Param);
+}
+
+=head2 _ParseXML2Data()
 
 this is a internal function for _ITSMVersionGet to parse the additional data
 stored in XMLData.
@@ -4005,7 +3912,7 @@ sub _ParseXML2Data {
     return 1;
 }
 
-=item _ParseData2XML()
+=head2 _ParseData2XML()
 
 this is a internal function for _ITSMVersionAdd to parse the additional data
 for xml storage.
@@ -4068,14 +3975,14 @@ sub _ParseData2XML {
     return 1;
 }
 
-=item _WebserviceCreateIfNotExists()
+=head2 _WebserviceCreateIfNotExists()
 
 creates web services that not exist yet
 
     # installs all .yml files in $OTRS/scripts/webservices/
     # name of the file will be the name of the webservice
     my $Result = $ZnunyHelperObject->_WebserviceCreateIfNotExists(
-        SubDir => 'Znuny4OTRSAssetDesk', # optional
+        SubDir => 'ZnunyAssetDesk', # optional
     );
 
 OR:
@@ -4126,6 +4033,7 @@ sub _WebserviceCreateIfNotExists {
         # read config
         my $Content = $MainObject->FileRead(
             Location => $WebserviceYAMLPath,
+            Mode     => 'utf8',
         );
 
         if ( !$Content ) {
@@ -4164,14 +4072,14 @@ sub _WebserviceCreateIfNotExists {
     return 1;
 }
 
-=item _WebserviceCreate()
+=head2 _WebserviceCreate()
 
 creates or updates web services
 
     # installs all .yml files in $OTRS/scripts/webservices/
     # name of the file will be the name of the webservice
     my $Result = $ZnunyHelperObject->_WebserviceCreate(
-        SubDir => 'Znuny4OTRSAssetDesk', # optional
+        SubDir => 'ZnunyAssetDesk', # optional
     );
 
 OR:
@@ -4215,7 +4123,7 @@ sub _WebserviceCreate {
     WEBSERVICE:
     for my $WebserviceName ( sort keys %{$Webservices} ) {
 
-        my $WebserviceID = $Self->_ItemReverseListGet( $WebserviceName, %WebserviceListReversed );
+        my $WebserviceID           = $Self->_ItemReverseListGet( $WebserviceName, %WebserviceListReversed );
         my $UpdateOrCreateFunction = 'WebserviceAdd';
 
         if ($WebserviceID) {
@@ -4227,6 +4135,7 @@ sub _WebserviceCreate {
         # read config
         my $Content = $MainObject->FileRead(
             Location => $WebserviceYAMLPath,
+            Mode     => 'utf8',
         );
 
         if ( !$Content ) {
@@ -4266,14 +4175,14 @@ sub _WebserviceCreate {
     return 1;
 }
 
-=item _WebserviceDelete()
+=head2 _WebserviceDelete()
 
 deletes web services
 
     # deletes all .yml files webservices in $OTRS/scripts/webservices/
     # name of the file will be the name of the webservice
     my $Result = $ZnunyHelperObject->_WebserviceDelete(
-        SubDir => 'Znuny4OTRSAssetDesk', # optional
+        SubDir => 'ZnunyAssetDesk', # optional
     );
 
 OR:
@@ -4336,17 +4245,17 @@ sub _WebserviceDelete {
     return 1;
 }
 
-=item _WebservicesGet()
+=head2 _WebservicesGet()
 
 gets a list of .yml files from $OTRS/scripts/webservices
 
     my $Result = $ZnunyHelperObject->_WebservicesGet(
-        SubDir => 'Znuny4OTRSAssetDesk', # optional
+        SubDir => 'ZnunyAssetDesk', # optional
     );
 
     $Result = {
-        'Webservice'          => '$OTRS/scripts/webservices/Znuny4OTRSAssetDesk/Webservice.yml',
-        'New Webservice 1234' => '$OTRS/scripts/webservices/Znuny4OTRSAssetDesk/New Webservice 1234.yml',
+        'Webservice'          => '$OTRS/scripts/webservices/ZnunyAssetDesk/Webservice.yml',
+        'New Webservice 1234' => '$OTRS/scripts/webservices/ZnunyAssetDesk/New Webservice 1234.yml',
     }
 
 =cut
@@ -4381,7 +4290,7 @@ sub _WebservicesGet {
     return \%Webservices;
 }
 
-=item _RebuildConfig()
+=head2 _RebuildConfig()
 
 Rebuilds OTRS config.
 
@@ -4405,25 +4314,24 @@ sub _RebuildConfig {
         UserID      => 1,
     );
 
-    # Remove the ZZZAAuto.pm from %INC to force reloading it
     delete $INC{'Kernel/Config/Files/ZZZAAuto.pm'};
 
-    # Make sure to use a new config object
-    $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::Config'],
-    );
+    # Don't use ObjectDiscard of ObjectManager because
+    # restore database will not work anymore (in tests).
+    delete $Kernel::OM->{Objects}->{'Kernel::Config'};
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     return 1;
 }
 
-=item _ProcessCreateIfNotExists()
+=head2 _ProcessCreateIfNotExists()
 
 creates processes if there is no active process with the same name
 
     # installs all .yml files in $OTRS/scripts/processes/
     # name of the file will be the name of the process
     my $Success = $ZnunyHelperObject->_ProcessCreateIfNotExists(
-        SubDir => 'Znuny4OTRSAssetDesk', # optional
+        SubDir => 'ZnunyAssetDesk', # optional
     );
 
 OR:
@@ -4586,14 +4494,14 @@ sub _ProcessCreateIfNotExists {
     return 1;
 }
 
-=item _ProcessCreate()
+=head2 _ProcessCreate()
 
 creates or updates processes
 
     # installs all .yml files in $OTRS/scripts/processes/
     # name of the file will be the name of the process
     my $Success = $ZnunyHelperObject->_ProcessCreate(
-        SubDir => 'Znuny4OTRSAssetDesk', # optional
+        SubDir => 'ZnunyAssetDesk', # optional
     );
 
 OR:
@@ -4616,17 +4524,17 @@ sub _ProcessCreate {
     );
 }
 
-=item _ProcessesGet()
+=head2 _ProcessesGet()
 
 gets a list of .yml files from $OTRS/scripts/processes
 
     my $Result = $ZnunyHelperObject->_ProcessesGet(
-        SubDir => 'Znuny4OTRSAssetDesk', # optional
+        SubDir => 'ZnunyAssetDesk', # optional
     );
 
     $Result = {
-        'Process'          => '$OTRS/scripts/processes/Znuny4OTRSAssetDesk/Process.yml',
-        'New Process 1234' => '$OTRS/scripts/processes/Znuny4OTRSAssetDesk/New Process 1234.yml',
+        'Process'          => '$OTRS/scripts/processes/ZnunyAssetDesk/Process.yml',
+        'New Process 1234' => '$OTRS/scripts/processes/ZnunyAssetDesk/New Process 1234.yml',
     }
 
 =cut
@@ -4661,7 +4569,7 @@ sub _ProcessesGet {
     return \%Processes;
 }
 
-=item _ProcessWidgetDynamicFieldGroupsGet()
+=head2 _ProcessWidgetDynamicFieldGroupsGet()
 
 gets ProcessWidgetDynamicFieldGroups
 
@@ -4704,7 +4612,7 @@ sub _ProcessWidgetDynamicFieldGroupsGet {
 
 }
 
-=item _ProcessWidgetDynamicFieldGroupsAdd()
+=head2 _ProcessWidgetDynamicFieldGroupsAdd()
 
 gets ProcessWidgetDynamicFieldGroups
 
@@ -4792,7 +4700,7 @@ sub _ProcessWidgetDynamicFieldGroupsAdd {
     return 0;
 }
 
-=item _ProcessWidgetDynamicFieldGroupsRemove()
+=head2 _ProcessWidgetDynamicFieldGroupsRemove()
 
 gets ProcessWidgetDynamicFieldGroups
 
@@ -4874,7 +4782,7 @@ sub _ProcessWidgetDynamicFieldGroupsRemove {
     return 0;
 }
 
-=item _ModuleGroupAdd()
+=head2 _ModuleGroupAdd()
 
 This function adds one or more groups to the list of groups of a frontend module registration for any interface.
 
@@ -4925,7 +4833,7 @@ sub _ModuleGroupAdd {
     return if !IsHashRefWithData($FrontendList);
 
     # Split module "path" (e. g. Admin###001-Framework)
-    my $Module = $Param{Module};
+    my $Module             = $Param{Module};
     my @ModulePathElements = split '###', $Module;
 
     my $ModuleRegistration = $FrontendList;
@@ -4987,7 +4895,7 @@ sub _ModuleGroupAdd {
     return 1;
 }
 
-=item _ModuleGroupRemove()
+=head2 _ModuleGroupRemove()
 
 This function removes one or more groups from the list of groups of a frontend module registration for any interface.
 
@@ -5038,7 +4946,7 @@ sub _ModuleGroupRemove {
     return if !IsHashRefWithData($FrontendList);
 
     # Split module "path" (e. g. Admin###001-Framework)
-    my $Module = $Param{Module};
+    my $Module             = $Param{Module};
     my @ModulePathElements = split '###', $Module;
 
     my $ModuleRegistration = $FrontendList;
@@ -5099,7 +5007,308 @@ sub _ModuleGroupRemove {
     return 1;
 }
 
-=item _GenericAgentCreate()
+=head2 _NotificationEventCreate()
+
+create or update notification event
+
+    my @NotificationList = (
+        {
+            Name => 'Agent::CustomerVIPPriorityUpdate',
+            Data => {
+                Events => [
+                    'TicketPriorityUpdate',
+                ],
+                ArticleAttachmentInclude => [
+                    '0'
+                ],
+                LanguageID => [
+                    'en',
+                    'de'
+                ],
+                NotificationArticleTypeID => [
+                    1,
+                ],
+                Recipients => [
+                    'Customer',
+                ],
+                TransportEmailTemplate => [
+                    'Default',
+                ],
+                Transports => [
+                    'Email',
+                ],
+                VisibleForAgent => [
+                    '0',
+                ],
+            },
+            Message => {
+                en => {
+                    Subject     => 'Priority for your ticket changed',
+                    ContentType => 'text/html',
+                    Body        => '...',
+                },
+                de => {
+                    Subject     => 'Die Prioritaet Ihres Tickets wurde geaendert',
+                    ContentType => 'text/html',
+                    Body        => '...',
+                },
+            },
+        },
+        # ...
+    );
+
+    my $Success = $ZnunyHelperObject->_NotificationEventCreate( @NotificationList );
+
+Returns:
+
+    my $Success = 1;
+
+=cut
+
+sub _NotificationEventCreate {
+    my ( $Self, @NotificationEvents ) = @_;
+
+    my $LogObject               = $Kernel::OM->Get('Kernel::System::Log');
+    my $NotificationEventObject = $Kernel::OM->Get('Kernel::System::NotificationEvent');
+    my $ValidObject             = $Kernel::OM->Get('Kernel::System::Valid');
+
+    my $Success = 1;
+    NOTIFICATIONEVENT:
+    for my $NotificationEvent (@NotificationEvents) {
+        next NOTIFICATIONEVENT if !IsHashRefWithData($NotificationEvent);
+
+        # check needed stuff
+        NEEDED:
+        for my $Needed (qw(Name)) {
+
+            next NEEDED if defined $NotificationEvent->{$Needed};
+
+            $LogObject->Log(
+                Priority => 'error',
+                Message  => "Parameter '$Needed' is needed!",
+            );
+            return;
+        }
+
+        my %NotificationEventReversed = $NotificationEventObject->NotificationList(
+            UserID => 1
+        );
+        %NotificationEventReversed = reverse %NotificationEventReversed;
+
+        my $ItemID  = $Self->_ItemReverseListGet( $NotificationEvent->{Name}, %NotificationEventReversed );
+        my $ValidID = $NotificationEvent->{ValidID} // $ValidObject->ValidLookup(
+            Valid => 'valid',
+        );
+
+        if ($ItemID) {
+            my $UpdateSuccess = $NotificationEventObject->NotificationUpdate(
+                %{$NotificationEvent},
+                ID      => $ItemID,
+                ValidID => $ValidID,
+                UserID  => 1,
+            );
+
+            if ( !$UpdateSuccess ) {
+                $Success = 0;
+            }
+        }
+        else {
+            my $CreateID = $NotificationEventObject->NotificationAdd(
+                %{$NotificationEvent},
+                ValidID => $ValidID,
+                UserID  => 1,
+            );
+
+            if ( !$CreateID ) {
+                $Success = 0;
+            }
+        }
+    }
+
+    return $Success;
+}
+
+=head2 _NotificationEventCreateIfNotExists()
+
+creates notification event if not exists
+
+    my $NotificationID = $ZnunyHelperObject->_NotificationEventCreateIfNotExists(
+        Name => 'Agent::CustomerVIPPriorityUpdate',
+        Data => {
+            Events => [
+                'TicketPriorityUpdate',
+            ],
+            ArticleAttachmentInclude => [
+                '0'
+            ],
+            LanguageID => [
+                'en',
+                'de'
+            ],
+            NotificationArticleTypeID => [
+                1,
+            ],
+            Recipients => [
+                'Customer',
+            ],
+            TransportEmailTemplate => [
+                'Default',
+            ],
+            Transports => [
+                'Email',
+            ],
+            VisibleForAgent => [
+                '0',
+            ],
+        },
+        Message => {
+            en => {
+                Subject     => 'Priority for your ticket changed',
+                ContentType => 'text/html',
+                Body        => '...',
+            },
+            de => {
+                Subject     => 'Die Prioritaet Ihres Tickets wurde geaendert',
+                ContentType => 'text/html',
+                Body        => '...',
+            },
+        },
+    );
+
+Returns:
+
+    my $NotificationID = 123;
+
+=cut
+
+sub _NotificationEventCreateIfNotExists {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject               = $Kernel::OM->Get('Kernel::System::Log');
+    my $NotificationEventObject = $Kernel::OM->Get('Kernel::System::NotificationEvent');
+    my $ValidObject             = $Kernel::OM->Get('Kernel::System::Valid');
+
+    # check needed stuff
+    NEEDED:
+    for my $Needed (qw(Name)) {
+
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my %NotificationEventReversed = $NotificationEventObject->NotificationList(
+        UserID => 1
+    );
+    %NotificationEventReversed = reverse %NotificationEventReversed;
+
+    my $ItemID = $Self->_ItemReverseListGet( $Param{Name}, %NotificationEventReversed );
+    return $ItemID if $ItemID;
+
+    my $ValidID = $Param{ValidID} // $ValidObject->ValidLookup(
+        Valid => 'valid',
+    );
+    my $NotificationEventID = $NotificationEventObject->NotificationAdd(
+        %Param,
+        ValidID => $ValidID,
+        UserID  => 1,
+    );
+
+    return $NotificationEventID;
+}
+
+=head2 _StandardTemplateCreate()
+
+create or update standard template
+
+    my @StandardTemplateList = (
+        {
+            Name         => 'New Standard Template',
+            Template     => 'Thank you for your email.',
+            ContentType  => 'text/plain; charset=utf-8',
+            TemplateType => 'Answer',                     # 'Answer', 'Create', 'Email', 'Forward', 'Note', 'PhoneCall'
+            Comment      => '',                           # optional
+            ValidID      => 1,
+            UserID       => 1,
+        },
+    );
+
+    my $Success = $ZnunyHelperObject->_StandardTemplateCreate( @StandardTemplateList );
+
+Returns:
+
+    my $Success = 1;
+
+=cut
+
+sub _StandardTemplateCreate {
+    my ( $Self, @StandardTemplateList ) = @_;
+
+    my $LogObject              = $Kernel::OM->Get('Kernel::System::Log');
+    my $ValidObject            = $Kernel::OM->Get('Kernel::System::Valid');
+    my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
+
+    my $Success = 1;
+
+    NOTIFICATIONEVENT:
+    for my $StandardTemplate (@StandardTemplateList) {
+        next StandardTemplate if !IsHashRefWithData($StandardTemplate);
+
+        # check needed stuff
+        NEEDED:
+        for my $Needed (qw(Name)) {
+
+            next NEEDED if defined $StandardTemplate->{$Needed};
+
+            $LogObject->Log(
+                Priority => 'error',
+                Message  => "Parameter '$Needed' is needed!",
+            );
+            return;
+        }
+
+        my %StandardTemplateReversed = $StandardTemplateObject->StandardTemplateList();
+        %StandardTemplateReversed = reverse %StandardTemplateReversed;
+
+        my $ItemID = $Self->_ItemReverseListGet( $StandardTemplate->{Name}, %StandardTemplateReversed );
+
+        my $ValidID = $StandardTemplate->{ValidID} // $ValidObject->ValidLookup(
+            Valid => 'valid',
+        );
+
+        if ($ItemID) {
+            my $UpdateSuccess = $StandardTemplateObject->StandardTemplateUpdate(
+                %{$StandardTemplate},
+                ID      => $ItemID,
+                ValidID => $ValidID,
+                UserID  => 1,
+            );
+
+            if ( !$UpdateSuccess ) {
+                $Success = 0;
+            }
+        }
+        else {
+            my $CreateID = $StandardTemplateObject->StandardTemplateAdd(
+                %{$StandardTemplate},
+                ValidID => $ValidID,
+                UserID  => 1,
+            );
+
+            if ( !$CreateID ) {
+                $Success = 0;
+            }
+        }
+    }
+
+    return $Success;
+}
+
+=head2 _GenericAgentCreate()
 
 creates or updates generic agents
 
@@ -5285,7 +5494,7 @@ sub _GenericAgentCreate {
     return 1;
 }
 
-=item _GenericAgentCreateIfNotExists()
+=head2 _GenericAgentCreateIfNotExists()
 
 creates generic agents if not exists
 
@@ -5334,14 +5543,14 @@ sub _GenericAgentCreateIfNotExists {
     return 1;
 }
 
-=item _ArticleActionsAdd()
+=head2 _ArticleActionsAdd()
 
 Adds article action menu items.
 
     my %ArticleActions = (
         Internal => [ # Channel name (Internal, Phone, Email, Chat or Invalid)
             {
-                Key      => 'Znuny4OTRSMarkTicketSeenUnseen',
+                Key      => 'ZnunyMarkTicketSeenUnseen',
                 Module   => 'Kernel::Output::HTML::ArticleAction::MyMenuItem',
                 Priority => 999,
             },
@@ -5388,7 +5597,7 @@ sub _ArticleActionsAdd {
 
     my $SettingSet = $SysConfigObject->SettingsSet(
         UserID   => 1,
-        Comments => 'Article action settings added by package setup of Znuny4OTRS-MarkTicketSeenUnseen.',
+        Comments => 'Article action settings added by ZnunyHelper::_ArticleActionsAdd().',
         Settings => \@Settings,
     );
 
@@ -5397,7 +5606,7 @@ sub _ArticleActionsAdd {
     return 1;
 }
 
-=item _ArticleActionsRemove()
+=head2 _ArticleActionsRemove()
 
 Removes article action menu items.
 
@@ -5446,7 +5655,7 @@ sub _ArticleActionsRemove {
 
     my $SettingSet = $SysConfigObject->SettingsSet(
         UserID   => 1,
-        Comments => 'Article action settings removed by package setup of Znuny4OTRS-MarkTicketSeenUnseen.',
+        Comments => 'Article action settings removed by ZnunyHelper::_ArticleActionsRemove().',
         Settings => \@Settings,
     );
 
@@ -5456,15 +5665,3 @@ sub _ArticleActionsRemove {
 }
 
 1;
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

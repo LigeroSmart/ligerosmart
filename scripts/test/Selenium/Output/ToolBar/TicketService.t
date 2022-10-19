@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Output/ToolBar/TicketService.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,12 +19,12 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
         my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group');
 
         # Get random variable.
-        my $RandomID = $Helper->GetRandomID();
+        my $RandomID = $HelperObject->GetRandomID();
 
         # Enable AgentTicketService toolbar icon.
         my %AgentTicketService = (
@@ -35,29 +34,23 @@ $Selenium->RunTest(
             Priority => '1030035',
         );
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Frontend::ToolBarModule###200-Ticket::AgentTicketService',
             Value => \%AgentTicketService,
         );
 
         # Allows defining services for tickets.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
             Value => 1,
         );
 
         # Create test service.
-        my $ServiceName = 'Selenium' . $Helper->GetRandomID();
+        my $ServiceName = 'Selenium' . $HelperObject->GetRandomID();
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
             ValidID => 1,
             UserID  => 1,
         );
@@ -67,7 +60,7 @@ $Selenium->RunTest(
         );
 
         # Create test group.
-        my $GroupName = "Group" . $Helper->GetRandomID();
+        my $GroupName = "Group" . $HelperObject->GetRandomID();
         my $GroupID   = $GroupObject->GroupAdd(
             Name    => $GroupName,
             ValidID => 1,
@@ -115,7 +108,7 @@ $Selenium->RunTest(
         );
 
         # Create test user.
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => [ 'admin', 'users', $GroupName ],
         ) || die "Did not get test user";
 
@@ -191,7 +184,7 @@ $Selenium->RunTest(
         );
 
         # Change settings Ticket::Frontend::AgentTicketService###ViewAllPossibleTickets to 'Yes'.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketService###ViewAllPossibleTickets',
             Value => 1
@@ -268,7 +261,7 @@ $Selenium->RunTest(
         # Delete test group.
         $GroupName = $DBObject->Quote($GroupName);
         $Success   = $DBObject->Do(
-            SQL  => "DELETE FROM groups WHERE name = ?",
+            SQL  => "DELETE FROM permission_groups WHERE name = ?",
             Bind => [ \$GroupName ],
         );
         $Self->True(

@@ -1,11 +1,10 @@
 # --
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-## nofilter(TidyAll::Plugin::OTRS::Legal::OTRSAGCopyright)
 
 package Kernel::System::UnitTest::WebUserAgent;
 
@@ -32,11 +31,7 @@ All WebUserAgent functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -49,7 +44,6 @@ create an object
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
 
@@ -59,7 +53,7 @@ sub new {
     return $Self;
 }
 
-=item Mock()
+=head2 Mock()
 
 Mocks all outgoing requests to a given mapping.
 
@@ -82,7 +76,6 @@ sub Mock {
 
     my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(URL Status StatusCode Header Body)) {
         next NEEDED if defined $Param{$Needed};
@@ -118,9 +111,9 @@ sub Mock {
     return 1;
 }
 
-=item LastResponseGet()
+=head2 LastResponseGet()
 
-This function returns the last response of the overwritten user agent.
+Returns the last response of the overwritten user agent.
 
     my %Response = $Object->LastResponseGet();
 
@@ -155,9 +148,9 @@ sub LastResponseGet {
     );
 }
 
-=item LastRequestGet()
+=head2 LastRequestGet()
 
-This function returns the last request of the overwritten user agent.
+Returns the last request of the overwritten user agent.
 
     my %Request = $Object->LastRequestGet();
 
@@ -192,9 +185,9 @@ sub LastRequestGet {
     );
 }
 
-=item Reset()
+=head2 Reset()
 
-This function will remove all mocks and mocking status.
+Removes all mocks and mocking status.
 
     my $Success = $UnitTestWebUserAgentObject->Reset();
 
@@ -213,7 +206,7 @@ sub Reset {
     return 1;
 }
 
-=item _OverwrittenUserAgentRestore()
+=head2 _OverwrittenUserAgentRestore()
 
 Restores overwritten user agent.
 
@@ -237,15 +230,3 @@ sub _OverwrittenUserAgentRestore {
 }
 
 1;
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

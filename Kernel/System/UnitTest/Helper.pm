@@ -1,80 +1,56 @@
 # --
-# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
-# --
-# $origin: otrs - 80c9a107bc2a5e197466b5efdbdfdeacc3484922 - Kernel/System/UnitTest/Helper.pm
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::System::UnitTest::Helper;
-## nofilter(TidyAll::Plugin::OTRS::Perl::Time)
-## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::TimeObject)
-## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::DateTime)
-# ---
-# Znuny4OTRS-Repo
-# ---
-## nofilter(TidyAll::Plugin::OTRS::Perl::ObjectDependencies)
-## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::CacheCleanup)
-## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::ZnunyTime)
-# ---
 
 use strict;
 use warnings;
+
+use utf8;
 
 use File::Path qw(rmtree);
 
 # Load DateTime so that we can override functions for the FixedTimeSet().
 use DateTime;
 
-use Kernel::System::VariableCheck qw(:all);
-use Kernel::System::SysConfig;
-# ---
-# Znuny4OTRS-Repo
-# ---
-use utf8;
 use Kernel::System::PostMaster;
-# ---
+use Kernel::System::SysConfig;
+use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::DB',
     'Kernel::System::Cache',
+    'Kernel::System::CommunicationLog',
     'Kernel::System::CustomerUser',
-    'Kernel::System::Group',
-    'Kernel::System::Log',
-    'Kernel::System::Main',
-    'Kernel::System::UnitTest::Driver',
-    'Kernel::System::User',
-    'Kernel::System::XML',
-# ---
-# Znuny4OTRS-Repo
-# ---
-    'Kernel::System::UnitTest',
-    'Kernel::System::Service',
-    'Kernel::System::SysConfig',
-    # There is a cause we don't have the
-    # 'Kernel::System::Ticket',
-    # as a dependency: Since we don't want to use
-    # $Kernel::OM->ObjectsDiscard in our UnitTests
-    # we have to load our TicketObject via the MainObject
-    # otherwise this object will get destroyed by the OM, too
-    # which causes a database and SysConfig rollback
-    'Kernel::System::ZnunyHelper',
-    'Kernel::System::PostMaster',
+    'Kernel::System::DB',
+    'Kernel::System::DateTime',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
     'Kernel::System::Encode',
+    'Kernel::System::Group',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+    'Kernel::System::Service',
+    'Kernel::System::SysConfig',
+    'Kernel::System::Ticket',
     'Kernel::System::Ticket::Article',
-    'Kernel::System::CommunicationLog',
-# ---
+    'Kernel::System::UnitTest',
+    'Kernel::System::UnitTest::Driver',
+    'Kernel::System::User',
+    'Kernel::System::XML',
+    'Kernel::System::ZnunyHelper',
 );
 
 =head1 NAME
 
 Kernel::System::UnitTest::Helper - unit test helper functions
+
 
 =head2 new()
 
@@ -83,7 +59,7 @@ construct a helper object.
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new(
         'Kernel::System::UnitTest::Helper' => {
-            RestoreDatabase            => 1,        # runs the test in a transaction,
+            RestoreDatabase => 1,                   # runs the test in a transaction,
                                                     # and roll it back in the destructor
                                                     #
                                                     # NOTE: Rollback does not work for
@@ -93,7 +69,7 @@ construct a helper object.
                                                     # yourself.
         },
     );
-    my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+    my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 =cut
 
@@ -106,12 +82,10 @@ sub new {
 
     $Self->{Debug} = $Param{Debug} || 0;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
-#     $Self->{UnitTestDriverObject} = $Kernel::OM->Get('Kernel::System::UnitTest::Driver');
     $Self->{UnitTestDriverObject} = $Self->UnitTestObjectGet();
-# ---
+
+    # Override Perl's built-in time handling mechanism to set a fixed time if needed.
+    $Self->_MockPerlTimeHandling();
 
     # Remove any leftover custom files from aborted previous runs.
     $Self->CustomFileCleanup();
@@ -141,8 +115,15 @@ sub new {
 
     }
 
+    # Disable scheduling of asynchronous tasks using C<AsynchronousExecutor> component of System daemon.
     if ( $Param{DisableAsyncCalls} ) {
         $Self->DisableAsyncCalls();
+    }
+
+    if ( $Param{DisableSysConfigs} ) {
+        $Self->DisableSysConfigs(
+            %Param
+        );
     }
 
     return $Self;
@@ -156,6 +137,12 @@ It is guaranteed that within a test this function will never return a duplicate.
 
 Please note that these numbers are not really random and should only be used
 to create test data.
+
+    my $RandomID = $HelperObject->GetRandomID();
+
+Returns:
+
+    my $RandomID = 'test2735808026700610';
 
 =cut
 
@@ -174,6 +161,12 @@ It is guaranteed that within a test this function will never return a duplicate.
 Please note that these numbers are not really random and should only be used
 to create test data.
 
+    my $RandomNumber = $HelperObject->GetRandomNumber();
+
+Returns:
+
+    my $RandomNumber = '2735808026700610';
+
 =cut
 
 # Use package variables here (instead of attributes in $Self)
@@ -183,7 +176,7 @@ my %GetRandomNumberPrevious;
 sub GetRandomNumber {
 
     my $PIDReversed = reverse $$;
-    my $PID = reverse sprintf '%.6d', $PIDReversed;
+    my $PID         = reverse sprintf '%.6d', $PIDReversed;
 
     my $Prefix = $PID . substr time(), -5, 5;
 
@@ -196,57 +189,40 @@ creates a test user that can be used in tests. It will
 be set to invalid automatically during L</DESTROY()>. Returns
 the login name of the new user, the password is the same.
 
-    my $TestUserLogin = $Helper->TestUserCreate(
-        Groups => ['admin', 'users'],           # optional, list of groups to add this user to (rw rights)
-        Language => 'de'                        # optional, defaults to 'en' if not set
-# ---
-# Znuny4OTRS-Repo
-# ---
-        KeepValid => 1, # optional, default 0
-# ---
+    my $TestUserLogin = $HelperObject->TestUserCreate(
+        Groups    => ['admin', 'users'],         # optional, list of groups to add this user to (rw rights)
+        Language  => 'de'                        # optional, defaults to 'en' if not set
+        KeepValid => 1,                          # optional, defaults to 0
     );
+
+Returns:
+
+    my $TestUserLogin = 'test2755008034702000';
+
+
+To get UserLogin and UserID:
+
+    my ( $TestUserLogin, $TestUserID ) = $HelperObject->TestUserCreate(
+        Groups    => ['admin', 'users'],
+        Language  => 'de'
+        KeepValid => 1,
+    );
+
+    my $TestUserLogin = 'test2755008034702000';
+    my $TestUserID    = '123';
 
 =cut
 
 sub TestUserCreate {
     my ( $Self, %Param ) = @_;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
     my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-# ---
 
-    # disable email checks to create new user
+    # Disable email checks to create new user.
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     local $ConfigObject->{CheckEmailAddresses} = 0;
 
-    # create test user
-# ---
-# Znuny4OTRS-Repo
-# ---
-#     my $TestUserID;
-#     my $TestUserLogin;
-#     COUNT:
-#     for my $Count ( 1 .. 10 ) {
-
-#         $TestUserLogin = $Self->GetRandomID();
-
-#         $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserAdd(
-#             UserFirstname => $TestUserLogin,
-#             UserLastname  => $TestUserLogin,
-#             UserLogin     => $TestUserLogin,
-#             UserPw        => $TestUserLogin,
-#             UserEmail     => $TestUserLogin . '@localunittest.com',
-#             ValidID       => 1,
-#             ChangeUserID  => 1,
-#         );
-
-#         last COUNT if $TestUserID;
-#     }
-
-#     die 'Could not create test user login' if !$TestUserLogin;
-#     die 'Could not create test user'       if !$TestUserID;
+    # Create test user.
     my $TestUserLogin = $Self->GetRandomID();
     my $TestUserID    = $ZnunyHelperObject->_UserCreateIfNotExists(
         UserFirstname => $TestUserLogin,
@@ -258,28 +234,23 @@ sub TestUserCreate {
         ChangeUserID  => 1,
         %Param,
     );
-# ---
 
     # Remember UserID of the test user to later set it to invalid
     #   in the destructor.
-    $Self->{TestUsers} ||= [];
-    push( @{ $Self->{TestUsers} }, $TestUserID );
-# ---
-# Znuny4OTRS-Repo
-# ---
+    $Self->{TestUsers} //= [];
+    push @{ $Self->{TestUsers} }, $TestUserID;
+
     if ( $Param{KeepValid} ) {
-        $Self->{TestUsersKeepValid} ||= [];
-        push( @{ $Self->{TestUsersKeepValid} }, $TestUserID );
+        $Self->{TestUsersKeepValid} //= [];
+        push @{ $Self->{TestUsersKeepValid} }, $TestUserID;
     }
-# ---
 
     $Self->{UnitTestDriverObject}->True( 1, "Created test user $TestUserID" );
 
-    # Add user to groups
+    # Add user to groups.
     GROUP_NAME:
     for my $GroupName ( @{ $Param{Groups} || [] } ) {
 
-        # get group object
         my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
         my $GroupID = $GroupObject->GroupLookup( Group => $GroupName );
@@ -302,7 +273,7 @@ sub TestUserCreate {
         $Self->{UnitTestDriverObject}->True( 1, "Added test user $TestUserLogin to group $GroupName" );
     }
 
-    # set user language
+    # Set user language.
     my $UserLanguage = $Param{Language} || 'en';
     $Kernel::OM->Get('Kernel::System::User')->SetPreferences(
         UserID => $TestUserID,
@@ -311,7 +282,7 @@ sub TestUserCreate {
     );
     $Self->{UnitTestDriverObject}->True( 1, "Set user UserLanguage to $UserLanguage" );
 
-    return $TestUserLogin;
+    return wantarray ? ( $TestUserLogin, $TestUserID ) : $TestUserLogin;
 }
 
 =head2 TestCustomerUserCreate()
@@ -320,56 +291,27 @@ creates a test customer user that can be used in tests. It will
 be set to invalid automatically during L</DESTROY()>. Returns
 the login name of the new customer user, the password is the same.
 
-    my $TestUserLogin = $Helper->TestCustomerUserCreate(
-        Language => 'de',   # optional, defaults to 'en' if not set
-# ---
-# Znuny4OTRS-Repo
-# ---
-        KeepValid => 1, # optional, default 0
-# ---
+    my $TestCustomerUserLogin = $HelperObject->TestCustomerUserCreate(
+        Language  => 'de',   # optional, defaults to 'en' if not set
+        KeepValid => 1,      # optional, defaults to 0
     );
+
+Returns:
+
+    my $TestCustomerUserLogin = 'test2735808026700610';
 
 =cut
 
 sub TestCustomerUserCreate {
     my ( $Self, %Param ) = @_;
 
-# ---
-# Znuny4OTRS-Repo
-# ---
     my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-# ---
 
-    # disable email checks to create new user
+    # Disable email checks to create new user.
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     local $ConfigObject->{CheckEmailAddresses} = 0;
 
-    # create test user
-# ---
-# Znuny4OTRS-Repo
-# ---
-#     my $TestUser;
-#     COUNT:
-#     for my $Count ( 1 .. 10 ) {
-
-#         my $TestUserLogin = $Self->GetRandomID();
-
-#         $TestUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserAdd(
-#             Source         => 'CustomerUser',
-#             UserFirstname  => $TestUserLogin,
-#             UserLastname   => $TestUserLogin,
-#             UserCustomerID => $TestUserLogin,
-#             UserLogin      => $TestUserLogin,
-#             UserPassword   => $TestUserLogin,
-#             UserEmail      => $TestUserLogin . '@localunittest.com',
-#             ValidID        => 1,
-#             UserID         => 1,
-#         );
-
-#         last COUNT if $TestUser;
-#     }
-
-#     die 'Could not create test user' if !$TestUser;
+    # Create test customer user.
     my $TestUserLogin = $Self->GetRandomID();
     my $TestUser      = $ZnunyHelperObject->_CustomerUserCreateIfNotExists(
         Source         => 'CustomerUser',
@@ -383,24 +325,20 @@ sub TestCustomerUserCreate {
         UserID         => 1,
         %Param,
     );
-# ---
 
     # Remember UserID of the test user to later set it to invalid
     #   in the destructor.
-    $Self->{TestCustomerUsers} ||= [];
-    push( @{ $Self->{TestCustomerUsers} }, $TestUser );
-# ---
-# Znuny4OTRS-Repo
-# ---
+    $Self->{TestCustomerUsers} //= [];
+    push @{ $Self->{TestCustomerUsers} }, $TestUser;
+
     if ( $Param{KeepValid} ) {
-        $Self->{TestCustomerUsersKeepValid} ||= [];
-        push( @{ $Self->{TestCustomerUsersKeepValid} }, $TestUser );
+        $Self->{TestCustomerUsersKeepValid} //= [];
+        push @{ $Self->{TestCustomerUsersKeepValid} }, $TestUser;
     }
-# ---
 
     $Self->{UnitTestDriverObject}->True( 1, "Created test customer user $TestUser" );
 
-    # set customer user language
+    # Set customer user language.
     my $UserLanguage = $Param{Language} || 'en';
     $Kernel::OM->Get('Kernel::System::CustomerUser')->SetPreferences(
         UserID => $TestUser,
@@ -414,9 +352,9 @@ sub TestCustomerUserCreate {
 
 =head2 BeginWork()
 
-    $Helper->BeginWork()
-
 Starts a database transaction (in order to isolate the test from the static database).
+
+    $HelperObject->BeginWork();
 
 =cut
 
@@ -429,9 +367,9 @@ sub BeginWork {
 
 =head2 Rollback()
 
-    $Helper->Rollback()
-
 Rolls back the current database transaction.
+
+    $HelperObject->Rollback()
 
 =cut
 
@@ -448,7 +386,12 @@ sub Rollback {
 
 =head2 GetTestHTTPHostname()
 
-returns a host name for HTTP based tests, possibly including the port.
+Returns a host name for HTTP based tests, possibly including the port.
+
+    my $Hostname = $HelperObject->GetTestHTTPHostname();
+
+Returns:
+    my $Hostname = 'localhost';
 
 =cut
 
@@ -489,12 +432,13 @@ the current system time will be used.
 All calls to methods of Kernel::System::Time and Kernel::System::DateTime will
 use the given time afterwards.
 
-    $HelperObject->FixedTimeSet(366475757);         # with Timestamp
-    $HelperObject->FixedTimeSet($DateTimeObject);   # with previously created DateTime object
-    $HelperObject->FixedTimeSet();                  # set to current date and time
+    my $Timestamp = $HelperObject->FixedTimeSet(366475757);         # with Timestamp
+    my $Timestamp = $HelperObject->FixedTimeSet($DateTimeObject);   # with previously created DateTime object
+    my $Timestamp = $HelperObject->FixedTimeSet();                  # set to current date and time
 
 Returns:
-    Timestamp
+
+    my $Timestamp = 1454420017;    # date/time as seconds
 
 =cut
 
@@ -505,32 +449,7 @@ sub FixedTimeSet {
         $FixedTime = $TimeToSave->ToEpoch();
     }
     else {
-        $FixedTime = $TimeToSave // CORE::time()
-    }
-
-    # This is needed to reload objects that directly use the native time functions
-    #   to get a hold of the overrides.
-    my @Objects = (
-        'Kernel::System::Time',
-        'Kernel::System::DB',
-        'Kernel::System::Cache::FileStorable',
-        'Kernel::System::PID',
-# ---
-# Znuny4OTRS-Repo
-# ---
-        'Kernel::System::ZnunyTime',
-# ---
-    );
-
-    for my $Object (@Objects) {
-        my $FilePath = $Object;
-        $FilePath =~ s{::}{/}xmsg;
-        $FilePath .= '.pm';
-        if ( $INC{$FilePath} ) {
-            no warnings 'redefine';    ## no critic
-            delete $INC{$FilePath};
-            $Kernel::OM->Get('Kernel::System::Main')->Require($Object);
-        }
+        $FixedTime = $TimeToSave // CORE::time();
     }
 
     return $FixedTime;
@@ -538,7 +457,9 @@ sub FixedTimeSet {
 
 =head2 FixedTimeUnset()
 
-restores the regular system time behavior.
+Restores the regular system time behavior.
+
+    $HelperObject->FixedTimeUnset();
 
 =cut
 
@@ -551,8 +472,10 @@ sub FixedTimeUnset {
 
 =head2 FixedTimeAddSeconds()
 
-adds a number of seconds to the fixed system time which was previously
+Adds a number of seconds to the fixed system time which was previously
 set by FixedTimeSet(). You can pass a negative value to go back in time.
+
+    $HelperObject->FixedTimeAddSeconds(5);
 
 =cut
 
@@ -565,7 +488,10 @@ sub FixedTimeAddSeconds {
 }
 
 # See http://perldoc.perl.org/5.10.0/perlsub.html#Overriding-Built-in-Functions
-BEGIN {
+## nofilter(TidyAll::Plugin::OTRS::Perl::Time)
+## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::TimeObject)
+## nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::DateTime)
+sub _MockPerlTimeHandling {
     no warnings 'redefine';    ## no critic
     *CORE::GLOBAL::time = sub {
         return defined $FixedTime ? $FixedTime : CORE::time();
@@ -598,6 +524,28 @@ BEGIN {
             @_
         );
     };
+
+    # This is needed to reload objects that directly use the native time functions
+    #   to get a hold of the overrides.
+    my @Objects = (
+        'Kernel::System::Time',
+        'Kernel::System::DB',
+        'Kernel::System::Cache::FileStorable',
+        'Kernel::System::PID',
+    );
+
+    for my $Object (@Objects) {
+        my $FilePath = $Object;
+        $FilePath =~ s{::}{/}xmsg;
+        $FilePath .= '.pm';
+        if ( $INC{$FilePath} ) {
+            no warnings 'redefine';    ## no critic
+            delete $INC{$FilePath};
+            require $FilePath;         ## nofilter(TidyAll::Plugin::OTRS::Perl::Require)
+        }
+    }
+
+    return 1;
 }
 
 =head2 DESTROY()
@@ -608,13 +556,10 @@ performs various clean-ups.
 
 sub DESTROY {
     my $Self = shift;
-# ---
-# Znuny4OTRS-Repo
-# ---
-    # some Users or CustomerUsers should be kept valid (development)
-    USERTYPE:
-    for my $UserType ( qw( User CustomerUser ) ) {
 
+    # some users or customer users should be kept valid (development)
+    USERTYPE:
+    for my $UserType (qw( User CustomerUser )) {
         my $Key          = "Test$UserType";
         my $KeyKeepValid = "${Key}KeepValid";
 
@@ -623,7 +568,6 @@ sub DESTROY {
         my @SetInvalid;
         USER:
         for my $User ( @{ $Self->{$Key} } ) {
-
             next USER if grep { $_ eq $User } @{ $Self->{$KeyKeepValid} };
 
             push @SetInvalid, $User;
@@ -631,7 +575,6 @@ sub DESTROY {
 
         $Self->{$Key} = \@SetInvalid;
     }
-# ---
 
     # reset time freeze
     FixedTimeUnset();
@@ -735,10 +678,8 @@ sub DESTROY {
             );
         }
     }
-# ---
-# Znuny4OTRS-Repo
-# ---
-    # Only manually delete created tickets and dynamic fields if RestoreDatabase flag is not set
+
+    # Only manually delete created tickets and dynamic fields if RestoreDatabase flag is not set.
     # Otherwise the already deleted tickets will be tried to delete again, resulting
     # in many error messages.
     return if $Self->{RestoreDatabase};
@@ -758,11 +699,9 @@ sub DESTROY {
     my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
 
     if ( IsArrayRefWithData( $Self->{TestTickets} ) ) {
-
-        TICKET:
+        TICKETID:
         for my $TicketID ( sort @{ $Self->{TestTickets} } ) {
-
-            next TICKET if !$TicketID;
+            next TICKETID if !$TicketID;
 
             $TicketObject->TicketDelete(
                 TicketID => $TicketID,
@@ -774,7 +713,6 @@ sub DESTROY {
     return if !IsArrayRefWithData( $Self->{TestDynamicFields} );
 
     $ZnunyHelperObject->_DynamicFieldsDelete( @{ $Self->{TestDynamicFields} } );
-# ---
 
     return;
 }
@@ -788,7 +726,7 @@ This will be reset when the Helper object is destroyed.
 
 Please note that this will not work correctly in clustered environments.
 
-    $Helper->ConfigSettingChange(
+    $HelperObject->ConfigSettingChange(
         Valid => 1,            # (optional) enable or disable setting
         Key   => 'MySetting',  # setting name
         Value => { ... } ,     # setting value
@@ -798,6 +736,9 @@ Please note that this will not work correctly in clustered environments.
 
 sub ConfigSettingChange {
     my ( $Self, %Param ) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $MainObject   = $Kernel::OM->Get('Kernel::System::Main');
 
     my $Valid = $Param{Valid} // 1;
     my $Key   = $Param{Key};
@@ -813,18 +754,18 @@ sub ConfigSettingChange {
     $KeyDump =~ s|\#{3}|'}->{'|smxg;
 
     # Also set at runtime in the ConfigObject. This will be destroyed at the end of the unit test.
-    $Kernel::OM->Get('Kernel::Config')->Set(
+    $ConfigObject->Set(
         Key   => $Key,
         Value => $Valid ? $Value : undef,
     );
 
     my $ValueDump;
     if ($Valid) {
-        $ValueDump = $Kernel::OM->Get('Kernel::System::Main')->Dump($Value);
+        $ValueDump = $MainObject->Dump($Value);
         $ValueDump =~ s/\$VAR1/$KeyDump/;
     }
     else {
-        $ValueDump = "delete $KeyDump;"
+        $ValueDump = "delete $KeyDump;";
     }
 
     my $PackageName = "ZZZZUnitTest$RandomNumber";
@@ -843,9 +784,11 @@ sub Load {
 }
 1;
 EOF
-    my $Home     = $Kernel::OM->Get('Kernel::Config')->Get('Home');
+
+    my $Home     = $ConfigObject->Get('Home');
     my $FileName = "$Home/Kernel/Config/Files/$PackageName.pm";
-    $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
+
+    $MainObject->FileWrite(
         Location => $FileName,
         Mode     => 'utf8',
         Content  => \$Content,
@@ -863,7 +806,7 @@ All code will be removed when the Helper object is destroyed.
 
 Please note that this will not work correctly in clustered environments.
 
-    $Helper->CustomCodeActivate(
+    $HelperObject->CustomCodeActivate(
         Code => q^
 sub Kernel::Config::Files::ZZZZUnitTestIdentifier::Load {} # no-op, avoid warning logs
 use Kernel::System::WebUserAgent;
@@ -889,7 +832,7 @@ use warnings;
 sub CustomCodeActivate {
     my ( $Self, %Param ) = @_;
 
-    my $Code = $Param{Code};
+    my $Code       = $Param{Code};
     my $Identifier = $Param{Identifier} || $Self->GetRandomNumber();
 
     die "Need 'Code'" if !defined $Code;
@@ -909,7 +852,9 @@ sub CustomCodeActivate {
 
 =head2 CustomFileCleanup()
 
-Remove all custom files from C<ConfigSettingChange()> and C<CustomCodeActivate()>.
+Removes all custom files from C<ConfigSettingChange()> and C<CustomCodeActivate()>.
+
+    $HelperObject->CustomFileCleanup();
 
 =cut
 
@@ -931,7 +876,9 @@ sub CustomFileCleanup {
 
 =head2 UseTmpArticleDir()
 
-switch the article storage directory to a temporary one to prevent collisions;
+Switch the article storage directory to a temporary one to prevent collisions;
+
+    $HelperObject->UseTmpArticleDir();
 
 =cut
 
@@ -963,7 +910,9 @@ sub UseTmpArticleDir {
 
 =head2 DisableAsyncCalls()
 
-Disable scheduling of asynchronous tasks using C<AsynchronousExecutor> component of OTRS daemon.
+Disable scheduling of asynchronous tasks using C<AsynchronousExecutor> component of System daemon.
+
+    $HelperObject->DisableAsyncCalls();
 
 =cut
 
@@ -975,6 +924,55 @@ sub DisableAsyncCalls {
         Key   => 'DisableAsyncCalls',
         Value => 1,
     );
+
+    return 1;
+}
+
+=head2 DisableSysConfigs()
+
+Disables SysConfigs for current UnitTest.
+
+    $HelperObject->DisableSysConfigs(
+        DisableSysConfigs => [
+            'Ticket::Responsible'
+            'DashboardBackend###0442-RSS'
+        ],
+    );
+
+    $Kernel::OM->ObjectParamAdd(
+        'Kernel::System::UnitTest::Helper' => {
+            DisableSysConfigs => [
+                'Ticket::Responsible'
+                'DashboardBackend###0442-RSS'
+            ],
+        },
+    );
+
+=cut
+
+sub DisableSysConfigs {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
+    NEEDED:
+    for my $Needed (qw(DisableSysConfigs)) {
+
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    for my $SysConfig ( @{ $Param{DisableSysConfigs} } ) {
+        $Self->ConfigSettingChange(
+            Valid => 0,
+            Key   => $SysConfig,
+        );
+    }
 
     return 1;
 }
@@ -994,7 +992,7 @@ receive all calls sent over system C<DBObject>.
 
 All database contents will be automatically dropped when the Helper object is destroyed.
 
-    $Helper->ProvideTestDatabase(
+    $HelperObject->ProvideTestDatabase(
         DatabaseXMLString => $XML,      # (optional) OTRS database XML schema to execute
                                         # or
         DatabaseXMLFiles => [           # (optional) List of XML files to load and execute
@@ -1015,11 +1013,11 @@ sub ProvideTestDatabase {
     my $TestDatabase = $ConfigObject->Get('TestDatabase');
     return if !$TestDatabase;
 
-    for (qw(DatabaseDSN DatabaseUser DatabasePw)) {
-        if ( !$TestDatabase->{$_} ) {
+    for my $Needed (qw(DatabaseDSN DatabaseUser DatabasePw)) {
+        if ( !$TestDatabase->{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_ in TestDatabase!",
+                Message  => "Need  $Needed in TestDatabase!",
             );
             return;
         }
@@ -1142,7 +1140,7 @@ order to set it up.
 
 Please note that all database contents will be dropped, USE WITH CARE!
 
-    $Helper->TestDatabaseCleanup();
+    $HelperObject->TestDatabaseCleanup();
 
 =cut
 
@@ -1164,7 +1162,7 @@ sub TestDatabaseCleanup {
 
     if ( scalar @Tables ) {
         my $TableList = join ', ', sort @Tables;
-        my $DBType = $DBObject->{'DB::Type'};
+        my $DBType    = $DBObject->{'DB::Type'};
 
         if ( $DBType eq 'mysql' ) {
 
@@ -1188,6 +1186,30 @@ sub TestDatabaseCleanup {
             for my $Table (@Tables) {
                 $DBObject->Do( SQL => "DROP TABLE $Table CASCADE CONSTRAINTS" );
             }
+
+            # Get complete list of user sequences.
+            my @Sequences;
+            return if !$DBObject->Prepare(
+                SQL => 'SELECT sequence_name FROM user_sequences ORDER BY sequence_name',
+            );
+            while ( my @Row = $DBObject->FetchrowArray() ) {
+                push @Sequences, $Row[0];
+            }
+
+            # Drop all found sequences as well.
+            for my $Sequence (@Sequences) {
+                $DBObject->Do( SQL => "DROP SEQUENCE $Sequence" );
+            }
+
+            # Check if all sequences have been dropped.
+            @Sequences = ();
+            return if !$DBObject->Prepare(
+                SQL => 'SELECT sequence_name FROM user_sequences ORDER BY sequence_name',
+            );
+            while ( my @Row = $DBObject->FetchrowArray() ) {
+                push @Sequences, $Row[0];
+            }
+            return if scalar @Sequences;
         }
 
         # Check if all tables have been dropped.
@@ -1203,13 +1225,13 @@ sub TestDatabaseCleanup {
 Execute supplied XML against current database. Content of supplied XML or XMLFilename parameter must be valid OTRS
 database XML schema.
 
-    $Helper->DatabaseXMLExecute(
-        XML => $XML,     # OTRS database XML schema to execute
+    $HelperObject->DatabaseXMLExecute(
+        XML => $XML,                 # OTRS database XML schema to execute
     );
 
 Alternatively, it can also load an XML file to execute:
 
-    $Helper->DatabaseXMLExecute(
+    $HelperObject->DatabaseXMLExecute(
         XMLFile => '/path/to/file',  # OTRS database XML file to execute
     );
 
@@ -1281,9 +1303,76 @@ sub DatabaseXMLExecute {
     return 1;
 }
 
-# ---
-# Znuny4OTRS-Repo
-# ---
+=head2 DynamicFieldSet()
+
+This function will set a dynamic field value for a object.
+
+    my $Success = $HelperObject->DynamicFieldSet(
+        Field      => 'DF1',
+        ObjectID   => 123,
+        Value      => '123',
+    );
+
+or
+
+    my $Success = $HelperObject->DynamicFieldSet(
+        Field          => 'DF1',
+        ObjectID       => 123,
+        Value          => '123',
+        UserID         => 123, # optional
+    );
+
+Returns:
+
+    my $Success = 1;
+
+=cut
+
+sub DynamicFieldSet {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject          = $Kernel::OM->Get('Kernel::System::Log');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $BackendObject      = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
+    # check needed stuff
+    NEEDED:
+    for my $Needed (qw(Field ObjectID Value)) {
+
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my $Field          = $Param{Field};
+    my $ObjectID       = $Param{ObjectID};
+    my $Value          = $Param{Value};
+    my $UnitTestObject = $Param{UnitTestObject};
+    my $UserID         = $Param{UserID} || 1;
+
+    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+        Name => $Field,
+    );
+    return if !IsHashRefWithData($DynamicFieldConfig);
+
+    my $Success = $BackendObject->ValueSet(
+        DynamicFieldConfig => $DynamicFieldConfig,
+        ObjectID           => $ObjectID,
+        Value              => $Value,
+        UserID             => $UserID,
+    );
+
+    $Self->{UnitTestDriverObject}->True(
+        $Success,
+        "HelperObject->DynamicFieldSet('$Field', '$Value') was successful."
+    );
+
+    return $Success;
+}
 
 =head2 FixedTimeSetByDate()
 
@@ -1308,9 +1397,9 @@ sub FixedTimeSetByDate {
 
     # check needed stuff
     NEEDED:
-    for my $Needed ( qw(Year Month Day) ) {
+    for my $Needed (qw(Year Month Day)) {
 
-        next NEEDED if defined $Param{ $Needed };
+        next NEEDED if defined $Param{$Needed};
 
         $LogObject->Log(
             Priority => 'error',
@@ -1319,7 +1408,7 @@ sub FixedTimeSetByDate {
         return;
     }
 
-    for my $Default ( qw(Hour Minute Second) ) {
+    for my $Default (qw(Hour Minute Second)) {
         $Param{$Default} ||= 0;
     }
 
@@ -1328,7 +1417,7 @@ sub FixedTimeSetByDate {
         ObjectParams => \%Param,
     );
 
-    $Self->FixedTimeSet($DateTimeObject->ToEpoch());
+    $Self->FixedTimeSet( $DateTimeObject->ToEpoch() );
 
     return 1;
 }
@@ -1363,7 +1452,7 @@ sub FixedTimeSetByTimeStamp {
         }
     );
 
-    $Self->FixedTimeSet($DateTimeObject->ToEpoch());
+    $Self->FixedTimeSet( $DateTimeObject->ToEpoch() );
 
     return 1;
 }
@@ -1471,7 +1560,7 @@ sub SetupTestEnvironment {
             ServiceMandatory => 1,
             SLAMandatory     => 1,
             State            => 1,
-            StateType        => ['open', 'closed', 'pending reminder', 'pending auto'],
+            StateType        => [ 'open', 'closed', 'pending reminder', 'pending auto' ],
             TicketType       => 1,
             Title            => 1,
         },
@@ -1584,14 +1673,16 @@ sub ConfigureViews {
             %{$NewConfig},
         );
 
-        for my $KeySuffix (sort keys %{ $NewConfig }) {
-            push(@Changes, {
-                Name           => $ConfigKey . '###'. $KeySuffix,
-                EffectiveValue => $NewConfig->{$KeySuffix},
-                IsValid        => 1,
-            });
+        for my $KeySuffix ( sort keys %{$NewConfig} ) {
+            push(
+                @Changes,
+                {
+                    Name           => $ConfigKey . '###' . $KeySuffix,
+                    EffectiveValue => $NewConfig->{$KeySuffix},
+                    IsValid        => 1,
+                }
+            );
         }
-
 
         $Result{$View} = \%UpdatedConfig;
     }
@@ -1941,7 +2032,7 @@ Default parameters contain various special chars.
     # create everything with defaults, except Type
     my $Result = $HelperObject->FillTestEnvironment(
         Type => {
-            'Type 1::Sub Type ÄÖÜ' => 1,
+            'Type 1::Sub Type' => 1,
             ...
         }
     );
@@ -2000,7 +2091,7 @@ sub FillTestEnvironment {
     my %AdditionalUserCreateData = (
         User => {
             Groups => ['users'],
-            }
+        }
     );
 
     my %Result;
@@ -2386,7 +2477,7 @@ sub TestUserPreferencesSet {
     }
 
     return 1;
-};
+}
 
 =head2 PostMaster()
 
@@ -2408,9 +2499,9 @@ sub PostMaster {
 
     # check needed stuff
     NEEDED:
-    for my $Needed ( qw(Location) ) {
+    for my $Needed (qw(Location)) {
 
-        next NEEDED if defined $Param{ $Needed };
+        next NEEDED if defined $Param{$Needed};
 
         $LogObject->Log(
             Priority => 'error',
@@ -2499,13 +2590,13 @@ sub DatabaseXML {
         Database => \@XMLArray,
     );
 
-    for my $SQL ( @SQL ) {
+    for my $SQL (@SQL) {
         return if !$DBObject->Do( SQL => $SQL );
     }
 
     my @SQLPost = $DBObject->SQLProcessorPost();
 
-    for my $SQL ( @SQLPost ) {
+    for my $SQL (@SQLPost) {
         return if !$DBObject->Do( SQL => $SQL );
     }
 
@@ -2524,7 +2615,7 @@ This is a helper function for executing ConsoleCommands without the hassle.
 
     my $Result = $HelperObject->ConsoleCommand(
         CommandModule => 'Kernel::System::Console::Command::Maint::Cache::Delete',
-        Parameter     => [ '--type', 'Znuny4OTRSIstCool' ],
+        Parameter     => [ '--type', 'Znuny' ],
     );
 
     # or
@@ -2548,7 +2639,7 @@ sub ConsoleCommand {
     my $EncodeObject = $Kernel::OM->Get('Kernel::System::Encode');
 
     $Self->{UnitTestDriverObject}->True(
-        scalar IsStringWithData($Param{CommandModule}),
+        scalar IsStringWithData( $Param{CommandModule} ),
         'Command module given.',
     ) || return;
 
@@ -2560,10 +2651,10 @@ sub ConsoleCommand {
         "CommandObject created from module name '$Param{CommandModule}'",
     ) || return;
 
-    if ( IsStringWithData($Param{Parameter}) ) {
+    if ( IsStringWithData( $Param{Parameter} ) ) {
         $Param{Parameter} = [ $Param{Parameter} ];
     }
-    elsif ( !IsArrayRefWithData($Param{Parameter}) ) {
+    elsif ( !IsArrayRefWithData( $Param{Parameter} ) ) {
         $Param{Parameter} = [];
     }
 
@@ -2691,7 +2782,7 @@ sub ACLValuesGet {
         }
 
         if ( !IsHashRefWithData($PossibleValuesFilter) ) {
-            %Result = %{ $PossibleValues || {} } ;
+            %Result = %{ $PossibleValues || {} };
         }
         else {
             %Result = %{ $PossibleValuesFilter || {} };
@@ -2727,19 +2818,19 @@ sub ACLValuesGet {
     elsif ( $Check eq 'Queue' ) {
         %Result = reverse $TicketObject->TicketMoveList(%Param);
     }
-    elsif ($Check eq 'Type') {
+    elsif ( $Check eq 'Type' ) {
         %Result = reverse $TicketObject->TicketTypeList(%Param);
     }
-    elsif ($Check eq 'State') {
+    elsif ( $Check eq 'State' ) {
         %Result = reverse $TicketObject->TicketStateList(%Param);
     }
-    elsif ($Check eq 'Service') {
+    elsif ( $Check eq 'Service' ) {
         %Result = reverse $TicketObject->TicketServiceList(%Param);
     }
-    elsif ($Check eq 'Priority') {
+    elsif ( $Check eq 'Priority' ) {
         %Result = reverse $TicketObject->TicketPriorityList(%Param);
     }
-    elsif ($Check eq 'SLA') {
+    elsif ( $Check eq 'SLA' ) {
         %Result = reverse $TicketObject->TicketSLAList(%Param);
     }
 
@@ -2770,17 +2861,15 @@ sub UnitTestObjectGet {
 
     return $Kernel::OM->Get('Kernel::System::UnitTest');
 }
-# ---
-
 
 1;
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (L<http://otrs.org/>).
+This software is part of the OTRS project (L<https://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see L<https://www.gnu.org/licenses/gpl-3.0.txt>.
 
 =cut

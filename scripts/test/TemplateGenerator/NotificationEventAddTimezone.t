@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -31,7 +32,7 @@ $Kernel::OM->ObjectParamAdd(
         CheckEmailAddresses => 0,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # Ensure mail queue is empty before tests start.
 $MailQueueObj->Delete();
@@ -53,6 +54,8 @@ my $SendEmails = sub {
     return @ToReturn;
 };
 
+# set default UserLanguage to en
+$ConfigObject->{DefaultLanguage} = 'en';
 $ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => '0',
@@ -86,16 +89,16 @@ $Self->IsDeeply(
     'Test backend is empty after initial cleanup',
 );
 
-my $RandomID = $Helper->GetRandomID();
+my $RandomID = $HelperObject->GetRandomID();
 
 # Create test customer user.
-my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate();
+my $TestCustomerUserLogin = $HelperObject->TestCustomerUserCreate();
 my %TestCustomerUserData  = $CustomerUserObject->CustomerUserDataGet(
     User => $TestCustomerUserLogin,
 );
 
 # Create test user.
-my $TestUserLogin = $Helper->TestUserCreate();
+my $TestUserLogin = $HelperObject->TestUserCreate();
 my %TestUserData  = $UserObject->GetUserData(
     User => $TestUserLogin,
 );
@@ -181,7 +184,7 @@ $Self->True(
 );
 
 # Set fixed time.
-$Helper->FixedTimeSet(
+$HelperObject->FixedTimeSet(
     $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {

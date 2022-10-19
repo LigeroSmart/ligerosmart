@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,22 +14,17 @@ use warnings;
 
 use List::Util qw(first);
 use Mail::Address;
-use Data::Dumper;
-use MIME::Base64;
-use Encode;
 
 use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::CustomerUser',
     'Kernel::System::CheckItem',
-    'Kernel::System::DB',
+    'Kernel::System::CustomerUser',
+    'Kernel::System::DateTime',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
-    'Kernel::System::Email',
     'Kernel::System::Group',
-    'Kernel::System::HTMLUtils',
     'Kernel::System::JSON',
     'Kernel::System::Log',
     'Kernel::System::NotificationEvent',
@@ -37,9 +33,9 @@ our @ObjectDependencies = (
     'Kernel::System::TemplateGenerator',
     'Kernel::System::Ticket',
     'Kernel::System::Ticket::Article',
-    'Kernel::System::DateTime',
     'Kernel::System::User',
-    'Kernel::System::CheckItem',
+    'Kernel::System::Valid',
+    'Kernel::System::Mention',
 );
 
 sub new {
@@ -179,30 +175,6 @@ sub Run {
             }
         }
 
-        # Complemento - add attachments foreach DFAttachments tag
-        my ($firstLanguageKey) = keys %{ $Notification{Message} };
-        my $DynamicFieldFileValueObject = $Kernel::OM->Get('Kernel::System::DynamicFieldFileValue');
-        while ( $Notification{Message}{$firstLanguageKey}{Body} =~ m/OTRS_TICKET_DynamicField_(.*)_Attach/ig ) {
-            my $dnField = $1;
-            if ( $DynamicFieldConfigLookup{ $dnField }{FieldType} eq 'File' ) {
-                my $DFValue = $DynamicFieldFileValueObject->ValueGet(
-                        ObjectID => $Param{Data}->{TicketID},
-                        FieldID  => $DynamicFieldConfigLookup{ $dnField }{ID}
-                );
-                my %fileAttach = (
-                    Content     => Encode::encode_utf8($DFValue->[0]->{Content}),
-                    ContentType => $DFValue->[0]->{ContentType},
-                    Filename    => $DFValue->[0]->{Filename},
-                    Disposition => 'attachment'
-                );
-                push @Attachments, \%fileAttach;
-                # remove tag from notifications
-                foreach my $lngKey ( keys %{ $Notification{Message} } ) {
-                   $Notification{Message}{$lngKey}{Body} =~ s/&lt;OTRS_TICKET_DynamicField_$dnField\_Attach&gt;//ig;
-                }
-            }
-        }
-
         # get recipients
         my @RecipientUsers = $Self->_RecipientsGet(
             %Param,
@@ -282,6 +254,8 @@ sub Run {
                 next TRANSPORT;
             }
 
+            my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+
             # check if transport is usable
             next TRANSPORT if !$TransportObject->IsUsable();
 
@@ -329,6 +303,17 @@ sub Run {
 
                     # No UserID means it's not a mapped customer.
                     next BUNDLE if !$Bundle->{Recipient}->{UserID};
+                }
+
+                # Check if customer user is invalid.
+                if (
+                    $Bundle->{Recipient}->{Source}
+                    && $Bundle->{Recipient}->{Source} eq 'CustomerUser'
+                    && $Bundle->{Recipient}->{ValidID}
+                    && !grep { $Bundle->{Recipient}->{ValidID} eq $_ } @ValidIDs
+                    )
+                {
+                    next BUNDLE;
                 }
 
                 my $Success = $Self->_SendRecipientNotification(
@@ -403,39 +388,24 @@ sub _NotificationFilter {
 
     my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
 
+    # get not ticket related attributes
+    my $IgnoredAttributes
+        = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Event::NotificationEvent::IgnoredAttributes') || {};
+    my %IgnoredAttributesHash;
+    for my $Key ( sort keys %{$IgnoredAttributes} ) {
+        if ( IsHashRefWithData( $IgnoredAttributes->{$Key} ) ) {
+            %IgnoredAttributesHash = ( %IgnoredAttributesHash, %{ $IgnoredAttributes->{$Key} } );
+        }
+    }
+
     # get the search article fields to retrieve values for
     my %ArticleSearchableFields = $ArticleObject->ArticleSearchableFieldsList();
 
     KEY:
     for my $Key ( sort keys %{ $Notification{Data} } ) {
 
-        # TODO: This function here should be fixed to not use hardcoded attribute values!
         # ignore not ticket related attributes
-        next KEY if $Key eq 'Recipients';
-        next KEY if $Key eq 'SkipRecipients';
-        next KEY if $Key eq 'RecipientAgents';
-        next KEY if $Key eq 'RecipientGroups';
-        next KEY if $Key eq 'RecipientRoles';
-        next KEY if $Key eq 'TransportEmailTemplate';
-        next KEY if $Key eq 'Events';
-        next KEY if $Key eq 'ArticleSenderTypeID';
-        next KEY if $Key eq 'ArticleIsVisibleForCustomer';
-        next KEY if $Key eq 'ArticleCommunicationChannelID';
-        next KEY if $Key eq 'ArticleAttachmentInclude';
-        next KEY if $Key eq 'IsVisibleForCustomer';
-        next KEY if $Key eq 'Transports';
-        next KEY if $Key eq 'OncePerDay';
-        next KEY if $Key eq 'VisibleForAgent';
-        next KEY if $Key eq 'VisibleForAgentTooltip';
-        next KEY if $Key eq 'LanguageID';
-        next KEY if $Key eq 'SendOnOutOfOffice';
-        next KEY if $Key eq 'AgentEnabledByDefault';
-        next KEY if $Key eq 'EmailSecuritySettings';
-        next KEY if $Key eq 'EmailSigningCrypting';
-        next KEY if $Key eq 'EmailMissingCryptingKeys';
-        next KEY if $Key eq 'EmailMissingSigningKeys';
-        next KEY if $Key eq 'EmailDefaultSigningKeys';
-        next KEY if $Key eq 'NotificationType';
+        next KEY if %IgnoredAttributesHash && $IgnoredAttributesHash{$Key};
 
         # ignore article searchable fields
         next KEY if $ArticleSearchableFields{$Key};
@@ -629,6 +599,7 @@ sub _RecipientsGet {
         my $CheckItemObject     = $Kernel::OM->Get('Kernel::System::CheckItem');
         my $SystemAddressObject = $Kernel::OM->Get('Kernel::System::SystemAddress');
         my $UserObject          = $Kernel::OM->Get('Kernel::System::User');
+        my $MentionObject       = $Kernel::OM->Get('Kernel::System::Mention');
 
         RECIPIENT:
         for my $Recipient ( @{ $Notification{Data}->{Recipients} } ) {
@@ -755,7 +726,7 @@ sub _RecipientsGet {
                 }
             }
 
-            # Other OTRS packages might add other kind of recipients that are normally handled by
+            # Other packages might add other kind of recipients that are normally handled by
             #   other modules then an elsif condition here is useful.
             elsif ( $Recipient eq 'Customer' ) {
 
@@ -997,6 +968,15 @@ sub _RecipientsGet {
                 $Recipient{Language} = $ConfigObject->Get('DefaultLanguage') || 'en';
 
                 push @RecipientUsers, \%Recipient;
+            }
+            elsif ( $Recipient eq 'AllMentionedUsers' ) {
+                my $TicketMentions = $MentionObject->GetTicketMentions(
+                    TicketID => $Param{Data}->{TicketID},
+                ) // [];
+
+                for my $TicketMention ( @{$TicketMentions} ) {
+                    push @{ $Notification{Data}->{RecipientAgents} }, $TicketMention->{UserID};
+                }
             }
         }
     }

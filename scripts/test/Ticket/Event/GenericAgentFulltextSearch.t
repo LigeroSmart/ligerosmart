@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,10 +18,10 @@ $Kernel::OM->ObjectParamAdd(
         RestoreDatabase => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # Create first test RandomID identifier.
-my $FirstRandomID = $Helper->GetRandomID();
+my $FirstRandomID = $HelperObject->GetRandomID();
 
 # Define structure for first Ticket create.
 my %FirstTicketValues = (
@@ -122,7 +123,7 @@ my $FirstArticleID = $ArticleBackendObject->ArticleCreate(
 );
 
 # Create second test RandomID identifier.
-my $SecondRandomID = $Helper->GetRandomID();
+my $SecondRandomID = $HelperObject->GetRandomID();
 
 # Define structure for second Ticket create.
 my %SecondTicketValues = (
@@ -156,7 +157,7 @@ my %SecondArticleValues = (
     Body    => "Body_$SecondRandomID Test",
 );
 
-my $UpdateRandomID   = $Helper->GetRandomID();
+my $UpdateRandomID   = $HelperObject->GetRandomID();
 my %ArticleUpdateJob = (
     Name => $SecondJobName,
     Data => {

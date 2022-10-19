@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -31,7 +32,6 @@ sub Run {
     my $PackageObject = $Kernel::OM->Get('Kernel::System::Package');
 
     my @InvalidPackages;
-    my @NotVerifiedPackages;
     my @WrongFrameworkVersion;
     for my $Package ( $PackageObject->RepositoryList() ) {
 
@@ -49,15 +49,6 @@ sub Run {
             Version => $Package->{Version}->{Content},
             Result  => 'SCALAR',
         );
-
-        my $Verified = $PackageObject->PackageVerify(
-            Package => $PackageContent,
-            Name    => $Package->{Name}->{Content},
-        ) || 'unknown';
-
-        if ( $Verified ne 'verified' ) {
-            push @NotVerifiedPackages, "$Package->{Name}->{Content} $Package->{Version}->{Content}";
-        }
 
         my %PackageStructure = $PackageObject->PackageParse(
             String => $PackageContent,
@@ -93,36 +84,6 @@ sub Run {
         $Self->AddResultOk(
             Label => Translatable('Package Installation Status'),
             Value => '',
-        );
-    }
-
-    if (@NotVerifiedPackages) {
-        if ( $Kernel::OM->Get('Kernel::Config')->Get('Package::AllowLocalModifications') ) {
-            $Self->AddResultInformation(
-                Identifier => 'Verification',
-                Label      => Translatable('Package Verification Status'),
-                Value      => join( ', ', @NotVerifiedPackages ),
-                Message    => Translatable(
-                    'Some packages are not verified by the OTRS Group! It is recommended not to use this packages.'
-                ),
-            );
-        }
-        else {
-            $Self->AddResultProblem(
-                Identifier => 'Verification',
-                Label      => Translatable('Package Verification Status'),
-                Value      => join( ', ', @NotVerifiedPackages ),
-                Message    => Translatable(
-                    'Some packages are not verified by the OTRS Group! It is recommended not to use this packages.'
-                ),
-            );
-        }
-    }
-    else {
-        $Self->AddResultOk(
-            Identifier => 'Verification',
-            Label      => Translatable('Package Verification Status'),
-            Value      => '',
         );
     }
 

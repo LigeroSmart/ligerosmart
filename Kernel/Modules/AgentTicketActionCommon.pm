@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 61764fc3cfd0e81cd5f6dbcf08115e12240f412d - Kernel/Modules/AgentTicketActionCommon.pm
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -92,16 +91,6 @@ sub new {
     if ( !$Self->{FormID} ) {
         $Self->{FormID} = $Kernel::OM->Get('Kernel::System::Web::UploadCache')->FormIDCreate();
     }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-
-    # Check if ITSMIncidentProblemManagement is used.
-    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
-    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
-        $Self->{ITSMIncidentProblemManagement} = 1;
-    }
-# ---
 
     return $Self;
 }
@@ -352,12 +341,6 @@ sub Run {
 
     # get dynamic field values form http request
     my %DynamicFieldValues;
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    # to store the reference to the dynamic field for the impact
-    my $ImpactDynamicFieldConfig;
-# ---
 
     # define the dynamic fields to show based on the object type
     my $ObjectType = ['Ticket'];
@@ -388,116 +371,7 @@ sub Run {
             ParamObject        => $ParamObject,
             LayoutObject       => $LayoutObject,
         );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-
-        # impact field was found
-        if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
-
-            # store the reference to the impact field
-            $ImpactDynamicFieldConfig = $DynamicFieldConfig;
-        }
-# ---
     }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    my %Service;
-    if ( $Self->{ITSMIncidentProblemManagement} ) {
-
-        # get needed stuff
-        $GetParam{DynamicField_ITSMCriticality} = $ParamObject->GetParam(Param => 'DynamicField_ITSMCriticality');
-        $GetParam{DynamicField_ITSMImpact}      = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
-        $GetParam{PriorityRC}                   = $ParamObject->GetParam(Param => 'PriorityRC');
-        $GetParam{ElementChanged}               = $ParamObject->GetParam(Param => 'ElementChanged') || '';
-
-        # check if priority needs to be recalculated
-        if ( $GetParam{ElementChanged} eq 'ServiceID' || $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' || $GetParam{ElementChanged} eq 'DynamicField_ITSMCriticality' ) {
-            $GetParam{PriorityRC} = 1;
-        }
-
-        # set service id from ticket
-        if ( !defined $GetParam{ServiceID} && $Ticket{ServiceID} ) {
-            $GetParam{ServiceID} = $Ticket{ServiceID};
-        }
-
-        # set impact from ticket
-        if ( !defined $GetParam{DynamicField_ITSMImpact} ) {
-            $GetParam{DynamicField_ITSMImpact} = $Ticket{DynamicField_ITSMImpact};
-        }
-
-        # set criticality from ticket
-        if ( !defined $GetParam{DynamicField_ITSMCriticality} ) {
-            $GetParam{DynamicField_ITSMCriticality} = $Ticket{DynamicField_ITSMCriticality};
-        }
-
-        if ( $GetParam{ServiceID} ) {
-
-            # get service
-            %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-                ServiceID     => $GetParam{ServiceID},
-                IncidentState => $Config->{ShowIncidentState} || 0,
-                UserID        => $Self->{UserID},
-            );
-
-            if ( $GetParam{ElementChanged} eq 'ServiceID' ) {
-                $GetParam{DynamicField_ITSMCriticality} = $Service{Criticality};
-            }
-
-            # recalculate impact if impact is not set until now
-            if ( !$GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} ne 'DynamicField_ITSMImpact' ) {
-
-                # get default selection
-                my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue};
-
-                if ($DefaultSelection) {
-
-                    # get default impact
-                    $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
-                    $GetParam{PriorityRC} = 1;
-                }
-            }
-
-            # recalculate priority
-            if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} && $Config->{Priority} ) {
-
-                if ( $GetParam{DynamicField_ITSMImpact} ) {
-
-                    # get priority
-                    $GetParam{NewPriorityID} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
-                        Criticality => $GetParam{DynamicField_ITSMCriticality} || $Service{Criticality},
-                        Impact      => $GetParam{DynamicField_ITSMImpact},
-                    );
-                }
-                else {
-                    $GetParam{NewPriorityID} = '';
-                }
-            }
-        }
-
-        # no service was selected
-        else {
-
-            # do not show the default selection
-            $ImpactDynamicFieldConfig->{Config}->{DefaultValue} = '';
-
-            # show only the empty selection
-            $ImpactDynamicFieldConfig->{Config}->{PossibleValues} = {};
-            $GetParam{DynamicField_ITSMImpact} = '';
-        }
-
-        # set the selected impact and criticality
-        $DynamicFieldValues{ITSMCriticality} = $GetParam{DynamicField_ITSMCriticality} || $Service{Criticality};
-        $DynamicFieldValues{ITSMImpact}      = $GetParam{DynamicField_ITSMImpact};
-
-        # Send config data to JS.
-        $LayoutObject->AddJSData(
-            Key   => $Self->{Action} . 'ShowIncidentState',
-            Value => $Config->{ShowIncidentState},
-        );
-    }
-# ---
 
     # convert dynamic field values into a structure for ACLs
     my %DynamicFieldACLParameters;
@@ -1362,38 +1236,6 @@ sub Run {
                 Comment => Translatable('Please contact the administrator.'),
             );
         }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-        if ( $Self->{ITSMIncidentProblemManagement} && ( $GetParam{DynamicField_ITSMCriticality} || $Service{Criticality} ) ) {
-
-            # get config for criticality dynamic field
-            my $CriticalityDynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
-                Name => 'ITSMCriticality',
-            );
-
-            # get possible values for criticality
-            my $CriticalityPossibleValues = $DynamicFieldBackendObject->PossibleValuesGet(
-                DynamicFieldConfig => $CriticalityDynamicFieldConfig,
-            );
-
-            # reverse the list to find out the key
-            my %ReverseCriticalityPossibleValues = reverse %{ $CriticalityPossibleValues };
-
-            my $Criticality = $Service{Criticality} || '';
-            if ( $Config->{DynamicField}->{ITSMCriticality} ) {
-                $Criticality = $GetParam{DynamicField_ITSMCriticality} || '';
-            }
-
-            # set the criticality
-            $DynamicFieldBackendObject->ValueSet(
-                DynamicFieldConfig => $CriticalityDynamicFieldConfig,
-                ObjectID           => $Self->{TicketID},
-                Value              => $ReverseCriticalityPossibleValues{ $Criticality },
-                UserID             => $Self->{UserID},
-            );
-        }
-# ---
 
         # load new URL in parent window and close popup
         $ReturnURL ||= "Action=AgentTicketZoom;TicketID=$Self->{TicketID};ArticleID=$ArticleID";
@@ -1609,8 +1451,8 @@ sub Run {
                 my %AllStdAttachments = $StdAttachmentObject->StdAttachmentStandardTemplateMemberList(
                     StandardTemplateID => $GetParam{StandardTemplateID},
                 );
-                for ( sort keys %AllStdAttachments ) {
-                    my %AttachmentsData = $StdAttachmentObject->StdAttachmentGet( ID => $_ );
+                for my $ID ( sort keys %AllStdAttachments ) {
+                    my %AttachmentsData = $StdAttachmentObject->StdAttachmentGet( ID => $ID );
                     $UploadCacheObject->FormIDAddFile(
                         FormID      => $Self->{FormID},
                         Disposition => 'attachment',
@@ -2784,18 +2626,9 @@ sub _Mask {
 
         # show time accounting box
         if ( $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {
-            if ( $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime') ) {
-                $LayoutObject->Block(
-                    Name => 'TimeUnitsLabelMandatory',
-                    Data => \%Param,
-                );
-            }
-            else {
-                $LayoutObject->Block(
-                    Name => 'TimeUnitsLabel',
-                    Data => \%Param,
-                );
-            }
+            $Param{TimeUnitsBlock} = $LayoutObject->TimeUnits(
+                %Param,
+            );
             $LayoutObject->Block(
                 Name => 'TimeUnits',
                 Data => \%Param,
@@ -3141,10 +2974,10 @@ sub _GetQuotedReplyBody {
                         ": $Param{CreateTime}<br/>" . $Param{Body};
                 }
 
-                for (qw(Subject ReplyTo Reply-To Cc To From)) {
-                    if ( $Param{$_} ) {
-                        $Param{Body} = $LayoutObject->{LanguageObject}->Translate($_) .
-                            ": $Param{$_}<br/>" . $Param{Body};
+                for my $Key (qw(Subject ReplyTo Reply-To Cc To From)) {
+                    if ( $Param{$Key} ) {
+                        $Param{Body} = $LayoutObject->{LanguageObject}->Translate($Key) .
+                            ": $Param{$Key}<br/>" . $Param{Body};
                     }
                 }
 
@@ -3186,10 +3019,10 @@ sub _GetQuotedReplyBody {
                         ": $Param{CreateTime}\n" . $Param{Body};
                 }
 
-                for (qw(Subject ReplyTo Reply-To Cc To From)) {
-                    if ( $Param{$_} ) {
-                        $Param{Body} = $LayoutObject->{LanguageObject}->Translate($_) .
-                            ": $Param{$_}\n" . $Param{Body};
+                for my $Key (qw(Subject ReplyTo Reply-To Cc To From)) {
+                    if ( $Param{$Key} ) {
+                        $Param{Body} = $LayoutObject->{LanguageObject}->Translate($Key) .
+                            ": $Param{$Key}\n" . $Param{Body};
                     }
                 }
 

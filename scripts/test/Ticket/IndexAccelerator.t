@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +22,7 @@ $Kernel::OM->ObjectParamAdd(
         UseTmpArticleDir => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 my $QueueID = $Kernel::OM->Get('Kernel::System::Queue')->QueueLookup( Queue => 'Raw' );
 
@@ -30,7 +31,7 @@ my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->
     ChannelName => 'Internal',
 );
 
-my ( $TestUserLogin, $UserID ) = $Helper->TestUserCreate(
+my ( $TestUserLogin, $UserID ) = $HelperObject->TestUserCreate(
     Groups => [ 'admin', 'users', ],
 );
 
@@ -354,7 +355,7 @@ $Self->Is(
 );
 
 my $QueueObject = $Kernel::OM->Get('Kernel::System::Queue');
-my $QueueRand   = 'Some::Queue' . $Helper->GetRandomID();
+my $QueueRand   = 'Some::Queue' . $HelperObject->GetRandomID();
 my $NewQueueID  = $QueueObject->QueueAdd(
     Name            => $QueueRand,
     ValidID         => 1,

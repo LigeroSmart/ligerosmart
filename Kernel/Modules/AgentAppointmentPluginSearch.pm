@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -53,10 +54,13 @@ sub Run {
         # get plugin object
         my $PluginObject = $Kernel::OM->Get('Kernel::System::Calendar::Plugin');
 
-        $ResultList = $PluginObject->PluginSearch(
-            Search    => $Search,
-            PluginKey => $PluginKey,
-            UserID    => $Self->{UserID},
+        $ResultList = $PluginObject->PluginFunction(
+            PluginKey      => $PluginKey,
+            PluginFunction => 'Search',
+            PluginData     => {
+                Search => $Search,
+                UserID => $Self->{UserID},
+            },
         );
     }
 
@@ -70,9 +74,11 @@ sub Run {
         keys %{$ResultList}
         )
     {
+
+        my $ObjectData = $ResultList->{$ObjectID};
         push @Data, {
             Key   => $ObjectID,
-            Value => $ResultList->{$ObjectID},
+            Value => ref $ObjectData ? $ObjectData->{Subject} : $ObjectData,
         };
 
         $MaxResultCount--;

@@ -1,12 +1,10 @@
 # --
-# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
-# --
-# $origin: otrs - 04139bf7d2feaf7631ce64edada6d19fea6a3328 - Kernel/Output/Template/Document.pm
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::Output::Template::Document;
@@ -69,61 +67,49 @@ sub _InstallOTRSExtensions {
     # The block data is passed to the template, and this macro processes it and calls the relevant
     #   blocks.
     #
+    # NOTE: Also see https://github.com/OTRS/otrs/pull/1055
+    #
     $Context->stash()->set(
         'PerformRenderBlock',
         sub {
             my $output = '';
             my ( %_tt_args, $_tt_params );
             $_tt_args{'BlockName'} = shift;
-            $_tt_params = shift;
-            $_tt_params = {} if ref $_tt_params ne 'HASH';
-            $_tt_params = { %_tt_args, %$_tt_params };
+            $_tt_params            = shift;
+            $_tt_params            = {} if ref $_tt_params ne 'HASH';
+            $_tt_params            = { %_tt_args, %$_tt_params };
 
             my $stash = $Context->localise($_tt_params);
             eval {
 
-                my $BlockName = $stash->get('BlockName');
+                my $BlockName   = $stash->get('BlockName');
                 my $ParentBlock = $stash->get('ParentBlock') || $stash->{_BlockTree};
-
-# ---
-# Znuny4OTRS-Repo - https://github.com/OTRS/otrs/pull/1055
-# ---
-#                return if !exists $ParentBlock->{Children};
-#                return if !exists $ParentBlock->{Children}->{$BlockName};
-# ---
 
                 my $TemplateName = $stash->get('template')->{name} // '';
                 $TemplateName = substr( $TemplateName, 0, -3 );    # remove .tt extension
                 my $GenerateBlockHook =
                     $Context->{LayoutObject}->{_BlockHookSubscriptions}->{$TemplateName}->{$BlockName};
 
-# ---
-# Znuny4OTRS-Repo - https://github.com/OTRS/otrs/pull/1055
-# ---
                 if ( exists $ParentBlock->{Children} && exists $ParentBlock->{Children}->{$BlockName} ) {
-# ---
-                for my $TargetBlock ( @{ $ParentBlock->{Children}->{$BlockName} } ) {
-                    $output .= "<!--HookStart${BlockName}-->\n" if $GenerateBlockHook;
-                    $output .= $Context->process(
-                        $TargetBlock->{Path},
-                        {
-                            'Data'        => $TargetBlock->{Data},
-                            'ParentBlock' => $TargetBlock,
-                        },
-                    );
-                    $output .= "<!--HookEnd${BlockName}-->\n" if $GenerateBlockHook;
+                    for my $TargetBlock ( @{ $ParentBlock->{Children}->{$BlockName} } ) {
+                        $output .= "<!--HookStart${BlockName}-->\n" if $GenerateBlockHook;
+                        $output .= $Context->process(
+                            $TargetBlock->{Path},
+                            {
+                                'Data'        => $TargetBlock->{Data},
+                                'ParentBlock' => $TargetBlock,
+                            },
+                        );
+                        $output .= "<!--HookEnd${BlockName}-->\n" if $GenerateBlockHook;
+                    }
+                    delete $ParentBlock->{Children}->{$BlockName};
                 }
-                delete $ParentBlock->{Children}->{$BlockName};
-# ---
-# Znuny4OTRS-Repo - https://github.com/OTRS/otrs/pull/1055
-# ---
-                }
-                elsif ( $GenerateBlockHook ) {
+                elsif ($GenerateBlockHook) {
                     $output .= "<!--HookStart${BlockName}-->\n";
                     $output .= "<!--HookEnd${BlockName}-->\n";
                 }
-# ---
             };
+
             $stash = $Context->delocalise();
 
             die $@ if $@;
@@ -254,6 +240,11 @@ sub _InstallOTRSExtensions {
                     Data     => \%Data,
                     SortKeys => 1,
                 );
+
+                # Escape closing script tags in the JSON content as they will confuse the
+                #   browser's parser.
+                $JSONString =~ s{ </(?<ScriptTag>script)}{<\\/$+{ScriptTag}}ismxg;
+
                 $output .= "Core.Config.AddConfig($JSONString);\n";
             }
             delete $context->{LayoutObject}->{_JSData};
@@ -291,10 +282,10 @@ sub _PrecalculateBlockStructure {
 
     BLOCKPATHIDENTIFIER:
     for my $BlockIdentifier ( sort keys %{$Defblocks} ) {
-        my @BlockPath = split( m{/}, $BlockIdentifier );
+        my @BlockPath       = split( m{/}, $BlockIdentifier );
         my $BlockPathLength = scalar @BlockPath;
         next BLOCKPATHIDENTIFIER if !$BlockPathLength;
-        $BlockPaths->{ $BlockPath[-1] } = $BlockIdentifier;
+        $BlockPaths->{ $BlockPath[-1] }   = $BlockIdentifier;
         $BlockParents->{ $BlockPath[-1] } = [ splice( @BlockPath, 0, $BlockPathLength - 1 ) ];
     }
 
@@ -378,10 +369,10 @@ sub _PrecalculateBlockHookSubscriptions {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (L<http://otrs.org/>).
+This software is part of the OTRS project (L<https://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see L<https://www.gnu.org/licenses/gpl-3.0.txt>.
 
 =cut

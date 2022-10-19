@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 2befc326148d97d4ecce398bdea289580cd18792 - scripts/test/Selenium/Agent/AgentTicketActionCommonACLFrontend.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +15,7 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
-        my $Helper         = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject   = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $ACLObject      = $Kernel::OM->Get('Kernel::System::ACL::DB::ACL');
         my $TicketObject   = $Kernel::OM->Get('Kernel::System::Ticket');
         my $TypeObject     = $Kernel::OM->Get('Kernel::System::Type');
@@ -26,30 +25,30 @@ $Selenium->RunTest(
         my $SLAObject      = $Kernel::OM->Get('Kernel::System::SLA');
         my $CacheObject    = $Kernel::OM->Get('Kernel::System::Cache');
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'CheckMXRecord',
             Value => 0,
         );
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Type',
             Value => 1,
         );
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'Ticket::Service',
             Value => 1,
         );
 
-        my $RandomID = $Helper->GetRandomID();
+        my $RandomID = $HelperObject->GetRandomID();
 
         # Create test customer user.
-        my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate()
+        my $TestCustomerUserLogin = $HelperObject->TestCustomerUserCreate()
             || die "Did not get test customer user";
 
         # Enable some fields in AgentTicketFreeText.
         for my $Field (qw(Type Priority Queue Service SLA)) {
-            $Helper->ConfigSettingChange(
+            $HelperObject->ConfigSettingChange(
                 Valid => 1,
                 Key   => "Ticket::Frontend::AgentTicketFreeText###$Field",
                 Value => 1,
@@ -123,12 +122,6 @@ $Selenium->RunTest(
             my $ServiceID = $ServiceObject->ServiceAdd(
                 Name    => $Name,
                 ValidID => 1,
-# ---
-# ITSMCore
-# ---
-                TypeID      => 1,
-                Criticality => '3 normal',
-# ---
                 UserID  => 1,
             );
             $Self->True(
@@ -156,11 +149,6 @@ $Selenium->RunTest(
                 ServiceIDs => \@ServiceIDs,
                 Name       => $Name,
                 ValidID    => 1,
-# ---
-# ITSMCore
-# ---
-                TypeID     => 1,
-# ---
                 UserID     => 1,
             );
             $Self->True(
@@ -174,7 +162,7 @@ $Selenium->RunTest(
         # Create 2 ACLs:
         # 1. Disable all
         # 2. PossibleAdd appropriate attributes, Match "Frontend->Action->[RegExp]^Agent".
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'TicketAcl',
             Value => {
@@ -232,7 +220,7 @@ $Selenium->RunTest(
         );
 
         # Create test user and login.
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
@@ -377,17 +365,6 @@ $Selenium->RunTest(
 
         # Delete test services.
         for my $ServiceID (@ServiceIDs) {
-# ---
-# ITSMCore
-# ---
-            $Success = $DBObject->Do(
-                SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
-            );
-            $Self->True(
-                $Success,
-                "Service preferences ID $ServiceID is deleted.",
-            );
-# ---
             $Success = $DBObject->Do(
                 SQL  => "DELETE FROM service WHERE id = ?",
                 Bind => [ \$ServiceID ],

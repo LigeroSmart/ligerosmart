@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,13 +22,12 @@ use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::Crypt::PGP',
-    'Kernel::System::Crypt::SMIME',
+    'Kernel::System::CommunicationLog',
+    'Kernel::System::DateTime',
     'Kernel::System::Encode',
     'Kernel::System::HTMLUtils',
     'Kernel::System::Log',
     'Kernel::System::MailQueue',
-    'Kernel::System::CommunicationLog',
 );
 
 =head1 NAME
@@ -695,7 +695,16 @@ Really send the mail
 
     my $Result = $SendObject->SendExecute(
         From                   => $RealFrom,
-        ToArray                => \@ToArray,
+        To                     => \@ToArray,
+        Header                 => \$Param{Header},
+        Body                   => \$Param{Body},
+        CommunicationLogObject => $CommunicationLogObject,
+    );
+
+    # or
+    my $Result = $SendObject->SendExecute(
+        From                   => $RealFrom,
+        To                     => $To, # can be a string with comma separated mail addresses
         Header                 => \$Param{Header},
         Body                   => \$Param{Body},
         CommunicationLogObject => $CommunicationLogObject,
@@ -787,7 +796,7 @@ Check mail configuration
 sub Check {
     my ( $Self, %Param ) = @_;
 
-    my %Check = $Self->{Backend}->Check();
+    my %Check = $Self->{Backend}->Check(%Param);
 
     if ( $Check{Successful} ) {
         return ( Successful => 1 );
@@ -876,10 +885,10 @@ sub Bounce {
     };
 
     # check needed stuff
-    for (qw(From To Email)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(From To Email)) {
+        if ( !$Param{$Needed} ) {
             return $SendError->(
-                ErrorMessage => "Need $_!",
+                ErrorMessage => "Need $Needed!",
             );
         }
     }
@@ -905,8 +914,8 @@ sub Bounce {
     $HeaderObject->replace( 'Resent-Date',       $DateTimeObject->ToEmailTimeStamp() );
     my $Body         = $EmailObject->body();
     my $BodyAsString = '';
-    for ( @{$Body} ) {
-        $BodyAsString .= $_ . "\n";
+    for my $String ( @{$Body} ) {
+        $BodyAsString .= $String . "\n";
     }
     my $HeaderAsString = $HeaderObject->as_string();
     my $OldMessageID   = $HeaderObject->get('Message-ID') || '??';

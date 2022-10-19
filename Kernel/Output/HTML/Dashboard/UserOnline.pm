@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -123,24 +124,6 @@ sub Config {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    
-    if ($Self->{Config}->{Async} && !$Param{AJAX}){
-        my $JSAsync = <<"ENDJS";
-asyncDashboardLoad('$Self->{Name}')
-ENDJS
-        $LayoutObject->AddJSOnDocumentComplete(
-            Code => $JSAsync,
-        );
-        return $LayoutObject->Output(
-            TemplateFile => 'AgentDashboardUserOnline',
-            Data         => {
-                %{ $Self->{Config} },
-            },
-        );
-    }
-
     my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
     my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
     my $UserObject    = $Kernel::OM->Get('Kernel::System::User');
@@ -224,6 +207,8 @@ ENDJS
     # Set the selected css class for the current filter ('Agents' or 'Customers').
     my %Summary;
     $Summary{ $Self->{Filter} . '::Selected' } = 'Selected';
+
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # Generate the output block for the filter bar.
     $LayoutObject->Block(

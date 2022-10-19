@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -56,15 +57,19 @@ sub new {
 
 =head2 Run()
 
-    Run Data
+Runs TransitionAction TicketArticleCreate.
 
-    my $TicketArticleCreateResult = $TicketArticleCreateActionObject->Run(
+    my $Success = $TicketArticleCreateActionObject->Run(
         UserID                   => 123,
+
+        # Ticket contains the result of TicketGet including dynamic fields
         Ticket                   => \%Ticket,   # required
         ProcessEntityID          => 'P123',
         ActivityEntityID         => 'A123',
         TransitionEntityID       => 'T123',
         TransitionActionEntityID => 'TA123',
+
+        # Config is the hash stored in a Process::TransitionAction's config key
         Config => {
             SenderType           => 'agent',                            # (required) agent|system|customer
             IsVisibleForCustomer => 1,                                  # 0 or 1
@@ -78,15 +83,13 @@ sub new {
        },
     );
 
-    Ticket contains the result of TicketGet including DynamicFields
-    Config is the Config Hash stored in a Process::TransitionAction's  Config key
-    Returns:
+Returns:
 
-    $TicketArticleCreateResult = 1; # 0
+    $Success = 1; # 0
 
-    Internal article example:
+    # Internal article example:
 
-    my $TicketArticleCreateResult = $TicketArticleCreateActionObject->Run(
+    my $Success = $TicketArticleCreateActionObject->Run(
         UserID => 123,
         Ticket => {
             TicketNumber => '20101027000001',
@@ -99,7 +102,7 @@ sub new {
         ActivityEntityID         => 'A123',
         TransitionEntityID       => 'T123',
         TransitionActionEntityID => 'TA123',
-        Config => {
+        Config                   => {
             SenderType           => 'agent',
             IsVisibleForCustomer => 1,
             CommunicationChannel => 'Internal',
@@ -117,42 +120,42 @@ sub new {
         },
     );
 
-    Chat article example:
+    # Email article example:
 
-    my $TicketArticleCreateResult = $TicketArticleCreateActionObject->Run(
+    my $Success = $TicketArticleCreateActionObject->Run(
         UserID => 123,
         Ticket => {
-            TicketNumber       => '20101027000001',
-            Title              => 'some title',
-            TicketID           => 123,
-            State              => 'some state',
+            TicketNumber => '20101027000001',
+            Title        => 'some title',
+            TicketID     => 123,
+            State        => 'some state',
             # ... (all ticket properties, as the result from Kernel::System::Ticket::TicketGet)
         },
         ProcessEntityID          => 'P123',
         ActivityEntityID         => 'A123',
         TransitionEntityID       => 'T123',
         TransitionActionEntityID => 'TA123',
-        Config => {
+        Config                   => {
             SenderType           => 'agent',
             IsVisibleForCustomer => 1,
-            CommunicationChannel => 'Internal',
+            CommunicationChannel => 'Email',
 
-            # Internal article data payload.
+            # Email article data payload.
             From             => 'Some Agent <email@example.com>',
             To               => 'Some Customer A <customer-a@example.com>',
             Subject          => 'some short description',
             Body             => 'the message text',
             Charset          => 'ISO-8859-15',
             MimeType         => 'text/plain',
-            HistoryType      => 'OwnerUpdate',
+            HistoryType      => 'EmailAgent',
             HistoryComment   => 'Some free text!',
             UnlockOnAway     => 1,
         },
     );
 
-    Chat article example:
+    # Chat article example:
 
-    my $TicketArticleCreateResult = $TicketArticleCreateActionObject->Run(
+    my $Success = $TicketArticleCreateActionObject->Run(
         UserID => 123,
         Ticket => {
             TicketNumber => '20101027000001',
@@ -168,7 +171,7 @@ sub new {
         Config                   => {
             SenderType           => 'agent',
             IsVisibleForCustomer => 1,
-            CommunicationChannel => 'Internal',
+            CommunicationChannel => 'Chat',
 
             # Chat article data payload.
             ChatMessageList => [
@@ -183,7 +186,7 @@ sub new {
                 },
                 # ...
             ],
-            HistoryType    => 'OwnerUpdate',
+            HistoryType    => 'Misc',
             HistoryComment => 'Some free text!',
         },
     );
@@ -283,6 +286,11 @@ sub Run {
     my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
         ChannelName => $Param{Config}->{CommunicationChannel}
     );
+
+    # check for selected Attachments
+    if ( $Param{Config}->{Attachments} ) {
+        $Param{Config}->{Attachment} = $Self->_GetAttachments(%Param);
+    }
 
     my $ArticleID = $ArticleBackendObject->ArticleCreate(
         %{ $Param{Config} },

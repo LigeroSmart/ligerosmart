@@ -1,11 +1,10 @@
 # --
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-## nofilter(TidyAll::Plugin::OTRS::Legal::OTRSAGCopyright)
 
 package Kernel::System::UnitTest::Webservice;
 
@@ -22,6 +21,7 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::GenericInterface::Provider',
     'Kernel::System::Cache',
+    'Kernel::System::Daemon::SchedulerDB',
     'Kernel::System::GenericInterface::Webservice',
     'Kernel::System::JSON',
     'Kernel::System::Log',
@@ -41,11 +41,9 @@ All web service functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -58,7 +56,6 @@ create an object
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
 
@@ -70,9 +67,9 @@ sub new {
     return $Self;
 }
 
-=item Process()
+=head2 Process()
 
-This function simulate an incoming web service call to test operations and the mapping.
+Simulates an incoming web service call to test operations and the mapping.
 
     my $Response = $UnitTestWebserviceObject->Process(
         UnitTestObject => $Self,
@@ -82,7 +79,7 @@ This function simulate an incoming web service call to test operations and the m
         Payload        => {
             ...
         },
-        Response => {               # optional, you can validate the response manually in the UnitTest via $Self->IsDeeply
+        Response => {               # optional, you can validate the response manually in the unit test via $Self->IsDeeply()
             Success      => 1,
             ErrorMessage => '',
             Data         => {
@@ -107,10 +104,8 @@ sub Process {
     my $CacheObject    = $Kernel::OM->Get('Kernel::System::Cache');
     my $ProviderObject = $Kernel::OM->Get('Kernel::GenericInterface::Provider');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(UnitTestObject Operation Payload)) {
-
         next NEEDED if defined $Param{$Needed};
 
         $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -122,7 +117,6 @@ sub Process {
 
     NAMEORID:
     for my $NameOrID (qw(Webservice WebserviceID)) {
-
         next NAMEORID if !$Param{$NameOrID};
 
         $ENV{REQUEST_URI} = "nph-genericinterface.pl/$NameOrID/$Param{$NameOrID}/";    ## no critic
@@ -138,7 +132,7 @@ sub Process {
             Success   => 1,
             Operation => $Param{Operation},
             Data      => $Param{Payload},
-            }
+        },
     );
 
     $ProviderObject->Run();
@@ -159,7 +153,7 @@ sub Process {
     return $Response;
 }
 
-=item Mock()
+=head2 Mock()
 
 Mocks all outgoing requests to a given mapping.
 
@@ -183,7 +177,7 @@ Mocks all outgoing requests to a given mapping.
     );
 
 
-    Now you can use the regular framework RequesterObject to perform this request like:
+    Now you can use the regular framework requester object to perform this request like:
 
     my $RequesterObject = $Kernel::OM->Get('Kernel::GenericInterface::Requester');
 
@@ -209,9 +203,8 @@ sub Mock {
 
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
-    # temporary store the given request data
+    # temporarily store the given request data
     for my $InvokerName ( sort keys %Param ) {
-
         $CacheObject->Set(
             Type  => $Self->{CacheType},
             Key   => $InvokerName,
@@ -223,7 +216,7 @@ sub Mock {
     return 1;
 }
 
-=item MockFromFile()
+=head2 MockFromFile()
 
 Loads a mapping from JSON file placed in 'var/mocks/' in the
 Webservice sub directory named as the Invoker like e.g.:
@@ -231,6 +224,14 @@ Webservice sub directory named as the Invoker like e.g.:
 
     $UnitTestWebserviceObject->MockFromFile(
         Webservice => 'ExampleWebservice',
+        Invoker    => 'SomeInvoker',
+        Data       => {
+
+        }
+    );
+
+    $UnitTestWebserviceObject->MockFromFile(
+        Location => $ConfigObject->Get('Home') . "/misc/mocks/WebserviceName/SomeInvoker.json";
         Invoker    => 'SomeInvoker',
         Data       => {
 
@@ -247,10 +248,8 @@ sub MockFromFile {
     my $MainObject   = $Kernel::OM->Get('Kernel::System::Main');
     my $JSONObject   = $Kernel::OM->Get('Kernel::System::JSON');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(Webservice Invoker)) {
-
         next NEEDED if defined $Param{$Needed};
 
         $LogObject->Log(
@@ -260,7 +259,8 @@ sub MockFromFile {
         return;
     }
 
-    my $MockFile = $ConfigObject->Get('Home') . "/var/mocks/$Param{Webservice}/$Param{Invoker}.json";
+    my $MockFile
+        = $Param{Location} || $ConfigObject->Get('Home') . "/var/mocks/$Param{Webservice}/$Param{Invoker}.json";
 
     my $JSONString = $MainObject->FileRead(
         Location => $MockFile,
@@ -274,7 +274,7 @@ sub MockFromFile {
     $Self->Mock(
         $Param{Invoker} => [
             {
-                Data => $Param{Data} || {},
+                Data   => $Param{Data} || {},
                 Result => {
                     Success => 1,
                     Data    => $MockData,
@@ -286,9 +286,10 @@ sub MockFromFile {
     return 1;
 }
 
-=item Result()
+=head2 Result()
 
-Returns the result of all requests since beginning or the last $UnitTestWebserviceObject->Result() call. Result cache gets cleared after calling this function.
+Returns the result of all requests since beginning or the last $UnitTestWebserviceObject->Result() call.
+Result cache will be cleared.
 
     my $Result = $UnitTestWebserviceObject->Result();
 
@@ -332,7 +333,7 @@ sub Result {
         Type => $CacheType,
         Key  => $CacheKeyResults,
     );
-    $StoredResults ||= [];
+    $StoredResults //= [];
 
     $CacheObject->Delete(
         Type => $CacheType,
@@ -342,9 +343,10 @@ sub Result {
     return $StoredResults;
 }
 
-=item ValidateResult()
+=head2 ValidateResult()
 
-Processes the results of expected mocked web service calls. If no web service call was mocked an error is printed.
+Processes the results of expected mocked web service calls.
+If no web service call was mocked, an error will be output.
 
     my $Result = $UnitTestWebserviceObject->ValidateResult(
         UnitTestObject => $Self,
@@ -382,10 +384,8 @@ Processes the results of expected mocked web service calls. If no web service ca
 sub ValidateResult {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(UnitTestObject)) {
-
         next NEEDED if defined $Param{$Needed};
 
         $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -407,9 +407,9 @@ sub ValidateResult {
     return if !$IsArrayRefWithData;
 
     my $Counter = 0;
-    RESULT:
-    for my $MockResult ( @{$MockResults} ) {
 
+    MOCKRESULT:
+    for my $MockResult ( @{$MockResults} ) {
         $Counter++;
 
         my $IsHashRefWithData = IsHashRefWithData($MockResult);
@@ -419,9 +419,10 @@ sub ValidateResult {
             "$Counter - Mock result has the right structure",
         );
 
-        next RESULT if !$IsHashRefWithData;
+        next MOCKRESULT if !$IsHashRefWithData;
 
         my $LogMessage = "$Counter - Request mock data was found";
+
         if ( !$MockResult->{Success} ) {
             $LogMessage .= ". Error Message: $MockResult->{ErrorMessage}";
         }
@@ -438,21 +439,165 @@ sub ValidateResult {
     $Param{UnitTestObject}->Is(
         $Counter,
         $Param{RequestCount},
-        "Number of processed web service requests",
+        'Number of processed web service requests matches expected one.',
     );
 
     return $MockResults;
 }
 
-=item OperationFunctionCall()
+=head2 SchedulerRunAll()
 
-This function will initialize an operation to test specific functions of an operation.
+Executes all asynchronous task handler tasks.
+
+    my $Success = $UnitTestWebserviceObject->SchedulerRunAll(
+        UnitTestObject => $Self,
+    );
+
+    my $Success = $UnitTestWebserviceObject->SchedulerRunAll(
+        UnitTestObject => $Self,
+        Type           => 'AsynchronousExecutor', # optional, default is 'GenericInterface'
+    );
+
+Returns:
+
+    my $Success = 1;
+
+=cut
+
+sub SchedulerRunAll {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
+    my $SchedulerDBObject = $Kernel::OM->Get('Kernel::System::Daemon::SchedulerDB');
+
+    NEEDED:
+    for my $Needed (qw(UnitTestObject)) {
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my $Type = $Param{Type} || 'GenericInterface';
+
+    my $TaskHandlerObject = $Kernel::OM->Get( 'Kernel::System::Daemon::DaemonModules::SchedulerTaskWorker::' . $Type );
+
+    my @InvokerTasks = $SchedulerDBObject->TaskList(
+        Type => $Type,
+    );
+
+    $Param{UnitTestObject}->IsNot(
+        scalar @InvokerTasks,
+        0,
+        'Found invoker tasks to execute',
+    );
+
+    for my $TaskData (@InvokerTasks) {
+        my %ConfirmTask = $SchedulerDBObject->TaskGet(
+            TaskID => $TaskData->{TaskID},
+        );
+
+        $TaskHandlerObject->Run(
+            TaskID   => $ConfirmTask{TaskID},
+            TaskName => $ConfirmTask{Name},
+            Data     => $ConfirmTask{Data},
+        );
+
+        $Param{UnitTestObject}->True(
+            $ConfirmTask{Name},
+            "Run invoker task with name '$ConfirmTask{Name}'",
+        );
+
+        $SchedulerDBObject->TaskDelete(
+            TaskID => $ConfirmTask{TaskID},
+        );
+    }
+
+    return 1;
+}
+
+=head2 SchedulerCleanUp()
+
+Cleans up all tasks for the scheduler.
+
+    my $Success = $UnitTestWebserviceObject->SchedulerCleanUp(
+        UnitTestObject => $Self,
+    );
+
+    my $Success = $UnitTestWebserviceObject->SchedulerCleanUp(
+        UnitTestObject => $Self,
+        Type           => 'AsynchronousExecutor', # optional, default is 'GenericInterface'
+    );
+
+Returns:
+
+    my $Success = 1;
+
+=cut
+
+sub SchedulerCleanUp {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
+    my $SchedulerDBObject = $Kernel::OM->Get('Kernel::System::Daemon::SchedulerDB');
+
+    NEEDED:
+    for my $Needed (qw(UnitTestObject)) {
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my $Type = $Param{Type} || 'GenericInterface';
+
+    my @List = $SchedulerDBObject->TaskList(
+        Type => $Type,
+    );
+
+    for my $Task (@List) {
+        $SchedulerDBObject->TaskDelete(
+            TaskID => $Task->{TaskID},
+        );
+    }
+
+    $Param{UnitTestObject}->True(
+        1,
+        "CleanUp for all scheduler tasks of type '$Type'",
+    );
+
+    return 1;
+}
+
+=head2 OperationFunctionCall()
+
+Initializes an operation to test specific functions of an operation.
 
     my $Success = $UnitTestWebserviceObject->OperationFunctionCall(
         Webservice    => 'webservice-name',
         Operation     => 'operation-name',
         Function      => 'function',
-        Data          => {}
+        Data          => {},
+    );
+
+    my $Success = $UnitTestWebserviceObject->OperationFunctionCall(
+        Webservice           => 'webservice-name',
+        Operation            => 'operation-name',
+        Function             => 'function',
+        Data                 => {},
+        ObjectModifyFunction => sub {
+            my (%Params) = @_;
+
+            $Params{Object}->{BackendObject}->{MessageName} = 'SEND_UPDATE';
+
+            return 1;
+        },
     );
 
 Returns:
@@ -468,10 +613,8 @@ sub OperationFunctionCall {
     my $MainObject       = $Kernel::OM->Get('Kernel::System::Main');
     my $WebserviceObject = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(Webservice Operation Function Data)) {
-
         next NEEDED if defined $Param{$Needed};
 
         $LogObject->Log(
@@ -481,24 +624,24 @@ sub OperationFunctionCall {
         return;
     }
 
-    my $Webservice = $Param{Webservice};
-    my $Operation  = $Param{Operation};
-    my $Function   = $Param{Function};
-    my $Data       = $Param{Data};
+    my $WebserviceName = $Param{Webservice};
+    my $Operation      = $Param{Operation};
+    my $Function       = $Param{Function};
+    my $Data           = $Param{Data};
 
-    my $WebserviceGet = $WebserviceObject->WebserviceGet(
-        Name => $Webservice,
+    my $Webservice = $WebserviceObject->WebserviceGet(
+        Name => $WebserviceName,
     );
-    return if !IsHashRefWithData($WebserviceGet);
+    return if !IsHashRefWithData($Webservice);
 
-    my $WebserviceID   = $WebserviceGet->{ID};
-    my $ProviderConfig = $WebserviceGet->{Config}->{Provider};
+    my $WebserviceID   = $Webservice->{ID};
+    my $ProviderConfig = $Webservice->{Config}->{Provider};
 
     $MainObject->Require('Kernel::GenericInterface::Debugger');
     $MainObject->Require('Kernel::GenericInterface::Operation');
 
     my $DebuggerObject = Kernel::GenericInterface::Debugger->new(
-        DebuggerConfig    => $WebserviceGet->{Config}->{Debugger},
+        DebuggerConfig    => $Webservice->{Config}->{Debugger},
         WebserviceID      => $WebserviceID,
         CommunicationType => 'Provider',
         RemoteIP          => $ENV{REMOTE_ADDR},
@@ -512,6 +655,11 @@ sub OperationFunctionCall {
     );
     return if ref $OperationObject ne 'Kernel::GenericInterface::Operation';
 
+    $Self->_WebserviceObjectModify(
+        %Param,
+        Object => $OperationObject,
+    );
+
     if ( ref $Data eq 'HASH' ) {
         return $OperationObject->{BackendObject}->$Function( %{ $Data || {} } );
     }
@@ -522,15 +670,29 @@ sub OperationFunctionCall {
     return;
 }
 
-=item InvokerFunctionCall()
+=head2 InvokerFunctionCall()
 
-This function will initialize an invoker to test specific functions of an invoker.
+Initialize an invoker to test specific functions of an invoker.
 
     my $Success = $UnitTestWebserviceObject->InvokerFunctionCall(
         Webservice => 'webservice-name',
         Invoker    => 'invoker-name',
         Function   => 'function',
-        Data       => {}
+        Data       => {},
+    );
+
+    my $Success = $UnitTestWebserviceObject->InvokerFunctionCall(
+        Webservice => 'webservice-name',
+        Invoker    => 'invoker-name',
+        Function   => 'function',
+        Data       => {},
+        ObjectModifyFunction => sub {
+            my (%Params) = @_;
+
+            $Params{Object}->{BackendObject}->{MessageName} = 'SEND_UPDATE';
+
+            return 1;
+        },
     );
 
 Returns:
@@ -546,10 +708,8 @@ sub InvokerFunctionCall {
     my $MainObject       = $Kernel::OM->Get('Kernel::System::Main');
     my $WebserviceObject = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(Webservice Invoker Function Data)) {
-
         next NEEDED if defined $Param{$Needed};
 
         $LogObject->Log(
@@ -559,24 +719,24 @@ sub InvokerFunctionCall {
         return;
     }
 
-    my $Webservice = $Param{Webservice};
-    my $Invoker    = $Param{Invoker};
-    my $Function   = $Param{Function};
-    my $Data       = $Param{Data};
+    my $WebserviceName = $Param{Webservice};
+    my $Invoker        = $Param{Invoker};
+    my $Function       = $Param{Function};
+    my $Data           = $Param{Data};
 
-    my $WebserviceGet = $WebserviceObject->WebserviceGet(
-        Name => $Webservice,
+    my $Webservice = $WebserviceObject->WebserviceGet(
+        Name => $WebserviceName,
     );
-    return if !IsHashRefWithData($WebserviceGet);
+    return if !IsHashRefWithData($Webservice);
 
-    my $WebserviceID    = $WebserviceGet->{ID};
-    my $RequesterConfig = $WebserviceGet->{Config}->{Requester};
+    my $WebserviceID    = $Webservice->{ID};
+    my $RequesterConfig = $Webservice->{Config}->{Requester};
 
     $MainObject->Require('Kernel::GenericInterface::Debugger');
     $MainObject->Require('Kernel::GenericInterface::Invoker');
 
     my $DebuggerObject = Kernel::GenericInterface::Debugger->new(
-        DebuggerConfig    => $WebserviceGet->{Config}->{Debugger},
+        DebuggerConfig    => $Webservice->{Config}->{Debugger},
         WebserviceID      => $WebserviceID,
         CommunicationType => 'Requester',
         RemoteIP          => $ENV{REMOTE_ADDR},
@@ -590,6 +750,11 @@ sub InvokerFunctionCall {
     );
     return if ref $InvokerObject ne 'Kernel::GenericInterface::Invoker';
 
+    $Self->_WebserviceObjectModify(
+        %Param,
+        Object => $InvokerObject,
+    );
+
     if ( ref $Data eq 'HASH' ) {
         return $InvokerObject->{BackendObject}->$Function( %{ $Data || {} } );
     }
@@ -600,7 +765,54 @@ sub InvokerFunctionCall {
     return;
 }
 
-=item CreateGenericInterfaceMappingObject()
+=head2 _WebserviceObjectModify()
+
+Internal function which will be used for OperationFunctionCall and InvokerFunctionCall
+to modify the object values of the initialized web service invoker or operation object.
+
+    my $Success = $UnitTestWebserviceObject->_WebserviceObjectModify(
+        Object               => \$OperationObject,
+        ObjectModifyFunction => sub {
+            my (%Params) = @_;
+
+            $Params{Object}->{BackendObject}->{MessageName} = 'SEND_UPDATE';
+
+            return 1;
+        },
+    );
+
+Returns:
+
+    my $Success = 1;
+
+=cut
+
+sub _WebserviceObjectModify {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
+    NEEDED:
+    for my $Needed (qw(Object)) {
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    return if !defined $Param{ObjectModifyFunction};
+
+    $Param{ObjectModifyFunction}->(
+        Object => $Param{Object},
+    );
+
+    return 1;
+}
+
+=head2 CreateGenericInterfaceMappingObject()
 
 Creates a mapping object to be used within unit tests.
 
@@ -624,10 +836,8 @@ sub CreateGenericInterfaceMappingObject {
     my $LogObject        = $Kernel::OM->Get('Kernel::System::Log');
     my $WebserviceObject = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw( UnitTestObject WebserviceName CommunicationType MappingConfig )) {
-
         next NEEDED if defined $Param{$Needed};
 
         $LogObject->Log(
@@ -637,14 +847,12 @@ sub CreateGenericInterfaceMappingObject {
         return;
     }
 
-    # Fetch web service
     my $Webservice = $WebserviceObject->WebserviceGet( Name => $Param{WebserviceName} );
     $Param{UnitTestObject}->True(
         scalar IsHashRefWithData($Webservice),
         "Web service '$Param{WebserviceName}' must exist.",
     ) || return;
 
-    # Create a debugger instance
     my $DebuggerObject = Kernel::GenericInterface::Debugger->new(
         DebuggerConfig => {
             DebugThreshold => 'debug',
@@ -654,7 +862,6 @@ sub CreateGenericInterfaceMappingObject {
         CommunicationType => $Param{CommunicationType},
     );
 
-    # Create a mapping instance
     my $MappingObject = Kernel::GenericInterface::Mapping->new(
         DebuggerObject => $DebuggerObject,
         MappingConfig  => $Param{MappingConfig},
@@ -669,9 +876,9 @@ sub CreateGenericInterfaceMappingObject {
     return $MappingObject;
 }
 
-=item _RedefineTransport()
+=head2 _RedefineTransport()
 
-This function redefines the functions of the transport object to handle tests and provide the results.
+Redefines the functions of the transport object to handle tests and provide the results.
 
     $Object->_RedefineTransport();
 
@@ -709,7 +916,6 @@ sub _RedefineTransport {
             );
 
             if ( !defined $Param{Success} ) {
-
                 my $ErrorMessage = 'Missing parameter Success.';
 
                 return $Self->{DebuggerObject}->Error(
@@ -718,7 +924,6 @@ sub _RedefineTransport {
             }
 
             if ( $Param{Data} && ref $Param{Data} ne 'HASH' ) {
-
                 return $Self->{DebuggerObject}->Error(
                     Summary => 'Data is not a hash reference.',
                     Data    => $Param{Data},
@@ -754,7 +959,6 @@ sub _RedefineTransport {
             $StoredResults ||= [];
 
             if ( !$Param{Operation} ) {
-
                 my $ErrorMessage = 'Missing parameter Operation.';
 
                 push @{$StoredResults}, {
@@ -778,7 +982,6 @@ sub _RedefineTransport {
             }
 
             if ( $Param{Data} && ref $Param{Data} ne 'HASH' ) {
-
                 my $ErrorMessage = "Data is not a hash reference for Invoker '$Param{Operation}'.";
 
                 push @{$StoredResults}, {
@@ -807,7 +1010,6 @@ sub _RedefineTransport {
             );
 
             if ( !IsArrayRefWithData($InvokerData) ) {
-
                 my $ErrorMessage = "Can't find matching Mock data for Invoker '$Param{Operation}'.";
 
                 push @{$StoredResults}, {
@@ -832,12 +1034,12 @@ sub _RedefineTransport {
 
             my $Counter = 0;
             my $Result;
-            REQUEST:
-            for my $PossibleRequest ( @{$InvokerData} ) {
 
+            POSSIBLEREQUEST:
+            for my $PossibleRequest ( @{$InvokerData} ) {
                 $Counter++;
 
-                next REQUEST if DataIsDifferent(
+                next POSSIBLEREQUEST if DataIsDifferent(
                     Data1 => $PossibleRequest->{Data},
                     Data2 => $Param{Data},
                 );
@@ -846,11 +1048,10 @@ sub _RedefineTransport {
                     Data => $PossibleRequest->{Result},
                 );
 
-                last REQUEST;
+                last POSSIBLEREQUEST;
             }
 
             if ( !IsHashRefWithData($Result) ) {
-
                 my $ErrorMessage
                     = "Can't find Mock data matching the given request Data structure for Invoker '$Param{Operation}'.";
 
@@ -897,15 +1098,3 @@ sub _RedefineTransport {
 }
 
 1;
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

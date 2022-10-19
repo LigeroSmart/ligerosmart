@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -196,20 +197,14 @@ sub Run {
     );
 
     my $FunctionResult = $InvokerObject->PrepareRequest(
-        Data => $Param{Data},
-        # Complemento
-        WebserviceID => $WebserviceID,
-        Invoker => $Param{Invoker},
-        # EO Complemento
+        Webservice  => $Webservice,
+        InvokerName => $Param{Invoker},
+        Data        => $Param{Data},
     );
 
     if ( !$FunctionResult->{Success} ) {
 
         my $Summary = $FunctionResult->{ErrorMessage} // 'InvokerObject returned an error, cancelling Request';
-        if ( $FunctionResult->{DisableLog} == 1 ) {
-            $FunctionResult->{Data}->{DisableLog} = 1;
-        }
-
         return $Self->_HandleError(
             %HandleErrorData,
             DataInclude => \%DataInclude,
@@ -230,7 +225,7 @@ sub Run {
         };
     }
 
-    # Extend the data$FunctionResult include payload/
+    # Extend the data include payload/
     $DataInclude{RequesterRequestPrepareOutput} = $FunctionResult->{Data};
 
     #
@@ -315,8 +310,10 @@ sub Run {
 
     # Read request content.
     $FunctionResult = $TransportObject->RequesterPerformRequest(
-        Operation => $Param{Invoker},
-        Data      => $DataOut,
+        Webservice => $Webservice,
+        Sort       => $RequesterConfig->{Invoker}->{ $Param{Invoker} }->{SortOutbound},
+        Operation  => $Param{Invoker},
+        Data       => $DataOut,
     );
 
     my $IsAsynchronousCall = $Param{Asynchronous} ? 1 : 0;
@@ -358,10 +355,10 @@ sub Run {
     # Extend the data include payload.
     $DataInclude{RequesterResponseInput} = $FunctionResult->{Data};
 
-    my $DataIn      = $FunctionResult->{Data};
-    my $SizeExeeded = $FunctionResult->{SizeExeeded} || 0;
+    my $DataIn       = $FunctionResult->{Data};
+    my $SizeExceeded = $FunctionResult->{SizeExceeded} || 0;
 
-    if ($SizeExeeded) {
+    if ($SizeExceeded) {
         $DebuggerObject->Debug(
             Summary => "Incoming data before mapping was too large for logging",
             Data => 'See SysConfig option GenericInterface::Operation::ResponseLoggingMaxSize to change the maximum.',
@@ -423,7 +420,7 @@ sub Run {
 
         $DataIn = $FunctionResult->{Data};
 
-        if ($SizeExeeded) {
+        if ($SizeExceeded) {
             $DebuggerObject->Debug(
                 Summary => "Incoming data after mapping was too large for logging",
                 Data =>
@@ -445,11 +442,6 @@ sub Run {
     $FunctionResult = $InvokerObject->HandleResponse(
         ResponseSuccess => 1,
         Data            => $DataIn,
-        # COMPLEMENTO: INCLUDE ORIGINAL INFORMATION SUCH AS TICKET ID
-        DataInclude => \%DataInclude,
-        WebserviceID => $WebserviceID,
-        Invoker => $Param{Invoker},
-        # EO COMPLEMENTO
     );
 
     if ( !$FunctionResult->{Success} ) {
@@ -550,7 +542,6 @@ sub _HandleError {
         Success      => 0,
         ErrorMessage => $ErrorHandlingResult->{ErrorMessage} || $Param{Summary},
         Data         => $ErrorHandlingResult->{ReScheduleData},
-	DisableLog   => ( $Param{Data}->{DisableLog} && $Param{Data}->{DisableLog} == 1 ) ? 1 : 0
     };
 
     return $ReturnData if !$Param{InvokerObject}->{BackendObject}->can('HandleError');

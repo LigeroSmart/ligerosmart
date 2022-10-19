@@ -1,10 +1,11 @@
 
+%defattr(-, otrs, [% webgroup %], -)
 %config(noreplace) /opt/otrs/Kernel/Config.pm
-%config(noreplace) /opt/otrs/.procmailrc
+%attr(-, otrs, root,) %config(noreplace) /opt/otrs/.procmailrc
 %config(noreplace) /opt/otrs/.fetchmailrc
 %config(noreplace) /opt/otrs/.mailfilter
 
-%dir /opt/otrs/
+%dir /opt/otrs
 /opt/otrs/RELEASE
 /opt/otrs/ARCHIVE
 /opt/otrs/.bash_completion
@@ -35,7 +36,7 @@
 /opt/otrs/Kernel/Output*
 /opt/otrs/Kernel/System*
 /opt/otrs/scripts*
-/opt/otrs/i18n/otrs/*
+/opt/otrs/i18n/Znuny/*
 
 %dir /opt/otrs/var/
 # TEMPROARILY DEACTIVATED. There are no packages to embed at present.
@@ -44,7 +45,6 @@
 %dir /opt/otrs/var/article/
 /opt/otrs/var/fonts/
 /opt/otrs/var/httpd/
-/opt/otrs/var/logo-otrs.png
 %dir /opt/otrs/var/cron/
 %dir /opt/otrs/var/log/
 %dir /opt/otrs/var/sessions/
@@ -53,10 +53,13 @@
 %dir /opt/otrs/var/tmp/
 %dir /opt/otrs/var/stats/
 /opt/otrs/var/stats/*.xml
+%dir /opt/otrs/var/stats/formatdefinition/excel/
+/opt/otrs/var/stats/formatdefinition/excel/*
 %dir /opt/otrs/var/processes/examples/
 /opt/otrs/var/processes/examples/*
 %dir /opt/otrs/var/webservices/examples/
 /opt/otrs/var/webservices/examples/*.pm
+/opt/otrs/var/webservices/examples/*.yml
 
 /opt/otrs/Kernel/cpan-lib*
 

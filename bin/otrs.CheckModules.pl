@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -187,6 +188,16 @@ my @NeededModules = (
         },
     },
     {
+        Module    => 'Authen::SASL',
+        Required  => 1,
+        Comment   => 'Required for SASL authentication mechanisms (e.g. IMAP and SMTP connections).',
+        InstTypes => {
+            aptget => 'libauthen-sasl-perl',
+            emerge => 'dev-perl/Authen-SASL',
+            zypper => 'perl-Authen-SASL',
+        },
+    },
+    {
         Module    => 'Crypt::Eksblowfish::Bcrypt',
         Required  => 0,
         Comment   => 'For strong password hashing.',
@@ -195,6 +206,51 @@ my @NeededModules = (
             emerge => 'dev-perl/Crypt-Eksblowfish',
             zypper => 'perl-Crypt-Eksblowfish',
             ports  => 'security/p5-Crypt-Eksblowfish',
+        },
+    },
+    {
+        Module    => 'Crypt::JWT',
+        Required  => 0,
+        Comment   => 'JSON web token support.',
+        InstTypes => {
+            aptget => 'libcrypt-jwt-perl',
+            emerge => 'dev-perl/Crypt-JWT',
+            zypper => 'perl-Crypt-JWT',
+            ports  => 'security/p5-Crypt-JWT',
+        },
+    },
+    {
+        Module    => 'Crypt::OpenSSL::X509',
+        Required  => 0,
+        Comment   => 'X509 certificate support.',
+        InstTypes => {
+            aptget => 'libcrypt-openssl-x509',
+            emerge => 'dev-perl/Crypt-OpenSSL-X509',
+            zypper => 'perl-Crypt-OpenSSL-X509',
+            ports  => 'security/p5-Crypt-OpenSSL-X509',
+        },
+    },
+    {
+        Module    => 'CSS::Minifier::XS',
+        Required  => 0,
+        Comment   => 'Alternative to CSS::Minifier in XS, which is slightly faster than CSS::Minifier (pure Perl).',
+        InstTypes => {
+            aptget => 'libcss-minifier-xs-perl',
+            emerge => 'dev-perl/CSS-Minifier-XS',
+            zypper => 'perl-CSS-Minifier-XS',
+            ports  => 'converters/p5-CSS-Minifier-XS',
+        },
+    },
+    {
+        Module    => 'Data::UUID',
+        Required  => 1,
+        Comment   => 'Required to generate UUIDs.',
+        InstTypes => {
+            aptget => undef,
+            emerge => undef,
+            yum    => undef,
+            zypper => undef,
+            ports  => undef,
         },
     },
     {
@@ -315,6 +371,30 @@ my @NeededModules = (
         },
     },
     {
+        Module          => 'Excel::Writer::XLSX',
+        VersionRequired => '0.95',
+        Required        => 0,
+        Comment         => 'Required for the creation of Excel statistical reports.',
+        InstTypes       => {
+            aptget => 'libexcel-writer-xlsx-perl',
+            emerge => 'dev-perl/Excel-Writer-XLSX',
+            zypper => 'perl-Excel-Writer-XLSX',
+            ports  => 'textproc/p5-Excel-Writer-XLSX',
+        },
+    },
+    {
+        Module          => 'Hash::Merge',
+        VersionRequired => '0.300',
+        Required        => 0,
+        Comment         => 'Required for the creation of Excel statistical reports.',
+        InstTypes       => {
+            aptget => 'libhash-merge-perl',
+            emerge => 'dev-perl/Hash-Merge',
+            zypper => 'perl-Hash-Merge',
+            ports  => 'textproc/p5-Hash-Merge',
+        },
+    },
+    {
         Module              => 'IO::Socket::SSL',
         Required            => 0,
         Comment             => 'Required for SSL connections to web and mail servers.',
@@ -329,6 +409,30 @@ my @NeededModules = (
             emerge => 'dev-perl/IO-Socket-SSL',
             zypper => 'perl-IO-Socket-SSL',
             ports  => 'security/p5-IO-Socket-SSL',
+        },
+    },
+    {
+        Module   => 'JavaScript::Minifier::XS',
+        Required => 0,
+        Comment =>
+            'Alternative to JavaScript::Minifier in XS, which is slightly faster than JavaScript::Minifier (pure Perl).',
+        InstTypes => {
+            aptget => 'libjavascript-minifier-xs-perl',
+            emerge => 'dev-perl/JavaScript-Minifier-XS',
+            zypper => 'perl-JavaScript-Minifier-XS',
+            ports  => 'converters/p5-JavaScript-Minifier-XS',
+        },
+    },
+    {
+        Module   => 'Jq',
+        Required => 0,
+        Comment =>
+            'Support for extended condition checking via Jq for the generic interface.',
+        InstTypes => {
+            aptget => undef,
+            emerge => undef,
+            zypper => undef,
+            ports  => undef,
         },
     },
     {
@@ -367,8 +471,7 @@ my @NeededModules = (
     {
         Module          => 'Mail::IMAPClient',
         VersionRequired => '3.22',
-        Comment         => 'Required for IMAP TLS connections.',
-        Required        => 0,
+        Required        => 1,
         InstTypes       => {
             aptget => 'libmail-imapclient-perl',
             emerge => 'dev-perl/Mail-IMAPClient',
@@ -391,16 +494,6 @@ my @NeededModules = (
                     emerge => 'dev-perl/IO-Socket-SSL',
                     zypper => 'perl-IO-Socket-SSL',
                     ports  => 'security/p5-IO-Socket-SSL',
-                },
-            },
-            {
-                Module    => 'Authen::SASL',
-                Required  => 0,
-                Comment   => 'Required for MD5 authentication mechanisms in IMAP connections.',
-                InstTypes => {
-                    aptget => 'libauthen-sasl-perl',
-                    emerge => 'dev-perl/Authen-SASL',
-                    zypper => 'perl-Authen-SASL',
                 },
             },
             {
@@ -466,6 +559,17 @@ my @NeededModules = (
         },
     },
     {
+        Module    => 'Net::LDAP::Constant',
+        Required  => 0,
+        Comment   => 'Required for directory authentication.',
+        InstTypes => {
+            aptget => 'libnet-ldap-perl',
+            emerge => 'dev-perl/perl-ldap',
+            zypper => 'perl-ldap',
+            ports  => 'net/p5-perl-ldap',
+        },
+    },
+    {
         Module              => 'Net::SMTP',
         Required            => 0,
         Comment             => 'Simple Mail Transfer Protocol Client.',
@@ -480,6 +584,17 @@ my @NeededModules = (
             emerge => undef,
             zypper => undef,
             ports  => undef,
+        },
+    },
+    {
+        Module    => 'Spreadsheet::XLSX',
+        Required  => 0,
+        Comment   => 'Spreadsheet::XLSX enables import and export of Excel files in certain dialogs.',
+        InstTypes => {
+            aptget => 'libspreadsheet-xlsx-perl',
+            emerge => 'dev-perl/Spreadsheet-XLSX',
+            zypper => 'perl-Spreadsheet-XLSX',
+            ports  => 'www/p5-Spreadsheet-XLSX',
         },
     },
     {
@@ -502,6 +617,17 @@ my @NeededModules = (
             emerge => 'dev-perl/Template-Toolkit',
             zypper => 'perl-Template-Toolkit',
             ports  => 'www/p5-Template-Toolkit',
+        },
+    },
+    {
+        Module    => 'Text::Diff::FormattedHTML',
+        Required  => 1,
+        Comment   => undef,
+        InstTypes => {
+            aptget => undef,
+            emerge => undef,
+            zypper => undef,
+            ports  => undef,
         },
     },
     {
@@ -843,6 +969,7 @@ sub _VersionClean {
 
     # replace all special characters with an dot
     $Param{Version} =~ s{ [_-] }{.}xmsg;
+    $Param{Version} =~ s{v}{}xmsg;
 
     my @VersionParts = split q{\.}, $Param{Version};
 

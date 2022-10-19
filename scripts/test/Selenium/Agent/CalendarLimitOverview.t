@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,14 +17,14 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
-        my $Helper         = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject   = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $CalendarObject = $Kernel::OM->Get('Kernel::System::Calendar');
 
-        my $RandomID = $Helper->GetRandomID();
+        my $RandomID = $HelperObject->GetRandomID();
         my $Limit    = 10;
 
         # Set CalendarLimitOverview.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'AppointmentCalendar::CalendarLimitOverview',
             Value => $Limit,
@@ -38,7 +39,7 @@ $Selenium->RunTest(
         );
 
         # Create test user.
-        my ( $TestUserLogin, $UserID ) = $Helper->TestUserCreate(
+        my ( $TestUserLogin, $UserID ) = $HelperObject->TestUserCreate(
             Groups => [ 'users', $GroupName ],
         );
 
@@ -233,7 +234,7 @@ $Selenium->RunTest(
 
         # Delete test group.
         $Success = $DBObject->Do(
-            SQL  => "DELETE FROM groups WHERE id = ?",
+            SQL  => "DELETE FROM permission_groups WHERE id = ?",
             Bind => [ \$GroupID ],
         );
         $Self->True(

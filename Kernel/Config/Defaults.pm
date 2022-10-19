@@ -1,6 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# Copyright (C) 2020-2021 Complemento https://complemento.net.br
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -106,7 +106,7 @@ sub LoadDefaults {
 
     # ProductName
     # (Application name displayed in frontend.)
-    $Self->{ProductName} = 'LigeroSmart 6';
+    $Self->{ProductName} = 'Znuny';
 
     # --------------------------------------------------- #
     # database settings                                   #
@@ -383,7 +383,7 @@ sub LoadDefaults {
     # --------------------------------------------------- #
     # (Where is sendmail located and some options.
     # See 'man sendmail' for details. Or use the SMTP backend.)
-    $Self->{'SendmailModule'}      = 'Kernel::System::Email::SMTP';
+    $Self->{'SendmailModule'}      = 'Kernel::System::Email::Sendmail';
     $Self->{'SendmailModule::CMD'} = '/usr/sbin/sendmail -i -f';
 
 #    $Self->{'SendmailModule'} = 'Kernel::System::Email::SMTP';
@@ -583,6 +583,9 @@ sub LoadDefaults {
 #        'users',
 #    ];
 
+    # Utilize extended nested group search? (may impact performance)
+#    $Self->{'AuthSyncModule::LDAP::NestedGroupSearch'} = 1;
+
     # AuthSyncModule::LDAP::UserSyncGroupsDefinition
     # (If "LDAP" was selected for AuthModule and you want to sync LDAP
     # groups to otrs groups, define the following.)
@@ -716,10 +719,6 @@ sub LoadDefaults {
     # agent interface notification module to check the admin user id
     # (don't work with user id 1 notification)
     $Self->{'Frontend::NotifyModule'} = {
-        '1000-CloudServicesDisabled' => {
-            Group  => 'admin',
-            Module => 'Kernel::Output::HTML::Notification::AgentCloudServicesDisabled',
-        },
         '1100-OTRSBusiness' => {
             Group  => 'admin',
             Module => 'Kernel::Output::HTML::Notification::AgentOTRSBusiness',
@@ -913,15 +912,15 @@ sub LoadDefaults {
     # --------------------------------------------------- #
     # MIME-Viewer for online to html converter
     # --------------------------------------------------- #
-    # (e. g. xlhtml (xls2html), http://chicago.sourceforge.net/xlhtml/)
-#    $Self->{'MIME-Viewer'}->{'application/excel'} = 'xlhtml';
+    # (e.g. xlhtml (xls2html), http://chicago.sourceforge.net/xlhtml/)
+#     $Self->{'MIME-Viewer'}->{'application/excel'} = 'xlhtml';
     # MIME-Viewer for online to html converter
-    # (e. g. wv (word2html), http://wvware.sourceforge.net/)
-#    $Self->{'MIME-Viewer'}->{'application/msword'} = 'wvWare';
-    # (e. g. pdftohtml (pdf2html), http://pdftohtml.sourceforge.net/)
-#    $Self->{'MIME-Viewer'}->{'application/pdf'} = 'pdftohtml -stdout -i';
-    # (e. g. xml2html (xml2html))
-#    $Self->{'MIME-Viewer'}->{'text/xml'} = $Self->{Home}.'/scripts/tools/xml2html.pl';
+    # (e.g. wv (word2html), http://wvware.sourceforge.net/)
+#     $Self->{'MIME-Viewer'}->{'application/msword'} = 'wvWare';
+    # (e.g. pdftohtml (pdf2html), http://pdftohtml.sourceforge.net/)
+#     $Self->{'MIME-Viewer'}->{'application/pdf'} = 'pdftohtml -stdout -i';
+    # (e.g. xml2html (xml2html))
+#     $Self->{'MIME-Viewer'}->{'text/xml'} = $Self->{Home}.'/scripts/tools/xml2html.pl';
 
     # --------------------------------------------------- #
     # directories                                         #
@@ -945,6 +944,7 @@ sub LoadDefaults {
 
     # Customer Common CSS
     $Self->{'Loader::Customer::CommonCSS'}->{'000-Framework'} = [
+        'Core.Color.css',
         'Core.Reset.css',
         'Core.Default.css',
         'Core.Form.css',
@@ -961,6 +961,7 @@ sub LoadDefaults {
 
     # Agent Common CSS
     $Self->{'Loader::Agent::CommonCSS'}->{'000-Framework'} = [
+        'Core.Color.css',
         'Core.Reset.css',
         'Core.Default.css',
         'Core.Header.css',
@@ -989,13 +990,13 @@ sub LoadDefaults {
 
     # Customer Common JS
     $Self->{'Loader::Customer::CommonJS'}->{'000-Framework'} = [
-        'thirdparty/jquery-3.5.1/jquery.js',
+        'thirdparty/jquery-3.6.0/jquery.js',
         'thirdparty/jquery-browser-detection/jquery-browser-detection.js',
         'thirdparty/jquery-validate-1.16.0/jquery.validate.js',
-        'thirdparty/jquery-ui-1.12.1/jquery-ui.js',
+        'thirdparty/jquery-ui-1.13.1/jquery-ui.js',
         'thirdparty/jquery-pubsub/pubsub.js',
         'thirdparty/jquery-jstree-3.3.7/jquery.jstree.js',
-        'thirdparty/nunjucks-3.0.1/nunjucks.js',
+        'thirdparty/nunjucks-3.2.2/nunjucks.min.js',
         'Core.Init.js',
         'Core.Debug.js',
         'Core.Exception.js',
@@ -1027,14 +1028,15 @@ sub LoadDefaults {
 
     # Agent Common JS
     $Self->{'Loader::Agent::CommonJS'}->{'000-Framework'} = [
-        'thirdparty/jquery-3.5.1/jquery.js',
+        'thirdparty/jquery-3.6.0/jquery.js',
         'thirdparty/jquery-browser-detection/jquery-browser-detection.js',
-        'thirdparty/jquery-ui-1.12.1/jquery-ui.js',
+        'thirdparty/jquery-ui-1.13.1/jquery-ui.js',
         'thirdparty/jquery-ui-touch-punch-0.2.3/jquery.ui.touch-punch.js',
         'thirdparty/jquery-validate-1.16.0/jquery.validate.js',
         'thirdparty/jquery-pubsub/pubsub.js',
         'thirdparty/jquery-jstree-3.3.7/jquery.jstree.js',
-        'thirdparty/nunjucks-3.0.1/nunjucks.js',
+        'thirdparty/nunjucks-3.2.2/nunjucks.min.js',
+        'thirdparty/jscolor-2.4.6/jscolor.js',
         'Core.Init.js',
         'Core.JavaScriptEnhancements.js',
         'Core.Debug.js',
@@ -1084,13 +1086,14 @@ sub LoadDefaults {
     # Package::RepositoryRoot
     # (get online repository list, use the fist availabe result)
     $Self->{'Package::RepositoryRoot'} = [
+        'https://download.znuny.org/releases/misc/packages/repository.xml',
     ];
 
     # Package::RepositoryList
     # (repository list)
-    $Self->{'Package::RepositoryList'} = {
-        'https://addons.ligerosmart.org/6' => 'LigeroSmart',
-    };
+#    $Self->{'Package::RepositoryList'} = {
+#        'ftp://ftp.example.com/pub/otrs/misc/packages/' => '[Example] ftp://ftp.example.com/',
+#    };
 
     # Package::Timeout
     # (http/ftp timeout to get packages)
@@ -1305,7 +1308,7 @@ You can log in via the following URL:
     # --------------------------------------------------- #
     # notification email about new password               #
     # --------------------------------------------------- #
-    $Self->{CustomerPanelSubjectLostPassword} = 'New LigeroSmart password';
+    $Self->{CustomerPanelSubjectLostPassword} = 'New OTRS password';
     $Self->{CustomerPanelBodyLostPassword}    = 'Hi <OTRS_USERFIRSTNAME>,
 
 
@@ -1317,10 +1320,10 @@ New password: <OTRS_NEWPW>
     # --------------------------------------------------- #
     # notification email about new account                #
     # --------------------------------------------------- #
-    $Self->{CustomerPanelSubjectNewAccount} = 'New LigeroSmart Account!';
+    $Self->{CustomerPanelSubjectNewAccount} = 'New OTRS Account!';
     $Self->{CustomerPanelBodyNewAccount}    = 'Hi <OTRS_USERFIRSTNAME>,
 
-You or someone impersonating you has created a new LigeroSmart account for
+You or someone impersonating you has created a new OTRS account for
 you.
 
 Full name: <OTRS_USERFIRSTNAME> <OTRS_USERLASTNAME>
@@ -2064,9 +2067,9 @@ sub Get {
 sub Set {
     my ( $Self, %Param ) = @_;
 
-    for (qw(Key)) {
-        if ( !defined $Param{$_} ) {
-            $Param{$_} = '';
+    for my $Key (qw(Key)) {
+        if ( !defined $Param{$Key} ) {
+            $Param{$Key} = '';
         }
     }
 

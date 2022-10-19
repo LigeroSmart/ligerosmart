@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -53,28 +54,29 @@ sub Config {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $LimitGroup = $Self->{Config}->{QueuePermissionGroup} || 0;
+    my $CacheKey   = 'User' . '-' . $Self->{UserID} . '-' . $LimitGroup;
+
     # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    
-    if ($Self->{Config}->{Async} && !$Param{AJAX}){
-        my $JSAsync = <<"ENDJS";
-asyncDashboardLoad('$Self->{Name}')
-ENDJS
-        $LayoutObject->AddJSOnDocumentComplete(
-            Code => $JSAsync,
-        );
-        return $LayoutObject->Output(
-            TemplateFile => 'AgentDashboardTicketQueueOverview',
-            Data         => {
-                %{ $Self->{Config} },
-                Name => $Self->{Name},
+
+    # check for refresh time
+    my $Refresh = '';
+    if ( $Self->{UserRefreshTime} ) {
+        $Refresh = 60 * $Self->{UserRefreshTime};
+        my $NameHTML = $Self->{Name};
+        $NameHTML =~ s{-}{_}xmsg;
+
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'QueueOverview',
+            Value => {
+                Name        => $Self->{Name},
+                NameHTML    => $NameHTML,
+                RefreshTime => $Refresh,
             },
         );
     }
-
-
-    my $LimitGroup = $Self->{Config}->{QueuePermissionGroup} || 0;
-    my $CacheKey   = 'User' . '-' . $Self->{UserID} . '-' . $LimitGroup;
 
     # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
@@ -179,7 +181,9 @@ ENDJS
         );
 
         # Gather ticket count for corresponding Queue <-> State.
+        QUEUEID:
         for my $QueueID (@QueueIDs) {
+            next QUEUEID if !%Queues || !$Queues{$QueueID};
             push @{ $Results{ $Queues{$QueueID} } },
                 $TicketCountByQueueID->{$QueueID} ? $TicketCountByQueueID->{$QueueID} : 0;
         }
@@ -277,24 +281,6 @@ ENDJS
             Data => {
                 ColumnCount => ( scalar keys %ConfiguredStates ) + 2,
             }
-        );
-    }
-
-    # check for refresh time
-    my $Refresh = '';
-    if ( $Self->{UserRefreshTime} ) {
-        $Refresh = 60 * $Self->{UserRefreshTime};
-        my $NameHTML = $Self->{Name};
-        $NameHTML =~ s{-}{_}xmsg;
-
-        # send data to JS
-        $LayoutObject->AddJSData(
-            Key   => 'QueueOverview',
-            Value => {
-                Name        => $Self->{Name},
-                NameHTML    => $NameHTML,
-                RefreshTime => $Refresh,
-            },
         );
     }
 

@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,41 +17,41 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
-        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $ACLObject    = $Kernel::OM->Get('Kernel::System::ACL::DB::ACL');
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-        my $RandomID = $Helper->GetRandomID();
+        my $RandomID = $HelperObject->GetRandomID();
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'CheckMXRecord',
             Value => 0,
         );
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
             Value => 1,
         );
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketNote###Service',
             Value => 1,
         );
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketNote###Queue',
             Value => 1,
         );
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketNote###Priority',
             Value => 1,
@@ -110,7 +109,7 @@ $Selenium->RunTest(
             "DynamicFieldAdd - Added dynamic field ($DynamicFieldID)",
         );
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketNote###DynamicField',
             Value => {
@@ -119,7 +118,7 @@ $Selenium->RunTest(
             },
         );
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketClose###DynamicField',
             Value => {
@@ -237,7 +236,7 @@ EOF
         );
 
         # Create test user and login.
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
@@ -265,9 +264,9 @@ EOF
             UserFirstname  => 'Huber',
             UserLastname   => 'Manfred',
             UserCustomerID => 'A124',
-            UserLogin      => 'customeruser_' . $Helper->GetRandomID(),
+            UserLogin      => 'customeruser_' . $HelperObject->GetRandomID(),
             UserPassword   => 'some-pass',
-            UserEmail      => $Helper->GetRandomID() . '@localhost.com',
+            UserEmail      => $HelperObject->GetRandomID() . '@localhost.com',
             ValidID        => 1,
             UserID         => 1,
         );
@@ -305,37 +304,12 @@ EOF
 
         # Create some test services.
         my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
-# ---
-# ITSMIncidentProblemManagement
-# ---
-        # Get the list of service types from general catalog.
-        my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-            Class => 'ITSM::Service::Type',
-        );
-
-        # Build a lookup hash.
-        my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
-
-        # Get the list of sla types from general catalog.
-        my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-            Class => 'ITSM::SLA::Type',
-        );
-
-        # Build a lookup hash.
-        my %SLATypeName2ID = reverse %{ $SLATypeList };
-# ---
 
         my $ServiceID;
         my @Services;
         for my $Count ( 1 .. 3 ) {
             $ServiceID = $ServiceObject->ServiceAdd(
                 Name    => "UT Test Service $Count $RandomID",
-# ---
-# ITSMIncidentProblemManagement
-# ---
-                TypeID      => $ServiceTypeName2ID{Training},
-                Criticality => '3 normal',
-# ---
                 ValidID => 1,
                 UserID  => 1,
             );
@@ -362,11 +336,6 @@ EOF
             my $SLAID = $SLAObject->SLAAdd(
                 ServiceIDs => \@Services,
                 Name       => "UT Test SLA $Count $RandomID",
-# ---
-# ITSMIncidentProblemManagement
-# ---
-                TypeID => $SLATypeName2ID{Other},
-# ---
                 ValidID    => 1,
                 UserID     => 1,
             );
@@ -448,7 +417,7 @@ EOF
         );
 
         # Turn off priority and try again. Please see bug#13312 for more information.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketNote###Priority',
             Value => 0,
@@ -693,19 +662,6 @@ EOF
             "Deleted service relations for $CustomerUserLogin",
         );
         for my $ServiceID (@Services) {
-# ---
-# ITSMIncidentProblemManagement
-# ---
-            # Clean up servica data.
-            $Success = $DBObject->Do(
-                SQL  => "DELETE FROM service_preferences WHERE service_id = ?",
-                Bind => [ \$ServiceID ],
-            );
-            $Self->True(
-                $Success,
-                "ServicePreferences is deleted - ID $ServiceID",
-            );
-# ---
             $Success = $DBObject->Do(
                 SQL  => "DELETE FROM service WHERE ID = ?",
                 Bind => [ \$ServiceID ],

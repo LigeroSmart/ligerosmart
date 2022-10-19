@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,16 +18,16 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # Disable check email address.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'CheckEmailAddresses',
             Value => 0
         );
 
         # Create test CustomerUser.
-        my $CustomerUserName = "CustomerUser" . $Helper->GetRandomID();
+        my $CustomerUserName = "CustomerUser" . $HelperObject->GetRandomID();
         my $CustomerUserID   = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserAdd(
             UserFirstname  => $CustomerUserName,
             UserLastname   => $CustomerUserName,
@@ -44,18 +43,12 @@ $Selenium->RunTest(
         );
 
         # Create test Service.
-        my $ServiceName = 'SomeService' . $Helper->GetRandomID();
+        my $ServiceName = 'SomeService' . $HelperObject->GetRandomID();
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
             Comment => 'Some Comment',
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         );
         $Self->True(
             $ServiceID,
@@ -63,7 +56,7 @@ $Selenium->RunTest(
         );
 
         # Create test user and login.
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => ['admin'],
         ) || die "Did not get test user";
 

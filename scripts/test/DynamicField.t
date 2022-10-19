@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -22,9 +23,9 @@ $Kernel::OM->ObjectParamAdd(
         RestoreDatabase => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-my $RandomID = $Helper->GetRandomNumber();
+my $RandomID = $HelperObject->GetRandomNumber();
 my $UserID   = 1;
 
 my @Tests = (
@@ -32,7 +33,7 @@ my @Tests = (
         Name          => 'Test1',
         SuccessAdd    => 1,
         SuccessUpdate => 1,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'AnyName',
                 Description => 'Description for Dynamic Field.',
@@ -49,7 +50,7 @@ my @Tests = (
         Name          => 'Test1',    # add same field again - fail
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'AnyName',
                 Description => 'Description for Dynamic Field.',
@@ -66,7 +67,7 @@ my @Tests = (
         Name          => 'InternalField',
         SuccessAdd    => 1,
         SuccessUpdate => 1,
-        Add           => {
+        Data          => {
             InternalField => 1,
             Config        => {
                 Name        => 'AnyName',
@@ -84,7 +85,7 @@ my @Tests = (
         Name          => 'Test2',
         SuccessAdd    => 1,
         SuccessUpdate => 1,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => '!"§$%&/()=?Ü*ÄÖL:L@,.-',
                 Description => 'Description for Dynamic Field.',
@@ -101,7 +102,7 @@ my @Tests = (
         Name          => 'Test3',
         SuccessAdd    => 1,
         SuccessUpdate => 1,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'OtherName',
                 Description => 'Description for Dynamic Field.',
@@ -118,7 +119,7 @@ my @Tests = (
         Name          => 'Test4',
         SuccessAdd    => 1,
         SuccessUpdate => 1,
-        Add           => {
+        Data          => {
             Config     => {},
             Label      => 'nothing interesting',
             FieldOrder => 10000,
@@ -132,7 +133,7 @@ my @Tests = (
         Name          => 'Test5',
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config     => undef,
             Label      => 'label',
             FieldOrder => 10000,
@@ -146,7 +147,7 @@ my @Tests = (
         Name          => 'Test6',
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'OtherName',
                 Description => 'Description for Dynamic Field.',
@@ -163,7 +164,7 @@ my @Tests = (
         Name          => 'Test7',
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'OtherName',
                 Description => 'Description for Dynamic Field.',
@@ -180,7 +181,7 @@ my @Tests = (
         Name          => 'Test8',
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'OtherName',
                 Description => 'Description for Dynamic Field.',
@@ -197,7 +198,7 @@ my @Tests = (
         Name          => 'Test9',
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'NameTwo',
                 Description => 'Description for Dynamic Field.',
@@ -214,7 +215,7 @@ my @Tests = (
         Name          => 'Test10',
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'Config Name',
                 Description => 'Description for Dynamic Field.',
@@ -231,7 +232,7 @@ my @Tests = (
         Name          => 'Test 11',
         SuccessAdd    => 0,
         SuccessUpdate => 0,
-        Add           => {
+        Data          => {
             Config => {
                 Name        => 'Config Name',
                 Description => 'Description for Dynamic Field.',
@@ -240,6 +241,69 @@ my @Tests = (
             FieldOrder => 10000,
             FieldType  => 'Text',
             ObjectType => 'Ticket',
+            ValidID    => 1,
+            UserID     => $UserID,
+        },
+    },
+    {
+        Name          => 'Test12',
+        SuccessAdd    => 1,
+        SuccessUpdate => 1,
+        Data          => {
+            Config => {
+                Name        => 'Test12',
+                Description => 'Description for Dynamic Field.',
+                Link        => 'https://www.znuny.org/[% Data.Link %]',
+            },
+            Label      => 'something for label',
+            FieldOrder => 10000,
+            FieldType  => 'Text',
+            ObjectType => 'Article',
+            ValidID    => 1,
+            UserID     => $UserID,
+        },
+        Expected => {
+            Config => {
+                Name        => 'Test12',
+                Description => 'Description for Dynamic Field.',
+                Link        => 'https://www.znuny.org/',
+            },
+            Label      => 'something for label',
+            FieldOrder => 10000,
+            FieldType  => 'Text',
+            ObjectType => 'Article',
+            ValidID    => 1,
+            UserID     => $UserID,
+        },
+    },
+    {
+        Name          => 'Test13',
+        SuccessAdd    => 1,
+        SuccessUpdate => 1,
+        Data          => {
+            Config => {
+                Name        => 'Test13',
+                Description => 'Description for Dynamic Field.',
+                Link =>
+                    'https://www.znuny.org/[% Data.Link %]/[% Data.LinkPreview %]/[% Data.Title %]/[% Data.Value %]',
+            },
+            Label      => 'something for label',
+            FieldOrder => 10000,
+            FieldType  => 'Text',
+            ObjectType => 'Article',
+            ValidID    => 1,
+            UserID     => $UserID,
+        },
+        Expected => {
+            Config => {
+                Name        => 'Test13',
+                Description => 'Description for Dynamic Field.',
+                Link        => 'https://www.znuny.org////',
+            },
+            Label      => 'something for label',
+            FieldOrder => 10000,
+            FieldType  => 'Text',
+            ObjectType => 'Article',
             ValidID    => 1,
             UserID     => $UserID,
         },
@@ -255,6 +319,7 @@ TEST:
 for my $Test (@Tests) {
 
     my $FieldName = $Test->{Name} . $RandomID;
+    $Test->{Expected} //= $Test->{Data};
 
     # get nonexisting field first
     my $GetResult = $DynamicFieldObject->DynamicFieldGet(
@@ -279,7 +344,7 @@ for my $Test (@Tests) {
     # add config
     my $DynamicFieldID = $DynamicFieldObject->DynamicFieldAdd(
         Name => $FieldName,
-        %{ $Test->{Add} },
+        %{ $Test->{Data} },
     );
     if ( !$Test->{SuccessAdd} ) {
         $Self->False(
@@ -312,12 +377,12 @@ for my $Test (@Tests) {
     );
     $Self->Is(
         $DynamicField->{InternalField},
-        $Test->{Add}->{InternalField} ? 1 : 0,
+        $Test->{Data}->{InternalField} ? 1 : 0,
         "$Test->{Name} - DynamicFieldGet() - InternalField",
     );
     $Self->IsDeeply(
         $DynamicField->{Config},
-        $Test->{Add}->{Config},
+        $Test->{Data}->{Config},
         "$Test->{Name} - DynamicFieldGet() - Config",
     );
 
@@ -342,9 +407,10 @@ for my $Test (@Tests) {
         $DynamicFieldFromCache->{Name},
         "$Test->{Name} - DynamicFieldGet() from cache",
     );
+
     $Self->IsDeeply(
         $DynamicFieldFromCache->{Config},
-        $Test->{Add}->{Config},
+        $Test->{Expected}->{Config},
         "$Test->{Name} - DynamicFieldGet() from cache- Config",
     );
 
@@ -366,7 +432,7 @@ for my $Test (@Tests) {
 
     # update config with a modification
     if ( !$Test->{Update} ) {
-        $Test->{Update} = $Test->{Add};
+        $Test->{Update} = $Test->{Data};
     }
     my $Success = $DynamicFieldObject->DynamicFieldUpdate(
         ID   => $DynamicFieldID,

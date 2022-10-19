@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Modules/CustomerTicketProcess.pm
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -28,37 +27,28 @@ sub new {
 
     # global config hash for id dissolution
     $Self->{NameToID} = {
-        Title          => 'Title',
-        State          => 'StateID',
-        StateID        => 'StateID',
-        Lock           => 'LockID',
-        LockID         => 'LockID',
-        Priority       => 'PriorityID',
-        PriorityID     => 'PriorityID',
-        Queue          => 'QueueID',
-        QueueID        => 'QueueID',
-        Customer       => 'CustomerID',
-        CustomerID     => 'CustomerID',
-        CustomerNo     => 'CustomerID',
-        CustomerUserID => 'CustomerUserID',
-        Type           => 'TypeID',
-        TypeID         => 'TypeID',
-        SLA            => 'SLAID',
-        SLAID          => 'SLAID',
-        Service        => 'ServiceID',
-        ServiceID      => 'ServiceID',
-        Article        => 'Article',
+        Title              => 'Title',
+        State              => 'StateID',
+        StateID            => 'StateID',
+        Lock               => 'LockID',
+        LockID             => 'LockID',
+        Priority           => 'PriorityID',
+        PriorityID         => 'PriorityID',
+        Queue              => 'QueueID',
+        QueueID            => 'QueueID',
+        Customer           => 'CustomerID',
+        CustomerID         => 'CustomerID',
+        CustomerNo         => 'CustomerID',
+        CustomerUserID     => 'CustomerUserID',
+        Type               => 'TypeID',
+        TypeID             => 'TypeID',
+        SLA                => 'SLAID',
+        SLAID              => 'SLAID',
+        Service            => 'ServiceID',
+        ServiceID          => 'ServiceID',
+        StandardTemplateID => 'StandardTemplateID',
+        Article            => 'Article',
     };
-# ---
-# ITSMIncidentProblemManagement
-# ---
-
-    # Check if ITSMIncidentProblemManagement is used.
-    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
-    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
-        $Self->{ITSMIncidentProblemManagement} = 1;
-    }
-# ---
 
     return $Self;
 }
@@ -594,46 +584,6 @@ sub _RenderAjax {
             my $Data = $Self->_GetPriorities(
                 %{ $Param{GetParam} },
             );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-            # check if priority needs to be recalculated
-            if (
-                $Self->{ITSMIncidentProblemManagement}
-                && ( $Param{GetParam}->{ElementChanged} eq 'ServiceID'
-                || $Param{GetParam}->{ElementChanged} eq 'DynamicField_ITSMImpact'
-                )
-                && $Param{GetParam}->{ServiceID}
-                && $Param{GetParam}->{DynamicField_ITSMImpact}
-            ) {
-
-                my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-                    ServiceID     => $Param{GetParam}->{ServiceID},
-                    UserID        => $Self->{UserID},
-                );
-
-                # calculate priority from the CIP matrix
-                my $PriorityIDFromImpact = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
-                    Criticality => $Service{Criticality},
-                    Impact      => $Param{GetParam}->{DynamicField_ITSMImpact},
-                );
-
-                # add Priority to the JSONCollector
-                push(
-                    @JSONCollector,
-                    {
-                        Name        => $Self->{NameToID}{$CurrentField},
-                        Data        => $Data,
-                        SelectedID  => $PriorityIDFromImpact,
-                        Translation => 1,
-                        Max         => 100,
-                    },
-                );
-                $FieldsProcessed{ $Self->{NameToID}->{$CurrentField} } = 1;
-
-                next DIALOGFIELD;
-            }
-# ---
 
             # add Priority to the JSONCollector
             push(
@@ -721,6 +671,72 @@ sub _RenderAjax {
                     Max          => 100,
                 },
             );
+            $FieldsProcessed{ $Self->{NameToID}{$CurrentField} } = 1;
+        }
+        elsif ( $Self->{NameToID}{$CurrentField} eq 'Article' ) {
+            next DIALOGFIELD if $FieldsProcessed{ $Self->{NameToID}{$CurrentField} };
+
+            my $TemplateGeneratorObject = $Kernel::OM->Get('Kernel::System::TemplateGenerator');
+            my $StandardTemplateObject  = $Kernel::OM->Get('Kernel::System::StandardTemplate');
+            my $StdAttachmentObject     = $Kernel::OM->Get('Kernel::System::StdAttachment');
+            my $UploadCacheObject       = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
+
+            my %StandardTemplate = $StandardTemplateObject->StandardTemplateGet(
+                ID => $Param{GetParam}->{StandardTemplateID},
+            );
+
+            # remove pre-submitted attachments
+            $UploadCacheObject->FormIDRemove( FormID => $Self->{FormID} );
+
+            my $StandardTemplateText = $TemplateGeneratorObject->_Replace(
+                RichText => $LayoutObject->{BrowserRichText},
+                Text     => $StandardTemplate{Template},
+                Data     => {
+                    %{ $Param{GetParam} },
+                },
+                TicketData => {
+                    %{ $Param{GetParam} },
+                },
+                UserID => $Self->{UserID},
+            );
+
+            # add standard attachments to ticket
+            my @TicketAttachments;
+            my %AllStdAttachments = $StdAttachmentObject->StdAttachmentStandardTemplateMemberList(
+                StandardTemplateID => $Param{GetParam}->{StandardTemplateID},
+            );
+            for my $ID ( sort keys %AllStdAttachments ) {
+                my %AttachmentsData = $StdAttachmentObject->StdAttachmentGet( ID => $ID );
+                $UploadCacheObject->FormIDAddFile(
+                    FormID      => $Self->{FormID},
+                    Disposition => 'attachment',
+                    %AttachmentsData,
+                );
+            }
+
+            @TicketAttachments = $UploadCacheObject->FormIDGetAllFilesMeta(
+                FormID => $Self->{FormID},
+            );
+
+            for my $Attachment (@TicketAttachments) {
+                $Attachment->{Filesize} = $LayoutObject->HumanReadableDataSize(
+                    Size => $Attachment->{Filesize},
+                );
+            }
+
+            push(
+                @JSONCollector,
+                {
+                    Name => 'RichText',
+                    Data => $StandardTemplateText || '',
+                },
+                {
+                    Name     => 'TicketAttachments',
+                    Data     => \@TicketAttachments,
+                    KeepData => 1,
+                },
+            );
+
             $FieldsProcessed{ $Self->{NameToID}{$CurrentField} } = 1;
         }
     }
@@ -947,22 +963,6 @@ sub _GetParam {
                 ParamObject        => $ParamObject,
                 LayoutObject       => $LayoutObject,
             );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-            # set the criticality from the service
-            if ( $Self->{ITSMIncidentProblemManagement} && $DynamicFieldName eq 'ITSMCriticality' && $ParamObject->GetParam( Param => 'ServiceID' ) ) {
-
-                # get service
-                my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-                    ServiceID => $ParamObject->GetParam( Param => 'ServiceID' ),
-                    UserID    => $Self->{UserID},
-                );
-
-                # set the criticality
-                $Value = $Service{Criticality};
-            }
-# ---
 
             # If we got a submitted param, take it and next out
             if (
@@ -1028,6 +1028,8 @@ sub _GetParam {
             );
 
             $ValuesGotten{Article} = 1 if ( $GetParam{Subject} && $GetParam{Body} );
+
+            $GetParam{StandardTemplateID} = $ParamObject->GetParam( Param => 'StandardTemplateID' );
         }
 
         if ( $CurrentField eq 'CustomerID' ) {
@@ -1072,7 +1074,7 @@ sub _GetParam {
             next DIALOGFIELD;
         }
     }
-    REQUIREDFIELDLOOP:
+
     for my $CurrentField (qw(Queue State Lock Priority)) {
         $Value = undef;
         if ( !$ValuesGotten{ $Self->{NameToID}{$CurrentField} } ) {
@@ -1117,11 +1119,6 @@ sub _GetParam {
     # and finally we'll have the special parameters:
     $GetParam{ResponsibleAll} = $ParamObject->GetParam( Param => 'ResponsibleAll' );
     $GetParam{OwnerAll}       = $ParamObject->GetParam( Param => 'OwnerAll' );
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    $GetParam{ElementChanged} = $ParamObject->GetParam( Param => 'ElementChanged' );
-# ---
 
     return \%GetParam;
 }
@@ -2263,6 +2260,48 @@ sub _RenderArticle {
             Name => 'rw:Article:InformAgent',
             Data => \%Param,
         );
+    }
+
+    # show StandardTemplates
+    if ( IsArrayRefWithData( $Param{ActivityDialogField}->{Config}->{StandardTemplateID} ) ) {
+        my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
+
+        my %StandardTemplates = $StandardTemplateObject->StandardTemplateList(
+            Valid => 1,
+            Type  => 'ProcessManagement',
+        );
+
+        STANDARDTEMPLATEID:
+        for my $StandardTemplateID ( sort keys %StandardTemplates ) {
+            my $Exists
+                = grep { $StandardTemplateID eq $_ } @{ $Param{ActivityDialogField}->{Config}->{StandardTemplateID} };
+            next STANDARDTEMPLATEID if $Exists;
+
+            delete $StandardTemplates{$StandardTemplateID};
+        }
+
+        if (%StandardTemplates) {
+            $Param{StandardTemplateStrg} = $LayoutObject->BuildSelection(
+                Data         => \%StandardTemplates,
+                Name         => 'StandardTemplateID',
+                SelectedID   => $Param{GetParam}->{StandardTemplateID} || '',
+                Class        => 'Modernize W75pc',
+                PossibleNone => 1,
+                Sort         => 'AlphanumericValue',
+                Translation  => 1,
+                Max          => 200,
+            );
+
+            $LayoutObject->AddJSData(
+                Key   => 'StandardTemplateAutoFill',
+                Value => $Param{ActivityDialogField}->{Config}->{StandardTemplateAutoFill} || 0,
+            );
+
+            $LayoutObject->Block(
+                Name => 'StandardTemplate',
+                Data => \%Param,
+            );
+        }
     }
 
     return {
@@ -3520,7 +3559,6 @@ sub _StoreActivityDialog {
 
         $ActivityEntityID = $ProcessStartpoint->{Activity};
 
-        NEEDEDLOOP:
         for my $Needed (qw(Queue State Lock Priority)) {
 
             if ( !$TicketParam{ $Self->{NameToID}->{$Needed} } ) {
@@ -4077,8 +4115,10 @@ sub _DisplayProcessList {
     $Param{Errors}->{ProcessEntityIDInvalid} = ' ServerError'
         if ( $Param{ProcessEntityID} && !$Param{ProcessList}->{ $Param{ProcessEntityID} } );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $Config = $ConfigObject->Get('Ticket::Frontend::CustomerTicketProcess');
 
     $Param{ProcessList} = $LayoutObject->BuildSelection(
         Class        => 'Modernize Validate_Required' . ( $Param{Errors}->{ProcessEntityIDInvalid} || ' ' ),
@@ -4087,7 +4127,8 @@ sub _DisplayProcessList {
         SelectedID   => $Param{ProcessEntityID},
         PossibleNone => 1,
         Sort         => 'AlphanumericValue',
-        Translation  => 0,
+        Translation  => 1,
+        TreeView     => $Config->{ProcessListTreeView} || 0,
         AutoComplete => 'off',
     );
 

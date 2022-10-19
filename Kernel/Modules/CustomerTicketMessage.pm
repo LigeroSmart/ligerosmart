@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -948,7 +949,7 @@ sub _GetServices {
     # get options for default services for unknown customers
     my $DefaultServiceUnknownCustomer
         = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Service::Default::UnknownCustomer');
-   
+
     # get service list
     if ( $Param{CustomerUserID} || $DefaultServiceUnknownCustomer ) {
         %Service = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
@@ -1070,9 +1071,9 @@ sub _MaskNew {
 
         # build to string
         if (%NewTos) {
-            for ( sort keys %NewTos ) {
-                $NewTos{"$_||$NewTos{$_}"} = $NewTos{$_};
-                delete $NewTos{$_};
+            for my $KeyTo ( sort keys %NewTos ) {
+                $NewTos{"$KeyTo||$NewTos{$KeyTo}"} = $NewTos{$KeyTo};
+                delete $NewTos{$KeyTo};
             }
         }
         $Param{ToStrg} = $LayoutObject->AgentQueueListOption(
@@ -1225,8 +1226,8 @@ sub _MaskNew {
 
     # prepare errors
     if ( $Param{Errors} ) {
-        for ( sort keys %{ $Param{Errors} } ) {
-            $Param{$_} = $Param{Errors}->{$_};
+        for my $Error ( sort keys %{ $Param{Errors} } ) {
+            $Param{$Error} = $Param{Errors}->{$Error};
         }
     }
 

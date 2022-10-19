@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -36,31 +37,6 @@ sub Run {
 
     # disable output of customer company tickets
     my $DisableCompanyTickets = $ConfigObject->Get('Ticket::Frontend::CustomerDisableCompanyTicketAccess');
-
-    my $CustomerCompanyEnabledForProfile = $ConfigObject->Get('Ticket::Frontend::CustomerCompanyEnabledForProfile');
-
-    if($CustomerCompanyEnabledForProfile) {
-        my %HashProfile = %{$CustomerCompanyEnabledForProfile};
-
-        my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
-        my $CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
-
-        my %UsData = $UserObject->CustomerUserDataGet(
-            User => $Self->{UserID},
-        );
-
-         my %CustomerCompany = $CustomerCompanyObject->CustomerCompanyGet(
-            CustomerID => $UsData{UserCustomerID},
-        );
-
-        for(keys %HashProfile){
-          my $compativeU = $UsData{$_};
-
-          if($HashProfile{$_} ne $compativeU){
-            $DisableCompanyTickets = 1;
-          }
-        }
-    }
 
     # check subaction
     if ( !$Self->{Subaction} ) {
@@ -133,9 +109,6 @@ sub Run {
             },
         },
     );
-
-    # get dynamic-field based filter if CustomerTicket::EnableDynamicFieldCheck is enabled
-    my %CustomerDynamicFieldFilter = $Kernel::OM->Get('Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck')->GetTicketSearchFilter();
 
     my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
 
@@ -251,7 +224,6 @@ sub Run {
 
         my $Count = $TicketObject->TicketSearch(
             %{ $Filters{ $Self->{Subaction} }->{$Filter}->{Search} },
-	    %CustomerDynamicFieldFilter,
             %SearchInArchive,
             Result => 'COUNT',
         ) || 0;
@@ -597,7 +569,6 @@ sub Run {
 
         my @ViewableTickets = $TicketObject->TicketSearch(
             %{ $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search} },
-	    %CustomerDynamicFieldFilter,
             %SearchInArchive,
             Result => 'ARRAY',
         );
@@ -709,8 +680,6 @@ sub ShowTicketStatus {
         Space => ' '
     ) || 0;
 
-    my $ShowAgeAsDate = $ConfigObject->Get('Ticket::Frontend::CustomerShowAgeAsDate');
-
     # return ticket information if there is no article
     if ( !IsHashRefWithData( \%Article ) ) {
         $Article{State}        = $Ticket{State};
@@ -734,7 +703,6 @@ sub ShowTicketStatus {
             %Ticket,
             Subject => $Subject,
             %Param,
-            ShowAgeAsDate => $ShowAgeAsDate
         },
     );
 

@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,12 +26,12 @@ our @ObjectDependencies = (
     'Kernel::Language',
     'Kernel::Output::HTML::SysConfig',
     'Kernel::System::Cache',
+    'Kernel::System::DateTime',
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::Package',
     'Kernel::System::Storable',
     'Kernel::System::SysConfig::DB',
-    'Kernel::System::SysConfig::Migration',
     'Kernel::System::SysConfig::XML',
     'Kernel::System::User',
     'Kernel::System::YAML',
@@ -2229,6 +2230,7 @@ sub ConfigurationTranslatableStrings {
     for my $Key ( sort keys %{ $Self->{ConfigurationTranslatableStrings} } ) {
         push @Strings, $Key;
     }
+
     return @Strings;
 }
 
@@ -5162,6 +5164,7 @@ sub _ConfigurationTranslatableStrings {
             {
                 return if !$Param{Data}->{Content};
                 return if $Param{Data}->{Content} =~ /^\d+$/;
+
                 $Self->{ConfigurationTranslatableStrings}->{ $Param{Data}->{Content} } = 1;
             }
             $Self->_ConfigurationTranslatableStrings( Data => $Param{Data}->{$Key} );

@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,23 +18,23 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # Disable check email address.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'CheckEmailAddresses',
             Value => 0
         );
 
         # Enable CustomerGroupSupport.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'CustomerGroupSupport',
             Value => 1
         );
 
         # Create test user and login.
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => ['admin'],
         ) || die "Did not get test user";
 
@@ -44,7 +45,7 @@ $Selenium->RunTest(
         );
 
         # Create new CustomerUser for the tests.
-        my $UserRandomID   = "user" . $Helper->GetRandomID();
+        my $UserRandomID   = "user" . $HelperObject->GetRandomID();
         my $CustomerUserID = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserAdd(
             UserFirstname  => $UserRandomID,
             UserLastname   => $UserRandomID,
@@ -60,7 +61,7 @@ $Selenium->RunTest(
         );
 
         # Create new Group for the tests.
-        my $GroupRandomID = "group" . $Helper->GetRandomID();
+        my $GroupRandomID = "group" . $HelperObject->GetRandomID();
         my $GroupID       = $Kernel::OM->Get('Kernel::System::Group')->GroupAdd(
             Name    => $GroupRandomID,
             ValidID => 1,
@@ -212,7 +213,7 @@ $Selenium->RunTest(
 
         if ($GroupRandomID) {
             my $Success = $DBObject->Do(
-                SQL => "DELETE FROM groups WHERE id = $GroupID",
+                SQL => "DELETE FROM permission_groups WHERE id = $GroupID",
             );
             $Self->True(
                 $Success,

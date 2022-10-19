@@ -1,4 +1,7 @@
 # --
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
@@ -40,36 +43,20 @@ sub Config {
 
     return (
         %{ $Self->{Config} },
-
-        # Don't cache this globally as it contains JS that is not inside of the HTML.
-        CacheTTL => undef,
-        CacheKey => undef,
+        CacheKey => 'RSS'
+            . $Self->{Config}->{URL} . '-'
+            . $Kernel::OM->Get('Kernel::Output::HTML::Layout')->{UserLanguage},
     );
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    
-    if ($Self->{Config}->{Async} && !$Param{AJAX}){
-        my $JSAsync = <<"ENDJS";
-asyncDashboardLoad('$Self->{Name}')
-ENDJS
-        $LayoutObject->AddJSOnDocumentComplete(
-            Code => $JSAsync,
-        );
-        return $LayoutObject->Output(
-            TemplateFile => 'AgentDashboardRSSOverview',
-            Data         => {
-                %{ $Self->{Config} },
-            },
-        );
-    }
-
     # Default URL
     my $FeedURL = $Self->{Config}->{URL};
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     my $Language = $LayoutObject->{UserLanguage};
 
@@ -110,7 +97,7 @@ ENDJS
     my $Feed;
 
     TRY:
-    for ( 1 .. 3 ) {
+    for my $Try ( 1 .. 3 ) {
         $Feed = eval {
             XML::FeedPP->new(
                 $FeedURL,

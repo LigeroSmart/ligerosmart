@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -324,10 +325,8 @@ sub new {
     if ( $Self->{Config}->{IsProcessWidget} ) {
 
         # get process management configuration
-        $Self->{ProcessManagementProcessID}
-            = $Kernel::OM->Get('Kernel::Config')->Get('Process::DynamicFieldProcessManagementProcessID');
-        $Self->{ProcessManagementActivityID}
-            = $Kernel::OM->Get('Kernel::Config')->Get('Process::DynamicFieldProcessManagementActivityID');
+        $Self->{ProcessManagementProcessID}  = $ConfigObject->Get('Process::DynamicFieldProcessManagementProcessID');
+        $Self->{ProcessManagementActivityID} = $ConfigObject->Get('Process::DynamicFieldProcessManagementActivityID');
 
         # get the list of processes in the system
         my $ProcessListHash = $Kernel::OM->Get('Kernel::System::ProcessManagement::Process')->ProcessList(
@@ -338,6 +337,21 @@ sub new {
 
         # use only the process EntityIDs
         @{ $Self->{ProcessList} } = sort keys %{$ProcessListHash};
+    }
+
+    # Mentions
+    $Self->{AdditionalMentionTicketSearchParams} = {};
+    if ( $Self->{Config}->{IncludesMentions} ) {
+        my $MentionObject = $Kernel::OM->Get('Kernel::System::Mention');
+
+        $Self->{MentionTicketData} = $MentionObject->GetDashboardWidgetTicketData(
+            UserID => $Self->{UserID},
+        );
+
+        if ( IsHashRefWithData( $Self->{MentionTicketData} ) ) {
+            $Self->{AdditionalMentionTicketSearchParams}->{TicketID} = $Self->{MentionTicketData}->{TicketIDs};
+            $Self->{AdditionalMentionTicketSearchParams}->{UserID}   = 1;
+        }
     }
 
     return $Self;
@@ -500,11 +514,21 @@ sub FilterContent {
         }
 
         if ( !$Self->{Config}->{IsProcessWidget} || IsArrayRefWithData( $Self->{ProcessList} ) ) {
-            @OriginalViewableTickets = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
-                %TicketSearch,
-                %{ $TicketSearchSummary{ $Self->{Filter} } },
-                Result => 'ARRAY',
-            );
+
+            # Ticket search will only be executed if widget does not include mentions
+            # or if it does, the user must have mentions.
+            if (
+                !$Self->{Config}->{IncludesMentions}
+                || $Self->{MentionTicketData}
+                )
+            {
+                @OriginalViewableTickets = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
+                    %TicketSearch,
+                    %{ $TicketSearchSummary{ $Self->{Filter} } },
+                    %{ $Self->{AdditionalMentionTicketSearchParams} },    # is empty if no mentions present
+                    Result => 'ARRAY',
+                );
+            }
         }
     }
 
@@ -637,25 +661,17 @@ sub Run {
         $CacheKey .= '-' . $Self->{AdditionalFilter};
     }
 
-    # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
-    my $TicketIDs;
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    # Add JS To async Load
-    if ($Self->{Config}->{Async} && !$Param{AJAX}){
-        my $JSAsync = <<"ENDJS";
-asyncDashboardLoad('$Self->{Name}')
-ENDJS
-        $LayoutObject->AddJSOnDocumentComplete(
-            Code => $JSAsync,
-        );
-    }
-    # check cache
-    $TicketIDs = $CacheObject->Get(
+    my $TicketIDs = $CacheObject->Get(
         Type => 'Dashboard',
         Key  => $CacheKey . '-' . $Self->{Filter} . '-List',
-    ) if(!$Self->{Config}->{Async} || ($Self->{Config}->{Async} && $Param{AJAX}));
+    );
+
+    my $CustomColumns = $CacheObject->Get(
+        Type => 'Dashboard',
+        Key  => $CacheKey . '-' . $Self->{Filter} . '-CustomColumns',
+    );
 
     # find and show ticket list
     my $CacheUsed = 1;
@@ -663,9 +679,7 @@ ENDJS
     # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-    if ( !$TicketIDs &&
-         (!$Self->{Config}->{Async} || ($Self->{Config}->{Async} && $Param{AJAX}))
-        ) {
+    if ( !$TicketIDs ) {
 
         # quote all CustomerIDs
         if ( $TicketSearch{CustomerID} ) {
@@ -740,13 +754,33 @@ ENDJS
 
             # Execute search.
             else {
-                @TicketIDsArray = $TicketObject->TicketSearch(
-                    Result => 'ARRAY',
-                    %TicketSearch,
-                    %{ $TicketSearchSummary{ $Self->{Filter} } },
-                    %ColumnFilter,
-                    Limit => $Self->{PageShown} + $Self->{StartHit} - 1,
-                );
+
+                # Mentions
+                if (
+                    $Self->{Config}->{IncludesMentions}
+                    && $Self->{MentionTicketData}
+                    && $Self->{MentionTicketData}->{CustomColumns}
+                    )
+                {
+                    $CustomColumns = $Self->{MentionTicketData}->{CustomColumns};
+                }
+
+                # Ticket search will only be executed if widget does not include mentions
+                # or if it does, the user must have mentions.
+                if (
+                    !$Self->{Config}->{IncludesMentions}
+                    || $Self->{MentionTicketData}
+                    )
+                {
+                    @TicketIDsArray = $TicketObject->TicketSearch(
+                        Result => 'ARRAY',
+                        %TicketSearch,
+                        %{ $TicketSearchSummary{ $Self->{Filter} } },
+                        %ColumnFilter,
+                        Limit => $Self->{PageShown} + $Self->{StartHit} - 1,
+                        %{ $Self->{AdditionalMentionTicketSearchParams} },    # is empty if no mentions present
+                    );
+                }
             }
         }
         $TicketIDs = \@TicketIDsArray;
@@ -837,12 +871,23 @@ ENDJS
 
                 # Execute search.
                 else {
-                    $Summary->{$Type} = $TicketObject->TicketSearch(
-                        Result => 'COUNT',
-                        %TicketSearch,
-                        %{ $TicketSearchSummary{$Type} },
-                        %ColumnFilter,
-                    ) || 0;
+                    $Summary->{$Type} = 0;
+
+                    # Ticket search will only be executed if widget does not include mentions
+                    # or if it does, the user must have mentions.
+                    if (
+                        !$Self->{Config}->{IncludesMentions}
+                        || $Self->{MentionTicketData}
+                        )
+                    {
+                        $Summary->{$Type} = $TicketObject->TicketSearch(
+                            Result => 'COUNT',
+                            %TicketSearch,
+                            %{ $TicketSearchSummary{$Type} },
+                            %ColumnFilter,
+                            %{ $Self->{AdditionalMentionTicketSearchParams} },    # is empty if no mentions present
+                        ) || 0;
+                    }
                 }
             }
         }
@@ -862,6 +907,15 @@ ENDJS
             Value => $TicketIDs,
             TTL   => $Self->{Config}->{CacheTTLLocal} * 60,
         );
+
+        if ($CustomColumns) {
+            $CacheObject->Set(
+                Type  => 'Dashboard',
+                Key   => $CacheKey . '-' . $Self->{Filter} . '-CustomColumns',
+                Value => $CustomColumns,
+                TTL   => $Self->{Config}->{CacheTTLLocal} * 60,
+            );
+        }
     }
 
     # Set the css class for the selected filter and additional filter.
@@ -869,6 +923,8 @@ ENDJS
     if ( $Self->{AdditionalFilter} ) {
         $Summary->{ $Self->{AdditionalFilter} . '::Selected' } = 'Selected';
     }
+
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # get filter ticket counts
     $LayoutObject->Block(
@@ -1657,6 +1713,8 @@ ENDJS
             Silent        => 1
         );
 
+        %Ticket = ( %Ticket, %{ $CustomColumns->{$TicketID} } ) if $CustomColumns->{$TicketID};
+
         next TICKETID if !%Ticket;
 
         # set a default title if ticket has no title
@@ -2196,15 +2254,10 @@ sub _ColumnFilterJSON {
 
         my %Values = %{ $Param{ColumnValues} };
 
-        # Keys must be link encoded for dynamic fields because they are added to URL during filtering
-        # and can contain characters like '&', ';', etc.
-        # See bug#14497 - https://bugs.otrs.org/show_bug.cgi?id=14497.
-        my $Encoding = ( $Param{ColumnName} =~ m/^DynamicField_/ ) ? 1 : 0;
-
         # Set possible values.
         for my $ValueKey ( sort { lc $Values{$a} cmp lc $Values{$b} } keys %Values ) {
             push @{$Data}, {
-                Key   => $Encoding ? $LayoutObject->LinkEncode($ValueKey) : $ValueKey,
+                Key   => $ValueKey,
                 Value => $Values{$ValueKey}
             };
         }

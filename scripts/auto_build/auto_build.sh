@@ -1,7 +1,8 @@
 #!/bin/sh
 # --
 # auto_build.sh - build automatically OTRS tar, rpm and src-rpm
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021 Znuny GmbH, https://znuny.org/
 # --
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,19 +19,23 @@
 # --
 
 echo "auto_build.sh - build OTRS release files"
-echo "Copyright (C) 2001-2020 OTRS AG, https://otrs.com/";
+echo "Copyright (C) 2001-2021 OTRS AG, https://otrs.com/";
+echo "Copyright (C) 2012-2021 Znuny GmbH, https://znuny.com/";
 
 PATH_TO_CVS_SRC=$1
-PRODUCT=OTRS
+PRODUCT="Znuny"
 VERSION=$2
+MAJOR_VERSION="$(echo "$VERSION" | cut -d. -f1)"
+MINOR_VERSION="$(echo "$VERSION" | cut -d. -f2)"
+LATEST_VERSION=false
 RELEASE=$3
-ARCHIVE_DIR="otrs-$VERSION"
-PACKAGE=otrs
-PACKAGE_BUILD_DIR="/tmp/$PACKAGE-build"
-PACKAGE_DEST_DIR="/tmp/$PACKAGE-packages"
-PACKAGE_TMP_SPEC="/tmp/$PACKAGE.spec"
+ARCHIVE_DIR="znuny-$VERSION"
+PACKAGE=znuny
+PACKAGE_BUILD_DIR="${CI_PROJECT_DIR}/../$PACKAGE-build"
+PACKAGE_DEST_DIR="${CI_PROJECT_DIR}/../$PACKAGE-buildpackages"
+PACKAGE_TMP_SPEC="${CI_PROJECT_DIR}/../$PACKAGE.spec"
 RPM_BUILD="rpmbuild"
-#RPM_BUILD="rpm"
+
 
 
 if ! test $PATH_TO_CVS_SRC || ! test $VERSION || ! test $RELEASE; then
@@ -53,26 +58,13 @@ else
     fi
 fi
 
-# --
-# get system info
-# --
-if test -d /usr/src/redhat/RPMS/; then
-    SYSTEM_RPM_DIR=/usr/src/redhat/RPMS/
-else
-    SYSTEM_RPM_DIR=/usr/src/packages/RPMS/
-fi
 
-if test -d /usr/src/redhat/SRPMS/; then
-    SYSTEM_SRPM_DIR=/usr/src/redhat/SRPMS/
-else
-    SYSTEM_SRPM_DIR=/usr/src/packages/SRPMS/
-fi
+SYSTEM_RPM_DIR="${CI_PROJECT_DIR}/../rpmbuild/RPMS"
+SYSTEM_SRPM_DIR="${CI_PROJECT_DIR}/../rpmbuild/SRPMS"
+SYSTEM_SOURCE_DIR="${CI_PROJECT_DIR}/../rpmbuild/SOURCES"
 
-if test -d /usr/src/redhat/SOURCES/; then
-    SYSTEM_SOURCE_DIR=/usr/src/redhat/SOURCES/
-else
-    SYSTEM_SOURCE_DIR=/usr/src/packages/SOURCES/
-fi
+mkdir -p "$SYSTEM_RPM_DIR" "$SYSTEM_SRPM_DIR" "$SYSTEM_SOURCE_DIR"
+mkdir -p "${CI_PROJECT_DIR}"/../rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 
 # --
 # cleanup system dirs
@@ -111,7 +103,7 @@ RELEASEFILE=$PACKAGE_BUILD_DIR/$ARCHIVE_DIR/RELEASE
 echo "PRODUCT = $PRODUCT" > $RELEASEFILE
 echo "VERSION = $VERSION" >> $RELEASEFILE
 echo "BUILDDATE = `date`" >> $RELEASEFILE
-echo "BUILDHOST = `hostname -f`" >> $RELEASEFILE
+echo "BUILDHOST = $CI_RUNNER_DESCRIPTION" >> $RELEASEFILE
 echo "COMMIT_ID = $COMMIT_ID" >> $RELEASEFILE
 
 # --
@@ -139,7 +131,7 @@ function CreateArchive() {
 
     cd $PACKAGE_BUILD_DIR/ || exit 1;
     SOURCE_LOCATION=$SYSTEM_SOURCE_DIR/$PACKAGE-$VERSION.$SUFFIX
-    rm $SOURCE_LOCATION
+    test -f "$SOURCE_LOCATION" && rm -f "$SOURCE_LOCATION"
     echo "Building $SOURCE_LOCATION..."
     $COMMANDLINE $SOURCE_LOCATION $ARCHIVE_DIR/ > /dev/null || exit 1;
     cp $SOURCE_LOCATION $PACKAGE_DEST_DIR/
@@ -165,7 +157,7 @@ function CreateRPM() {
     specfile=$PACKAGE_TMP_SPEC
     # replace version and release
     cat $ARCHIVE_DIR/scripts/auto_build/spec/$SpecfileName | sed "s/^Version:.*/Version:      $VERSION/" | sed "s/^Release:.*/Release:      $RELEASE/" > $specfile
-    $RPM_BUILD -ba --clean $specfile || exit 1;
+    $RPM_BUILD --define "_topdir ${CI_PROJECT_DIR}/../rpmbuild/" -ba --clean $specfile || exit 1;
     rm $specfile || exit 1;
 
     mkdir -p $PACKAGE_DEST_DIR/RPMS/$TargetPath
@@ -174,22 +166,53 @@ function CreateRPM() {
     mv $SYSTEM_SRPM_DIR/$PACKAGE*$VERSION*$RELEASE*.src.rpm $PACKAGE_DEST_DIR/SRPMS/$TargetPath
 }
 
+CreateRPM "RHEL 7"    "rhel7-otrs.spec"    "rhel/7"
 CreateRPM "SuSE 12"   "suse12-otrs.spec"   "suse/12/"
 CreateRPM "SuSE 13"   "suse13-otrs.spec"   "suse/13/"
 CreateRPM "Fedora 25" "fedora25-otrs.spec" "fedora/25/"
 CreateRPM "Fedora 26" "fedora26-otrs.spec" "fedora/26/"
-CreateRPM "RHEL 7"    "rhel7-otrs.spec"    "rhel/7"
 
 echo "-----------------------------------------------------------------";
 echo "You will find your tar.gz, RPMs and SRPMs in $PACKAGE_DEST_DIR";
-cd $PACKAGE_DEST_DIR
+cd "$PACKAGE_DEST_DIR"
 find . -name "*$PACKAGE*" | xargs ls -lo
 echo "-----------------------------------------------------------------";
 if which md5sum >> /dev/null; then
-    echo "MD5 message digest (128-bit) checksums in wiki table format";
-    find . -name "*$PACKAGE*" | xargs md5sum | sed -e "s/^/| /" -e "s/\.\//| http:\/\/ftp.otrs.org\/pub\/otrs\//" -e "s/$/ |/"
+    echo "MD5 message digest (128-bit) checksums and download URLs in markdown table format";
+    echo "| Typ / URL| MD5 Summe |
+| ---- | ------- |"
+    for p in $(find . -name "*$PACKAGE*")
+    do
+        md5_complete="$(md5sum "$p"| sed -e "s/\.\//https:\/\/download.znuny.org\/releases\//" )"
+        md5=$(echo "$md5_complete" | awk {'print $1'})
+        url=$(echo "$md5_complete" | awk {'print $NF'})
+        label="Unknown"
+        echo "$url" | grep -q ".gz" && label="Source .tar.gz"
+        echo "$url" | grep -q ".bz2" && label="Source .bz2"
+        echo "$url" | grep -q ".zip" && label="Source .zip"
+        echo "$url" | grep -q "/RPMS/rhel/7" && label="RPM RHEL 7 / CentOS 7"
+        echo "$url" | grep -q "/RPMS/suse/12/" && label="RPM SuSE 12"
+        echo "$url" | grep -q "/RPMS/suse/13/" && label="RPM SuSE 13 "
+        echo "$url" | grep -q "/RPMS/fedora/25/" && label="RPM Fedora 25 "
+        echo "$url" | grep -q "/RPMS/fedora/26/" && label="RPM Fedora 26 "
+        echo "$url" | grep -q "/SRPMS/rhel/7" && label="SRPM RHEL 7 / CentOS 7"
+        echo "$url" | grep -q "/SRPMS/suse/12/" && label="SRPM SuSE 12"
+        echo "$url" | grep -q "/SRPMS/suse/13/" && label="SRPM SuSE 13 "
+        echo "$url" | grep -q "/SRPMS/fedora/25/" && label="SRPM Fedora 25 "
+        echo "$url" | grep -q "/SRPMS/fedora/26/" && label="SRPM Fedora 26 "
+
+        echo "| [$label]($url) | $md5 |"
+    done
 else
     echo "No md5sum found in \$PATH!"
+fi
+prerelease=$(echo "$VERSION" | egrep -e '[a-zA-Z]')
+if [ -z "$prerelease" ]; then 
+    ln -s $PACKAGE-$VERSION.tar.gz $PACKAGE-$MAJOR_VERSION.$MINOR_VERSION.tar.gz
+    ln -s $PACKAGE-$VERSION.tar.gz $PACKAGE-latest-$MAJOR_VERSION.$MINOR_VERSION.tar.gz
+    if [ $LATEST_VERSION  = "true" ]; then
+        ln -s $PACKAGE-$VERSION.tar.gz $PACKAGE-latest.tar.gz
+    fi
 fi
 echo "--------------------------------------------------------------------------";
 echo "Note: You may have to tag your git tree: git tag rel-6_x_x -a -m \"6.x.x\"";

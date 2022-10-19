@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,9 +19,9 @@ my $Selenium     = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        my ( $TestUserLogin, $UserID ) = $Helper->TestUserCreate(
+        my ( $TestUserLogin, $UserID ) = $HelperObject->TestUserCreate(
             Groups => ['admin'],
         );
 
@@ -100,7 +101,7 @@ $Selenium->RunTest(
         );
 
         # Create a real test group.
-        my $GroupName = 'TestGroup' . $Helper->GetRandomID();
+        my $GroupName = 'TestGroup' . $HelperObject->GetRandomID();
         $Selenium->find_element( "#GroupName", 'css' )->send_keys($GroupName);
         $Selenium->InputFieldValueSet(
             Element => '#ValidID',
@@ -387,7 +388,7 @@ $Selenium->RunTest(
 
             $GroupName = $DBObject->Quote($GroupName);
             $Success   = $DBObject->Do(
-                SQL  => "DELETE FROM groups WHERE name = ?",
+                SQL  => "DELETE FROM permission_groups WHERE name = ?",
                 Bind => [ \$GroupName ],
             );
             $Self->True(

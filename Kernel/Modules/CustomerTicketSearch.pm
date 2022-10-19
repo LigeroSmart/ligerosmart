@@ -1,6 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, http://otrs.com/
-# LigeroSmart 2021
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -512,37 +512,9 @@ sub Run {
         # disable output of customer company tickets
         my $DisableCompanyTickets = $ConfigObject->Get('Ticket::Frontend::CustomerDisableCompanyTicketAccess');
 
-        my $CustomerCompanyEnabledForProfile = $ConfigObject->Get('Ticket::Frontend::CustomerCompanyEnabledForProfile');
-
-        if($CustomerCompanyEnabledForProfile) {
-            my %HashProfile = %{$CustomerCompanyEnabledForProfile};
-
-            my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
-            my $CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
-
-            my %UsData = $UserObject->CustomerUserDataGet(
-                User => $Self->{UserID},
-            );
-
-            my %CustomerCompany = $CustomerCompanyObject->CustomerCompanyGet(
-                CustomerID => $UsData{UserCustomerID},
-            );
-
-            for(keys %HashProfile){
-              my $compativeU = $UsData{$_};
-
-              if($HashProfile{$_} ne $compativeU){
-                $DisableCompanyTickets = 1;
-              }
-            }
-        }
-
         if ($DisableCompanyTickets) {
             $GetParam{CustomerUserLoginRaw} = $Self->{UserID};
         }
-
-        # get dynamic-field based filter if CustomerTicket::EnableDynamicFieldCheck is enabled
-        my %CustomerDynamicFieldFilter = $Kernel::OM->Get('Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck')->GetTicketSearchFilter();
 
         # perform ticket search
         my @ViewableTicketIDs = $TicketObject->TicketSearch(
@@ -557,13 +529,11 @@ sub Run {
             FullTextIndex       => 1,
             %GetParam,
             %DynamicFieldSearchParameters,
-	    %CustomerDynamicFieldFilter
         );
 
         # get needed objects
         my $UserObject         = $Kernel::OM->Get('Kernel::System::User');
         my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
-        my $TimeObject         = $Kernel::OM->Get('Kernel::System::Time');
 
         # CSV and Excel output
         if (
@@ -573,8 +543,8 @@ sub Run {
         {
 
             # create head (actual head and head for data fill)
-            my @TmpCSVHead      = @{ $Config->{SearchCSVData} };
-            my @CSVHead         = @{ $Config->{SearchCSVData} };
+            my @TmpCSVHead = @{ $Config->{SearchCSVData} };
+            my @CSVHead    = @{ $Config->{SearchCSVData} };
 
             # get the ticket dynamic fields for CSV display
             my $CSVDynamicField = $DynamicFieldObject->DynamicFieldListGet(
@@ -649,10 +619,6 @@ sub Run {
                     %Data = ( %Ticket, %Article );
                 }
 
-		my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $Data{TicketID});
-		
-		$Data{AccountedTime} = $AccountedTime || 0;
-
                 for my $Key (qw(State Lock)) {
                     $Data{$Key} = $LayoutObject->{LanguageObject}->Translate( $Data{$Key} );
                 }
@@ -666,7 +632,6 @@ sub Run {
                 if ( $Config->{SearchArticleCSVTree} && $GetParam{ResultForm} eq 'CSV' ) {
                     my @Articles = $ArticleObject->ArticleList(
                         TicketID             => $TicketID,
-                        OnlyFirst            => 1,
                         IsVisibleForCustomer => 1,
                     );
                     if (@Articles) {
@@ -765,11 +730,9 @@ sub Run {
                 TicketNumber => Translatable('Ticket Number'),
                 CustomerName => Translatable('Customer Realname'),
             );
-            my %CSVHeaderRewrite  = %{ $Config->{CSVHeaderRewrite} };
-            my @RewriteCSVHead = map {$CSVHeaderRewrite{$_} || $_} @CSVHead;
 
             my @CSVHeadTranslated = map { $LayoutObject->{LanguageObject}->Translate( $HeaderMap{$_} || $_ ); }
-                @RewriteCSVHead;
+                @CSVHead;
 
             # return csv to download
             my $CurSystemDateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
@@ -877,10 +840,7 @@ sub Run {
                     %Data = ( %Ticket, %Article );
                 }
 
-                my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $Data{TicketID});
-                $Data{AccountedTime} = $AccountedTime || 0;
-
-             # customer info
+                # customer info
                 my %CustomerData;
                 if ( $Data{CustomerUserID} ) {
                     %CustomerData = $CustomerUserObject->CustomerUserDataGet(
@@ -909,7 +869,7 @@ sub Run {
                 $UserInfo{CustomerName} = '(' . $UserInfo{CustomerName} . ')'
                     if ( $UserInfo{CustomerName} );
 
-                my %Info = ( %Data, %UserInfo );
+                my %Info    = ( %Data, %UserInfo );
                 my $Created = $LayoutObject->{LanguageObject}->FormatTimeString(
                     $Data{CreateTime} // $Data{Created},
                     'DateFormat',
@@ -917,35 +877,14 @@ sub Run {
 
                 my $Customer = "$Data{CustomerID} $Data{CustomerName}";
 
-                my $Customer = "$Data{CustomerID} $Data{CustomerName}";	
-				#Formata a data 
-				#
-								#
-				#Caso não haja o solutionTimeDestinationDate será obtido de um campo dinâmico que possuíra o valor.O solutionTimeDestinationDate é zerado quando o chamado é zerado COMPLEMENTO.
-
-				$Data{SolutionTimeDestinationDate} =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g if( $Data{SolutionTimeDestinationDate});
-				my $DynamicSolutionTimeDestinationDateID = $ConfigObject->Get("Ticket::Complemento::AccountedTime::DynamicFieldSolutionTimeDestinationDate");
-				
-			    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			        ID   => $DynamicSolutionTimeDestinationDateID,             # ID or Name must be provided
-			    );
-				my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-				my $Value = $BackendObject->ValueGet(
-			        DynamicFieldConfig => $DynamicFieldConfig,
-					ObjectID           => $TicketID,  
-				);
-				$Data{SolutionTimeDestinationDate} = $Value if(!$Data{SolutionTimeDestinationDate}); 
                 my @PDFRow;
                 push @PDFRow,  $Data{TicketNumber};
                 push @PDFRow,  $Created;
-                # push @PDFRow,  $Closed;
                 push @PDFRow,  $Data{From};
                 push @PDFRow,  $Data{Subject};
                 push @PDFRow,  $Data{State};
                 push @PDFRow,  $Data{Queue};
                 push @PDFRow,  $Customer;
-				push @PDFRow,  $Data{AccountedTime};
-				push @PDFRow,  $Data{SolutionTimeDestinationDate};
                 push @PDFData, \@PDFRow;
 
             }
@@ -986,12 +925,6 @@ sub Run {
                 $CellData->[0]->[5]->{Font}    = 'ProportionalBold';
                 $CellData->[0]->[6]->{Content} = $LayoutObject->{LanguageObject}->Translate('CustomerID');
                 $CellData->[0]->[6]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[8]->{Content} = $LayoutObject->{LanguageObject}->Translate('AccountedTime');
-                $CellData->[0]->[8]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[9]->{Content} = $LayoutObject->{LanguageObject}->Translate('SolutionTimeDestinationDate');
-                $CellData->[0]->[9]->{Font}    = 'ProportionalBold';
-
-
 
                 # create the content array
                 my $CounterRow = 1;
@@ -1014,10 +947,9 @@ sub Run {
             my %PageParam;
             $PageParam{PageOrientation} = 'landscape';
             $PageParam{MarginTop}       = 30;
-			#ALTERADO DE 40 para 20 para adição de mais um campo COMPLEMENTO
-            $PageParam{MarginRight}     = 20;
+            $PageParam{MarginRight}     = 40;
             $PageParam{MarginBottom}    = 40;
-            $PageParam{MarginLeft}      = 20;
+            $PageParam{MarginLeft}      = 40;
             $PageParam{HeaderRight}     = $Title;
             $PageParam{HeadlineLeft}    = $Title;
 
@@ -1276,8 +1208,6 @@ sub Run {
                         %Data = ( %Ticket, %Article );
                     }
 
-                    my $AccountedTime = $TicketObject->TicketAccountedTimeGet(TicketID => $TicketID);
-
                     # customer info
                     my %CustomerData;
                     if ( $Data{CustomerUserID} ) {
@@ -1317,29 +1247,14 @@ sub Run {
                     if ( $Data{CustomerName} ) {
                         $Data{CustomerName} = '(' . $Data{CustomerName} . ')';
                     }
-			my $DynamicSolutionTimeDestinationDateID = $ConfigObject->Get("Ticket::Complemento::AccountedTime::DynamicFieldSolutionTimeDestinationDate");
-			
-		    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-		        ID   => $DynamicSolutionTimeDestinationDateID,             # ID or Name must be provided
-		    );
-                    my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-                    my $Value = $BackendObject->ValueGet(
-                        DynamicFieldConfig => $DynamicFieldConfig,
-                    	ObjectID           => $TicketID,  
-                    );
-                    $Data{SolutionTimeDestinationDate} = $Value if(!$Ticket{SolutionTimeDestinationDate}); 
 
-                    #COMPLEMENTO 
-                    #Apresenta a informação do ACC Time
                     # add blocks to template
-                    $Data{SolutionTimeDestinationDate} =~ s/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/$3-$2-$1 $4:$5:$6/g;
                     $LayoutObject->Block(
                         Name => 'Record',
                         Data => {
                             %Data,
                             Subject => $Subject,
                             %Owner,
-							AccountedTime => "$AccountedTime",  
                         },
                     );
 
@@ -1796,14 +1711,18 @@ sub MaskForm {
     my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 
     my %ServiceList;
-    $Param{QueueID} = 1;
+    if ( $ConfigObject->Get('Customer::TicketSearch::AllServices') ) {
+        %ServiceList = $ServiceObject->ServiceList(
+            UserID => $Self->{UserID},
+        );
+    }
+    else {
+        %ServiceList = $ServiceObject->CustomerUserServiceMemberList(
+            CustomerUserLogin => $Self->{UserID},
+            Result            => 'HASH',
+        );
+    }
 
-    %ServiceList = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
-      %Param,
-      Action => $Self->{Action},
-      CustomerUserID => $Self->{UserID},
-    );
-    
     $Param{ServicesStrg} = $LayoutObject->BuildSelection(
         Data       => \%ServiceList,
         Name       => 'ServiceIDs',

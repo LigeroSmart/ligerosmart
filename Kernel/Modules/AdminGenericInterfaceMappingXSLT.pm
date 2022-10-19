@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -122,6 +123,8 @@ sub Run {
 
         $Mapping{Template}              = $MappingConfig->{Template};
         $Mapping{DataInclude}           = $MappingConfig->{DataInclude};
+        $Mapping{ForceArray}            = $MappingConfig->{ForceArray};
+        $Mapping{KeepAttributes}        = $MappingConfig->{KeepAttributes};
         $Mapping{PreRegExFilter}        = $MappingConfig->{PreRegExFilter};
         $Mapping{PreRegExValueCounter}  = $MappingConfig->{PreRegExValueCounter};
         $Mapping{PostRegExFilter}       = $MappingConfig->{PostRegExFilter};
@@ -177,6 +180,8 @@ sub Run {
         my %NewMapping;
         $NewMapping{Template}              = $GetParam->{Template};
         $NewMapping{DataInclude}           = $GetParam->{DataInclude};
+        $NewMapping{ForceArray}            = $GetParam->{ForceArray};
+        $NewMapping{KeepAttributes}        = $GetParam->{KeepAttributes};
         $NewMapping{PreRegExFilter}        = $GetParam->{PreRegExFilter};
         $NewMapping{PreRegExValueCounter}  = $GetParam->{PreRegExValueCounter};
         $NewMapping{PostRegExFilter}       = $GetParam->{PostRegExFilter};
@@ -351,6 +356,9 @@ sub _ShowEdit {
         Class        => 'Modernize W50pc',
     );
 
+    $Param{ForceArray}     = $MappingConfig->{ForceArray}     // '';
+    $Param{KeepAttributes} = $MappingConfig->{KeepAttributes} // '';
+
     $LayoutObject->Block(
         Name => 'ConfigBlock',
         Data => {},
@@ -384,6 +392,8 @@ sub _ShowEdit {
 sub _GetParams {
     my ( $Self, %Param ) = @_;
 
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     my $GetParam;
 
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
@@ -393,6 +403,10 @@ sub _GetParams {
     my @DataInclude = $ParamObject->GetArray( Param => 'DataInclude' );
     $GetParam->{DataInclude} = \@DataInclude;
 
+    $GetParam->{ForceArray}     = $ParamObject->GetParam( Param => 'ForceArray' )     // '';
+    $GetParam->{KeepAttributes} = $ParamObject->GetParam( Param => 'KeepAttributes' ) // '';
+    my $LibXMLHugeXMLDataSupportEnabled = $ConfigObject->Get('LibXML::EnableHugeXMLDataSupport') ? 1 : 0;
+
     # Check validity.
     my $LibXML  = XML::LibXML->new();
     my $LibXSLT = XML::LibXSLT->new();
@@ -401,6 +415,7 @@ sub _GetParams {
         $StyleDoc = XML::LibXML->load_xml(
             string   => $GetParam->{Template},
             no_cdata => 1,
+            huge     => $LibXMLHugeXMLDataSupportEnabled,
         );
     };
     if ( !$StyleDoc ) {

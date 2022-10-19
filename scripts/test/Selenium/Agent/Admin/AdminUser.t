@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 523a918656e9bb2b56c7417e28403fc9d79046e8 - scripts/test/Selenium/Agent/Admin/AdminUser.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,22 +18,22 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # Do not check email addresses.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'CheckEmailAddresses',
             Value => 0,
         );
 
         # Enable Service.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
             Value => 1,
         );
 
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
@@ -114,7 +113,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminUser;Subaction=Add");
 
         # Create a real test agent.
-        my $RandomID     = $Helper->GetRandomID();
+        my $RandomID     = $HelperObject->GetRandomID();
         my $UserRandomID = 'TestAgent' . $RandomID;
         $Selenium->find_element( "#UserFirstname", 'css' )->send_keys($UserRandomID);
         $Selenium->find_element( "#UserLastname",  'css' )->send_keys($UserRandomID);
@@ -226,12 +225,6 @@ $Selenium->RunTest(
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
             Comment => 'Selenium Test',
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
             ValidID => 1,
             UserID  => 1,
         );
@@ -326,7 +319,7 @@ $Selenium->RunTest(
         );
 
         # Create another test user.
-        my $TestUserLogin2 = $Helper->TestUserCreate(
+        my $TestUserLogin2 = $HelperObject->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 

@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/System/Service/PreferencesDB.pm
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,6 +17,7 @@ our @ObjectDependencies = (
     'Kernel::System::Cache',
     'Kernel::System::DB',
     'Kernel::System::Log',
+    'Kernel::System::Util',
 );
 
 sub new {
@@ -50,11 +50,11 @@ sub ServicePreferencesSet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ServiceID Key Value)) {
-        if ( !defined $Param{$_} ) {
+    for my $Needed (qw(ServiceID Key Value)) {
+        if ( !defined $Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!"
+                Message  => "Need $Needed!"
             );
             return;
         }
@@ -90,22 +90,22 @@ sub ServicePreferencesGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ServiceID)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(ServiceID)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!"
+                Message  => "Need $Needed!"
             );
             return;
         }
     }
-# ---
-# ITSMConfigurationManagement
-# ---
-#
-#    # check if service preferences are available
-#    return if !$Kernel::OM->Get('Kernel::Config')->Get('ServicePreferences');
-# ---
+
+    my $IsITSMInstalled = $Kernel::OM->Get('Kernel::System::Util')->IsITSMInstalled();
+    if ( !$IsITSMInstalled ) {
+
+        # check if service preferences are available
+        return if !$Kernel::OM->Get('Kernel::Config')->Get('ServicePreferences');
+    }
 
     # read cache
     my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(

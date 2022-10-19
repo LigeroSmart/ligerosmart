@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/CustomerUserService.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +24,7 @@ $Kernel::OM->ObjectParamAdd(
         RestoreDatabase => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # don't check email address validity
 $ConfigObject->Set(
@@ -51,18 +50,12 @@ for my $ServiceID (@OriginalDefaultServices) {
 }
 
 # add service1
-my $ServiceRand1 = 'SomeService' . $Helper->GetRandomID();
+my $ServiceRand1 = 'SomeService' . $HelperObject->GetRandomID();
 my $ServiceID1   = $ServiceObject->ServiceAdd(
     Name    => $ServiceRand1,
     Comment => 'Some Comment',
     ValidID => 1,
     UserID  => 1,
-# ---
-# ITSMCore
-# ---
-    TypeID      => 1,
-    Criticality => '3 normal',
-# ---
 );
 
 $Self->True(
@@ -71,18 +64,12 @@ $Self->True(
 );
 
 # add service2
-my $ServiceRand2 = 'SomeService' . $Helper->GetRandomID();
+my $ServiceRand2 = 'SomeService' . $HelperObject->GetRandomID();
 my $ServiceID2   = $ServiceObject->ServiceAdd(
     Name    => $ServiceRand2,
     Comment => 'Some Comment',
     ValidID => 1,
     UserID  => 1,
-# ---
-# ITSMCore
-# ---
-    TypeID      => 1,
-    Criticality => '3 normal',
-# ---
 );
 
 $Self->True(
@@ -90,9 +77,9 @@ $Self->True(
     'ServiceAdd2()',
 );
 
-my $CustomerUser1 = $Helper->TestCustomerUserCreate()
+my $CustomerUser1 = $HelperObject->TestCustomerUserCreate()
     || die "Did not get test customer user";
-my $CustomerUser2 = $Helper->TestCustomerUserCreate()
+my $CustomerUser2 = $HelperObject->TestCustomerUserCreate()
     || die "Did not get test customer user";
 
 # allocation test 1
@@ -378,7 +365,7 @@ $Self->True(
 my %Customer = $CustomerUserObject->CustomerUserDataGet(
     User => $CustomerUser1,
 );
-my $NewCustomerUser1 = $Helper->GetRandomID();
+my $NewCustomerUser1 = $HelperObject->GetRandomID();
 my $Update           = $CustomerUserObject->CustomerUserUpdate(
     %Customer,
     ID        => $Customer{UserLogin},

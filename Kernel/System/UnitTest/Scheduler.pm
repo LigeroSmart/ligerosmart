@@ -1,11 +1,10 @@
 # --
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::CacheCleanup)
 
 package Kernel::System::UnitTest::Scheduler;
 
@@ -21,7 +20,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::UnitTest::Scheduler - Scheduler lib
+Kernel::System::UnitTest::Scheduler - Scheduler unit test lib
 
 =head1 SYNOPSIS
 
@@ -29,11 +28,7 @@ All Scheduler functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -46,7 +41,6 @@ create an object
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
 
@@ -55,9 +49,9 @@ sub new {
     return $Self;
 }
 
-=item CleanUp()
+=head2 CleanUp()
 
-This function removes all entries in the SchedulerDB.
+Removes all entries in the SchedulerDB.
 
     my $Success = $UnitTestSchedulerObject->CleanUp(
         Type => 'AsynchronousExecutor', # optional
@@ -75,7 +69,6 @@ sub CleanUp {
     );
 
     for my $DeleteTask (@DeleteTasks) {
-
         $SchedulerDBObject->TaskDelete(
             TaskID => $DeleteTask->{TaskID},
         );
@@ -84,9 +77,9 @@ sub CleanUp {
     return 1;
 }
 
-=item Execute()
+=head2 Execute()
 
-This function executes all entries in the SchedulerDB.
+Executes all entries in the SchedulerDB.
 
     my $Success = $UnitTestSchedulerObject->Execute(
         Type => 'AsynchronousExecutor', # optional
@@ -99,36 +92,35 @@ sub Execute {
 
     my $SchedulerDBObject = $Kernel::OM->Get('Kernel::System::Daemon::SchedulerDB');
 
-    my @ExecuteTasks = $SchedulerDBObject->TaskList(
+    my @Tasks = $SchedulerDBObject->TaskList(
         Type => $Param{Type},
     );
 
-    for my $ExecuteTask (@ExecuteTasks) {
-
-        my %ExecuteTask = $SchedulerDBObject->TaskGet(
-            TaskID => $ExecuteTask->{TaskID},
+    for my $Task (@Tasks) {
+        my %Task = $SchedulerDBObject->TaskGet(
+            TaskID => $Task->{TaskID},
         );
 
         my $TaskHandlerObject
-            = $Kernel::OM->Get( 'Kernel::System::Daemon::DaemonModules::SchedulerTaskWorker::' . $ExecuteTask{Type} );
+            = $Kernel::OM->Get( 'Kernel::System::Daemon::DaemonModules::SchedulerTaskWorker::' . $Task{Type} );
 
         $TaskHandlerObject->Run(
-            TaskID   => $ExecuteTask{TaskID},
-            TaskName => $ExecuteTask{Name},
-            Data     => $ExecuteTask{Data},
+            TaskID   => $Task{TaskID},
+            TaskName => $Task{Name},
+            Data     => $Task{Data},
         );
 
         $SchedulerDBObject->TaskDelete(
-            TaskID => $ExecuteTask{TaskID},
+            TaskID => $Task{TaskID},
         );
     }
 
     return 1;
 }
 
-=item CheckCount()
+=head2 CheckCount()
 
-This function checks the count of the entries in the SchedulerDB.
+Checks the count of the entries in the SchedulerDB.
 
     my $Success = $UnitTestSchedulerObject->CheckCount(
         UnitTestObject => $Self,
@@ -145,10 +137,8 @@ sub CheckCount {
     my $SchedulerDBObject = $Kernel::OM->Get('Kernel::System::Daemon::SchedulerDB');
     my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(Count UnitTestObject)) {
-
         next NEEDED if defined $Param{$Needed};
 
         $LogObject->Log(
@@ -163,10 +153,10 @@ sub CheckCount {
     );
 
     if ( $Param{Type} ) {
-        $Param{Message} ||= "$Param{Count} '$Param{Type}' tasks added";
+        $Param{Message} //= "$Param{Count} '$Param{Type}' tasks added";
     }
     else {
-        $Param{Message} ||= "$Param{Count} tasks added";
+        $Param{Message} //= "$Param{Count} tasks added";
     }
 
     return $Param{UnitTestObject}->Is(
@@ -177,15 +167,3 @@ sub CheckCount {
 }
 
 1;
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

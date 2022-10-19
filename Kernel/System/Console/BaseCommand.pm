@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,7 +22,6 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
     'Kernel::System::Encode',
-    'Kernel::System::Main',
 );
 
 our $SuppressANSI = 0;
@@ -697,7 +697,7 @@ sub TableOutput {
         }
     }
 
-    Row:
+    ROW:
     for my $Row ( @{ $Param{TableData}->{Body} } ) {
 
         next ROW if !$Row;
@@ -908,8 +908,12 @@ sub _ParseCommandlineArguments {
 
     my %OptionValues;
 
+    my %KnownOptions;
+
     OPTION:
     for my $Option ( @{ $Self->{_Options} // [] }, @{ $Self->{_GlobalOptions} } ) {
+        $KnownOptions{ '--' . $Option->{Name} } = 1;
+
         my $Lookup = $Option->{Name};
         if ( $Option->{HasValue} ) {
             $Lookup .= '=s';
@@ -973,6 +977,14 @@ sub _ParseCommandlineArguments {
 
             $OptionValues{ $Option->{Name} } = $Value;
         }
+    }
+
+    # Check for remaining known options that could not be parsed.
+    my @RemainingKnownOptions = grep { exists $KnownOptions{$_} } @{$Arguments};
+    if (@RemainingKnownOptions) {
+        my $OptionsString = join ', ', sort @RemainingKnownOptions;
+        $Self->PrintError("the following options have an unexpected or missing value: $OptionsString.");
+        return;
     }
 
     my %ArgumentValues;

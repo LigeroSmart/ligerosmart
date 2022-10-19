@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -103,7 +104,6 @@ sub Run {
         Accounts            => '_AccountsView',
         GetObjectLog        => '_GetObjectLog',
         GetCommunicationLog => '_GetCommunicationLog',
-        MailQueueResend     => '_MailQueueResend',
     );
 
     my $Subaction = $Self->{Subaction};
@@ -118,29 +118,6 @@ sub Run {
         Action        => $Subaction,
         Communication => $Communication,
     );
-}
-
-sub _MailQueueResend {
-    my ( $Self, %Param ) = @_;
-
-    use JSON;
-
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    # my $CommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Maint::Email::MailQueue');
-    # my $ExitCode = $CommandObject->Execute( '--send', '--force' );
-    my $ConsoleOutput = `otrs.Console.pl Maint::Email::MailQueue --send --force 2>&1`;
-    $ConsoleOutput =~ s/^\s+|\s+$//g;
-
-    my $Output; 
-
-    $Output = $LayoutObject->Attachment(
-        ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
-        Content     => '{ "message": '. encode_json($ConsoleOutput) .' }',
-        Type        => 'inline',
-        NoCache     => 1,
-    );
-
-    return $Output;
 }
 
 sub _ShowOverview {

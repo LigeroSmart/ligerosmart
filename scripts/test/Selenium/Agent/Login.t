@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,10 +26,10 @@ for my $SessionID ( $AuthSessionObject->GetAllSessionIDs() ) {
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # Disable autocomplete in login form.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'DisableLoginAutocomplete',
             Value => 1,
         );
@@ -37,7 +38,7 @@ $Selenium->RunTest(
 
         # Create test users.
         for ( 0 .. 2 ) {
-            my $TestUserLogin = $Helper->TestUserCreate(
+            my $TestUserLogin = $HelperObject->TestUserCreate(
                 Groups => [ 'admin', 'users' ],
             ) || die "Did not get test user";
 
@@ -57,7 +58,7 @@ $Selenium->RunTest(
         my $CONTROLInstalled = $Kernel::OM->Get('Kernel::System::OTRSBusiness')->OTRSCONTROLIsInstalled();
 
         for my $Disabled ( reverse 0 .. 1 ) {
-            $Helper->ConfigSettingChange(
+            $HelperObject->ConfigSettingChange(
                 Key   => 'Secure::DisableBanner',
                 Value => $Disabled,
             );
@@ -219,7 +220,7 @@ $Selenium->RunTest(
             );
         }
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'AgentSessionLimitPriorWarning',
             Value => 1,
         );
@@ -248,7 +249,7 @@ $Selenium->RunTest(
         );
 
         # Enable autocomplete in login form.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'DisableLoginAutocomplete',
             Value => 0,
         );
@@ -256,7 +257,7 @@ $Selenium->RunTest(
         $Element = $Selenium->find_element( 'a#LogoutButton', 'css' );
         $Element->VerifiedClick();
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'AgentSessionPerUserLimit',
             Value => 1,
         );
@@ -288,7 +289,7 @@ $Selenium->RunTest(
             "AgentSessionPerUserLimit is reached.",
         );
 
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'AgentSessionLimit',
             Value => 2,
         );
@@ -311,7 +312,7 @@ $Selenium->RunTest(
         );
 
         # Check if login works with a higher limit and that the webservice sessions have no influence on the limit.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'AgentSessionLimit',
             Value => 3,
         );

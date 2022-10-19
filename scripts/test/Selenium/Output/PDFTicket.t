@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - scripts/test/Selenium/Output/PDFTicket.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -27,31 +26,31 @@ if ( $Selenium->{browser_name} ne 'firefox' ) {
 $Selenium->RunTest(
     sub {
 
-        my $Helper   = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-        my $RandomID = $Helper->GetRandomID();
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $RandomID     = $HelperObject->GetRandomID();
 
         # Do not check email addresses.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'CheckEmailAddresses',
             Value => 0,
         );
 
         # Enable ticket Responsible feature.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Responsible',
             Value => 1
         );
 
         # Enable ticket Type feature.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Type',
             Value => 1
         );
 
         # Enable ticket service feature.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
             Value => 1
@@ -73,50 +72,11 @@ $Selenium->RunTest(
             $QueueID,
             "Created QueueID $QueueID"
         );
-# ---
-# ITSMCore
-# ---
-
-# get the list of service types from general catalog
-my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::Service::Type',
-);
-
-# build a lookup hash
-my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
-
-# get the list of sla types from general catalog
-my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::SLA::Type',
-);
-
-# build a lookup hash
-my %SLATypeName2ID = reverse %{ $SLATypeList };
-
-# Get the current setting for customer ticket print
-my %CustomerTicketPrintSysConfig = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
-    Name => 'CustomerFrontend::Module###CustomerTicketPrint',
-);
-
-# Make sure CustomerTicket print is enabled.
-$Helper->ConfigSettingChange(
-    Valid => 1,
-    Key   => 'CustomerFrontend::Module###CustomerTicketPrint',
-    Value => $CustomerTicketPrintSysConfig{EffectiveValue},
-);
-
-# ---
 
         # Create Service.
         my $ServiceName = 'Servi' . $RandomID;
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
-# ---
-# ITSMCore
-# ---
-            TypeID      => $ServiceTypeName2ID{Training},
-            Criticality => '3 normal',
-# ---
             ValidID => 1,
             Comment => 'Selenium Service',
             UserID  => 1,
@@ -131,21 +91,11 @@ $Helper->ConfigSettingChange(
         my $SLAID   = $Kernel::OM->Get('Kernel::System::SLA')->SLAAdd(
             ServiceIDs        => [$ServiceID],
             Name              => $SLAName,
-# ---
-# ITSMCore
-# ---
-            TypeID => $SLATypeName2ID{Other},
-# ---
             FirstResponseTime => 50,
             UpdateTime        => 100,
             SolutionTime      => 200,
             ValidID           => 1,
             Comment           => 'Selenium SLA',
-# ---
-# ITSMCore
-# ---
-            TypeID            => $ServiceTypeName2ID{Training},
-# ---
             UserID            => 1,
         );
         $Self->True(
@@ -171,7 +121,7 @@ $Helper->ConfigSettingChange(
         for my $UserCount ( 1 .. 2 ) {
 
             # Create test User and login.
-            my $TestUserLogin = $Helper->TestUserCreate(
+            my $TestUserLogin = $HelperObject->TestUserCreate(
                 Groups => ['users'],
             ) || die "Did not get test user";
 
@@ -333,7 +283,7 @@ $Helper->ConfigSettingChange(
         }
 
         # Create Dynamic Fields.
-        my $RandomNumber = substr $Helper->GetRandomNumber(), -7;
+        my $RandomNumber = substr $HelperObject->GetRandomNumber(), -7;
         my %DynamicFields = (
             Dropdown => {
                 Name       => 'DFDropdown' . $RandomNumber,
@@ -438,7 +388,7 @@ $Helper->ConfigSettingChange(
         }
 
         # Enable created DynamicFields to be visible in AgentTicketPrint.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::AgentTicketPrint###DynamicField',
             Value => {
@@ -449,7 +399,7 @@ $Helper->ConfigSettingChange(
         );
 
         # Enable created DynamicFields to be visible in CustomerTicketPrint.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::CustomerTicketPrint###DynamicField',
             Value => {
@@ -460,7 +410,7 @@ $Helper->ConfigSettingChange(
         );
 
         # Enable Ticket attributes in CustomerTicketZoom screen => CustomerTicketPrint.
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Frontend::CustomerTicketZoom###AttributesView',
             Value => {
@@ -507,7 +457,7 @@ $Helper->ConfigSettingChange(
         );
 
         # Create test User and login.
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
@@ -1118,15 +1068,6 @@ $Helper->ConfigSettingChange(
                 Bind    => $SLAID,
                 Message => "SLAID $SLAID is deleted",
             },
-# ---
-# ITSMCore
-# ---
-            {
-                SQL     => "DELETE FROM service_preferences WHERE service_id = ?",
-                Bind    => $ServiceID,
-                Message => "Service preferences for $ServiceID is deleted",
-            },
-# ---
             {
                 SQL     => "DELETE FROM service WHERE id = ?",
                 Bind    => $ServiceID,

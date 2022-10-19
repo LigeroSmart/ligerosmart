@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +26,7 @@ $Kernel::OM->ObjectParamAdd(
         SkipSSLVerify => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 my $DebuggerObject = Kernel::GenericInterface::Debugger->new(
     DebuggerConfig => {
@@ -304,14 +305,16 @@ for my $Fail ( 0 .. 1 ) {
             ResultSuccess => 1,
         },
         {
-            Name          => "TransportObject (Fail $Fail) ProviderGenerateResponse() wrong data scalar",
+            Name          => "TransportObject (Fail $Fail) ProviderGenerateResponse() scalar data",
             Data          => 'testdata',
-            ResultSuccess => 0,
+            ResultData    => 'testdata',
+            ResultSuccess => 1,
         },
         {
-            Name          => "TransportObject (Fail $Fail) ProviderGenerateResponse() wrong data listref",
+            Name          => "TransportObject (Fail $Fail) ProviderGenerateResponse() arrayref data",
             Data          => ['testdata'],
-            ResultSuccess => 0,
+            ResultData    => '',
+            ResultSuccess => 1,
         },
     );
 

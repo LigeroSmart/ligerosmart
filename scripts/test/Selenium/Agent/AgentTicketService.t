@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/AgentTicketService.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,24 +20,24 @@ $Selenium->RunTest(
     sub {
 
         # get needed objects
-        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
         # do not check email addresses
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Key   => 'CheckEmailAddresses',
             Value => 0,
         );
 
         # enable ticket service feature
-        $Helper->ConfigSettingChange(
+        $HelperObject->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
             Value => 1
         );
 
         # create test user and login
-        my $TestUserLogin = $Helper->TestUserCreate(
+        my $TestUserLogin = $HelperObject->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
@@ -55,17 +54,11 @@ $Selenium->RunTest(
         my @ServiceIDs;
         my @ServiceNames;
         for my $Service (qw(Parent Child)) {
-            my $ServiceName = $Service . 'Service' . $Helper->GetRandomID();
+            my $ServiceName = $Service . 'Service' . $HelperObject->GetRandomID();
             my $ServiceID   = $ServiceObject->ServiceAdd(
                 Name    => $ServiceName,
                 ValidID => 1,
                 Comment => 'Selenium Test',
-# ---
-# ITSMCore
-# ---
-                TypeID      => 1,
-                Criticality => '3 normal',
-# ---
                 UserID  => 1,
             );
             $Self->True(
@@ -82,12 +75,6 @@ $Selenium->RunTest(
             Name      => $ServiceNames[1],
             ParentID  => $ServiceIDs[0],
             ValidID   => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
             UserID    => 1,
         );
         $Self->True(
@@ -101,12 +88,6 @@ $Selenium->RunTest(
             ServiceID => $ServiceIDs[0],
             Name      => $ServiceNames[0],
             ValidID   => 2,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
             UserID    => 1,
         );
         $Self->True(

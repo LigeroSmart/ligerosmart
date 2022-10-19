@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -31,20 +32,20 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Data Event Config)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(Data Event Config)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!"
+                Message  => "Need $Needed!"
             );
             return;
         }
     }
-    for (qw(TicketID)) {
-        if ( !$Param{Data}->{$_} ) {
+    for my $Needed (qw(TicketID)) {
+        if ( !$Param{Data}->{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_ in Data!"
+                Message  => "Need $Needed in Data!"
             );
             return;
         }
@@ -72,7 +73,7 @@ sub Run {
     return if !%Ticket;
 
     # only set the pending time to 0 if it's actually set
-    return 1 if !$Ticket{UntilTime};
+    return 1 if !defined $Ticket{UntilTime};
 
     # only set the pending time to 0 if the new state is NOT a pending state
     return 1 if $Ticket{StateType} eq $PendingReminderStateType;

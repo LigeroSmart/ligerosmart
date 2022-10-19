@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -594,36 +595,31 @@ sub Run {
             );
         }
 
-        my @StatesBypass = @{ $ConfigObject->Get('Ticket::NextState::Bypass') };
+        # set state
+        my $NextState = $Config->{StateDefault} || 'open';
+        if ( $GetParam{StateID} && $Config->{State} ) {
+            my %NextStateData = $StateObject->StateGet( ID => $GetParam{StateID} );
+            $NextState = $NextStateData{Name};
+        }
 
-        if(!(grep {$_ eq $Ticket{State}} @StatesBypass)) {
+        # change state if
+        # customer set another state
+        # or the ticket is not new
+        if ( $Ticket{StateType} !~ /^new/ || $GetParam{StateID} ) {
+            $TicketObject->StateSet(
+                TicketID => $Self->{TicketID},
+                State    => $NextState,
+                UserID   => $ConfigObject->Get('CustomerPanelUserID'),
+            );
 
-          # set state
-          my $NextState = $Config->{StateDefault} || 'open';
-          if ( $GetParam{StateID} && $Config->{State} ) {
-              my %NextStateData = $StateObject->StateGet( ID => $GetParam{StateID} );
-              $NextState = $NextStateData{Name};
-          }
-
-          # change state if
-          # customer set another state
-          # or the ticket is not new
-          if ( $Ticket{StateType} !~ /^new/ || $GetParam{StateID} ) {
-              $TicketObject->StateSet(
-                  TicketID => $Self->{TicketID},
-                  State    => $NextState,
-                  UserID   => $ConfigObject->Get('CustomerPanelUserID'),
-              );
-
-              # set unlock on close state
-              if ( $NextState =~ /^close/i ) {
-                  $TicketObject->TicketLockSet(
-                      TicketID => $Self->{TicketID},
-                      Lock     => 'unlock',
-                      UserID   => $ConfigObject->Get('CustomerPanelUserID'),
-                  );
-              }
-          }
+            # set unlock on close state
+            if ( $NextState =~ /^close/i ) {
+                $TicketObject->TicketLockSet(
+                    TicketID => $Self->{TicketID},
+                    Lock     => 'unlock',
+                    UserID   => $ConfigObject->Get('CustomerPanelUserID'),
+                );
+            }
         }
 
         # set priority
@@ -1007,10 +1003,6 @@ sub _Mask {
 
     # ticket accounted time
     if ( $Config->{ZoomTimeDisplay} ) {
-		$Param{TicketTimeUnits} = $LayoutObject->CustomerAge(
-			Age   => $Param{TicketTimeUnits} * 60,
-			Space => ' '
-		);
         $LayoutObject->Block(
             Name => 'TicketTimeUnits',
             Data => \%Param,
@@ -1354,7 +1346,7 @@ sub _Mask {
                     Title                       => $ValueStrg->{Title},
                     Link                        => $DynamicFieldConfig->{Config}->{Link},
                     LinkPreview                 => $DynamicFieldConfig->{Config}->{LinkPreview},
-                    $DynamicFieldConfig->{Name} => $ValueStrg->{Value},
+                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
                 },
             );
         }

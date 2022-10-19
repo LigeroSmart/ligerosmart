@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -64,15 +65,17 @@ Retrieve a new session id value.
 
     my $Result = $OperationObject->Run(
         Data => {
-            UserLogin         => 'Agent1',
+            UserLogin         => 'Agent1',          # optional, provide UserLogin or CustomerUserLogin
+            # or
             CustomerUserLogin => 'Customer1',       # optional, provide UserLogin or CustomerUserLogin
+
             Password          => 'some password',   # plain text password
         },
     );
 
     $Result = {
-        Success      => 1,                                # 0 or 1
-        ErrorMessage => '',                               # In case of an error
+        Success      => 1,                          # 0 or 1
+        ErrorMessage => '',                         # In case of an error
         Data         => {
             SessionID => $SessionID,
         },
@@ -80,36 +83,6 @@ Retrieve a new session id value.
 
 =cut
 
-=pod
-@api {post} /session/create Create session.
-@apiName Create
-@apiGroup Session
-@apiVersion 1.0.0
-
-@apiExample Example usage:
-  {
-    "UserLogin": "root@localhost",
-    "Password": "ligero"
-  }
-
-@apiParam (Request body) {String} UserLogin User login to create sesssion.
-@apiParam (Request body) {String} Password Password to create session.
-
-@apiErrorExample {json} Error example:
-  HTTP/1.1 200 Success
-  {
-    "Error": {
-      "ErrorCode": "SessionCreate.AuthFail",
-      "ErrorMessage": "SessionCreate: Authorization failing!"
-    }
-  }
-@apiSuccessExample {json} Success example:
-  HTTP/1.1 200 Success
-  {
-    "UserID": 1,
-    "SessionID": "a0uShqmDGXkiSyPRjmFnPH2vRH4yPc8J"
-  }
-=cut
 sub Run {
     my ( $Self, %Param ) = @_;
 

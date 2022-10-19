@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Ticket/TicketACL.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -34,20 +33,20 @@ $Kernel::OM->ObjectParamAdd(
         UseTmpArticleDir => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # set valid options
 my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
 %ValidList = reverse %ValidList;
 
 # set user options
-my ( $UserLogin, $UserID ) = $Helper->TestUserCreate(
+my ( $UserLogin, $UserID ) = $HelperObject->TestUserCreate(
     Groups => ['admin'],
 );
 my %UserData = $UserObject->GetUserData(
     UserID => $UserID,
 );
-my ( $NewUserLogin, $NewUserID ) = $Helper->TestUserCreate(
+my ( $NewUserLogin, $NewUserID ) = $HelperObject->TestUserCreate(
     Groups => ['admin'],
 );
 my %NewUserData = $UserObject->GetUserData(
@@ -55,21 +54,21 @@ my %NewUserData = $UserObject->GetUserData(
 );
 
 # set customer user options
-my $CustomerUserLogin = $Helper->TestCustomerUserCreate()
+my $CustomerUserLogin = $HelperObject->TestCustomerUserCreate()
     || die "Did not get test customer user";
 
 my %CustomerUserData = $CustomerUserObject->CustomerUserDataGet(
     User => $CustomerUserLogin,
 );
 
-my $NewCustomerUserLogin = $Helper->TestCustomerUserCreate()
+my $NewCustomerUserLogin = $HelperObject->TestCustomerUserCreate()
     || die "Did not get test customer user";
 
 my %NewCustomerUserData = $CustomerUserObject->CustomerUserDataGet(
     User => $NewCustomerUserLogin,
 );
 
-my $RandomID = $Helper->GetRandomID();
+my $RandomID = $HelperObject->GetRandomID();
 
 # set queue options
 my $QueueName = 'Queue_' . $RandomID;
@@ -107,37 +106,11 @@ $Self->True(
     $NewQueueID,
     "QueueAdd() ID ($NewQueueID) added successfully"
 );
-# ---
-# ITSMCore
-# ---
-
-# get the list of service types from general catalog
-my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::Service::Type',
-);
-
-# build a lookup hash
-my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
-
-# get the list of sla types from general catalog
-my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-    Class => 'ITSM::SLA::Type',
-);
-
-# build a lookup hash
-my %SLATypeName2ID = reverse %{ $SLATypeList };
-# ---
 
 # set service options
 my $ServiceName = 'Service_' . $RandomID;
 my $ServiceID   = $ServiceObject->ServiceAdd(
     Name    => $ServiceName,
-# ---
-# ITSMCore
-# ---
-    TypeID      => $ServiceTypeName2ID{Training},
-    Criticality => '3 normal',
-# ---
     ValidID => $ValidList{'valid'},
     UserID  => 1,
 );
@@ -151,12 +124,6 @@ $Self->True(
 my $NewServiceName = 'NewService_' . $RandomID;
 my $NewServiceID   = $ServiceObject->ServiceAdd(
     Name    => $NewServiceName,
-# ---
-# ITSMCore
-# ---
-    TypeID      => $ServiceTypeName2ID{Training},
-    Criticality => '3 normal',
-# ---
     ValidID => $ValidList{'valid'},
     UserID  => 1,
 );
@@ -225,11 +192,6 @@ $Self->True(
 my $SLAName = 'SLA_' . $RandomID;
 my $SLAID   = $SLAObject->SLAAdd(
     Name    => $SLAName,
-# ---
-# ITSMCore
-# ---
-    TypeID => $SLATypeName2ID{Other},
-# ---
     ValidID => $ValidList{'valid'},
     UserID  => 1,
 );
@@ -243,11 +205,6 @@ $Self->True(
 my $NewSLAName = 'NewSLA_' . $RandomID;
 my $NewSLAID   = $SLAObject->SLAAdd(
     Name    => $NewSLAName,
-# ---
-# ITSMCore
-# ---
-    TypeID => $SLATypeName2ID{Other},
-# ---
     ValidID => $ValidList{'valid'},
     UserID  => 1,
 );

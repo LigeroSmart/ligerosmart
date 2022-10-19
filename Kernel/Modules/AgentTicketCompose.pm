@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -65,9 +66,10 @@ sub Run {
     }
 
     # get needed objects
-    my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
-    my $TicketObject  = $Kernel::OM->Get('Kernel::System::Ticket');
-    my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $TicketObject    = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $ArticleObject   = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+    my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
     my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Email' );
 
@@ -189,7 +191,7 @@ sub Run {
 
     # get params
     my %GetParam;
-    for (
+    for my $Needed (
         qw(
         To Cc Bcc Subject Body InReplyTo References ResponseID ReplyArticleID StateID ArticleID
         IsVisibleForCustomerPresent IsVisibleForCustomer TimeUnits Year Month Day Hour Minute FormID ReplyAll
@@ -197,7 +199,7 @@ sub Run {
         )
         )
     {
-        $GetParam{$_} = $ParamObject->GetParam( Param => $_ );
+        $GetParam{$Needed} = $ParamObject->GetParam( Param => $Needed );
     }
 
     # Make sure sender is correct one. See bug#14872 ( https://bugs.otrs.org/show_bug.cgi?id=14872 ).
@@ -1294,18 +1296,41 @@ sub Run {
             NoCache     => 1,
         );
     }
+    elsif ( $Self->{Subaction} eq 'CheckSubject' ) {
+
+        # Inform a user that article subject will be empty if contains only the ticket hook (if nothing is modified).
+        my $Message = $LayoutObject->{LanguageObject}->Translate(
+            'Article subject will be empty if the subject contains only the ticket hook!'
+        );
+
+        my $Subject = $ParamObject->GetParam( Param => 'Subject' );
+
+        my $CleanedSubject = $TicketObject->TicketSubjectClean(
+            TicketNumber => $Ticket{TicketNumber},
+            Subject      => $Subject,
+        );
+
+        my $Empty = !length $CleanedSubject;
+
+        my $JSON = $LayoutObject->JSONEncode(
+            Data => {
+                Empty   => $Empty ? 1 : 0,
+                Message => $Message,
+            }
+        );
+
+        return $LayoutObject->Attachment(
+            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
+            Content     => $JSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
     else {
         my $Output = $LayoutObject->Header(
             Value     => $Ticket{TicketNumber},
             Type      => 'Small',
             BodyClass => 'Popup',
-        );
-
-        # Inform a user that article subject will be empty if contains only the ticket hook (if nothing is modified).
-        $Output .= $LayoutObject->Notify(
-            Data => $LayoutObject->{LanguageObject}->Translate(
-                'Article subject will be empty if the subject contains only the ticket hook!'
-            ),
         );
 
         # get std attachment object
@@ -1316,8 +1341,8 @@ sub Run {
             my %AllStdAttachments = $StdAttachmentObject->StdAttachmentStandardTemplateMemberList(
                 StandardTemplateID => $GetParam{ResponseID},
             );
-            for ( sort keys %AllStdAttachments ) {
-                my %Data = $StdAttachmentObject->StdAttachmentGet( ID => $_ );
+            for my $ID ( sort keys %AllStdAttachments ) {
+                my %Data = $StdAttachmentObject->StdAttachmentGet( ID => $ID );
                 $UploadCacheObject->FormIDAddFile(
                     FormID      => $Self->{FormID},
                     Disposition => 'attachment',
@@ -1445,7 +1470,7 @@ sub Run {
             UploadCacheObject => $UploadCacheObject,
         );
 
-        my %SafetyCheckResult = $Kernel::OM->Get('Kernel::System::HTMLUtils')->Safety(
+        my %SafetyCheckResult = $HTMLUtilsObject->Safety(
             String => $Data{Body},
 
             # Strip out external content if BlockLoadingRemoteContent is enabled.
@@ -1461,23 +1486,17 @@ sub Run {
         $Data{Body} = $SafetyCheckResult{String};
 
         # restrict number of body lines if configured
+        my $ResponseQuoteMaxLines = $ConfigObject->Get('Ticket::Frontend::ResponseQuoteMaxLines');
         if (
-            $Data{Body}
-            && $ConfigObject->Get('Ticket::Frontend::ResponseQuoteMaxLines')
+            IsStringWithData( $Data{Body} )
+            && $ResponseQuoteMaxLines
             )
         {
-            my $MaxLines = $ConfigObject->Get('Ticket::Frontend::ResponseQuoteMaxLines');
-
-            # split body - one element per line
-            my @Body = split "\n", $Data{Body};
-
-            # only modify if body is longer than allowed
-            if ( scalar @Body > $MaxLines ) {
-
-                # splice to max. allowed lines and reassemble
-                @Body = @Body[ 0 .. ( $MaxLines - 1 ) ];
-                $Data{Body} = join "\n", @Body;
-            }
+            $Data{Body} = $HTMLUtilsObject->TruncateBodyQuote(
+                Body       => $Data{Body},
+                Limit      => $ResponseQuoteMaxLines,
+                HTMLOutput => $LayoutObject->{BrowserRichText},
+            ) // $Data{Body};
         }
 
         if ( $LayoutObject->{BrowserRichText} ) {
@@ -1486,6 +1505,7 @@ sub Run {
             # rewrap body if exists
             if ( $Data{Body} ) {
                 $Data{Body} =~ s/\t/ /g;
+
                 my $Quote = $LayoutObject->Ascii2Html(
                     Text           => $ConfigObject->Get('Ticket::Frontend::Quote') || '',
                     HTMLResultMode => 1,
@@ -1509,10 +1529,10 @@ sub Run {
                             ": $Data{CreateTime}<br/>" . $Data{Body};
                     }
 
-                    for (qw(Subject ReplyTo Reply-To Cc To From)) {
-                        if ( $Data{$_} ) {
-                            $Data{Body} = $LayoutObject->{LanguageObject}->Translate($_) .
-                                ": $Data{$_}<br/>" . $Data{Body};
+                    for my $Key (qw(Subject ReplyTo Reply-To Cc To From)) {
+                        if ( $Data{$Key} ) {
+                            $Data{Body} = $LayoutObject->{LanguageObject}->Translate($Key) .
+                                ": $Data{$Key}<br/>" . $Data{Body};
                         }
                     }
 
@@ -1534,6 +1554,7 @@ sub Run {
             # re-wrap body if exists
             if ( $Data{Body} ) {
                 $Data{Body} =~ s/\t/ /g;
+
                 my $Quote = $ConfigObject->Get('Ticket::Frontend::Quote');
                 if ($Quote) {
                     $Data{Body} =~ s/\n/\n$Quote /g;
@@ -1546,10 +1567,10 @@ sub Run {
                             ": $Data{CreateTime}\n" . $Data{Body};
                     }
 
-                    for (qw(Subject ReplyTo Reply-To Cc To From)) {
-                        if ( $Data{$_} ) {
-                            $Data{Body} = $LayoutObject->{LanguageObject}->Translate($_) .
-                                ": $Data{$_}\n" . $Data{Body};
+                    for my $Key (qw(Subject ReplyTo Reply-To Cc To From)) {
+                        if ( $Data{$Key} ) {
+                            $Data{Body} = $LayoutObject->{LanguageObject}->Translate($Key) .
+                                ": $Data{$Key}\n" . $Data{Body};
                         }
                     }
 
@@ -2252,20 +2273,9 @@ sub _Mask {
 
     # show time accounting box
     if ( $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {
-        if ( $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime') ) {
-            $LayoutObject->Block(
-                Name => 'TimeUnitsLabelMandatory',
-                Data => \%Param,
-            );
-            $Param{TimeUnitsRequired} = 'Validate_Required';
-        }
-        else {
-            $LayoutObject->Block(
-                Name => 'TimeUnitsLabel',
-                Data => \%Param,
-            );
-            $Param{TimeUnitsRequired} = '';
-        }
+        $Param{TimeUnitsBlock} = $LayoutObject->TimeUnits(
+            %Param,
+        );
         $LayoutObject->Block(
             Name => 'TimeUnits',
             Data => \%Param,

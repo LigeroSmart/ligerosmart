@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,11 +17,10 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
     'Kernel::System::DB',
-    'Kernel::System::Main',
     'Kernel::System::Log',
+    'Kernel::System::Main',
     'Kernel::System::Ticket::Article',
     'Kernel::System::Valid',
-    'Kernel::System::XML',
     'Kernel::System::YAML',
 );
 
@@ -486,17 +486,17 @@ sub ChannelList {
 
 Synchronize communication channels in the database with channel registration in configuration.
 
-    my $Result = $CommunicationChannelObject->ChannelSync(
+    my %Result = $CommunicationChannelObject->ChannelSync(
         UserID => 1,
     );
 
 Returns:
 
-    $Result = {
+    %Result = (
         ChannelsUpdated => [ 'Email', 'Phone' ],
         ChannelsAdded   => [ 'Chat' ],
         ChannelsInvalid => [ 'Internal' ],
-    };
+    );
 
 =cut
 

@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -32,10 +33,6 @@
                     <a href="[% Env("Baselink") %]Action=AgentNotificationView" title="[% Translate("View notifications") | html %]">
                         <i class="fa fa-flag-o"></i><strong>[% Translate("Notifications") | html %]</strong>
                     </a>
-                [% ELSE %]
-                    <a href="#" class="OTRSBusinessRequired" title="[% Translate("Notifications (OTRS Business Solution™)") | html %]">
-                        <i class="fa fa-flag-o"></i><strong>[% Translate("Notifications (OTRS Business Solution™)") | html %]</strong>
-                    </a>
                 [% END %]
                 [% RenderBlockStart("Login") %]
                     <a href="[% Env("Baselink") %]Action=AgentPreferences" title="[% Translate("Edit personal preferences") | html %]">
@@ -47,6 +44,10 @@
                         <i class="fa fa-power-off"></i><strong>[% Translate("Logout") | html %]</strong>
                     </a>
                 [% RenderBlockEnd("Logout") %]
+[% RenderBlockStart("LastViewsAvatar") %]
+                    <span>[% Translate("Last viewed") | html %]</span>
+                    [% Data.AvatarLastViewsHTML %]
+[% RenderBlockEnd("LastViewsAvatar") %]
                 </div>
             </li>
 [% RenderBlockStart("ToolBarItem") %]
@@ -95,5 +96,10 @@
                 <button type="button" class="DebugRTL">Simulate RTL</button>
             </li>
 [% RenderBlockEnd("DebugRTLButton") %]
+[% RenderBlockStart("LastViewsToolBar") %]
+            <div class="LastViewToolBar">
+                [% Data.ToolBarLastViewsHTML %]
+            </div>
+[% RenderBlockEnd("LastViewsToolBar") %]
         </ul>
     </div>

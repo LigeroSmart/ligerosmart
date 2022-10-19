@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -19,11 +20,12 @@ our @ObjectDependencies = (
     'Kernel::System::Cache',
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
+    'Kernel::System::DateTime',
     'Kernel::System::Encode',
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::SearchProfile',
-    'Kernel::System::DateTime',
+    'Kernel::System::Time',
     'Kernel::System::Valid',
 );
 
@@ -265,6 +267,68 @@ sub GetUserData {
 
     # out of office check
     if ( !$Param{NoOutOfOffice} ) {
+        my %AvailableInformationMessage;
+
+        for my $InformationName (qw(LoggedIn LoggedOut)) {
+            $AvailableInformationMessage{$InformationName} = $ConfigObject->Get(
+                'OutOfOffice::DisplayAgent' . $InformationName . 'Message'
+            );
+        }
+
+        if (%AvailableInformationMessage) {
+            my $SessionTable   = $ConfigObject->Get('SessionTable')   // 'sessions';
+            my $MaxSessionTime = $ConfigObject->Get('SessionMaxTime') // 57600;
+            my $SystemTime     = $Kernel::OM->Get('Kernel::System::Time')->SystemTime();
+            my $LastValidSessionTime = $SystemTime - $MaxSessionTime;
+
+            return if !$DBObject->Prepare(
+                SQL => "
+                    SELECT s2.data_value
+                    FROM   $SessionTable s1, $SessionTable s2
+                    WHERE  s1.data_key = 'UserEmail'
+                        AND s1.data_value LIKE ?
+                        AND s1.session_id = s2.session_id
+                        AND s2.data_key = 'UserLastRequest'
+                ",
+                Bind => [
+                    \$Preferences{UserEmail},
+                ],
+            );
+
+            my @UserLastRequests;
+            while ( my @Row = $DBObject->FetchrowArray() ) {
+                push @UserLastRequests, $Row[0];
+            }
+            @UserLastRequests = reverse sort @UserLastRequests;
+
+            my %AvailableInformation = (
+                LoggedIn  => 0,
+                LoggedOut => 0,
+            );
+
+            if (
+                $UserLastRequests[0]
+                && $UserLastRequests[0] > $LastValidSessionTime
+                )
+            {
+                $AvailableInformation{LoggedIn} = 1;
+            }
+
+            if ( !$AvailableInformation{LoggedIn} ) {
+                $AvailableInformation{LoggedOut} = 1;
+                $AvailableInformation{LoggedIn}  = 0;
+            }
+
+            INFORMATIONNAME:
+            for my $InformationName (qw(LoggedIn LoggedOut)) {
+                next INFORMATIONNAME if !$AvailableInformationMessage{$InformationName};
+                next INFORMATIONNAME if !$AvailableInformation{$InformationName};
+
+                $Preferences{LoggedStatusMessage} = $AvailableInformationMessage{$InformationName} . ' ';
+                $Data{UserFullname} .= ' ' . $AvailableInformationMessage{$InformationName} . ' ';
+            }
+        }
+
         if ( $Preferences{OutOfOffice} ) {
 
             my $CurrentTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
@@ -299,22 +363,24 @@ sub GetUserData {
                 Time  => '23:59:59',
             );
 
+            $Preferences{OutOfOfficeDaysRemaining}
+                = int( ( $TimeEndObj->ToEpoch() - $CurrentTimeObject->ToEpoch() ) / 60 / 60 / 24 );
+
             if ( $TimeStartObj < $CurrentTimeObject && $TimeEndObj > $CurrentTimeObject ) {
-                my $OutOfOfficeMessageTemplate =
-                    $ConfigObject->Get('OutOfOfficeMessageTemplate') || '*** out of office until %s (%s d left) ***';
-                my $TillDate = sprintf(
-                    '%04d-%02d-%02d',
-                    $Preferences{OutOfOfficeEndYear},
-                    $Preferences{OutOfOfficeEndMonth},
-                    $Preferences{OutOfOfficeEndDay}
-                );
-                my $Till = int( ( $TimeEndObj->ToEpoch() - $CurrentTimeObject->ToEpoch() ) / 60 / 60 / 24 );
-                $Preferences{OutOfOfficeMessage} = sprintf( $OutOfOfficeMessageTemplate, $TillDate, $Till );
-                $Data{UserFullname} .= ' ' . $Preferences{OutOfOfficeMessage};
+                my $OutOfficeMessage = $ConfigObject->Get('OutOfOffice::DisplayAgentOutOfOfficeMessage')
+                    // '*** out of office until ###EndYear###-###EndMonth###-###EndDay###/###DaysRemaining### d ***';
+
+                for my $CurrentAttribute (qw(StartYear StartMonth StartDay EndYear EndMonth EndDay DaysRemaining )) {
+                    my $ReplaceValue = $Preferences{ 'OutOfOffice' . $CurrentAttribute } // '';
+                    $OutOfficeMessage =~ s{\#\#\#$CurrentAttribute\#\#\#}{$ReplaceValue}g;
+                }
+
+                $Preferences{OutOfOfficeMessage} .= $OutOfficeMessage;
+                $Data{UserFullname}              .= ' ' . $OutOfficeMessage;
             }
 
             # Reduce CacheTTL to one hour for users that are out of office to make sure the cache expires timely
-            #   even if there is no update action.
+            # even if there is no update action.
             $CacheTTL = 60 * 60 * 1;
         }
     }
@@ -371,11 +437,11 @@ sub UserAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserFirstname UserLastname UserLogin UserEmail ValidID ChangeUserID)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(UserFirstname UserLastname UserLogin UserEmail ValidID ChangeUserID)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -516,18 +582,18 @@ sub UserUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID UserFirstname UserLastname UserLogin ValidID ChangeUserID)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(UserID UserFirstname UserLastname UserLogin ValidID ChangeUserID)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Needed!",
             );
             return;
         }
     }
 
-    # store old user information for later use
-    my %OldUserInformation = $Self->GetUserData(
+    # store old user login for later use
+    my $OldUserLogin = $Self->UserLookup(
         UserID => $Param{UserID},
     );
 
@@ -590,7 +656,7 @@ sub UserUpdate {
         next USERPREFERENCE if $UserPreference eq 'UserEmail' && !$Param{UserEmail};
 
         # Set user preferences.
-        # Native user data will not be overwriten (handeled by SetPreferences()).
+        # Native user data will not be overwritten (handled by SetPreferences()).
         $Self->SetPreferences(
             UserID => $Param{UserID},
             Key    => $UserPreference,
@@ -599,25 +665,15 @@ sub UserUpdate {
     }
 
     # update search profiles if the UserLogin changed
-    if ( lc $OldUserInformation{UserLogin} ne lc $Param{UserLogin} ) {
+    if ( lc $OldUserLogin ne lc $Param{UserLogin} ) {
         $Kernel::OM->Get('Kernel::System::SearchProfile')->SearchProfileUpdateUserLogin(
             Base         => 'TicketSearch',
-            UserLogin    => $OldUserInformation{UserLogin},
+            UserLogin    => $OldUserLogin,
             NewUserLogin => $Param{UserLogin},
         );
     }
 
     $Self->_UserCacheClear( UserID => $Param{UserID} );
-
-    # Do not clean permission cache if userlogin and valid id is the same
-    if ( 
-        (lc $OldUserInformation{UserLogin} eq lc $Param{UserLogin})
-         &&
-        ($Param{ValidID} eq $OldUserInformation{ValidID})
-       )
-    {
-           return 1;
-    }
 
     my $CacheObject            = $Kernel::OM->Get('Kernel::System::Cache');
     my $SystemPermissionConfig = $Kernel::OM->Get('Kernel::Config')->Get('System::Permission') || [];
@@ -717,9 +773,9 @@ sub UserSearch {
             Value => $Param{PostMasterSearch},
         );
 
-        for ( sort keys %UserID ) {
+        for my $UserID ( sort keys %UserID ) {
             my %User = $Self->GetUserData(
-                UserID => $_,
+                UserID => $UserID,
                 Valid  => $Param{Valid},
             );
             if (%User) {
@@ -1165,6 +1221,11 @@ sub UserList {
             my %User = $Self->GetUserData(
                 UserID => $UserID,
             );
+
+            if ( $User{LoggedStatusMessage} ) {
+                $Users{$UserID} .= ' ' . $User{LoggedStatusMessage};
+            }
+
             if ( $User{OutOfOfficeMessage} ) {
                 $Users{$UserID} .= ' ' . $User{OutOfOfficeMessage};
             }
@@ -1224,12 +1285,11 @@ set user preferences
 sub SetPreferences {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for (qw(Key UserID)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(Key UserID)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!"
+                Message  => "Need $Needed!"
             );
             return;
         }
@@ -1251,6 +1311,8 @@ sub SetPreferences {
 
     return 0 if $Blacklisted{ $Param{Key} };
 
+    $Self->_UserCacheClear( UserID => $Param{UserID} );
+
     # get current setting
     my %User = $Self->GetUserData(
         UserID        => $Param{UserID},
@@ -1262,8 +1324,6 @@ sub SetPreferences {
         if defined $User{ $Param{Key} }
         && defined $Param{Value}
         && $User{ $Param{Key} } eq $Param{Value};
-
-    $Self->_UserCacheClear( UserID => $Param{UserID} );
 
     # get user preferences config
     my $GeneratorModule = $Kernel::OM->Get('Kernel::Config')->Get('User::PreferencesModule')
@@ -1292,7 +1352,7 @@ sub _UserCacheClear {
     my @CacheKeys;
 
     # Delete cache for all possible FirstnameLastNameOrder settings as this might be overridden by users.
-    for my $FirstnameLastNameOrder ( 0 .. 8 ) {
+    for my $FirstnameLastNameOrder ( 0 .. 9 ) {
         for my $ActiveLevel1 ( 0 .. 1 ) {
             for my $ActiveLevel2 ( 0 .. 1 ) {
                 push @CacheKeys, (

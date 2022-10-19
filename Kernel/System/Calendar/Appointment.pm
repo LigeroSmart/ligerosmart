@@ -1,10 +1,12 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
+## nofilter(TidyAll::Plugin::Znuny::CodeStyle::DollarUnderscore)
 
 package Kernel::System::Calendar::Appointment;
 
@@ -131,7 +133,6 @@ Events:
 sub AppointmentCreate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(CalendarID Title StartTime EndTime UserID)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1082,6 +1083,110 @@ sub AppointmentGet {
     }
 
     return %Result;
+}
+
+=head2 AppointmentRecurringGet()
+
+Get data of all of an appointment's recurring appointments.
+
+    my @RecurringAppointments = $AppointmentObject->AppointmentRecurringGet(
+        AppointmentID => 1,                                  # (required)
+                                                             # or
+        UniqueID      => '20160101T160000-71E386@localhost', # (required)
+        CalendarID    => 1,                                  # (required)
+    );
+
+Returns an array:
+
+    @RecurringAppointment = (
+        {
+            AppointmentID       => 2,
+            ParentID            => 1,
+            CalendarID          => 1,
+            UniqueID            => '20160101T160000-71E386@localhost',
+            Title               => 'Webinar',
+            Description         => 'How to use Process tickets...',
+            Location            => 'Straubing',
+            StartTime           => '2016-01-01 16:00:00',
+            EndTime             => '2016-01-01 17:00:00',
+            AllDay              => 0,
+            TeamID              => [ 1 ],
+            ResourceID          => [ 1, 3 ],
+            Recurring           => 1,
+            RecurrenceType      => 'Daily',
+            RecurrenceFrequency => 1,
+            RecurrenceCount     => 1,
+            RecurrenceInterval  => 2,
+            RecurrenceUntil     => '2016-01-10 00:00:00',
+            RecurrenceID        => '2016-01-10 00:00:00',
+            RecurrenceExclude   => [
+                '2016-01-10 00:00:00',
+                '2016-01-11 00:00:00',
+            ],
+            NotificationTime                  => '2016-01-01 17:0:00',
+            NotificationTemplate              => 'Custom',
+            NotificationCustomUnitCount       => '12',
+            NotificationCustomUnit            => 'minutes',
+            NotificationCustomUnitPointOfTime => 'beforestart',
+
+            TicketAppointmentRuleID => '9bb20ea035e7a9930652a9d82d00c725',  # for ticket appointments only!
+            CreateTime              => '2016-01-01 00:00:00',
+            CreateBy                => 2,
+            ChangeTime              => '2016-01-01 00:00:00',
+            ChangeBy                => 2,
+        },
+        # ...
+    );
+
+=cut
+
+sub AppointmentRecurringGet {
+    my ( $Self, %Param ) = @_;
+
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # Fetch parent appointment.
+    my %Appointment = $Self->AppointmentGet(%Param);
+    return if !%Appointment;
+
+    my $AppointmentID = $Appointment{AppointmentID};
+
+    # Get IDs of recurring appointments.
+    my $SQL = '
+        SELECT id
+        FROM   calendar_appointment
+        WHERE  parent_id = ?
+    ';
+    my @Bind = (
+        \$AppointmentID,
+    );
+
+    return if !$DBObject->Prepare(
+        SQL  => $SQL,
+        Bind => \@Bind,
+    );
+
+    my %RecurringAppointmentIDs;
+    while ( my @Row = $DBObject->FetchrowArray() ) {
+        my $RecurringAppointmentID = $Row[0];
+        $RecurringAppointmentIDs{$RecurringAppointmentID} = 1;
+    }
+    return if !%RecurringAppointmentIDs;
+
+    my @RecurringAppointments;
+
+    RECURRINGAPPOINTMENTID:
+    for my $RecurringAppointmentID ( sort keys %RecurringAppointmentIDs ) {
+        my %RecurringAppointment = $Self->AppointmentGet(
+            AppointmentID => $RecurringAppointmentID,
+
+        );
+        next RECURRINGAPPOINTMENTID if !%RecurringAppointment;
+
+        push @RecurringAppointments, \%RecurringAppointment;
+    }
+
+    return @RecurringAppointments;
 }
 
 =head2 AppointmentUpdate()
@@ -2277,7 +2382,7 @@ sub _AppointmentRecurringCreate {
     elsif ( $Param{Appointment}->{RecurrenceCount} ) {
 
         COUNT:
-        for ( 1 .. $Param{Appointment}->{RecurrenceCount} - 1 ) {
+        for my $Count ( 1 .. $Param{Appointment}->{RecurrenceCount} - 1 ) {
             $Step += $Param{Appointment}->{RecurrenceInterval};
 
             # calculate recurring times
@@ -2499,6 +2604,19 @@ sub _CalculateRecurrenceTime {
     # We will modify this object throughout the function.
     my $CurrentTimeObject = $Param{CurrentTime};
 
+    # Use floating time zone to be able to add and subtract whole days, etc.
+    # regardless of daylight saving time.
+    #
+    # This might lead to other problems like calculating a time that does not exist,
+    # e.g. 2:00 AM on the day of the DST switch from winter to summer time in time zone
+    # Europe/Berlin (1:59 AM switches to 3:00 AM).
+    #
+    # Kernel::System::DateTime takes care of this by adjusting the date.
+    my $CurrentTimeObjectValues = $CurrentTimeObject->Get();
+    my $TimeZone                = $CurrentTimeObjectValues->{TimeZone};
+
+    $CurrentTimeObject->ToTimeZone( TimeZone => 'floating' );
+
     if ( $Param{Appointment}->{RecurrenceType} eq 'Daily' ) {
 
         # Add one day.
@@ -2574,7 +2692,7 @@ sub _CalculateRecurrenceTime {
         my $Found;
 
         # loop up to 7*n times (7 days in week * frequency)
-        LOOP:
+        DAY:
         for ( my $Counter = 0; $Counter < 7 * $Param{Appointment}->{RecurrenceInterval}; $Counter++ ) {
 
             # Add one day.
@@ -2587,14 +2705,14 @@ sub _CalculateRecurrenceTime {
                 OriginalTime => $OriginalTimeObject,
             );
 
-            next LOOP if $CWDiff % $Param{Appointment}->{RecurrenceInterval};
+            next DAY if $CWDiff % $Param{Appointment}->{RecurrenceInterval};
 
             my $WeekDay = $CurrentTimeObject->Get()->{DayOfWeek};
 
             # check if SystemTime match requirements
             if ( grep { $WeekDay == $_ } @{ $Param{Appointment}->{RecurrenceFrequency} } ) {
                 $Found = 1;
-                last LOOP;
+                last DAY;
             }
         }
 
@@ -2703,6 +2821,8 @@ sub _CalculateRecurrenceTime {
     else {
         return;
     }
+
+    $CurrentTimeObject->ToTimeZone( TimeZone => $TimeZone );
 
     return $CurrentTimeObject;
 }

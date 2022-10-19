@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -82,6 +83,20 @@ sub Run {
         # check required parameters
         my %Error;
         if ( !$GetParam->{Name} ) {
+
+            # add server error error class
+            $Error{NameServerError}        = 'ServerError';
+            $Error{NameServerErrorMessage} = Translatable('This field is required');
+        }
+
+        if ( !$GetParam->{Config}->{Scope} ) {
+
+            # add server error error class
+            $Error{NameServerError}        = 'ServerError';
+            $Error{NameServerErrorMessage} = Translatable('This field is required');
+        }
+
+        if ( $GetParam->{Config}->{Scope} eq 'Process' && !$GetParam->{Config}->{ScopeEntityID} ) {
 
             # add server error error class
             $Error{NameServerError}        = 'ServerError';
@@ -422,10 +437,13 @@ sub _GetTransitionConfig {
 sub _ShowEdit {
     my ( $Self, %Param ) = @_;
 
+    my $LayoutObject     = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $TransitionObject = $Kernel::OM->Get('Kernel::System::ProcessManagement::Transition');
+
     # get Transition information
     my $TransitionData = $Param{TransitionData} || {};
 
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my %TransitionValidationTypeList = $TransitionObject->TransitionValidationTypeList();
 
     # check if last screen action is main screen
     if ( $Self->{ScreensPath}->[-1]->{Action} eq 'AdminProcessManagement' ) {
@@ -466,6 +484,37 @@ sub _ShowEdit {
         Type  => 'Small',
     );
 
+    $Param{ScopeSelection} = $LayoutObject->BuildSelection(
+        Data => {
+            Global  => 'Global',
+            Process => 'Process',
+        },
+        Name           => 'Scope',
+        ID             => 'Scope',
+        SelectedID     => $TransitionData->{Config}->{Scope} || 'Global',
+        Sort           => 'IndividualKey',
+        SortIndividual => [ 'Global', 'Process' ],
+        Translation    => 1,
+        Class          => 'Modernize W50pc ',
+    );
+
+    my $ProcessList = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::Process')->ProcessList(
+        UserID      => 1,
+        UseEntities => 1,
+    );
+
+    my $GetParam = $Self->_GetParams();
+
+    $Param{ScopeEntityIDSelection} = $LayoutObject->BuildSelection(
+        Data        => $ProcessList,
+        Name        => 'ScopeEntityID',
+        ID          => 'ScopeEntityID',
+        SelectedID  => $TransitionData->{Config}->{ScopeEntityID} // $GetParam->{ProcessEntityID},
+        Sort        => 'AlphanumericValue',
+        Translation => 1,
+        Class       => 'Modernize W50pc ',
+    );
+
     $Param{FreshConditionLinking} = $LayoutObject->BuildSelection(
         Data => {
             'and' => Translatable('and'),
@@ -479,19 +528,15 @@ sub _ShowEdit {
     );
 
     $Param{FreshConditionFieldType} = $LayoutObject->BuildSelection(
-        Data => {
-            'String' => Translatable('String'),
-
-          # disable hash and array selection here, because there is no practical way to enter the needed data in the GUI
-          # TODO: implement a possibility to enter the data in a correct way in the GUI
-          #'Hash'   => 'Hash',
-          #'Array'  => 'Array',
-            'Regexp' => Translatable('Regular expression'),
-            'Module' => Translatable('Transition validation module')
-        },
-        SelectedID   => 'String',
-        Name         => "ConditionFieldType[_INDEX_][_FIELDINDEX_]",
-        Sort         => 'AlphanumericKey',
+        Data           => \%TransitionValidationTypeList,
+        SelectedID     => 'String',
+        Name           => "ConditionFieldType[_INDEX_][_FIELDINDEX_]",
+        Sort           => 'IndividualKey',
+        SortIndividual => [
+            'Module',   'Regexp',   'String',      'Equal',
+            'NotEqual', 'Contains', 'NotContains', 'GreaterThan',
+            'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual'
+        ],
         PossibleNone => 1,
         Class        => 'Validate_Required Modernize',
         Translation  => 1,
@@ -546,18 +591,14 @@ sub _ShowEdit {
 
                 my %FieldData          = %{ $ConditionData{Fields}->{$Field} };
                 my $ConditionFieldType = $LayoutObject->BuildSelection(
-                    Data => {
-                        'String' => Translatable('String'),
-
-          # disable hash and array selection here, because there is no practical way to enter the needed data in the GUI
-          # TODO: implement a possibility to enter the data in a correct way in the GUI
-          #'Hash'   => 'Hash',
-          #'Array'  => 'Array',
-                        'Regexp' => Translatable('Regular expression'),
-                        'Module' => Translatable('Transition validation module')
-                    },
-                    Name         => "ConditionFieldType[$Condition][$Field]",
-                    Sort         => 'AlphanumericKey',
+                    Data           => \%TransitionValidationTypeList,
+                    Name           => "ConditionFieldType[$Condition][$Field]",
+                    Sort           => 'IndividualKey',
+                    SortIndividual => [
+                        'Module',   'Regexp',   'String',      'Equal',
+                        'NotEqual', 'Contains', 'NotContains', 'GreaterThan',
+                        'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual'
+                    ],
                     Translation  => 1,
                     PossibleNone => 1,
                     Class        => 'Validate_Required Modernize',
@@ -620,18 +661,14 @@ sub _ShowEdit {
         );
 
         $Param{ConditionFieldType} = $LayoutObject->BuildSelection(
-            Data => {
-                'String' => Translatable('String'),
-
-          # disable hash and array selection here, because there is no practical way to enter the needed data in the GUI
-          # TODO: implement a possibility to enter the data in a correct way in the GUI
-          #'Hash'   => 'Hash',
-          #'Array'  => 'Array',
-                'Regexp' => Translatable('Regular expression'),
-                'Module' => Translatable('Transition validation module')
-            },
-            Name        => 'ConditionFieldType[_INDEX_][_FIELDINDEX_]',
-            Sort        => 'AlphanumericKey',
+            Data           => \%TransitionValidationTypeList,
+            Name           => 'ConditionFieldType[_INDEX_][_FIELDINDEX_]',
+            Sort           => 'IndividualKey',
+            SortIndividual => [
+                'Module',   'Regexp',   'String',      'Equal',
+                'NotEqual', 'Contains', 'NotContains', 'GreaterThan',
+                'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual'
+            ],
             Class       => 'Modernize',
             Translation => 1,
         );
@@ -664,17 +701,24 @@ sub _GetParams {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get parameters from web browser
-    $GetParam->{Name}            = $ParamObject->GetParam( Param => 'Name' ) || '';
-    $GetParam->{ConditionConfig} = $ParamObject->GetParam( Param => 'ConditionConfig' )
-        || '';
+    for my $ParamName (qw( Name ConditionConfig ProcessEntityID)) {
+        $GetParam->{$ParamName} = $ParamObject->GetParam( Param => $ParamName ) || '';
+    }
 
     my $Config = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
-        Data => $GetParam->{ConditionConfig}
+        Data => $GetParam->{ConditionConfig} || '{}',
     );
     $GetParam->{Config}                     = {};
     $GetParam->{Config}->{Condition}        = $Config;
     $GetParam->{Config}->{ConditionLinking} = $ParamObject->GetParam( Param => 'OverallConditionLinking' ) || '';
 
+    for my $ParamName (qw( Scope ScopeEntityID )) {
+        $GetParam->{Config}->{$ParamName} = $ParamObject->GetParam( Param => $ParamName ) || '';
+    }
+    $GetParam->{Config}->{Scope} //= 'Global';
+    if ( $GetParam->{Config}->{Scope} eq 'Global' ) {
+        delete $GetParam->{Config}->{ScopeEntityID};
+    }
     return $GetParam;
 }
 

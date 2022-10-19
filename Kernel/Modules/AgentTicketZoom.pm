@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -266,6 +267,14 @@ sub Run {
     my %Ticket = $TicketObject->TicketGet(
         TicketID      => $Self->{TicketID},
         DynamicFields => 1,
+    );
+
+    # Set ticket mentions as seen.
+    $TicketObject->TicketFlagSet(
+        TicketID => $Self->{TicketID},
+        Key      => 'MentionSeen',
+        Value    => 1,
+        UserID   => $Self->{UserID},
     );
 
     # get ACL restrictions
@@ -809,24 +818,6 @@ sub Run {
             Content     => $Article{Body},
         );
     }
-
-    my $LastHistory = $TicketObject->HistoryGetByTypeInterval(
-        TicketID     => $Self->{TicketID},
-        UserID      =>  $Self->{UserID},
-        HistoryType =>  'TicketViewed',
-        Interval => ($ConfigObject->Get('Ticket::TimeLogViewed') || '30')
-    );
-
-    #use Data::Dumper;
-    #die Dumper($LastHistory);
-
-    my $SuccessHistory = $TicketObject->HistoryAdd(
-        Name         => "Ticket Viewed: ticket viewd for UserId $Self->{UserID}",
-        HistoryType  => 'TicketViewed', # see system tables
-        TicketID     => $Self->{TicketID},
-        ArticleID    => $Self->{ArticleID} , # not required!
-        CreateUserID =>  $Self->{UserID},
-    ) if $LastHistory == 0 && $ConfigObject->Get('Ticket::LogViewedEnabled');
 
     # generate output
     my $Output = $LayoutObject->Header(
@@ -2087,17 +2078,6 @@ sub _ArticleTree {
     }
     elsif ( $Self->{ZoomTimeline} ) {
         $ArticleViewSelected = 'Timeline';
-    }
-
-    # Add disabled teaser option for OTRSBusiness timeline view
-    my $OTRSBusinessIsInstalled = $Kernel::OM->Get('Kernel::System::OTRSBusiness')->OTRSBusinessIsInstalled();
-    if ( !$OTRSBusinessIsInstalled ) {
-        push @ArticleViews, {
-            Key   => 'Timeline',
-            Value => $LayoutObject->{LanguageObject}
-                ->Translate( 'Show Ticket Timeline View (%s)', 'OTRS Business Solution™' ),
-            Disabled => 1,
-        };
     }
 
     my $ArticleViewStrg = $LayoutObject->BuildSelection(

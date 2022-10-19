@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,12 +19,12 @@ $Kernel::OM->ObjectParamAdd(
         RestoreDatabase => 1,
     },
 );
-my $Helper              = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject        = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $SystemAddressObject = $Kernel::OM->Get('Kernel::System::SystemAddress');
 my $QueueObject         = $Kernel::OM->Get('Kernel::System::Queue');
 
-my $QueueRand1 = $Helper->GetRandomID();
-my $QueueRand2 = $Helper->GetRandomID();
+my $QueueRand1 = $HelperObject->GetRandomID();
+my $QueueRand2 = $HelperObject->GetRandomID();
 
 my $QueueID1 = $QueueObject->QueueAdd(
     Name                => $QueueRand1,
@@ -60,7 +61,7 @@ my $QueueID2 = $QueueObject->QueueAdd(
 );
 
 # add SystemAddress
-my $SystemAddressEmail    = $Helper->GetRandomID() . '@example.com';
+my $SystemAddressEmail    = $HelperObject->GetRandomID() . '@example.com';
 my $SystemAddressRealname = "OTRS-Team";
 
 my %SystemAddressData = (
@@ -96,7 +97,7 @@ $Self->False(
 );
 
 # add SystemAddress
-my $SystemAddressEmail2    = $Helper->GetRandomID() . '@example.com';
+my $SystemAddressEmail2    = $HelperObject->GetRandomID() . '@example.com';
 my $SystemAddressRealname2 = "OTRS-Team2";
 my $SystemAddressID2       = $SystemAddressObject->SystemAddressAdd(
     Name     => $SystemAddressEmail2,
@@ -201,6 +202,46 @@ for my $Test (@Tests) {
         $QueueID,
         $Test->{QueueID},
         "SystemAddressQueueID() - $Test->{Address}",
+    );
+}
+
+# NameExistsCheck
+
+@Tests = (
+    {
+        Address  => uc($SystemAddressEmail),
+        Expected => 1,
+    },
+    {
+        Address  => lc($SystemAddressEmail),
+        Expected => 1,
+    },
+    {
+        Address  => $SystemAddressEmail,
+        Expected => 1,
+    },
+    {
+        Address  => '2' . $SystemAddressEmail,
+        Expected => 0,
+    },
+    {
+        Address  => ', ' . $SystemAddressEmail,
+        Expected => 0,
+    },
+    {
+        Address  => ')' . $SystemAddressEmail,
+        Expected => 0,
+    },
+);
+for my $Test (@Tests) {
+    my $Exists = $SystemAddressObject->NameExistsCheck(
+        Name => $Test->{Address},
+    );
+
+    $Self->Is(
+        $Exists,
+        $Test->{Expected},
+        "NameExistsCheck - $Test->{Address}",
     );
 }
 
@@ -322,6 +363,52 @@ $Self->False(
         This system address $SystemAddressID2 cannot be set to invalid,
         because it is used in one or more queue(s) or auto response(s)",
 );
+
+# SystemAddressLookup
+@Tests = (
+    {
+        Name => 'Lookup via Name',
+        Data => {
+            Name => '2' . $SystemAddressEmail,
+        },
+        Expected => $SystemAddressID,
+    },
+    {
+        Name => 'Lookup via Name',
+        Data => {
+            SystemAddress => '2' . $SystemAddressEmail,
+        },
+        Expected => $SystemAddressID,
+    },
+    {
+        Name => 'Lookup via ID',
+        Data => {
+            ID => $SystemAddressID
+        },
+        Expected => '2' . $SystemAddressEmail,
+    },
+    {
+        Name => 'Lookup via ID',
+        Data => {
+            SystemAddressID => $SystemAddressID
+        },
+        Expected => '2' . $SystemAddressEmail,
+    },
+);
+
+for my $Test (@Tests) {
+
+    my $Result = $SystemAddressObject->SystemAddressLookup(
+        %{ $Test->{Data} },
+    );
+
+    $Self->Is(
+        $Result,
+        $Test->{Expected},
+        $Test->{Name} . ' - SystemAddressLookup ' . $Result,
+    );
+
+}
 
 # Cleanup is done by RestoreDatabase.
 

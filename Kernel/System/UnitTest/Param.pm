@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::UnitTest::Param - Helper to unit test Params
+Kernel::System::UnitTest::Param - Helper to unit test the Param object
 
 =head1 SYNOPSIS
 
@@ -31,11 +31,7 @@ Functions to unit test Params
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -54,9 +50,9 @@ sub new {
     return $Self;
 }
 
-=item ParamUploadSet()
+=head2 ParamUploadSet()
 
-This function set an file path as a upload parameter for the param object.
+Sets a file path as an upload parameter for the Param object.
 
     my $Success = $UnitTestParamObject->ParamUploadSet(
         Name     => 'Upload',
@@ -75,7 +71,6 @@ sub ParamUploadSet {
     my $LogObject   = $Kernel::OM->Get('Kernel::System::Log');
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(Name Location)) {
         next NEEDED if defined $Param{$Needed};
@@ -89,10 +84,10 @@ sub ParamUploadSet {
 
     my $Name     = $Param{Name};
     my $Location = $Param{Location};
+
     my ( $Volume, $Directories, $Filename ) = File::Spec->splitpath($Location);
 
-    my $FH;
-    open( $FH, '<', $Location );    ## no critic
+    open( my $FH, '<', $Location );    ## no critic
 
     $ParamObject->{Query}->param(
         -name   => $Name,
@@ -102,9 +97,9 @@ sub ParamUploadSet {
     return 1;
 }
 
-=item ParamSet()
+=head2 ParamSet()
 
-This function set a parameter for the param object.
+Sets a parameter for the Param object.
 
     my $Success = $UnitTestParamObject->ParamSet(
         Name  => 'Upload',
@@ -123,7 +118,6 @@ sub ParamSet {
     my $LogObject   = $Kernel::OM->Get('Kernel::System::Log');
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # check needed stuff
     NEEDED:
     for my $Needed (qw(Name)) {
         next NEEDED if defined $Param{$Needed};
@@ -147,15 +141,3 @@ sub ParamSet {
 }
 
 1;
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

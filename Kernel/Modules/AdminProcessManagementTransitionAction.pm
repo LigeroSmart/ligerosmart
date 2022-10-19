@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -29,7 +30,10 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $ParamObject            = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject           = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $EntityObject           = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::Entity');
+    my $TransitionActionObject = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::TransitionAction');
 
     $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
 
@@ -44,11 +48,6 @@ sub Run {
     $Self->{ScreensPath} = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
         Data => $SessionData{ProcessManagementScreensPath}
     );
-
-    # get needed objects
-    my $LayoutObject           = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $EntityObject           = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::Entity');
-    my $TransitionActionObject = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::TransitionAction');
 
     # ------------------------------------------------------------ #
     # TransitionActionNew
@@ -76,9 +75,8 @@ sub Run {
         my $GetParam = $Self->_GetParams();
 
         # set new configuration
-        $TransitionActionData->{Name}             = $GetParam->{Name};
-        $TransitionActionData->{Config}->{Module} = $GetParam->{Module};
-        $TransitionActionData->{Config}->{Config} = $GetParam->{Config};
+        $TransitionActionData->{Name}   = $GetParam->{Name};
+        $TransitionActionData->{Config} = $GetParam->{Config};
 
         # check required parameters
         my %Error;
@@ -89,17 +87,31 @@ sub Run {
             $Error{NameServerErrorMessage} = Translatable('This field is required');
         }
 
-        if ( !$GetParam->{Module} ) {
+        if ( !$GetParam->{Config}->{Module} ) {
 
             # add server error error class
             $Error{ModuleServerError}        = 'ServerError';
             $Error{ModuleServerErrorMessage} = Translatable('This field is required');
         }
 
-        if ( !$GetParam->{Config} ) {
+        if ( !IsHashRefWithData( $GetParam->{Config}->{Config} ) ) {
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('At least one valid config parameter is required.'),
             );
+        }
+
+        if ( !$GetParam->{Config}->{Scope} ) {
+
+            # add server error error class
+            $Error{NameServerError}        = 'ServerError';
+            $Error{NameServerErrorMessage} = Translatable('This field is required');
+        }
+
+        if ( $GetParam->{Config}->{Scope} eq 'Process' && !$GetParam->{Config}->{ScopeEntityID} ) {
+
+            # add server error error class
+            $Error{NameServerError}        = 'ServerError';
+            $Error{NameServerErrorMessage} = Translatable('This field is required');
         }
 
         # if there is an error return to edit screen
@@ -128,7 +140,6 @@ sub Run {
         # otherwise save configuration and return process screen
         my $TransitionActionID = $TransitionActionObject->TransitionActionAdd(
             Name     => $TransitionActionData->{Name},
-            Module   => $TransitionActionData->{Module},
             EntityID => $EntityID,
             Config   => $TransitionActionData->{Config},
             UserID   => $Self->{UserID},
@@ -141,7 +152,7 @@ sub Run {
             );
         }
 
-        # set entitty sync state
+        # set entity sync state
         my $Success = $EntityObject->EntitySyncStateSet(
             EntityType => 'TransitionAction',
             EntityID   => $EntityID,
@@ -275,10 +286,9 @@ sub Run {
         my $GetParam = $Self->_GetParams();
 
         # set new configuration
-        $TransitionActionData->{Name}             = $GetParam->{Name};
-        $TransitionActionData->{EntityID}         = $GetParam->{EntityID};
-        $TransitionActionData->{Config}->{Module} = $GetParam->{Module};
-        $TransitionActionData->{Config}->{Config} = $GetParam->{Config};
+        $TransitionActionData->{Name}     = $GetParam->{Name};
+        $TransitionActionData->{EntityID} = $GetParam->{EntityID};
+        $TransitionActionData->{Config}   = $GetParam->{Config};
 
         # check required parameters
         my %Error;
@@ -289,17 +299,31 @@ sub Run {
             $Error{NameServerErrorMessage} = Translatable('This field is required');
         }
 
-        if ( !$GetParam->{Module} ) {
+        if ( !$GetParam->{Config}->{Module} ) {
 
             # add server error error class
             $Error{ModuleServerError}        = 'ServerError';
             $Error{ModuleServerErrorMessage} = Translatable('This field is required');
         }
 
-        if ( !$GetParam->{Config} ) {
+        if ( !$GetParam->{Config}->{Config} ) {
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('At least one valid config parameter is required.'),
             );
+        }
+
+        if ( !$GetParam->{Config}->{Scope} ) {
+
+            # add server error error class
+            $Error{NameServerError}        = 'ServerError';
+            $Error{NameServerErrorMessage} = Translatable('This field is required');
+        }
+
+        if ( $GetParam->{Config}->{Scope} eq 'Process' && !$GetParam->{Config}->{ScopeEntityID} ) {
+
+            # add server error error class
+            $Error{NameServerError}        = 'ServerError';
+            $Error{NameServerErrorMessage} = Translatable('This field is required');
         }
 
         # if there is an error return to edit screen
@@ -317,7 +341,6 @@ sub Run {
             ID       => $TransitionActionID,
             EntityID => $TransitionActionData->{EntityID},
             Name     => $TransitionActionData->{Name},
-            Module   => $TransitionActionData->{Module},
             Config   => $TransitionActionData->{Config},
             UserID   => $Self->{UserID},
         );
@@ -329,7 +352,7 @@ sub Run {
             );
         }
 
-        # set entitty sync state
+        # set entity sync state
         $Success = $EntityObject->EntitySyncStateSet(
             EntityType => 'TransitionAction',
             EntityID   => $TransitionActionData->{EntityID},
@@ -407,6 +430,28 @@ sub Run {
                 );
             }
         }
+    }
+
+    # ------------------------------------------------------------ #
+    # Add default parameter
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'GetDefaultConfigParameters' ) {
+        my $Module          = $ParamObject->GetParam( Param => 'Module' );
+        my %ConfigParameter = $Self->_GetDefaultConfigParameters(
+            Module => $Module,
+        );
+
+        my $JSON = $LayoutObject->JSONEncode(
+            Data => {
+                %ConfigParameter
+            }
+        );
+        return $LayoutObject->Attachment(
+            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
+            Content     => $JSON || '',
+            Type        => 'inline',
+            NoCache     => 1,
+        );
     }
 
     # ------------------------------------------------------------ #
@@ -556,8 +601,40 @@ sub _ShowEdit {
         Data         => \%TransitionAction,
         Name         => 'Module',
         PossibleNone => 1,
+        Translation  => 0,
         SelectedID   => $TransitionActionData->{Config}->{Module},
         Class        => 'Modernize Validate_Required ' . ( $Param{Errors}->{'ModuleInvalid'} || '' ),
+    );
+
+    $Param{ScopeSelection} = $LayoutObject->BuildSelection(
+        Data => {
+            Global  => 'Global',
+            Process => 'Process',
+        },
+        Name           => 'Scope',
+        ID             => 'Scope',
+        SelectedID     => $TransitionActionData->{Config}->{Scope} || 'Global',
+        Sort           => 'IndividualKey',
+        SortIndividual => [ 'Global', 'Process' ],
+        Translation    => 1,
+        Class          => 'Modernize W50pc ',
+    );
+
+    my $ProcessList = $Kernel::OM->Get('Kernel::System::ProcessManagement::DB::Process')->ProcessList(
+        UserID      => 1,
+        UseEntities => 1,
+    );
+
+    my $GetParam = $Self->_GetParams();
+
+    $Param{ScopeEntityIDSelection} = $LayoutObject->BuildSelection(
+        Data        => $ProcessList,
+        Name        => 'ScopeEntityID',
+        ID          => 'ScopeEntityID',
+        SelectedID  => $TransitionActionData->{Config}->{ScopeEntityID} // $GetParam->{ProcessEntityID},
+        Sort        => 'AlphanumericValue',
+        Translation => 1,
+        Class       => 'Modernize W50pc ',
     );
 
     $Output .= $LayoutObject->Output(
@@ -581,11 +658,16 @@ sub _GetParams {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get parameters from web browser
-    for my $ParamName (
-        qw( Name Module EntityID )
-        )
-    {
+    for my $ParamName (qw(Name EntityID ProcessEntityID)) {
         $GetParam->{$ParamName} = $ParamObject->GetParam( Param => $ParamName ) || '';
+    }
+
+    for my $ParamName (qw(Module Scope ScopeEntityID)) {
+        $GetParam->{Config}->{$ParamName} = $ParamObject->GetParam( Param => $ParamName ) || '';
+    }
+    $GetParam->{Config}->{Scope} //= 'Global';
+    if ( $GetParam->{Config}->{Scope} eq 'Global' ) {
+        delete $GetParam->{Config}->{ScopeEntityID};
     }
 
     # get config params
@@ -612,10 +694,13 @@ sub _GetParams {
     }
 
     my ( $KeyValue, $ValueValue );
+    PARAM:
     for my $Key (@ConfigParamKeys) {
         $KeyValue   = $ParamObject->GetParam( Param => "ConfigKey[$Key]" );
         $ValueValue = $ParamObject->GetParam( Param => "ConfigValue[$Key]" );
-        $GetParam->{Config}->{$KeyValue} = $ValueValue;
+
+        next PARAM if !$KeyValue || $KeyValue eq '';
+        $GetParam->{Config}->{Config}->{$KeyValue} = $ValueValue;
     }
 
     return $GetParam;
@@ -744,6 +829,34 @@ sub _CheckTransitionActionUsage {
     }
 
     return \@Usage;
+}
+
+sub _GetDefaultConfigParameters {
+    my ( $Self, %Param ) = @_;
+
+    NEEDED:
+    for my $Needed (qw(Module)) {
+        next NEEDED if defined $Param{$Needed};
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Need ' . $Needed . '!'
+        );
+        return;
+    }
+
+# get TransitionAction name of full namespace e.g. 'Kernel::System::ProcessManagement::TransitionAction::TicketCreate' to 'TicketCreate'
+    if ( $Param{Module} =~ m/TransitionAction::(.+)$/ ) {
+        my $TransitionAction = $1;
+        my $Config = $Kernel::OM->Get('Kernel::Config')->Get('ProcessManagement::TransitionAction::DefaultParameters');
+        my %Settings;
+        for my $Key ( sort keys %{$Config} ) {
+            if ( IsHashRefWithData( $Config->{$Key} ) ) {
+                %Settings = ( %Settings, %{ $Config->{$Key} } );
+            }
+        }
+        return %{ $Settings{$TransitionAction} || {} };
+    }
+    return;
 }
 
 1;

@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -479,21 +480,22 @@ sub AgentQueueListOption {
     my $ValueNoQueue;
     my $MoveStr           = $Self->{LanguageObject}->Translate('Move');
     my $ValueOfQueueNoKey = "- " . $MoveStr . " -";
+
     DATA:
-    for ( sort { $Data{$a} cmp $Data{$b} } keys %Data ) {
+    for my $DataKey ( sort { $Data{$a} cmp $Data{$b} } keys %Data ) {
 
         # find value for default item in select box
         # it can be "-" or "Move"
         if (
-            $Data{$_} eq "-"
-            || $Data{$_} eq $ValueOfQueueNoKey
+            $Data{$DataKey} eq "-"
+            || $Data{$DataKey} eq $ValueOfQueueNoKey
             )
         {
-            $KeyNoQueue   = $_;
-            $ValueNoQueue = $Data{$_};
+            $KeyNoQueue   = $DataKey;
+            $ValueNoQueue = $Data{$DataKey};
             next DATA;
         }
-        $Data{$_} .= '::';
+        $Data{$DataKey} .= '::';
     }
 
     # get HTML utils object
@@ -513,14 +515,14 @@ sub AgentQueueListOption {
 
     # build selection string
     KEY:
-    for ( sort { $Data{$a} cmp $Data{$b} } keys %Data ) {
+    for my $DataKey ( sort { $Data{$a} cmp $Data{$b} } keys %Data ) {
 
         # default item of select box has set already
-        next KEY if ( $Data{$_} eq "-" || $Data{$_} eq $ValueOfQueueNoKey );
+        next KEY if ( $Data{$DataKey} eq "-" || $Data{$DataKey} eq $ValueOfQueueNoKey );
 
-        my @Queue = split( /::/, $Param{Data}->{$_} );
-        $UsedData{ $Param{Data}->{$_} } = 1;
-        my $UpQueue = $Param{Data}->{$_};
+        my @Queue = split( /::/, $Param{Data}->{$DataKey} );
+        $UsedData{ $Param{Data}->{$DataKey} } = 1;
+        my $UpQueue = $Param{Data}->{$DataKey};
         $UpQueue =~ s/^(.*)::.+?$/$1/g;
         if ( !$Queue[$MaxLevel] && $Queue[-1] ne '' ) {
             $Queue[-1] = $Self->Ascii2Html(
@@ -535,8 +537,8 @@ sub AgentQueueListOption {
             # check if SelectedIDRefArray exists
             if ($SelectedIDRefArray) {
                 for my $ID ( @{$SelectedIDRefArray} ) {
-                    if ( $ID eq $_ ) {
-                        $Param{SelectedIDRefArrayOK}->{$_} = 1;
+                    if ( $ID eq $DataKey ) {
+                        $Param{SelectedIDRefArrayOK}->{$DataKey} = 1;
                     }
                 }
             }
@@ -592,13 +594,13 @@ sub AgentQueueListOption {
                 $OptionTitleHTMLValue = ' title="' . $HTMLValue . '"';
             }
             my $HTMLValue = $HTMLUtilsObject->ToHTML(
-                String             => $_,
+                String             => $DataKey,
                 ReplaceDoubleSpace => 0,
             );
             if (
-                $SelectedID eq $_
-                || $Selected eq $Param{Data}->{$_}
-                || $Param{SelectedIDRefArrayOK}->{$_}
+                $SelectedID eq $DataKey
+                || $Selected eq $Param{Data}->{$DataKey}
+                || $Param{SelectedIDRefArrayOK}->{$DataKey}
                 )
             {
                 $Param{MoveQueuesStrg}
@@ -608,7 +610,7 @@ sub AgentQueueListOption {
                     . $String
                     . "</option>\n";
             }
-            elsif ( $CurrentQueueID eq $_ )
+            elsif ( $CurrentQueueID eq $DataKey )
             {
                 $Param{MoveQueuesStrg}
                     .= '<option value="-" disabled="disabled"'
@@ -730,7 +732,7 @@ sub TicketListShow {
     my $Object = $Backends->{$View}->{Module}->new( %{$Env} );
     return if !$Object;
 
-    # retireve filter values
+    # retrieve filter values
     if ( $Param{FilterContentOnly} ) {
         return $Object->FilterContent(
             %Param,
@@ -1112,6 +1114,111 @@ sub TicketMetaItems {
     }
 
     return @Result;
+}
+
+=head2 TimeUnits()
+
+Returns HTML block consisting of label and field for time units.
+
+    my $TimeUnitsBlock = $LayoutObject->TimeUnits(
+        ID                => 'TimeUnits',       # (optional) the HTML ID for this element, if not provided, the name will be used as ID as well
+        Name              => 'TimeUnits',       # name of element
+        TimeUnits         => '123',
+        TimeUnitsRequired => '1',
+    );
+
+Returns:
+
+    my $TimeUnitsBlock =  '<label for="TimeUnits">Time units  (work units):</label>
+    <div class="Field">
+        <input type="text" name="TimeUnits" id="TimeUnits" value="" class="W50pc Validate_TimeUnits  "/>
+        <div id="TimeUnitsError" class="TooltipErrorMessage"><p>Invalid time!</p></div>
+        <div id="TimeUnitsServerError" class="TooltipErrorMessage"><p>This field is required.</p></div>
+    </div>
+    <div class="Clear"></div>'
+
+=cut
+
+sub TimeUnits {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    $Param{ID}                ||= 'TimeUnits';
+    $Param{Name}              ||= 'TimeUnits';
+    $Param{TimeUnitsRequired} ||= $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime');
+
+    my $Type = $ConfigObject->Get('Ticket::Frontend::AccountTimeType') || 'Text';
+
+    if ( $Param{TimeUnitsRequired} ) {
+        $Self->Block(
+            Name => 'TimeUnitsLabelMandatory',
+            Data => \%Param,
+        );
+        $Param{TimeUnitsRequiredClass} ||= 'Validate_Required';
+    }
+    else {
+        $Self->Block(
+            Name => 'TimeUnitsLabel',
+            Data => \%Param,
+        );
+        $Param{TimeUnitsRequiredClass} = '';
+    }
+
+    $Self->Block(
+        Name => 'TimeUnits' . $Type,
+        Data => \%Param,
+    );
+
+    if ( $Type eq 'Dropdown' ) {
+
+        my $Config = $ConfigObject->Get( 'Ticket::Frontend::AccountTime::' . $Type );
+        my $DefaultTimeUnits;
+
+        for my $Item ( sort keys %{$Config} ) {
+
+            my $Label = $Config->{$Item}->{Label};
+            $DefaultTimeUnits += $Config->{$Item}->{DataSelected} || 0;
+
+            my $Field = $Self->BuildSelection(
+                Class => $Param{ID} . ' TimeUnitDropdown Modernize ' . $Param{TimeUnitsRequiredClass},
+                Data  => {
+                    %{ $Config->{$Item}->{Data} },
+                },
+                ID           => $Param{ID} . $Label,
+                Name         => $Param{Name} . $Label,
+                SelectedID   => $Config->{$Item}->{DataSelected},
+                PossibleNone => 1,
+                Sort         => 'NumericValue',
+                Translation  => 0,
+                OnChange     => 'Core.Agent.TicketAction.SetTimeUnits(\'' . $Param{ID} . '\');',
+            );
+
+            $Self->Block(
+                Name => $Type,
+                Data => {
+                    %Param,
+                    Label => $Label,
+                    Field => $Field,
+                },
+            );
+        }
+
+        $Param{TimeUnits} //= $DefaultTimeUnits;
+        $Self->Block(
+            Name => 'TimeUnits',
+            Data => \%Param,
+        );
+    }
+
+    my $TimeUnitsStrg = $Self->Output(
+        TemplateFile => 'Ticket/TimeUnits',
+        Data         => {
+            %Param,
+        },
+    );
+
+    return $TimeUnitsStrg;
 }
 
 1;

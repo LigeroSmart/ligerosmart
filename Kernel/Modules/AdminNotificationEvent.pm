@@ -1,5 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -821,6 +822,7 @@ sub _Edit {
             Customer                  => Translatable('Customer user of the ticket'),
             AllRecipientsFirstArticle => Translatable('All recipients of the first article'),
             AllRecipientsLastArticle  => Translatable('All recipients of the last article'),
+            AllMentionedUsers         => Translatable('All users who are mentioned in a ticket'),
         },
         Name       => 'Recipients',
         Multiple   => 1,
@@ -1380,24 +1382,6 @@ sub _Edit {
                     },
                 );
 
-                # if not standard transport
-                if (
-                    defined $RegisteredTransports{$Transport}->{IsOTRSBusinessTransport}
-                    && $RegisteredTransports{$Transport}->{IsOTRSBusinessTransport} eq '1'
-                    && !$OTRSBusinessIsInstalled
-                    )
-                {
-
-                    # transport
-                    $LayoutObject->Block(
-                        Name => 'TransportRowRecommendation',
-                        Data => {
-                            Transport     => $Transport,
-                            TransportName => $RegisteredTransports{$Transport}->{Name},
-                        },
-                    );
-                }
-
                 next TRANSPORT;
             }
             else {
@@ -1514,6 +1498,7 @@ sub _Overview {
             my %Data = $NotificationEventObject->NotificationGet(
                 ID => $NotificationID,
             );
+
             $LayoutObject->Block(
                 Name => 'OverviewResultRow',
                 Data => {

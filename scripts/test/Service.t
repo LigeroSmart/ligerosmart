@@ -1,7 +1,6 @@
 # --
-# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Service.t
+# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
+# Copyright (C) 2021-2022 Znuny GmbH, https://znuny.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -27,9 +26,9 @@ $Kernel::OM->ObjectParamAdd(
         RestoreDatabase => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-my $RandomID = $Helper->GetRandomID();
+my $RandomID = $HelperObject->GetRandomID();
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -71,7 +70,7 @@ my @UserIDs;
 # create needed random service names
 my @ServiceName;
 for my $Counter ( 1 .. 11 ) {
-    push @ServiceName, $Helper->GetRandomID();
+    push @ServiceName, $HelperObject->GetRandomID();
 }
 
 # get original service list for later checks
@@ -109,30 +108,6 @@ my $ItemData = [
             ValidID => 1,
         },
     },
-# ---
-# ITSMCore
-# ---
-
-    # this service is NOT complete and must not be added
-    {
-        Add => {
-            Name    => $ServiceName[0],
-            ValidID => 1,
-            UserID  => 1,
-            TypeID  => 1,
-        },
-    },
-
-    # this service is NOT complete and must not be added
-    {
-        Add => {
-            Name        => $ServiceName[0],
-            ValidID     => 1,
-            UserID      => 1,
-            Criticality => '3 normal',
-        },
-    },
-# ---
 
     # this service must be inserted successfully
     {
@@ -140,12 +115,6 @@ my $ItemData = [
             Name    => $ServiceName[0],
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => '',
@@ -155,12 +124,6 @@ my $ItemData = [
             Comment   => '',
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -196,30 +159,6 @@ my $ItemData = [
             ValidID => 1,
         },
     },
-# ---
-# ITSMCore
-# ---
-
-    # the service one add-test before must be NOT updated (service is NOT complete)
-    {
-        Update => {
-            Name    => $ServiceName[0] . 'UPDATE1',
-            ValidID => 1,
-            UserID  => 1,
-            TypeID  => 1,
-        },
-    },
-
-    # the service one add-test before must be NOT updated (service is NOT complete)
-    {
-        Update => {
-            Name        => $ServiceName[0] . 'UPDATE1',
-            ValidID     => 1,
-            UserID      => 1,
-            Criticality => '3 normal',
-        },
-    },
-# ---
 
     # this service must be inserted successfully
     {
@@ -228,12 +167,6 @@ my $ItemData = [
             ValidID => 1,
             Comment => 'TestComment2',
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 2,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => '',
@@ -243,12 +176,6 @@ my $ItemData = [
             Comment   => 'TestComment2',
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 2,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -283,12 +210,6 @@ my $ItemData = [
             ValidID => 2,
             Comment => 'TestComment2UPDATE2',
             UserID  => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 4,
-            Criticality => '3 normal',
-# ---
         },
         UpdateGet => {
             ParentID  => '',
@@ -298,12 +219,6 @@ my $ItemData = [
             Comment   => 'TestComment2UPDATE2',
             CreateBy  => 1,
             ChangeBy  => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 4,
-            Criticality => '3 normal',,
-# ---
         },
     },
 
@@ -314,12 +229,6 @@ my $ItemData = [
             ValidID => 1,
             Comment => 'TestComment2UPDATE3',
             UserID  => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         UpdateGet => {
             ParentID  => '',
@@ -329,12 +238,6 @@ my $ItemData = [
             Comment   => 'TestComment2UPDATE3',
             CreateBy  => 1,
             ChangeBy  => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -399,12 +302,6 @@ my $ItemData = [
             ValidID => 1,
             Comment => " \t \n \r Test Comment \t \n \r ",
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 2,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => '',
@@ -414,12 +311,6 @@ my $ItemData = [
             Comment   => 'Test Comment',
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 2,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -430,12 +321,6 @@ my $ItemData = [
             ValidID => 2,
             Comment => " \t \n \r Test Comment \t \n \r ",
             UserID  => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         UpdateGet => {
             ParentID  => '',
@@ -445,12 +330,6 @@ my $ItemData = [
             Comment   => 'Test Comment',
             CreateBy  => 1,
             ChangeBy  => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -461,12 +340,6 @@ my $ItemData = [
             ValidID => 1,
             Comment => ' Ѡ Ѥ TestComment5 Ϡ Ω ',
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => '',
@@ -476,12 +349,6 @@ my $ItemData = [
             Comment   => 'Ѡ Ѥ TestComment5 Ϡ Ω',
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -492,12 +359,6 @@ my $ItemData = [
             ValidID => 2,
             Comment => ' Ѡ Ѥ TestComment5 Ϡ Ω UPDATE1',
             UserID  => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         UpdateGet => {
             ParentID  => '',
@@ -507,12 +368,6 @@ my $ItemData = [
             Comment   => 'Ѡ Ѥ TestComment5 Ϡ Ω UPDATE1',
             CreateBy  => 1,
             ChangeBy  => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -523,12 +378,6 @@ my $ItemData = [
             ValidID => 1,
             Comment => ' [test]%*\\ Test Comment [test]%*\\ ',
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => '',
@@ -538,12 +387,6 @@ my $ItemData = [
             Comment   => '[test]%*\\ Test Comment [test]%*\\',
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -554,12 +397,6 @@ my $ItemData = [
             ValidID => 2,
             Comment => ' [test]%*\\ Test Comment UPDATE1 [test]%*\\ ',
             UserID  => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         UpdateGet => {
             ParentID  => '',
@@ -569,12 +406,6 @@ my $ItemData = [
             Comment   => '[test]%*\\ Test Comment UPDATE1 [test]%*\\',
             CreateBy  => 1,
             ChangeBy  => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -584,12 +415,6 @@ my $ItemData = [
             Name    => $ServiceName[5],
             ValidID => 1,
             UserID  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => '',
@@ -598,12 +423,6 @@ my $ItemData = [
             ValidID   => 1,
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -614,12 +433,6 @@ my $ItemData = [
             Name     => $ServiceName[6],
             ValidID  => 1,
             UserID   => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => 'LASTADDID',
@@ -628,12 +441,6 @@ my $ItemData = [
             ValidID   => 1,
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -644,12 +451,6 @@ my $ItemData = [
             Name     => " \n \t " . $ServiceName[7] . " \n \t ",
             ValidID  => 1,
             UserID   => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         AddGet => {
             ParentID  => 'LASTADDID',
@@ -658,12 +459,6 @@ my $ItemData = [
             ValidID   => 1,
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -684,12 +479,6 @@ my $ItemData = [
             Name     => $ServiceName[7] . ' UPDATE1',
             ValidID  => 1,
             UserID   => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         UpdateGet => {
             ParentID  => '',
@@ -698,12 +487,6 @@ my $ItemData = [
             ValidID   => 1,
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 
@@ -714,12 +497,6 @@ my $ItemData = [
             Name     => $ServiceName[7] . ' UPDATE(2)',
             ValidID  => 1,
             UserID   => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
         UpdateGet => {
             ParentID => 'LASTLASTADDID',
@@ -731,12 +508,6 @@ my $ItemData = [
             ValidID   => 1,
             CreateBy  => 1,
             ChangeBy  => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID      => 1,
-            Criticality => '3 normal',
-# ---
         },
     },
 ];
@@ -1019,12 +790,6 @@ my $ServiceList2ServiceID = $ServiceObject->ServiceAdd(
     Name    => $ServiceName[9],
     ValidID => 1,
     UserID  => 1,
-# ---
-# ITSMCore
-# ---
-    TypeID      => 1,
-    Criticality => '3 normal',
-# ---
 );
 
 my %ServiceList2b = $ServiceObject->ServiceList(
@@ -1107,12 +872,6 @@ for my $ServiceName (@ServiceNames) {
         Name    => $ServiceName,
         ValidID => 1,
         UserID  => 1,
-# ---
-# ITSMCore
-# ---
-        TypeID      => 1,
-        Criticality => '3 normal',
-# ---
     );
 
     $Counter1++;
@@ -1193,11 +952,6 @@ $Self->Is(
         my %Service = $ServiceObject->ServiceGet(
             ServiceID => $ServiceData->{ServiceID},
             UserID    => 1,
-# ---
-# ITSMCore
-# ---
-            IncidentState => 1,
-# ---
         );
         $Counter++;
         $Self->IsDeeply(
@@ -1213,12 +967,6 @@ my $ServiceGrandFatherID = $ServiceObject->ServiceAdd(
     Name     => 'UnitTestService_GF_' . $RandomID,
     ParentID => 0,
     ValidID  => 1,
-# ---
-# ITSMCore
-# ---
-    TypeID      => 1,
-    Criticality => '3 normal',
-# ---
     Comment  => 'Testing service',
     UserID   => 1,
 );
@@ -1233,12 +981,6 @@ my $ServiceFatherID = $ServiceObject->ServiceAdd(
     Name     => 'UnitTestService_F_' . $RandomID,
     ParentID => $ServiceGrandFatherID,
     ValidID  => 1,
-# ---
-# ITSMCore
-# ---
-    TypeID      => 1,
-    Criticality => '3 normal',
-# ---
     Comment  => 'Testing service',
     UserID   => 1,
 );
@@ -1253,12 +995,6 @@ my $ServiceSonID = $ServiceObject->ServiceAdd(
     Name     => 'UnitTestService_S_' . $RandomID,
     ParentID => $ServiceFatherID,
     ValidID  => 1,
-# ---
-# ITSMCore
-# ---
-    TypeID      => 1,
-    Criticality => '3 normal',
-# ---
     Comment  => 'Testing service',
     UserID   => 1,
 );
