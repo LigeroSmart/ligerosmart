@@ -1,0 +1,5 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::UserType')->CodeInstall();
+    ]]></CodeInstall>
+</Migrations>
