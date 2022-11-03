@@ -351,12 +351,19 @@ sub Run {
             $Kernel::OM->Get('Kernel::System::JSON')->Decode(Data => $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmartClassification::SearchTemplate'));
 		
 		# Busca primeiro Artigo do Chamado e dados do chamado (ArticleGet? ou ArticleFirst alguma coisa)
-		my %Article = $TicketObject->ArticleFirstArticle(
-			   TicketID      => $Self->{TicketID},
-			   DynamicFields => 0,     # 0 or 1, see ArticleGet()
+        my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');            
+        my @Articles = $ArticleObject->ArticleList(
+            TicketID      => $Self->{TicketID},
+            OnlyFirst              => 1,
         );
+
+        my %Article;
+        for my $Article (@Articles) {
+            %Article = $ArticleObject->BackendForArticle( %{$Article} )->ArticleGet( %{$Article} );
+        }
+
 		# Concatena titulo do chamado e corpo do primeiro artigo na variavel query
-		$Query = $Article{Title}.' '.$Article{Body};
+		$Query = $Article{Subject}.' '.$Article{Body};
 		
 		# Limpa preparando variavel query
         $Query =~ s/(\n|\r|\*|\+|\.|:|\?|!|-|\/|\(|\)|\<|\>|\[|\]|,)/ /g;
