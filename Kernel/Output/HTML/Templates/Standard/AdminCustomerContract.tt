@@ -1,0 +1,845 @@
+# --
+# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("Overview") %]
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>
+        [% Translate("Customer Contract Management") | html %]
+[% RenderBlockStart("CustomerID") %]
+    -   [% Data.CustomerID | html %]
+[% RenderBlockEnd("CustomerID") %]
+    </h1>
+    <div class="SidebarColumn">
+[% RenderBlockStart("ActionList") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionOverview") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Nav=[% Data.Nav | uri %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Search;Search=[% Data.Search | uri %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Back to search results") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionOverview") %]
+[% RenderBlockStart("ActionSearch") %]
+                    <li>
+                        <form class="SearchBox" action="[% Env("CGIHandle") %]" method="post">
+                            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                            <input type="hidden" name="Subaction" value="Search"/>
+                            <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+                            <input type="text" name="Search" value="[% Data.Search | html %]" id="Search" title="[% Translate("Search") | html %]"/>
+                            <button type="submit" value="[% Translate("Search") | html %]" title="[% Translate("Search") | html %]"><i class="fa fa-search"></i></button>
+                        </form>
+                        <p class="FieldExplanation">
+                            [% Translate("Search for customer name.") | html %]
+                        </p>
+                    </li>
+[% RenderBlockEnd("ActionSearch") %]
+[% RenderBlockStart("ActionAdd") %]
+                    <li>
+                        <form action="[% Env("CGIHandle") %]" method="post">
+                            <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                            <input type="hidden" name="Subaction" value="Add"/>
+                            <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+
+                            <button class="CallForAction Fullsize Center" type="submit"><span><i class="fa fa-plus-square"></i> [% Translate("Add customer contract") | html %]</span></button>
+                            
+                        </form>
+                    </li>
+[% RenderBlockEnd("ActionAdd") %]
+                </ul>
+
+            </div>
+        </div>
+[% RenderBlockEnd("ActionList") %]
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Hint") | html %]</h2>
+            </div>
+            <div class="Content">
+                <p>
+                    [% Translate("Customer contacts are needed to have a customer costs history.") | html %]
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="ContentColumn">
+[% RenderBlockStart("CustomerData") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Customer Data") | html %]</h2>
+            </div>
+            <div class="Content ">
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Customer Name") | html %]</label>
+                            <p class="Value">[% Data.CustomerCompanyName | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Customer Address") | html %]</label>
+                            <p class="Value">[% Data.CustomerCompanyStreet | html %] [% Data.CustomerCompanyZIP | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Customer City") | html %]</label>
+                            <p class="Value">[% Data.CustomerCompanyCity | html %] [% Data.CustomerCompanyCountry | html %]</p>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+[% RenderBlockEnd("CustomerData") %]
+[% RenderBlockStart("ContractData") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Contract Data") | html %]</h2>
+            </div>
+            <div class="Content ">
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of4">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Number") | html %]</label>
+                            <p class="Value">[% Data.ContractNumber | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of4">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Period") | html %]</label>
+                            <p class="Value">[% Data.PeriodClosing | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of4">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Start Date") | html %]</label>
+                            <p class="Value">[% Data.StartTime | Localize("Date") %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of4">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("End Date") | html %]</label>
+                            <p class="Value">[% Data.EndTime | Localize("Date") %]</p>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+[% RenderBlockEnd("ContractData") %]
+[% RenderBlockStart("ContractRulesRegistries") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Filter") | html %]</h2>
+            </div>
+            <div class="Content ">
+                <form action="[% Env("CGIHandle") %]" enctype="multipart/form-data" method="get" name="compose" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="Details"/>
+                    <input type="hidden" name="ID" value="[% Data.ContractID | html %]"/>
+                    <input type="hidden" name="Source" value="[% Data.Source | html %]"/>
+                    <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+                    <input type="hidden" name="Search" value="[% Data.Search | html %]"/>
+                    <fieldset class="TableLike">
+                        <label class="Mandatory" for="FromSearch"><span class="Marker">*</span> [% Translate("From") | html %]:[% Data.FromSearch | html %]</label>
+                        <div class="Field">
+                            <input type="text" id="FromSearch" name="FromSearch" class="W50pc Validate_Required" data-inputmask="'alias': 'datetime', 'inputFormat': 'dd/mm/yyyy'" value="[% Data.FromSearch | html %]"/>
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="ToSearch"><span class="Marker">*</span> [% Translate("To") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="ToSearch" name="ToSearch" class="W50pc Validate_Required" data-inputmask="'alias': 'datetime', 'inputFormat': 'dd/mm/yyyy'" value="[% Data.ToSearch | html %]"/>
+                        </div>
+                        <div class="Clear"></div>
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Search") | html %]"><span>[% Translate("Search") | html %]</span></button>
+                        </div>
+                        <div class="Clear"></div>                        
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Contract Rules and Registries") | html %]</h2>
+            </div>
+            <div class="Content ">
+[% RenderBlockStart("PriceRuleReg") %]
+                <h1>[% Translate("Price Rule") | html %] - [% Data.RuleID | html %]</h1>
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Ticket Types") | html %]</label>
+                            <p class="Value">[% Data.PriceRuleTicketTypes | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Treatment Types") | html %]</label>
+                            <p class="Value">[% Data.TreatmentTypesStr | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("SLAs") | html %]</label>
+                            <p class="Value">[% Data.SLAsStr | html %]</p>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Services") | html %]</label>
+                            <p class="Value">[% Data.ServicesStr | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Hour Types") | html %]</label>
+                            <p class="Value">[% Data.HourTypesStr | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Value") | html %]</label>
+                            <p class="Value">[% Data.Value | html %]</p>
+                        </fieldset>
+                    </div>
+                </div>
+[% RenderBlockStart("PriceRuleRegResult") %]
+                <table class="DataTable" id="CustomerTable">
+                    <thead>
+                        <tr>
+                            <th>Ticket#</th>
+                            <th>[% Translate("Article") | html %]</th>
+                            <th>[% Translate("Date") | html %]</th>
+                            <th>[% Translate("Value") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("PriceRuleRegResultNoData") %]
+                        <tr>
+                            <td colspan="[% Data.ColSpan | html %]">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("PriceRuleRegResultNoData") %]
+
+[% RenderBlockStart("PriceRuleRegResultRow") %]
+                        <tr>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %]" title="[% Data.TicketData.Title %]" target="_blank">
+                                    [% Data.TicketNumber | html %]
+                                </a>
+                            </td>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %];ArticleID=[% Data.ArticleID %]" title="[% Data.ArticleData.Subject %]" target="_blank">
+                                    [% Data.ArticleData.Subject | html %]
+                                </a>
+                            </td>
+                            <td>[% Data.ArticleData.CreateTime | Localize("TimeLong") %]</td>
+                            <td>[% Data.Value | html %]</td>
+                        </tr>
+[% RenderBlockEnd("PriceRuleRegResultRow") %]
+
+                    </tbody>
+[% RenderBlockStart("PriceRuleRegResultTotal") %]
+                    <tfooter>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td><strong>[% Data.Total | html %]</strong></td>
+                      </tr>
+                    </tfooter>
+[% RenderBlockEnd("PriceRuleRegResultTotal") %]
+                </table>
+[% RenderBlockEnd("PriceRuleRegResult") %]
+                <br><br>
+[% RenderBlockEnd("PriceRuleReg") %]
+[% RenderBlockStart("FranchiseRuleReg") %]
+                <h1>[% Translate("Franchise Rule") | html %] - [% Data.RuleID | html %]</h1>
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Ticket Types") | html %]</label>
+                            <p class="Value">[% Data.FranchiseRuleTicketTypes | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Treatment Types") | html %]</label>
+                            <p class="Value">[% Data.TreatmentTypesStr | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("SLAs") | html %]</label>
+                            <p class="Value">[% Data.SLAsStr | html %]</p>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Services") | html %]</label>
+                            <p class="Value">[% Data.ServicesStr | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Hour Types") | html %]</label>
+                            <p class="Value">[% Data.HourTypesStr | html %]</p>
+                        </fieldset>
+                    </div>
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Value") | html %]</label>
+                            [% IF Data.Recurrence == 'ilimitado' %]
+                                <p class="Value">[% Data.Recurrence | html %] </p>
+                            [% ELSE %]
+                                <p class="Value">[% Data.Value | html %] Hrs / [% Data.Recurrence | html %] </p>
+                            [% END %]
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="LayoutGrid ColumnsWithSpace">
+                    <div class="Size1of3">
+                        <fieldset class="TableLike">
+                            <label>[% Translate("Available Time") | html %]</label>
+                            <p class="Value">[% Data.AvailableTime | html %]</p>
+                        </fieldset>
+                    </div>
+                </div>
+
+[% RenderBlockStart("FranchiseRuleRegResult") %]
+                <table class="DataTable" id="CustomerTable">
+                    <thead>
+                        <tr>
+                            <th>Ticket#</th>
+                            <th>[% Translate("Article") | html %]</th>
+                            <th>[% Translate("Date") | html %]</th>
+                            <th>[% Translate("Value") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("FranchiseRuleRegResultNoData") %]
+                        <tr>
+                            <td colspan="4">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("FranchiseRuleRegResultNoData") %]
+
+[% RenderBlockStart("FranchiseRuleRegResultRow") %]
+                        <tr>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %]" title="[% Data.TicketData.Title %]" target="_blank">
+                                    [% Data.TicketNumber | html %]
+                                </a>
+                            </td>
+                            <td>
+                                <a href="index.pl?Action=AgentTicketZoom;TicketID=[% Data.TicketID %];ArticleID=[% Data.ArticleID %]" title="[% Data.ArticleData.Subject %]" target="_blank">
+                                    [% Data.ArticleData.Subject | html %]
+                                </a>
+                            </td>
+                            <td>[% Data.ArticleData.CreateTime | Localize("TimeLong") %]</td>
+                            <td>[% Data.Value | html %]</td>
+                        </tr>
+[% RenderBlockEnd("FranchiseRuleRegResultRow") %]
+                    </tbody>
+[% RenderBlockStart("FranchiseRuleRegResultTotal") %]
+                    <tfooter>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td><strong>[% Data.Total | html %]</strong></td>
+                      </tr>
+                    </tfooter>
+[% RenderBlockEnd("FranchiseRuleRegResultTotal") %]
+                    
+                </table>
+[% RenderBlockEnd("FranchiseRuleRegResult") %]
+                <br><br>
+[% RenderBlockEnd("FranchiseRuleReg") %]
+            </div>
+        </div>
+[% RenderBlockEnd("ContractRulesRegistries") %]
+        <div class="WidgetSimple">
+[% RenderBlockStart("NoSearchTerms") %]
+            <div class="Content">
+                <p>[% Translate("Please enter a search term to look for customers.") | html %]</p>
+            </div>
+[% RenderBlockEnd("NoSearchTerms") %]
+[% RenderBlockStart("OverviewResult") %]
+            <div class="Content ">
+                <table class="DataTable" id="CustomerTable">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("CustomerID") | html %]</th>
+                            <th>[% Translate("CustomerName") | html %]</th>
+                            <th>[% Translate("Contracts") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("NoDataFoundMsg") %]
+                        <tr>
+                            <td colspan="[% Data.ColSpan | html %]">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("NoDataFoundMsg") %]
+
+[% RenderBlockStart("OverviewResultRow") %]
+                        <tr>
+                            <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ViewContracts;CustomerID=[% Data.CustomerID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Data.CustomerID | html %]</a></td>
+                            <td>[% Data.CustomerName | html %]</td>
+                            <td>[% Data.ContractQuantity | html %]</td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultRow") %]
+
+                    </tbody>
+                </table>
+            </div>
+[% RenderBlockEnd("OverviewResult") %]
+
+[% RenderBlockStart("OverviewResultContracts") %]
+            
+            <div class="Content ">
+                <table class="DataTable" id="CustomerTable">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Number") | html %]</th>
+                            <th>[% Translate("Closing Period") | html %]</th>
+                            <th>[% Translate("CustomerID") | html %]</th>
+                            <th>[% Translate("From") | html %]</th>
+                            <th>[% Translate("To") | html %]</th>
+                            <th>[% Translate("Validity") | html %]</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("NoDataFoundMsgContracts") %]
+                        <tr>
+                            <td colspan="[% Data.ColSpan | html %]">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("NoDataFoundMsgContracts") %]
+
+[% RenderBlockStart("OverviewResultRowContracts") %]
+                        <tr [% IF Data.ValidID && Data.ValidID != 1 %]class="Invalid"[% END %]>
+                            <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Change;ID=[% Data.ID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Data.Number | html %]</a></td>
+
+                            <td>[% Data.PeriodClosing | html %]</td>
+                            <td>[% Data.Customer | html %]</td>
+                            <td>[% Data.StartTime | Localize("Date") %]</td>
+                            <td>[% Data.EndTime | Localize("Date") %]</td>
+                            <td>[% Translate(Data.Valid) | html %]</td>
+                            <td>
+                              [% IF Data.OrderNumber > 1 %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpContract;ID=[% Data.ID | uri %];CustomerID=[% Data.CustomerID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
+                              [% END %]
+                            </td>
+                            <td>
+                              [% IF !Data.IsTheLast %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownContract;ID=[% Data.ID | uri %];CustomerID=[% Data.CustomerID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
+                              [% END %]
+                            </td>
+                            <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Details;ID=[% Data.ID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]">[% Translate("Details") | html %]</a></td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultRowContracts") %]
+
+                    </tbody>
+                </table>
+            </div>
+[% RenderBlockEnd("OverviewResultContracts") %]
+
+[% RenderBlockStart("OverviewUpdate") %]
+            <div class="Header">
+[% RenderBlockStart("HeaderAdd") %]
+                <h2>[% Translate("Add Customer Contract") | html %]</h2>
+[% RenderBlockEnd("HeaderAdd") %]
+[% RenderBlockStart("HeaderEdit") %]
+                <h2>[% Translate("Edit Customer Contract") | html %]</h2>
+[% RenderBlockEnd("HeaderEdit") %]
+            </div>
+
+            <div class="Content">
+                <form action="[% Env("CGIHandle") %]" enctype="multipart/form-data" method="post" name="compose" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="[% Data.Action | html %]Action"/>
+                    <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+                    <input type="hidden" name="Source" value="[% Data.Source | html %]"/>
+                    <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+                    <input type="hidden" name="Search" value="[% Data.Search | html %]"/>
+                    <fieldset class="TableLike">
+                        <label class="Mandatory" for="Number"><span class="Marker">*</span> [% Translate("Number") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="Number" name="Number" class="W50pc Validate_Required" value="[% Data.Number | html %]"/>
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="CustomerId"><span class="Marker">*</span> [% Translate("Customer") | html %]:</label>
+                        <div class="Field">
+                            [% Data.CustomerOption %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="ClosingPeriod"><span class="Marker">*</span> [% Translate("Closing Period") | html %]:</label>
+                        <div class="Field">
+                            [% Data.PeriodClosingOption %]
+                        </div>                        
+                        <div class="Clear"></div>
+                        
+                        [% RenderBlockStart("AddMode") %]
+                            <label class="Mandatory"><span class="Marker">*</span> [% Translate("Validity Period") | html %]:</label>
+                            <div class="Field">
+                                <p style="margin-top: 5px;">
+                                    <input type="radio" name="DateType" id="AbsolutPeriod" value="0" [% Data.AbsolutPeriod %] />
+                                    <label class="Mandatory" for="AbsolutPeriod">[% Translate("Absolut Period") | html %]</label>
+                                    <input type="radio" name="DateType" id="RelativePeriod" value="1" [% Data.RelativePeriod %] />
+                                    <label class="Mandatory" for="RelativePeriod">[% Translate("Relative Period") | html %]</label>
+                                </p>
+                            </div>
+                            <div class="Clear"></div>
+                            <label class="Mandatory absolutPeriodContent" style="margin-left: 45px;"><span class="Marker">*</span>[% Translate("From") | html %]:</label>
+                            <div class="Field absolutPeriodContent" style="padding-left: 50px;">                            
+                                [% Data.FromDateString %]
+                                <div id="DayError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                                <div id="HourError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                            </div>                        
+                            <div class="Clear absolutPeriodContent"></div>                        
+                            <label class="Mandatory absolutPeriodContent" style="margin-left: 55px;"><span class="Marker">*</span>[% Translate("To") | html %]:</label>
+                            <div class="Field absolutPeriodContent" style="padding-left: 60px;">
+                                [% Data.ToDateString %]
+                                <div id="DayError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                                <div id="HourError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                            </div>
+                            <div class="Clear absolutPeriodContent"></div>
+                            <label class="Mandatory relativePeriodContent" for="RelatedTo" style="margin-left: 83px;"><span class="Marker">*</span> [% Translate("The Last") | html %]:</label>
+                            <div class="Field relativePeriodContent" style="padding-left: 90px;">
+                                <input type="text" id="RelatedTo" name="RelatedTo" class="W10pc Validate_Required" value="[% Data.RelatedTo | html %]"/>
+                                [% Data.RelatedToPeriodOption %]
+                            </div>
+                            <div class="Clear relativePeriodContent"></div>
+                        [% RenderBlockEnd("AddMode") %]
+                        [% RenderBlockStart("EditMode") %]
+                            <input type="hidden" name="FromDateYear" value="[% Data.FromDateYear | html %]"/>
+                            <input type="hidden" name="FromDateMonth" value="[% Data.FromDateMonth | html %]"/>
+                            <input type="hidden" name="FromDateDay" value="[% Data.FromDateDay | html %]"/>
+                            <input type="hidden" name="ToDateYear" value="[% Data.ToDateYear | html %]"/>
+                            <input type="hidden" name="ToDateMonth" value="[% Data.ToDateMonth | html %]"/>
+                            <input type="hidden" name="ToDateDay" value="[% Data.ToDateDay | html %]"/>
+                            <label class="Mandatory"><span class="Marker">*</span>[% Translate("From") | html %]:</label>
+                            <div class="Field">                            
+                                [% Data.FromDateDay | html %]/[% Data.FromDateMonth | html %]/[% Data.FromDateYear | html %]
+                            </div>                        
+                            <div class="Clear"></div>                        
+                            <label class="Mandatory"><span class="Marker">*</span>[% Translate("To") | html %]:</label>
+                            <div class="Field">
+                                [% Data.ToDateDay | html %]/[% Data.ToDateMonth | html %]/[% Data.ToDateYear | html %]
+                            </div>
+                            <div class="Clear"></div>
+                        [% RenderBlockEnd("EditMode") %]
+                        
+                        
+                        
+                        <label class="Mandatory" for="ValidId"><span class="Marker">*</span> [% Translate("Valid") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ValidOption %]                            
+                        </div>                        
+                        <div class="Clear"></div>
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Nav=[% Data.Nav | uri %]">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>                        
+                    </fieldset>
+                </form>
+            </div>
+            [% WRAPPER JSOnDocumentComplete %]
+            <script type="text/javascript">//<![CDATA[
+                function setViewDateType(){
+                    if($('input[name=DateType]:checked').val() == 0){
+                        $(".relativePeriodContent").hide();
+                        $(".absolutPeriodContent").show();
+                    }
+                    else{
+                        $(".relativePeriodContent").show();
+                        $(".absolutPeriodContent").hide();
+                    }
+                }
+                setViewDateType();
+                $('input[name=DateType]').on('change',function(){setViewDateType();});
+            //]]></script>
+            [% END %]
+[% RenderBlockEnd("OverviewUpdate") %]
+        </div>
+[% RenderBlockStart("RulesArea") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Price Rules") | html %]</h2>
+            </div>
+            <div class="Content ">
+                <div class="Right Field SpacingBottom">
+                    <button class="Primary CallForAction" type="button" value="New" id="btnNewPriceRule"><span>[% Translate("New") | html %]</span></button>                                
+                </div>
+                <form id="formAddPriceRule" action="[% Env("CGIHandle") %]" enctype="multipart/form-data" method="post" name="compose" class="Validate PreventMultipleSubmits SpacingBottom">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="AddPriceRuleAction"/>
+                    <input type="hidden" name="ContractID" value="[% Data.ID | html %]"/>
+                    <input type="hidden" name="Source" value="[% Data.Source | html %]"/>
+                    <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+                    <input type="hidden" name="Search" value="[% Data.Search | html %]"/>
+                    <fieldset class="TableLike">
+                        <label class="Mandatory" for="Types"> [% Translate("Types") | html %]:</label>
+                        <div class="Field">
+                            [% Data.TypesStrgPrice %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="TreatmentTypes">[% Translate("Treatment Types") | html %]:</label>
+                        <div class="Field">
+                            [% Data.TreatmentTypesStrgPrice %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Slas"> [% Translate("SLAs") | html %]:</label>
+                        <div class="Field">
+                            [% Data.SLAsStrgPrice %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Services">[% Translate("Services") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ServicesStrgPrice %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Hours"> [% Translate("Hours") | html %]:</label>
+                        <div class="Field">
+                            [% Data.HoursStrgPrice %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Value"><span class="Marker">*</span> [% Translate("Value") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="Valor" name="Valor" class="W30pc Validate_Required" data-inputmask="'alias': 'decimal', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'placeholder': '0'"/>
+                        </div>
+                        <div class="Clear"></div>
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="#" id="btnCancelAddPriceRule">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </form>
+                <table class="DataTable" id="PriceRulesTable">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Types") | html %]</th>
+                            <th>[% Translate("Treatment Types") | html %]</th>
+                            <th>[% Translate("SLAs") | html %]</th>
+                            <th>[% Translate("Services") | html %]</th>
+                            <th>[% Translate("Hours") | html %]</th>
+                            <th>[% Translate("Value") | html %]</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    [% RenderBlockStart("NoDataFoundMsgPriceRule") %]
+                        <tr>
+                            <td colspan="7">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+                    [% RenderBlockEnd("NoDataFoundMsgPriceRule") %]
+
+                    [% RenderBlockStart("PriceRuleRow") %]
+                        <tr>
+                            <td>[% Data.Types | html %]</td>
+                            <td>[% Data.TreatmentTypes | html %]</td>
+                            <td>[% Data.Slas | html %]</td>
+                            <td>[% Data.Services | html %]</td>
+                            <td>[% Data.Hours | html %]</td>
+                            <td>[% Data.Value | html %]</td>
+                            <td>
+                              [% IF Data.OrderNumber > 1 %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
+                              [% END %]
+                            </td>
+                            <td>
+                              [% IF !Data.IsTheLast %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
+                              [% END %]
+                            </td>
+                            <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemovePriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
+                        </tr>
+                    [% RenderBlockEnd("PriceRuleRow") %]
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Franchise Rules") | html %]</h2>
+            </div>
+            <div class="Content ">
+                <div class="Right Field SpacingBottom">
+                    <button class="Primary CallForAction" type="button" value="New" id="btnNewFranchiseRule"><span>[% Translate("New") | html %]</span></button>                                
+                </div>
+                <form id="formAddFranchiseRule" action="[% Env("CGIHandle") %]" enctype="multipart/form-data" method="post" name="compose" class="Validate PreventMultipleSubmits SpacingBottom">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="AddFranchiseRuleAction"/>
+                    <input type="hidden" name="ContractID" value="[% Data.ID | html %]"/>
+                    <input type="hidden" name="Source" value="[% Data.Source | html %]"/>
+                    <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+                    <input type="hidden" name="Search" value="[% Data.Search | html %]"/>
+                    <fieldset class="TableLike">
+                        <label class="Mandatory" for="Types"> [% Translate("Types") | html %]:</label>
+                        <div class="Field">
+                            [% Data.TypesStrgFranchise %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="TreatmentTypes"> [% Translate("Treatment Types") | html %]:</label>
+                        <div class="Field">
+                            [% Data.TreatmentTypesStrgFranchise %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Slas"> [% Translate("SLAs") | html %]:</label>
+                        <div class="Field">
+                            [% Data.SLAsStrgFranchise %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Services"> [% Translate("Services") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ServicesStrgFranchise %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="HourIDs"> [% Translate("Hours") | html %]:</label>
+                        <div class="Field">
+                            [% Data.HoursStrgFranchise %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Recurrence"><span class="Marker">*</span> [% Translate("Recurrence") | html %]:</label>
+                        <div class="Field">
+                            [% Data.RecurrenceStrgFranchise %]
+                        </div>
+                        <div class="Clear"></div>
+                        <label class="Mandatory" for="Value"><span class="Marker">*</span> [% Translate("Hours") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="Hours" name="Hours" class="W30pc Validate_Required" data-inputmask="'alias': 'decimal', 'autoGroup': false, 'digits': 0, 'digitsOptional': false, 'placeholder': '0'"/>
+                        </div>
+                        <div class="Clear"></div>
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="#" id="btnCancelAddFranchiseRule">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </form>
+                <table class="DataTable" id="FranchiseRulesTable">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Types") | html %]</th>
+                            <th>[% Translate("Treatment Types") | html %]</th>
+                            <th>[% Translate("SLAs") | html %]</th>
+                            <th>[% Translate("Services") | html %]</th>
+                            <th>[% Translate("Hours") | html %]</th>
+                            <th>[% Translate("Recurrence") | html %]</th>
+                            <th>[% Translate("Value Hours") | html %]</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        [% RenderBlockStart("NoDataFoundMsgFranchiseRule") %]
+                        <tr>
+                            <td colspan="7">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+                        [% RenderBlockEnd("NoDataFoundMsgFranchiseRule") %]
+
+                        [% RenderBlockStart("FranchiseRuleRow") %]
+                            <tr>
+                                <td>[% Data.Types | html %]</td>
+                                <td>[% Data.TreatmentTypes | html %]</td>
+                                <td>[% Data.Slas | html %]</td>
+                                <td>[% Data.Services | html %]</td>
+                                <td>[% Data.Hours | html %]</td>
+                                <td>[% Data.Recurrence | html %]</td>
+                                <td>[% Data.ValueHours | html %]</td>
+                                <td>
+                                  [% IF Data.OrderNumber > 1 %]
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
+                                  [% END %]
+                                </td>
+                                <td>
+                                  [% IF !Data.IsTheLast %]
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
+                                  [% END %]
+                                </td>
+                                <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
+                            </tr>
+                        [% RenderBlockEnd("FranchiseRuleRow") %]
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        [% WRAPPER JSOnDocumentComplete %]
+        <script type="text/javascript">//<![CDATA[
+            $("#btnNewPriceRule").on("click",function(){
+                $("#formAddPriceRule").show();
+                $("#btnNewPriceRule").hide();
+            });
+
+            $("#btnCancelAddPriceRule").on("click",function(){
+                $("#formAddPriceRule").hide();
+                $("#btnNewPriceRule").show();
+            });
+
+            $("#btnNewFranchiseRule").on("click",function(){
+                $("#formAddFranchiseRule").show();
+                $("#btnNewFranchiseRule").hide();
+            });
+
+            $("#btnCancelAddFranchiseRule").on("click",function(){
+                $("#formAddFranchiseRule").hide();
+                $("#btnNewFranchiseRule").show();
+            });
+
+            $("#formAddPriceRule").hide();
+
+            $("#formAddFranchiseRule").hide();
+        //]]></script>
+        [% END %]
+[% RenderBlockEnd("RulesArea") %]
+    </div>    
+    <div class="Clear"></div>
+</div>
+[% RenderBlockEnd("Overview") %]
+
+[% RenderBlockStart("BorrowedViewJS") %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('#CustomerTable a').bind('click', function (Event) {
+    Core.Agent.TicketAction.UpdateCustomer($(this).text());
+});
+//]]></script>
+[% END %]
+[% RenderBlockEnd("BorrowedViewJS") %]

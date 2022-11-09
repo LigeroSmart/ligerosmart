@@ -53,6 +53,34 @@ sub Run {
 			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};		
 		};
 	}
+
+  my $ShowServiceSLAByContract
+        = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
+
+
+    if ($ShowServiceSLAByContract) {
+        my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
+                User => $Self->{UserID},
+        );
+        my $CustomerID = $CustomerIDs[0];
+
+        my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerServiceListGet(
+            CustomerID  =>  $CustomerID,
+        );
+
+        my @SelectedServiceIDs;
+
+        foreach my $Item ( @{$CustomerServiceList} ) {
+            push @SelectedServiceIDs, $Item->{ServiceID};
+        }
+
+        foreach my $key (keys %Services)
+        {
+            if ( !grep( /^$Services{$key}$/, @SelectedServiceIDs ) && !grep(/^$key$/, @SelectedServiceIDs) ) {
+                delete $Services{$key};
+            }
+        }
+    }
 	
 	my %DataParam = (
 		Name         => 'Service',
