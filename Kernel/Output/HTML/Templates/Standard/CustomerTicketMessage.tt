@@ -7,7 +7,11 @@
 # --
 <div id="MainBox" class="TicketCompose ARIARoleMain">
     <div class="Content">
+[% IF Env("Action") == "CustomerTicketMessage" %]    
         <form action="[% Env("CGIHandle") %]" method="post" name="compose" id="NewCustomerTicket" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+[% ELSIF Env("Action") == "CustomerTicketQRCode" %]
+        <form action="[% Env("CGIHandle") %]" method="post" name="compose" id="NewCustomerTicketQRCode" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+[% END %]        
             <input type="hidden" name="Action" value="[% Env("Action") %]" />
             <input type="hidden" name="Subaction" value="StoreNew" />
             <input type="hidden" name="Expand" id="Expand" value="" />
@@ -16,7 +20,17 @@
             <fieldset>
 
             <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
-
+[% IF Env("Action") == "CustomerTicketQRCode" %]             
+[% RenderBlockStart("DynamicField_Teste") %]
+                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+                    [% Data.Label %]
+                    <div class="Field">
+                        [% Data.Field %]
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+[% RenderBlockEnd("DynamicField_Teste") %]
+[% END %] 
 [% RenderBlockStart("TicketType") %]
                 <div>
 <!--

@@ -429,10 +429,10 @@ mark{
     color:inherit !important;
     
 }
-body.Visible-ScreenS #LigeroServiceSearch, #LigeroServiceSearchMark {
+body.Visible-ScreenS #LigeroServiceSearch, #LigeroServiceSearchMark, #LigeroICSearch, #LigeroICSearchMark {
 	width: 88%;
 } 
-#LigeroServiceSearch, #LigeroServiceSearchMark{
+#LigeroServiceSearch, #LigeroServiceSearchMark, #LigeroICSearch, #LigeroICSearchMark{
 	margin-left: 10px;
 	margin-bottom: 10px;
     line-height: 15pt;

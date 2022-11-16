@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="ITSMConfigItemBarcode::BarcodeType" Required="1" Valid="1">
+        <Description Translatable="1">Type of barcode generated for the config items.</Description>
+        <Navigation>Barcode</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="EAN13">
+                <Item ValueType="Option" Value="EAN8">EAN8</Item>
+                <Item ValueType="Option" Value="EAN13">EAN13</Item>
+                <Item ValueType="Option" Value="QRcode">QR</Item>
+                <Item ValueType="Option" Value="Code39">Code39</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::BarcodeAttribute" Required="1" Valid="1">
+        <Description Translatable="1">Attribute that is encoded in the barcode.</Description>
+        <Navigation>Barcode</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">ConfigItemID</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::BarcodeITSMConfigItemURL" Required="0" Valid="0">
+        <Description Translatable="1">Encode config item URL in the barcode (overrides ITSMConfigItemBarcode::BarcodeAttribute and only usable with QR codes).</Description>
+        <Navigation>Barcode</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::RebuildBarcode" Required="1" Valid="1">
+        <Description Translatable="1">The barcode should be rebuilt when the barcode type and/or the value of the attribute (or the attribute itself) changed.</Description>
+        <Navigation>Barcode</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::BarcodeHeight" Required="1" Valid="1">
+        <Description Translatable="1">Height of the barcode image.</Description>
+        <Navigation>Barcode</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">80</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::Factor" Required="1" Valid="1">
+        <Description Translatable="1">Factor for the barcode image.</Description>
+        <Navigation>Barcode</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]+$">2</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::QRcode###Ecc" Required="1" Valid="1">
+        <Description Translatable="1">QR code error correction level (see https://blog.qrstuff.com/2011/12/14/qr-code-error-correction).</Description>
+        <Navigation>Barcode::QR</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[LMQH]$">H</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::QRcode###Version" Required="1" Valid="1">
+        <Description Translatable="1">QR code version </Description>
+        <Navigation>Barcode::QR</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]+$">11</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::QRcode###ModuleSize" Required="1" Valid="1">
+        <Description Translatable="1">QR code version </Description>
+        <Navigation>Barcode::QR</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]+$">5</Item>
+        </Value>
+    </Setting>
+    <Setting Name="ITSMConfigItemBarcode::Queues" Required="0" Valid="1">
+        <Description Translatable="1">Tickets in these Queues get the barcode printed. Regexes can be used.</Description>
+        <Navigation>Barcode</Navigation>
+        <Value>
+            <Array></Array>
+        </Value>
+    </Setting>
+</otrs_config>

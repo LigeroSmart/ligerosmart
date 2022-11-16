@@ -16,11 +16,13 @@
 # Fim da Barra Lateral
 
 <div class="Content">
-
+[% IF Env("Action") == "CustomerServiceCatalog" %]
 [% RenderBlockStart("FirstLvl") %]
 <input id="LigeroServiceSearch" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
-
 [% RenderBlockEnd("FirstLvl") %]
+[% ELSIF Env("Action") == "CustomerQRCode" %]
+<input id="LigeroICSearch" type="text" class="form-control input-sm" placeholder="[% Translate("Please enter the item code.") %]" /> 
+[% END %]
 		<ul class="breadcrumb">
 [% RenderBlockStart("BreadcrumbStart") %]
 			<li><a href="[% Env("Baselink") %]Action=CustomerServiceCatalog"> [% Translate("Start") | html %]</a></li>
@@ -36,9 +38,15 @@
 
 [% RenderBlockEnd("BreadcrumbServices") %]
 		</ul>
+[% IF Env("Action") == "CustomerServiceCatalog" %]		
 [% RenderBlockStart("CategorySearch") %]
 <input id="LigeroServiceSearchMark" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
 [% RenderBlockEnd("CategorySearch") %]
+[% ELSIF Env("Action") == "CustomerQRCode" %]
+[% RenderBlockStart("CategorySearch") %]
+<input id="LigeroICSearchMark" type="text" class="form-control input-sm" placeholder="[% Translate("Please enter the item code.") %]" /> 
+[% RenderBlockEnd("CategorySearch") %]
+[% END %]
 
 [% RenderBlockStart("CategoryTitle") %]
 	<h1 class="CategoryTitle">[% Data.CategoryTitle %]</h1>

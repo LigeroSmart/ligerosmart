@@ -1,0 +1,60 @@
+=encoding utf-8
+
+=head1 NÉV
+
+CIBarcode
+
+=head1 LEÍRÁS
+
+Ez a csomag egy vonalkódot ad hozzá egy konfigurációelem PDF verziójához (a konfigurációelem nyomtatásán keresztül előállítva).
+
+=head1 BEÁLLÍTÁS
+
+Telepítés után a rendszerbeállításokon keresztül állíthatja be a modult az adminisztrációs területen. A beállítási lehetőségek:
+
+=over 4
+
+=item * CIBarcode::BarcodeType
+
+Ez a beállítás határozza meg, hogy a konfigurációelem PDF verziójára milyen típusú vonalkód legyen nyomtatva. Jelenleg négy típus támogatott.
+
+=over 4
+
+=item * EAN8
+
+=item * EAN13
+
+=item * QR
+
+=item * Code39
+
+=back
+
+Annak ellenére, hogy a rendszerbeállítás csak négy támogatott vonalkódtípust határoz meg, ennek a csomagnak az összes vonalkódtípust támogatnia kellene, amelyet a C<GD::Barcode> Perl-modullal elő lehet állítani. Ezeket a típusokat a I<Kernel/Config/Files/CIBarcode.xml> szerkesztésével adhatja hozzá.
+
+=item * CIBarcode::BarcodeAttribute
+
+Meghatározza, hogy melyik konfigurációelem-attribútum legyen belekódolva a vonalkódba. Ne feledje, hogy az EAN8 és az EAN13 vonalkódok csak olyan számszerű attribútumokat tudnak kezelni, amelyek nem lehetnek hosszabbak a nevükben lévő számnál (EAN8: 8-számjegyű számok, EAN13: 13-számjegyű számok).
+
+=item * CIBarcode::BarcodeCIURL
+
+Ha QR-kódokat használ, akkor belekódolhatja a konfigurációelem URL-ét a vonalkódba. Ha ez a lehetőség engedélyezve van, akkor felülbírálja a C<CIBarcode::BarcodeAttribute> értékét.
+Ha nem választott QR-kódot típusként, akkor ez automatikusan be lesz állítva.
+
+=item * CIBarcode::RebuildBarcode
+
+Ha engedélyezve van, akkor a vonalkód újra előállításra kerül, amikor a vonalkód típusa vagy az attribútum megváltozik.
+
+=back
+
+=head1 SZERZŐ ÉS LICENC
+
+Ezt a csomagot Renee Bäcker E<lt>otrs@perl-services.deE<gt> készítette.
+
+A csomag AGPL szerint licencelt. Ha nem kapta meg ezt a fájlt, akkor nézze meg a http://www.gnu.org/licenses/agpl.txt oldalon.
+
+=head1 MAGYAR FORDÍTÁS
+
+A magyar fordítást az OTRS-megoldások csapata készítette.
+Copyright (C) 2016 Úr Balázs, L<http://otrs-megoldasok.hu>
+

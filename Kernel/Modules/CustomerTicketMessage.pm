@@ -11,6 +11,8 @@ package Kernel::Modules::CustomerTicketMessage;
 use strict;
 use warnings;
 
+use Data::Dumper;
+
 our $ObjectManagerDisabled = 1;
 
 use Kernel::System::VariableCheck qw(:all);
@@ -217,7 +219,16 @@ sub Run {
                     }
                 }
             }
-
+#Alder
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => Dumper($DynamicFieldConfig),
+            );   
+#Alder
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => Dumper($PossibleValuesFilter),
+            );   
             # get field html
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
                 $BackendObject->EditFieldRender(
@@ -231,6 +242,11 @@ sub Run {
                 UpdatableFields => $Self->_GetFieldsToUpdate(),
                 );
         }
+#Alder
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => Dumper(\%DynamicFieldHTML),
+            );        
 
         # print form ...
         my $Output = $LayoutObject->CustomerHeader();
@@ -1230,6 +1246,10 @@ sub _MaskNew {
         }
     }
 
+    #Add DynamicField QRCode
+
+    $Config->{DynamicField}->{Teste} = 1;
+
     # get the dynamic fields for this screen
     my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
@@ -1242,16 +1262,24 @@ sub _MaskNew {
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-
-        my $IsCustomerInterfaceCapable = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->HasBehavior(
-            DynamicFieldConfig => $DynamicFieldConfig,
-            Behavior           => 'IsCustomerInterfaceCapable',
-        );
-        next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
+        
+        if ( $DynamicFieldConfig->{Label} ne 'Teste') {
+            my $IsCustomerInterfaceCapable = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->HasBehavior(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Behavior           => 'IsCustomerInterfaceCapable',
+            );
+            next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
+        }
 
         push @CustomerDynamicFields, $DynamicFieldConfig;
     }
     $DynamicField = \@CustomerDynamicFields;
+
+        #Alder
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => Dumper(\$DynamicField),
+            );  
 
     # Dynamic fields
     # cycle trough the activated Dynamic Fields for this screen

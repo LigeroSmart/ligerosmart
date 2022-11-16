@@ -339,6 +339,8 @@ sub GetDynamicFieldByServiceAndInterface {
 	}
 	if($Param{InterfaceName} eq 'NewCustomerTicket'){
 		$Param{Interface} = 'CustomerInterface';
+	}elsif($Param{InterfaceName} eq 'NewCustomerTicketQRCode'){
+		$Param{Interface} = 'CustomerInterface';
 	}else{
 		$Param{Interface} = 'AgentInterface';
 	}

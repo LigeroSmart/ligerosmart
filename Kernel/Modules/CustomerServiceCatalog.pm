@@ -281,10 +281,8 @@ sub Run {
 		my %ViewHash;
 		my $AllHits = $SearchResultsHash{hits}{total};
 		my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-		my $SplitTimes = $ConfigObject->Get("ServiceCatalog::SplitFirstLvl") || 0;
-
-		
-    my $count = 0;
+		my $SplitTimes = $ConfigObject->Get("ServiceCatalog::SplitFirstLvl") || 0;		
+    	my $count = 0;
 
  		foreach my $document (@{$SearchResultsHash{hits}->{hits}}){
 
@@ -311,7 +309,7 @@ sub Run {
 			}
 
 			if($document->{_source}->{Object} eq "Service"){
-        my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet( Name => 'PublicService' );
+        	my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet( Name => 'PublicService' );
 				my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
 					DynamicFieldConfig => $DynamicFieldConfig,
 					ObjectID => $document->{_source}->{ObjectID}
@@ -346,16 +344,17 @@ sub Run {
 				}
 			}
 			else{
-        next if ($document->{_source}->{Visibility} ne 'public' && $Self->{isPublicInterface});
+        		next if ($document->{_source}->{Visibility} ne 'public' && $Self->{isPublicInterface});
         
         
-        if($Self->{isPublicInterface}) {
-          $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerFAQZoom/PublicFAQZoom/r;
-          $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/customer.pl/public.pl/r;
-        }
+				if($Self->{isPublicInterface}) {
+				$document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerFAQZoom/PublicFAQZoom/r;
+				$document->{_source}->{URL} = $document->{_source}->{URL} =~ s/customer.pl/public.pl/r;
+				}
 				$LayoutObject->Block( Name => "Result", 
 								  Data => $document->{_source}
 							    );
+										
 			}		
 
       $count++; 	

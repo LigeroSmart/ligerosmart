@@ -1,0 +1,8 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::DynamicFieldITSMConfigItem' )->CodeInstall();
+    ]]></CodeInstall>
+    <CodeUpgrade Type="post"><![CDATA[
+        $Kernel::OM->Get('var::packagesetup::DynamicFieldITSMConfigItem' )->CodeUpgrade();
+    ]]></CodeUpgrade>
+</Migrations>
