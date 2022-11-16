@@ -219,16 +219,7 @@ sub Run {
                     }
                 }
             }
-#Alder
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => Dumper($DynamicFieldConfig),
-            );   
-#Alder
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => Dumper($PossibleValuesFilter),
-            );   
+  
             # get field html
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
                 $BackendObject->EditFieldRender(
@@ -242,11 +233,6 @@ sub Run {
                 UpdatableFields => $Self->_GetFieldsToUpdate(),
                 );
         }
-#Alder
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => Dumper(\%DynamicFieldHTML),
-            );        
 
         # print form ...
         my $Output = $LayoutObject->CustomerHeader();
@@ -787,6 +773,17 @@ sub Run {
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
         );
+        if ( $Self->{Action} eq 'CustomerTicketQRCode' ) {
+            my $ICQRCode = $GetParam{DynamicField_Teste}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'DynamicField_Teste' );
+            my %results = $Self->_GetLinkObject (
+                ConfigItemID => $ICQRCode,
+            );            
+            foreach my $k (keys %{$Services}) {
+                if (!$results{$k}) {
+                    delete $Services->{$k};
+                }
+            }            
+        }
         my $SLAs = $Self->_GetSLAs(
             %GetParam,
             %ACLCompatGetParam,
@@ -974,6 +971,62 @@ sub _GetServices {
         );
     }
     return \%Service;
+}
+
+sub _GetLinkObject {
+    my ( $Self, %Param ) = @_;
+
+    my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
+        Object => 'ITSMConfigItem',
+        Key    => $Param{ConfigItemID},
+        State  => 'Valid',
+        UserID => $Self->{UserID},
+    );    
+
+    my %LinkList;
+    my %results;
+    for my $Object ( sort keys %{ $LinkListWithData } ) {
+
+        for my $LinkType ( sort keys %{ $LinkListWithData->{$Object} } ) {
+
+            # extract link type List
+            my $LinkTypeList = $LinkListWithData->{$Object}->{$LinkType};
+
+            for my $Direction ( sort keys %{$LinkTypeList} ) {
+
+                # extract direction list
+                my $DirectionList = $LinkListWithData->{$Object}->{$LinkType}->{$Direction};
+
+                for my $ObjectKey ( sort keys %{$DirectionList} ) {                    
+
+                    my $ClassName;
+                    if ( $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Class} ) {
+                        $ClassName = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Class};
+                        if ( $Object ne 'Service' && $ClassName eq "PortalServiceQRCode" ) {
+                            my $QRCodeGroupServiceID = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{ConfigItemID};
+                            my %result = $Self->_GetLinkObject (
+                                ConfigItemID => $QRCodeGroupServiceID,
+                                Lock => '1',
+                            ); 
+                            %results = (%results, %result);                          
+                        }                        
+                    }
+
+                    if ( $Object eq 'Service' &&  $Param{Lock}) {
+                        $LinkList{$LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{ServiceID}} = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Name};
+                    }
+                }
+            }
+        }
+    }
+    if ( %LinkList &&  $Param{Lock} ) {
+        return %LinkList;
+    }
+
+    if ( %results &&  !$Param{Lock} ) {
+        return %results;        
+    } 
+    
 }
 
 sub _GetSLAs {
@@ -1246,10 +1299,6 @@ sub _MaskNew {
         }
     }
 
-    #Add DynamicField QRCode
-
-    $Config->{DynamicField}->{Teste} = 1;
-
     # get the dynamic fields for this screen
     my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
@@ -1274,12 +1323,6 @@ sub _MaskNew {
         push @CustomerDynamicFields, $DynamicFieldConfig;
     }
     $DynamicField = \@CustomerDynamicFields;
-
-        #Alder
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => Dumper(\$DynamicField),
-            );  
 
     # Dynamic fields
     # cycle trough the activated Dynamic Fields for this screen

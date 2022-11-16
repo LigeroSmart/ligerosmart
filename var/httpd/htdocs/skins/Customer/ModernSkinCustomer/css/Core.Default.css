@@ -1,0 +1,1196 @@
+/*
+ * Copyright (C) 2020–present Efflux GmbH, https://efflux.de/
+ * Part of the ModernSkinCustomer package.
+ *
+ * This software comes with ABSOLUTELY NO WARRANTY. For details, see
+ * the enclosed file COPYING for license information (GPL). If you
+ * did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+ */
+
+/* 
+	Background: #f2f4f5; Second: #ffffff
+	Header: #19475b
+	Border: #e3e7ea; Active: #4d90fe
+	Icons: #19475b; Hover: #028b8b
+	Text/a: #444444; Hover: #335b6e
+
+	Border radius: 3px
+*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, hr {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+	background: #f2f4f5;
+	/* overflow-y: overlay;  /* Don't let the scrollbar change the width */
+}
+
+a, p {
+	color: #444444;
+}
+
+a:hover {
+	color: #335b6e;
+}
+
+h1 {
+	font-size: 28px;
+}
+
+/* Default box styling */
+#Navigation > ul > li > ul, .TicketCompose .Content, .Preferences .Content, .Search .Content, .FieldHelpContainer > span,
+#MainBox.TicketView, .TicketProcess .LayoutPopup, #FollowUp.Visible #Messenger, #ReplyCustomerTicket #Messages li:nth-child(even),
+.ModernSkinBox, #Login, #Reset, #Signup, #PreLogin, #MainBox > .Content.Error {
+	background: #ffffff;
+	box-shadow: 0 0px 0px 0 rgba(0,0,0,0.14), 0 1px 1px -1px rgba(0,0,0,0.12), 0 0px 3px 0 rgba(0,0,0,0.2);
+	border-radius: 3px;
+}
+
+/* Header */
+#Header {
+	background: #19475b;
+	padding: 0px;
+	height: 61px;
+}
+
+#Header a {
+	color: #ffffff;
+}
+
+#Header #Logo {
+	top: 5px !important;
+	right: 0px !important;
+	width: 300px !important;
+	height: 45px !important;
+	left: 19px !important;
+}
+
+h1.CompanyName {
+	padding: 22px;
+}
+
+#Navigation {
+	background: #ffffff;
+	height: 39px;
+}
+
+#Navigation > ul > li:hover ul, #Navigation > ul > li a:focus + ul, #Navigation > ul > li ul.Expanded {
+	margin: 10px 4px;
+}
+
+#Navigation > ul > li:first-child:hover ul {
+	margin: 10px 9px;
+}
+
+#Navigation > ul > li {
+	padding: 5px 5px 3px 5px;
+	border-right: none;
+}
+
+#Navigation > ul > li:first-child {
+	padding-left: 10px;
+}
+
+#Navigation > ul > li > a {
+	display: block !important;
+	height: 21px;
+	padding: 8px 10px 0px 10px !important;
+	line-height: 12px;
+	position: relative;
+	color: #323232 !important;
+	font-weight: bold;
+	font-size: 13px !important;
+}
+
+#Navigation .Selected > a {
+	border-bottom: 2px solid #19475b;
+}
+
+#Navigation > ul > li:hover > a {
+	border-bottom: 2px solid #028b8b;
+}
+
+#Navigation .Selected, #Navigation .Selected:active, #Navigation > ul > li:hover {
+	background: #ffffff !important;
+}
+
+#Navigation > ul > li > ul {
+	top: 29px;
+	padding: 0px !important;
+}
+
+#Navigation > ul > li > ul a, #Navigation > ul > li > ul a.SubSelected {
+	border-top: none;
+	font-size: 13px;
+	padding: 12px;
+	color: #212121;
+	background: transparent;
+}
+
+#Navigation > ul > li > ul li:last-child {
+	border-bottom: none;
+}
+
+#Navigation > ul > li > ul a:hover, #Navigation > ul > li > ul a:focus {
+	background: transparent;
+}
+
+#Navigation > ul > li > ul > li:hover, #Navigation > ul > li > ul > li:focus {
+	background: #D0E3FA;
+}
+
+#Navigation > ul > li > ul > li:hover:first-child {
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+}
+
+#Navigation > ul > li > ul > li:hover:last-child {
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+/* Main */
+#MainBox[role=main]:not(.Login) {
+	padding: 16px 10px 7px 10px;
+}
+
+.Content {
+	padding: 5px !important;
+}
+
+fieldset, form label.Mandatory, label {
+	border: none;
+	background: transparent !important;
+}
+
+form label.Mandatory span.Marker {
+	font-size: 1em;
+	top: 0;
+}
+
+iframe.Signature, input[type=text]:not([readonly]), input[type=email], input[type=password], 
+textarea, select[multiple=multiple], form #cke_RichText, div.DnDUpload {
+	border: 1px solid #e3e7ea !important;
+	border-top-color: #e3e7ea !important;
+	box-shadow: none;
+	border-radius: 3px !important;
+	box-shadow: none !important;
+}
+
+div.InputField_Selection div.Text {
+	background: transparent;
+}
+
+div.InputField_Selection div.Remove a {
+	color: #028b8b;
+}
+
+div.InputField_Selection div.Remove {
+	background: transparent;
+}
+
+div.InputField_TreeContainer, .ui-widget-content, .ui-widget-header .ui-state-default {
+	border: none !important;
+	border-radius: 3px !important;
+	box-shadow: 0 2px 18px 0 rgba(18,52,77,.16), 0 2px 4px 0 rgba(18,52,77,.06);
+}
+
+.jstree-InputField-Tree .jstree-node:first-child, .jstree-InputField-NoTree .jstree-node:first-child {
+	padding-top: 0px;
+}
+
+.jstree-InputField .jstree-wholerow-ul .jstree-wholerow-clicked {
+	background-color: #467b94 !important;
+}
+
+.jstree-InputField .jstree-wholerow-ul .jstree-anchor.jstree-clicked {
+	color: #ffffff !important;
+}
+
+.jstree-InputField .jstree-wholerow-ul .jstree-wholerow:hover, .jstree-InputField .jstree-wholerow-ul .jstree-wholerow-hovered, 
+.jstree-InputField .jstree-focused > .jstree-wholerow,
+.ui-menu-item:hover, .ui-menu-item:focus, .ui-menu-item:active, .ui-autocomplete .ui-menu-item-wrapper.ui-state-active {
+	background-color: #D0E3FA;
+}
+
+.jstree-InputField-Tree .jstree-wholerow,
+.jstree-InputField .jstree-wholerow-ul .jstree-wholerow {
+	height: 28px;
+}
+
+.jstree-InputField .jstree-anchor {
+	padding: 5px !important;
+}
+
+.jstree-InputField-Tree .jstree-node,
+.jstree-InputField-NoTree .jstree-node {
+	margin: 0px 5px;
+}
+
+.cke_top, .cke_bottom {
+	border: none !important;
+	background: #ffffff !important;
+}
+
+.cke_inner, .cke_top, .cke_bottom {
+	border-radius: 3px !important;
+}
+
+.cke_toolbox .cke_toolbar_last:last-child {
+	border-bottom: 1px solid #dfe4e7 !important;
+	width: 100%;
+}
+
+.cke_resizer {
+	border-color: transparent #e3e7ea transparent transparent !important;
+}
+
+div.Tooltip > div.Content {
+	border-radius: 3px;
+	border: 1px solid #e3e7ea;
+}
+
+#BottomActionRow {
+	background: #ffffff;
+	margin-left: 125px;
+}
+
+button, .Button, .cke_dialog_footer_buttons a.cke_dialog_ui_button {
+	text-shadow: none;
+	color: #757575;
+	padding: 6px 7px 6px;
+	border-radius: 3px !important;
+	background: #e9ecec;
+	border-bottom: none;
+	border: 1px solid #e3e7ea;
+	transition: none;
+}
+
+button:hover, .Button:hover, button:active, .Button:active {
+	border: 1px solid #c6c6c6;
+}
+
+.Placeholder p {
+	max-width: 100%;
+	line-height: 1em;
+}
+
+.Placeholder h2 {
+	border-bottom: none;
+	padding: 0;
+}
+
+#MainBox > .Content.Error {
+	padding: 20px !important;
+}
+
+/* Ticket overview */
+.MessageBox, .ActionRow {
+	text-shadow: none;
+	background: transparent;
+	border: none;
+}
+
+#MainBox.TicketView {
+	margin: 16px 10px 7px 10px;
+	min-height: 250px;
+	border: none;
+}
+
+#MainBox.TicketView .ActionRow {
+	padding-bottom: 10px;
+}
+
+.Flag span[class^="PriorityID-"] {
+	border-radius: 3px;
+}
+
+.Overview tbody tr {
+	border-bottom: none;
+}
+
+.Overview thead, .Overview tbody tr td, .Overview tbody tr:nth-child(even) td, .Overview thead .SortDescending a,
+.Overview thead .SortAscending a {
+	background: transparent;
+	text-shadow: none;
+	font-size: 1em;
+}
+
+.Overview thead .SortAscending a {
+	color: #212121 !important;
+	text-shadow: none;
+}
+
+.Overview tbody a, .Overview tbody tr td, .Overview tbody tr td, .Overview tbody tr:nth-child(even) td {
+	font-weight: normal;
+	color: #444444;
+}
+
+.Overview tbody tr td, .Overview tbody tr:active td {
+	border-top: 1px solid #e3e7ea;
+	padding: 8px 8px 8px 11px;
+}
+
+.Overview thead a {
+	color: #757575;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 0px !important;
+	text-transform: none;
+	text-shadow: none;
+}
+
+.Overview thead tr th {
+	padding: 5px 0px 5px 11px;
+}
+
+.Overview thead th {
+	border-right: none;
+	border-bottom: none;
+}
+
+.Overview tbody tr:hover {
+	border-color: transparent;
+}
+
+.Overview tbody tr:hover td, .Overview tbody tr:hover a, .Overview tbody tr:hover .Title div {
+	text-shadow: none;
+	color: #444444;
+}
+
+.Overview tbody tr:hover td {
+	background: #D0E3FA !important;;
+}
+
+.Overview tbody tr:active {
+	background-color: transparent;
+}
+
+.Overview thead .SortAscending a:after, .Overview thead .SortDescending a:after {
+	display: inline-block;
+	right: auto;
+	top: auto;
+}
+
+td.Age {
+	text-align: left;
+}
+
+.Filter a {
+	text-shadow: none;
+	padding: 0px 5px 0px 0px;
+}
+
+.Filter a:after {
+	padding-left: 0px;
+	margin-right: 0;
+}
+
+.Tabs {
+	padding-left: 11px !important;
+}
+
+#NoArticles {
+	border: 1px solid #e3e7ea !important;
+	border-radius: 3px;
+}
+
+#NoArticles li {
+	border-top: none;
+}
+
+/* New Ticket */
+.TicketZoom[role=main] .Content {
+	background: #ffffff !important;
+	box-shadow: 0 0px 0px 0 rgba(0,0,0,0.14), 0 1px 1px -1px rgba(0,0,0,0.12), 0 0px 3px 0 rgba(0,0,0,0.2);
+	border-radius: 3px !important;
+	min-height: 300px;
+}
+
+form#ReplyCustomerTicket .ActionRow {
+	border: none;
+}
+
+.TicketHeader h2 {
+	margin: 0 !important;
+	font-weight: bold;
+}
+
+#TicketOptions {
+	top: 0px !important;
+	padding: 5px 9px !important;
+}
+
+#FollowUp {
+	margin: 0px !important;
+	background-color: transparent !important;
+	margin-bottom: 50px !important;
+	width: 100%;
+}
+
+#ReplyButton, #submitRichText, button.Primary {
+	font-size: 14px;
+	background-color: #028b8b;
+	border-radius: 3px !important;
+	color: #ffffff;
+	top: 0px;
+	width: 150px;
+	margin: 0px;
+	height: 12px !important;
+	padding: 10px !important;
+	font-weight: bold;
+	text-align: center;
+	border: none;
+}
+
+#submitRichText, button.Primary {
+	height: 35px !important;
+}
+
+fieldset p {
+	margin: 0 0 0 135px !important;
+}
+
+#ReplyButton:hover, #submitRichText:hover, button.Primary:hover {
+	background-color: #4ecac2;
+	color: #ffffff;
+}
+
+#Messages {
+	border: none;
+}
+
+#Messages li {
+	margin-bottom: 5px;
+}
+
+.MessageHeader {
+	border: none;
+	background: transparent;
+	padding: 5px 15px 3px;
+}
+
+.MessageHeader h3 {
+	font-size: 14px;
+}
+
+#Metadata, #Activities {
+	border: none;
+}
+
+#Metadata li.Header, #Activities li.Header {
+	margin-bottom: 5px;
+}
+
+#Activities li {
+	border-bottom: none;
+}
+
+.MessageContent {
+	width: 99%;
+	border-bottom: none;
+	background: transparent;
+}
+
+.MessageBrowser {
+	border: 1px solid transparent;
+}
+
+.MessageBrowser p {
+	background-color: #f2f4f5 !important;
+	border-radius: 3px !important;
+}
+
+#ReplyCustomerTicket #Messages li:nth-child(even) .MessageBrowser p {
+	background-color: #ffffff !important;
+}
+
+#ReplyCustomerTicket #Messages li:nth-child(even), #ReplyCustomerTicket #Messages li:nth-child(even) .MessageContent {
+	background-color: #f2f4f5 !important;
+}
+
+#ReplyCustomerTicket #Messenger {
+	margin: 0px 8px;
+}
+
+#ReplyCustomerTicket #FollowUp .ActionRow {
+	padding-left: 143px;
+}
+
+#ReplyCustomerTicket .ActionRow button {
+	font-size: 14px;
+	background-color: #028b8b;
+	border-radius: 3px !important;
+	color: #ffffff;
+	top: 0px;
+	width: 150px;
+	margin: 0px;
+	padding: 10px !important;
+	font-weight: bold;
+	text-align: center;
+	border: none;
+}
+
+.TicketZoom iframe {
+	background-color: #ffffff;
+	border-radius: 3px;
+}
+
+.Details .Label {
+	color: #b0b1b2 !important;
+	width: 50px !important;
+	text-align: left !important;
+}
+
+.SeperatorRow {
+	background: transparent;
+	border-bottom: 1px solid #e4e7ea;
+	border-top: none;
+}
+
+.fa-navicon:before, .fa-reorder:before, .fa-bars:before, .fa-remove:before, .fa-close:before, .fa-times:before, .fa-print:before {
+	color: #19475b !important;
+}
+
+#TicketOptions .Print:hover .fa-bars:before, #TicketOptions .ZoomExpand:hover .fa-bars:before, .MessageBrowser a.Close:hover .fa-times:before,
+#TicketOptions .ZoomExpand:hover, #TicketOptions a.Print:hover .fa-print:before {
+	color: #028b8b !important;
+}
+
+#FollowUp.Visible {
+	border: none;
+	max-width: 80%;
+}
+
+#FollowUp.Visible #Messenger {
+	background: #f2f4f5;
+}
+
+.DnDUpload.AjaxDnDUploadReady, #Messenger #Subject {
+	background: #ffffff;
+}
+
+.DataTable {
+	background-color: transparent;
+	border: none;
+}
+
+.DataTable tr:nth-child(even) td {
+	background-color: transparent
+}
+
+.DataTable tbody td {
+	border-right: none;
+	border-top: 1px solid #e3e7ea;
+}
+
+td i, td a i {
+	color: #999;
+}
+
+.DataTable thead th, .TableSmall thead th {
+	text-transform: none;
+	background: #ffffff;
+	font-size: 1em;
+	font-weight: bold !important;
+	color: #757575 !important;
+	font-weight: bold !important;
+	border: none;
+	padding: 5px 20px 5px 10px;
+}
+
+.DataTable tbody tr:hover td, .TableSmall tbody tr:hover td, 
+.DataTable tbody tr:active td.Clickable, .TableSmall tbody tr:active td.Clickable, 
+.DataTable tr:nth-child(even):hover td.Highlight {
+	background: #D0E3FA !important;
+}
+
+/* New Process Ticket */
+.TicketProcess > .Content {
+	padding: 0px !important;
+}
+
+.AsteriskExplanationCustomer {
+	color: #444444;
+	margin-left: 178px !important;
+}
+
+fieldset h2 {
+	border-top: none;
+	border-bottom: none;
+	text-shadow: none;
+}
+
+.TicketProcess fieldset h2 {
+	padding-left: 145px !important;
+}
+
+.TicketProcess fieldset {
+	margin: 0px !important;
+}
+
+.Spacing {
+	margin: 5px;
+}
+
+.PopupFooter {
+	background: #ffffff !important;
+	border-radius: 3px !important;
+	border: none !important;
+	margin-top: 10px;
+	padding: 10px 240px !important;
+}
+
+.FieldHelpContainer > span {
+	background-color: #19475b !important;
+	text-shadow: none !important;
+	opacity: 0.95 !important;
+}
+
+.FieldHelpContainer .FieldHelpTrigger {
+	color: #19475b !important;
+}
+
+.FieldHelpContainer .FieldHelpTrigger:hover {
+	cursor: pointer;
+}
+
+#ActivityDialogContent select {
+	border: 1px solid #e3e7ea;
+}
+
+/* Settings */
+#MainBox.Preferences fieldset p {
+	margin: 0px !important;
+}
+
+#MainBox.Preferences .Box {
+	min-height: 250px;
+	width: 100%;
+	max-width: 500px;
+}
+
+#MainBox.Preferences .Box form {
+	margin: 10px;
+	min-height: 230px;
+	background: #f2f4f5;
+	box-shadow: 0 0px 0px 0 rgba(0,0,0,0.14), 0 1px 1px -1px rgba(0,0,0,0.12), 0 0px 3px 0 rgba(0,0,0,0.2);
+	border-radius: 3px;
+}
+
+#MainBox.Preferences .Box fieldset {
+	margin: 0;
+}
+
+#MainBox.Preferences fieldset h2 {
+	font-size: 1.25em;
+	line-height: 20px;
+}
+
+#MainBox.Preferences fieldset h2 + p.Description {
+	padding: 0px 8px 4px;
+}
+
+/* Search */
+.Search form > fieldset {
+	margin-bottom: 0px;
+}
+
+.Search fieldset.Columns .Column h2 {
+	margin-left: 0px;
+}
+
+.Search .Row {
+	padding-left: 135px;
+}
+
+.Search fieldset h2 + div {
+	padding-top: 2px;
+}
+
+.Search fieldset.Columns .Column div {
+	padding: 0px 3px 3px 3px;
+}
+
+.Search fieldset h2, .Search .Column {
+	margin-left: 127px;
+}
+
+.Search fieldset.TimeSearchType div {
+	margin-left: 135px;
+}
+
+div.InputField_ToolbarContainer {
+	background-color: #f2f4f5;
+	border: none !important;
+}
+
+div.InputField_ToolbarContainer ul li a, div.InputField_ToolbarContainer ul li a .fa-check-square-o:before {
+	color: #444444;
+}
+
+div.InputField_ToolbarContainer ul li a:hover {
+	border-bottom: 1px solid #ffffff;
+}
+
+input[type=text][readonly], input[type=password][readonly], input[type=email][readonly], textarea[readonly] {
+	border: 1px solid transparent;
+	box-shadow: none;
+	border-radius: 3px;
+}
+
+/* jQuery Datepicker */
+.DatepickerIcon {
+	color: #19475b;
+}
+
+.ui-datepicker td {
+	padding: 4px 6px !important;
+}
+
+#ui-datepicker-div a.ui-state-default {
+	box-shadow: none !important;
+}
+
+.ui-datepicker .ui-datepicker-header {
+	background: transparent !important;
+}
+
+.ui-datepicker th {
+	font-weight: normal !important;
+}
+
+.ui-widget-header {
+	border: none !important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	background: transparent !important;
+}
+
+.ui-widget-content .ui-state-default {
+	border: none !important;
+	border-radius: 3px !important;
+}
+
+.ui-datepicker .ui-datepicker-next, .ui-datepicker .ui-datepicker-prev {
+	cursor: pointer;
+}
+
+.ui-datepicker .ui-datepicker-next:hover, .ui-datepicker .ui-datepicker-prev:hover {
+	border: none !important;
+	background: transparent !important;
+}
+
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+	top: 1px !important;
+}
+
+.ui-datepicker .ui-datepicker-next {
+	right: 1px !important;
+}
+
+.ui-datepicker .ui-datepicker-prev {
+	left: 1px !important;
+}
+
+.ui-icon-circle-triangle-e {
+	background-position: -31px 0px !important;
+}
+
+.ui-icon-circle-triangle-w {
+	background-position: -96px 0px !important;
+}
+
+td.ui-datepicker-today:not(.ui-datepicker-days-cell-over) a.ui-state-default {	/* Today. */
+	color: #d55c4b;
+}
+
+td.ui-datepicker-days-cell-over, td.ui-datepicker-current-day {	/* Selected day. */
+	background: #4d90fe !important;
+	border-radius: 10px !important;
+}
+
+.ui-datepicker-days-cell-over:not(.Highlight) a.ui-state-default {
+	color: #ffffff;
+}
+
+.ui-datepicker-days-cell-over.Highlight a.ui-state-default {	/* Holiday */
+	color: #f8f32b;
+}
+
+.ui-datepicker td.Highlight a.ui-state-default {
+	background: transparent !important;
+}
+
+.ui-datepicker td.Highlight:not(.ui-datepicker-days-cell-over) {
+	background: #f8f32b;
+	border-radius: 10px;
+}
+
+/* Login screen */
+#Slider {
+	width: 100%;
+	height: 337px;
+	margin-top: 15px;
+}
+
+#Login, #Reset, #Signup, #PreLogin {
+	width: 100%;
+	max-width: 400px;
+	height: 280px;
+	margin: auto !important;
+	margin-top: 16px !important;
+	margin-bottom: 20px !important;
+	padding: 20px 30px;
+}
+
+#Slider h2 {
+	font-size: 20px;
+	line-height: 1.1em;
+	font-weight: 600;
+	text-align: center;
+	padding-top: 10px;
+}
+
+.Floating div {
+	width: 100%;
+}
+
+.InlineNavigation {
+	top: 10px;
+}
+
+.Login {
+	padding: 0;
+}
+
+.Login p {
+	text-align: center !important;
+}
+
+.Login a {
+	color: #4ecac2;
+	font-weight: bold;
+}
+
+.Login input[type="text"], .Login input[type="password"], .Login input[type=email],
+#Signup #Title, #Signup input[type='text'], #Signup input[type='email'] {
+	border: 0 !important;
+	border-bottom: 1px solid #e3e7ea !important;
+	padding: 0px 5px !important;
+	margin-bottom: 5px !important;
+	height: 30px;
+	width: 97%;
+	outline: none;
+	border-radius: 0px !important;
+}
+
+.Login button[type="submit"] {
+	background-color: #028b8b;
+	color: #ffffff;
+	border-color: #028b8b;
+	border: 0;
+	width: 100%;
+	height: 40px;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: background 0.3s ease-in-out;
+}
+
+.Login form div {
+	position: relative;
+}
+
+.Login form div label {
+	position: absolute !important;
+	transition: 0.2s !important;
+	margin-left: 3px !important;
+}
+
+.Login form div label.Focused, .JavaScriptAvailable .Login label.Focused {
+	display: inline-block !important;
+	top: -10px;
+	font-size: 0.75em;
+	color: #4d90fe !important;
+}
+
+.Login .Floating.Validate {
+	margin-top: 15px !important;
+}
+
+.Login form label.Mandatory span.Marker {
+	margin-right: -2px;
+}
+
+/* Messages */
+.ErrorBox, .SuccessBox, .WarningBox {
+	margin: 0px !important;
+	text-align: center !important;
+	padding: 10px;
+	font-weight: bold;
+}
+
+.ErrorBox {
+	background: #d55c4b;
+}
+
+.MessageBox.Error {
+	background: #d55c4b;
+}
+
+.MessageBox.Error p {
+	color: #ffffff;
+}
+
+.SuccessBox {
+	color: #1a475b;
+	background: #4bd5a1;
+}
+
+.MessageBox.Success {
+	background: #4bd5a1;
+}
+
+.MessageBox.Success p {
+	color: #1a475b;
+}
+
+/* Important */
+input[type=text]:not([readonly]):focus, input[type=email]:focus, input[type=password]:focus,
+textarea:focus, select[multiple=multiple]:focus, form #cke_RichText:focus, div.DnDUpload:focus {
+	border-color: #4d90fe !important;
+}
+
+/* Some duplicate responsive rules */
+@media only screen and (max-width: 1024px) and (min-width: 0px) {
+	/* Global */
+	input[type=text], input[type=email], input[type=password], textarea {
+		padding: 7px;
+	}
+
+	input[type=checkbox] {
+    max-width: 15px !important;
+	}
+
+	label {
+		text-align: left;
+	}
+
+	#BottomActionRow {
+		margin-left: 0px;
+	}
+
+	fieldset div.Field, #BottomActionRow, fieldset .RichTextHolder {
+		padding-left: 5px !important;
+	}
+
+	fieldset p {
+		margin: 0px 0px 0px 8px !important;
+	}
+
+	#Messenger fieldset, #NewCustomerTicket fieldset, #ActivityDialogContent fieldset, #NewProcessTicket fieldset {
+		display: contents !important;
+	}
+
+	#Messenger input, #Messenger select, #NewCustomerTicket input, #NewCustomerTicket select, #ActivityDialogContent input, 
+  #NewProcessTicket select, .TicketCompose fieldset #Subject {
+		max-width: 300px;
+	}
+
+	#ActivityDialogContent select {
+		max-width: 85px;
+	}
+
+	/* Header */
+	#Header h1.CompanyName {
+		margin: -6px 0px 0px 20px;
+		text-align: left;
+	}
+
+	#Header .CompanyName a {
+		white-space: nowrap;
+		font-size: 1.5em;
+	}
+
+	#Header #Logo {
+		position: absolute;
+	}
+
+	#Navigation .Selected {
+		background: transparent !important;
+	}
+
+	#Navigation .Selected, #Navigation .Selected:active {
+		background: transparent !important;
+	}
+
+	#Navigation > ul > li > ul a, #Navigation > ul > li > ul a.SubSelected {
+		font-size: 1em;
+    padding: 5px 20px;
+	}
+
+	#Navigation > ul > li > ul {
+		box-shadow: none;
+		width: 98%;
+	}
+
+	#Navigation > ul > li > ul a {
+		color: #444444 !important;
+		border-top: none !important;
+	}
+
+	#Navigation > ul > li > a {
+		margin-bottom: 10px;
+	}
+
+	#Navigation > ul > li {
+		padding-left: 10px;
+	}
+
+	#Navigation > ul > li:first-child:hover ul {
+		margin: 0px;;
+	}
+
+	#Navigation .Selected > a, #Navigation > ul > li:hover > a {
+		color: #ffffff !important;
+		border-bottom: none;
+	}
+
+	#Navigation .Selected, #Navigation .Selected:active, #Navigation > ul > li:hover {
+		background: transparent !important;
+	}
+
+	#Navigation > ul > li:hover ul, #Navigation > ul > li a:focus + ul, #Navigation > ul > li ul.Expanded {
+		margin: initial;
+	}
+
+	.fa-toggle-left:before, .fa-caret-square-o-left:before {
+		color: #018b8a !important;
+	}
+
+	.fa-bars:before, .fa-minus:before {
+		color: #018b8a !important;
+	}
+	
+	#Navigation {
+		background-color: #19475b !important;
+	}
+
+	.Visible-ScreenXS #Navigation > ul >li > a {
+		border-top: none !important;
+		color: #ffffff !important;
+	}
+
+	#ZoomSidebar, .SidebarColumn {
+		background: #19475b !important;
+	}
+
+	#Metadata, #Activities {
+		border-radius: 3px;
+	}
+
+	/* Ticket form */
+	div.DnDUploadBox {
+		width: 100%;
+	}
+
+	span.ReadyForUpload {
+		white-space: nowrap;
+	}
+
+	#NewCustomerTicket input.InputField_Search {
+		padding: 5px;
+	}
+
+	.DnDUpload.AjaxDnDUploadReady {
+		display: inline-block;
+	}
+
+	/* Ticket view */
+	.TicketZoom #cke_RichText {
+		margin-bottom: 15px !important;
+		margin-left: 10px !important;
+	}
+
+	#Messenger input:not(#Subject) {
+		margin: 0px;
+	}
+
+	.TicketZoom #Messenger #Subject {
+		margin-left: 10px;
+	}
+
+	.TicketZoom #AttachmentHolder {
+		width: max-content;
+	}
+
+	.TicketZoom div.InputField_Container {
+		margin: 0px 10px 0px;
+	}
+
+	.TicketZoom #AttachmentHolder label {
+		width: fit-content;
+	}
+
+	.TicketZoom div.DnDUploadBox {
+		margin: 0px 0px 0px 5px;
+	}
+
+	.TicketZoom form#ReplyCustomerTicket #FollowUp .ActionRow {
+		padding-left: 11px;
+	}
+
+	.TicketZoom #FollowUp.Visible {
+		max-width: 100%;
+	}
+
+	.MessageBrowser {
+		margin-right: 10px;
+	}
+
+	#ReplyCustomerTicket #AttachmentHolder {
+		width: 96%;
+	}
+
+	#ReplyCustomerTicket input#PriorityID_Search, #ReplyCustomerTicket input#StateID_Search {
+		max-width: 200px !important;
+	}
+
+	/* Process Ticket */
+	.AsteriskExplanationCustomer {
+		margin-left: 6px !important;
+	}
+
+	fieldset h2 + p.Description {
+		padding: 5px 0px;
+	}
+
+	.PopupFooter {
+		margin-top: 0px;
+		padding: 5px 9px !important;
+	}
+
+	/* Search */
+	.Search div.InputField_Container {
+		margin: 0px;
+	}
+
+	.Search div.InputField_Container {
+		width: 50%;
+	}
+
+	/* Settings */
+	#MainBox.Preferences .Content .Box {
+		max-width: 460px !important;
+		float: left;
+	}
+
+	#MainBox.Preferences fieldset div label {
+    padding: 8px 8px 0px 9px;
+	}
+
+	#MainBox.Preferences .Box button {
+		margin: 5px 0 0 5px;
+	}
+}

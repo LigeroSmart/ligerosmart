@@ -14,125 +14,197 @@ use utf8;
 use Kernel::System::VariableCheck qw(:all);
 use JSON;
 use Try::Tiny;
+use Kernel::Language qw(Translatable);
+use Data::Dumper;
 
 sub new {
-	my ( $Type, %Param ) = @_;
-	# allocate new hash for object
-	my $Self = {%Param};
-	bless( $Self, $Type );
-	return $Self;
+    my ( $Type, %Param ) = @_;
+    # allocate new hash for object
+    my $Self = {%Param};
+    bless( $Self, $Type );
+    return $Self;
 }
 
 sub Run {
-	my ( $Self, %Param ) = @_;
+    my ( $Self, %Param ) = @_;
 
-	# get params
-	my %GetParam;
-	my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
-	my $LayoutObject  = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-	my $Config  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
-	my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');	
-	my %TypesColor = %{$Config->{TypeColors}};
-	for my $Key (qw(KeyPrimary FAQID ServiceID Service StateID State CustomParam0 CustomParam1 CustomParam2 CustomParam3 CustomParam4 CustomParam5 CustomParam6 CustomParam7 CustomParam8 CustomParam9)) {
-		$GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
+    # get params
+    my %GetParam;
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject  = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $Config  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
+    my $ConfigObject     = $Kernel::OM->Get('Kernel::Config');
+    my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');    
+    my %TypesColor = %{$Config->{TypeColors}};
+    for my $Key (qw(KeyPrimary FAQID ServiceID Service StateID State DynamicField_Teste CustomParam0 CustomParam1 CustomParam2 CustomParam3 CustomParam4 CustomParam5 CustomParam6 CustomParam7 CustomParam8 CustomParam9)) {
+        $GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
         delete $GetParam{$Key} if (!$GetParam{$Key});
-	}
+    }
 
   $Self->{isPublicInterface} = ($Kernel::OM->Get('Kernel::Output::HTML::Layout')->{Baselink} =~ m/public\.pl/ig) ? 1 : 0;
 
-	# Get all services that are visible by this customer
-	my %Services;
+    # Get all services that are visible by this customer
+    my %Services;
 
-	if ( $Self->{isPublicInterface} ) {
-		%Services = $Kernel::OM->Get('Kernel::System::Service')->ServiceList( UserID => 1);
-	} else {
-		try {
-			$Kernel::OM->Get('Kernel::System::SubscriptionPlan');
-			%Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
-		} catch {
-			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};		
-		};
-	}
-	
-	my %DataParam = (
-		Name         => 'Service',
+    if ( $Self->{isPublicInterface} ) {
+        %Services = $Kernel::OM->Get('Kernel::System::Service')->ServiceList( UserID => 1);
+    } else {
+        if ( $Self->{Action} eq "CustomerQRCode" ) {
+
+			my $CIID = $Param{DynamicField_Teste}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'DynamicField_Teste' );
+
+			if( !$CIID ){
+				return $LayoutObject->ErrorScreen(
+					Message => Translatable('No ConfigItemID is given!'),
+					Comment => Translatable('Please contact the administrator.'),
+				);
+			} else {
+
+                $LayoutObject->Block( Name => "ConfigItemID", Data => {ConfigItemID => $CIID} );
+
+                # get needed object
+                my $ConfigItemObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');                
+
+                my $ConfigItem = $ConfigItemObject->ConfigItemGet(
+                    ConfigItemID => $CIID,
+                );   
+                if ( !$ConfigItem->{ConfigItemID} ) {
+                    return $LayoutObject->ErrorScreen(
+                        Message =>
+                            $LayoutObject->{LanguageObject}->Translate( 'ConfigItemID %s not found in database!', $CIID ),
+                        Comment => Translatable('Please contact the administrator.'),
+                    );
+                }                             
+
+                # get version list
+                my $VersionList = $ConfigItemObject->VersionZoomList(
+                    ConfigItemID => $CIID,
+                );
+                if ( !$VersionList->[0]->{VersionID} ) {
+                    return $LayoutObject->ErrorScreen(
+                        Message =>
+                            $LayoutObject->{LanguageObject}->Translate( 'No version found for ConfigItemID %s!', $CIID ),
+                        Comment => Translatable('Please contact the administrator.'),
+                    );
+                }                
+
+                # get last version
+                my $LastVersion = $VersionList->[-1];                
+
+                # set incident signal
+                my %InciSignals = (
+                    Translatable('operational') => 'greenled',
+                    Translatable('warning')     => 'yellowled',
+                    Translatable('incident')    => 'redled',
+                );                
+                # to store the color for the deployment states
+                my %DeplSignals;
+
+                # get general catalog object
+                my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+
+                # get list of deployment states
+                my $DeploymentStatesList = $GeneralCatalogObject->ItemList(
+                    Class => 'ITSM::ConfigItem::DeploymentState',
+                );
+
+                $LayoutObject->Block( Name => "ConfigItemHeader", Data => {
+                    %{$ConfigItem},
+                    %{$LastVersion},
+                    CurInciSignal => $InciSignals{ $LastVersion->{CurInciStateType} },
+                    CurDeplSignal => $DeplSignals{ $LastVersion->{DeplState} },} 
+                );
+                %Services = %{$Self->_GetServicesQRCode(ConfigItemID => $CIID)};
+            }          
+        } else {
+            try {
+                $Kernel::OM->Get('Kernel::System::SubscriptionPlan');
+                %Services = %{$Self->_GetServicesSP(CustomerUserID => $Self->{UserID})};
+            } catch {
+                %Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};        
+            };
+        }
+    }
+    
+    my %DataParam = (
+        Name         => 'Service',
         Data         => \%Services,
-		Translation  => 0,
+        Translation  => 0,
         PossibleNone => 0,
         TreeView     => 0,
-	);
-	my $OptionRef = $LayoutObject->_BuildSelectionOptionRefCreate(%DataParam);
-	
-	$OptionRef->{Sort} = 'TreeView';
-	$OptionRef->{Max}=0;
-		
-	my $AttributeRef = $LayoutObject->_BuildSelectionAttributeRefCreate(%DataParam);
-	my $DataRef = $LayoutObject->_BuildSelectionDataRefCreate(
+    );
+    my $OptionRef = $LayoutObject->_BuildSelectionOptionRefCreate(%DataParam);
+    
+    $OptionRef->{Sort} = 'TreeView';
+    $OptionRef->{Max}=0;
+        
+    my $AttributeRef = $LayoutObject->_BuildSelectionAttributeRefCreate(%DataParam);
+    my $DataRef = $LayoutObject->_BuildSelectionDataRefCreate(
         Data         => \%Services,
         AttributeRef => $AttributeRef,
         OptionRef    => $OptionRef,
     );
-	my $ServiceObject = $Kernel::OM->Get("Kernel::System::Service");
+    my $ServiceObject = $Kernel::OM->Get("Kernel::System::Service");
     # Creates array of searchable services IDs for elasticsearch filter
-	my @SearchableServiceIDS;
-	foreach my $dataKey ( @{$DataRef}){
-		my $ServiceName = $dataKey->{Value};
-		my $ServiceID = $dataKey->{Key};
-		if(!$ServiceID or $ServiceID eq "-"){
-			 $ServiceID = $ServiceObject->ServiceLookup(
-		        Name => $ServiceName,
-		    );
-		}
+    my @SearchableServiceIDS;
+    foreach my $dataKey ( @{$DataRef}){
+        my $ServiceName = $dataKey->{Value};
+        my $ServiceID = $dataKey->{Key};
+        if(!$ServiceID or $ServiceID eq "-"){
+             $ServiceID = $ServiceObject->ServiceLookup(
+                Name => $ServiceName,
+            );
+        }
         
-		push @SearchableServiceIDS, "$ServiceID";
-			
-	}
+        push @SearchableServiceIDS, "$ServiceID";
+            
+    }
 
-	if($Self->{Subaction} eq  'VerifyOpenTickets'){
-		my $ServiceIDRecovered = $ParamObject->GetParam(Param => 'ServiceID') || '';
+    if($Self->{Subaction} eq  'VerifyOpenTickets'){
+        my $ServiceIDRecovered = $ParamObject->GetParam(Param => 'ServiceID') || '';
 
-		if($ServiceIDRecovered){
+        if($ServiceIDRecovered){
 
-			my $JustOneTicketConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
-				Name   => 'JustOneTicket',             # ID or Name must be provided
-			);
-			my $JustOneTicket = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
-				DynamicFieldConfig => $JustOneTicketConfig,      # complete config of the DynamicField
-				ObjectID           => $ServiceIDRecovered,                # ID of the current object that the field
-			) || '';
+            my $JustOneTicketConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+                Name   => 'JustOneTicket',             # ID or Name must be provided
+            );
+            my $JustOneTicket = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
+                DynamicFieldConfig => $JustOneTicketConfig,      # complete config of the DynamicField
+                ObjectID           => $ServiceIDRecovered,                # ID of the current object that the field
+            ) || '';
 
-			return $LayoutObject->Attachment(
-				ContentType => 'application/json; charset=utf8',
-				Content     => '0',
-				Type        => 'inline',
-				NoCache     => 1,
-			) if !$JustOneTicket;
+            return $LayoutObject->Attachment(
+                ContentType => 'application/json; charset=utf8',
+                Content     => '0',
+                Type        => 'inline',
+                NoCache     => 1,
+            ) if !$JustOneTicket;
 
-			my @TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
-				ServiceIDs => [$ServiceIDRecovered],
-				#CustomerUserLogin     => $Self->{UserID},
-				StateType    => ['new','open'],
-				Result              => 'ARRAY',
-				CustomerUserLogin => $Self->{UserID},
-				CustomerUserID => $Self->{UserID},
-				Permission     => 'rw',
-			);
+            my @TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
+                ServiceIDs => [$ServiceIDRecovered],
+                #CustomerUserLogin     => $Self->{UserID},
+                StateType    => ['new','open'],
+                Result              => 'ARRAY',
+                CustomerUserLogin => $Self->{UserID},
+                CustomerUserID => $Self->{UserID},
+                Permission     => 'rw',
+            );
 
-			return $LayoutObject->Attachment(
-				ContentType => 'application/json; charset=utf8',
-				Content     => $TicketIDs[0],
-				Type        => 'inline',
-				NoCache     => 1,
-			) if(scalar(@TicketIDs) > 0);
-		}
+            return $LayoutObject->Attachment(
+                ContentType => 'application/json; charset=utf8',
+                Content     => $TicketIDs[0],
+                Type        => 'inline',
+                NoCache     => 1,
+            ) if(scalar(@TicketIDs) > 0);
+        }
 
-		return $LayoutObject->Attachment(
+        return $LayoutObject->Attachment(
             ContentType => 'application/json; charset=utf8',
             Content     => '0',
             Type        => 'inline',
             NoCache     => 1,
         );
-	}
+    }
     elsif($Self->{Subaction} eq  'SelfAnswered'){
         # User is satisfied with some FAQ Article. Let's create a ticket for that
         
@@ -149,7 +221,7 @@ sub Run {
         if ($GetParam{FAQID}){
             %FAQ = $Kernel::OM->Get("Kernel::System::FAQ")->FAQGet(
                         ItemID => $GetParam{FAQID},
-                        UserID	=> 1,
+                        UserID    => 1,
                         ItemFields => 0,
                     );
             $GetParam{FAQTitle} = $FAQ{Title};
@@ -224,30 +296,30 @@ sub Run {
 
     }
     # Subaction for searching on customer portal (services and other objects)
-	elsif($Self->{Subaction} eq  'AjaxCustomerService'){
-		
-		my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
+    elsif($Self->{Subaction} eq  'AjaxCustomerService'){
+        
+        my $Index = $Kernel::OM->Get('Kernel::Config')->Get('LigeroSmart::Index');
 
-		my $Lang = $Self->{UserLanguage} || $ENV{UserLanguage} || '*';
-		$Index .= "_".$Lang."_search";
+        my $Lang = $Self->{UserLanguage} || $ENV{UserLanguage} || '*';
+        $Index .= "_".$Lang."_search";
 
-		$Index = lc($Index);
-		
-		my $Term = $ParamObject->GetParam(Param => 'Term');
- 	    my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ));
-		 $StartHit = 0	if($StartHit == 1);
-				
+        $Index = lc($Index);
+        
+        my $Term = $ParamObject->GetParam(Param => 'Term');
+         my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ));
+         $StartHit = 0    if($StartHit == 1);
+                
         my $EndHit = $ParamObject->GetParam( Param => 'EndHit') || 10;
-		if($StartHit > 0){
-			$EndHit = $StartHit + 10;
-		} 
-		my $JSON; 
+        if($StartHit > 0){
+            $EndHit = $StartHit + 10;
+        } 
+        my $JSON; 
 
         # Construct Template Query
-		my %HashQuery;
+        my %HashQuery;
 
-		$HashQuery{source}->{from} = $StartHit ;
-		$HashQuery{source}->{size} = $EndHit;
+        $HashQuery{source}->{from} = $StartHit ;
+        $HashQuery{source}->{size} = $EndHit;
 
         $HashQuery{params}->{pesquisa}   = $Term;
         $HashQuery{params}->{ServiceIDs} = [@SearchableServiceIDS];
@@ -256,135 +328,150 @@ sub Run {
         $HashQuery{source}->{query} = 
             $Kernel::OM->Get('Kernel::System::JSON')->Decode(Data => $Config->{InlineQueryTemplate});
 
-		$HashQuery{source}->{highlight} = {
-			require_field_match => JSON::false,
-			fields => {
-	            Title => {
-            	    pre_tags => ["<mark class=\"elasticHightlightTitle\">"],
-	                post_tags => ["</mark>"],
-	                fragment_size=> 10000
-    	        },
-	            Description =>{
-            	    pre_tags => ["<mark class=\"elasticHightlightDesc\">"],
-	                post_tags => ["</mark>"],
+        $HashQuery{source}->{highlight} = {
+            require_field_match => JSON::false,
+            fields => {
+                Title => {
+                    pre_tags => ["<mark class=\"elasticHightlightTitle\">"],
+                    post_tags => ["</mark>"],
+                    fragment_size=> 10000
+                },
+                Description =>{
+                    pre_tags => ["<mark class=\"elasticHightlightDesc\">"],
+                    post_tags => ["</mark>"],
 
-					fragment_size=> $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog::CharLimiteSizeDescription") || 100
-				}
+                    fragment_size=> $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog::CharLimiteSizeDescription") || 100
+                }
 
-        	}
-		};
-		my %SearchResultsHash = $LigeroSmartObject->SearchTemplate(
+            }
+        };
+        my %SearchResultsHash = $LigeroSmartObject->SearchTemplate(
             Indexes => $Index,
             Types   => 'portallinks',
             Data    => \%HashQuery,
-	    );
-		my %ViewHash;
-		my $AllHits = $SearchResultsHash{hits}{total};
-		my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-		my $SplitTimes = $ConfigObject->Get("ServiceCatalog::SplitFirstLvl") || 0;		
-    	my $count = 0;
+        );
+        my %ViewHash;
+        my $AllHits = $SearchResultsHash{hits}{total};
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+        my $SplitTimes = $ConfigObject->Get("ServiceCatalog::SplitFirstLvl") || 0;        
+        my $count = 0;
 
- 		foreach my $document (@{$SearchResultsHash{hits}->{hits}}){
+         foreach my $document (@{$SearchResultsHash{hits}->{hits}}){
 
-			my $TruncateSizeDesc = $ConfigObject->Get("ServiceCatalog::CharLimiteSizeDescription") || 100;
-			# If there is a highlight then changes what's shown to the user (_source Title and Description)
-			#
-			if(defined($document->{highlight}->{Title}) and scalar $document->{highlight}->{Title} > 0){
-				$document->{_source}->{Title} = $document->{highlight}->{Title}[0];
-			} 
-			if(defined($document->{highlight}->{Description}) and scalar $document->{highlight}->{Description} > 0){
-				$document->{_source}->{Description} = $document->{highlight}->{Description}[0];
-			} 
-	
-		   	$document->{_source}->{backColor} = $TypesColor{$document->{_source}->{Subtitle}}; 	
-			#$TruncateSizeDesc = _CountTruncate($TruncateSizeDesc, $document->{_source}->{Description});
-			#$document->{_source}->{TruncateSizeDesc} = $TruncateSizeDesc;
+            my $TruncateSizeDesc = $ConfigObject->Get("ServiceCatalog::CharLimiteSizeDescription") || 100;
+            # If there is a highlight then changes what's shown to the user (_source Title and Description)
+            #
+            if(defined($document->{highlight}->{Title}) and scalar $document->{highlight}->{Title} > 0){
+                $document->{_source}->{Title} = $document->{highlight}->{Title}[0];
+            } 
+            if(defined($document->{highlight}->{Description}) and scalar $document->{highlight}->{Description} > 0){
+                $document->{_source}->{Description} = $document->{highlight}->{Description}[0];
+            } 
+    
+               $document->{_source}->{backColor} = $TypesColor{$document->{_source}->{Subtitle}};     
+            #$TruncateSizeDesc = _CountTruncate($TruncateSizeDesc, $document->{_source}->{Description});
+            #$document->{_source}->{TruncateSizeDesc} = $TruncateSizeDesc;
 
-			# Check if we need to split "::"
-			my $c = $document->{_source}->{Title} =~ tr/:://;
-			if ($c > 1 and $SplitTimes > 0){
-				
-				my @fields = split("::",$document->{_source}->{Title},2);
-				$document->{_source}->{Title} = $fields[1];
-			}
+            # Check if we need to split "::"
+            my $c = $document->{_source}->{Title} =~ tr/:://;
+            if ($c > 1 and $SplitTimes > 0){
+                
+                my @fields = split("::",$document->{_source}->{Title},2);
+                $document->{_source}->{Title} = $fields[1];
+            }
 
-			if($document->{_source}->{Object} eq "Service"){
-        	my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet( Name => 'PublicService' );
-				my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
-					DynamicFieldConfig => $DynamicFieldConfig,
-					ObjectID => $document->{_source}->{ObjectID}
-				);
-				next if (!$Value && $Self->{isPublicInterface});
+            if($document->{_source}->{Object} eq "Service"){
+            my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet( Name => 'PublicService' );
+                my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                    ObjectID => $document->{_source}->{ObjectID}
+                );
+                next if (!$Value && $Self->{isPublicInterface});
 
-				$DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
-					Name   => 'ForwardToUrl',             # ID or Name must be provided
-				);
-				my $ForwardToUrl = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
-					DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-					ObjectID           => $document->{_source}->{ObjectID},                # ID of the current object that the field
-																		# must be linked to, e. g. TicketID
-				)||'';
+                $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+                    Name   => 'ForwardToUrl',             # ID or Name must be provided
+                );
+                my $ForwardToUrl = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
+                    DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+                    ObjectID           => $document->{_source}->{ObjectID},                # ID of the current object that the field
+                                                                        # must be linked to, e. g. TicketID
+                )||'';
 
-				$DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
-					Name   => 'UrlTarget',             # ID or Name must be provided
-				);
-				my $UrlTarget = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
-					DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-					ObjectID           => $document->{_source}->{ObjectID},                # ID of the current object that the field
-																		# must be linked to, e. g. TicketID
-				)||'';
+                $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+                    Name   => 'UrlTarget',             # ID or Name must be provided
+                );
+                my $UrlTarget = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
+                    DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+                    ObjectID           => $document->{_source}->{ObjectID},                # ID of the current object that the field
+                                                                        # must be linked to, e. g. TicketID
+                )||'';
 
-				if($ForwardToUrl eq ''){
-					$LayoutObject->Block( Name => "Result", Data=> $document->{_source});
-				}
-				else{
-					$document->{_source}->{Url}=$ForwardToUrl;
-					$document->{_source}->{UrlTarget}=$UrlTarget;
-					$LayoutObject->Block( Name => "ResultUrl", Data=> $document->{_source});
-				}
-			}
-			else{
-        		next if ($document->{_source}->{Visibility} ne 'public' && $Self->{isPublicInterface});
+                if( $Self->{Action} eq "CustomerQRCode" ) {
+                    $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerServiceCatalog/CustomerQRCode\;DynamicField_Teste=$GetParam{DynamicField_Teste}/r;                    
+                }                
+
+                if($ForwardToUrl eq ''){
+                    $LayoutObject->Block( Name => "Result", Data=> $document->{_source});
+                }
+                else{
+                    $document->{_source}->{Url}=$ForwardToUrl;
+                    $document->{_source}->{UrlTarget}=$UrlTarget;
+                    $LayoutObject->Block( Name => "ResultUrl", Data=> $document->{_source});
+                }
+            }
+            else{
+                next if ($document->{_source}->{Visibility} ne 'public' && $Self->{isPublicInterface});
         
         
-				if($Self->{isPublicInterface}) {
-				$document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerFAQZoom/PublicFAQZoom/r;
-				$document->{_source}->{URL} = $document->{_source}->{URL} =~ s/customer.pl/public.pl/r;
-				}
-				$LayoutObject->Block( Name => "Result", 
-								  Data => $document->{_source}
-							    );
-										
-			}		
+                if($Self->{isPublicInterface}) {
+                $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerFAQZoom/PublicFAQZoom/r;
+                $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/customer.pl/public.pl/r;
+                }
+                if( $Self->{Action} eq "CustomerQRCode" ) {
+                    $document->{_source}->{URL} = $document->{_source}->{URL} =~ s/CustomerServiceCatalog/CustomerQRCode/r;                    
+                }
+                $LayoutObject->Block( Name => "Result", 
+                                  Data => $document->{_source}
+                                );
+                                        
+            }        
 
-      $count++; 	
-		}
+            $count++;     
+        }
 
-  if ($Self->{isPublicInterface}) {
-      $LayoutObject->Block( Name => "NumberOfRows", 
-							  Data =>{ NumberOfRows => $count} 
-						    );
-  }
-  else {
-    $LayoutObject->Block( Name => "NumberOfRows", 
-							  Data =>{ NumberOfRows => $AllHits} 
-						    );
-  }
+        if ($Self->{isPublicInterface}) {
+            $LayoutObject->Block( Name => "NumberOfRows", 
+                                    Data =>{ NumberOfRows => $count} 
+                                    );
+        }
+        else {
+            $LayoutObject->Block( Name => "NumberOfRows", 
+                                    Data =>{ NumberOfRows => $AllHits} 
+                                    );
+        }
     
 
-    	my $PageShown = 10;
+        my $PageShown = 10;
         my $Link =  'Subaction=' . $LayoutObject->Ascii2Html( Text => $Self->{Subaction} )
-			.';Term=' . $LayoutObject->Ascii2Html( Text => $Term )
+            .';Term=' . $LayoutObject->Ascii2Html( Text => $Term )
             . ';';
+
+
+        my $ActionCustomer;
+        if ( $Self->{Action} eq "CustomerQRCode" ) {
+            $ActionCustomer = 'CustomerQRCode'
+        } else {
+            $ActionCustomer = 'CustomerServiceCatalog'
+        }
 
         my %PageNav = $LayoutObject->PageNavBar(
             Limit     => 10000,
             StartHit  => $StartHit,
             PageShown => $PageShown,
             AllHits   => $Self->{isPublicInterface} ? $count : $AllHits,
-            Action    => ( $Self->{isPublicInterface} ) ? 'Action=CustomerServiceCatalog' : 'Action=PublicServiceCatalog',
+            Action    => ( $Self->{isPublicInterface} ) ? 'Action='. $ActionCustomer : 'Action=PublicServiceCatalog',
             Link      => $Link,
-            IDPrefix  => ( $Self->{isPublicInterface} ) ? 'CustomerServiceCatalog' : 'PublicServiceCatalog'
+            IDPrefix  => ( $Self->{isPublicInterface} ) ? $ActionCustomer : 'PublicServiceCatalog'
         );
         $LayoutObject->Block(
                 Name => 'FilterFooter',
@@ -393,68 +480,68 @@ sub Run {
                     %PageNav,
                 },
             );
-	   my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
+       my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
        $SessionObject->UpdateSessionID(
                 SessionID => $Self->{SessionID},
                 Key       => "LastScreenOverview",
-                Value     => ( $Self->{isPublicInterface} ) ? 'Action=CustomerServiceCatalog;' : 'Action=PublicServiceCatalog;',
+                Value     => ( $Self->{isPublicInterface} ) ? 'Action=' . $ActionCustomer . ';' : 'Action=PublicServiceCatalog;',
             );
-	
-	    ### GENERATE OUTPUT for search
-	 	my $HTML = $LayoutObject->Output(
-	        TemplateFile => 'CustomerServiceCatalogResult',
-	        Data         => \%Param,
-	    );
-		return $LayoutObject->Attachment(
-        	ContentType => 'text/html; charset=' . $LayoutObject->{Charset},
+    
+        ### GENERATE OUTPUT for search
+         my $HTML = $LayoutObject->Output(
+            TemplateFile => 'CustomerServiceCatalogResult',
+            Data         => \%Param,
+        );
+        return $LayoutObject->Attachment(
+            ContentType => 'text/html; charset=' . $LayoutObject->{Charset},
             Content     => $HTML,
             Type        => 'inline',
             NoCache     => 1,
         );
-		
-	}
-	else{
-		
-		# Check if we got a Service
-		if ( $GetParam{KeyPrimary} ){
-			$GetParam{ServiceID} = $ServiceObject->ServiceLookup(
-										Name => $GetParam{KeyPrimary},
-									);
+        
+    }
+    else{
+        
+        # Check if we got a Service
+        if ( $GetParam{KeyPrimary} ){
+            $GetParam{ServiceID} = $ServiceObject->ServiceLookup(
+                                        Name => $GetParam{KeyPrimary},
+                                    );
 
-			my $LinksDescription = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
-				Object => 'Service',
-				Object2 => 'FAQ',
-				Key    => $GetParam{ServiceID},
-				State  => 'Valid',
-				Type   => 'ServiceDescriptionArticle',
-				UserID => 1,
-			);
+            my $LinksDescription = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
+                Object => 'Service',
+                Object2 => 'FAQ',
+                Key    => $GetParam{ServiceID},
+                State  => 'Valid',
+                Type   => 'ServiceDescriptionArticle',
+                UserID => 1,
+            );
 
-			my @FAQsDesc;
-			if ($LinksDescription->{FAQ}){
-				my %LinkedFaqIDsDesc = %{$LinksDescription->{FAQ}->{ServiceDescriptionArticle}->{Source}};
-				my @FaqIDsDesc = keys %LinkedFaqIDsDesc;
-				my $FAQObjectDesc = $Kernel::OM->Get("Kernel::System::FAQ") if @FaqIDsDesc;
+            my @FAQsDesc;
+            if ($LinksDescription->{FAQ}){
+                my %LinkedFaqIDsDesc = %{$LinksDescription->{FAQ}->{ServiceDescriptionArticle}->{Source}};
+                my @FaqIDsDesc = keys %LinkedFaqIDsDesc;
+                my $FAQObjectDesc = $Kernel::OM->Get("Kernel::System::FAQ") if @FaqIDsDesc;
 
-				foreach my $FaqIDDesc (@FaqIDsDesc){
-					my %FAQDesc = $FAQObjectDesc->FAQGet(
-						ItemID => $FaqIDDesc,
-						UserID	=> 1,
-						ItemFields => 1,
-					);
-					
-					next if($FAQDesc{Language} ne $ENV{UserLanguage});
-					next if($FAQDesc{Valid} ne 'valid');
+                foreach my $FaqIDDesc (@FaqIDsDesc){
+                    my %FAQDesc = $FAQObjectDesc->FAQGet(
+                        ItemID => $FaqIDDesc,
+                        UserID    => 1,
+                        ItemFields => 1,
+                    );
+                    
+                    next if($FAQDesc{Language} ne $ENV{UserLanguage});
+                    next if($FAQDesc{Valid} ne 'valid');
 
-					$LayoutObject->Block( Name => "CategoryFaqDesc", Data=> { FaqTitle => $FAQDesc{Title}, FaqDescription => $FAQDesc{Field1}." ".$FAQDesc{Field2}." ".$FAQDesc{Field3}." ".$FAQDesc{Field4}." ".$FAQDesc{Field5}." ".$FAQDesc{Field6} });
-				}
+                    $LayoutObject->Block( Name => "CategoryFaqDesc", Data=> { FaqTitle => $FAQDesc{Title}, FaqDescription => $FAQDesc{Field1}." ".$FAQDesc{Field2}." ".$FAQDesc{Field3}." ".$FAQDesc{Field4}." ".$FAQDesc{Field5}." ".$FAQDesc{Field6} });
+                }
 
-			}
+            }
 
-			
-			# Last level of service. Check if are there linked FAQ articles or if we should redirect
+            
+            # Last level of service. Check if are there linked FAQ articles or if we should redirect
             # to the create ticket screen
-			if(!_HasParent($DataRef,$GetParam{KeyPrimary})){
+            if(!_HasParent($DataRef,$GetParam{KeyPrimary})){
                 # Check if there are one or more FAQs attacheds as ServiceArticle with same language
                 my $Links = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
                     Object => 'Service',
@@ -474,7 +561,7 @@ sub Run {
                     foreach my $FaqID (@FaqIDs){
                         my %FAQ = $FAQObject->FAQGet(
                             ItemID => $FaqID,
-                            UserID	=> 1,
+                            UserID    => 1,
                             ItemFields => 1,
                         );
                         next if($ENV{UserLanguage} && $FAQ{Language} ne $ENV{UserLanguage});
@@ -525,7 +612,7 @@ sub Run {
                             
                         
                             $Datas{LayoutServiceName} = $FAQ->{Title};
-                            #$Datas{LayoutServiceID}	  = $ServiceID;
+                            #$Datas{LayoutServiceID}      = $ServiceID;
                             $Datas{LayoutServiceDescription} = $Kernel::OM->Get("Kernel::System::HTMLUtils")->ToAscii( String => $FAQ->{$Config->{ServiceArticleDescriptionField}});
                                 
                             #my $ServiceTypeID = $ServicePreferences{TicketType} || '';
@@ -545,53 +632,61 @@ sub Run {
                       . ';ServiceID='.$GetParam{ServiceID};
                       return $LayoutObject->Redirect( ExtURL => $Redirect );
                     }
+                    elsif ( $Self->{Action} eq 'CustomerQRCode' ) {
+                      my $Redirect = $LayoutObject->{Baselink}
+                      . 'Action=CustomerTicketQRCode'
+                      . ';DynamicField_Teste=' . $GetParam{DynamicField_Teste}
+                      . ';ServiceID='.$GetParam{ServiceID};
+                      return $LayoutObject->Redirect( OP => $Redirect );
+                    }
                     else {
                       my $Redirect = $LayoutObject->{Baselink}
                       . 'Action=CustomerTicketMessage'
                       . ';ServiceID='.$GetParam{ServiceID};
-                      return $LayoutObject->Redirect( OP => $Redirect );
+                      return $LayoutObject->Redirect( OP => $Redirect );                        
                     }
+
                     
                 }
 
-			}
-			$GetParam{FirstLvl} = 0;
-		} else {
-			# No service selected, so check if there is a default first level configured
-			if($Config->{DefaultServiceID}){
-				$GetParam{ServiceID}  = $Config->{DefaultServiceID};
-				$GetParam{KeyPrimary} = $ServiceObject->ServiceLookup(
-											ServiceID => $Config->{DefaultServiceID},
-										);
-				$Self->{Subaction}= 'NextLevel';
-				$GetParam{DefaultServiceID}=$Config->{DefaultServiceID};
-				$LayoutObject->Block( Name => "FirstLvl");
-			}
-			$GetParam{FirstLvl} = 1;
-		}
-	
-		my $Output .= $LayoutObject->CustomerHeader();
-		$Output    .= $LayoutObject->CustomerNavigationBar() if ( !$Self->{isPublicInterface} );
-		$Output    .= $Self->_MaskNew(
-			%GetParam,
-			DataRef => $DataRef,
-			AllServices => \%Services,
-		);
-		$Output .= $LayoutObject->CustomerFooter();
-		return $Output;
+            }
+            $GetParam{FirstLvl} = 0;
+        } else {
+            # No service selected, so check if there is a default first level configured
+            if($Config->{DefaultServiceID}){
+                $GetParam{ServiceID}  = $Config->{DefaultServiceID};
+                $GetParam{KeyPrimary} = $ServiceObject->ServiceLookup(
+                                            ServiceID => $Config->{DefaultServiceID},
+                                        );
+                $Self->{Subaction}= 'NextLevel';
+                $GetParam{DefaultServiceID}=$Config->{DefaultServiceID};
+                $LayoutObject->Block( Name => "FirstLvl");
+            }
+            $GetParam{FirstLvl} = 1;
+        }
+    
+        my $Output .= $LayoutObject->CustomerHeader();
+        $Output    .= $LayoutObject->CustomerNavigationBar() if ( !$Self->{isPublicInterface} );
+        $Output    .= $Self->_MaskNew(
+            %GetParam,
+            DataRef => $DataRef,
+            AllServices => \%Services,
+        );
+        $Output .= $LayoutObject->CustomerFooter();
+        return $Output;
 
-	}
+    }
 }
 sub _GetServices {
-	my ( $Self, %Param ) = @_;
-	# get service
-	my %Service;
-	%Service = $Kernel::OM->Get('Kernel::System::Service')->CustomerUserServiceMemberList(
-		Result            => 'HASH',
-		CustomerUserLogin => $Self->{UserID},
-		UserID            => 1,
-	);
-	my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my ( $Self, %Param ) = @_;
+    # get service
+    my %Service;
+    %Service = $Kernel::OM->Get('Kernel::System::Service')->CustomerUserServiceMemberList(
+        Result            => 'HASH',
+        CustomerUserLogin => $Self->{UserID},
+        UserID            => 1,
+    );
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     my $ACL = $TicketObject->TicketAcl(
         %Param,
         Action         => $Self->{Action},
@@ -600,48 +695,48 @@ sub _GetServices {
         ReturnSubType => 'Service',
         Data          => \%Service,
     );
-	if($ACL){
-		my %Services = $TicketObject->TicketAclData();
-		return \%Services;
-	}
-	return \%Service;
+    if($ACL){
+        my %Services = $TicketObject->TicketAclData();
+        return \%Services;
+    }
+    return \%Service;
 
 }
 
 sub _GetServicesSP {
-	my ( $Self, %Param ) = @_;
-	# get service
-	# COMPLEMENTO
-	my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
-	# EO COMPLEMENTO
+    my ( $Self, %Param ) = @_;
+    # get service
+    # COMPLEMENTO
+    my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
+    # EO COMPLEMENTO
 
-	if(!$CustomerID){
-			my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
-					User => $Param{CustomerUserID},
-			);
-			$CustomerID = $CustomerIDs[0];
-	}
+    if(!$CustomerID){
+            my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
+                    User => $Param{CustomerUserID},
+            );
+            $CustomerID = $CustomerIDs[0];
+    }
 
-	# get service
-	my %Service;
+    # get service
+    my %Service;
 
-	# get options for default services for unknown customers
-	my $DefaultServiceUnknownCustomer
-		= $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Service::Default::UnknownCustomer');
+    # get options for default services for unknown customers
+    my $DefaultServiceUnknownCustomer
+        = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Service::Default::UnknownCustomer');
 
-	# get service list
-	if ( $Param{CustomerUserID} || $DefaultServiceUnknownCustomer ) {
-		%Service = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
-			%Param,
-			Action => 'CustomerTicketMessage',
-			UserID => $Self->{UserID},
-			# COMPLEMENTO
-			CustomerID => $CustomerID,
-			# EO COMPLEMENTO
-		);
-	}
+    # get service list
+    if ( $Param{CustomerUserID} || $DefaultServiceUnknownCustomer ) {
+        %Service = $Kernel::OM->Get('Kernel::System::Ticket')->TicketServiceList(
+            %Param,
+            Action => 'CustomerTicketMessage',
+            UserID => $Self->{UserID},
+            # COMPLEMENTO
+            CustomerID => $CustomerID,
+            # EO COMPLEMENTO
+        );
+    }
 
-	my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     my $ACL = $TicketObject->TicketAcl(
         %Param,
         Action         => $Self->{Action},
@@ -650,418 +745,543 @@ sub _GetServicesSP {
         ReturnSubType => 'Service',
         Data          => \%Service,
     );
-	if($ACL){
-		my %Services = $TicketObject->TicketAclData();
-		return \%Services;
-	}
+    if($ACL){
+        my %Services = $TicketObject->TicketAclData();
+        return \%Services;
+    }
 
-	return \%Service;
+    return \%Service;
 
 }
 
+sub _GetServicesQRCode {
+    my ( $Self, %Param ) = @_;
+
+    my $ICQRCode = $Param{ConfigItemID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'DynamicField_Teste' );
+    # get service
+    my %Service;
+    %Service = $Kernel::OM->Get('Kernel::System::Service')->CustomerUserServiceMemberList(
+        Result            => 'HASH',
+        CustomerUserLogin => $Self->{UserID},
+        UserID            => 1,
+    );    
+
+    if( !$ICQRCode ){
+        return {'' => ''};
+    } else {
+        
+        my %results = $Self->_GetLinkObject (
+            ConfigItemID => $ICQRCode,
+        );
+
+        foreach my $k (keys %Service) {
+            if (!$results{$k}) {
+                delete %Service{$k};
+            }
+        }
+
+    }     
+   
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $ACL = $TicketObject->TicketAcl(
+        %Param,
+        Action         => $Self->{Action},
+        CustomerUserID => $Self->{UserID},
+        ReturnType    => 'Ticket',
+        ReturnSubType => 'Service',
+        Data          => \%Service,
+    );
+    if($ACL){
+        my %Services = $TicketObject->TicketAclData();
+        return \%Services;
+    }
+    return \%Service;
+
+}
+
+sub _GetLinkObject {
+    my ( $Self, %Param ) = @_;
+
+    my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
+        Object => 'ITSMConfigItem',
+        Key    => $Param{ConfigItemID},
+        State  => 'Valid',
+        UserID => $Self->{UserID},
+    );    
+
+    my %LinkList;
+    my %results;
+    for my $Object ( sort keys %{ $LinkListWithData } ) {
+
+        for my $LinkType ( sort keys %{ $LinkListWithData->{$Object} } ) {
+
+            # extract link type List
+            my $LinkTypeList = $LinkListWithData->{$Object}->{$LinkType};
+
+            for my $Direction ( sort keys %{$LinkTypeList} ) {
+
+                # extract direction list
+                my $DirectionList = $LinkListWithData->{$Object}->{$LinkType}->{$Direction};
+
+                for my $ObjectKey ( sort keys %{$DirectionList} ) {                    
+
+                    my $ClassName;
+                    if ( $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Class} ) {
+                        $ClassName = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Class};
+                        if ( $Object ne 'Service' && $ClassName eq "PortalServiceQRCode" ) {
+                            my $QRCodeGroupServiceID = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{ConfigItemID};
+                            my %result = $Self->_GetLinkObject (
+                                ConfigItemID => $QRCodeGroupServiceID,
+                                Lock => '1',
+                            ); 
+                            %results = (%results, %result);                          
+                        }                        
+                    }
+
+                    if ( $Object eq 'Service' &&  $Param{Lock}) {
+                        $LinkList{$LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{ServiceID}} = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Name};
+                    }
+                }
+            }
+        }
+    }
+    if ( %LinkList &&  $Param{Lock} ) {
+        return %LinkList;
+    }
+
+    if ( %results &&  !$Param{Lock} ) {
+        return %results;        
+    } 
+    
+}
+
 sub _MaskNew {
-	my ( $Self, %Param ) = @_;
+    my ( $Self, %Param ) = @_;
 
-	my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
-	my $ServiceObject = $Kernel::OM->Get("Kernel::System::Service");
-	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-	my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-	my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-	my $Config  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
-	my $Services;
-	my %ServicesIDs;
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $ServiceObject = $Kernel::OM->Get("Kernel::System::Service");
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+    my $Config  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
+    my $Services;
+    my %ServicesIDs;
 
-	if ( !$Param{KeyPrimary} ) {
-		$Services = _GetParents($Param{DataRef});
-		$LayoutObject->Block( Name => "FirstLvl");
-	} else {
-		$LayoutObject->Block( Name => "BreadcrumbStart");
-		$Services = _GetChildren($Param{DataRef},$Param{KeyPrimary});
-	}
+    if ( !$Param{KeyPrimary} ) {
+        $Services = _GetParents($Param{DataRef});
+        $LayoutObject->Block( Name => "FirstLvl");
+    } else {
+        $LayoutObject->Block( Name => "BreadcrumbStart");
+        $Services = _GetChildren($Param{DataRef},$Param{KeyPrimary});
+    }
 
-	my $Needs=0;
-	my $Categories=0;
-	foreach my $dataKey ( @{$Services}){
-		my $ServiceName = $dataKey->{Value};
-		my $ServiceID = $dataKey->{Key};
-		$ServicesIDs{$ServiceID} = 1;
-		if(!$ServiceID or $ServiceID eq "-"){
-			 $ServiceID = $ServiceObject->ServiceLookup(
-		        Name => $ServiceName,
-		    );
-		}
-		my @ServiceArray = split("::",$ServiceName);
-		my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ServiceImage',             # ID or Name must be provided
-		);
-		my $Value = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		);
-		my %DynamicFieldHTML;
-		# get field HTML
-		$DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
-		$BackendObject->EditFieldRender(
-			 ParamObject          => $ParamObject,
-			 DynamicFieldConfig => $DynamicFieldConfig,
-			 LayoutObject => $LayoutObject,
-			 Value => $Value
-		);
-		# get the HTML strings form $Param
-		my $newDynamicFieldHTML = $DynamicFieldHTML{ $DynamicFieldConfig->{Name} };
-		my $Url = $newDynamicFieldHTML->{Field};
-		my $Link =  _GetUrlHref($Url);
-		$Link = "#" if(!$Link);
-		my @Names =  split("::",$ServiceName);
-		my $LayoutServiceName = $Names[-1];
+    my $Needs=0;
+    my $Categories=0;
+    foreach my $dataKey ( @{$Services}){
+        my $ServiceName = $dataKey->{Value};
+        my $ServiceID = $dataKey->{Key};
+        $ServicesIDs{$ServiceID} = 1;
+        if(!$ServiceID or $ServiceID eq "-"){
+             $ServiceID = $ServiceObject->ServiceLookup(
+                Name => $ServiceName,
+            );
+        }
+        my @ServiceArray = split("::",$ServiceName);
+        my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ServiceImage',             # ID or Name must be provided
+        );
+        my $Value = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        );
+        my %DynamicFieldHTML;
+        # get field HTML
+        $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
+        $BackendObject->EditFieldRender(
+             ParamObject          => $ParamObject,
+             DynamicFieldConfig => $DynamicFieldConfig,
+             LayoutObject => $LayoutObject,
+             Value => $Value
+        );
+        # get the HTML strings form $Param
+        my $newDynamicFieldHTML = $DynamicFieldHTML{ $DynamicFieldConfig->{Name} };
+        my $Url = $newDynamicFieldHTML->{Field};
+        my $Link =  _GetUrlHref($Url);
+        $Link = "#" if(!$Link);
+        my @Names =  split("::",$ServiceName);
+        my $LayoutServiceName = $Names[-1];
 
-    	# Ignore non public services
-		if ( $Self->{isPublicInterface} ) {
-	                my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
-	                my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
-	                next if (!$Value);
+        # Ignore non public services
+        if ( $Self->{isPublicInterface} ) {
+                    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
+                    my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
+                    next if (!$Value);
 
-	                # Fix Service Link
-	                $Link =~ s/Action=;/Action=CustomerDFFileAttachment;/g;
-		} else {
-	                my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
-	                my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
-	                next if ($Value);
-		}
+                    # Fix Service Link
+                    $Link =~ s/Action=;/Action=CustomerDFFileAttachment;/g;
+        } else {
+                    my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'PublicService' );
+                    my $Value = $BackendObject->ValueGet( DynamicFieldConfig => $DynamicFieldConfig, ObjectID => $ServiceID );
+                    next if ($Value);
+        }
 
-		# Output Services categories and activities
-		my %Datas;
-		$Datas{KeyPrimary} = "$ServiceName";
-		$Datas{LayoutServiceLink} = $Link;
-		$Datas{LayoutServiceName} = "$LayoutServiceName";
-		$Datas{LayoutServiceID}	  = $ServiceID;
-		my %ServicePreferences = $ServiceObject->ServicePreferencesGet(
-		   ServiceID => $ServiceID,
-		   UserID    => 1,
-		);
+        # Output Services categories and activities
+        my %Datas;      
+        if ( $Self->{Action} eq 'CustomerQRCode' ) {
+            $Datas{Action} = "CustomerQRCode;DynamicField_Teste=" . $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'DynamicField_Teste' );
+        } else {
+            $Datas{Action} = "CustomerServiceCatalog";
+        }        
+        $Datas{KeyPrimary} = "$ServiceName";
+        $Datas{LayoutServiceLink} = $Link;
+        $Datas{LayoutServiceName} = "$LayoutServiceName";
+        $Datas{LayoutServiceID}      = $ServiceID;
+        my %ServicePreferences = $ServiceObject->ServicePreferencesGet(
+           ServiceID => $ServiceID,
+           UserID    => 1,
+        );
 
       $Datas{Icons} = $ServicePreferences{Icons};
 
-		#$Param{ServiceID} = $ServiceObject->ServiceLookup(
-		#								Name => $Param{KeyPrimary},
-		#							);
+        #$Param{ServiceID} = $ServiceObject->ServiceLookup(
+        #                                Name => $Param{KeyPrimary},
+        #                            );
 
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ShowAsCategory',             # ID or Name must be provided
-		);
-		my $ShowAsCategory = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-		) || '';
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ServiceType',             # ID or Name must be provided
-		);
-		my $ServiceType = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-		) || '';
-
-
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ForwardToUrl',             # ID or Name must be provided
-		);
-		my $ForwardToUrl = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		)||'';
-
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'UrlTarget',             # ID or Name must be provided
-		);
-		my $UrlTarget = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		)||'';
-
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ServiceDescription',             # ID or Name must be provided
-		);
-		$Value = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		)||'';
-		$Datas{LayoutServiceDescription} =   $Kernel::OM->Get("Kernel::System::HTMLUtils")->ToHTML( String => $Value);
-		$Datas{ShowAsCategory} = $ShowAsCategory || '0';
-		$Datas{ServiceType} = $ServiceType || '0';
-
-		if(!_HasChildren($Param{AllServices},$ServiceName) && $Datas{ShowAsCategory} eq '0'){
-
-			## Needs (last service level)
-			$Needs++;
-		
-			my $ServiceTypeID = $ServicePreferences{TicketType} || '';
-			my %TypesColor = %{$Config->{TypeColors}};
-			my %TypesLabel = %{$Config->{TypeLabels}};
-
-			$Datas{LayoutTypeDescription} = $TypesLabel{$ServiceTypeID} || '';
-
-			$Datas{backColor} = $TypesColor{$Datas{LayoutTypeDescription}};
-			
-			# Get CSS style
-			if($ForwardToUrl eq ''){
-				$LayoutObject->Block( Name => "LayoutActivity", Data=> { %Datas});
-				$Datas{Layout} = "LayoutActivity";
-			}
-			else{
-				$Datas{Url}=$ForwardToUrl;
-				$Datas{UrlTarget}=$UrlTarget;
-				$LayoutObject->Block( Name => "LayoutActivityUrl", Data=> { %Datas});
-				$Datas{Layout} = "LayoutActivityUrl";
-			}
-
-		}else{
-			$Categories++;	
-
-			## Categories and Subcategories
-			$Datas{Color}=$ServicePreferences{ServiceImageBackground};
-			if($ForwardToUrl eq ''){
-				$LayoutObject->Block( Name => "LayoutCategory", Data=> { %Datas});
-				$Datas{Layout} = "LayoutCategory";
-			}
-			else{
-				$Datas{Url}=$ForwardToUrl;
-				$Datas{UrlTarget}=$UrlTarget;
-				$LayoutObject->Block( Name => "LayoutCategoryUrl", Data=> { %Datas});
-				$Datas{Layout} = "LayoutCategoryUrl";
-			}
-
-		}
-	}
-
-	####MOUNT FOOTER######
-	my @ServicesFooter = $Kernel::OM->Get("Kernel::System::ServiceDF")->ServiceListFooter(UserID=>1);
-
-	foreach my $dataKey ( @ServicesFooter){
-
-		next if (!$ServicesIDs{$dataKey->{ServiceID}});
-
-		my $ServiceName = $dataKey->{Name};
-		my $ServiceID = $dataKey->{ServiceID};
-		if(!$ServiceID or $ServiceID eq "-"){
-			 $ServiceID = $ServiceObject->ServiceLookup(
-		        Name => $ServiceName,
-		    );
-		}
-		my @ServiceArray = split("::",$ServiceName);
-		my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ServiceImage',             # ID or Name must be provided
-		);
-		my $Value = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		);
-		my %DynamicFieldHTML;
-		# get field HTML
-		$DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
-		$BackendObject->EditFieldRender(
-			 ParamObject          => $ParamObject,
-			 DynamicFieldConfig => $DynamicFieldConfig,
-			 LayoutObject => $LayoutObject,
-			 Value => $Value
-		);
-		# get the HTML strings form $Param
-		my $newDynamicFieldHTML = $DynamicFieldHTML{ $DynamicFieldConfig->{Name} };
-		my $Url = $newDynamicFieldHTML->{Field};
-		my $Link =  _GetUrlHref($Url);
-		$Link = "#" if(!$Link);
-		my @Names =  split("::",$ServiceName);
-		my $LayoutServiceName = $Names[-1];
-
-		# Output Services categories and activities
-		my %Datas;
-		$Datas{KeyPrimary} = "$ServiceName";
-		$Datas{LayoutServiceLink} = $Link;
-		$Datas{LayoutServiceName} = "$LayoutServiceName";
-		$Datas{LayoutServiceID}	  = $ServiceID;
-		my %ServicePreferences = $ServiceObject->ServicePreferencesGet(
-		   ServiceID => $ServiceID,
-		   UserID    => 1,
-		);
-
-		#$Param{ServiceID} = $ServiceObject->ServiceLookup(
-		#								Name => $Param{KeyPrimary},
-		#							);
-
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ShowAsCategory',             # ID or Name must be provided
-		);
-		my $ShowAsCategory = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-		) || '';
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ServiceType',             # ID or Name must be provided
-		);
-		my $ServiceType = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-		) || '';
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ShowAsCategory',             # ID or Name must be provided
+        );
+        my $ShowAsCategory = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+        ) || '';
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ServiceType',             # ID or Name must be provided
+        );
+        my $ServiceType = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+        ) || '';
 
 
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ForwardToUrl',             # ID or Name must be provided
-		);
-		my $ForwardToUrl = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		)||'';
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ForwardToUrl',             # ID or Name must be provided
+        );
+        my $ForwardToUrl = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        )||'';
 
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'UrlTarget',             # ID or Name must be provided
-		);
-		my $UrlTarget = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		)||'';
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'UrlTarget',             # ID or Name must be provided
+        );
+        my $UrlTarget = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        )||'';
 
-		$DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
-			Name   => 'ServiceDescription',             # ID or Name must be provided
-		);
-		$Value = $BackendObject->ValueGet(
-			DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
-			ObjectID           => $ServiceID,                # ID of the current object that the field
-																# must be linked to, e. g. TicketID
-		)||'';
-		$Datas{LayoutServiceDescription} =   $Kernel::OM->Get("Kernel::System::HTMLUtils")->ToHTML( String => $Value);
-		$Datas{ShowAsCategory} = $ShowAsCategory || '0';
-		$Datas{ServiceType} = $ServiceType || '0';
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ServiceDescription',             # ID or Name must be provided
+        );
+        $Value = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        )||'';
+        $Datas{LayoutServiceDescription} =   $Kernel::OM->Get("Kernel::System::HTMLUtils")->ToHTML( String => $Value);
+        $Datas{ShowAsCategory} = $ShowAsCategory || '0';
+        $Datas{ServiceType} = $ServiceType || '0';
 
-		if(!_HasChildren($Param{AllServices},$ServiceName) && $Datas{ShowAsCategory} eq '0'){
-		
-			my $ServiceTypeID = $ServicePreferences{TicketType} || '';
-			my %TypesColor = %{$Config->{TypeColors}};
-			my %TypesLabel = %{$Config->{TypeLabels}};
+        if(!_HasChildren($Param{AllServices},$ServiceName) && $Datas{ShowAsCategory} eq '0'){
 
-			$Datas{LayoutTypeDescription} = $TypesLabel{$ServiceTypeID} || '';
+            ## Needs (last service level)
+            $Needs++;
+        
+            my $ServiceTypeID = $ServicePreferences{TicketType} || '';
+            my %TypesColor = %{$Config->{TypeColors}};
+            my %TypesLabel = %{$Config->{TypeLabels}};
 
-			$Datas{backColor} = $TypesColor{$Datas{LayoutTypeDescription}};
-			
-			# Get CSS style
-			if($ForwardToUrl eq ''){
-				$Datas{Layout} = "LayoutActivity";
-			}
-			else{
-				$Datas{Url}=$ForwardToUrl;
-				$Datas{UrlTarget}=$UrlTarget;
-				$Datas{Layout} = "LayoutActivityUrl";
-			}
+            $Datas{LayoutTypeDescription} = $TypesLabel{$ServiceTypeID} || '';
 
-		}else{
+            $Datas{backColor} = $TypesColor{$Datas{LayoutTypeDescription}};
+            
+            # Get CSS style
+            if($ForwardToUrl eq ''){
+                $LayoutObject->Block( Name => "LayoutActivity", Data=> { %Datas});
+                $Datas{Layout} = "LayoutActivity";
+            }
+            else{
+                $Datas{Url}=$ForwardToUrl;
+                $Datas{UrlTarget}=$UrlTarget;
+                $LayoutObject->Block( Name => "LayoutActivityUrl", Data=> { %Datas});
+                $Datas{Layout} = "LayoutActivityUrl";
+            }
 
-			## Categories and Subcategories
-			$Datas{Color}=$ServicePreferences{ServiceImageBackground};
-			if($ForwardToUrl eq ''){
-				$Datas{Layout} = "LayoutCategory";
-			}
-			else{
-				$Datas{Url}=$ForwardToUrl;
-				$Datas{UrlTarget}=$UrlTarget;
-				$Datas{Layout} = "LayoutCategoryUrl";
-			}
+        }else{
+            $Categories++;    
 
-		}
-		if ($Param{FirstLvl} == 1) {
-			$LayoutObject->Block( Name => "ServiceFooter", Data=> { %Datas});
-	                $Param{ServiceFooter} = 1;
-		}
-	}
-	####MOUNT FOOTER######
-	
-	if($Needs>0){
-		$LayoutObject->Block( Name => "NeedMessage");
-	}
+            ## Categories and Subcategories
+            $Datas{Color}=$ServicePreferences{ServiceImageBackground};
+            if($ForwardToUrl eq ''){
+                $LayoutObject->Block( Name => "LayoutCategory", Data=> { %Datas});
+                $Datas{Layout} = "LayoutCategory";
+            }
+            else{
+                $Datas{Url}=$ForwardToUrl;
+                $Datas{UrlTarget}=$UrlTarget;
+                $LayoutObject->Block( Name => "LayoutCategoryUrl", Data=> { %Datas});
+                $Datas{Layout} = "LayoutCategoryUrl";
+            }
 
-	if($Needs>0 && $Categories>0){
-		$LayoutObject->Block( Name => "MoreServices");
-	}
+        }
+    }
 
-	######## Bread Crumbs #####
+    ####MOUNT FOOTER######
+    my @ServicesFooter = $Kernel::OM->Get("Kernel::System::ServiceDF")->ServiceListFooter(UserID=>1);
 
-	my @Breads = _CreateBreadcrumb($Param{KeyPrimary});
-	my $FullPrevService;
-	foreach my $crumbs(@Breads){
-		if($crumbs eq $Breads[-1]){
+    foreach my $dataKey ( @ServicesFooter){
 
-			# Get the service description
-			my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'ServiceDescription' );
-			my $CategoryDescription = $BackendObject->ValueGet(
-				DynamicFieldConfig => $DynamicFieldConfig,
-				ObjectID           => $Param{ServiceID},
-			) ||'';
+        next if (!$ServicesIDs{$dataKey->{ServiceID}});
 
-			# Category title
-			$LayoutObject->Block( Name => "CategorySearch",  Data=> {}) if($ParamObject->GetParam(Param => 'Subaction'));
-			$LayoutObject->Block( Name => "CategoryTitle", Data=> { CategoryTitle => $crumbs, CategoryDescription => $Kernel::OM->Get("Kernel::System::HTMLUtils")->ToHTML( String => $CategoryDescription) });
-		} else {
-			# navigation
-			if(!defined( $FullPrevService)){
-				$FullPrevService = $crumbs;  
-			}else{
-				$FullPrevService .="::".$crumbs;
-			}
-			my $links = $LayoutObject->{Baselink}
-		        . 'Action=CustomerServiceCatalog'
-				. ';KeyPrimary='.$FullPrevService;
-      if ( $Self->{isPublicInterface} ) {
-				$links = $LayoutObject->{Baselink}
-					. 'Action=PublicServiceCatalog'
-					. ';KeyPrimary='.$FullPrevService;
-			}
-			$LayoutObject->Block( Name => "BreadcrumbServices", Data=> { BreadcrumbLink => $links, BreadcrumbTitle => $crumbs });
-		}
+        my $ServiceName = $dataKey->{Name};
+        my $ServiceID = $dataKey->{ServiceID};
+        if(!$ServiceID or $ServiceID eq "-"){
+             $ServiceID = $ServiceObject->ServiceLookup(
+                Name => $ServiceName,
+            );
+        }
+        my @ServiceArray = split("::",$ServiceName);
+        my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ServiceImage',             # ID or Name must be provided
+        );
+        my $Value = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        );
+        my %DynamicFieldHTML;
+        # get field HTML
+        $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
+        $BackendObject->EditFieldRender(
+             ParamObject          => $ParamObject,
+             DynamicFieldConfig => $DynamicFieldConfig,
+             LayoutObject => $LayoutObject,
+             Value => $Value
+        );
+        # get the HTML strings form $Param
+        my $newDynamicFieldHTML = $DynamicFieldHTML{ $DynamicFieldConfig->{Name} };
+        my $Url = $newDynamicFieldHTML->{Field};
+        my $Link =  _GetUrlHref($Url);
+        $Link = "#" if(!$Link);
+        my @Names =  split("::",$ServiceName);
+        my $LayoutServiceName = $Names[-1];
 
-	}
+        # Output Services categories and activities
+        my %Datas;
+        if ( $Self->{Action} eq 'CustomerQRCode' ) {
+            $Datas{Action} = "CustomerQRCode;DynamicField_Teste=" . $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'DynamicField_Teste' );
+        } else {
+            $Datas{Action} = "CustomerServiceCatalog";
+        }
+        $Datas{KeyPrimary} = "$ServiceName";
+        $Datas{LayoutServiceLink} = $Link;
+        $Datas{LayoutServiceName} = "$LayoutServiceName";
+        $Datas{LayoutServiceID}      = $ServiceID;
+        my %ServicePreferences = $ServiceObject->ServicePreferencesGet(
+           ServiceID => $ServiceID,
+           UserID    => 1,
+        );
+
+        #$Param{ServiceID} = $ServiceObject->ServiceLookup(
+        #                                Name => $Param{KeyPrimary},
+        #                            );
+
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ShowAsCategory',             # ID or Name must be provided
+        );
+        my $ShowAsCategory = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+        ) || '';
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ServiceType',             # ID or Name must be provided
+        );
+        my $ServiceType = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+        ) || '';
+
+
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ForwardToUrl',             # ID or Name must be provided
+        );
+        my $ForwardToUrl = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        )||'';
+
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'UrlTarget',             # ID or Name must be provided
+        );
+        my $UrlTarget = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        )||'';
+
+        $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name   => 'ServiceDescription',             # ID or Name must be provided
+        );
+        $Value = $BackendObject->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+            ObjectID           => $ServiceID,                # ID of the current object that the field
+                                                                # must be linked to, e. g. TicketID
+        )||'';
+        $Datas{LayoutServiceDescription} =   $Kernel::OM->Get("Kernel::System::HTMLUtils")->ToHTML( String => $Value);
+        $Datas{ShowAsCategory} = $ShowAsCategory || '0';
+        $Datas{ServiceType} = $ServiceType || '0';
+
+        if(!_HasChildren($Param{AllServices},$ServiceName) && $Datas{ShowAsCategory} eq '0'){
+        
+            my $ServiceTypeID = $ServicePreferences{TicketType} || '';
+            my %TypesColor = %{$Config->{TypeColors}};
+            my %TypesLabel = %{$Config->{TypeLabels}};
+
+            $Datas{LayoutTypeDescription} = $TypesLabel{$ServiceTypeID} || '';
+
+            $Datas{backColor} = $TypesColor{$Datas{LayoutTypeDescription}};
+            
+            # Get CSS style
+            if($ForwardToUrl eq ''){
+                $Datas{Layout} = "LayoutActivity";
+            }
+            else{
+                $Datas{Url}=$ForwardToUrl;
+                $Datas{UrlTarget}=$UrlTarget;
+                $Datas{Layout} = "LayoutActivityUrl";
+            }
+
+        }else{
+
+            ## Categories and Subcategories
+            $Datas{Color}=$ServicePreferences{ServiceImageBackground};
+            if($ForwardToUrl eq ''){
+                $Datas{Layout} = "LayoutCategory";
+            }
+            else{
+                $Datas{Url}=$ForwardToUrl;
+                $Datas{UrlTarget}=$UrlTarget;
+                $Datas{Layout} = "LayoutCategoryUrl";
+            }
+
+        }
+        if ($Param{FirstLvl} == 1) {
+            $LayoutObject->Block( Name => "ServiceFooter", Data=> { %Datas});
+                    $Param{ServiceFooter} = 1;
+        }
+    }
+    ####MOUNT FOOTER######
+    
+    if($Needs>0){
+        $LayoutObject->Block( Name => "NeedMessage");
+    }
+
+    if($Needs>0 && $Categories>0){
+        $LayoutObject->Block( Name => "MoreServices");
+    }
+
+    ######## Bread Crumbs #####
+
+    my @Breads = _CreateBreadcrumb($Param{KeyPrimary});
+    my $FullPrevService;
+    foreach my $crumbs(@Breads){
+        if($crumbs eq $Breads[-1]){
+
+            # Get the service description
+            my $DynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet( Name => 'ServiceDescription' );
+            my $CategoryDescription = $BackendObject->ValueGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ObjectID           => $Param{ServiceID},
+            ) ||'';
+
+            # Category title
+            $LayoutObject->Block( Name => "CategorySearch",  Data=> {}) if($ParamObject->GetParam(Param => 'Subaction'));
+            $LayoutObject->Block( Name => "CategoryTitle", Data=> { CategoryTitle => $crumbs, CategoryDescription => $Kernel::OM->Get("Kernel::System::HTMLUtils")->ToHTML( String => $CategoryDescription) });
+        } else {
+            # navigation
+            if(!defined( $FullPrevService)){
+                $FullPrevService = $crumbs;  
+            }else{
+                $FullPrevService .="::".$crumbs;
+            }
+            my $links = $LayoutObject->{Baselink}
+                . 'Action=CustomerServiceCatalog'
+                . ';KeyPrimary='.$FullPrevService;
+            if ( $Self->{isPublicInterface} ) {
+                $links = $LayoutObject->{Baselink}
+                    . 'Action=PublicServiceCatalog'
+                    . ';KeyPrimary='.$FullPrevService;
+            }
+            if ( $Self->{Action} eq 'CustomerQRCode' ) {
+                $links = $LayoutObject->{Baselink}
+                    . 'Action=CustomerQRCode'
+                    . ';KeyPrimary='.$FullPrevService;
+            }            
+            $LayoutObject->Block( Name => "BreadcrumbServices", Data=> { BreadcrumbLink => $links, BreadcrumbTitle => $crumbs });
+        }
+
+    }
     
     # Block sidebar widgets
-	my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my %SideBarWidgets       = %{ $ConfigObject->Get('LigeroServiceCatalog::SidebarWidget') ||{} };
-	foreach my $SideBar(sort keys %SideBarWidgets){
-		my $WidgetsGroup = $SideBarWidgets{$SideBar};
+    foreach my $SideBar(sort keys %SideBarWidgets){
+        my $WidgetsGroup = $SideBarWidgets{$SideBar};
 
-		next if(!$WidgetsGroup);
-		next if( ref $WidgetsGroup ne 'HASH');
+        next if(!$WidgetsGroup);
+        next if( ref $WidgetsGroup ne 'HASH');
 
-		my $Module = $WidgetsGroup->{Module};
+        my $Module = $WidgetsGroup->{Module};
         if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($Module) ) {
             return $LayoutObject->FatalError();
         }
-		my $Object = $Module->new();
+        my $Object = $Module->new();
 
-		my $WidgetContent = $Object->Run(
-			 GetParam => \%Param,
-			 ConfigItem => $WidgetsGroup,
-			 UserID => $Self->{UserID},
-			);
-
-			$LayoutObject->Block( Name => "SidebarWidget", Data=> { WidgetContent => $WidgetContent }) if $WidgetContent;
- 		
-	}	
-    
-	# Get CSS config
-	my $AgentCss = " .Category:hover {". $Config->{CategoryCssOnMousehover} ."}";
-	$LayoutObject->Block( Name => "LayoutStyleCategoryShadow",  Data=> { LayoutClassStyleCategory => $AgentCss });
-	my $Link =  'Subaction=' . $LayoutObject->Ascii2Html( Text => $Self->{Subaction} );
-	$Link .= ";KeyPrimary=". $Param{KeyPrimary} if($Param{KeyPrimary} );
-	 my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
-		
-       $SessionObject->UpdateSessionID(
-                SessionID => $Self->{SessionID},
-                Key       => "LastScreenOverview",
-                Value     => "Action=CustomerServiceCatalog;".$Link,
+        my $WidgetContent = $Object->Run(
+             GetParam => \%Param,
+             ConfigItem => $WidgetsGroup,
+             UserID => $Self->{UserID},
             );
-	
+
+            $LayoutObject->Block( Name => "SidebarWidget", Data=> { WidgetContent => $WidgetContent }) if $WidgetContent;
+         
+    }    
+    
+    # Get CSS config
+    my $AgentCss = " .Category:hover {". $Config->{CategoryCssOnMousehover} ."}";
+    $LayoutObject->Block( Name => "LayoutStyleCategoryShadow",  Data=> { LayoutClassStyleCategory => $AgentCss });
+    my $Link =  'Subaction=' . $LayoutObject->Ascii2Html( Text => $Self->{Subaction} );
+    $Link .= ";KeyPrimary=". $Param{KeyPrimary} if($Param{KeyPrimary} );
+     my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
+
+    if ( $Self->{Action} eq "CustomerQRCode" ) {
+        $SessionObject->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => "LastScreenOverview",
+            Value     => "Action=CustomerQRCode;".$Link,
+        );
+    } else {
+        $SessionObject->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => "LastScreenOverview",
+            Value     => "Action=CustomerServiceCatalog;".$Link,
+        );
+    }
+
+    
 
     ### GENERATE OUTPUT
     return $LayoutObject->Output(
@@ -1072,85 +1292,85 @@ sub _MaskNew {
 
 sub _GetUrlHref{
 
-	my $String = shift;
-	my $Link;
-	if($String){
-		if($String =~ /<a[^>]*?href=\'([^>]*?)\'[^>]*?>\s*([\w\W]*?)\s*<\/a>/g){
-			$Link = $1;
-		}
-		return $Link;	
-	}
-	return "";
+    my $String = shift;
+    my $Link;
+    if($String){
+        if($String =~ /<a[^>]*?href=\'([^>]*?)\'[^>]*?>\s*([\w\W]*?)\s*<\/a>/g){
+            $Link = $1;
+        }
+        return $Link;    
+    }
+    return "";
 }
 sub _HasParent{ 
-	my $Para = shift;
-	my $AllServices = $Para;
-	my $Name = ""|| shift;
-	my  $Regex;
-	$Regex="^".quotemeta($Name)."::";
-	my @matching_items = grep {	  $_->{Value} =~ /$Regex/} @{$AllServices};
-	if(scalar @matching_items){
-		return 1;	
-	}else{
-		return 0;
-	}
+    my $Para = shift;
+    my $AllServices = $Para;
+    my $Name = ""|| shift;
+    my  $Regex;
+    $Regex="^".quotemeta($Name)."::";
+    my @matching_items = grep {      $_->{Value} =~ /$Regex/} @{$AllServices};
+    if(scalar @matching_items){
+        return 1;    
+    }else{
+        return 0;
+    }
 
 }
 sub _GetParents{ 
-	my $Para = shift;
-	my $AllServices = $Para;
-	my $Name = ""|| shift;
-	@{$AllServices} = grep { $_->{Value} =~ /^(?!.*::).*$/} @{$AllServices};
+    my $Para = shift;
+    my $AllServices = $Para;
+    my $Name = ""|| shift;
+    @{$AllServices} = grep { $_->{Value} =~ /^(?!.*::).*$/} @{$AllServices};
 
-	return $AllServices;	
+    return $AllServices;    
 }
 sub _HasChildren{ 
-	my $Para = shift;
-	my $AllServices = $Para;
-	my $Name = ""|| shift;
-	my $Regex="^".quotemeta($Name)."::";
+    my $Para = shift;
+    my $AllServices = $Para;
+    my $Name = ""|| shift;
+    my $Regex="^".quotemeta($Name)."::";
 
-	my @matching_items = grep {	  $AllServices->{$_} =~ /$Regex/} keys %{$AllServices};
+    my @matching_items = grep {      $AllServices->{$_} =~ /$Regex/} keys %{$AllServices};
 
-	if(scalar @matching_items){
-		return 1;	
-	}else{
-		return 0;
-	}
+    if(scalar @matching_items){
+        return 1;    
+    }else{
+        return 0;
+    }
 
 }
 sub _GetChildren{ 
-	my $Para = shift;
-	my $AllServices = $Para;
-	my $Name = ""|| shift;
-		
-	my $Regex = "^".quotemeta($Name)."::"; 
-	@{$AllServices} = grep { $_->{Value} =~ /^$Regex+(?!.*::).*$/} @{$AllServices};
+    my $Para = shift;
+    my $AllServices = $Para;
+    my $Name = ""|| shift;
+        
+    my $Regex = "^".quotemeta($Name)."::"; 
+    @{$AllServices} = grep { $_->{Value} =~ /^$Regex+(?!.*::).*$/} @{$AllServices};
 
-	return $AllServices;	
+    return $AllServices;    
 
 }
 sub _CreateBreadcrumb{
-	my $ServiceName = shift||'';
-	my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');  	
-	my @breadcrumbs;
-	my @TempName = split("::",$ServiceName);
-	my $Redirect;
-	return @TempName;	
+    my $ServiceName = shift||'';
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');      
+    my @breadcrumbs;
+    my @TempName = split("::",$ServiceName);
+    my $Redirect;
+    return @TempName;    
 }
 sub _CountTruncate{
-	my ($TruncateSize ,$StringDesc)   = @_;
-	
-	my $TruncateString = substr($StringDesc,0,$TruncateSize);
-	my $c1 = () = $TruncateString =~ /<mark/g;
-	my $c2 = () = $TruncateString =~ /<\/mark>/g;
-	if($c1 ne $c2){
-		 $TruncateSize = $TruncateSize + 10;
-		_CountTruncate($TruncateSize,$StringDesc);
-	}
-	return $TruncateSize;
-	
-	
-	
+    my ($TruncateSize ,$StringDesc)   = @_;
+    
+    my $TruncateString = substr($StringDesc,0,$TruncateSize);
+    my $c1 = () = $TruncateString =~ /<mark/g;
+    my $c2 = () = $TruncateString =~ /<\/mark>/g;
+    if($c1 ne $c2){
+         $TruncateSize = $TruncateSize + 10;
+        _CountTruncate($TruncateSize,$StringDesc);
+    }
+    return $TruncateSize;
+    
+    
+    
 }
 1;

@@ -1,0 +1,231 @@
+@media only screen and (max-width: 1024px) and (min-width: 0px) {
+	/* Global */
+	input[type=text], input[type=email], input[type=password], textarea {
+		padding: 7px;
+	}
+
+	input[type=checkbox] {
+    max-width: 15px !important;
+	}
+
+	label {
+		text-align: left;
+	}
+
+	#BottomActionRow {
+		margin-left: 0px;
+	}
+
+	fieldset div.Field, #BottomActionRow, fieldset .RichTextHolder {
+		padding-left: 5px !important;
+	}
+
+	fieldset p {
+		margin: 0px 0px 0px 8px !important;
+	}
+
+	#Messenger fieldset, #NewCustomerTicket fieldset, #ActivityDialogContent fieldset, #NewProcessTicket fieldset {
+		display: contents !important;
+	}
+
+	#Messenger input, #Messenger select, #NewCustomerTicket input, #NewCustomerTicket select, #ActivityDialogContent input, 
+  #NewProcessTicket select, .TicketCompose fieldset #Subject {
+		max-width: 300px;
+	}
+
+	#ActivityDialogContent select {
+		max-width: 85px;
+	}
+
+	/* Header */
+	#Header h1.CompanyName {
+		margin: -6px 0px 0px 20px;
+		text-align: left;
+	}
+
+	#Header .CompanyName a {
+		white-space: nowrap;
+		font-size: 1.5em;
+	}
+
+	#Header #Logo {
+		position: absolute;
+	}
+
+	#Navigation .Selected {
+		background: transparent !important;
+	}
+
+	#Navigation .Selected, #Navigation .Selected:active {
+		background: transparent !important;
+	}
+
+	#Navigation > ul > li > ul a, #Navigation > ul > li > ul a.SubSelected {
+		font-size: 1em;
+    padding: 5px 20px;
+	}
+
+	#Navigation > ul > li > ul {
+		box-shadow: none;
+		width: 98%;
+	}
+
+	#Navigation > ul > li > ul a {
+		color: #444444 !important;
+		border-top: none !important;
+	}
+
+	#Navigation > ul > li > a {
+		margin-bottom: 10px;
+	}
+
+	#Navigation > ul > li {
+		padding-left: 10px;
+	}
+
+	#Navigation > ul > li:first-child:hover ul {
+		margin: 0px;;
+	}
+
+	#Navigation .Selected > a, #Navigation > ul > li:hover > a {
+		color: #ffffff !important;
+		border-bottom: none;
+	}
+
+	#Navigation .Selected, #Navigation .Selected:active, #Navigation > ul > li:hover {
+		background: transparent !important;
+	}
+
+	#Navigation > ul > li:hover ul, #Navigation > ul > li a:focus + ul, #Navigation > ul > li ul.Expanded {
+		margin: initial;
+	}
+
+	.fa-toggle-left:before, .fa-caret-square-o-left:before {
+		color: #018b8a !important;
+	}
+
+	.fa-bars:before, .fa-minus:before {
+		color: #018b8a !important;
+	}
+	
+	#Navigation {
+		background-color: #19475b !important;
+	}
+
+	.Visible-ScreenXS #Navigation > ul >li > a {
+		border-top: none !important;
+		color: #ffffff !important;
+	}
+
+	#ZoomSidebar, .SidebarColumn {
+		background: #19475b !important;
+	}
+
+	#Metadata, #Activities {
+		border-radius: 3px;
+	}
+
+	/* Ticket form */
+	div.DnDUploadBox {
+		width: 100%;
+	}
+
+	span.ReadyForUpload {
+		white-space: nowrap;
+	}
+
+	#NewCustomerTicket input.InputField_Search {
+		padding: 5px;
+	}
+
+	.DnDUpload.AjaxDnDUploadReady {
+		display: inline-block;
+	}
+
+	/* Ticket view */
+	.TicketZoom #cke_RichText {
+		margin-bottom: 15px !important;
+		margin-left: 10px !important;
+	}
+
+	#Messenger input:not(#Subject) {
+		margin: 0px;
+	}
+
+	.TicketZoom #Messenger #Subject {
+		margin-left: 10px;
+	}
+
+	.TicketZoom #AttachmentHolder {
+		width: max-content;
+	}
+
+	.TicketZoom div.InputField_Container {
+		margin: 0px 10px 0px;
+	}
+
+	.TicketZoom #AttachmentHolder label {
+		width: fit-content;
+	}
+
+	.TicketZoom div.DnDUploadBox {
+		margin: 0px 0px 0px 5px;
+	}
+
+	.TicketZoom form#ReplyCustomerTicket #FollowUp .ActionRow {
+		padding-left: 11px;
+	}
+
+	.TicketZoom #FollowUp.Visible {
+		max-width: 100%;
+	}
+
+	.MessageBrowser {
+		margin-right: 10px;
+	}
+
+	#ReplyCustomerTicket #AttachmentHolder {
+		width: 96%;
+	}
+
+	#ReplyCustomerTicket input#PriorityID_Search, #ReplyCustomerTicket input#StateID_Search {
+		max-width: 200px !important;
+	}
+
+	/* Process Ticket */
+	.AsteriskExplanationCustomer {
+		margin-left: 6px !important;
+	}
+
+	fieldset h2 + p.Description {
+		padding: 5px 0px;
+	}
+
+	.PopupFooter {
+		margin-top: 0px;
+		padding: 5px 9px !important;
+	}
+
+	/* Search */
+	.Search div.InputField_Container {
+		margin: 0px;
+	}
+
+	.Search div.InputField_Container {
+		width: 50%;
+	}
+
+	/* Settings */
+	#MainBox.Preferences .Content .Box {
+		max-width: 460px !important;
+		float: left;
+	}
+
+	#MainBox.Preferences fieldset div label {
+    padding: 8px 8px 0px 9px;
+	}
+
+	#MainBox.Preferences .Box button {
+		margin: 5px 0 0 5px;
+	}
+}

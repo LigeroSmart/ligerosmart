@@ -7,11 +7,7 @@
 # --
 <div id="MainBox" class="TicketCompose ARIARoleMain">
     <div class="Content">
-[% IF Env("Action") == "CustomerTicketMessage" %]    
         <form action="[% Env("CGIHandle") %]" method="post" name="compose" id="NewCustomerTicket" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
-[% ELSIF Env("Action") == "CustomerTicketQRCode" %]
-        <form action="[% Env("CGIHandle") %]" method="post" name="compose" id="NewCustomerTicketQRCode" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
-[% END %]        
             <input type="hidden" name="Action" value="[% Env("Action") %]" />
             <input type="hidden" name="Subaction" value="StoreNew" />
             <input type="hidden" name="Expand" id="Expand" value="" />
@@ -140,6 +136,7 @@
 [% RenderBlockEnd("Priority") %]
 
 [% RenderBlockStart("DynamicField") %]
+[% IF Env("Action") == "CustomerTicketQRCode" && Data.Name != "Teste" %]
                     <div class="Row Row_DynamicField_[% Data.Name | html %]">
                     [% Data.Label %]
                         <div class="Field">
@@ -147,6 +144,7 @@
                         </div>
                         <div class="Clear"></div>
                     </div>
+[%END%]                    
 [% RenderBlockEnd("DynamicField") %]
 
 # example of how to use fixed dynamic field blocks for customizations

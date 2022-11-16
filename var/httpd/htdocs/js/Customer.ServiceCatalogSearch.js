@@ -40,10 +40,6 @@ $('#LigeroServiceSearch').on('keydown', function () {
 });
 
 $(function () {
-	var Data = {
-		Action: 'CustomerServiceCatalog',
-		Subaction: 'AjaxCustomerService',
-	};
 	$("#LigeroServiceSearch").bind("keydown", function (event) { })
 		.autocomplete({
 			minLength: 3,
@@ -51,10 +47,11 @@ $(function () {
 				$.ajax({
 					url: Core.Config.Get('CGIHandle'),
 					data: {
-						Action: 'CustomerServiceCatalog',
+						Action: Core.Config.Get('Action'),
 						Subaction: 'AjaxCustomerService',
 						Term: $("#LigeroServiceSearch").val(),
 						StartHit: $("#StartHit").val(),
+						DynamicField_Teste: $("#ConfigItemID").val(),
 					},
 					success: function (Datas) {
 						$("#ServiceCatalogResults").html(Datas);
@@ -71,8 +68,6 @@ $(function () {
 					error: function () {
 						response([]);
 					}
-
-
 				});
 			}
 

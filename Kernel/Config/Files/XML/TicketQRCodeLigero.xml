@@ -53,7 +53,7 @@
         <Description Translatable="1">Allows customers to set the ticket priority in the customer interface.</Description>
         <Navigation>Frontend::Customer::View::TicketQRCode</Navigation>
         <Value>
-            <Item ValueType="Checkbox">1</Item>
+            <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::CustomerTicketQRCode###PriorityDefault" Required="1" Valid="1">
@@ -67,10 +67,10 @@
         <Description Translatable="1">Allows customers to set the ticket queue in the customer interface. If this is not enabled, QueueDefault should be configured.</Description>
         <Navigation>Frontend::Customer::View::TicketQRCode</Navigation>
         <Value>
-            <Item ValueType="Checkbox">1</Item>
+            <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::CustomerTicketQRCode###QueueDefault" Required="0" Valid="0">
+    <Setting Name="Ticket::Frontend::CustomerTicketQRCode###QueueDefault" Required="0" Valid="1">
         <Description Translatable="1">Defines the default queue for new customer tickets in the customer interface.</Description>
         <Navigation>Frontend::Customer::View::TicketQRCode</Navigation>
         <Value>
@@ -81,10 +81,10 @@
         <Description Translatable="1">Allows customers to set the ticket type in the customer interface. If this is not enabled, TicketTypeDefault should be configured.</Description>
         <Navigation>Frontend::Customer::View::TicketQRCode</Navigation>
         <Value>
-            <Item ValueType="Checkbox">1</Item>
+            <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::CustomerTicketQRCode###TicketTypeDefault" Required="0" Valid="0">
+    <Setting Name="Ticket::Frontend::CustomerTicketQRCode###TicketTypeDefault" Required="0" Valid="1">
         <Description Translatable="1">Defines the default ticket type for new customer tickets in the customer interface.</Description>
         <Navigation>Frontend::Customer::View::TicketQRCode</Navigation>
         <Value>
@@ -102,14 +102,14 @@
         <Description Translatable="1">Allows customers to set the ticket SLA in the customer interface.</Description>
         <Navigation>Frontend::Customer::View::TicketQRCode</Navigation>
         <Value>
-            <Item ValueType="Checkbox">1</Item>
+            <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::CustomerTicketQRCode###ServiceMandatory" Required="0" Valid="1">
         <Description Translatable="1">Sets if service must be selected by the customer.</Description>
         <Navigation>Frontend::Customer::View::TicketQRCode</Navigation>
         <Value>
-            <Item ValueType="Checkbox">0</Item>
+            <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::CustomerTicketQRCode###SLAMandatory" Required="0" Valid="1">
@@ -157,6 +157,7 @@
                     <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
                     <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
                 </DefaultItem>
+                <Item Key="Teste" SelectedID="2"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -257,5 +258,21 @@
                 </Item>
             </Hash>
         </Value>
-    </Setting>    
+    </Setting>
+    <Setting Name="Ticket::Frontend::CustomerTicketZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket zoom screen of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::TicketZoom</Navigation>
+        <Value>
+            <Hash>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+                <Item Key="ITSMImpact" SelectedID="1"></Item>
+                <Item Key="ITSMCriticality" SelectedID="1"></Item>
+                <Item Key="Teste" SelectedID="1"></Item>                
+            </Hash>
+        </Value>
+    </Setting>
 </otrs_config>
