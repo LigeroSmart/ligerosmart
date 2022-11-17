@@ -962,6 +962,32 @@ textarea:focus, select[multiple=multiple]:focus, form #cke_RichText:focus, div.D
 	border-color: #4d90fe !important;
 }
 
+
+
+.Category {
+	padding: 13px 0;
+	background-color: #fff;
+	border:1px solid #707070;
+	width:100%;
+	display:inline-block;
+	max-width: 229px;
+	position: relative;
+	cursor:pointer;
+  }
+
+  .Icon-outside {
+	position:relative;
+   }
+   
+   .Icon-outside i {
+	position:absolute;
+	margin-left:-6px;
+	top:4px;
+	padding:17px 15px;
+	color:#30A3F1;
+	background:black;
+   }
+
 /* Some duplicate responsive rules */
 @media only screen and (max-width: 1024px) and (min-width: 0px) {
 	/* Global */
