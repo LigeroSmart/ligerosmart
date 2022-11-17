@@ -858,12 +858,12 @@ sub _GetLinkObject {
 sub _MaskNew {
     my ( $Self, %Param ) = @_;
 
-    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $ServiceObject = $Kernel::OM->Get("Kernel::System::Service");
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
     my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-    my $Config  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
+    my $Config = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
     my $Services;
     my %ServicesIDs;
 
@@ -871,7 +871,12 @@ sub _MaskNew {
         $Services = _GetParents($Param{DataRef});
         $LayoutObject->Block( Name => "FirstLvl");
     } else {
-        $LayoutObject->Block( Name => "BreadcrumbStart");
+        if ( $Self->{Action} eq 'CustomerQRCode' ) {
+            $LayoutObject->Block( Name => "BreadcrumbStart", Data => { Action => $Self->{Action} . ';DynamicField_Teste=' . $Param{DynamicField_Teste} } );
+        } else {
+            $LayoutObject->Block( Name => "BreadcrumbStart", Data => { Action => $Self->{Action} } );
+        }
+        
         $Services = _GetChildren($Param{DataRef},$Param{KeyPrimary});
     }
 
@@ -1228,7 +1233,8 @@ sub _MaskNew {
             if ( $Self->{Action} eq 'CustomerQRCode' ) {
                 $links = $LayoutObject->{Baselink}
                     . 'Action=CustomerQRCode'
-                    . ';KeyPrimary='.$FullPrevService;
+                    . ';DynamicField_Teste=' . $Param{DynamicField_Teste}
+                    . ';KeyPrimary=' . $FullPrevService;
             }            
             $LayoutObject->Block( Name => "BreadcrumbServices", Data=> { BreadcrumbLink => $links, BreadcrumbTitle => $crumbs });
         }

@@ -26,27 +26,37 @@
     </div>
 [% RenderBlockEnd("ConfigItemHeader") %]
 
-[% RenderBlockStart("FirstLvl") %]
-<input id="LigeroServiceSearch" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
-[% RenderBlockEnd("FirstLvl") %]
-
-		<ul class="breadcrumb">
+	<ul class="breadcrumb">
 [% RenderBlockStart("BreadcrumbStart") %]
-			<li><a href="[% Env("Baselink") %]Action=[%Data.Action | html %]"> [% Translate("Start") | html %]</a></li>
+		<li>
+			<a href="[% Env("Baselink") %]Action=[%Data.Action | html %]">
+				[% Translate("Start") | html %]
+			</a>
+		</li>
 [% RenderBlockEnd("BreadcrumbStart") %]
 [% RenderBlockStart("BreadcrumbServices") %]
-			<li><span><i class="fa fa-arrow-right" aria-hidden="true"></i></span></li>
-			<li><a href="[%Data.BreadcrumbLink | html %]">[%Data.BreadcrumbTitle | html %] </a></li>
+		<li>
+			<span>
+				<i class="fa fa-arrow-right" aria-hidden="true"></i>
+			</span>
+		</li>
+		<li>
+			<a href="[%Data.BreadcrumbLink | html %]">
+				[%Data.BreadcrumbTitle | html %]
+			</a>
+		</li>
 [% RenderBlockEnd("BreadcrumbServices") %]
-		</ul>
+	</ul>
 
+[% RenderBlockStart("FirstLvl") %]
+	<input id="LigeroServiceSearch" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
+[% RenderBlockEnd("FirstLvl") %]
 [% RenderBlockStart("CategorySearch") %]
-<input id="LigeroServiceSearchMark" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
-[% RenderBlockEnd("CategorySearch") %]	
-
-<input type="hidden" id="StartHit" value='0'>
+	<input id="LigeroServiceSearchMark" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
+[% RenderBlockEnd("CategorySearch") %]
+	<input type="hidden" id="StartHit" value='0'>
 [% RenderBlockStart("ConfigItemID") %]
-<input type="hidden" id="ConfigItemID" value='[% Data.ConfigItemID %]'>
+	<input type="hidden" id="ConfigItemID" value='[% Data.ConfigItemID %]'>
 [% RenderBlockEnd("ConfigItemID") %]
 
 <div class="Content">
