@@ -102,7 +102,7 @@ sub BarcodeGet {
 
     if ( $ConfigObject->Get( 'ITSMConfigItemBarcode::BarcodeITSMConfigItemURL' ) ) {
         $ConfiguredType = 'QRcode';
-        $CurrentValue   = sprintf "%s://%s/%sindex.pl?Action=AgentITSMConfigItemZoom;ConfigItemID=%s",
+        $CurrentValue   = sprintf "%s://%s/%scustomer.pl?Action=CustomerQRCode;ConfigItemID=%s",
             $ConfigObject->Get( 'HttpType' ),
             $ConfigObject->Get( 'FQDN' ),
             $ConfigObject->Get( 'ScriptAlias' ),
