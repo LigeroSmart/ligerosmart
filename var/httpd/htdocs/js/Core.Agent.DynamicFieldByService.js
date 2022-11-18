@@ -166,6 +166,9 @@ Core.Agent.DynamicFieldByService = (function (TargetNS) {
 							if (formID === "NewCustomerTicket"){
 								FieldConfigInsert = CustomerFieldConfigInsert;
 							}
+							else if (formID === "NewCustomerTicketQRCode"){
+								FieldConfigInsert = CustomerFieldConfigInsert;
+							}
 							else {
 								FieldConfigInsert = AgentFieldConfigInsert;
 							}

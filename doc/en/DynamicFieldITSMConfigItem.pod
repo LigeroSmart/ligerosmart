@@ -1,0 +1,39 @@
+=head1 NAME
+
+DynamicFieldITSMConfigItem
+
+=head1 DESCRIPTION
+
+This is a backend for DynamicFields to use ITSM Config Items in DynamicFields.
+
+=head1 PLEASE NOTE
+
+This is a very short document. The addon ships a L<PDF document|https://github.com/reneeb/otrs-DynamicFieldITSMConfigItem/blob/master/doc/en/DynamicFieldITSMConfigItem.pdf>
+with more detailed information.
+
+=head1 CONFIGURATION
+
+=head2 Constrictions
+
+With constrictions, you can define additional search parameters. If you select class "Computer"
+all computers are search. If you have a dynamic field for Lenovo Laptops, you can define the
+constriction
+
+    Vendor::Configuration::Lenovo::1
+
+The first column (e.g. I<Vendor>) defines which config item attribute is search. The second
+column defines where the value comes from. In this case, it is a hard-coded value. That value
+is defined in column three (I<Levono>). And it is a mandatory search parameter.
+
+When you define the constriction
+
+    Owner::CustomerUser::UserLogin::1
+
+the I<Owner> attribute of a config item must have the value of the I<CustomerUser>'s I<UserLogin> attribute.
+So when the ticket belongs to the customer user I<test.customer>, only config items that belong to this
+customer user are shown in the dialog.
+
+=head1 AUTHOR
+
+This addon was originally developed by L<c.a.p.e IT|https://cape-it.de>, and is maintained by
+L<Perl-Services.de|https://www.perl-services.de> now.

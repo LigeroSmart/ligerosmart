@@ -18,7 +18,7 @@ var doneTypingInterval = 500;  //time in ms
 //on keyup, start the countdown
 $input.on('keyup', function () {
 	clearTimeout(typingTimer);
-    // @TODO: Isso é realmente necessário:?
+	// @TODO: Isso é realmente necessário:?
 	typingTimer = setTimeout(doneTyping, doneTypingInterval);
 });
 
@@ -27,8 +27,8 @@ $input.on('keydown', function () {
 	clearTimeout(typingTimer);
 });
 $('#LigeroServiceSearch').on('keyup', function () {
-    clearTimeout(typingTimer);
-	if($(this).val() == ""){
+	clearTimeout(typingTimer);
+	if ($(this).val() == "") {
 		$("#ServiceCatalogResults").hide();
 		$("#ServiceCatalogItens").show();
 		$("#StartHit").val('0');
@@ -36,94 +36,130 @@ $('#LigeroServiceSearch').on('keyup', function () {
 });
 
 $('#LigeroServiceSearch').on('keydown', function () {
-    clearTimeout(typingTimer);
+	clearTimeout(typingTimer);
 });
 
-$( function() {
+$(function () {
+	$("#LigeroServiceSearch").bind("keydown", function (event) { })
+		.autocomplete({
+			minLength: 3,
+			source: function (request, response) {
+				$.ajax({
+					url: Core.Config.Get('CGIHandle'),
+					data: {
+						Action: Core.Config.Get('Action'),
+						Subaction: 'AjaxCustomerService',
+						Term: $("#LigeroServiceSearch").val(),
+						StartHit: $("#StartHit").val(),
+						DynamicField_Teste: $("#ConfigItemID").val(),
+					},
+					success: function (Datas) {
+						$("#ServiceCatalogResults").html(Datas);
+						$("#ServiceCatalogResults").show();
+						$(".Tabs a").click(function (e) {
+							e.preventDefault();
+							var linkPag = $(this).attr('href');
+							var res = linkPag.split("=");
+							$("#StartHit").val(res[5]);
+							$("#LigeroServiceSearch").trigger("keydown");
+						});
+						$("#StartHit").val('0');
+					},
+					error: function () {
+						response([]);
+					}
+				});
+			}
+
+		});
+});
+
+$(function () {
 	var Data = {
-		Action: 'CustomerServiceCatalog',
-		Subaction: 'AjaxCustomerService',
+		Action: 'CustomerQRCode',
+		Subaction: 'AjaxCustomerQRCode',
 	};
-	$( "#LigeroServiceSearch" ).bind( "keydown", function( event ) {
-	    }).autocomplete({
-			     	minLength: 3,
-		    	  	source: function( request, response){
-						$.ajax({
-							url: Core.Config.Get('CGIHandle'),
-							data:  {
-								Action: 'CustomerServiceCatalog',
-								Subaction: 'AjaxCustomerService',
-								Term: $("#LigeroServiceSearch").val(),
-								StartHit: $("#StartHit").val(), 
-							},
-							success: function(Datas){
-								$("#ServiceCatalogResults").html(Datas);
-								$("#ServiceCatalogResults").show();
-								$(".Tabs a").click(function(e){
-									e.preventDefault();
-									var linkPag = $(this).attr('href');
-									var res = linkPag.split("=");
-									$("#StartHit").val(res[5]);
-									$( "#LigeroServiceSearch").trigger("keydown");	
-								});	
-								$("#StartHit").val('0');
-							},
-							error:  function(){	
-								response([]);
-							}
-	
-		
-						});	
+	$("#LigeroICSearch").bind("keydown", function (event) { })
+		.autocomplete({
+			minLength: 3,
+			source: function (request, response) {
+				alert($("#LigeroICSearch").val());
+				$.ajax({
+					url: Core.Config.Get('CGIHandle'),
+					data: {
+						Action: 'CustomerServiceCatalog',
+						Subaction: 'AjaxCustomerQRCode',
+						Term: $("#LigeroQRCodeSearch").val(),
+						StartHit: $("#StartHit").val(),
+					},
+					success: function (Datas) {
+						$("#QRCodeResults").html(Datas);
+						$("#QRCodeResults").show();
+						$(".Tabs a").click(function (e) {
+							e.preventDefault();
+							var linkPag = $(this).attr('href');
+							var res = linkPag.split("=");
+							$("#StartHit").val(res[5]);
+							$("#LigeroQRCodeSearch").trigger("keydown");
+						});
+						$("#StartHit").val('0');
+					},
+					error: function () {
+						response([]);
 					}
 
-    			} );
-	 } );
 
-function doneTyping () {
+				});				
+			}
+
+		});
+});
+
+function doneTyping() {
 	var term = $input.val();
-	$('.Need,.Category',$context).show().unmark();
+	$('.Need,.Category', $context).show().unmark();
 	if (term) {
 
-		$('.Need,.Category',$context).mark(term, {
+		$('.Need,.Category', $context).mark(term, {
 
 		});
 
-	    $('.Need',$context).each(function(){
-			if($(this).contents().find("mark").length){
+		$('.Need', $context).each(function () {
+			if ($(this).contents().find("mark").length) {
 				$(this).show();
 			} else {
 				$(this).hide();
-		
+
 			}
-		
-	  	});
-	    $('.Category',$context).each(function(){
-			if($(this).contents().find("mark").length){
+
+		});
+		$('.Category', $context).each(function () {
+			if ($(this).contents().find("mark").length) {
 				$(this).show();
 			} else {
 				$(this).hide();
-		    }
- 	   });
+			}
+		});
 
 	};
-	if($('.Need:visible').length){
+	if ($('.Need:visible').length) {
 		$('.NeedMessage').show();
 	} else {
 		$('.NeedMessage').hide();
 	}
-	if($('.Category:visible').length){
+	if ($('.Category:visible').length) {
 		$('.MoreServices').show();
 	} else {
 		$('.MoreServices').hide();
 	}
-  	if($('.Need:visible').length == 0 && $('.Category:visible').length == 0){
+	if ($('.Need:visible').length == 0 && $('.Category:visible').length == 0) {
 		$("#NotFoundResult").show();
-	}else{
+	} else {
 		$("#NotFoundResult").hide();
-	}	
+	}
 };
 
 // Quando começar a busca já apaga as informações da tela 
-$( "#LigeroServiceSearch" ).on( "autocompletesearch", function( event, ui ) {
+$("#LigeroServiceSearch").on("autocompletesearch", function (event, ui) {
 	$("#ServiceCatalogItens").hide();
-} );			
+});			

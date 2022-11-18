@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+	<Setting Name="Loader::Customer::Skin###001-ModernSkinCustomer" Required="1" Valid="1">
+		<Description Translatable="1">A modern and flat skin by Efflux GmbH.</Description>
+		<Navigation>Frontend::Base::Loader</Navigation>
+		<Value>
+			<Hash>
+				<Item Key="InternalName">ModernSkinCustomer</Item>
+				<Item Key="VisibleName" Translatable="1">ModernSkinCustomer by Efflux</Item>
+				<Item Key="Description" Translatable="1">A modern and flat skin by Efflux GmbH.</Item>
+				<Item Key="HomePage">https://efflux.de</Item>
+			</Hash>
+		</Value>
+	</Setting>
+</otrs_config>

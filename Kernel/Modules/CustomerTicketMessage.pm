@@ -11,6 +11,8 @@ package Kernel::Modules::CustomerTicketMessage;
 use strict;
 use warnings;
 
+use Data::Dumper;
+
 our $ObjectManagerDisabled = 1;
 
 use Kernel::System::VariableCheck qw(:all);
@@ -217,7 +219,7 @@ sub Run {
                     }
                 }
             }
-
+  
             # get field html
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
                 $BackendObject->EditFieldRender(
@@ -771,6 +773,17 @@ sub Run {
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
         );
+        if ( $Self->{Action} eq 'CustomerTicketQRCode' ) {
+            my $ICQRCode = $GetParam{DynamicField_Teste}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'DynamicField_Teste' );
+            my %results = $Self->_GetLinkObject (
+                ConfigItemID => $ICQRCode,
+            );            
+            foreach my $k (keys %{$Services}) {
+                if (!$results{$k}) {
+                    delete $Services->{$k};
+                }
+            }            
+        }
         my $SLAs = $Self->_GetSLAs(
             %GetParam,
             %ACLCompatGetParam,
@@ -958,6 +971,62 @@ sub _GetServices {
         );
     }
     return \%Service;
+}
+
+sub _GetLinkObject {
+    my ( $Self, %Param ) = @_;
+
+    my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
+        Object => 'ITSMConfigItem',
+        Key    => $Param{ConfigItemID},
+        State  => 'Valid',
+        UserID => $Self->{UserID},
+    );    
+
+    my %LinkList;
+    my %results;
+    for my $Object ( sort keys %{ $LinkListWithData } ) {
+
+        for my $LinkType ( sort keys %{ $LinkListWithData->{$Object} } ) {
+
+            # extract link type List
+            my $LinkTypeList = $LinkListWithData->{$Object}->{$LinkType};
+
+            for my $Direction ( sort keys %{$LinkTypeList} ) {
+
+                # extract direction list
+                my $DirectionList = $LinkListWithData->{$Object}->{$LinkType}->{$Direction};
+
+                for my $ObjectKey ( sort keys %{$DirectionList} ) {                    
+
+                    my $ClassName;
+                    if ( $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Class} ) {
+                        $ClassName = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Class};
+                        if ( $Object ne 'Service' && $ClassName eq "PortalServiceQRCode" ) {
+                            my $QRCodeGroupServiceID = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{ConfigItemID};
+                            my %result = $Self->_GetLinkObject (
+                                ConfigItemID => $QRCodeGroupServiceID,
+                                Lock => '1',
+                            ); 
+                            %results = (%results, %result);                          
+                        }                        
+                    }
+
+                    if ( $Object eq 'Service' &&  $Param{Lock}) {
+                        $LinkList{$LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{ServiceID}} = $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ObjectKey}->{Name};
+                    }
+                }
+            }
+        }
+    }
+    if ( %LinkList &&  $Param{Lock} ) {
+        return %LinkList;
+    }
+
+    if ( %results &&  !$Param{Lock} ) {
+        return %results;        
+    } 
+    
 }
 
 sub _GetSLAs {
@@ -1242,12 +1311,14 @@ sub _MaskNew {
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-
-        my $IsCustomerInterfaceCapable = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->HasBehavior(
-            DynamicFieldConfig => $DynamicFieldConfig,
-            Behavior           => 'IsCustomerInterfaceCapable',
-        );
-        next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
+        
+        if ( $DynamicFieldConfig->{Label} ne 'Teste') {
+            my $IsCustomerInterfaceCapable = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->HasBehavior(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Behavior           => 'IsCustomerInterfaceCapable',
+            );
+            next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
+        }
 
         push @CustomerDynamicFields, $DynamicFieldConfig;
     }

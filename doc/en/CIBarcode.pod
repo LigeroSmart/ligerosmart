@@ -1,0 +1,52 @@
+=head1 NAME
+
+CIBarcode
+
+=head1 DESCRIPTION
+
+This package adds a barcode to the PDF version of a config item (generated via config item print).
+
+=head1 CONFIGURATION
+
+After installation you can configure the module via SysConfig in the admin area. Config options:
+
+=over 4
+
+=item * CIBarcode::BarcodeType
+
+This option defines what type of barcode is printed in the PDF version of the config item. Currently four types are supported.
+
+=over 4
+
+=item * EAN8
+
+=item * EAN13
+
+=item * QR
+
+=item * Code39
+
+=back
+
+Even though the SysConfig defines only four supported barcode types, this packages should support all barcode types that can be generated with the Perl module C<GD::Barcode>. You can add those types by editing I<Kernel/Config/Files/CIBarcode.xml>.
+
+=item * CIBarcode::BarcodeAttribute
+
+Defines which config item attribute is encoded in the barcode. Please note that EAN8 and EAN13 barcodes can handle only numeric attributes that are not longer than the number in the name (EAN8: 8-digit numbers, EAN13: 13-digit numbers).
+
+=item * CIBarcode::BarcodeCIURL
+
+If you use QR codes you can encode the config item URL in the barcode. If this option is enabled, it overrides the value of C<CIBarcode::BarcodeAttribute>.
+If you have not chosen QR as the type, this is automatically set.
+
+=item * CIBarcode::RebuildBarcode
+
+If enabled, the barcode is rebuilt when the barcode type or the attribute changed.
+
+=back
+
+=head1 AUTHOR AND LICENSE
+
+This package was written by Renee Baecker E<lt>otrs@perl-services.deE<gt>.
+
+The package is licensed under AGPL. If you did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

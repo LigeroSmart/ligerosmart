@@ -16,7 +16,17 @@
             <fieldset>
 
             <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
-
+[% IF Env("Action") == "CustomerTicketQRCode" %]             
+[% RenderBlockStart("DynamicField_Teste") %]
+                <div class="Row Row_DynamicField_[% Data.Name | html %]">
+                    [% Data.Label %]
+                    <div class="Field">
+                        [% Data.Field %]
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+[% RenderBlockEnd("DynamicField_Teste") %]
+[% END %] 
 [% RenderBlockStart("TicketType") %]
                 <div>
 <!--
@@ -126,6 +136,7 @@
 [% RenderBlockEnd("Priority") %]
 
 [% RenderBlockStart("DynamicField") %]
+[% IF Env("Action") == "CustomerTicketQRCode" && Data.Name != "Teste" %]
                     <div class="Row Row_DynamicField_[% Data.Name | html %]">
                     [% Data.Label %]
                         <div class="Field">
@@ -133,6 +144,7 @@
                         </div>
                         <div class="Clear"></div>
                     </div>
+[%END%]                    
 [% RenderBlockEnd("DynamicField") %]
 
 # example of how to use fixed dynamic field blocks for customizations

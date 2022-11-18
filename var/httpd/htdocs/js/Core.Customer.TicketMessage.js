@@ -64,8 +64,21 @@ Core.Customer.TicketMessage = (function (TargetNS) {
      *      Create on change event handler
      */
     function FieldUpdate (Value, ModifiedFields) {
+        var formID = "";
+        $("form").each(function () {
+            if ($(this).attr("name") == "compose") {
+                formID = $(this).attr("id");
+            }
+
+        });        
         $('#' + Value).on('change', function () {
-            Core.AJAX.FormUpdate($('#NewCustomerTicket'), 'AJAXUpdate', Value, ModifiedFields);
+            if (formID === "NewCustomerTicket"){
+                Core.AJAX.FormUpdate($('#NewCustomerTicket'), 'AJAXUpdate', Value, ModifiedFields);
+            }
+            else{
+                Core.AJAX.FormUpdate($('#NewCustomerTicketQRCode'), 'AJAXUpdate', Value, ModifiedFields);
+            }            
+            //Core.AJAX.FormUpdate($('#NewCustomerTicket'), 'AJAXUpdate', Value, ModifiedFields);
         });
     }
 

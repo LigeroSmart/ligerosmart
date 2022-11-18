@@ -23,6 +23,7 @@ sub Data {
     $Self->{Translation}->{'Alerts'} = 'Avisos';
     $Self->{Translation}->{'Search in this category...'} = 'Pesquisar nesta categoria...';
     $Self->{Translation}->{'What are you looking for?'} = 'O que você procura?';
+    $Self->{Translation}->{'Please enter the item code.'} = 'Por favor, informe o código do item.';
     $Self->{Translation}->{'No results found'} = 'Nenhum resultado encontrado';
     $Self->{Translation}->{'What do you need?'} = 'O que você precisa fazer?';
     $Self->{Translation}->{'Image'} = 'Imagem';

@@ -1,0 +1,15 @@
+<Migrations>
+    <DatabaseInstall Type="pre">
+        <TableCreate Name="ps_ci_barcode">
+            <Column Name="ci_id" Type="BIGINT" Required="True" />
+            <Column Name="b_value" Type="VARCHAR" Size="250"  Required="True" />
+            <Column Name="b_type" Type="VARCHAR" Size="250" Required="True" />
+            <Column Name="b_height" Type="INTEGER" Required="True" />
+            <Column Name="b_width" Type="INTEGER" Required="True" />
+            <Column Name="barcode" Type="VARCHAR" Size="250" Required="True" />
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUninstall Type="post">
+        <TableDrop Name="ps_ci_barcode" />
+    </DatabaseUninstall>
+</Migrations>
