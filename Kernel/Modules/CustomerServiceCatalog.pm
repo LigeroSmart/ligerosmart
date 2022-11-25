@@ -1094,10 +1094,12 @@ sub _MaskNew {
         $Datas{LayoutServiceLink} = $Link;
         $Datas{LayoutServiceName} = "$LayoutServiceName";
         $Datas{LayoutServiceID}      = $ServiceID;
+        
         my %ServicePreferences = $ServiceObject->ServicePreferencesGet(
            ServiceID => $ServiceID,
            UserID    => 1,
         );
+        $Datas{Icons} = $ServicePreferences{Icons};
 
         #$Param{ServiceID} = $ServiceObject->ServiceLookup(
         #                                Name => $Param{KeyPrimary},

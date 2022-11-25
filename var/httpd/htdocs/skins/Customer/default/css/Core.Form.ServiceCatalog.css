@@ -844,5 +844,115 @@ did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
         width: 50%;
     }
     
+    /**
+    * @subsection  Flag
+    */
+
+    fieldset.TableLike div.Value .Flag {
+        float: left;
+        margin-right: 5px;
+        margin-top: 3px;
+    }
+
+    #ServiceIncidentStateContainer .Flag,
+    .SidebarColumn fieldset.TableLike div.Value .Flag {
+        margin-top: 7px;
+    }
+
+    ul.ITSMFlag {
+        margin-top: 5px;
+    }
+
+    ul.ITSMFlag div.Value .Flag {
+        float: left;
+        margin-right: 5px;
+        margin-top: 3px;
+    }
+
+    .RTL fieldset.TableLike div.Value .Flag {
+        float: right;
+        margin-left: 5px;
+    }
+
+    .Flag span.grayled {
+        background-color:#cdcdcd;
+    }
+
+    .Flag span.greenled {
+        background-color: #8bef4d;
+    }
+
+    .Flag span.yellowled {
+        background-color: #ffdd50;
+    }
+
+    .Flag span.redled {
+        background-color:#ff505e;
+    }
+
+    .Flag span.purpleled {
+        background-color:#b23aee;
+    }
+
+    .Flag span.orangeled {
+        background-color:#ff8c00;
+    }
+
+    .Flag span.cyanled {
+        background-color:#79cdcd;
+    }
+
+    .Flag span.whiteled {
+        background-color:#ffffff;
+    }
+
+    .Flag span.blackled {
+        background-color:#000000;
+    }
+
+    /**
+    * @subsection  Headline
+    */
+    div.Headline {
+        height: 24px;
+        margin: 5px 0px;
+        position: relative;
+    }
+
+    div.Headline h1 {
+        font-size: 15px;
+        line-height: 24px;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    div.Headline h1 span {
+        padding: 0 3px;
+    }
+
+    div.Headline .Flag + h1 {
+        margin-left: 30px;
+    }
+
+    .RTL div.Headline .Flag + h1 {
+        margin-left: 0;
+        margin-right: 30px;
+    }
+
+    div.Headline .Flag {
+        position: absolute;
+        top: 5px;
+        left: 0px;
+        width: 20px;
+        height: 15px;
+    }
+
+    .RTL div.Headline .Flag {
+        left: auto;
+        right: 0;
+    }    
+
     } /* end @media */
     
