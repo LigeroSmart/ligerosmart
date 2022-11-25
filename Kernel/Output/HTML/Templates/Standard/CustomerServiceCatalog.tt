@@ -5,8 +5,7 @@
 # --
 <div id="MainBox" class="TicketView ARIARoleMain 0 " role="main">
     <h1 class="InvisibleText">Visão Geral do catálogo de serviços</h1>
-[% RenderBlockStart("ConfigItemHeader") %]    
-        <!--<div style="margin: 10px 0px; padding: 8px 11px 7px; position: relative;" class="Content">-->
+[% RenderBlockStart("ConfigItemHeader") %]
         <div class="Headline">
             <div class="Flag" title="[% Translate(Data.CurInciState) | html %]">
                 <span class="[% Data.CurInciSignal | html %]"></span>
