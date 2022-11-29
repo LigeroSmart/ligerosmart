@@ -1,14 +1,22 @@
-<div class="WidgetOpenTickets">
-
-<div class="WidgetTitle">[% Translate("Open Tickets") %]</div>
-
-<ul class="OpenTickets">
+<div class="WidgetSimpleAgent">
+	<div class="Header">
+		<h2>[% Translate("Open Tickets") %]</h2>
+	</div>
+	<div class="Content">
+		<table class="Overview" summary=[% Translate("Open Tickets") %]>
+			<tbody>
 [% RenderBlockStart("OpenTicket") %]
-<li>
-	<a href="[% Env("Baselink") %]Action=CustomerTicketZoom;TicketNumber=[% Data.TicketNumber %]">[% Data.Title %]</a><br>
-	<span class="ChangedTime">[% Translate("Last Change") %] [% Data.Changed | Localize("TimeShort") %]</span>
-</li>
+				<tr class="MasterAction">
+					<td>
+						<a href="[% Env("Baselink") %]Action=CustomerTicketZoom;TicketNumber=[% Data.TicketNumber %]" class="MasterActionLink">
+							<h2>[% Data.Title %]</h2>
+							<span class="Key">[% Translate("Last Change") %]:</span>
+							<span title='[% Data.Changed | Localize("TimeShort") %]'>[% Data.Changed | Localize("TimeShort") %]</span>
+						</a>
+					</td>
+				</tr>
 [% RenderBlockEnd("OpenTicket") %]
-</ul>
-
+			</tbody>
+		</table>
+	</div>
 </div>

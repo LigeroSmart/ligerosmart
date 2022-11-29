@@ -1265,6 +1265,7 @@ sub _MaskNew {
             );
 
             $LayoutObject->Block( Name => "SidebarWidget", Data=> { WidgetContent => $WidgetContent }) if $WidgetContent;
+            #$LayoutObject->Block( Name => "SidebarWidget", Data=> { WidgetContent => "" }) if $WidgetContent;
          
     }    
     
