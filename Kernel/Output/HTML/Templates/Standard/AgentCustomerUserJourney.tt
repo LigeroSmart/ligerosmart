@@ -1,0 +1,90 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+[% RenderBlockStart("Content") %]
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+
+  <div class="SidebarColumn">
+
+    <div id="Async_0200-CustomerInformation">
+      [% Data.CustomerInfoWidget %]
+    </div>
+  </div>
+
+  <div class="ContentColumn">
+    <div class="WidgetSimple WidgetJourney">
+[% RenderBlockStart("Ticket") %]
+      <div class="item [% Data.AdditionalClass %] 
+# add journey channel as class
+        Journey-[% Data.DynamicField_JourneyChannel %]
+       ">
+        <div class="line"></div>
+        <div class="image">
+          <img src="/otrs-web/skins/Agent/default/img/icons/journey/png/[% Data.DynamicField_JourneyChannel %].png" alt="[% Data.DynamicField_JourneyChannel %]" />
+        </div>
+        <div class="date">
+            <span>
+# Output the ticket creation date, remove the timezone part with regex.
+              [% Data.CreatedNoTimezone %]
+            </span>
+        </div>
+        <div class="details">
+            <span>
+# add link if dynamic field journey url is not empty
+              [% IF Data.DynamicField_JourneyURL %]
+              <a href="[% Data.DynamicField_JourneyURL %]" target="_blank">
+              [% END %]
+# if dynamic field journey url is empty, add link to the ticket:
+              [% IF NOT Data.DynamicField_JourneyURL %]
+              <a href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID %]" target="_blank">
+              [% END %]
+            [% Data.TicketNumber %] -
+# Output channel Description
+              [% Translate(Data.ChannelDescription) %]
+# add link if dynamic field journey url is not empty
+              </a>
+            </span>
+# show category if dynamic field journey category is not empty
+            [% IF Data.DynamicField_JourneyCategory %]
+            <p>
+# output dynamic field journey category
+            [% Translate("Category") %]: 
+              [% Data.DynamicField_JourneyCategory %]
+            </p>
+            [% END %]
+# if DynamicField Additional Info is not empty
+            [% IF Data.DynamicField_JourneyAdditionalInfo %]            
+            <p>
+# DynamicField Additional info
+              [% Data.DynamicField_JourneyAdditionalInfo %]
+            </p>
+            [% END %]
+        </div>
+    </div>
+[% RenderBlockEnd("Ticket") %]
+[% RenderBlockStart("NoTicketsFound") %]
+
+                <h4>
+                    Mensagem: <span class="Error">[% Translate("No tickets found for this Customer User") %]</span>
+                </h4>
+
+
+[% RenderBlockEnd("NoTicketsFound") %]
+
+    </div>
+# Render no tickets found block.
+
+  </div>
+</div>
+
+
+
+
+
+[% RenderBlockEnd("Content") %]

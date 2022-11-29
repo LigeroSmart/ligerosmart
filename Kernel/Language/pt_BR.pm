@@ -38,6 +38,25 @@ sub Data {
     $Self->{ThousandSeparator} = '.';
     $Self->{Translation} = {
 
+        # Template: AgentCustomerJourney
+        'Customer Journey' => 'Jornada do Cliente',
+        'Customer User Journey' => 'Jornada do Usuário',
+        'No tickets found for this Customer User' => 'Nenhum chamado encontrado para este Usuário Cliente',
+        'Check Customer User Journey' => 'Verificar Jornada do Usuário',
+
+        'Email received' => 'Email recebido',
+        'Web form submitted' => 'Formulário web enviado',
+        'Phone call received' => 'Chamada telefônica recebida',
+        'Chat received' => 'Chat recebido',
+        'Social media message received' => 'Mensagem de mídia social recebida',
+        'Whatsapp message received' => 'Mensagem do Whatsapp recebida',
+        'SMS received' => 'SMS recebido',
+        'Facebook message received' => 'Mensagem do Facebook recebida',
+        'Twitter message received' => 'Mensagem do Twitter recebida',
+        'Instagram message received' => 'Mensagem do Instagram recebida',
+        'Telegram message received' => 'Mensagem do Telegram recebida',
+        'Action not specified' => 'Ação não especificada',
+
         # Template: AdminACL
         'ACL Management' => 'Gerenciamento de ACL',
         'Actions' => 'Ações',

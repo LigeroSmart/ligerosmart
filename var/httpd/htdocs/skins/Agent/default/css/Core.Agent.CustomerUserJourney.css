@@ -1,0 +1,144 @@
+.WidgetJourney {
+    padding: 1em;
+}
+.item {
+    display: flex;
+    max-width: 1000px;
+    padding-bottom: 1.3em;
+    position: relative;
+}
+
+.item .image {
+    /* padding-right: 0.5em; */
+    border-radius: 50%;
+    height:1.6em;
+    width: 1.6em;
+    background-color: white;
+    border: 0.2em solid #888;
+    display: flex;
+    z-index: 1;
+}
+.item .image img {
+    display: block;
+    margin:auto;
+    height: 1.1em;
+    width: 1.1em;
+}
+
+/* add a vertical line after img */
+.item .line {
+    width: 1em;
+    height: 100%;
+    border-left: 0.2em solid #888;
+    position: absolute;
+    left: 0.9em;
+    z-index: 0;
+}
+
+.item--last .line {
+    border-left: none;
+}
+
+.item .date {
+    font-size: 0.8em;
+    /* color: #888; */
+    padding:0.2em;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    margin-left: 0.3em;
+    /* round corners */
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    border: 0.1em solid #888;
+    height: 1em;
+    margin-top: 0.5em;
+
+}
+
+.item .details {
+    font-size: 0.8em;
+    color: #333;
+    font-weight: bold;
+    padding-top: 0.7em;
+    padding-left: 1em;
+    text-align: left;
+}
+/*
+.item .image>div {
+    position: relative;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.item .image>div::after {
+    content: '';
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid #232b50;
+    position: absolute;
+    z-index: -1;
+}
+
+
+
+.item .image span {
+    display: block;
+    clear: both;
+    border-radius: 0.5em;
+
+    padding: 0.5em;
+    margin: 0.4em 0;
+    border: 1px solid #3b4262;
+    background: white;
+    width: 5em;
+}
+
+
+.item .details {
+    position: relative;
+    flex-grow: 1;
+}
+
+.item .details>div {
+    border: 1px solid #232b50;
+    border-radius: 0.5em;
+    padding: 1.5em;
+    margin: 1em 0;
+    background: white;
+}
+
+.item .details>div h1 {
+    color: #5ed3bf;
+    font-size: 1.4em;
+    margin: 0;
+    padding: 0 0 0.5em 0;
+    letter-spacing: 0.1em;
+}
+
+.item .details>div p {
+    margin: 0;
+    padding: 0;
+    line-height: 150%;
+}
+
+
+.item .details::before {
+    content: '';
+    width: 0;
+    height: 100%;
+    border-left: 1px solid #232b50;
+    position: absolute;
+    top: 0;
+    left: -4.5em;
+    z-index: -1;
+}
+
+.item .details.details--first::before {
+    top: 1em;
+}
+
+.item .details.details--last::before {
+    top: -2.3em;
+} */
