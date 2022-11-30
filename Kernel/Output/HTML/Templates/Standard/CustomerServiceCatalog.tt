@@ -3,303 +3,415 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<div id="MainBox" class="ARIARoleMain">
-
-#Inserir a barra lateral
-	<div id="ZoomSidebar">
-[% RenderBlockStart("SidebarWidget") %]
-		<div class="SidebarWidget">
-			[% Data.WidgetContent %]
-		</div>
-[% RenderBlockEnd("SidebarWidget") %]
-	</div>
-# Fim da Barra Lateral
-
-[% RenderBlockStart("ConfigItemHeader") %]	
+<div id="MainBox" class="TicketView ARIARoleMain 0 " role="main">
+    <h1 class="InvisibleText">Visão Geral do catálogo de serviços</h1>
+[% RenderBlockStart("ConfigItemHeader") %]
     <div class="Headline">
         <div class="Flag" title="[% Translate(Data.CurInciState) | html %]">
             <span class="[% Data.CurInciSignal | html %]"></span>
         </div>
-        <h1 title="[% Translate("QRCode item") | html %]: [% Data.Number | html %] &ndash; [% Data.Name | truncate(40) | html %]">
+        <h1  title="[% Translate("QRCode item") | html %]: [% Data.Number | html %] &ndash; [% Data.Name | truncate(40) | html %]">
             [% Translate("QRCode item") | html %]: [% Data.Number | html %] <span>&mdash;</span> [% Data.Name | truncate(60) | html %]
-        </h1>	
+        </h1>    
     </div>
-[% RenderBlockEnd("ConfigItemHeader") %]
-
-	<ul class="breadcrumb">
+[% RenderBlockEnd("ConfigItemHeader") %]    
+    <ul id="ulBreadCrumb" class="BreadCrumb">
 [% RenderBlockStart("BreadcrumbStart") %]
-		<li>
-			<a href="[% Env("Baselink") %]Action=[%Data.Action | html %]">
-				[% Translate("Start") | html %]
-			</a>
-		</li>
+        <li>
+            <a href="[% Env("Baselink") %]Action=[%Data.Action | html %]" title="Retornar para a visão geral de serviços">
+                <i class="fa fa-home"></i>
+            </a>
+        </li>
 [% RenderBlockEnd("BreadcrumbStart") %]
 [% RenderBlockStart("BreadcrumbServices") %]
-		<li>
-			<span>
-				<i class="fa fa-arrow-right" aria-hidden="true"></i>
-			</span>
-		</li>
-		<li>
-			<a href="[%Data.BreadcrumbLink | html %]">
-				[%Data.BreadcrumbTitle | html %]
-			</a>
-		</li>
-[% RenderBlockEnd("BreadcrumbServices") %]
-	</ul>
-
+        <li>
+            <a href="[%Data.BreadcrumbLink | html %]" title=[%Data.BreadcrumbTitle | html %]>
+                [%Data.BreadcrumbTitle | html %]
+            </a>
+        </li>
+[% RenderBlockEnd("BreadcrumbServices") %]       
+    </ul>
+<script type="text/javascript">
+    const ulBreadCrumb = document.getElementById("ulBreadCrumb");
+    const ulBreadCrumblength = document.querySelectorAll("#ulBreadCrumb li").length;
+    if (!ulBreadCrumblength) {
+        ulBreadCrumb.style.display = "none";
+    }
+</script>
+    <div class="Content">
+        <div class="LayoutFixedSidebar SidebarLast">
+            <div class="SidebarColumn">        
+[% RenderBlockStart("SidebarWidget") %]
+                [% Data.WidgetContent %]
+[% RenderBlockEnd("SidebarWidget") %]
+            </div>
+            <div class="ContentColumn">
+                    <div class="WidgetSimpleAgent">
+                        <div class="Header">
+                            <h2>
+                                [% Translate("What are you looking for?") %]
+                            </h2>
+                        </div>
+                        <div class="Content">
+                            <span class="TableFilterContainer">
 [% RenderBlockStart("FirstLvl") %]
-	<input id="LigeroServiceSearch" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
+                                <input type="text" id="LigeroServiceSearch" autocomplete="off" class="W95pc" name="Filter" value="" title="Filtro" placeholder="Basta começar a digitar para filtrar... ">
 [% RenderBlockEnd("FirstLvl") %]
 [% RenderBlockStart("CategorySearch") %]
-	<input id="LigeroServiceSearchMark" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
-[% RenderBlockEnd("CategorySearch") %]
-	<input type="hidden" id="StartHit" value='0'>
+                                <input type="text" id="LigeroServiceSearchMark" autocomplete="off" class="W95pc" name="Filter" value="" title="Filtro" placeholder="Basta começar a digitar para filtrar... ">
+[% RenderBlockEnd("CategorySearch") %]                
+                            </span>
+                            <div class="Content">
+                                <div id="ServiceCatalogResults"> </div>
+                            </div>
+                        </div>
+                    </div>	
+                <input type="hidden" id="StartHit" value='0'>
 [% RenderBlockStart("ConfigItemID") %]
-	<input type="hidden" id="ConfigItemID" value='[% Data.ConfigItemID %]'>
+                <input type="hidden" id="ConfigItemID" value='[% Data.ConfigItemID %]'>
 [% RenderBlockEnd("ConfigItemID") %]
-
-<div class="Content">
-
-[% RenderBlockStart("CategoryTitle") %]
-	<h1 class="CategoryTitle">[% Data.CategoryTitle %]</h1>
-	<h1 class="CategoryTitle" style="margin-top: -30px;font-weight: normal;font-size: 13pt;line-height: 13pt;color: black;">[% Data.CategoryDescription %]</h1>
-[% RenderBlockEnd("CategoryTitle") %]
-
 [% RenderBlockStart("CategoryFaqDesc") %]
-	<h2 class="CategoryFaqDescTitle">[% Data.FaqTitle %]</h1>
-	<div class="CategoryFaqDescText">[% Data.FaqDescription %]</div>
+                <h2 class="CategoryFaqDescTitle">[% Data.FaqTitle %]</h2>
+                <div class="CategoryFaqDescText">[% Data.FaqDescription %]</div>
 [% RenderBlockEnd("CategoryFaqDesc") %]
-
-	<div id="ServiceCatalog">
-	    <div id="ServiceCatalogItens">
+                <div id="ServiceCatalog">
+                    <div id="ServiceCatalogItens"> 
+                        <div class="WidgetSimpleAgent">                
+[% RenderBlockStart("CategoryTitle") %]
+                            <div class="Header">
+                                <h2>[% Data.CategoryTitle %]</h2>
+                            </div>
+[% RenderBlockEnd("CategoryTitle") %]
+                            <div class="Content">
+                                <div id="divwhatdoyouneed" class="WidgetSimpleAgent" style="">			                               
 [% RenderBlockStart("NeedMessage") %]
-			<h2 class="NeedMessage">[% Translate("What do you need?") | html %]</h2>
-[% RenderBlockEnd("NeedMessage") %]
+                                    <div class="Header">
+                                        <h2>[% Translate("What do you need?") | html %]</h2>
+                                    </div>
+[% RenderBlockEnd("NeedMessage") %]					
+                                    <div class="Content">
+                                        <table id="tablewhatdoyouneed" class="Overview" style=" ">
+                                            <tbody>
 [% RenderBlockStart("LayoutActivity") %]
-			<div class="Need">
-		  		<a target="_self"  href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
-[%Data.LayoutServiceName %]
-		  		</a>
-				<span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
-			</div> 
+                                                <tr class="MasterAction">
+                                                    <td class="Title">
+                                                        <a href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]" class="MasterActionLink">
+                                                            <div>
+                                                                <h2>[%Data.LayoutServiceName %]</h2>
+                                                                &nbsp;-&nbsp; [% Data.LayoutServiceDescription %]
+                                                            </div>
+                                                        </a>
+                                                    </td>
+                                                </tr> 
 [% RenderBlockEnd("LayoutActivity") %]
 [% RenderBlockStart("LayoutActivityUrl") %]
-			<div class="Need">
-				<a target="[% Data.UrlTarget | html %]"  href="[% Data.Url | html %]">
-[%Data.LayoutServiceName %]
-				</a>
-				<span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
-			</div>
+                                                <tr class="MasterAction">
+                                                    <td class="Title">
+                                                        <a target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]" class="MasterActionLink">
+                                                            <div>
+                                                                <h2>[%Data.LayoutServiceName %]</h2>
+                                                                &nbsp;-&nbsp; [% Data.LayoutServiceDescription %]
+                                                            </div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
 [% RenderBlockEnd("LayoutActivityUrl") %]
 [% RenderBlockStart("LayoutServiceArticle") %]
-			<div class="Need">
-				<a target="_self"  href="[% Data.LayoutServiceLink| html %]">
-		  			[%Data.LayoutServiceName %]
-		  		</a>
-				<span class="BackgroundType"  style="background-color: [% Data.backColor %] ">[% Translate(Data.LayoutTypeDescription) | html %] </span> <span>[% Data.LayoutServiceDescription %]</span>
-			</div> 
-[% RenderBlockEnd("LayoutServiceArticle") %]
-			<div id="NewLine"></div>
+                                                <tr class="MasterAction">
+                                                    <td class="Title">
+                                                        <a target="[% Data.UrlTarget | html %]" href="[% Data.LayoutServiceLink| html %]" class="MasterActionLink">
+                                                            <div>
+                                                                <h2>[%Data.LayoutServiceName %]</h2>
+                                                                &nbsp;-&nbsp; [% Data.LayoutServiceDescription %]
+                                                            </div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+[% RenderBlockEnd("LayoutServiceArticle") %]                
+                                            </tbody>
+                                        </table>
+<script>
+    const tablewhatdoyouneed = document.getElementById("tablewhatdoyouneed");
+    const divwhatdoyouneed = document.getElementById("divwhatdoyouneed");
+    const rows = tablewhatdoyouneed.rows;
+    if (!rows.length) {
+        divwhatdoyouneed.style.display = "none";
+    }
+</script>                        
+                                    </div>
+                                </div>
+                            </div>                    
 [% RenderBlockStart("MoreServices") %]
-			<h2 class="MoreServices">[% Translate("More Services:") | html %]</h2>
-[% RenderBlockEnd("<MoreServices>") %]
+                            <div class="Header">
+                                <h2>[% Translate("More Services:") | html %]</h2>
+                            </div>
+[% RenderBlockEnd("MoreServices") %]
+                            <div class="Content">
+                                <ul class="ItemListGrid WithIcons">    
 [% RenderBlockStart("LayoutCategory") %]
-[% SWITCH Data.ShowAsCategory %]
-[% CASE [ '0','1' ] %]
-			<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
-				<div class="Category" style="background-color:[% Data.Color %]">
-					<div class="img">
-[% SWITCH Data.LayoutServiceLink %]
-[% CASE '#' %]
-	                	<div class="icon-category">
-    	                	<span class="[%Data.Icons | html %] fa-6x" />
-        	        	</div>
-[% CASE %]
-            	    	<img src="[%Data.LayoutServiceLink | html %]" >
-[% END %]
-		    		</div>
-					<div class="desc">
-						<div>[%Data.LayoutServiceName %]</div>
-					</div>
-				</div>
-			</a>
-[% CASE '2' %]
-			<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
-				<div class="Category primary" style="background-color:[% Data.Color %]">
-					<div class="desc" style="top: 0px;" >
-						<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName %]</div>
-					</div>			
-[% SWITCH Data.LayoutServiceLink %]
-[% CASE '#' %]
-					<div class="icon-category">
-						<span style="top: 60px;" class="[%Data.Icons | html %] fa-6x" />
-	          		</div>
-[% CASE %]
-					<div class="img">
-						<img style="top: 60px;" src="[%Data.LayoutServiceLink | html %]" >
-	          		</div>
-[% END %]	
-					<div class="desc" style="bottom: -20px;">
-						<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription %]</div>
-					</div>
-				</div>
-			</a>
-[% CASE '3' %]
-			<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
-				<div class="Category secondary" style="background-color: transparent; border: 2px solid #2e91dd;">
-					<div>
-						<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";>
-	
-[% SWITCH Data.LayoutServiceLink %]
-[% CASE '#' %]
-							<div class="icon-category" style="top: 40px; color: #000">
-	                		<span class="[%Data.Icons | html %] fa-3x" />
-	            		</div>
-[% CASE %]
-						<img src="[%Data.LayoutServiceLink | html %]" ></div>
-[% END %]        
-						<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
-					</div>
-					<div>
-						<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
-					</div>
-				</div>
-			</a>
-[% CASE '4' %]
-			<a target="_self" class="CategoryLink"  href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">
-				<div class="Category tertiary" style="background-color: transparent; border: 2px solid #2e91dd;">
-					<div>
-						<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";></div>
-						<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
-					</div>
-					<div>
-						<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
-					</div>
-				</div>
-			</a>
-[% END %]
+            [% SWITCH Data.ShowAsCategory %]
+                [% CASE [ '0','1' ] %]    
+                                    <li class=" ">            
+                                        <a class="AsBlock" href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">                        
+                                            
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>       
+                    [% END %]
+                                            
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                [% CASE '2' %]
+                                    <li class=" ">            
+                                        <a class="AsBlock" href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">                        
+                                            
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>        
+                    [% END %]
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                [% CASE '3' %]
+                                    <li class=" "> 					            
+                                        <a class="AsBlock" href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">                        
+                                            
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>     
+                    [% END %]
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                [% CASE '4' %]
+                                    <li class=" "> 					            
+                                        <a class="AsBlock" href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">                        
+                                            
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>       
+                    [% END %]
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                [% END %]
 [% RenderBlockEnd("LayoutCategory") %]
 [% RenderBlockStart("LayoutCategoryUrl") %]
-[% SWITCH Data.ShowAsCategory %]
-[% CASE [ '0','1' ] %]
-			<a target="[% Data.UrlTarget | html %]" class="CategoryLink"  href="[% Data.Url | html %]">
-				<div class="Category" style="background-color:[% Data.Color %]">
-					<div class="img">
-[% SWITCH Data.LayoutServiceLink %]
-[% CASE '#' %]
-						<div class="icon-category">
-							<span class="[%Data.Icons | html %] fa-6x" />
-          				</div>
-[% CASE %]
-					    <img src="[%Data.LayoutServiceLink | html %]" >
-[% END %]
-				    </div>
-					<div class="desc">
-						<div>[%Data.LayoutServiceName | html %]</div>
-					</div>
-				</div>
-			</a>
-[% CASE '2' %]
-			<a target="[% Data.UrlTarget | html %]" class="CategoryLink"  href="[% Data.Url | html %]">
-				<div class="Category primary" style="background-color:[% Data.Color %]">
-					<div class="desc" style="top: 0px;" >
-						<div class="title" style="font-size: 14pt;">[%Data.LayoutServiceName %]</div>
-					</div>
-					<div class="img">      
-[% SWITCH Data.LayoutServiceLink %]
-[% CASE '#' %]
-			            <div class="icon-category">
-	        		        <span class="[%Data.Icons | html %] fa-6x" />
-	            		</div>
-[% CASE %]
-			            <img style="top: 60px;" src="[%Data.LayoutServiceLink | html %]" >
-[% END %]
-					</div>
-					<div class="desc" style="bottom: -20px;">
-						<div class="description" style="font-size: 12pt;">[%Data.LayoutServiceDescription %]</div>
-					</div>
-				</div>
-			</a>
-[% CASE '3' %]
-			<a target="[% Data.UrlTarget | html %]" class="CategoryLink"  href="[% Data.Url | html %]">
-				<div class="Category secondary" style="background-color: transparent; border: 2px solid #2e91dd;">
-					<div>
-						<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";>
-
-[% SWITCH Data.LayoutServiceLink %]
-[% CASE '#' %]
-							<div class="icon-category">
-								<span class="[%Data.Icons | html %] fa-6x" />
-							</div>
-[% CASE %]
-							<img src="[%Data.LayoutServiceLink | html %]" />
-[% END %]        
-						</div>
-					<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
-					</div>
-					<div>
-						<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
-					</div>
-				</div>
-			</a>
-[% CASE '4' %]
-			<a target="_self" class="CategoryLink"  href="[% Data.Url | html %]">
-				<div class="Category tertiary" style="background-color: transparent; border: 2px solid #2e91dd;">
-					<div>
-						<div style="position: absolute;top: 10px;left: 10px;height: 32px;width: 32px;";></div>
-						<div class="title" style="position: absolute;top: 15px;left: 45px;font-size: 13pt; color: #2e91dd;font-weight: bold;">[%Data.LayoutServiceName %]</div>
-					</div>
-					<div>
-						<div class="description" style="position: absolute;top: 60px;left: 45px;font-size: 11pt; color: #2e91dd;margin-right: 10px;">[%Data.LayoutServiceDescription %]</div>
-					</div>
-				</div>
-			</a>
-[% END %]
+                    [% SWITCH Data.ShowAsCategory %]
+                    [% CASE [ '0','1' ] %]
+                                    <li class=" ">            
+                                        <a class="AsBlock" target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]">                                        
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>       
+                    [% END %]
+                                            
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                    [% CASE '2' %]
+                                    <li class=" ">            
+                                        <a class="AsBlock" target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]">                                        
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>       
+                    [% END %]
+                                            
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                    [% CASE '3' %]
+                                    <li class=" ">            
+                                        <a class="AsBlock" target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]">                                        
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>       
+                    [% END %]
+                                            
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                    [% CASE '4' %]
+                                    <li class=" ">            
+                                        <a class="AsBlock" target="_self" href="[% Data.Url | html %]">                                        
+                    [% SWITCH Data.LayoutServiceLink %]
+                        [% CASE '#' %]
+                                            <span class="Icons">
+                                                <i class="fa [%Data.Icons | html %]"></i>
+                                            </span>
+                        [% CASE %]
+                                            <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                            background-size: 20px 20px; background-color:[% Data.Color %];"></span>       
+                    [% END %]
+                                            
+                                            <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            <span class="Title">
+                                                [%Data.LayoutServiceName %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                            </span>                             
+                                            <span class="Description">
+                                                [%Data.LayoutServiceDescription %]
+                                                <span class="InvisibleText">[%Data.LayoutServiceDescription %]</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                    [% END %]
 [% RenderBlockEnd("LayoutCategoryUrl") %]
-			<div id="NotFoundResult" style="display:none"> [% Translate("No results found") %] </div>
-		</div> <!--ServiceCatalogItens-->
-		<div id="ServiceCatalogResults">	
-		</div>	
-    </div> <!--ServiceCatalog-->
-    <div class="ARIARoleContentinfo ServiceFooter">
-[% IF Data.ServiceFooter %]
-		<div class="Clear"></div> 
-		    <h1 class="CategoryTitle" style="margin-top: -30px;font-weight: normal;font-size: 13pt;line-height: 13pt;color: black;">[% Translate("Quick Access") | html %]</h1>
-[% END %]
-[% RenderBlockStart("ServiceFooter") %]
-[% IF Data.ServiceType == '1' %]
-[% IF Data.Layout == 'LayoutActivity' %]
-			<a href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]" class="CategoryLink">
-[% ELSIF Data.Layout == 'LayoutActivityUrl' %]
-			<a target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]" class="CategoryLink">
-[% ELSIF Data.Layout == 'LayoutCategory' %]
-			<a href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]" class="CategoryLink">
-[% ELSIF Data.Layout == 'LayoutCategoryUrl' %]
-			<a target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]" class="CategoryLink">
-[% END %]
-			<div class="Category" style="background-color:[% Data.Color %]">
-				<div class="img">
-[% SWITCH Data.LayoutServiceLink %]
-[% CASE '#' %]
-					<div class="icon-category">
-						<span class="[%Data.Icons | html %] fa-6x" />
-					</div>
-[% CASE %]
-					<img src="[%Data.LayoutServiceLink | html %]" >
-[% END %]
-				</div>
-				<div class="desc">
-					<div>[%Data.LayoutServiceName %]</div>
-				</div>
-			</div>
-			</a>
-[% END %]
-[% END %]
-		</div>
-	</div>    
-</div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="divServiceFooter" class="WidgetSimpleAgent">
+        [% IF Data.ServiceFooter %]
+                    <div class="Header">
+                        <h2>[% Translate("Quick Access") | html %]:</h2>
+                    </div>
+        [% END %]
+                    <div class="Content">
+                        <ul id="ulServiceFooter" class="ItemListGrid WithIcons">  
+[% RenderBlockStart("ServiceFooter") %]  
+        [% IF Data.ServiceType == '1' %]
+                            <li class=" "> 					                            
+            [% IF Data.Layout == 'LayoutActivity' %]
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">                        
+            [% ELSIF Data.Layout == 'LayoutActivityUrl' %]
+                                <a class="AsBlock" target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]">                        
+            [% ELSIF Data.Layout == 'LayoutCategory' %]
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[%Data.Action | html %]&Subaction=NextLevel&KeyPrimary=[%Data.KeyPrimary | html %]">            
+            [% ELSIF Data.Layout == 'LayoutCategoryUrl' %]
+                                <a class="AsBlock" target="[% Data.UrlTarget | html %]" href="[% Data.Url | html %]">                                    
+            [% END %]                                
+                                        
+            [% SWITCH Data.LayoutServiceLink %]
+                [% CASE '#' %]
+                                    <span class="Icons">
+                                        <i class="fa [%Data.Icons | html %]"></i>
+                                    </span>
+                [% CASE %]
+                                    <span class="Icons" style="background:url([%Data.LayoutServiceLink | html %]) no-repeat 50% 50%;
+                                    background-size: 20px 20px; background-color:[% Data.Color %];"></span>       
+            [% END %]
+                                    <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                    <span class="Title">
+                                        [%Data.LayoutServiceName %]
+                                        <span class="InvisibleText">[%Data.LayoutServiceName %]</span>
+                                    </span>                             
+                                    <span class="Description">
+                                        [%Data.LayoutServiceDescription %]
+                                        <span class="InvisibleText">[%Data.LayoutServiceDescription %] - [%Data.Icons | html %]</span>
+                                    </span>
+                                </a>
+                            </li>
 
+        [% END %]                 
+[% RenderBlockEnd("ServiceFooter") %]             
+                        </ul> 
+<script type="text/javascript">
+    const ulServiceFooter = document.getElementById("ulServiceFooter");
+    const ulServiceFooterlength = document.querySelectorAll("#ulServiceFooter li").length;
+    if (!ulServiceFooterlength) {
+        divServiceFooter.style.display = "none";
+    }
+</script>                
+                    </div>               
+                </div>                  
+                <div id="NotFoundResult" style="display:none"> [% Translate("No results found") %] </div>
+            </div>
+        </div>    
+    </div>    
+</div>
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">
 
@@ -309,9 +421,3 @@ $( window ).on('load',function() {
 
 </script>
 [% END %]
-
-<style>
-[% RenderBlockStart("LayoutStyleCategoryShadow") %]
-	[%Data.LayoutClassStyleCategory | html %]        
-[% RenderBlockEnd("LayoutStyleCategoryShadow") %]   	
- </style>

@@ -1,34 +1,47 @@
-
-[% RenderBlockStart("NumberOfRows") %]
-	<div class="NumberOfRows" > 
-		<span> [% Data.NumberOfRows | html %] </span> 
-		[% Translate("Results Found") | html %] 
-	</div>
-[% RenderBlockEnd("NumberOfRows") %]
-
-[% RenderBlockStart("Result") %]
-<div class="Need">
-  <a target="_self"  href="[% Data.URL %]">
-  [%Data.Title  %]
-  </a>
-  <br/><span class="BackgroundType" style="background-color: [% Data.backColor %] ">[% Translate(Data.Subtitle) | html %] </span> <span>[% Data.Description %] </span>
-</div> 
-#</div>
-[% RenderBlockEnd("Result") %]
-
-[% RenderBlockStart("ResultUrl") %]
-<div class="Need">
-  <a target="[% Data.UrlTarget | html %]"  href="[% Data.Url | html %]">
-  [%Data.Title  %]
-  </a>
-  <br/><span class="BackgroundType" style="background-color: [% Data.backColor %] ">[% Translate(Data.Subtitle) | html %] </span> <span>[% Data.Description %] </span>
-</div> 
-#</div>
-[% RenderBlockEnd("ResultUrl") %]
-
-[% RenderBlockStart("FilterFooter") %]
-     <div class="Tabs Pagination">
-            [% Data.SiteNavBar %]
-        </div>
+    <div class="ActionRow">
         <div class="Clear"></div>
-[% RenderBlockEnd("FilterFooter") %] 
+[% RenderBlockStart("NumberOfRows") %]    
+        <ul class="Filter Tabs">
+            <li>                
+              <span> [% Data.NumberOfRows | html %] </span> 
+		          [% Translate("Results Found") | html %]            
+            </li>        
+        </ul>
+[% RenderBlockEnd("NumberOfRows") %]        
+[% RenderBlockStart("FilterFooter") %]
+        <div class="Tabs Pagination">
+          [% Data.SiteNavBar %]            
+        </div>
+[% RenderBlockEnd("FilterFooter") %]         
+        <div class="Clear"></div>
+    </div>
+    <div class="Content">
+        <table class="Overview">
+            <tbody>
+[% RenderBlockStart("Result") %]
+                <tr class="MasterAction">
+                    <td class="Title">
+                        <a target="_self" href="[% Data.URL %]" class="MasterActionLink">
+                          <div>
+                              <h2>[%Data.Title  %]</h2>
+                                &nbsp;-&nbsp; [% Translate(Data.Subtitle) | html %] [% Data.Description %]
+                          </div>
+                        </a>
+                    </td>
+                </tr>
+[% RenderBlockEnd("Result") %]
+[% RenderBlockStart("ResultUrl") %]
+                <tr class="MasterAction">
+                    <td class="Title">
+                        <a ttarget="[% Data.UrlTarget | html %]"  href="[% Data.Url | html %]" class="MasterActionLink">
+                          <div>
+                              <h2>[%Data.Title  %]</h2>
+                                &nbsp;-&nbsp; [% Translate(Data.Subtitle) | html %] [% Data.Description %]
+                          </div>
+                        </a>
+                    </td>
+                </tr>
+[% RenderBlockEnd("ResultUrl") %]
+            </tbody>
+        </table>
+    </div>

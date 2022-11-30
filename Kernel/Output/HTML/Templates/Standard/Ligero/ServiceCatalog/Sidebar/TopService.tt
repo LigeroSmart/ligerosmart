@@ -1,29 +1,15 @@
-<style>
-	.TopHitsService{
-		font-size:11pt !important;
-	}
-	.TopHitsService li span {
-		font-size:10pt !important;
-	}
-	ul.TopHitsService a:visited {
-	    color: #2873ad;
-	}
-	ul.TopHitsService a:hover {
-	    font-weight: bolder;
-	}
-	ul.TopHitsService a:link {
-	    color: #2873ad;
-	    font-size: 14pt;
-	}
-</style>
-<div class="WidgetTopService" style="display:none;padding-top:30px;border-top:1px solid #ccc">
-
-<div id="TopServicesWidget" style="display:none;" class="WidgetTitle">[% Translate("Top Services") %]</div>
-<ul class="TopHitsService">
-[% RenderBlockStart("Alert") %]
-[% RenderBlockEnd("Alert") %]
-</ul>
-
+<div id="idWidgetTopService" class="WidgetSimpleAgent" style="display:none;">
+	<div id="TopServicesWidget" class="Header" style="display:none;">
+		<h2>[% Translate("Top Services") %]</h2>
+	</div>
+	<div class="Content">
+		<table class="Overview" summary=[% Translate("Open Tickets") %]>
+			<tbody id="tbodyTopServicesWidget">
+			</tbody>
+		</table>
+	</div>	
+	[% RenderBlockStart("Alert") %]
+	[% RenderBlockEnd("Alert") %]
 </div>
 [% RenderBlockStart("JSAJAX") %] 
 <input type="hidden" value="[% Data.DisplayTopNumber %]" id="DisplayTopNumber">
@@ -45,7 +31,7 @@
 		success: function(Response){
 			var Agg = Response.Servico;
 			if(Agg.length > 0)
-				$("#TopServicesWidget ,.WidgetTopService").show();
+				$("#TopServicesWidget, #idWidgetTopService").show();
 
 			var CategoryName = $('.CategoryTitle').not('.ServiceFooter .CategoryTitle').first().text();
 			var re = new RegExp(".*"+RegExp.escape(CategoryName)+"::");
@@ -58,7 +44,15 @@
 				var ServiceName = Agg[i].name;
 				if(CategoryName)
 					ServiceName = ServiceName.replace(re," ");
-		        $(".TopHitsService").append("<li> <a href='[% Env("Baselink") %]Action=CustomerTicketMessage;ServiceID="+Agg[i].id +"'>"+ ServiceName + "</a> </br><span class='BackgroundType'  style='background-color: "+Agg[i].backColor +"'> "+ Agg[i].LayoutTypeDescription +"</span> </li>");
+		        $("#tbodyTopServicesWidget").append(" \
+									<tr class='MasterAction'>\
+										<td>\
+											<a href='[% Env('Baselink') %]Action=CustomerTicketMessage;ServiceID="+Agg[i].id +"' class='MasterActionLink'>\
+												<span title='"+ServiceName+"'>"+ ServiceName + "</span>\
+											</a>\
+										</td>\
+									</tr>\
+								");
 			} 
 		}
 	});

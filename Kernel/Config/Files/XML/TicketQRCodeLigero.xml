@@ -28,7 +28,10 @@
             <Hash>
                 <Item Key="CSS">
                     <Array>
-                        <Item>Customer.ServiceCatalog.css</Item>
+                        <Item>Core.Agent.Admin.css</Item>
+                        <Item>ore.PageLayout.css</Item>
+                        <Item>Core.Widget.css</Item>
+                        <Item>Core.Form.ServiceCatalog.css</Item>
                     </Array>
                 </Item>
                 <Item Key="JavaScript">
