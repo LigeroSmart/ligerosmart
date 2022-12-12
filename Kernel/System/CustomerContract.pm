@@ -1309,6 +1309,204 @@ sub FranchiseRuleHourTypeAdd {
 
 }
 
+=item FranchiseRuleRecurrenceUpd()
+
+###
+
+=cut
+
+sub FranchiseRuleRecurrenceUpd {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ContractFranchiseRuleID Recurrence ContractID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+	
+	# update FranchiseRuleRecurrence
+	return if !$Self->{DBObject}->Do(
+		SQL =>
+			'UPDATE contract_franchise_rule SET recurrence = ?'
+			. ' WHERE id = ?'
+			. ' AND contract_id = ?',
+		Bind => [ \$Param{Recurrence}, \$Param{ContractFranchiseRuleID}, \$Param{ContractID}, ]
+	);
+    
+    return 1;
+
+}
+
+=item FranchiseRuleHoursUpd()
+
+###
+
+=cut
+
+sub FranchiseRuleHoursUpd {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ContractFranchiseRuleID Hours ContractID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+	
+	# update FranchiseRuleRecurrence
+	return if !$Self->{DBObject}->Do(
+		SQL =>
+			'UPDATE contract_franchise_rule SET hours = ?'
+			. ' WHERE id = ?'
+			. ' AND contract_id = ?',
+		Bind => [ \$Param{Hours}, \$Param{ContractFranchiseRuleID}, \$Param{ContractID}, ]
+	);
+    
+    return 1;
+
+}
+
+=item FranchiseRuleTicketTypeUpd()
+
+###
+
+=cut
+
+sub FranchiseRuleTicketTypeUpd {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ContractFranchiseRuleID TicketTypeID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+	
+	# update FranchiseRuleTicketType
+	return if !$Self->{DBObject}->Do(
+		SQL =>
+			'UPDATE franchise_rule_ticket_type SET ticket_type_id = ?'
+			. ' WHERE contract_franchise_rule_id = ?',
+		Bind => [ \$Param{TicketTypeID}, \$Param{ContractFranchiseRuleID}, ]
+	);
+    
+    return 1;
+
+}
+
+=item FranchiseRuleTreatmentTypeUpd()
+
+###
+
+=cut
+
+sub FranchiseRuleTreatmentTypeUpd {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ContractFranchiseRuleID TreatmentType)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+	
+	# update FranchiseRuleTreatmentType
+	return if !$Self->{DBObject}->Do(
+		SQL =>
+			'UPDATE franchise_rule_treatment_type SET treatment_type = ?'
+			. ' WHERE contract_franchise_rule_id = ?',
+		Bind => [ \$Param{TreatmentType}, \$Param{ContractFranchiseRuleID}, ]
+	);
+    
+    return 1;
+
+}
+
+=item FranchiseRuleSlaUpd()
+
+###
+
+=cut
+
+sub FranchiseRuleSlaUpd {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ContractFranchiseRuleID SLAID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+	
+	# update FranchiseRuleSLA
+	return if !$Self->{DBObject}->Do(
+		SQL =>
+			'UPDATE franchise_rule_sla SET sla_id = ?'
+			. ' WHERE contract_franchise_rule_id = ?',
+		Bind => [ \$Param{SLAID}, \$Param{ContractFranchiseRuleID}, ]
+	);
+    
+    return 1;
+
+}
+
+=item FranchiseRuleServiceUpd()
+
+###
+
+=cut
+
+sub FranchiseRuleServiceUpd {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ContractFranchiseRuleID ServiceID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+	
+	# update FranchiseRuleService
+	return if !$Self->{DBObject}->Do(
+		SQL =>
+			'UPDATE franchise_rule_service SET service_id = ?'
+			. ' WHERE contract_franchise_rule_id = ?',
+		Bind => [ \$Param{ServiceID}, \$Param{ContractFranchiseRuleID}, ]
+	);
+    
+    return 1;
+
+}
+
+=item FranchiseRuleHourTypeUpd()
+
+###
+
+=cut
+
+sub FranchiseRuleHourTypeUpd {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ContractFranchiseRuleID HourType)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+	
+	# update FranchiseRuleHourType
+	return if !$Self->{DBObject}->Do(
+		SQL =>
+			'UPDATE franchise_rule_hour_type SET hour_type = ?'
+			. ' WHERE contract_franchise_rule_id = ?',
+		Bind => [ \$Param{HourType}, \$Param{ContractFranchiseRuleID}, ]
+	);
+    
+    return 1;
+
+}
+
 =item CustomerContractUpdate()
 
 to update customer users
