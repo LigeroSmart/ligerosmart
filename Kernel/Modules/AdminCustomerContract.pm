@@ -522,6 +522,100 @@ sub Run {
         return $Output;
     }
 
+    elsif ( $Self->{Subaction} eq 'UpdFranchiseRuleAction' ) {
+
+        # challenge token check for write action
+        $LayoutObject->ChallengeTokenCheck();
+
+        my $ContractID = $ParamObject->GetParam( Param => 'ContractID' ) || '';
+        my @TypeIDs = $ParamObject->GetArray( Param => 'TypeIDs' );
+        my @TreatmentTypes = $ParamObject->GetArray( Param => 'TreatmentTypes' );
+        my @SLAIDs = $ParamObject->GetArray( Param => 'SLAIDs' );
+        my @ServiceIDs = $ParamObject->GetArray( Param => 'ServiceIDs' );
+        my @HourIDs = $ParamObject->GetArray( Param => 'HourIDs' );
+        my $Recurrence = $ParamObject->GetParam( Param => 'Recurrence' )  || '';
+        my $Hours = $ParamObject->GetParam( Param => 'Hours' )  || '';
+        my $RuleID = $ParamObject->GetParam( Param => 'RuleID' ) || '';   
+
+        if($RuleID){
+            $CustomerContractObject->FranchiseRuleRecurrenceUpd(
+                ContractFranchiseRuleID => $RuleID,
+                ContractID => $ContractID,
+                Recurrence => $Recurrence,
+            );
+
+            $CustomerContractObject->FranchiseRuleHoursUpd(
+                ContractFranchiseRuleID => $RuleID,
+                ContractID => $ContractID,
+                Hours => $Hours,
+            );            
+
+            for my $TypeID (@TypeIDs){
+                $CustomerContractObject->FranchiseRuleTicketTypeUpd(
+                    ContractFranchiseRuleID => $RuleID,
+                    TicketTypeID => $TypeID,
+                );
+            }
+
+            for my $TreatmentType (@TreatmentTypes){
+                $CustomerContractObject->FranchiseRuleTreatmentTypeUpd(
+                    ContractFranchiseRuleID => $RuleID,
+                    TreatmentType => $TreatmentType,
+                );
+            }
+
+            for my $SLAID (@SLAIDs){
+                $CustomerContractObject->FranchiseRuleSlaUpd(
+                    ContractFranchiseRuleID => $RuleID,
+                    SLAID => $SLAID,
+                );
+            }
+
+            for my $ServiceID (@ServiceIDs){
+                $CustomerContractObject->FranchiseRuleServiceUpd(
+                    ContractFranchiseRuleID => $RuleID,
+                    ServiceID => $ServiceID,
+                );
+            }
+
+            for my $Hour (@HourIDs){
+                $CustomerContractObject->FranchiseRuleHourTypeUpd(
+                    ContractFranchiseRuleID => $RuleID,
+                    HourType => $Hour,
+                );
+            }
+        }
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_Edit(
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }    
+
     elsif ( $Self->{Subaction} eq 'RemovePriceRole' ) {
 
         my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
@@ -1583,6 +1677,16 @@ sub _Edit {
             Translation => 0,
             Class       => 'Modernize',
         );
+
+        $Param{UpdTypesStrgFranchise} = $LayoutObject->BuildSelection(
+            Data        => \%Type,
+            Name        => 'TypeIDs',
+            Sort        => 'AlphanumericValue',
+            Size        => 3,
+            Multiple    => 1,
+            Translation => 0,
+            Class       => 'Modernize',
+        );        
 
         my %SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
             UserID => $Self->{UserID},

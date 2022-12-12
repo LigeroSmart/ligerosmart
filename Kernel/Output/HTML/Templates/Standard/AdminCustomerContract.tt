@@ -598,8 +598,8 @@
                 <div class="Right Field SpacingBottom">
                     <button class="Primary CallForAction" type="button" value="New" id="btnNewPriceRule"><span>[% Translate("New") | html %]</span></button>                                
                 </div>
-                <form id="formAddPriceRule" action="[% Env("CGIHandle") %]" enctype="multipart/form-data" method="post" name="compose" class="Validate PreventMultipleSubmits SpacingBottom">
-                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                <form id="formAddPriceRule" action="[% Env('CGIHandle') %]" enctype="multipart/form-data" method="post" name="compose" class="Validate PreventMultipleSubmits SpacingBottom">
+                    <input type="hidden" name="Action" value="[% Env('Action') %]"/>
                     <input type="hidden" name="Subaction" value="AddPriceRuleAction"/>
                     <input type="hidden" name="ContractID" value="[% Data.ID | html %]"/>
                     <input type="hidden" name="Source" value="[% Data.Source | html %]"/>
@@ -637,7 +637,7 @@
                         </div>
                         <div class="Clear"></div>
                         <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" value="[% Translate('Submit') | html %]"><span>[% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="#" id="btnCancelAddPriceRule">[% Translate("Cancel") | html %]</a>
                         </div>
@@ -677,15 +677,15 @@
                             <td>[% Data.Value | html %]</td>
                             <td>
                               [% IF Data.OrderNumber > 1 %]
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=UpPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
+                                <a href="[% Env('Baselink') %]Action=[% Env('Action') %];Subaction=UpPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-up"></i></a>
                               [% END %]
                             </td>
                             <td>
                               [% IF !Data.IsTheLast %]
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
+                                <a href="[% Env('Baselink') %]Action=[% Env('Action') %];Subaction=DownPriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
                               [% END %]
                             </td>
-                            <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemovePriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
+                            <td><a href="[% Env('Baselink') %]Action=[% Env('Action') %];Subaction=RemovePriceRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
                         </tr>
                     [% RenderBlockEnd("PriceRuleRow") %]
                     </tbody>
@@ -700,8 +700,8 @@
                 <div class="Right Field SpacingBottom">
                     <button class="Primary CallForAction" type="button" value="New" id="btnNewFranchiseRule"><span>[% Translate("New") | html %]</span></button>                                
                 </div>
-                <form id="formAddFranchiseRule" action="[% Env("CGIHandle") %]" enctype="multipart/form-data" method="post" name="compose" class="Validate PreventMultipleSubmits SpacingBottom">
-                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                <form id="formAddFranchiseRule" action="[% Env('CGIHandle') %]" enctype="multipart/form-data" method="post" name="compose" class="Validate PreventMultipleSubmits SpacingBottom">
+                    <input type="hidden" name="Action" value="[% Env('Action') %]"/>
                     <input type="hidden" name="Subaction" value="AddFranchiseRuleAction"/>
                     <input type="hidden" name="ContractID" value="[% Data.ID | html %]"/>
                     <input type="hidden" name="Source" value="[% Data.Source | html %]"/>
@@ -744,12 +744,12 @@
                         </div>
                         <div class="Clear"></div>
                         <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]" data-query-string="Action=[% Env("Action") %];Subaction=AddFranchiseRuleAction;ContractID=[% Data.ID | html %];Source=[% Data.Source | html %];Nav=[% Data.Nav | html %];Search=[% Data.Search | html %]"><span>[% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="#" id="btnCancelAddFranchiseRule">[% Translate("Cancel") | html %]</a>
                         </div>
                         <div class="Clear"></div>
-                    </fieldset>
+                    </fieldset>                   
                 </form>
                 <table class="DataTable" id="FranchiseRulesTable">
                     <thead>
@@ -761,9 +761,10 @@
                             <th>[% Translate("Hours") | html %]</th>
                             <th>[% Translate("Recurrence") | html %]</th>
                             <th>[% Translate("Value Hours") | html %]</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>[% Translate("Up") | html %]</th>
+                            <th>[% Translate("Down") | html %]</th>
+                            <th>[% Translate("Edit") | html %]</th>
+                            <th>[% Translate("Remove") | html %]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -776,7 +777,7 @@
                         [% RenderBlockEnd("NoDataFoundMsgFranchiseRule") %]
 
                         [% RenderBlockStart("FranchiseRuleRow") %]
-                            <tr>
+                            <tr id="[% Data.RuleID | uri %]">
                                 <td>[% Data.Types | html %]</td>
                                 <td>[% Data.TreatmentTypes | html %]</td>
                                 <td>[% Data.Slas | html %]</td>
@@ -794,40 +795,41 @@
                                     <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-arrow-down"></i></a>
                                   [% END %]
                                 </td>
+                                <td>
+                    <div class="Clear"></div>
+
+                    [% INCLUDE "CustomerCompany/TicketCustomerIDSelection.tt" Required = 0 Readonly = Config("Ticket::Frontend::AgentTicketEmail::CustomerIDReadOnly") %]
+
+                    <div class="Clear"></div>
+                    [% INCLUDE "FormElements/DraftButtons.tt" %]                                
+                                    <a class="Edit"  href="#">
+                                        <i class="fas fa-edit">
+                                        </i>
+                                    </a>
+                                </td>           
                                 <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
                             </tr>
                         [% RenderBlockEnd("FranchiseRuleRow") %]
                     </tbody>
                 </table>
             </div>
+            <div class="Content">
+                <fieldset class="TableLike SpacingTop">
+                    <div class="Field">
+                        <p class="FieldExplanation">
+                            [% Translate("Define rules for creating automatic appointments in this calendar based on ticket data.") | html %]
+                        </p>
+                        <a id="AddRuleButton" class="CallForAction" title="[% Translate("Add entry") | html %]" href="#">
+                            <span>
+                                <i class="fa fa-plus-square"></i>
+                                [% Translate("Add Rule") | html %]
+                            </span>
+                        </a>
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>      
+            </div>       
         </div>
-        [% WRAPPER JSOnDocumentComplete %]
-        <script type="text/javascript">//<![CDATA[
-            $("#btnNewPriceRule").on("click",function(){
-                $("#formAddPriceRule").show();
-                $("#btnNewPriceRule").hide();
-            });
-
-            $("#btnCancelAddPriceRule").on("click",function(){
-                $("#formAddPriceRule").hide();
-                $("#btnNewPriceRule").show();
-            });
-
-            $("#btnNewFranchiseRule").on("click",function(){
-                $("#formAddFranchiseRule").show();
-                $("#btnNewFranchiseRule").hide();
-            });
-
-            $("#btnCancelAddFranchiseRule").on("click",function(){
-                $("#formAddFranchiseRule").hide();
-                $("#btnNewFranchiseRule").show();
-            });
-
-            $("#formAddPriceRule").hide();
-
-            $("#formAddFranchiseRule").hide();
-        //]]></script>
-        [% END %]
 [% RenderBlockEnd("RulesArea") %]
     </div>    
     <div class="Clear"></div>
@@ -835,11 +837,5 @@
 [% RenderBlockEnd("Overview") %]
 
 [% RenderBlockStart("BorrowedViewJS") %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('#CustomerTable a').bind('click', function (Event) {
-    Core.Agent.TicketAction.UpdateCustomer($(this).text());
-});
-//]]></script>
-[% END %]
+
 [% RenderBlockEnd("BorrowedViewJS") %]
