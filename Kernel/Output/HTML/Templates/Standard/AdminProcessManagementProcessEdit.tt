@@ -60,7 +60,7 @@
                                     <div class="AsBlock W80pc" title="[% Data.Name | html %] ([% Data.EntityID | html %])">[% Data.Name | html %]</div>
                                     <span>
                                         <a href="#" title="[% Translate("Delete") | html %]" class="DeleteEntity DeleteActivity"><i class="fa fa-trash-o"></i></a>
-                                        <a href="[% Env("Baselink") %]Action=AdminProcessManagementActivity;Subaction=ActivityEdit;ID=[% Data.ID | uri %];EntityID=[% Data.EntityID | uri %]" title="[% Translate("Edit") | html %]" class="AsPopup PopupType_Activity"><i class="fa fa-edit"></i></a>
+                                        <a href="[% Env("Baselink") %]Action=AdminProcessManagementActivity;Subaction=ActivityEdit;ID=[% Data.ID | uri %];EntityID=[% Data.EntityID | uri %]" title="[% Translate("Edit") | html %] Farofa" class="AsPopup PopupType_Activity"><i class="fa fa-edit"></i></a>
                                     </span>
                                 </li>
 [% RenderBlockEnd("ActivityRow") %]

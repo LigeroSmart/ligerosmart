@@ -796,17 +796,8 @@
                                   [% END %]
                                 </td>
                                 <td>
-                    <div class="Clear"></div>
-
-                    [% INCLUDE "CustomerCompany/TicketCustomerIDSelection.tt" Required = 0 Readonly = Config("Ticket::Frontend::AgentTicketEmail::CustomerIDReadOnly") %]
-
-                    <div class="Clear"></div>
-                    [% INCLUDE "FormElements/DraftButtons.tt" %]                                
-                                    <a class="Edit"  href="#">
-                                        <i class="fas fa-edit">
-                                        </i>
-                                    </a>
-                                </td>           
+                                    <a href="[% Env("Baselink") %]Action=AdminProcessManagementActivityDialog;Subaction=ActivityDialogEdit;ID=[% Data.ID | uri %];EntityID=[% Data.EntityID | uri %]" title="[% Translate("Edit") | html %]" class="AsPopup PopupType_ActivityDialog"><i class="fa fa-edit"></i></a>
+                                </td>
                                 <td><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=RemoveFranchiseRole;RuleID=[% Data.RuleID | uri %];ContractID=[% Data.ContractID | uri %];Search=[% Data.Search | uri %];Nav=[% Data.Nav | uri %]"><i class="fas fa-trash"></i></a></td>
                             </tr>
                         [% RenderBlockEnd("FranchiseRuleRow") %]
