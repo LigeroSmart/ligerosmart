@@ -86,7 +86,35 @@ sub Run {
     # change
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Change' ) {
+
         my $Contract = $ParamObject->GetParam( Param => 'ID' ) || '';
+
+        # check for ProcessID
+        if ( !$Contract ) {
+            return $LayoutObject->ErrorScreen(
+                Message => Translatable('Need Contract!'),
+            );
+        }
+
+        # set screens path in session
+        my @ScreensPath = (
+            {
+                Action    => $Self->{Action}    || '',
+                Subaction => $Self->{Subaction} || '',
+                Parameters => 'ID=' . $Contract
+            }
+        );
+
+        # convert screens patch to string (JSON)
+        my $JSONScreensPath = $LayoutObject->JSONEncode(
+            Data => \@ScreensPath,
+        );
+
+        $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'CustomerContractScreensPath',
+            Value     => $JSONScreensPath,
+        );        
 
         # get user data
         my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $Contract );
@@ -522,6 +550,195 @@ sub Run {
         return $Output;
     }
 
+    elsif ( $Self->{Subaction} eq 'UpdFranchiseRuleAction' ) {
+
+        # challenge token check for write action
+        $LayoutObject->ChallengeTokenCheck();
+
+        my $ContractID      = $ParamObject->GetParam( Param => 'ContractID' ) || '';
+        my @TypeIDs         = $ParamObject->GetArray( Param => 'TypeIDs' );
+        my @TreatmentTypes  = $ParamObject->GetArray( Param => 'TreatmentTypes' );
+        my @SLAIDs          = $ParamObject->GetArray( Param => 'SLAIDs' );
+        my @ServiceIDs      = $ParamObject->GetArray( Param => 'ServiceIDs' );
+        my @HourIDs         = $ParamObject->GetArray( Param => 'HourIDs' );
+        my $Recurrence      = $ParamObject->GetParam( Param => 'Recurrence' )  || '';
+        my $Hours           = $ParamObject->GetParam( Param => 'Hours' )  || '';
+        my $RuleID          = $ParamObject->GetParam( Param => 'RuleID' ) || '';   
+
+        if($RuleID){
+            $CustomerContractObject->FranchiseRuleRecurrenceUpd(
+                ContractFranchiseRuleID => $RuleID,
+                ContractID => $ContractID,
+                Recurrence => $Recurrence,
+            );
+
+            $CustomerContractObject->FranchiseRuleHoursUpd(
+                ContractFranchiseRuleID => $RuleID,
+                ContractID => $ContractID,
+                Hours => $Hours,
+            );
+
+            $CustomerContractObject->CustomerContractFranchiseRuleRemoveToUpdate(
+                ID => $RuleID
+            );
+
+            for my $TypeID (@TypeIDs){
+                $CustomerContractObject->FranchiseRuleTicketTypeAdd(
+                    ContractFranchiseRuleID => $RuleID,
+                    TicketTypeID => $TypeID,
+                );
+            }
+
+            for my $TreatmentType (@TreatmentTypes){
+                $CustomerContractObject->FranchiseRuleTreatmentTypeAdd(
+                    ContractFranchiseRuleID => $RuleID,
+                    TreatmentType => $TreatmentType,
+                );
+            }
+
+            for my $SLAID (@SLAIDs){
+                $CustomerContractObject->FranchiseRuleSlaAdd(
+                    ContractFranchiseRuleID => $RuleID,
+                    SLAID => $SLAID,
+                );
+            }
+
+            for my $ServiceID (@ServiceIDs){
+                $CustomerContractObject->FranchiseRuleServiceAdd(
+                    ContractFranchiseRuleID => $RuleID,
+                    ServiceID => $ServiceID,
+                );
+            }
+
+            for my $Hour (@HourIDs){
+                $CustomerContractObject->FranchiseRuleHourTypeAdd(
+                    ContractFranchiseRuleID => $RuleID,
+                    HourType => $Hour,
+                );
+            }
+        }
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_Edit(
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }
+
+    elsif ( $Self->{Subaction} eq 'UpdPriceRuleAction' ) {
+
+        # challenge token check for write action
+        $LayoutObject->ChallengeTokenCheck();
+
+        my $ContractID      = $ParamObject->GetParam( Param => 'ContractID' ) || '';
+        my @TypeIDs         = $ParamObject->GetArray( Param => 'TypeIDs' );
+        my @TreatmentTypes  = $ParamObject->GetArray( Param => 'TreatmentTypes' );
+        my @SLAIDs          = $ParamObject->GetArray( Param => 'SLAIDs' );
+        my @ServiceIDs      = $ParamObject->GetArray( Param => 'ServiceIDs' );
+        my @HourIDs         = $ParamObject->GetArray( Param => 'HourIDs' );
+        my $Valor           = $ParamObject->GetParam( Param => 'Valor' )  || '';
+        my $RuleID          = $ParamObject->GetParam( Param => 'RuleID' ) || '';   
+
+        if($RuleID){
+            $CustomerContractObject->PriceRuleHoursUpd(
+                ContractPriceRuleID => $RuleID,
+                ContractID => $ContractID,
+                Hours => $Valor,
+            );
+
+            $CustomerContractObject->CustomerContractPriceRuleRemoveToUpdate(
+                ID => $RuleID
+            );
+
+            for my $TypeID (@TypeIDs){
+                $CustomerContractObject->PriceRuleTicketTypeAdd(
+                    ContractPriceRuleID => $RuleID,
+                    TicketTypeID => $TypeID,
+                );
+            }
+
+            for my $TreatmentType (@TreatmentTypes){
+                $CustomerContractObject->PriceRuleTreatmentTypeAdd(
+                    ContractPriceRuleID => $RuleID,
+                    TreatmentType => $TreatmentType,
+                );
+            }
+
+            for my $SLAID (@SLAIDs){
+                $CustomerContractObject->PriceRuleSlaAdd(
+                    ContractPriceRuleID => $RuleID,
+                    SLAID => $SLAID,
+                );
+            }
+
+            for my $ServiceID (@ServiceIDs){
+                $CustomerContractObject->PriceRuleServiceAdd(
+                    ContractPriceRuleID => $RuleID,
+                    ServiceID => $ServiceID,
+                );
+            }
+
+            for my $Hour (@HourIDs){
+                $CustomerContractObject->PriceRuleHourTypeAdd(
+                    ContractPriceRuleID => $RuleID,
+                    HourType => $Hour,
+                );
+            }
+        }
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_Edit(
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }      
+
     elsif ( $Self->{Subaction} eq 'RemovePriceRole' ) {
 
         my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
@@ -708,6 +925,84 @@ sub Run {
         return $Output;
     }
 
+    elsif ( $Self->{Subaction} eq 'EditFranchiseRole' ) {
+
+        my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
+        my $RuleID = $ParamObject->GetParam( Param => 'RuleID' ) || '';
+
+        #$CustomerContractObject->DownFranchiseRule( ID => $RuleID );
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_EditRule(
+            EditFranchiseRole => '1',
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            RuleID => $RuleID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }
+
+    elsif ( $Self->{Subaction} eq 'EditPriceRole' ) {
+
+        my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
+        my $RuleID = $ParamObject->GetParam( Param => 'RuleID' ) || '';
+
+        #$CustomerContractObject->DownFranchiseRule( ID => $RuleID );
+
+        my $ContractData = $CustomerContractObject->CustomerContractDataGet( ID => $ContractID );
+
+        my $Output = $NavBar;
+        $Output .= $Self->_EditRule(
+            EditPriceRole => '1',
+            Nav    => $Nav,
+            Action => 'Change',
+            Source => $Source,
+            Search => $Search,
+            ID     => $ContractID,
+            RuleID => $RuleID,
+            Number => $ContractData->{Number},
+            CustomerID => $ContractData->{CustomerID},
+            Type => $ContractData->{Type},
+            DateType => $ContractData->{DateType},
+            StartTime => $ContractData->{StartTime},
+            EndTime => $ContractData->{EndTime},
+            RelatedTo => $ContractData->{RelatedTo},
+            RelatedToPeriod => $ContractData->{RelatedToPeriod},
+            ValidID => $ContractData->{ValidID},
+        );
+
+        if ( $Nav eq 'None' ) {
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
+        }
+        else {
+            $Output .= $LayoutObject->Footer();
+        }       
+
+        return $Output;
+    }
+
     elsif ( $Self->{Subaction} eq 'RemoveFranchiseRole' ) {
 
         my $ContractID = $ParamObject->GetParam( Param => 'ContractID' )  || '';
@@ -855,6 +1150,48 @@ sub Run {
         return $Output;
 
     }
+    
+    # ------------------------------------------------------------ #
+    # UpdateScreensPath AJAX
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'UpdateScreensPath' ) {
+
+        my $Success = 1;
+        my $Message = '';
+        for my $Needed (qw(ID)) {
+
+            $Param{$Needed} = $ParamObject->GetParam( Param => $Needed ) || '';
+            if ( !$Param{$Needed} ) {
+                $Success = 0;
+                $Message = $LayoutObject->{LanguageObject}->Translate( 'Need %s!', $Needed );
+            }
+        }
+
+        if ($Success) {
+
+            $Self->_PushSessionScreen(
+                ContractID => $Param{ID},               
+                Subaction => 'Change',
+                Action    => 'AdminCustomerContract',
+            );
+        }
+
+        # build JSON output
+        my $JSON = $LayoutObject->JSONEncode(
+            Data => {
+                Success => $Success,
+                Message => $Message,
+            },
+        );
+
+        # send JSON response
+        return $LayoutObject->Attachment(
+            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
+            Content     => $JSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
 
     # ------------------------------------------------------------ #
     # overview
@@ -980,7 +1317,14 @@ sub _Overview {
     }
 
     if ( $Param{Nav} eq 'None' ) {
-        $LayoutObject->Block( Name => 'BorrowedViewJS' );
+
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'BorrowedViewJS',
+            Value => '1'
+        );
+
+        #$LayoutObject->Block( Name => 'BorrowedViewJS' );
     }
 }
 
@@ -1091,7 +1435,14 @@ sub _OverviewCustomer {
     }
 
     if ( $Param{Nav} eq 'None' ) {
-        $LayoutObject->Block( Name => 'BorrowedViewJS' );
+
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'BorrowedViewJS',
+            Value => '1'
+        );
+
+        #$LayoutObject->Block( Name => 'BorrowedViewJS' );
     }
 }
 
@@ -1378,11 +1729,11 @@ sub _Details {
             Name => 'FranchiseRuleRegResult',
         );
 
-        my $FranchiseRegistries = $CustomerContractObject->GetFranchiseRulesRegistry(
+        $FranchiseRegistries = $CustomerContractObject->GetFranchiseRulesRegistry(
           ContractFranchiseRuleID => $FranchiseRule->{ID},
           FromSearch => $FromSearchDB,
           ToSearch => $ToSearchDB,
-          );
+        );
 
         if(scalar(@$FranchiseRegistries) == 0){
           $LayoutObject->Block(
@@ -1455,7 +1806,14 @@ sub _Details {
     my $ColSpan = 6;
 
     if ( $Param{Nav} eq 'None' ) {
-        $LayoutObject->Block( Name => 'BorrowedViewJS' );
+
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'BorrowedViewJS',
+            Value => '1'
+        );
+
+        #$LayoutObject->Block( Name => 'BorrowedViewJS' );
     }
 }
 
@@ -1476,6 +1834,12 @@ sub _Edit {
         Name => 'ActionOverview',
         Data => \%Param,
     );
+
+    # send data to JS
+    $LayoutObject->AddJSData(
+        Key   => 'OverviewUpdate',
+        Value => '1'
+    );    
 
     $LayoutObject->Block(
         Name => 'OverviewUpdate',
@@ -1555,7 +1919,14 @@ sub _Edit {
     
 
     if ( $Param{Nav} eq 'None' ) {
-        $LayoutObject->Block( Name => 'BorrowedViewJS' );
+
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'BorrowedViewJS',
+            Value => '1'
+        );
+
+        #$LayoutObject->Block( Name => 'BorrowedViewJS' );
     }
 
     if ( $Param{ID} && $Param{ID} > 0) {  
@@ -1583,6 +1954,16 @@ sub _Edit {
             Translation => 0,
             Class       => 'Modernize',
         );
+
+        $Param{UpdTypesStrgFranchise} = $LayoutObject->BuildSelection(
+            Data        => \%Type,
+            Name        => 'TypeIDs',
+            Sort        => 'AlphanumericValue',
+            Size        => 3,
+            Multiple    => 1,
+            Translation => 0,
+            Class       => 'Modernize',
+        );        
 
         my %SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
             UserID => $Self->{UserID},
@@ -1791,7 +2172,7 @@ sub _Edit {
                         Services => $ServicesStr,
                         Hours => $HourTypesStr,
                         Value => $PriceRule->{Value},
-                        ValueTiotal => $PriceRule->{ValueTotal},
+                        ValueTotal => $PriceRule->{ValueTotal},
                         RuleID => $PriceRule->{ID},
                         ContractID => $Param{ID},
                         OrderNumber => $PriceRule->{OrderNumber},
@@ -1809,55 +2190,55 @@ sub _Edit {
         if($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0){
             for my $FranchiseRule (@$ContractFranchiseRules){
 
-		my $FranchiseRuleTicketTypes = $CustomerContractObject->FranchiseRuleTicketTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-		my $TicketTypesStr = '*';
-		if (scalar @$FranchiseRuleTicketTypes > 0) {
-			my @arr;
-			foreach my $x ( @$FranchiseRuleTicketTypes ) {
-				push @arr, $x->{TicketTypeName};
-			}
-			$TicketTypesStr = join(', ', @arr);
-		}
+                my $FranchiseRuleTicketTypes = $CustomerContractObject->FranchiseRuleTicketTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $TicketTypesStr = '*';
+                if (scalar @$FranchiseRuleTicketTypes > 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleTicketTypes ) {
+                        push @arr, $x->{TicketTypeName};
+                    }
+                    $TicketTypesStr = join(', ', @arr);
+                }
 
-		my $FranchiseRuleTreatmentTypes = $CustomerContractObject->FranchiseRuleTreatmentTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-		my $TreatmentTypesStr = '*';
-		if (scalar @$FranchiseRuleTreatmentTypes > 0) {
-			my @arr;
-			foreach my $x ( @$FranchiseRuleTreatmentTypes ) {
-				push @arr, $x->{TreatmentType};
-			}
-			$TreatmentTypesStr = join(', ', @arr);
-		}
+                my $FranchiseRuleTreatmentTypes = $CustomerContractObject->FranchiseRuleTreatmentTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $TreatmentTypesStr = '*';
+                if (scalar @$FranchiseRuleTreatmentTypes > 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleTreatmentTypes ) {
+                        push @arr, $x->{TreatmentType};
+                    }
+                    $TreatmentTypesStr = join(', ', @arr);
+                }
 
-		my $FranchiseRuleSLAs = $CustomerContractObject->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-		my $SLAsStr = '*';
-		if (scalar @$FranchiseRuleSLAs> 0) {
-			my @arr;
-			foreach my $x ( @$FranchiseRuleSLAs ) {
-				push @arr, $x->{SLAName};
-			}
-			$SLAsStr = join(', ', @arr);
-		}
+                my $FranchiseRuleSLAs = $CustomerContractObject->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $SLAsStr = '*';
+                if (scalar @$FranchiseRuleSLAs> 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleSLAs ) {
+                        push @arr, $x->{SLAName};
+                    }
+                    $SLAsStr = join(', ', @arr);
+                }
 
-		my $FranchiseRuleServices = $CustomerContractObject->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-		my $ServicesStr = '*';
-		if (scalar @$FranchiseRuleServices> 0) {
-			my @arr;
-			foreach my $x ( @$FranchiseRuleServices ) {
-				push @arr, $x->{ServiceName};
-			}
-			$ServicesStr = join(', ', @arr);
-		}
+                my $FranchiseRuleServices = $CustomerContractObject->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $ServicesStr = '*';
+                if (scalar @$FranchiseRuleServices> 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleServices ) {
+                        push @arr, $x->{ServiceName};
+                    }
+                    $ServicesStr = join(', ', @arr);
+                }
 
-		my $FranchiseRuleHourTypes = $CustomerContractObject->FranchiseRuleHourTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
-		my $HourTypesStr = '*';
-		if (scalar @$FranchiseRuleHourTypes > 0) {
-			my @arr;
-			foreach my $x ( @$FranchiseRuleHourTypes ) {
-				push @arr, $x->{HourType};
-			}
-			$HourTypesStr = join(', ', @arr);
-		}
+                my $FranchiseRuleHourTypes = $CustomerContractObject->FranchiseRuleHourTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $HourTypesStr = '*';
+                if (scalar @$FranchiseRuleHourTypes > 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleHourTypes ) {
+                        push @arr, $x->{HourType};
+                    }
+                    $HourTypesStr = join(', ', @arr);
+                }
 
                 $LayoutObject->Block( 
                     Name => 'FranchiseRuleRow',
@@ -1890,6 +2271,13 @@ sub _Edit {
         $Param{FromDateMonth} = $MonthS;
         $Param{FromDateDay} = $DayS;
 
+        $Param{FromDateStringEdit} = $LayoutObject->BuildDateSelection(
+            Prefix => "FromDate",
+            FromDateYear => $Param{FromDateYear},
+            FromDateMonth => $Param{FromDateMonth},
+            FromDateDay => $Param{FromDateDay},
+        );        
+
         my ($Sec, $Min, $Hour, $Day, $Month, $Year, $WeekDay) = $TimeObject->SystemTime2Date(
             SystemTime => $TimeObject->TimeStamp2SystemTime(String=> $Param{EndTime}),
         );
@@ -1897,6 +2285,15 @@ sub _Edit {
         $Param{ToDateYear} = $Year;
         $Param{ToDateMonth} = $Month;
         $Param{ToDateDay} = $Day;
+
+        $Param{ToDateStringEdit} = $LayoutObject->BuildDateSelection(
+            Prefix => "ToDate",
+            ToDateYear => $Param{ToDateYear},
+            ToDateMonth => $Param{ToDateMonth},
+            ToDateDay => $Param{ToDateDay},
+            YearPeriodFuture        => 10,
+            YearPeriodPast          => 1,
+        );
 
         $LayoutObject->Block( 
             Name => 'EditMode',
@@ -1941,6 +2338,467 @@ sub _Edit {
         TemplateFile => 'AdminCustomerContract',
         Data         => \%Param,
     );
+}
+
+sub _EditRule {
+    my ( $Self, %Param ) = @_;
+
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $CustomerContractObject = $Kernel::OM->Get('Kernel::System::CustomerContract');
+
+    if ($Param{EditFranchiseRole}) {
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'EditFranchiseRole',
+            Value => $Param{RuleID}
+        );     
+    } elsif ($Param{EditPriceRole}) {
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'EditPriceRole',
+            Value => $Param{RuleID}
+        );
+    }
+
+    $LayoutObject->Block(
+        Name => 'Overview',
+        Data => \%Param,
+    );
+
+    $LayoutObject->Block( Name => 'ActionList' );
+
+    $LayoutObject->Block(
+        Name => 'ActionOverview',
+        Data => \%Param,
+    );
+
+    if ( $Param{ID} && $Param{ID} > 0) {  
+        my $RuleEditServices;
+        my $RuleEditTypes;
+        my $RuleEditSLAs;
+        my $RuleEditTreatmentType;
+        my $RuleEditHours;
+        my $RuleEditRecurrence;
+        my $RuleEditHourTypes;
+        my $RuleEditContract;
+
+        if ($Param{EditFranchiseRole}) {
+            $RuleEditServices               = $CustomerContractObject->FranchiseRuleServiceList(ContractFranchiseRuleID => $Param{RuleID});
+            $RuleEditContract               = $CustomerContractObject->FranchiseRuleGet(ContractID => $Param{ID},RuleID => $Param{RuleID});
+            $RuleEditHourTypes              = $CustomerContractObject->FranchiseRuleHourTypeList(ContractFranchiseRuleID => $Param{RuleID});           
+            $RuleEditSLAs                   = $CustomerContractObject->FranchiseRuleSLAList(ContractFranchiseRuleID => $Param{RuleID});           
+            $RuleEditTreatmentType          = $CustomerContractObject->FranchiseRuleTreatmentTypeList(ContractFranchiseRuleID => $Param{RuleID});           
+            $RuleEditTypes                  = $CustomerContractObject->FranchiseRuleTicketTypeList(ContractFranchiseRuleID => $Param{RuleID});            
+            $Param{ValueHoursStrgFranchise} = $RuleEditContract->{Hours};
+            $Param{NameStrgFranchise}       = $RuleEditContract->{Name};            
+
+            my %Recurrence;
+            $Recurrence{ 'diario' } = 'diario';
+            $Recurrence{ 'semanal' } = 'semanal';
+            $Recurrence{ 'mensal' } = 'mensal';
+            $Recurrence{ 'bimestral' } = 'bimestral';
+            $Recurrence{ 'trimestral' } = 'trimestral';
+            $Recurrence{ 'semestral' } = 'semestral';
+            $Recurrence{ 'anual' } = 'anual';
+            $Recurrence{ 'ilimitado' } = 'ilimitado';
+
+            $Param{RecurrenceStrgFranchise} = $LayoutObject->BuildSelection(
+                Data        => \%Recurrence,
+                Name        => 'Recurrence',
+                SelectedID  => $RuleEditContract->{Recurrence} || "-",
+                PossibleNone => 0,
+                Size        => 5,
+                Multiple    => 0,
+                TreeView    => 0,
+                Translation => 0,
+                Max         => 200,
+                Class       => 'Modernize Validate_Required',
+            );
+        } elsif ($Param{EditPriceRole}) {
+            $RuleEditServices           = $CustomerContractObject->PriceRuleServiceList(ContractPriceRuleID => $Param{RuleID});
+            $RuleEditContract           = $CustomerContractObject->PriceRuleGet(ContractID => $Param{ID},RuleID => $Param{RuleID});
+            $RuleEditHourTypes          = $CustomerContractObject->PriceRuleHourTypeList(ContractPriceRuleID => $Param{RuleID});           
+            $RuleEditSLAs               = $CustomerContractObject->PriceRuleSLAList(ContractPriceRuleID => $Param{RuleID});           
+            $RuleEditTreatmentType      = $CustomerContractObject->PriceRuleTreatmentTypeList(ContractPriceRuleID => $Param{RuleID});           
+            $RuleEditTypes              = $CustomerContractObject->PriceRuleTicketTypeList(ContractPriceRuleID => $Param{RuleID});            
+            $Param{ValueHoursStrgPrice} = $RuleEditContract->{Value};
+            $Param{NameStrgPrice}       = $RuleEditContract->{Name};              
+        }         
+
+        my %Type = $Kernel::OM->Get('Kernel::System::Type')->TypeList(
+            UserID => $Self->{UserID},
+        );
+
+		my @arrRuleEditTypes;
+        if (scalar @{$RuleEditTypes} > 0) {
+            foreach my $x ( @{$RuleEditTypes} ) {
+                push @arrRuleEditTypes, $x->{TicketTypeID};
+            }
+        }        
+        
+        $Param{TypesStrgPrice} = $LayoutObject->BuildSelection(
+            Data        => \%Type,
+            Name        => 'TypeIDs',
+            SelectedID  => \@arrRuleEditTypes || [],
+            Sort        => 'AlphanumericValue',
+            Size        => 3,
+            Multiple    => 1,
+            Translation => 0,
+            Class       => 'Modernize',
+        );
+
+        $Param{TypesStrgFranchise} = $LayoutObject->BuildSelection(
+            Data        => \%Type,
+            Name        => 'TypeIDs',
+            SelectedID  => \@arrRuleEditTypes || [],
+            Sort        => 'AlphanumericValue',
+            Size        => 3,
+            Multiple    => 1,
+            Translation => 0,
+            Class       => 'Modernize',
+        );     
+        
+        my @arrSLAs;
+        if (scalar @{$RuleEditSLAs}> 0) {
+            foreach my $x ( @{$RuleEditSLAs} ) {
+                push @arrSLAs, $x->{SLAID};
+            }
+        }         
+
+        my %SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
+            UserID => $Self->{UserID},
+        );
+
+        $Param{SLAsStrgPrice} = $LayoutObject->BuildSelection(
+            Data        => \%SLA,
+            Name        => 'SLAIDs',
+            SelectedID  => \@arrSLAs || [],
+            Sort        => 'AlphanumericValue',
+            Size        => 5,
+            Multiple    => 1,
+            Translation => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );
+
+        $Param{SLAsStrgFranchise} = $LayoutObject->BuildSelection(
+            Data        => \%SLA,
+            Name        => 'SLAIDs',
+            SelectedID  => \@arrSLAs || [],
+            Sort        => 'AlphanumericValue',
+            Size        => 5,
+            Multiple    => 1,
+            Translation => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );
+
+        my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+        my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+        my $TreatmentTypeDF = $DynamicFieldObject->DynamicFieldGet(
+            Name => $ConfigObject->Get('CustomerContracts::DynamicField::TreatmentType'),
+        );
+
+        my $TreatmentTypePossibleValues = $DynamicFieldBackendObject->PossibleValuesGet(
+            DynamicFieldConfig => $TreatmentTypeDF,       # complete config of the DynamicField
+        );
+
+        my %RevTreatmentTypePossibleValues = reverse %{$TreatmentTypePossibleValues};
+
+        my @arrTreatmentType;
+        if (scalar @{$RuleEditTreatmentType} > 0) {
+            foreach my $x ( @{$RuleEditTreatmentType} ) {
+                push @arrTreatmentType, $x->{TreatmentType};
+            }
+        }         
+
+        $Param{TreatmentTypesStrgPrice} = $LayoutObject->BuildSelection(
+            Data        => $TreatmentTypePossibleValues,
+            Name        => 'TreatmentTypes',
+            SelectedID  => \@arrTreatmentType || [],
+            Sort        => 'AlphanumericValue',
+            Size        => 5,
+            Multiple    => 1,
+            Translation => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );
+
+        $Param{TreatmentTypesStrgFranchise} = $LayoutObject->BuildSelection(
+            Data        => $TreatmentTypePossibleValues,
+            Name        => 'TreatmentTypes',
+            SelectedID  => \@arrTreatmentType || [],
+            Sort        => 'AlphanumericValue',
+            Size        => 5,
+            Multiple    => 1,
+            Translation => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );
+
+        my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceList(
+            Valid        => 1,
+            KeepChildren => $ConfigObject->Get('Ticket::Service::KeepChildren') // 0,
+            UserID       => $Self->{UserID},
+        );
+
+       
+        my @arrServices;
+		if (scalar @{$RuleEditServices} > 0 ) {
+			foreach my $x ( @{$RuleEditServices} ) {
+				push @arrServices, $x->{ServiceID};
+			}
+		}        
+        # generate ServiceOptionStrg
+        $Param{ServicesStrgFranchise} = $LayoutObject->BuildSelection(
+            Data        => \%Service,
+            Name        => 'ServiceIDs',
+            SelectedID  => \@arrServices || [],
+            Multiple    => 1,
+            Size        => 5,
+            Translation => 0,
+            TreeView    => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );        
+
+        $Param{ServicesStrgPrice} = $LayoutObject->BuildSelection(
+            Data        => \%Service,
+            Name        => 'ServiceIDs',
+            SelectedID  => \@arrServices || [],
+            Size        => 5,
+            Multiple    => 1,
+            TreeView    => 0,
+            Translation => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );
+
+        my @arrHourTypes;
+        if (scalar @{$RuleEditHourTypes} > 0) {
+            foreach my $x ( @{$RuleEditHourTypes} ) {
+                push @arrHourTypes, $x->{HourType};
+            }
+        } 
+
+        my %HoursList;
+        $HoursList{ 'Comercial' } = 'Comercial';
+        $HoursList{ 'Nao Comercial' } = 'Nao Comercial';
+        $HoursList{ 'Final de Semana' } = 'Final de Semana';
+        $HoursList{ 'Feriados' } = 'Feriados';
+
+        $Param{HoursStrgPrice} = $LayoutObject->BuildSelection(
+            Data        => \%HoursList,
+            Name        => 'HourIDs',
+            SelectedID  => \@arrHourTypes || [],
+            Size        => 5,
+            Multiple    => 1,
+            TreeView    => 0,
+            Translation => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );
+
+        $Param{HoursStrgFranchise} = $LayoutObject->BuildSelection(
+            Data        => \%HoursList,
+            Name        => 'HourIDs',
+            SelectedID  => \@arrHourTypes || [],
+            Size        => 5,
+            Multiple    => 1,
+            TreeView    => 0,
+            Translation => 0,
+            Max         => 200,
+            Class       => 'Modernize',
+        );
+
+        $LayoutObject->Block( Name => 'RulesArea',
+        Data         => \%Param, );
+
+        my $ContractPriceRules = $CustomerContractObject->ContactPriceRuleList(ContractID => $Param{ID});
+
+        if($ContractPriceRules && (scalar @$ContractPriceRules) > 0){
+            for my $PriceRule (@$ContractPriceRules){
+
+		my $PriceRuleTicketTypes = $CustomerContractObject->PriceRuleTicketTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $TicketTypesStr = '*';
+		if (scalar @$PriceRuleTicketTypes > 0) {
+			my @arr;
+			foreach my $x ( @$PriceRuleTicketTypes ) {
+				push @arr, $x->{TicketTypeName};
+			}
+			$TicketTypesStr = join(', ', @arr);
+		}
+
+		my $PriceRuleTreatmentTypes = $CustomerContractObject->PriceRuleTreatmentTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $TreatmentTypesStr = '*';
+		if (scalar @$PriceRuleTreatmentTypes > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleTreatmentTypes ) {
+				push @arr, $x->{TreatmentType};
+			}
+			$TreatmentTypesStr = join(', ', @arr);
+		}
+
+		my $PriceRuleSLAs = $CustomerContractObject->PriceRuleSLAList(ContractPriceRuleID => $PriceRule->{ID});
+		my $SLAsStr = '*';
+		if (scalar @$PriceRuleSLAs > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleSLAs ) {
+				push @arr, $x->{SLAName};
+			}
+			$SLAsStr = join(', ', @arr);
+		}
+
+		my $PriceRuleServices = $CustomerContractObject->PriceRuleServiceList(ContractPriceRuleID => $PriceRule->{ID});
+		my $ServicesStr = '*';
+		if (scalar @$PriceRuleServices > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleServices ) {
+				push @arr, $x->{ServiceName};
+			}
+			$ServicesStr = join(', ', @arr);
+		}
+
+		my $PriceRuleHourTypes = $CustomerContractObject->PriceRuleHourTypeList(ContractPriceRuleID => $PriceRule->{ID});
+		my $HourTypesStr = '*';
+		if (scalar @$PriceRuleHourTypes > 0 ) {
+			my @arr;
+			foreach my $x ( @$PriceRuleHourTypes ) {
+				push @arr, $x->{HourType};
+			}
+			$HourTypesStr = join(', ', @arr);
+		}
+
+                $LayoutObject->Block( 
+                    Name => 'PriceRuleRow',
+                    Data => {
+                        Types => $TicketTypesStr,
+                        TreatmentTypes => $TreatmentTypesStr,
+                        Slas => $SLAsStr,
+                        Services => $ServicesStr,
+                        Hours => $HourTypesStr,
+                        Value => $PriceRule->{Value},
+                        ValueTiotal => $PriceRule->{ValueTotal},
+                        RuleID => $PriceRule->{ID},
+                        ContractID => $Param{ID},
+                        OrderNumber => $PriceRule->{OrderNumber},
+                        IsTheLast => $PriceRule->{OrderNumber} == @$ContractPriceRules,
+                    }
+                );
+            }            
+        }
+        else{
+            $LayoutObject->Block( Name => 'NoDataFoundMsgPriceRule',);
+        }
+
+        my $ContractFranchiseRules = $CustomerContractObject->ContactFranchiseRuleList(ContractID => $Param{ID});
+
+        if($ContractFranchiseRules && (scalar @$ContractFranchiseRules) > 0){
+            for my $FranchiseRule (@$ContractFranchiseRules){
+
+                my $FranchiseRuleTicketTypes = $CustomerContractObject->FranchiseRuleTicketTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $TicketTypesStr = '*';
+                if (scalar @$FranchiseRuleTicketTypes > 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleTicketTypes ) {
+                        push @arr, $x->{TicketTypeName};
+                    }
+                    $TicketTypesStr = join(', ', @arr);
+                }
+
+                my $FranchiseRuleTreatmentTypes = $CustomerContractObject->FranchiseRuleTreatmentTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $TreatmentTypesStr = '*';
+                if (scalar @$FranchiseRuleTreatmentTypes > 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleTreatmentTypes ) {
+                        push @arr, $x->{TreatmentType};
+                    }
+                    $TreatmentTypesStr = join(', ', @arr);
+                }
+
+                my $FranchiseRuleSLAs = $CustomerContractObject->FranchiseRuleSLAList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $SLAsStr = '*';
+                if (scalar @$FranchiseRuleSLAs> 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleSLAs ) {
+                        push @arr, $x->{SLAName};
+                    }
+                    $SLAsStr = join(', ', @arr);
+                }
+
+                my $FranchiseRuleServices = $CustomerContractObject->FranchiseRuleServiceList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $ServicesStr = '*';
+                if (scalar @$FranchiseRuleServices> 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleServices ) {
+                        push @arr, $x->{ServiceName};
+                    }
+                    $ServicesStr = join(', ', @arr);
+                }
+
+                my $FranchiseRuleHourTypes = $CustomerContractObject->FranchiseRuleHourTypeList(ContractFranchiseRuleID => $FranchiseRule->{ID});
+                my $HourTypesStr = '*';
+                if (scalar @$FranchiseRuleHourTypes > 0) {
+                    my @arr;
+                    foreach my $x ( @$FranchiseRuleHourTypes ) {
+                        push @arr, $x->{HourType};
+                    }
+                    $HourTypesStr = join(', ', @arr);
+                }
+
+                $LayoutObject->Block( 
+                    Name => 'FranchiseRuleRow',
+                    Data => {
+                        Types => $TicketTypesStr,
+                        TreatmentTypes => $TreatmentTypesStr,
+                        Slas => $SLAsStr,
+                        Services => $ServicesStr,
+                        Hours => $HourTypesStr,
+                        Recurrence => $FranchiseRule->{Recurrence},
+                        ValueHours => $FranchiseRule->{Hours},
+                        RuleID => $FranchiseRule->{ID},
+                        ContractID => $Param{ID},
+                        OrderNumber => $FranchiseRule->{OrderNumber},
+                        IsTheLast => $FranchiseRule->{OrderNumber} == @$ContractFranchiseRules,
+                    }
+                );
+            }            
+        } else{
+            $LayoutObject->Block( Name => 'NoDataFoundMsgFranchiseRule',);
+        }
+    }
+
+    return $LayoutObject->Output(
+        TemplateFile => 'AdminCustomerContract',
+        Data         => \%Param,
+    );
+}
+
+sub _PushSessionScreen {
+    my ( $Self, %Param ) = @_;
+
+    # add screen to the screen path
+    push @{ $Self->{ScreensPath} }, {
+        Action     => $Self->{Action} || '',
+        Subaction  => $Param{Subaction},
+        ContractID => $Param{ContractID},
+    };
+
+    # convert screens path to string (JSON)
+    my $JSONScreensPath = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->JSONEncode(
+        Data => $Self->{ScreensPath},
+    );
+
+    # update session
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'CustomerContractScreensPath',
+        Value     => $JSONScreensPath,
+    );
+
+    return 1;
 }
 
 1;
