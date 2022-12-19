@@ -71,6 +71,7 @@
                 <Item Key="JavaScript">
                     <Array>
                         <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Admin.CustomerContract.js</Item>
                     </Array>
                 </Item>
             </Hash>

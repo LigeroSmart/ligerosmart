@@ -48,6 +48,8 @@ sub Data {
     $Self->{Translation}->{'Contract Rules and Registries'} = 'Regras contratuais e registros';
     $Self->{Translation}->{'Price Rule'} = 'Regra de preço';
     $Self->{Translation}->{'Franchise Rule'} = 'Regra de franquia';
+    $Self->{Translation}->{'Edit Franchise Rule'} = 'Editar uma regra de franquia';
+    $Self->{Translation}->{'Edit Price Rule'} = 'Editar uma regra de preço';
     $Self->{Translation}->{'Hour Types'} = 'Tipos de horas';
     $Self->{Translation}->{'Available Time'} = 'Tempo Disponível';
 
