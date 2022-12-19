@@ -529,6 +529,86 @@ sub ContactFranchiseRuleList {
     return $Data;
 }
 
+=item FranchiseRuleGet()
+
+#
+
+=cut
+
+sub FranchiseRuleGet {
+    my ( $Self, %Param ) = @_;
+    
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT 
+                id,
+                contract_id,
+                name,
+                recurrence,
+                hours,
+                order_number 
+            	FROM contract_franchise_rule
+                where contract_id = ?
+                AND id = ? 
+                ORDER BY order_number ', 
+        Bind => [\$Param{ContractID},\$Param{RuleID}]               
+    );
+
+    my $Data = [];
+
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $Data = {
+            ID          => $Data[0],
+            ContractID  => $Data[1],
+            Name        => $Data[2],
+            Recurrence  => $Data[3],
+            Hours       => $Data[4],
+            OrderNumber => $Data[5],
+        };        
+    }
+    
+    return $Data;
+}
+
+=item FranchiseRuleGet()
+
+#
+
+=cut
+
+sub PriceRuleGet {
+    my ( $Self, %Param ) = @_;
+    
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT 
+                id,
+                contract_id,
+                name,
+                value,
+                value_total,
+                order_number 
+            	FROM contract_price_rule
+                where contract_id = ?
+                AND id = ?  
+                ORDER BY order_number', 
+        Bind => [\$Param{ContractID},\$Param{RuleID}]               
+    );
+
+    my $Data = [];
+
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $Data = {
+            ID          => $Data[0],
+            ContractID  => $Data[1],
+            Name        => $Data[2],
+            Value       => $Data[3],
+            ValueTotal  => $Data[4],
+            OrderNumber => $Data[5],
+        };        
+    }
+    
+    return $Data;
+}
+
 =item FranchiseRuleTicketTypeList()
 
 #
@@ -656,10 +736,10 @@ sub FranchiseRuleServiceList {
 
     while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
         push @{ $Data },{
-            ID            => $Data[0],
-            ContractFranchiseRuleID          => $Data[1],
-            ServiceID          => $Data[2],
-            ServiceName          => $Data[3]
+            ID                        => $Data[0],
+            ContractFranchiseRuleID   => $Data[1],
+            ServiceID                 => $Data[2],
+            ServiceName               => $Data[3]
         };
     }
     
@@ -1367,140 +1447,29 @@ sub FranchiseRuleHoursUpd {
 
 }
 
-=item FranchiseRuleTicketTypeUpd()
+=item PriceRuleHoursUpd()
 
 ###
 
 =cut
 
-sub FranchiseRuleTicketTypeUpd {
+sub PriceRuleHoursUpd {
     my ( $Self, %Param ) = @_;
 
-    for (qw(ContractFranchiseRuleID TicketTypeID)) {
+    for (qw(ContractPriceRuleID Hours ContractID)) {
         if ( !defined( $Param{$_} ) ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 	
-	# update FranchiseRuleTicketType
+	# update FranchiseRuleRecurrence
 	return if !$Self->{DBObject}->Do(
 		SQL =>
-			'UPDATE franchise_rule_ticket_type SET ticket_type_id = ?'
-			. ' WHERE contract_franchise_rule_id = ?',
-		Bind => [ \$Param{TicketTypeID}, \$Param{ContractFranchiseRuleID}, ]
-	);
-    
-    return 1;
-
-}
-
-=item FranchiseRuleTreatmentTypeUpd()
-
-###
-
-=cut
-
-sub FranchiseRuleTreatmentTypeUpd {
-    my ( $Self, %Param ) = @_;
-
-    for (qw(ContractFranchiseRuleID TreatmentType)) {
-        if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
-	
-	# update FranchiseRuleTreatmentType
-	return if !$Self->{DBObject}->Do(
-		SQL =>
-			'UPDATE franchise_rule_treatment_type SET treatment_type = ?'
-			. ' WHERE contract_franchise_rule_id = ?',
-		Bind => [ \$Param{TreatmentType}, \$Param{ContractFranchiseRuleID}, ]
-	);
-    
-    return 1;
-
-}
-
-=item FranchiseRuleSlaUpd()
-
-###
-
-=cut
-
-sub FranchiseRuleSlaUpd {
-    my ( $Self, %Param ) = @_;
-
-    for (qw(ContractFranchiseRuleID SLAID)) {
-        if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
-	
-	# update FranchiseRuleSLA
-	return if !$Self->{DBObject}->Do(
-		SQL =>
-			'UPDATE franchise_rule_sla SET sla_id = ?'
-			. ' WHERE contract_franchise_rule_id = ?',
-		Bind => [ \$Param{SLAID}, \$Param{ContractFranchiseRuleID}, ]
-	);
-    
-    return 1;
-
-}
-
-=item FranchiseRuleServiceUpd()
-
-###
-
-=cut
-
-sub FranchiseRuleServiceUpd {
-    my ( $Self, %Param ) = @_;
-
-    for (qw(ContractFranchiseRuleID ServiceID)) {
-        if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
-	
-	# update FranchiseRuleService
-	return if !$Self->{DBObject}->Do(
-		SQL =>
-			'UPDATE franchise_rule_service SET service_id = ?'
-			. ' WHERE contract_franchise_rule_id = ?',
-		Bind => [ \$Param{ServiceID}, \$Param{ContractFranchiseRuleID}, ]
-	);
-    
-    return 1;
-
-}
-
-=item FranchiseRuleHourTypeUpd()
-
-###
-
-=cut
-
-sub FranchiseRuleHourTypeUpd {
-    my ( $Self, %Param ) = @_;
-
-    for (qw(ContractFranchiseRuleID HourType)) {
-        if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
-	
-	# update FranchiseRuleHourType
-	return if !$Self->{DBObject}->Do(
-		SQL =>
-			'UPDATE franchise_rule_hour_type SET hour_type = ?'
-			. ' WHERE contract_franchise_rule_id = ?',
-		Bind => [ \$Param{HourType}, \$Param{ContractFranchiseRuleID}, ]
+			'UPDATE contract_price_rule SET value = ?'
+			. ' WHERE id = ?'
+			. ' AND contract_id = ?',
+		Bind => [ \$Param{Hours}, \$Param{ContractPriceRuleID}, \$Param{ContractID}, ]
 	);
     
     return 1;
@@ -1740,6 +1709,144 @@ sub CustomerContractFranchiseRuleRemove {
 
     $Self->{DBObject}->Do(
         SQL => 'delete from contract_franchise_rule where id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
+=item CustomerContractPriceRuleRemoveToUpdate()
+
+#
+
+=cut
+
+sub CustomerContractPriceRuleRemoveToUpdate {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+   return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_price_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID          => $Data[0],
+            OrderNumber              => $Data[1],
+        };
+    }
+
+    $Self->{DBObject}->Do(
+        SQL => ' delete from price_rule_treatment_type where contract_price_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => ' delete from price_rule_sla where contract_price_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => ' delete from price_rule_service where contract_price_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => ' delete from price_rule_ticket_type where contract_price_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+ 
+    $Self->{DBObject}->Do(
+        SQL => ' delete from price_rule_hour_type where contract_price_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    return 1;
+
+}
+
+=item CustomerContractFranchiseRuleRemoveToUpdate()
+
+#
+
+=cut
+
+sub CustomerContractFranchiseRuleRemoveToUpdate {
+    my ( $Self, %Param ) = @_;
+
+    for (qw(ID)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT contract_id, order_number from contract_franchise_rule where id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    my $RetData;
+    
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        $RetData = {
+            ContractID  => $Data[0],
+            OrderNumber => $Data[1],
+        };
+    }
+
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_ticket_type where contract_franchise_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_treatment_type where contract_franchise_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_sla where contract_franchise_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_service where contract_franchise_rule_id = ?',
+        Bind => [
+            \$Param{ID},
+        ],
+    );
+
+    $Self->{DBObject}->Do(
+        SQL => 'delete from franchise_rule_hour_type where contract_franchise_rule_id = ?',
         Bind => [
             \$Param{ID},
         ],

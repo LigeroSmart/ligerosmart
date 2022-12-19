@@ -28,80 +28,157 @@ Core.Agent.Admin = Core.Agent.Admin || {};
 Core.Agent.Admin.CustomerContract = (function (TargetNS) {
 
     /**
-     * @private
-     * @name KeysWithoutSubkeys
-     * @memberof Core.Agent.Admin.CustomerContract
-     * @member {Array}
-     * @description
-     *      KeysWithoutSubkeys
-     */
-    var myForm = document.getElementById("formAddFranchiseRule"),
-        elementRuleID =  myForm.elements.namedItem('RuleID'),
-        ButtonAddPriceRole = $("button.Primary[id='btnNewPriceRule']").first();
-
-    /**
      * @name Init
      * @memberof Core.Agent.Admin.CustomerContract
      * @function
      * @description
      *      This function initialize the module.
      */
-    TargetNS.Init = function() {
+    TargetNS.Init = function() { 
+        var Subaction = Core.Config.Get('Subaction');       
 
-        //alert("Alder");    
+        InitCustomerContractsRules();        
 
-        $('a.AsPopup').on('click', function () {
-
-            alert('Alder');
-            var Matches,
-                PopupType = 'Process';
-
-            Matches = $(this).attr('class').match(/PopupType_(\w+)/);
-            if (Matches) {
-                PopupType = Matches[1];
-            }
-
-            if (PopupType !== 'ProcessOverview') {
-                TargetNS.ShowOverlay();
-            }
-
-            Core.UI.Popup.OpenPopup($(this).attr('href'), PopupType);
-            return false;
-        });
-
+        TargetNS.HideForms();
     };
-
+    
     /**
-     * @name ShowOverlay
-     * @memberof Core.Agent.Admin.ProcessManagement
-     * @function
-     * @description
-     *      Opens overlay.
-     */
-    TargetNS.ShowOverlay = function () {
-        $('<div id="Overlay" tabindex="-1">').appendTo('body');
-        $('body').css({
-            'overflow': 'hidden'
-        });
-        $('#Overlay').height($(document).height()).css('top', 0);
-
-        // If the underlying page is perhaps to small, we extend the page to window height for the dialog
-        $('body').css('min-height', $(window).height());
-    };
-
-    /**
-     * @name HideOverlay
-     * @memberof Core.Agent.Admin.ProcessManagement
+     * @name HideForms
+     * @memberof Core.Agent.Admin.CustomerContract
      * @function
      * @description
      *      Closes overlay and restores normal view.
      */
-    TargetNS.HideOverlay = function () {
-        $('#Overlay').remove();
-        $('body').css({
-            'overflow': 'visible',
-            'min-height': 0
+     TargetNS.HideForms = function () {
+        $("form.formAddRule").css({
+            'display': 'none'
+        });      
+    };    
+
+    /**
+     * @private
+     * @name InitProcessPopups
+     * @memberof Core.Agent.Admin.CustomerContract
+     * @function
+     * @description
+     *      Initializes needed popup handler.
+     */
+    function InitCustomerContractsRules() {
+        var BorrowedViewJS = Core.Config.Get('BorrowedViewJS'),
+            OverviewUpdate = Core.Config.Get('OverviewUpdate'),
+            EditFranchiseRole = Core.Config.Get('EditFranchiseRole'),
+            EditPriceRole = Core.Config.Get('EditPriceRole');        
+
+        $("#btnNewPriceRule").on("click",function(Event){
+            $("#formAddPriceRule").show();
+            $("#btnNewPriceRule").hide();
+
+            Event.preventDefault();
+            return false;
         });
+
+        $("#btnCancelAddPriceRule").on("click",function(Event){
+            $("#formAddPriceRule").hide();
+            $("#btnNewPriceRule").show();
+
+            Event.preventDefault();
+            return false;
+        });
+
+        $("#btnNewFranchiseRule").on("click",function(Event){
+            $("#formAddFranchiseRule").show();
+            $("#btnNewFranchiseRule").hide();
+
+            Event.preventDefault();
+            return false;
+        });
+
+        $("#btnCancelAddFranchiseRule").on("click",function(Event){
+            $("#formAddFranchiseRule").hide();
+            $("#btnNewFranchiseRule").show();
+
+            Event.preventDefault();
+            return false;
+        });
+        
+        $("#FromDateEdit").on("click",function(Event){
+            $('div.FromDateEdit').css({'display':''});
+            $('div.FromDateNoEdit').css({'display':'none'});
+
+            Event.preventDefault();
+            return false;
+        }); 
+
+        $("#ToDateEdit").on("click",function(Event){
+            $('div.ToDateEdit').css({'display':''});
+            $('div.ToDateNoEdit').css({'display':'none'});
+
+            Event.preventDefault();
+            return false;
+        });         
+        
+        $("#ToDateEdit").on("click",function(Event){
+            $("#formAddFranchiseRule").hide();
+            $("#btnNewFranchiseRule").show();
+
+            Event.preventDefault();
+            return false;
+        });         
+
+        if (typeof EditFranchiseRole !== 'undefined') {
+            $("#btnNewFranchiseRule").hide();
+            $("#ZonePriceRule").hide();
+            $("#ZoneCustomer").hide();
+        } else if (typeof EditPriceRole !== 'undefined') {
+            $("#btnNewPriceRule").hide();
+            $("#ZoneFranchiseRule").hide();
+            $("#ZoneCustomer").hide();
+        }         
+
+        if (typeof BorrowedViewJS !== 'undefined') {
+            $('#CustomerTable a').bind('click', function (Event) {
+                Core.Agent.TicketAction.UpdateCustomer($(this).text());
+
+                Event.preventDefault();
+                return false;
+            });
+        }
+
+        if (typeof OverviewUpdate !== 'undefined') {
+            TargetNS.SetViewDateType();
+            $('input[name=DateType]').on('change',function(){TargetNS.SetViewDateType();});        
+        }
+
+        $('span.Actions').css({
+            'white-space':'nowrap'
+        });  
+        
+        $('div.ToDateEdit').css({
+            'display':'none'
+        });
+
+        $('div.FromDateEdit').css({
+            'display':'none'
+        });        
+
+    };
+
+    /**
+     * @name SetViewDateType
+     * @memberof Core.Agent.Admin.CustomerContract
+     * @function
+     * @description
+     *      Closes overlay and restores normal view.
+     */
+     TargetNS.SetViewDateType = function (){
+        if($('input[name=DateType]:checked').val() == 0){
+            $(".relativePeriodContent").hide();
+            $(".absolutPeriodContent").show();
+        }
+        else{
+            $(".relativePeriodContent").show();
+            $(".absolutPeriodContent").hide();
+        }
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
