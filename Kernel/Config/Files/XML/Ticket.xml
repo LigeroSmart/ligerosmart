@@ -12008,7 +12008,7 @@ Thanks for your help!
                     </Item>
                     <Item Key="Description" Translatable="1">This module is part of the admin area of OTRS.</Item>
                     <Item Key="Title" Translatable="1">Dynamic Fields Text Backend GUI</Item>
-                    <Item Key="NavBarName"></Item>
+                    <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
         </Value>
@@ -12045,7 +12045,7 @@ Thanks for your help!
                     </Item>
                     <Item Key="Description" Translatable="1">This module is part of the admin area of OTRS.</Item>
                     <Item Key="Title" Translatable="1">Dynamic Fields Checkbox Backend GUI</Item>
-                    <Item Key="NavBarName"></Item>
+                    <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
         </Value>
@@ -12082,7 +12082,7 @@ Thanks for your help!
                     </Item>
                     <Item Key="Description" Translatable="1">This module is part of the admin area of OTRS.</Item>
                     <Item Key="Title" Translatable="1">Dynamic Fields Drop-down Backend GUI</Item>
-                    <Item Key="NavBarName"></Item>
+                    <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
         </Value>
@@ -12124,7 +12124,7 @@ Thanks for your help!
                     </Item>
                     <Item Key="Description" Translatable="1">This module is part of the admin area of OTRS.</Item>
                     <Item Key="Title" Translatable="1">Dynamic Fields Date Time Backend GUI</Item>
-                    <Item Key="NavBarName"></Item>
+                    <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
         </Value>
@@ -12166,7 +12166,7 @@ Thanks for your help!
                     </Item>
                     <Item Key="Description" Translatable="1">This module is part of the admin area of OTRS.</Item>
                     <Item Key="Title" Translatable="1">Dynamic Fields Multiselect Backend GUI</Item>
-                    <Item Key="NavBarName"></Item>
+                    <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
         </Value>
