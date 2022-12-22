@@ -9021,4 +9021,51 @@ via the Preferences button after logging in.
             </Array>
         </Value>
     </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###Ligero.DynamicFieldsPlus" Required="0" Valid="1">
+        <Description Translatable="1">Output filter for DynamicFieldsPlus Module.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Ligero::DynamicFieldsPlus</Item>
+<!--                <Item Key="Debug">0</Item>-->
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AdminDynamicFieldText">1</Item>
+                        <Item Key="AdminDynamicFieldCheckbox">1</Item>
+                        <Item Key="AdminDynamicFieldDateTime">1</Item>
+                        <Item Key="AdminDynamicFieldDropdown">1</Item>
+                        <Item Key="AdminDynamicFieldFile">1</Item>
+                        <Item Key="AdminDynamicFieldMultiselect">1</Item>
+                        <Item Key="AdminDynamicFieldCustomerUser">1</Item>
+                        <Item Key="AdminDynamicFieldITSMConfigItem">1</Item>
+                        <Item Key="AdminDynamicFieldJsonAPI">1</Item>
+                        <Item Key="AdminDynamicFieldTextMask">1</Item>
+                        <Item Key="AdminDynamicFieldRemoteDB">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###DynamicFieldsPlus" Required="1" Valid="1">
+        <Description Lang="en">Frontend module registration for the DynamicFieldsPlus</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Title">DynamicFieldsPlus</Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">DynamicFieldsPlus</Item>
+                    <Item Key="NavBarName">Admin</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
 </otrs_config>
