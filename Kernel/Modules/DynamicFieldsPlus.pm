@@ -90,13 +90,6 @@ sub Run {
                     }
                 }
             }
-
-            # Dump ValRetorno
-            # $Kernel::OM->Get('Kernel::System::Log')->Log(
-            #     Priority => 'error',
-            #     Message  => Dumper($ValRetorno),
-            # );
-
         }
 
         my $JSON = $LayoutObject->JSONEncode(
@@ -133,28 +126,10 @@ sub Run {
 
             my $value = $AreasList{$key};
 
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "------------------------------- $key ---- $value",
-            );
             if($value == 1){
                 my %Setting = $SysConfigObject->SettingGet(
                     Name        => $key,
                     Deployed    => 0,
-                );
-
-                #log
-                $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    Priority => 'error',
-                    Message  => "Effective".Dumper($Setting{EffectiveValue}),
-                );
-
-                # $Setting{EffectiveValue}->{$DataReceived->{dynamicFieldName}} = $DataReceived->{visibilities}->{$key};
-
-                # log
-                $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    Priority => 'error',
-                    Message  => "CHCHCHCHCHCHCHCHCHCHCHCHCHCHHC ".Dumper($Setting{EffectiveValue}),
                 );
 
                 my %EffectiveValue = (
@@ -162,20 +137,11 @@ sub Run {
                     $DataReceived->{dynamicFieldName} => $DataReceived->{visibilities}->{$key},
                 );
 
-
-
                 my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
                     UserID    => $Self->{UserID},
                     Force     => 1,
                     DefaultID => $Setting{DefaultID},
                 );
-
-                # log
-                $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    Priority => 'error',
-                    Message  => "ExclusiveLockGUID".Dumper($ExclusiveLockGUID),
-                );
-
 
                 my %Success = $Kernel::OM->Get("Kernel::System::SysConfig")->SettingUpdate(
                     Name              => $key,
@@ -185,13 +151,6 @@ sub Run {
                     UserID            => $Self->{UserID},
                     # TargetUserID      => $Self->{UserID},
                 );
-
-                # log
-                $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    Priority => 'error',
-                    Message  => "Success".Dumper(%Success),
-                );
-
 
                 my $Success = $Kernel::OM->Get("Kernel::System::SysConfig")->SettingUnlock(
                     UserID    => $Self->{UserID},
@@ -210,10 +169,8 @@ sub Run {
                         Deployed => 0,
                         NoCache  => 1,
                     );
-                    # $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    #     Priority => 'error',
-                    #     Message  => Dumper(\%SettingGroup),
-                    # );
+
+                    my %EffectiveValueGroups;
                     foreach my $keya (sort keys %{$SettingGroup{EffectiveValue}}) {
                         my @values = split(',', $SettingGroup{EffectiveValue}->{$keya});
                         my @newValues;
@@ -222,13 +179,13 @@ sub Run {
                                 push @newValues,$val;
                             }
                         }
-                        $SettingGroup{EffectiveValue}->{$keya} = join(',', @newValues);
+                        $EffectiveValueGroups{$keya} = join(',', @newValues);
                     }
 
                     if($DataReceived->{widgetGroup}){
                         my @values = split(',', $SettingGroup{EffectiveValue}->{$DataReceived->{widgetGroup}});
                         push @values,$DataReceived->{dynamicFieldName};
-                        $SettingGroup{EffectiveValue}->{$DataReceived->{widgetGroup}} = join(',', @values);
+                        $EffectiveValueGroups{$DataReceived->{widgetGroup}} = join(',', @values);
                     }
 
                     my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
@@ -236,14 +193,10 @@ sub Run {
                         Force     => 1,
                         DefaultID => $SettingGroup{DefaultID},
                     );
-                    # log SettingGroup
-                    # $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    #     Priority => 'error',
-                    #     Message  => Dumper(\%SettingGroup),
-                    # );
+
                     my %Success = $Kernel::OM->Get("Kernel::System::SysConfig")->SettingUpdate(
                         Name              => 'Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicFieldGroups',
-                        EffectiveValue    => $SettingGroup{EffectiveValue},
+                        EffectiveValue    => \%EffectiveValueGroups,
                         ExclusiveLockGUID => $ExclusiveLockGUID,
                         UserID            => $Self->{UserID},
                         NoValidation      => 1,
@@ -270,7 +223,11 @@ sub Run {
                     Deployed        => 0,
                 );
 
-                delete $Setting{EffectiveValue}->{$DataReceived->{dynamicFieldName}};
+                my %EffectiveValue = (
+                    %{$Setting{EffectiveValue}},
+                );
+
+                delete $EffectiveValue{$DataReceived->{dynamicFieldName}};
 
                 my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
                     UserID    => $Self->{UserID},
@@ -280,7 +237,7 @@ sub Run {
 
                 my $Success = $Kernel::OM->Get("Kernel::System::SysConfig")->SettingUpdate(
                     Name              => $key,
-                    EffectiveValue    => $Setting{EffectiveValue},
+                    EffectiveValue    => \%EffectiveValue,
                     ExclusiveLockGUID => $ExclusiveLockGUID,
                     UserID            => $Self->{UserID},
                 );
@@ -304,11 +261,6 @@ sub Run {
                         NoCache         => 1,
                     );
 
-# log setting group
-                    # $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    #     Priority => 'error',
-                    #     Message  => "Setting Group: ".Dumper(\%SettingGroup),
-                    # );
                     foreach my $keya (sort keys %{$SettingGroup{EffectiveValue}}) {
                         my @values = split(',', $SettingGroup{EffectiveValue}->{$keya});
                         my @newValues;
