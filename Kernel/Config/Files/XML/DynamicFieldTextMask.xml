@@ -46,7 +46,7 @@
                     </Item>
                     <Item Key="Description">Admin</Item>
                     <Item Key="Title" Translatable="1">Dynamic Fields Text Backend GUI</Item>
-                    <Item Key="NavBarName"></Item>
+                    <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
         </Value>
