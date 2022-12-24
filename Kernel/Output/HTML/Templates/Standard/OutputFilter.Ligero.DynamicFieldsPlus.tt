@@ -168,8 +168,7 @@
 
 	$("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField_Search").on("keyup",val=>{
 		var key = val.which || val.keyCode;
-		if (key == 13) { // codigo da tecla enter
-			// colocas aqui a tua função a rodar
+		if (key == 13) {
 			var exists = false;
 			$('#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField > option').each(function() {
 				if($(this).val() === $("#GroupTicketFrontendAgentTicketZoomProcessWidgetDynamicField_Search").val()){

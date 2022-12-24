@@ -30,17 +30,122 @@ sub Run {
     }
 
     my %AreasList = (
-	        "Ticket::Frontend::AgentTicketPhone###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Iterface - New Phone Ticket'),
-	        "Ticket::Frontend::CustomerTicketMessage###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Customer Interface - New Ticket'),
-            "Ticket::Frontend::AgentTicketZoom###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - Ticket Zoom'),
-            "Ticket::Frontend::CustomerTicketZoom###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Customer Interface - Ticket Zoom'),
-            "Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - Process Widget'),
-            "Ticket::Frontend::AgentTicketEmail###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - New Email Ticket'),
-            "Ticket::Frontend::AgentTicketSearch###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - Allow ticket search'),
-            "Ticket::Frontend::OverviewSmall###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - Allow show as column on ticket lists'),
-            "Ticket::Frontend::AgentTicketFreeText###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - Free Text'),
-            "Ticket::Frontend::AgentTicketNote###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - Note'),
-            "Ticket::Frontend::AgentTicketClose###DynamicField" => $LayoutObject->{LanguageObject}->Translate('Agent Interface - Close'),
+            "Ticket::Frontend::AgentTicketZoom###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Ticket Zoom'
+                    ),
+            "Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Process Widget'
+                    ),
+            "Ticket::Frontend::AgentTicketLigeroSmartClassification###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Smart Classification'
+                    ),
+            "Ticket::Frontend::AgentTicketPhone###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - New Phone Ticket'
+                    ),
+            "Ticket::Frontend::AgentTicketEmail###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - New Email Ticket'
+                    ),
+            "Ticket::Frontend::AgentTicketCompose###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - New Reply'
+                    ),
+            "Ticket::Frontend::AgentTicketSearch###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Search'
+                    ),
+            "Ticket::Frontend::OverviewSmall###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - List of Tickets'
+                    ),
+            "Ticket::Frontend::AgentTicketFreeText###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Free Text'
+                    ),
+            "Ticket::Frontend::AgentTicketNote###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - New Note'
+                    ),
+            "Ticket::Frontend::AgentTicketClose###DynamicField" =>
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Close'
+                    ),
+            "Ticket::Frontend::CustomerTicketMessage###DynamicField" => 
+            $LayoutObject->{LanguageObject}->Translate(
+                    'Customer - New Ticket'
+                    ),
+            "Ticket::Frontend::CustomerTicketZoom###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Customer - Ticket Zoom'
+                    ),
+            "Ticket::Frontend::CustomerTicketOverview###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Customer - List of Tickets'
+                    ),
+            "Ticket::Frontend::AgentTicketAddtlITSMField###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Additional ITSM Fields'
+                    ),
+            "Ticket::Frontend::AgentTicketArticleEdit###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Edit Article'
+                    ),
+            "Ticket::Frontend::AgentTicketDecision###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Decision'
+                    ),
+            "Ticket::Frontend::AgentTicketEmailOutbound###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Outbound Email'
+                    ),
+            "Ticket::Frontend::AgentTicketForward###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Forward'
+                    ),
+            "Ticket::Frontend::AgentTicketMove###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Move'
+                    ),
+            "Ticket::Frontend::AgentTicketOwner###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Owner'
+                    ),
+            "Ticket::Frontend::AgentTicketPending###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Pending'
+                    ),
+            "Ticket::Frontend::AgentTicketPhoneInbound###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Inbound Phone'
+                    ),
+            "Ticket::Frontend::AgentTicketPhoneOutbound###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Outbound Phone'
+                    ),
+            "Ticket::Frontend::AgentTicketPrint###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Print'
+                    ),
+            "Ticket::Frontend::AgentTicketPriority###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Priority'
+                    ),
+            "Ticket::Frontend::AgentTicketResponsible###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Agent - Responsible'
+                    ),
+            "Ticket::Frontend::CustomerTicketSearch###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Customer - Search'
+                    ),
+            "Ticket::Frontend::CustomerTicketPrint###DynamicField" => 
+                $LayoutObject->{LanguageObject}->Translate(
+                    'Customer - Print'
+                    ),
 	    );
 	 $Data{Areas} = $LayoutObject->BuildSelection(
         Data         => \%AreasList,
@@ -53,7 +158,7 @@ sub Run {
         Size        => 8,
     );
 
-    foreach my $key (sort keys %AreasList) {
+    foreach my $key (sort { $AreasList{$a} cmp $AreasList{$b}} keys %AreasList) {
         my $value = $AreasList{$key};
 
         my %DataSub = ();
@@ -79,7 +184,7 @@ sub Run {
 
         $DataSub{FieldName} = $fieldName;
 
-        $DataSub{FieldLabel} = $LayoutObject->{LanguageObject}->Translate("Visibility ").$value;
+        $DataSub{FieldLabel} = $value;
 
         if($key eq "Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicField"){
 
@@ -88,7 +193,7 @@ sub Run {
             );
 
             my %Groups = (
-                "Default" => "Default"
+                "Default" => $LayoutObject->{LanguageObject}->Translate('Default'),
             );
 
             foreach my $key2 (sort keys %{$Setting{EffectiveValue}}){
@@ -101,12 +206,13 @@ sub Run {
                 Translation  => 0,
                 PossibleNone => 1,
                 Class       => 'Modernize',
+                Multiple    => 1,
                 Size        => 8,
             );
 
-            $DataSub{GroupFieldName} = "Group".$fieldName;
+            $DataSub{GroupFieldName} = $fieldName;
 
-            $DataSub{GroupFieldLabel} = $LayoutObject->{LanguageObject}->Translate("Group ").$value;
+            $DataSub{GroupFieldLabel} = "Show in these groups";
             
             $LayoutObject->Block(
                 Name => 'VisibilityWid',

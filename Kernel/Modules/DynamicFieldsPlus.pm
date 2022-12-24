@@ -30,21 +30,39 @@ sub Run {
     my $JSONObject = $Kernel::OM->Get('Kernel::System::JSON');
 
     my %AreasList = (
-        "Ticket::Frontend::AgentTicketPhone###DynamicField" => 0,
         "Ticket::Frontend::CustomerTicketMessage###DynamicField" => 0,
-        "Ticket::Frontend::AgentTicketZoom###DynamicField" => 0,
         "Ticket::Frontend::CustomerTicketZoom###DynamicField" => 0,
+        "Ticket::Frontend::CustomerTicketOverview###DynamicField" => 0,      
+        "Ticket::Frontend::AgentTicketPhone###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketZoom###DynamicField" => 0,
         "Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicField" => 0,
         "Ticket::Frontend::AgentTicketEmail###DynamicField" => 0,
         "Ticket::Frontend::AgentTicketSearch###DynamicField" => 0,
-        "Ticket::Frontend::OverviewSmall###DynamicField" => 0,
         "Ticket::Frontend::AgentTicketFreeText###DynamicField" => 0,
         "Ticket::Frontend::AgentTicketNote###DynamicField" => 0,
         "Ticket::Frontend::AgentTicketClose###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketCompose###DynamicField" => 0,
+        "Ticket::Frontend::OverviewSmall###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketLigeroSmartClassification###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketAddtlITSMField###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketArticleEdit###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketDecision###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketEmailOutbound###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketForward###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketMove###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketOwner###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketPending###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketPhoneInbound###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketPhoneOutbound###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketPrint###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketPriority###DynamicField" => 0,
+        "Ticket::Frontend::AgentTicketResponsible###DynamicField" => 0,
+        "Ticket::Frontend::CustomerTicketSearch###DynamicField" => 0,
+        "Ticket::Frontend::CustomerTicketPrint###DynamicField" => 0,
     );
 
     # ------------------------------------------------------------ #
-    # AllocateDynamicField
+    # Get Field display areas and process groups
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'GetAllocateDynamicField' ) {
 
@@ -81,12 +99,12 @@ sub Run {
                 Deployed        => 0,
             );
 
-            foreach my $key2 (sort keys %{$SettingGroup{EffectiveValue}}){
-                my @values = split(',', $SettingGroup{EffectiveValue}->{$key2});
-                my @newValues;
-                foreach my $val (@values) {
-                    if($val eq $DataReceived->{dynamicFieldName}){
-                        $ValRetorno->{widgetGroup} = $key2;
+            # Get all groups where the dynamic field is allocated
+            for my $group ( sort keys %{$SettingGroup{EffectiveValue}} ) {
+                my @values = split( ',', $SettingGroup{EffectiveValue}->{$group} );
+                for my $value (@values) {
+                    if ( $value eq $DataReceived->{dynamicFieldName} ) {
+                        push @{$ValRetorno->{widgetGroup}}, $group;
                     }
                 }
             }
@@ -183,9 +201,16 @@ sub Run {
                     }
 
                     if($DataReceived->{widgetGroup}){
-                        my @values = split(',', $SettingGroup{EffectiveValue}->{$DataReceived->{widgetGroup}});
-                        push @values,$DataReceived->{dynamicFieldName};
-                        $EffectiveValueGroups{$DataReceived->{widgetGroup}} = join(',', @values);
+                        # for each group in widgetGroup
+                        foreach my $group (@{$DataReceived->{widgetGroup}}){
+                            if($EffectiveValueGroups{$group}){
+                                my @values = split(',', $EffectiveValueGroups{$group});
+                                push @values,$DataReceived->{dynamicFieldName};
+                                $EffectiveValueGroups{$group} = join(',', @values);
+                            }else{
+                                $EffectiveValueGroups{$group} = $DataReceived->{dynamicFieldName};
+                            }
+                        }
                     }
 
                     my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
@@ -254,6 +279,7 @@ sub Run {
                 #    DirtySettings => [$key],
                 #);
 
+                # Check for ProcessWidgetDynamicFieldGroups
                 if($key eq "Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicField"){
                     my %SettingGroup = $SysConfigObject->SettingGet(
                         Name    => "Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicFieldGroups",
