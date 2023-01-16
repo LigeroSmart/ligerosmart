@@ -143,7 +143,8 @@
 
 .Login input[type='text'],
 .Login input[type='email'],
-.Login input[type='password']  {
+.Login input[type='password'],
+.Login input[name='ListType']   {
     width: 177px;
     padding: 3px 5px;
     font-size: 14px;
@@ -246,7 +247,8 @@ a #ForgotPassword {
 }
 
 .JavaScriptAvailable .Login input[type='text'],
-.JavaScriptAvailable .Login input[type='password'] {
+.JavaScriptAvailable .Login input[type='password'],
+.JavaScriptAvailable .Login input[name='ListType'] {
     margin: 0;
     position: relative;
     width: 118%;
@@ -259,7 +261,17 @@ a #ForgotPassword {
 	background-color: #F2F2F2;
 	cursor: text;
 }
-
+/**
+input[name='ListType']::-webkit-calendar-picker-indicator {
+    display: none;/ remove default arrow /
+}
+.myarrow:after {
+    content: url(https://i.stack.imgur.com/i9WFO.png);
+    margin-left: -40px; 
+    padding: .1em;
+    pointer-events:none;
+}
+*/
 .Option {
 	padding: 0 16px 3px;
     line-height: 21px;
@@ -277,7 +289,8 @@ a #ForgotPassword {
 }
 
 #Signup input[type='text'],
-#Signup input[type='email'] {
+#Signup input[type='email'],
+#Signup input[name='ListType']  {
     margin: 0;
     position: relative;
     width: 118%;

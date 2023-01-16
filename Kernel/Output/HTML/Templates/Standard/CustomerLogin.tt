@@ -56,6 +56,18 @@
                     <input type="hidden" name="RequestedURL" value="[% Data.RequestedURL | html %]"/>
                     <input type="hidden" name="Lang" value="[% Env("UserLanguage") | html %]"/>
                     <input type="hidden" name="TimeZoneOffset" id="TimeZoneOffset" value=""/>
+[% RenderBlockStart("SelectTypeUser") %]   
+                    <input type="hidden" name="TypeUser" id="TypeUser" value=""/>           
+                    <div>                    
+                        <!--<input list="AllTypes" type="text" id="ListType" name="ListType" onfocus="this.value=''" onchange="this.blur();" placeholder ="[% Translate("Type access") | html %]">-->
+                        <span class="myarrow"><input list="AllTypes" id="ListType" name="ListType" onfocus="this.value=''" onchange="this.blur();" placeholder ="[% Translate("Type access") | html %]"></span>
+                        <datalist id="AllTypes">
+[% RenderBlockStart("UserItemType") %]                        
+                            <option value="[% Translate(Data.ItemValue) %]" id="[% Data.ItemKey %]"></option>
+[% RenderBlockEnd("UserItemType") %]
+                        </datalist>          
+                    </div>
+[% RenderBlockEnd("SelectTypeUser") %]
                     <div>
                         <label for="User">[% Translate("User name") | html %]</label>
                         <input autocorrect="off" autocapitalize="off" autocomplete="[% Data.UserNameAutocomplete %]" title="[% Translate("Your user name") | html %]" type="text" name="User" id="User" maxlength="150" />

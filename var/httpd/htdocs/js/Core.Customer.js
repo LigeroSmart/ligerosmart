@@ -92,6 +92,26 @@ Core.Customer = (function (TargetNS) {
         $('.TriggerFullErrorDetails').on('click', function() {
             $('.Content.ErrorDetails').toggle();
         });
+
+        var listtype = document.getElementById("ListType");
+        if (listtype) {
+            listtype.addEventListener("input", function(event){         
+                var el=$("#ListType")[0];  //used [0] is to get HTML DOM not jquery Object
+                var dl=$("#AllTypes")[0];
+                var inputtype=document.getElementById('TypeUser');
+                inputtype.value = '';
+                if(el.value.trim() != ''){
+                    var opSelected = dl.querySelector(`[value="${el.value}"]`);
+                    inputtype.value = opSelected.getAttribute('id');
+                    document.getElementById("User").focus();
+                }           
+            }) 
+        }     
+
+        $("#ListType").on('click', function() {
+            var inputtype=document.getElementById('TypeUser');
+            inputtype.value = '';
+        });        
     };
 
     /**
