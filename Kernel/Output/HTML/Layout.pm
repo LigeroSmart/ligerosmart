@@ -3975,6 +3975,7 @@ sub CustomerLogin {
         # show tyoe input if we have at least one backend enabled Alder
         COUNT:
         for my $Count ( '', 1 .. 10 ) {
+            next COUNT if !$ConfigObject->Get("Customer::AuthModule$Count");
             next COUNT if $ConfigObject->Get("Customer::AuthModule$Count") ne "Kernel::System::CustomerAuth::RESTAPIAuth";
 
             # 
