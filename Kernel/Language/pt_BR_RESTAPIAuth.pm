@@ -21,10 +21,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    $Self->{Translation} = {'Doctor'} = 'Médico';
-    $Self->{Translation} = {'Academic'} = 'Acadêmico';
-    $Self->{Translation} = {'Collaborator'} = 'Colaborador';
-    $Self->{Translation} = {'Type access'} = 'Tipo de acesso';
+    $Self->{Translation}->{'Doctor'} = 'Médico';
+    $Self->{Translation}->{'Academic'} = 'Acadêmico';
+    $Self->{Translation}->{'Collaborator'} = 'Colaborador';
+    $Self->{Translation}->{'Type access'} = 'Tipo de acesso';
 
 }
 
