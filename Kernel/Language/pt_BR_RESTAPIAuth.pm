@@ -21,37 +21,11 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # $$START$$
-    # possible charsets
-    $Self->{Charset} = ['utf-8', ];
-    # date formats (%A=WeekDay;%B=LongMonth;%T=Time;%D=Day;%M=Month;%Y=Year;)
-    $Self->{DateFormat}          = '%D/%M/%Y %T';
-    $Self->{DateFormatLong}      = '%A %D %B %T %Y';
-    $Self->{DateFormatShort}     = '%D/%M/%Y';
-    $Self->{DateInputFormat}     = '%D/%M/%Y';
-    $Self->{DateInputFormatLong} = '%D/%M/%Y - %T';
-    $Self->{Completeness}        = 0.938367761598375;
+    $Self->{Translation} = {'Doctor'} = 'Médico';
+    $Self->{Translation} = {'Academic'} = 'Acadêmico';
+    $Self->{Translation} = {'Collaborator'} = 'Colaborador';
+    $Self->{Translation} = {'Type access'} = 'Tipo de acesso';
 
-    # csv separator
-    $Self->{Separator}         = ';';
-
-    $Self->{DecimalSeparator}  = ',';
-    $Self->{ThousandSeparator} = '.';
-    $Self->{Translation} = {
-
-        # 
-        'Doctor' => 'Médico',
-        'Academic' => 'Acadêmico',
-        'Collaborator' => 'Colaborador',
-        'Type access' => 'Tipo de acesso',
-    };
-
-    $Self->{JavaScriptStrings} = [
-        
-    ];
-
-    # $$STOP$$
-    return;
 }
 
 1;
