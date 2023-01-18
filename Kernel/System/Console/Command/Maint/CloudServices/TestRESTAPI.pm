@@ -4,6 +4,7 @@
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# otrs.Console.pl Maint::CloudServices::TestRESTAPI --Token 86739577-faf7-48de-8225-00c0c9d724a7 --URL https://portalapp.simers.org.br/external/auth/login --TypeReq POST --TypeLoginID 1 --UserLogin 19 --PasswordLogin Simers2022
 # --
 
 package Kernel::System::Console::Command::Maint::CloudServices::TestRESTAPI;
@@ -27,6 +28,48 @@ sub Configure {
     my ( $Self, %Param ) = @_;
 
     $Self->Description('Check Auth REST API services connectivity.');
+    $Self->AddOption(
+        Name        => 'Token',
+        Description => 'Enter the TOKEN for the API request.',
+        Required    => 1,
+        HasValue    => 1,
+        ValueRegex  => qr/.*/smx,
+    );
+    $Self->AddOption(
+        Name        => 'URL',
+        Description => 'Enter the URL for the API request.',
+        Required    => 1,
+        HasValue    => 1,
+        ValueRegex  => qr/.*/smx,
+    );
+    $Self->AddOption(
+        Name        => 'TypeReq',
+        Description => 'Enter the type of request.',
+        Required    => 1,
+        HasValue    => 1,
+        ValueRegex  => qr/.*/smx,
+    );
+    $Self->AddOption(
+        Name        => 'TypeLoginID',
+        Description => 'Inform the ID of the type of Login that will be performed.',
+        Required    => 1,
+        HasValue   => 1,
+        ValueRegex => qr/^\d+$/smx,
+    );
+    $Self->AddOption(
+        Name        => 'UserLogin',
+        Description => 'Enter the user to be used.',
+        Required    => 1,
+        HasValue    => 1,
+        ValueRegex  => qr/.*/smx,
+    );
+    $Self->AddOption(
+        Name        => 'PasswordLogin',
+        Description => 'Enter the password of the user to be used.',
+        Required    => 1,
+        HasValue    => 1,
+        ValueRegex  => qr/.*/smx,
+    );
 
     return;
 }
@@ -74,35 +117,27 @@ sub Run {
         $Self->Print("<yellow>Sending request...</yellow>\n\n");
     }
 
-    # prepare request data
-    my $RequestData = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
-        Data => {
-            token => "86739577-faf7-48de-8225-00c0c9d724a7",
-            username => "alder.pinto",
-            password => "Pass5793",
-            type => "5",
-            uf => "",            
-        },
-    );
+    my $RequestData = {
+        token => $Self->GetOption('Token'),
+        username => $Self->GetOption('UserLogin'),
+        password => $Self->GetOption('PasswordLogin'),
+        type => $Self->GetOption('TypeLoginID'),
+        uf => "",            
+    };    
 
     # remember the time when the request is sent
     my $TimeStartObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
     # send request
+
     my %Response = $Kernel::OM->Get('Kernel::System::WebUserAgent')->Request(
-        Type => 'POST',
-        URL  => 'https://portalapp.simers.org.br/external/auth/login',
-        Data => {
-            token => "86739577-faf7-48de-8225-00c0c9d724a7",
-            username => "alder.pinto",
-            password => "Pass5793",
-            type => "5",
-            uf => ""           
-        },
+        Type => $Self->GetOption('TypeReq'),
+        URL  => $Self->GetOption('URL'),
+        Data => $RequestData,
         Header => {
             Content_Type  => 'application/json',
         },
-    );
+    );    
 
     # calculate and print the time spent in the request
     my $TimeEndObject = $Kernel::OM->Create('Kernel::System::DateTime');
