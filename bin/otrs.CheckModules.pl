@@ -251,6 +251,17 @@ my @NeededModules = (
         },
     },
     {
+        Module    => 'DBD::MariaDB',
+        Required  => 0,
+        Comment   => 'Required to connect to a MariaDB database.',
+        InstTypes => {
+            aptget => 'libdbd-mariadb-perl',
+            emerge => 'dev-perl/DBD-mariadb',
+            zypper => 'perl-DBD-mariadb',
+            ports  => 'databases/p5-DBD-mariadb',
+        },
+    },
+    {
         Module               => 'DBD::ODBC',
         Required             => 0,
         VersionsNotSupported => [
