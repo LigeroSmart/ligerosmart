@@ -10616,7 +10616,7 @@ msgstr ""
 
 #. Template: GeneralSpecificationsWidget
 msgid "Result formats"
-msgstr "Formatos de Resutaldo"
+msgstr "Formatos de Resultado"
 
 #. Template: GeneralSpecificationsWidget
 msgid "Time Zone"

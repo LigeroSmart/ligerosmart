@@ -3153,7 +3153,7 @@ sub Data {
         'Permissions' => 'Permissões',
         'You can select one or more groups to define access for different agents.' =>
             'Você pode selecionar um ou mais grupos para definir o acesso de diferentes atendentes.',
-        'Result formats' => 'Formatos de Resutaldo',
+        'Result formats' => 'Formatos de Resultado',
         'Time Zone' => 'Fuso Horário',
         'The selected time periods in the statistic are time zone neutral.' =>
             'O período selecionado na estatística é neutro quanto ao fuso horário.',
