@@ -5,6 +5,7 @@
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # Kernel/System/Console/Command/Maint/Database/CheckConnectDB.pm
+# su -c "otrs.Console.pl Maint::Database::CheckConnectDB --type 'mysql' --dsn 'DBI:mysql:database=consulta_otrs;host=10.0.0.8;port=3306;' --user <> --password '<>' --sql 'SELECT 2+2'" -s /bin/bash otrs
 # --
 
 package Kernel::System::Console::Command::Maint::Database::CheckConnectDB;
