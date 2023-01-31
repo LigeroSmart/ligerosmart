@@ -45,9 +45,13 @@ sub Load {
     my $dbType = defined($ENV{APP_DatabaseType}) ? $ENV{APP_DatabaseType} : 'mysql';
 
     # The database DSN for MySQL ==> more: "perldoc DBD::mysql"
+    if($dbType eq 'mariadb') {
+        $Self->{'DatabaseDSN'} = "DBI:MariaDB:database=$Self->{Database};host=$Self->{DatabaseHost}";
+    }
+
     if($dbType eq 'mysql') {
         $Self->{'DatabaseDSN'} = "DBI:mysql:database=$Self->{Database};host=$Self->{DatabaseHost}";
-    }
+    }    
     
     # The database DSN for PostgreSQL ==> more: "perldoc DBD::Pg"
     # if you want to use a local socket connection

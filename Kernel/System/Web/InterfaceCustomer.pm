@@ -236,6 +236,10 @@ sub Run {
             Param => 'Password',
             Raw   => 1
         ) || '';
+        my $PostType   = $ParamObject->GetParam(
+            Param => 'TypeUser',
+            Raw   => 1
+        ) || '';
         my $PostTwoFactorToken = $ParamObject->GetParam(
             Param => 'TwoFactorToken',
             Raw   => 1
@@ -249,6 +253,7 @@ sub Run {
             User           => $PostUser,
             Pw             => $PostPw,
             TwoFactorToken => $PostTwoFactorToken,
+            UserType       => $PostType,
         );
 
         my $Expires = '+' . $ConfigObject->Get('SessionMaxTime') . 's';

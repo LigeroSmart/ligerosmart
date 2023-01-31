@@ -58,3 +58,6 @@ bin/DatabaseInstall.pl
 .cache
 .viminfo
 .bash*
+Kernel/Config.pm.SIMERS
+Kernel/Config.pm
+Kernel/Config.pm

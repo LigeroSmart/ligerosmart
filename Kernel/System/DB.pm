@@ -111,6 +111,9 @@ sub new {
     elsif ( $Self->{DSN} =~ /(mssql|sybase|sql server)/i ) {
         $Self->{'DB::Type'} = 'mssql';
     }
+    elsif ( $Self->{DSN} =~ /(mariadb)/i ) {
+        $Self->{'DB::Type'} = 'mariadb';
+    }
 
     # get database type (config option)
     if ( $ConfigObject->Get('Database::Type') ) {
@@ -135,7 +138,7 @@ sub new {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'Error',
             Message  => 'Unknown database type! Set option Database::Type in '
-                . 'Kernel/Config.pm to (mysql|postgresql|oracle|db2|mssql).',
+                . 'Kernel/Config.pm to (mariadb|mysql|postgresql|oracle|db2|mssql).',
         );
         return;
     }

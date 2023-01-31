@@ -826,7 +826,7 @@ sub Login {
         $Self->Block(
             Name => 'LoginBox',
             Data => \%Param,
-        );
+        );      
 
         # show 2 factor password input if we have at least one backend enabled
         COUNT:
@@ -3971,6 +3971,38 @@ sub CustomerLogin {
             Name => 'LoginBox',
             Data => \%Param,
         );
+
+        # show tyoe input if we have at least one backend enabled Alder
+        COUNT:
+        for my $Count ( '', 1 .. 10 ) {
+            next COUNT if !$ConfigObject->Get("Customer::AuthModule$Count");
+            next COUNT if $ConfigObject->Get("Customer::AuthModule$Count") ne "Kernel::System::CustomerAuth::RESTAPIAuth";
+
+            # 
+            my $ItensType = $ConfigObject->Get( 'Customer::AuthModule::RESTAPIAuth::UserTypes' . $Count );
+            if ( ref $ItensType eq 'HASH' ) {
+
+                $Self->Block(
+                    Name => 'SelectTypeUser',
+                    Data => \%Param,
+                ); 
+
+                my %ItensType = %{$ItensType};
+
+                ITEMTYPE:
+                for my $ItemType ( sort keys %ItensType ) {
+                    $Self->Block(
+                        Name => 'UserItemType',
+                        Data => {
+                            ItemKey => $ItemType,
+                            ItemValue => $ItensType{$ItemType},
+                        }
+                    );
+                }                 
+            }        
+
+            last COUNT;
+        }          
 
         # show 2 factor password input if we have at least one backend enabled
         COUNT:
