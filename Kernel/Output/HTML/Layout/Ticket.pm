@@ -609,14 +609,14 @@ sub AgentQueueListOption {
                     . $String
                     . "</option>\n";
             }
-            elsif ( $CurrentQueueID eq $_ )
-            {
-                $Param{MoveQueuesStrg}
-                    .= '<option value="-" disabled="disabled"'
-                    . $OptionTitleHTMLValue . '>'
-                    . $String
-                    . "</option>\n";
-            }
+            #elsif ( $CurrentQueueID eq $_ )
+            #{
+            #    $Param{MoveQueuesStrg}
+            #        .= '<option value="-" disabled="disabled"'
+            #        . $OptionTitleHTMLValue . '>'
+            #        . $String
+            #        . "</option>\n";
+            #}
             else {
                 $Param{MoveQueuesStrg}
                     .= '<option value="'

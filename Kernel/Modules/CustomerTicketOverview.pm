@@ -12,6 +12,8 @@ package Kernel::Modules::CustomerTicketOverview;
 use strict;
 use warnings;
 
+use Data::Dumper;
+
 our $ObjectManagerDisabled = 1;
 
 use Kernel::System::VariableCheck qw(:all);
@@ -56,10 +58,12 @@ sub Run {
         for(keys %HashProfile){
           my $compativeU = $UsData{$_};
 
+          next if !$compativeU;
+
           if($HashProfile{$_} ne $compativeU){
             $DisableCompanyTickets = 1;
           }
-        }
+        }          
     }
 
     # check subaction
@@ -137,6 +141,14 @@ sub Run {
     # get dynamic-field based filter if CustomerTicket::EnableDynamicFieldCheck is enabled
     my %CustomerDynamicFieldFilter = $Kernel::OM->Get('Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck')->GetTicketSearchFilter();
 
+
+
+        #Alder
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Alder:\n\n\n" . Dumper(%CustomerDynamicFieldFilter),
+        );       
+
     my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
 
     my @CustomerIDs;
@@ -163,7 +175,7 @@ sub Run {
                 Size       => 1,
                 SelectedID => \@CustomerIDs,
                 Class      => 'Modernize',
-            );
+            );             
 
             # Remember the active customer ID filter.
             $Param{CustomerIDs} = '';
@@ -213,7 +225,7 @@ sub Run {
                     Permission     => 'ro',
                 },
             },
-        };
+        };       
     }
 
     my $FilterCurrent = $ParamObject->GetParam( Param => 'Filter' ) || 'Open';
@@ -354,6 +366,7 @@ sub Run {
         my $StateSort  = '';
         my $TicketSort = '';
         my $TitleSort  = '';
+        my $SolutionSort    = '';
         my $AgeSort    = '';
         my $QueueSort  = '';
         my $OwnerSort  = '';
@@ -375,6 +388,9 @@ sub Run {
         elsif ( $SortBy eq 'Title' ) {
             $TitleSort = $Sort;
         }
+        elsif ( $SortBy eq 'EscalationSolutionTime' ) {
+            $SolutionSort = $Sort;
+        }
         elsif ( $SortBy eq 'Age' ) {
             $AgeSort = $Sort;
         }
@@ -393,6 +409,7 @@ sub Run {
                 StateSort  => $StateSort,
                 TicketSort => $TicketSort,
                 TitleSort  => $TitleSort,
+                EscalationSolutionTimeSort    => $SolutionSort,
                 AgeSort    => $AgeSort,
                 Filter     => $FilterCurrent,
             },
@@ -595,6 +612,12 @@ sub Run {
             }
         }
 
+        #if (1==1) {
+        #    #$Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = ['Problem','Incident'];
+        #    $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = ['Problem'];
+        #    #$Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = ['normal', 'change'];
+        #}
+
         my @ViewableTickets = $TicketObject->TicketSearch(
             %{ $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search} },
 	    %CustomerDynamicFieldFilter,
@@ -708,6 +731,14 @@ sub ShowTicketStatus {
         Age   => $Ticket{Age},
         Space => ' '
     ) || 0;
+
+    # SolutionTimeWorkingTime design. Alder
+    $Ticket{SolutionTimeWorkingTimeCustomerAge} = $LayoutObject->CustomerAge(
+        Age   => $Ticket{SolutionTimeWorkingTime},
+        Space => ' '
+    ) || 0;    
+
+    #$Ticket{CustomerAge} = $Ticket{CustomerAge} . "Alder" . $Ticket{SolutionTimeWorkingTime};
 
     my $ShowAgeAsDate = $ConfigObject->Get('Ticket::Frontend::CustomerShowAgeAsDate');
 

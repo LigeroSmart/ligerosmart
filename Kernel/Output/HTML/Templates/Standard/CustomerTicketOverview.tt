@@ -96,11 +96,17 @@
 #[% RenderBlockEnd("OverviewNavBarPageDynamicField_Field2_NotSortable") %]
 #                    </th>
 #[% RenderBlockEnd("OverviewNavBarPageDynamicField_Field2") %]
+                    <th class="EscalationSolutionTime [% Data.EscalationSolutionTimeSort | uri %]">
+                    <!--<th class="EscalationSolutionTime SortAscending">-->
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];SortBy=EscalationSolutionTime;OrderBy=[% Data.OrderBy | uri %];Filter=[% Data.Filter | uri %]">
+                            [% Translate("Solution Time") | html %]
+                        </a>
+                    </th>
                     <th class="Age [% Data.AgeSort | uri %]">
                         <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];SortBy=Age;OrderBy=[% Data.OrderBy | uri %];Filter=[% Data.Filter | uri %]">
                             [% Translate("Age") | html %]
                         </a>
-                    </th>
+                    </th>                    
                 </tr>
             </thead>
             <tbody>
@@ -161,6 +167,7 @@
 #                        </div>
 #                    </td>
 #[% RenderBlockEnd("RecordDynamicField_Field2") %]
+                    <td class="EscalationSolutionTime" title="[% Data.SolutionTimeWorkingTimeCustomerAge | Localize("TimeShort") | html %]">[% Data.SolutionTimeWorkingTimeCustomerAge | truncate(20) | html %]</td>
 [% IF Data.ShowAgeAsDate != 1 %]
                     <td class="Age" title="[% Data.Created | Localize("TimeShort") | html %]">[% Data.CustomerAge | truncate(20) | html %]</td>
 [% ELSE %]

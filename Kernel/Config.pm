@@ -81,6 +81,48 @@ sub Load {
     # $Self->{SessionUseCookie} = 0;
     # $Self->{CheckMXRecord} = 0;
 
+    $Self->{CustomerUser} = {
+        Name => 'Database Backend',
+        Module => 'Kernel::System::CustomerUser::DB',
+        Params => {
+            Table => 'customer_user',
+            CaseSensitive => 0,
+        },
+        CustomerKey => 'login',
+        CustomerID => 'customer_id',
+        CustomerValid => 'valid_id',
+        CustomerUserListFields => [ 'first_name', 'last_name', 'email' ],
+        CustomerUserSearchFields => [ 'login', 'first_name', 'last_name', 'customer_id' ],
+        CustomerUserSearchPrefix => '*',
+        CustomerUserSearchSuffix => '*',
+        CustomerUserSearchListLimit => 230000,
+        CustomerUserPostMasterSearchFields => ['email'],
+        CustomerUserNameFields => [ 'title', 'first_name', 'last_name' ],
+        CustomerUserEmailUniqCheck => 1,
+        CustomerCompanySupport => 1,
+        CacheTTL => 60 * 60 * 24,
+        Map => [
+            # var, frontend, storage, shown (1=always,2=lite), required, storage-type, http-link, readonly, http-link-target, link class(es)
+            #[ 'UserTitle', 'Title', 'title', 1, 0, 'var', '', 0 ],
+            [ 'UserFirstname', 'Firstname', 'first_name', 1, 1, 'var', '', 0 ],
+            [ 'UserLastname', 'Lastname', 'last_name', 1, 1, 'var', '', 0 ],
+            [ 'UserLogin', 'Username', 'login', 1, 1, 'var', '', 0 ],
+            [ 'UserPassword', 'Password', 'pw', 0, 0, 'var', '', 0 ],
+            [ 'UserEmail', 'Email', 'email', 1, 1, 'var', '', 0 ],
+            [ 'UserCustomerID', 'CustomerID', 'customer_id', 0, 1, 'var', '', 0 ],
+            [ 'UserPhone', 'Phone', 'phone', 1, 0, 'var', '', 0 ],
+            [ 'DynamicField_GestorUser', undef, 'GestorUser', 1, 0, 'dynamic_field', undef, 0, undef, undef ],
+            [ 'UserFax', 'Fax', 'fax', 1, 0, 'var', '', 0 ],
+            [ 'UserMobile', 'Mobile', 'mobile', 1, 0, 'var', '', 0 ],
+            [ 'UserStreet', 'Street', 'street', 1, 0, 'var', '', 0 ],
+            [ 'UserZip', 'Zip', 'zip', 1, 0, 'var', '', 0 ],
+            [ 'UserCity', 'City', 'city', 1, 0, 'var', '', 0 ],
+            [ 'UserCountry', 'Country', 'country', 1, 0, 'var', '', 0 ],
+            [ 'UserComment', 'Comment', 'comments', 1, 0, 'var', '', 0 ],
+            [ 'ValidID', 'Valid', 'valid_id', 0, 1, 'int', '', 0 ],
+        ],
+    };    
+
     # ---------------------------------------------------- #
 
     # ---------------------------------------------------- #
