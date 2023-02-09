@@ -11,6 +11,8 @@ package Kernel::Output::HTML::Layout::Ticket;
 use strict;
 use warnings;
 
+use Data::Dumper;
+
 use Kernel::System::VariableCheck qw(:all);
 use Kernel::Language qw(Translatable);
 
@@ -377,6 +379,7 @@ sub AgentQueueListOption {
     my $TreeView           = $Param{TreeView} ? $Param{TreeView} : 0;
     my $OptionTitle        = defined( $Param{OptionTitle} ) ? $Param{OptionTitle} : 0;
     my $OnChangeSubmit     = defined( $Param{OnChangeSubmit} ) ? $Param{OnChangeSubmit} : '';
+    my $Action              = defined( $Param{Action} ) ? $Param{Action} : '';
 
     if ($OnChangeSubmit) {
         $OnChangeSubmit = " onchange=\"submit();\"";
@@ -599,7 +602,6 @@ sub AgentQueueListOption {
                 $SelectedID eq $_
                 || $Selected eq $Param{Data}->{$_}
                 || $Param{SelectedIDRefArrayOK}->{$_}
-                || $Param{Action} =~ m{ ^AgentTicket.*$ }xmsi
                 )
             {
                 $Param{MoveQueuesStrg}
@@ -609,13 +611,22 @@ sub AgentQueueListOption {
                     . $String
                     . "</option>\n";
             }
-            elsif ( $CurrentQueueID eq $_ )
+            elsif ( $CurrentQueueID eq $_ && !$Action )
             {
                 $Param{MoveQueuesStrg}
                     .= '<option value="-" disabled="disabled"'
                     . $OptionTitleHTMLValue . '>'
                     . $String
                     . "</option>\n";
+            }
+            elsif ( $CurrentQueueID eq $_ && $Action =~ /^AgentTicket.*$/i )
+            {
+                $Param{MoveQueuesStrg}
+                    .= '<option selected="selected" value="'
+                    . $HTMLValue . '"'
+                    . $OptionTitleHTMLValue . '>'
+                    . $String
+                    . "</option>\n";                
             }
             else {
                 $Param{MoveQueuesStrg}
@@ -624,7 +635,7 @@ sub AgentQueueListOption {
                     . $OptionTitleHTMLValue . '>'
                     . $String
                     . "</option>\n";
-            }
+            }            
         }
     }
     $Param{MoveQueuesStrg} .= "</select>\n";
