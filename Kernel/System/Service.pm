@@ -9,7 +9,7 @@ package Kernel::System::Service;
 use strict;
 use warnings;
 # COMPLEMENTO
-use Data::Dumper;
+#use Data::Dumper;
 # EO COMPLEMENTO
 use Kernel::System::VariableCheck (qw(:all));
 
