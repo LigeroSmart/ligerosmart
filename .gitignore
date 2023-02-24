@@ -58,3 +58,5 @@ bin/DatabaseInstall.pl
 .cache
 .viminfo
 .bash*
+Custom/SurveySendRequestbyState-0.0.1.opm
+Custom/SurveySendRequestbyState.sopm
