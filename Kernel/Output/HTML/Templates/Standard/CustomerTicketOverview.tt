@@ -11,7 +11,7 @@
 <div id="MainBox" class="TicketView ARIARoleMain [% Config("Ticket::Frontend::CustomerTicketOverviewSortable") %] ">
 [% RenderBlockStart("Filled") %]
     <div class="ActionRow">
-        <ul class="Filter Tabs">
+        <ul class="TicketOverviewList Level_1 Filter Tabs">
 [% RenderBlockStart("FilterHeader") %]
             <li>
                 <a class="[% Data.ClassA | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];Filter=[% Data.Filter | uri %];SortBy=[% Data.SortBy | uri %];OrderBy=[% Data.OrderBy | uri %][% Data.CustomerIDs %];">
@@ -24,6 +24,15 @@
                 [% Data.CustomerIDStrg %]
             </li>
         [% END %]
+        </ul>
+        <ul class="TicketOverviewList Level_2 Filter Tabs">
+[% RenderBlockStart("SubFilterHeader") %]        
+            <li>
+                <a class="[% Data.ClassA | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];Filter=[% Data.Filter | uri %];SubFilterType=[% Data.SubFilterType | uri %];SortBy=[% Data.SortBy | uri %];OrderBy=[% Data.OrderBy | uri %][% Data.CustomerIDs %];">
+                    [% Translate(Data.Name) | html %] ([% Data.Count | html %])
+                </a>
+            </li>
+[% RenderBlockEnd("SubFilterHeader") %]            
         </ul>
         <div class="Tabs Pagination">
             [% Data.SiteNavBar %]

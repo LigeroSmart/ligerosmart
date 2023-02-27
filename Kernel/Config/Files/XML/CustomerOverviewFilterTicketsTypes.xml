@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Ticket::Complemento::CustomerFilterOverviewTicketTypes" Required="1" Valid="1">
+        <Description Translatable="1">Ticket Types which will discount time from customer quota.</Description>
+        <Navigation>Configuration</Navigation>
+        <Value>
+            <Array>
+                <Item>ServiceRequest</Item>
+                <Item>RfC</Item>
+            </Array>
+        </Value>
+    </Setting>
+</otrs_config>

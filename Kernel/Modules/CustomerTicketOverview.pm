@@ -12,8 +12,6 @@ package Kernel::Modules::CustomerTicketOverview;
 use strict;
 use warnings;
 
-use Data::Dumper;
-
 our $ObjectManagerDisabled = 1;
 
 use Kernel::System::VariableCheck qw(:all);
@@ -38,6 +36,9 @@ sub Run {
 
     # disable output of customer company tickets
     my $DisableCompanyTickets = $ConfigObject->Get('Ticket::Frontend::CustomerDisableCompanyTicketAccess');
+
+    # Ticket Types which account time
+    my @TicketTypesArray = @{$ConfigObject->Get('Ticket::Complemento::CustomerFilterOverviewTicketTypes')};    
 
     my $CustomerCompanyEnabledForProfile = $ConfigObject->Get('Ticket::Frontend::CustomerCompanyEnabledForProfile');
 
@@ -139,15 +140,7 @@ sub Run {
     );
 
     # get dynamic-field based filter if CustomerTicket::EnableDynamicFieldCheck is enabled
-    my %CustomerDynamicFieldFilter = $Kernel::OM->Get('Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck')->GetTicketSearchFilter();
-
-
-
-        #Alder
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Alder:\n\n\n" . Dumper(%CustomerDynamicFieldFilter),
-        );       
+    my %CustomerDynamicFieldFilter = $Kernel::OM->Get('Kernel::System::Ticket::CustomerPermission::TicketDynamicFieldCheck')->GetTicketSearchFilter();      
 
     my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
 
@@ -229,6 +222,7 @@ sub Run {
     }
 
     my $FilterCurrent = $ParamObject->GetParam( Param => 'Filter' ) || 'Open';
+    my $SubFilterCurrent = $ParamObject->GetParam( Param => 'SubFilterType' );
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Subaction} }->{$FilterCurrent} ) {
@@ -253,17 +247,22 @@ sub Run {
     }
 
     my %NavBarFilter;
+    my $RefSubFilter;
     my $Counter         = 0;
     my $AllTickets      = 0;
     my $AllTicketsTotal = 0;
     my $TicketObject    = $Kernel::OM->Get('Kernel::System::Ticket');
 
     for my $Filter ( sort keys %{ $Filters{ $Self->{Subaction} } } ) {
-        $Counter++;
+        $Counter++;      
+
+        if ( IsArrayRefWithData( \@TicketTypesArray ) && !$Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} ) {
+            $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = \@TicketTypesArray;
+        }        
 
         my $Count = $TicketObject->TicketSearch(
             %{ $Filters{ $Self->{Subaction} }->{$Filter}->{Search} },
-	    %CustomerDynamicFieldFilter,
+	        %CustomerDynamicFieldFilter,
             %SearchInArchive,
             Result => 'COUNT',
         ) || 0;
@@ -272,6 +271,7 @@ sub Run {
         if ( $Filter eq $FilterCurrent ) {
             $ClassA     = 'Selected';
             $AllTickets = $Count;
+            $RefSubFilter = $Filter;
         }
         if ( $Filter eq 'All' ) {
             $AllTicketsTotal = $Count;
@@ -347,6 +347,15 @@ sub Run {
                 $Link .= "CustomerIDs=$CustomerID;";
             }
         }
+
+        # Add Types parameter if needed.
+        if ( IsArrayRefWithData( \@TicketTypesArray ) ) {
+            for my $Type (@TicketTypesArray) {
+                $Link .= "SubFilterType=" . $LayoutObject->Ascii2Html( Text => $Type )
+                . ';'
+            }
+        }
+
 
         my %PageNav = $LayoutObject->PageNavBar(
             Limit     => 10000,
@@ -448,7 +457,40 @@ sub Run {
                     %Param,
                     %{ $NavBarFilter{$Key} },
                 },
-            );
+            );           
+        }
+
+        if ( IsArrayRefWithData( \@TicketTypesArray ) ) {
+            my $CounterTypes = 1000;
+            for my $Key ( sort @TicketTypesArray ) {
+
+                $Filters{ $Self->{Subaction} }->{$RefSubFilter}->{Search}->{Types} = [$Key,];            
+                $NavBarFilter{$Key}->{Search}->{Types} = [$Key,] if $SubFilterCurrent;
+
+                $NavBarFilter{$Key}->{Count} = $TicketObject->TicketSearch(
+                    %{ $Filters{ $Self->{Subaction} }->{$RefSubFilter}->{Search} },
+                    %CustomerDynamicFieldFilter,
+                    %SearchInArchive,
+                    Result => 'COUNT',
+                ) || 0;
+
+                $NavBarFilter{$Key}->{Prio} = $CounterTypes;
+                $NavBarFilter{$Key}->{Name} = $Key;
+                $NavBarFilter{$Key}->{Filter} = $RefSubFilter;
+                $NavBarFilter{$Key}->{SubFilterType} = $LayoutObject->Ascii2Html( Text => $Key ); 
+
+                if ( $Key eq $SubFilterCurrent ) {
+                    $NavBarFilter{$Key}->{ClassA} = 'Selected';
+                }                    
+                $LayoutObject->Block(
+                    Name => 'SubFilterHeader',
+                    Data => {
+                        %Param,
+                        %{ $NavBarFilter{$Key} },
+                    },
+                );
+                $CounterTypes += 100;
+            }        
         }
 
         # show footer filter - show only if more the one page is available
@@ -612,15 +654,20 @@ sub Run {
             }
         }
 
-        #if (1==1) {
-        #    #$Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = ['Problem','Incident'];
-        #    $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = ['Problem'];
-        #    #$Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = ['normal', 'change'];
-        #}
+        if (exists $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} && !$SubFilterCurrent )
+        {
+            delete $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types};
+        } elsif ($SubFilterCurrent && $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} ne $SubFilterCurrent) {
+            $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = [$SubFilterCurrent,];
+        } 
+    
+        if ( IsArrayRefWithData( \@TicketTypesArray ) && !$Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} ) {
+            $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search}->{Types} = \@TicketTypesArray;
+        }
 
         my @ViewableTickets = $TicketObject->TicketSearch(
             %{ $Filters{ $Self->{Subaction} }->{$FilterCurrent}->{Search} },
-	    %CustomerDynamicFieldFilter,
+	        %CustomerDynamicFieldFilter,
             %SearchInArchive,
             Result => 'ARRAY',
         );
@@ -736,9 +783,7 @@ sub ShowTicketStatus {
     $Ticket{SolutionTimeWorkingTimeCustomerAge} = $LayoutObject->CustomerAge(
         Age   => $Ticket{SolutionTimeWorkingTime},
         Space => ' '
-    ) || 0;    
-
-    #$Ticket{CustomerAge} = $Ticket{CustomerAge} . "Alder" . $Ticket{SolutionTimeWorkingTime};
+    ) || "-";
 
     my $ShowAgeAsDate = $ConfigObject->Get('Ticket::Frontend::CustomerShowAgeAsDate');
 

@@ -467,4 +467,37 @@
     vertical-align: bottom;
 }
 
+.TicketOverviewList {
+    clear: both;
+    float: none;
+}
+
+.TicketOverviewList.Level_1 {
+    margin-left: 0px;
+}
+
+.TicketOverviewList.Level_2 {
+    margin-left: 10px;
+}
+
+.RTL .TicketOverviewList.Level_1 {
+    margin-right: 0px;
+}
+
+.RTL .TicketOverviewList.Level_2 {
+    margin-right: 10px;
+}
+
+.TicketOverviewList li {
+    float: left;
+    list-style: none;
+    padding: 2px 5px;
+    height: 14px;
+    white-space:nowrap;
+}
+
+.RTL .TicketOverviewList li {
+    float: right;
+}
+
 } /* end @media */
