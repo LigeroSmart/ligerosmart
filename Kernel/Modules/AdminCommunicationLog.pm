@@ -128,7 +128,7 @@ sub _MailQueueResend {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     # my $CommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Maint::Email::MailQueue');
     # my $ExitCode = $CommandObject->Execute( '--send', '--force' );
-    my $ConsoleOutput = `otrs.Console.pl Maint::Email::MailQueue --send --force 2>&1`;
+    my $ConsoleOutput = `otrs.Console.pl Maint::Email::MailQueue --send 2>&1`;
     $ConsoleOutput =~ s/^\s+|\s+$//g;
 
     my $Output; 
