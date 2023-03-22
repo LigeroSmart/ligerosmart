@@ -306,10 +306,11 @@ sub _TicketGetFirstResponse {
                 AND a.article_sender_type_id = ast.id
                 AND a.id = adm.article_id
                 AND a.ticket_id = t.id
-                AND t.customer_user_id = cu.login
                 AND a.ticket_id = ?
                 AND ast.name = ?
-                AND adm.a_to like concat("%",cu.email,"%")
+                AND ((t.customer_user_id = cu.login
+                    AND adm.a_to like concat("%",cu.email,"%")) 
+                    OR adm.a_to like concat("%",t.customer_user_id,"%"))
             ORDER BY a.create_time',
         Bind  => [ \$Param{TicketID}, \'agent' ],
     );
