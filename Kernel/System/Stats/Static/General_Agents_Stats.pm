@@ -13,8 +13,6 @@ package Kernel::System::Stats::Static::General_Agents_Stats;
 use strict;
 use warnings;
 
-use Data::Dumper;
-
 use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
