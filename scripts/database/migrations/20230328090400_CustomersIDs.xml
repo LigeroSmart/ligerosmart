@@ -1,0 +1,13 @@
+<Migrations>
+    <DatabaseInstall Type="post">
+        <TableAlter Type="post" Name="customer_user">
+            <ColumnAdd Default="0" Name="customer_ids" Required="false" Size="250" Type="VARCHAR"></ColumnAdd>
+        </TableAlter>
+    </DatabaseInstall>
+
+    <DatabaseUninstall Type="pre">
+        <TableAlter Type="pre" Name="customer_user">
+            <ColumnDrop Name="customer_ids"></ColumnDrop>
+        </TableAlter>
+    </DatabaseUninstall>
+</Migrations>

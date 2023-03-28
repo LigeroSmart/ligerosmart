@@ -11,6 +11,8 @@ package Kernel::System::CustomerUser::DB;
 use strict;
 use warnings;
 
+use Data::Dumper;
+
 use Kernel::System::VariableCheck qw(:all);
 
 use Crypt::PasswdMD5 qw(unix_md5_crypt apache_md5_crypt);
@@ -115,6 +117,8 @@ sub new {
     # fetch names of configured dynamic fields
     my @DynamicFieldMapEntries = grep { $_->[5] eq 'dynamic_field' } @{ $Self->{CustomerUserMap}->{Map} };
     $Self->{ConfiguredDynamicFieldNames} = { map { $_->[2] => 1 } @DynamicFieldMapEntries };
+    my @CustomerIDsMapEntries = grep { $_->[2] eq 'customer_ids' } @{ $Self->{CustomerUserMap}->{Map} };
+    $Self->{ConfiguredCustomerIDs} = { map { $_->[2] => 1 } @CustomerIDsMapEntries };
 
     return $Self;
 }
@@ -276,7 +280,7 @@ sub CustomerSearch {
 
     # check cache
     my $CacheKey = join '::', map { $_ . '=' . $Param{$_} } sort keys %Param;
-
+    
     if ( $Self->{CacheObject} ) {
         my $Users = $Self->{CacheObject}->Get(
             Type => $Self->{CacheType} . '_CustomerSearch',
@@ -416,6 +420,18 @@ sub CustomerSearch {
         else {
             $SQL .= "LOWER($Self->{CustomerID}) = LOWER(?) ";
         }
+
+        # create example installation string for module
+        if ( IsHashRefWithData( \%{$Self->{ConfiguredCustomerIDs}} ) ) {
+
+            if ( $Self->{CaseSensitive} ) {
+                $SQL .= " OR customer_ids LIKE '%" . $Param{CustomerIDRaw} . "%'";
+            }
+            else {
+                $SQL .= "OR LOWER(customer_ids) LIKE LOWER('%" . $Param{CustomerIDRaw} . "%') ";
+            }            
+
+        }              
     }
 
     # add valid option
@@ -426,7 +442,7 @@ sub CustomerSearch {
 
         $SQL .= ' AND '
             . $Self->{CustomerUserMap}->{CustomerValid}
-            . ' IN (' . join( ', ', $ValidObject->ValidIDsGet() ) . ') ';
+            . ' IN (' . join( ', ', $ValidObject->ValidIDsGet() ) . ') ';      
     }
 
     # dynamic field handling
