@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="Survey::TicketStateSendCondition" Required="1" Valid="1" ConfigLevel="200">
+        <Description Translatable="1">State list to bypass automatic state changing</Description>
+        <Navigation>Core::Survey</Navigation>
+        <Value>
+            <Array>
+            </Array>
+        </Value>
+    </Setting>
+</otrs_config>
