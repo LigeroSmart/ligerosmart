@@ -1454,12 +1454,14 @@ sub AgentMove {
 
     # set move queues
     $Param{MoveQueuesStrg} = $LayoutObject->AgentQueueListOption(
+        Action         => $Self->{Action},
         Data           => { %MoveQueues, '' => '-' },
         Multiple       => 0,
         Size           => 0,
         Class          => 'Modernize Validate_Required' . ' ' . $Param{DestQueueIDInvalid},
         Name           => 'DestQueueID',
-        SelectedID     => $Param{DestQueueID},
+        SelectedID     => $Param{DestQueueID} || $Param{QueueID},
+        Selected       => $Param{Queue},
         TreeView       => $TreeView,
         CurrentQueueID => $Param{QueueID},
         OnChangeSubmit => 0,
