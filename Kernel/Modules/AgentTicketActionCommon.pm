@@ -2126,6 +2126,10 @@ sub _Mask {
             Type     => 'move_into',
         );
 
+        if( !$Param{NewQueueID} && $Param{QueueID} ) {
+            $Param{NewQueueID} = $Param{QueueID};
+        }
+        
         # set move queues
         $Param{QueuesStrg} = $LayoutObject->AgentQueueListOption(
             Action   => $Self->{Action},
