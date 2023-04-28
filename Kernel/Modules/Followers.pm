@@ -170,11 +170,6 @@ sub Run {
 		}
 		my $InternalArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
 
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "$IsVisibleForCustomer",
-            );
-
 		my $ArticleID = $InternalArticleBackendObject->ArticleCreate(
 			TicketID                    => $TicketID,
 			SenderType                  => 'agent',
