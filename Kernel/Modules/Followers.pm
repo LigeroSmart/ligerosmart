@@ -103,7 +103,7 @@ sub Run {
 	        WatchUserID => $AgentID,
     	    UserID      => $Self->{UserID},
        );
-		return $LayoutObject->ttachment(
+		return $LayoutObject->Attachment(
 			ContentType => 'text/html; charset= '. $LayoutObject->{Charset},
 			Content		=>  $Success,
 			Type		=> 'inline',
@@ -115,10 +115,15 @@ sub Run {
 	}elsif($Self->{Subaction} eq 'FastNote'){
    		my $TicketID = $ParamObject->GetParam(Param => 'TicketID');
 		my $FastNote = $ParamObject->GetParam(Param => 'FastNote');
+		my $IsVisibleForCustomer = 0;
+
+		if(uc $ParamObject->GetParam(Param => 'IsVisibleForCustomer') eq "TRUE"){
+			$IsVisibleForCustomer = 1;
+		}
 
 		my @AgentNotify = split( /,/, $ParamObject->GetParam(Param => 'AgentNotify'));
 		
-		my $ArticleType = $ConfigObject->Get("Followers::ArticleType") || "note-internal"; 
+		my $ArticleType = $ConfigObject->Get("Followers::ArticleType") || "internal"; 
 		my $ArticleSubject = $ConfigObject->Get("Followers::ArticleSubject") || "Subject";
 		if(!$FastNote){
 			return;
@@ -137,23 +142,55 @@ sub Run {
 		my $UserEmail = $User{UserEmail}; 
 		
 		my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
-		my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Phone' );
-		my $ArticleID = $ArticleBackendObject->ArticleCreate(
-        	TicketID         => $TicketID,
-	        ArticleType      => $ArticleType,                        # email-external|email-internal|phone|fax|...
-	        SenderType       => 'agent',                                # agent|system|customer
-		    Subject          => $ArticleSubject, 	              # required
-			From		 	 => $UserEmail,
-			MimeType         => 'text/plain',
-	        Body             => $FastNote ,                     # required
-            Charset          => $LayoutObject->{UserCharset},
-	        HistoryType      => 'AddNote',                          # EmailCustomer|Move|AddNote|PriorityUpdate|WebRequestCustomer|...
-		    HistoryComment   => 'New Note from Followers Module',
-		    UserID           => $Self->{UserID},
-	        ForceNotificationToUserID   => \@AgentNotify,               # if you want to force somebody
-			IsVisibleForCustomer => 1,
-		);
+		###my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Phone' );
+		###my $ArticleID = $ArticleBackendObject->ArticleCreate(
+        ###	TicketID         => $TicketID,
+	    ###    ArticleType      => $ArticleType,                        # email-external|email-internal|phone|fax|...
+	    ###    SenderType       => 'agent',                                # agent|system|customer
+		###    Subject          => $ArticleSubject, 	              # required
+		###	From		 	 => $UserEmail,
+		###	MimeType         => 'text/plain',
+	    ###    Body             => $FastNote ,                     # required
+        ###    Charset          => $LayoutObject->{UserCharset},
+	    ###    HistoryType      => 'AddNote',                          # EmailCustomer|Move|AddNote|PriorityUpdate|WebRequestCustomer|...
+		###    HistoryComment   => 'New Note from Followers Module',
+		###    UserID           => $Self->{UserID},
+	    ###    ForceNotificationToUserID   => \@AgentNotify,               # if you want to force somebody
+		###	IsVisibleForCustomer => 1,
+		###);
 		
+		my $MimeType = 'text/plain';
+		if ( $LayoutObject->{BrowserRichText} ) {
+			$MimeType = 'text/html';
+
+			# verify html document
+			$FastNote = $LayoutObject->RichTextDocumentComplete(
+				String => $FastNote,
+			);
+		}
+		my $InternalArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
+
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "$IsVisibleForCustomer",
+            );
+
+		my $ArticleID = $InternalArticleBackendObject->ArticleCreate(
+			TicketID                    => $TicketID,
+			SenderType                  => 'agent',
+			ArticleType                 => $ArticleType,
+			IsVisibleForCustomer        => $IsVisibleForCustomer,
+			ForceNotificationToUserID   => \@AgentNotify,
+			From                        => "\"$User{UserFullname}\" <$User{UserEmail}>",
+			Subject                     => $ArticleSubject,
+			Body                        => $FastNote,
+			MimeType                    => $MimeType,
+			Charset                     => $LayoutObject->{UserCharset},
+			UserID                      => $Self->{UserID},
+			HistoryType                 => 'AddNote',
+			HistoryComment              => '%%Followers',
+		);
+
 		return $LayoutObject->Attachment(
 			ContentType => 'text/plain; charset= '. $LayoutObject->{Charset},
 			Content		=>  $ArticleID,

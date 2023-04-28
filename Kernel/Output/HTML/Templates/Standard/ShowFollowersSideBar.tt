@@ -9,17 +9,18 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 # --
+<form id="formFollowers">
 [% RenderBlockStart("BeginsFollowers") %]
 
             <div class="WidgetSimple [% Data.Class_collapsed %]">
 
 [% RenderBlockEnd("BeginsFollowers") %]
-		    <div class="Header">
+		    	<div class="Header">
                 	    <div class="WidgetAction Toggle">
                         	<a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
 	                    </div>
 	                    <h2>[% Translate("Followers") | html %]</h2>
-		     </div>
+		     	</div>
 
                 <div class="Content">
                     <div class="Field">
@@ -49,17 +50,24 @@
                             <p>[% Translate("This field is required.") | html %]</p>
                         </div>
                     </div>
-
-					<div id="FL-buttons"> <button style="align:right;" class="flbuttons" id="ButtonSend" title="[% Translate("Send") | html %]" value="[% Translate("Send") | html %]" type="button"><span>[% Translate("Send") | html %] </span>
-					<button style="align:left;" id="ButtonSelectAll"  class="flbuttons" title="[% Translate("Select All") | html %]" value="[% Translate("Select All") | html %]" type="button"><span>[% Translate("Select All") | html %] </span> 
-
-	 </button> 
- 
-</div> 
-
-
-                </div>
+					<div id="FL-buttons"> 
+[% RenderBlockStart("IsVisibleForCustomer") %]
+						<ul>
+							<li>
+								<input class="Checkbox"  type="checkbox" name='IsVisibleForCustomer' id="IsVisibleForCustomer"[% IF Data.IsVisibleForCustomer %]checked="checked" [% END %]/><span> [% Translate("Is visible for customer") | html %]</span> 
+							</li>
+	                    </ul>
+[% RenderBlockEnd("IsVisibleForCustomer") %]					
+						<button style="align:right;" class="flbuttons" id="ButtonSend" title="[% Translate("Send") | html %]" value="[% Translate("Send") | html %]" type="submit">
+							<span>[% Translate("Send") | html %] </span>
+						</button> 						
+						<button style="align:left;" id="ButtonSelectAll"  class="flbuttons" title="[% Translate("Select All") | html %]" value="[% Translate("Select All") | html %]" type="button">
+							<span>[% Translate("Select All") | html %] </span> 	 
+						</button> 
+					</div> 
+				</div>
             </div>
+</form>			
 <style>
 	
 	#ContainerFollowUsers {
@@ -120,7 +128,8 @@
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 //AJAX para buscar 
-
+	const formulario = document.getElementById("formFollowers");
+	const IsVisibleForCustomer = document.getElementById("IsVisibleForCustomer");
 	$( function() {
 		//Ajax responsável por carregar a lista que será utilizada 
 
@@ -228,18 +237,17 @@
 	// ENVIA A NOTA QUANDO O BOTÃO É CLICADO , 
 	// Pega todos os usuários que estão marcados e envia uma nota informando para os mesmos
 
-	 $("#ButtonSend").click(function(e){
-#		console.log(e);
-#
-		$(this).find("span").text("[% Translate("Loading") | html %]");
-		$(this).prop("disabled",true);
+	 formulario.addEventListener("submit", function(e) {	
+		e.preventDefault();	
+		$("#ButtonSend").find("span").text("[% Translate("Loading") | html %]");
+		$("#ButtonSend").prop("disabled",true);
 		if($("#RichTexts").val() != ""){
-			addNote();
+			addNote();			
 		}else{
 			$("#RichTexts").attr("placeholder","[% Translate("Please fill the field.") | html %]");
 			
-			$(this).prop("disabled",false);
-			$(this).find("span").text("[% Translate("Send") | html %]");  
+			$("#ButtonSend").prop("disabled",false);
+			$("#ButtonSend").find("span").text("[% Translate("Send") | html %]");  
 			setCaretToPos($("#RichTexts")[0], 10);
 		}
 	 });
@@ -263,11 +271,8 @@
 	 function addNote(){	
 		var TicketID = $("[name=TicketID]").val();
 		var FastNote = $("[name=FastNote]").val();
-#		if(FastNote !== "" ){
-#			FastNote = FastNote.substring(0,FastNote.length-1);
-#		}
-#		console.log(FastNote);
-		
+		var valorIsVisibleForCustomer = IsVisibleForCustomer.checked;
+				
 		var AgentNotify = "";  
 		$("[name=notifyChoose]:checked").each(function(){
 
@@ -278,6 +283,7 @@
 					 Subaction: "FastNote",
 					 TicketID: TicketID,
 					 FastNote: FastNote,
+					 IsVisibleForCustomer: valorIsVisibleForCustomer,
 					 AgentNotify: AgentNotify,	
 				   };
 		$.ajax({
@@ -285,9 +291,11 @@
 			url: Core.Config.Get("CGIHanle"),
 			data: Data,
 			success: function(Response){
-#				console.log("Nota Adicionada com sucesso");
 				$("[name=FastNote]").val("");
-				location.reload();
+				$("#ButtonSend").prop("disabled",false);
+				$("#ButtonSend").find("span").text("[% Translate("Send") | html %]");  				
+				//location.reload();
+				location.replace(location.href);
 			}
 		});
 
@@ -594,6 +602,7 @@
 		pressedCtrl = true; 
 		if(e.which == 13 && pressedCtrl == true) { 
 			if($("#RichTexts").val() != ""){
+				//e.preventDefault();
 				$("#ButtonSend").trigger("click");
 				location.reload();
 			}else{
