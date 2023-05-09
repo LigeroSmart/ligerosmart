@@ -167,18 +167,20 @@ sub Run {
 
     $Headers[0] = $LanguageObject->Translate( 'Current Agent' );    
     $Headers[1] = $LanguageObject->Translate( 'NumberOfEmails' );    
-    $Headers[2] = $LanguageObject->Translate( 'AverageFirstResponseInMin' );    
-    $Headers[3] = $LanguageObject->Translate( 'AverageSolutionInMin' );
+    $Headers[2] = $LanguageObject->Translate( 'AverageFirstResponseInMin' );        
+    $Headers[3] = $LanguageObject->Translate( 'AverageFirstResponse' ); 
+    $Headers[4] = $LanguageObject->Translate( 'AverageSolutionInMin' ); 
+    $Headers[5] = $LanguageObject->Translate( 'AverageSolution' );
     
     for (my $b = 0; $b < $len; $b = $b + 1)
     {
         my $TicketID = $Tickets[$b];
 
-        # Get ticket data.
+        # Get ticket data .
         my %Ticket = $TicketObject->TicketGet(
             TicketID      => $TicketID,
-            DynamicFields => 1,
-            Extended      => 1,
+            DynamicFields => 0,
+            Extended      => 0,
             UserID        => 1,
         );  
 
@@ -228,9 +230,19 @@ sub Run {
         }
 
         $Data[$RowsAgents][0] = $Agent;
-        $Data[$RowsAgents][1] = $AgentData{$Agent}->{NumberOfEmails};
+        $Data[$RowsAgents][1] = $AgentData{$Agent}->{NumberOfEmails} || 0;
         $Data[$RowsAgents][2] = $AgentData{$Agent}->{AverageFirstResponseInMin} || 0;
-        $Data[$RowsAgents][3] = $AgentData{$Agent}->{AverageSolutionInMin} || 0;
+        $AgentData{$Agent}->{AverageFirstResponseInSec} = int( $AgentData{$Agent}->{AverageFirstResponseInMin} * 60 );
+        $AgentData{$Agent}->{AverageFirstResponseHumanReadable} = $Kernel::OM->Get('Kernel::System::Stats')->_HumanReadableAgeGet(
+            Age => int $AgentData{$Agent}->{AverageFirstResponseInSec},
+        ); 
+        $Data[$RowsAgents][3] = $AgentData{$Agent}->{AverageFirstResponseHumanReadable};
+        $Data[$RowsAgents][4] = $AgentData{$Agent}->{AverageSolutionInMin} || 0;
+        $AgentData{$Agent}->{AverageSolutionInSec} = int( $AgentData{$Agent}->{AverageSolutionInMin} * 60 );
+        $AgentData{$Agent}->{AverageSolutionHumanReadable} = $Kernel::OM->Get('Kernel::System::Stats')->_HumanReadableAgeGet(
+            Age => int $AgentData{$Agent}->{AverageSolutionInSec},
+        ); 
+        $Data[$RowsAgents][5] = $AgentData{$Agent}->{AverageSolutionHumanReadable};
 
         $RowsAgents++;
     }
@@ -413,6 +425,18 @@ sub _TicketGetClosed {
     # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
+    my $SQL = "
+        SELECT MAX(create_time)
+        FROM ticket_history
+        WHERE ticket_id = ?
+            AND state_id IN (${\(join ', ', sort @List)})
+            AND history_type_id IN  (${\(join ', ', sort @HistoryTypeIDs)})    
+    ";
+    $Kernel::OM->Get('Kernel::System::Log')->Log(
+        Priority => 'error',
+        Message  => "$SQL",
+    );
+
     return if !$DBObject->Prepare(
         SQL => "
             SELECT MAX(create_time)
@@ -427,12 +451,16 @@ sub _TicketGetClosed {
     my %Data;
     ROW:
     while ( my @Row = $DBObject->FetchrowArray() ) {
-        last ROW if !defined $Row[0];
+        last ROW if !defined $Row[0];      
         $Data{Closed} = $Row[0];
 
         # cleanup time stamps (some databases are using e. g. 2008-02-25 22:03:00.000000
         # and 0000-00-00 00:00:00 time stamps)
         $Data{Closed} =~ s/^(\d\d\d\d-\d\d-\d\d\s\d\d:\d\d:\d\d)\..+?$/$1/;
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "$Data{Closed}",
+        );          
     }
 
     return if !$Data{Closed};

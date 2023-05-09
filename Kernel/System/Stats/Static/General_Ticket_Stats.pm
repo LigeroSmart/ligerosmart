@@ -171,7 +171,9 @@ sub Run {
     $Headers[4] = $LanguageObject->Translate( 'Queue' );    
     $Headers[5] = $LanguageObject->Translate( 'State' ); 
     $Headers[6] = $LanguageObject->Translate( 'FirstResponseInMin' );    
-    $Headers[7] = $LanguageObject->Translate( 'SolutionInMin' );
+    $Headers[7] = $LanguageObject->Translate( 'FirstResponse' );  
+    $Headers[8] = $LanguageObject->Translate( 'SolutionInMin' );  
+    $Headers[9] = $LanguageObject->Translate( 'Solution' );
     
     for (my $b = 0; $b < $len; $b = $b + 1)
     {
@@ -180,8 +182,8 @@ sub Run {
         # Get ticket data.
         my %Ticket = $TicketObject->TicketGet(
             TicketID      => $TicketID,
-            DynamicFields => 1,
-            Extended      => 1,
+            DynamicFields => 0,
+            Extended      => 0,
             UserID        => 1,
         );  
 
@@ -204,9 +206,11 @@ sub Run {
         if ( IsHashRefWithData( \%FirstResponse ) ) {
             
             $Data[$b][6] = $FirstResponse{FirstResponseInMin};
+            $Data[$b][7] = $FirstResponse{HumanReadable};
 
         } else {
             $Data[$b][6] = 0;
+            $Data[$b][7] = 0;
         }         
 
         my %TicketGetClosed = $Self->_TicketGetClosed(
@@ -216,10 +220,12 @@ sub Run {
 
         if ( IsHashRefWithData( \%TicketGetClosed ) ) {
             
-            $Data[$b][7] = $TicketGetClosed{SolutionInMin};
+            $Data[$b][8] = $TicketGetClosed{SolutionInMin};
+            $Data[$b][9] = $TicketGetClosed{HumanReadable};
 
         } else {
-            $Data[$b][7] = 0;
+            $Data[$b][8] = 0;
+            $Data[$b][9] = 0;
         }                  
 
     }
@@ -349,6 +355,11 @@ sub _TicketGetFirstResponse {
         my $WorkingTime = $DeltaObj ? $DeltaObj->{AbsoluteSeconds} : 0;
 
         $Data{FirstResponseInMin} = int( $WorkingTime / 60 );
+
+        $Data{HumanReadable} = $Kernel::OM->Get('Kernel::System::Stats')->_HumanReadableAgeGet(
+            Age => int $WorkingTime,
+        ); 
+
         my $EscalationFirstResponseTime = $Escalation{FirstResponseTime} * 60;
         $Data{FirstResponseDiffInMin} =
             int( ( $EscalationFirstResponseTime - $WorkingTime ) / 60 );
@@ -455,6 +466,10 @@ sub _TicketGetClosed {
     my $WorkingTime = $DeltaObj ? $DeltaObj->{AbsoluteSeconds} : 0;
 
     $Data{SolutionInMin} = int( $WorkingTime / 60 );
+
+    $Data{HumanReadable} = $Kernel::OM->Get('Kernel::System::Stats')->_HumanReadableAgeGet(
+        Age => int $WorkingTime,
+    ); 
 
     if ( $Escalation{SolutionTime} ) {
         my $EscalationSolutionTime = $Escalation{SolutionTime} * 60;

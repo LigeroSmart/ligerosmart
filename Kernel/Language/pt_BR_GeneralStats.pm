@@ -21,6 +21,8 @@ sub Data {
     $Self->{Translation}->{'Closing Period'} = 'Período por Data de Fechamento';
     $Self->{Translation}->{'NumberOfEmails'} = 'Quantidade de emails enviados';
     $Self->{Translation}->{'AverageFirstResponseInMin'} = 'Tempo médio de primeira resposta em minutos';
+    $Self->{Translation}->{'AverageFirstResponse'} = 'Tempo médio de primeira resposta';
+    $Self->{Translation}->{'AverageSolution'} = 'Tempo médio de solução';
     $Self->{Translation}->{'AverageSolutionInMin'} = 'Tempo médio de solução em minutos';
     $Self->{Translation}->{'General report of average time indicators for first response and solution by Agents.'} = 
         'Relatório geral de indicadores de média de tempos sobre primeira resposta e solução por parte dos Agentes.';
