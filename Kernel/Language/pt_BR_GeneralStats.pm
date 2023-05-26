@@ -24,10 +24,14 @@ sub Data {
     $Self->{Translation}->{'AverageFirstResponse'} = 'Tempo médio de primeira resposta';
     $Self->{Translation}->{'AverageSolution'} = 'Tempo médio de solução';
     $Self->{Translation}->{'AverageSolutionInMin'} = 'Tempo médio de solução em minutos';
+    $Self->{Translation}->{'Send Mail Date'} = 'Data de envio do Email';
+    $Self->{Translation}->{'Send Mail Hour'} = 'Hora do envio do Email';
     $Self->{Translation}->{'General report of average time indicators for first response and solution by Agents.'} = 
         'Relatório geral de indicadores de média de tempos sobre primeira resposta e solução por parte dos Agentes.';
     $Self->{Translation}->{'General report of indicators for first response and solution times.'} = 
         'Relatório geral de indicadores de tempos de primeira resposta e solução.';
+    $Self->{Translation}->{'General report of articles of type email sent to the customer.'} = 
+        'Relatório geral de artigos do tipo email enviado para o cliente.';
 
 }
 
