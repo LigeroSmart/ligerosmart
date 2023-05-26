@@ -144,7 +144,7 @@ sub Run {
         Agents   => @AgentIDs,
     );    
     
-    my $Title = $LanguageObject->Translate( 'General report of average time indicators for first response and solution by Agents.' );
+    my $Title = $LanguageObject->Translate( 'General report of articles of type email sent to the customer.' );
     return ( [$Title], [@Headers] , @Data );
         
 
