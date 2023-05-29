@@ -32,44 +32,42 @@ use vars qw($VERSION);
 $VERSION = qw($Revision: 1.55 $) [1];
 
 sub new {
-    my ( $Type, %Param ) = @_;
+    my ($Type, %Param) = @_;
 
     # allocate new hash for object
     my $Self = {%Param};
-    bless( $Self, $Type );
-
-
-
-   
+    bless($Self, $Type);
 
     return $Self;
 }
 
 sub Run {
-    my ( $Self, %Param ) = @_;
-    my $AutoTicketObject	= $Kernel::OM->Get('Kernel::System::AutoTicket');
-    my $ValidObject 		= $Kernel::OM->Get('Kernel::System::Valid');
-    my $TypeObject 		= $Kernel::OM->Get('Kernel::System::Type');
-    my $HTMLUtilsObject		= $Kernel::OM->Get('Kernel::System::HTMLUtils');
-    my $ServiceObject		= $Kernel::OM->Get('Kernel::System::Service');
-    my $SLAObject		= $Kernel::OM->Get('Kernel::System::SLA');
-    my $QueueObject		= $Kernel::OM->Get('Kernel::System::Queue');
-    my $StateObject 		= $Kernel::OM->Get('Kernel::System::State');
-    my $PriorityObject		= $Kernel::OM->Get('Kernel::System::Priority');
-    my $DynamicFieldObject 	= $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $BackendObject 		= $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-    $Self->{DynamicField} 	= $DynamicFieldObject->DynamicFieldListGet(
+    my ($Self, %Param) = @_;
+    my $AutoTicketObject   = $Kernel::OM->Get('Kernel::System::AutoTicket');
+    my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
+    my $TypeObject         = $Kernel::OM->Get('Kernel::System::Type');
+    my $HTMLUtilsObject    = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+    my $ServiceObject      = $Kernel::OM->Get('Kernel::System::Service');
+    my $SLAObject          = $Kernel::OM->Get('Kernel::System::SLA');
+    my $QueueObject        = $Kernel::OM->Get('Kernel::System::Queue');
+    my $StateObject        = $Kernel::OM->Get('Kernel::System::State');
+    my $PriorityObject     = $Kernel::OM->Get('Kernel::System::Priority');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $BackendObject =
+      $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+    $Self->{DynamicField} = $DynamicFieldObject->DynamicFieldListGet(
         Valid      => 1,
-        ObjectType => ['Ticket','Article'],
+        ObjectType => [ 'Ticket', 'Article' ],
     );
-    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $LayoutObject   = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # ------------------------------------------------------------ #
     # change
     # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'Change' ) {
-        my $ID = $ParamObject->GetParam( Param => 'ID' ) || '';
-        my %Data = $AutoTicketObject->AutoTicketGet( ID => $ID, );
+    if ($Self->{Subaction} eq 'Change') {
+        my $ID = $ParamObject->GetParam(Param => 'ID') || '';
+        my %Data = $AutoTicketObject->AutoTicketGet(ID => $ID,);
 
 #  # Maybe we can attach files in the future
 #        my @SelectedAttachment;
@@ -85,7 +83,8 @@ sub Run {
         $Self->_Edit(
             Action => 'Change',
             %Data,
-#            SelectedAttachments => \@SelectedAttachment,
+
+            #            SelectedAttachments => \@SelectedAttachment,
         );
         $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminAutoTicket',
@@ -98,96 +97,103 @@ sub Run {
     # ------------------------------------------------------------ #
     # change action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'ChangeAction' ) {
+    elsif ($Self->{Subaction} eq 'ChangeAction') {
 
         # challenge token check for write action
         $LayoutObject->ChallengeTokenCheck();
 
-        my @NewIDs = $ParamObject->GetArray( Param => 'IDs' );
-        my ( %GetParam, %Errors );
+        my @NewIDs = $ParamObject->GetArray(Param => 'IDs');
+        my (%GetParam, %Errors);
 
-        for my $Parameter (qw(ID Name TypeID ServiceID Customer CustomerID IsVisibleForCustomer SLAID QueueID StateID PriorityID Title Message NoAgentNotify Nwd Weekday Monthday Months Hour Minutes Comment ValidID)) {
-            $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter ) || '';
+        for my $Parameter (
+            qw(ID Name TypeID ServiceID Customer CustomerID IsVisibleForCustomer SLAID QueueID StateID PriorityID Title Message NoAgentNotify Nwd Weekday Monthday Months Hour Minutes Comment ValidID)
+          )
+        {
+            $GetParam{$Parameter} =
+              $ParamObject->GetParam(Param => $Parameter) || '';
         }
-		$GetParam{IsVisibleForCustomer} = $GetParam{IsVisibleForCustomer} ? 1 : 0;
+        $GetParam{IsVisibleForCustomer} =
+          $GetParam{IsVisibleForCustomer} ? 1 : 0;
 
         # get composed content type
-#        $GetParam{ContentType} = 'text/plain';
-#        if ( $LayoutObject->{BrowserRichText} ) {
-#            $GetParam{ContentType} = 'text/html';
-#        }
+        #        $GetParam{ContentType} = 'text/plain';
+        #        if ( $LayoutObject->{BrowserRichText} ) {
+        #            $GetParam{ContentType} = 'text/html';
+        #        }
 
         # check needed data
-        $GetParam{Minutes} =$GetParam{Minutes}||"00";
-        for my $Needed (qw(Name ValidID TypeID QueueID StateID PriorityID Title Hour Minutes)) {
-            if ( !$GetParam{$Needed} ) {
+        $GetParam{Minutes} = $GetParam{Minutes} || "00";
+        for my $Needed (
+            qw(Name ValidID TypeID QueueID StateID PriorityID Title Hour Minutes)
+          )
+        {
+            if (!$GetParam{$Needed}) {
                 $Errors{ $Needed . 'Invalid' } = 'ServerError';
             }
         }
 
-	# Take Weekday fields from template and convert into one string split by ;
-	$GetParam{Weekday}='';
-        my @wdays = $ParamObject->GetArray( Param => "Weekday" );
-	for (@wdays) {
+      # Take Weekday fields from template and convert into one string split by ;
+        $GetParam{Weekday} = '';
+        my @wdays = $ParamObject->GetArray(Param => "Weekday");
+        for (@wdays) {
             $GetParam{Weekday} .= "$_;";
-	}
+        }
 
-	# Get months selections
-	$GetParam{Months}='';
-	my @months= $ParamObject->GetArray( Param => "Months" );
+        # Get months selections
+        $GetParam{Months} = '';
+        my @months = $ParamObject->GetArray(Param => "Months");
         for (@months) {
             $GetParam{Months} .= "$_;";
         }
-        
-        
-    # GET DYNAMIC FIELDS FOR UPDATE ACTION
-    # get dynamic fields to set from web request
-    # to store dynamic fields profile data
-    my %DynamicFieldValues;
 
-    # cycle trough the activated Dynamic Fields for this screen
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+        # GET DYNAMIC FIELDS FOR UPDATE ACTION
+        # get dynamic fields to set from web request
+        # to store dynamic fields profile data
+        my %DynamicFieldValues;
 
-        # extract the dynamic field value form the web request
-        my $DynamicFieldValue = $BackendObject->EditFieldValueGet(
-            DynamicFieldConfig      => $DynamicFieldConfig,
-            ParamObject             => $ParamObject,
-            LayoutObject            => $LayoutObject,
-            ReturnTemplateStructure => 1,
-        );
+        # cycle trough the activated Dynamic Fields for this screen
+      DYNAMICFIELD:
+        for my $DynamicFieldConfig (@{ $Self->{DynamicField} }) {
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # set the comple value structure in GetParam to store it later in the Generic Agent Job
-        if ( IsHashRefWithData($DynamicFieldValue) ) {
-            %DynamicFieldValues = ( %DynamicFieldValues, %{$DynamicFieldValue} );
+            # extract the dynamic field value form the web request
+            my $DynamicFieldValue = $BackendObject->EditFieldValueGet(
+                DynamicFieldConfig      => $DynamicFieldConfig,
+                ParamObject             => $ParamObject,
+                LayoutObject            => $LayoutObject,
+                ReturnTemplateStructure => 1,
+            );
+
+# set the comple value structure in GetParam to store it later in the Generic Agent Job
+            if (IsHashRefWithData($DynamicFieldValue)) {
+                %DynamicFieldValues =
+                  (%DynamicFieldValues, %{$DynamicFieldValue});
+            }
         }
-    }
 
         # if no errors occurred
-        if ( !%Errors ) {
+        if (!%Errors) {
 
             # update group
             if (
-                $AutoTicketObject
-                ->AutoTicketUpdate(
-                     %GetParam,
-                     %DynamicFieldValues,
-                     UserID => $Self->{UserID} )
+                $AutoTicketObject->AutoTicketUpdate(
+                    %GetParam, %DynamicFieldValues,
+                    UserID => $Self->{UserID}
                 )
+              )
             {
 
-                # update attachments to AutoTicket
-#                $Self->{StdAttachmentObject}->StdAttachmentSetAutoTickets(
-#                    AttachmentIDsRef => \@NewIDs,
-#                    ID               => $GetParam{ID},
-#                    UserID           => $Self->{UserID},
-#                );
+     # update attachments to AutoTicket
+     #                $Self->{StdAttachmentObject}->StdAttachmentSetAutoTickets(
+     #                    AttachmentIDsRef => \@NewIDs,
+     #                    ID               => $GetParam{ID},
+     #                    UserID           => $Self->{UserID},
+     #                );
 
                 $Self->_Overview();
                 my $Output = $LayoutObject->Header();
                 $Output .= $LayoutObject->NavigationBar();
-                $Output .= $LayoutObject->Notify( Info => 'AutoTicket updated!' );
+                $Output .= $LayoutObject->Notify(Info => 'AutoTicket updated!');
                 $Output .= $LayoutObject->Output(
                     TemplateFile => 'AdminAutoTicket',
                     Data         => \%Param,
@@ -200,7 +206,7 @@ sub Run {
         # something has gone wrong
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
-        $Output .= $LayoutObject->Notify( Priority => 'Error' );
+        $Output .= $LayoutObject->Notify(Priority => 'Error');
         $Self->_Edit(
             Action              => 'Change',
             Errors              => \%Errors,
@@ -218,10 +224,10 @@ sub Run {
     # ------------------------------------------------------------ #
     # add
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'Add' ) {
+    elsif ($Self->{Subaction} eq 'Add') {
         my %GetParam;
-        $GetParam{Name} = $ParamObject->GetParam( Param => 'Name' );
-        
+        $GetParam{Name} = $ParamObject->GetParam(Param => 'Name');
+
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
         $Self->_Edit(
@@ -239,89 +245,91 @@ sub Run {
     # ------------------------------------------------------------ #
     # add action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'AddAction' ) {
+    elsif ($Self->{Subaction} eq 'AddAction') {
 
         # challenge token check for write action
         $LayoutObject->ChallengeTokenCheck();
 
-        my @NewIDs = $ParamObject->GetArray( Param => 'IDs' );
-        my ( %GetParam, %Errors );
+        my @NewIDs = $ParamObject->GetArray(Param => 'IDs');
+        my (%GetParam, %Errors);
 
-        for my $Parameter (qw(ID Name TypeID ServiceID SLAID QueueID StateID PriorityID Title Customer CustomerID IsVisibleForCustomer Message NoAgentNotify Nwd Weekday Monthday Months Hour Minutes Comment ValidID)) {
-            $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter ) || '';
+        for my $Parameter (
+            qw(ID Name TypeID ServiceID SLAID QueueID StateID PriorityID Title Customer CustomerID IsVisibleForCustomer Message NoAgentNotify Nwd Weekday Monthday Months Hour Minutes Comment ValidID)
+          )
+        {
+            $GetParam{$Parameter} =
+              $ParamObject->GetParam(Param => $Parameter) || '';
         }
 
-		$GetParam{IsVisibleForCustomer} = $GetParam{IsVisibleForCustomer} || 0;
-		
-	# Take Weekday fields from template and convert into one string split by ;
-	$GetParam{Weekday}='';
-        my @wdays = $ParamObject->GetArray( Param => "Weekday" );
-	for (@wdays) {
-            $GetParam{Weekday} .= "$_;";
-	}
+        $GetParam{IsVisibleForCustomer} = $GetParam{IsVisibleForCustomer} || 0;
 
-	# Get months selections
-	$GetParam{Months}='';
-	my @months= $ParamObject->GetArray( Param => "Months" );
+      # Take Weekday fields from template and convert into one string split by ;
+        $GetParam{Weekday} = '';
+        my @wdays = $ParamObject->GetArray(Param => "Weekday");
+        for (@wdays) {
+            $GetParam{Weekday} .= "$_;";
+        }
+
+        # Get months selections
+        $GetParam{Months} = '';
+        my @months = $ParamObject->GetArray(Param => "Months");
         for (@months) {
             $GetParam{Months} .= "$_;";
         }
-        
-        
-        
+
         # get composed content type
-#        $GetParam{ContentType} = 'text/plain';
-#        if ( $LayoutObject->{BrowserRichText} ) {
-#            $GetParam{ContentType} = 'text/html';
-#        }
-    # GET DYNAMIC FIELDS FOR UPDATE ACTION
-    # get dynamic fields to set from web request
-    # to store dynamic fields profile data
-    my %DynamicFieldValues;
+        #        $GetParam{ContentType} = 'text/plain';
+        #        if ( $LayoutObject->{BrowserRichText} ) {
+        #            $GetParam{ContentType} = 'text/html';
+        #        }
+        # GET DYNAMIC FIELDS FOR UPDATE ACTION
+        # get dynamic fields to set from web request
+        # to store dynamic fields profile data
+        my %DynamicFieldValues;
 
-    # cycle trough the activated Dynamic Fields for this screen
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+        # cycle trough the activated Dynamic Fields for this screen
+      DYNAMICFIELD:
+        for my $DynamicFieldConfig (@{ $Self->{DynamicField} }) {
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # extract the dynamic field value form the web request
-        my $DynamicFieldValue = $BackendObject->EditFieldValueGet(
-            DynamicFieldConfig      => $DynamicFieldConfig,
-            ParamObject             => $ParamObject,
-            LayoutObject            => $LayoutObject,
-            ReturnTemplateStructure => 1,
-        );
+            # extract the dynamic field value form the web request
+            my $DynamicFieldValue = $BackendObject->EditFieldValueGet(
+                DynamicFieldConfig      => $DynamicFieldConfig,
+                ParamObject             => $ParamObject,
+                LayoutObject            => $LayoutObject,
+                ReturnTemplateStructure => 1,
+            );
 
-        # set the comple value structure in GetParam to store it later in the Generic Agent Job
-        if ( IsHashRefWithData($DynamicFieldValue) ) {
-            %DynamicFieldValues = ( %DynamicFieldValues, %{$DynamicFieldValue} );
+# set the comple value structure in GetParam to store it later in the Generic Agent Job
+            if (IsHashRefWithData($DynamicFieldValue)) {
+                %DynamicFieldValues =
+                  (%DynamicFieldValues, %{$DynamicFieldValue});
+            }
         }
-    }
-
 
         # check needed data
-        $GetParam{Minutes} =$GetParam{Minutes}||"00";
-        for my $Needed (qw(Name ValidID TypeID QueueID StateID PriorityID Title Hour Minutes)) {
-            if ( !$GetParam{$Needed} ) {
+        $GetParam{Minutes} = $GetParam{Minutes} || "00";
+        for my $Needed (
+            qw(Name ValidID TypeID QueueID StateID PriorityID Title Hour Minutes)
+          )
+        {
+            if (!$GetParam{$Needed}) {
                 $Errors{ $Needed . 'Invalid' } = 'ServerError';
             }
         }
 
         # if no errors occurred
-        if ( !%Errors ) {
+        if (!%Errors) {
 
             # add AutoTicket
-            my $AutoTicketID
-                = $AutoTicketObject
-                ->AutoTicketAdd( 
-                    %GetParam,
-                    %DynamicFieldValues,
-                    UserID => $Self->{UserID} );
+            my $AutoTicketID =
+              $AutoTicketObject->AutoTicketAdd(%GetParam, %DynamicFieldValues,
+                UserID => $Self->{UserID});
             if ($AutoTicketID) {
                 $Self->_Overview();
                 my $Output = $LayoutObject->Header();
                 $Output .= $LayoutObject->NavigationBar();
-                $Output .= $LayoutObject->Notify( Info => 'AutoTicket added!' );
+                $Output .= $LayoutObject->Notify(Info => 'AutoTicket added!');
                 $Output .= $LayoutObject->Output(
                     TemplateFile => 'AdminAutoTicket',
                     Data         => \%Param,
@@ -334,7 +342,7 @@ sub Run {
         # something has gone wrong
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
-        $Output .= $LayoutObject->Notify( Priority => 'Error' );
+        $Output .= $LayoutObject->Notify(Priority => 'Error');
         $Self->_Edit(
             Action              => 'Add',
             Errors              => \%Errors,
@@ -352,21 +360,19 @@ sub Run {
     # ------------------------------------------------------------ #
     # delete action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'Delete' ) {
+    elsif ($Self->{Subaction} eq 'Delete') {
 
         # challenge token check for write action
         $LayoutObject->ChallengeTokenCheck();
 
-        my $ID = $ParamObject->GetParam( Param => 'ID' );
+        my $ID = $ParamObject->GetParam(Param => 'ID');
 
-        my $Delete = $AutoTicketObject->AutoTicketDelete(
-            ID => $ID,
-        );
-        if ( !$Delete ) {
+        my $Delete = $AutoTicketObject->AutoTicketDelete(ID => $ID,);
+        if (!$Delete) {
             return $LayoutObject->ErrorScreen();
         }
 
-        return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
+        return $LayoutObject->Redirect(OP => "Action=$Self->{Action}");
     }
 
     # ------------------------------------------------------------
@@ -386,29 +392,30 @@ sub Run {
 }
 
 sub _Edit {
-    my ( $Self, %Param ) = @_;
+    my ($Self, %Param) = @_;
 
-    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $LayoutObject   = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $AutoTicketObject	= $Kernel::OM->Get('Kernel::System::AutoTicket');
-    my $ValidObject 		= $Kernel::OM->Get('Kernel::System::Valid');
-    my $TypeObject 		= $Kernel::OM->Get('Kernel::System::Type');
-    my $HTMLUtilsObject		= $Kernel::OM->Get('Kernel::System::HTMLUtils');
-    my $ServiceObject		= $Kernel::OM->Get('Kernel::System::Service');
-    my $SLAObject		= $Kernel::OM->Get('Kernel::System::SLA');
-    my $QueueObject		= $Kernel::OM->Get('Kernel::System::Queue');
-    my $StateObject 		= $Kernel::OM->Get('Kernel::System::State');
-    my $PriorityObject		= $Kernel::OM->Get('Kernel::System::Priority');
-    my $DynamicFieldObject 	= $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $BackendObject 		= $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
- my $TicketObject		= $Kernel::OM->Get('Kernel::System::Ticket');
+    my $ParamObject        = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $AutoTicketObject   = $Kernel::OM->Get('Kernel::System::AutoTicket');
+    my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
+    my $TypeObject         = $Kernel::OM->Get('Kernel::System::Type');
+    my $HTMLUtilsObject    = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+    my $ServiceObject      = $Kernel::OM->Get('Kernel::System::Service');
+    my $SLAObject          = $Kernel::OM->Get('Kernel::System::SLA');
+    my $QueueObject        = $Kernel::OM->Get('Kernel::System::Queue');
+    my $StateObject        = $Kernel::OM->Get('Kernel::System::State');
+    my $PriorityObject     = $Kernel::OM->Get('Kernel::System::Priority');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $BackendObject =
+      $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $LayoutObject->Block( Name => 'ActionList' );
-    $LayoutObject->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block(Name => 'ActionList');
+    $LayoutObject->Block(Name => 'ActionOverview');
 
     # get valid list
     my %ValidList        = $ValidObject->ValidList();
@@ -418,10 +425,9 @@ sub _Edit {
         Data       => \%ValidList,
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'ValidIDInvalid'} || '' ),
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'ValidIDInvalid'} || ''),
     );
-
-
 
     # get type list
     my %TypeList        = $TypeObject->TypeList();
@@ -431,31 +437,34 @@ sub _Edit {
         Data       => \%TypeList,
         Name       => 'TypeID',
         SelectedID => $Param{TypeID} || $TypeListReverse{type},
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'TypeIDInvalid'} || '' ),
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'TypeIDInvalid'} || ''),
     );
 
     # get Service list
-    my %ServiceList        = $ServiceObject->ServiceList(UserID => 1);
+    my %ServiceList = $ServiceObject->ServiceList(UserID => 1);
     my %ServiceListReverse = reverse %ServiceList;
 
     $Param{ServiceOption} = $LayoutObject->BuildSelection(
         Data       => \%ServiceList,
         Name       => 'ServiceID',
         SelectedID => $Param{ServiceID} || $ServiceListReverse{service},
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'ServiceIDInvalid'} || '' ),
-        PossibleNone=> 1,
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'ServiceIDInvalid'} || ''),
+        PossibleNone => 1,
     );
 
     # get SLA list
-    my %SLAList        = $SLAObject->SLAList(UserID => 1);
+    my %SLAList = $SLAObject->SLAList(UserID => 1);
     my %SLAListReverse = reverse %SLAList;
 
     $Param{SLAOption} = $LayoutObject->BuildSelection(
         Data       => \%SLAList,
         Name       => 'SLAID',
         SelectedID => $Param{SLAID} || $SLAListReverse{sla},
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'SLAIDInvalid'} || '' ),
-        PossibleNone=> 1,
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'SLAIDInvalid'} || ''),
+        PossibleNone => 1,
     );
 
     # get queue list
@@ -466,75 +475,71 @@ sub _Edit {
         Data       => \%QueueList,
         Name       => 'QueueID',
         SelectedID => $Param{QueueID} || $QueueListReverse{queue},
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'QueueIDInvalid'} || '' ),
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'QueueIDInvalid'} || ''),
     );
 
     # get state list
-    my %StateList        = $StateObject->StateList(UserID=>1);
+    my %StateList = $StateObject->StateList(UserID => 1);
     my %StateListReverse = reverse %StateList;
 
     $Param{StateOption} = $LayoutObject->BuildSelection(
         Data       => \%StateList,
         Name       => 'StateID',
         SelectedID => $Param{StateID} || $StateListReverse{state},
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'StateIDInvalid'} || '' ),
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'StateIDInvalid'} || ''),
     );
-
 
     # Display article types for article creation if notification is sent
     # only use 'email-notification-*'-type articles
 
-    
-
-
-
-
     # NoAgentNotify
     if ($Param{NoAgentNotify} && $Param{NoAgentNotify} eq 1) {
-	$Param{NoAgentNotifyOption} = ' checked="checked" ',
+        $Param{NoAgentNotifyOption} = ' checked="checked" ',;
     }
 
     $Param{NwdOption} = $LayoutObject->BuildSelection(
         Data => {
-        	5 => "Create at scheduled time.",
-        	4 => "Create based on SLA. By Pass NBD.",
-        	3 => "Create based on SLA. On NBD, solution on next business hour.",
-        	2 => "Create based on SLA. On NBD, solution on previous business day.",
-        	1 => "Create based on SLA. On NBD, solution on next business day.",
+            5 => "Create at scheduled time.",
+            4 => "Create based on SLA. By Pass NBD.",
+            3 => "Create based on SLA. On NBD, solution on next business hour.",
+            2 =>
+              "Create based on SLA. On NBD, solution on previous business day.",
+            1 => "Create based on SLA. On NBD, solution on next business day.",
         },
         Name       => 'Nwd',
         SelectedID => $Param{Nwd} || 5,
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'NwdInvalid'} || '' ),
-        Max 	   => 255,
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'NwdInvalid'} || ''),
+        Max => 255,
     );
-
 
     # Weekdays
     my @weekdays = split(/;/, $Param{Weekday});
-    $Param{w0_Option} = grep(/^0$/, @weekdays)?' checked="checked" ':"";
-    $Param{w1_Option} = grep(/^1$/, @weekdays)?' checked="checked" ':"";
-    $Param{w2_Option} = grep(/^2$/, @weekdays)?' checked="checked" ':"";
-    $Param{w3_Option} = grep(/^3$/, @weekdays)?' checked="checked" ':"";
-    $Param{w4_Option} = grep(/^4$/, @weekdays)?' checked="checked" ':"";
-    $Param{w5_Option} = grep(/^5$/, @weekdays)?' checked="checked" ':"";
-    $Param{w6_Option} = grep(/^6$/, @weekdays)?' checked="checked" ':"";
-    
+    $Param{w0_Option} = grep(/^0$/, @weekdays) ? ' checked="checked" ' : "";
+    $Param{w1_Option} = grep(/^1$/, @weekdays) ? ' checked="checked" ' : "";
+    $Param{w2_Option} = grep(/^2$/, @weekdays) ? ' checked="checked" ' : "";
+    $Param{w3_Option} = grep(/^3$/, @weekdays) ? ' checked="checked" ' : "";
+    $Param{w4_Option} = grep(/^4$/, @weekdays) ? ' checked="checked" ' : "";
+    $Param{w5_Option} = grep(/^5$/, @weekdays) ? ' checked="checked" ' : "";
+    $Param{w6_Option} = grep(/^6$/, @weekdays) ? ' checked="checked" ' : "";
+
     # Months
     my @months = split(/;/, $Param{Months});
-    $Param{m1_Option} = grep(/^1$/, @months)?' checked="checked" ':"";
-    $Param{m2_Option} = grep(/^2$/, @months)?' checked="checked" ':"";
-    $Param{m3_Option} = grep(/^3$/, @months)?' checked="checked" ':"";
-    $Param{m4_Option} = grep(/^4$/, @months)?' checked="checked" ':"";
-    $Param{m5_Option} = grep(/^5$/, @months)?' checked="checked" ':"";
-    $Param{m6_Option} = grep(/^6$/, @months)?' checked="checked" ':"";
-    $Param{m7_Option} = grep(/^7$/, @months)?' checked="checked" ':"";
-    $Param{m8_Option} = grep(/^8$/, @months)?' checked="checked" ':"";
-    $Param{m9_Option} = grep(/^9$/, @months)?' checked="checked" ':"";
-    $Param{m10_Option} = grep(/^10$/, @months)?' checked="checked" ':"";
-    $Param{m11_Option} = grep(/^11$/, @months)?' checked="checked" ':"";
-    $Param{m12_Option} = grep(/^12$/, @months)?' checked="checked" ':"";
-    
-    
+    $Param{m1_Option}  = grep(/^1$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m2_Option}  = grep(/^2$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m3_Option}  = grep(/^3$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m4_Option}  = grep(/^4$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m5_Option}  = grep(/^5$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m6_Option}  = grep(/^6$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m7_Option}  = grep(/^7$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m8_Option}  = grep(/^8$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m9_Option}  = grep(/^9$/,  @months) ? ' checked="checked" ' : "";
+    $Param{m10_Option} = grep(/^10$/, @months) ? ' checked="checked" ' : "";
+    $Param{m11_Option} = grep(/^11$/, @months) ? ' checked="checked" ' : "";
+    $Param{m12_Option} = grep(/^12$/, @months) ? ' checked="checked" ' : "";
+
     # get priority list
     my %PriorityList        = $PriorityObject->PriorityList();
     my %PriorityListReverse = reverse %PriorityList;
@@ -543,9 +548,9 @@ sub _Edit {
         Data       => \%PriorityList,
         Name       => 'PriorityID',
         SelectedID => $Param{PriorityID} || '3',
-        Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'PriorityIDInvalid'} || '' ),
+        Class      => 'Modernize Validate_Required '
+          . ($Param{Errors}->{'PriorityIDInvalid'} || ''),
     );
-
 
 #    my %AttachmentData = $Self->{StdAttachmentObject}->StdAttachmentList( Valid => 1 );
 #    $Param{AttachmentOption} = $LayoutObject->BuildSelection(
@@ -560,33 +565,30 @@ sub _Edit {
 
     $LayoutObject->Block(
         Name => 'OverviewUpdate',
-        Data => {
-            %Param,
-            %{ $Param{Errors} },
-        },
+        Data => { %Param, %{ $Param{Errors} }, },
     );
-    
+
     # nesta variavel temos que armazenar os dados dos campos dinamicos imagino
-    my %JobData=%Param;
-    
+    my %JobData = %Param;
+
     # create dynamic field HTML for set with historical data options
     my $PrintDynamicFieldsSearchHeader = 1;
-
 
     # create dynamic field HTML for set with historical data options
     my $PrintDynamicFieldsEditHeader = 1;
 
     # cycle trough the activated Dynamic Fields for this screen
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+  DYNAMICFIELD:
+    for my $DynamicFieldConfig (@{ $Self->{DynamicField} }) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         my $PossibleValuesFilter;
 
         # check if field has PossibleValues property in its configuration
-        if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
+        if (IsHashRefWithData($DynamicFieldConfig->{Config}->{PossibleValues}))
+        {
 
-            # convert possible values key => value to key => key for ACLs usign a Hash slice
+# convert possible values key => value to key => key for ACLs usign a Hash slice
             my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
             @AclData{ keys %AclData } = keys %AclData;
 
@@ -603,9 +605,10 @@ sub _Edit {
                 my %Filter = $TicketObject->TicketAclData();
 
                 # convert Filer key => key back to key => value using map
-                %{$PossibleValuesFilter}
-                    = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
-                    keys %Filter;
+                %{$PossibleValuesFilter} = map {
+                    $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_}
+                  }
+                  keys %Filter;
             }
         }
 
@@ -624,10 +627,10 @@ sub _Edit {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldHTML);
 
         if ($PrintDynamicFieldsEditHeader) {
-            $LayoutObject->Block( Name => 'NewDynamicField' );
+            $LayoutObject->Block(Name => 'NewDynamicField');
             $PrintDynamicFieldsEditHeader = 0;
         }
-  
+
         # output dynamic field
         $LayoutObject->Block(
             Name => 'NewDynamicFieldElement',
@@ -637,61 +640,55 @@ sub _Edit {
             },
         );
     }
-    
-    
+
     # shows header
-    if ( $Param{Action} eq 'Change' ) {
-        $LayoutObject->Block( Name => 'HeaderEdit' );
-    }
-    else {
-        $LayoutObject->Block( Name => 'HeaderAdd' );
+    if ($Param{Action} eq 'Change') {
+        $LayoutObject->Block(Name => 'HeaderEdit');
+    } else {
+        $LayoutObject->Block(Name => 'HeaderAdd');
     }
 
     # add rich text editor
-    if ( $LayoutObject->{BrowserRichText} ) {
+    if ($LayoutObject->{BrowserRichText}) {
         $LayoutObject->Block(
             Name => 'RichText',
             Data => \%Param,
         );
 
-	# reformat from plain to html
-	$Param{Message} = $HTMLUtilsObject->ToHTML(
-		String => $Param{Message},
-	);
-    }
-    else {
+        # reformat from plain to html
+        $Param{Message} = $HTMLUtilsObject->ToHTML(String => $Param{Message},);
+    } else {
 
         # reformat from html to plain
-	$Param{Message} = $HTMLUtilsObject->ToAscii(
-		String => $Param{Message},
-	);
+        $Param{Message} = $HTMLUtilsObject->ToAscii(String => $Param{Message},);
     }
     return 1;
 }
 
 sub _Overview {
-    my ( $Self, %Param ) = @_;
-    my $AutoTicketObject	= $Kernel::OM->Get('Kernel::System::AutoTicket');
-    my $ValidObject 		= $Kernel::OM->Get('Kernel::System::Valid');
-    my $TypeObject 		= $Kernel::OM->Get('Kernel::System::Type');
-    my $HTMLUtilsObject		= $Kernel::OM->Get('Kernel::System::HTMLUtils');
-    my $ServiceObject		= $Kernel::OM->Get('Kernel::System::Service');
-    my $SLAObject		= $Kernel::OM->Get('Kernel::System::SLA');
-    my $QueueObject		= $Kernel::OM->Get('Kernel::System::Queue');
-    my $StateObject 		= $Kernel::OM->Get('Kernel::System::State');
-    my $PriorityObject		= $Kernel::OM->Get('Kernel::System::Priority');
-    my $DynamicFieldObject 	= $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $BackendObject 		= $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
-   my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $LayoutObject   = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my ($Self, %Param) = @_;
+    my $AutoTicketObject   = $Kernel::OM->Get('Kernel::System::AutoTicket');
+    my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
+    my $TypeObject         = $Kernel::OM->Get('Kernel::System::Type');
+    my $HTMLUtilsObject    = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+    my $ServiceObject      = $Kernel::OM->Get('Kernel::System::Service');
+    my $SLAObject          = $Kernel::OM->Get('Kernel::System::SLA');
+    my $QueueObject        = $Kernel::OM->Get('Kernel::System::Queue');
+    my $StateObject        = $Kernel::OM->Get('Kernel::System::State');
+    my $PriorityObject     = $Kernel::OM->Get('Kernel::System::Priority');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $BackendObject =
+      $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $LayoutObject->Block( Name => 'ActionList' );
-    $LayoutObject->Block( Name => 'ActionAdd' );
-    $LayoutObject->Block( Name => 'Filter' );
+    $LayoutObject->Block(Name => 'ActionList');
+    $LayoutObject->Block(Name => 'ActionAdd');
+    $LayoutObject->Block(Name => 'Filter');
 
     $LayoutObject->Block(
         Name => 'OverviewResult',
@@ -704,9 +701,10 @@ sub _Overview {
 
         # get valid list
         my %ValidList = $ValidObject->ValidList();
-        for my $ID ( sort { $List{$a} cmp $List{$b} } keys %List ) {
+        for my $ID (sort { $List{$a} cmp $List{$b} } keys %List) {
 
-            my %Data = $AutoTicketObject->AutoTicketGet( ID => $ID, );
+            my %Data = $AutoTicketObject->AutoTicketGet(ID => $ID,);
+
 #            my @SelectedAttachment;
 #            my %SelectedAttachmentData = $Self->{StdAttachmentObject}->StdAttachmentsByAutoTicketID(
 #                ID => $ID,
@@ -719,7 +717,8 @@ sub _Overview {
                 Data => {
                     Valid => $ValidList{ $Data{ValidID} },
                     %Data,
-#                    Attachments => scalar @SelectedAttachment,
+
+                 #                    Attachments => scalar @SelectedAttachment,
                 },
             );
         }
