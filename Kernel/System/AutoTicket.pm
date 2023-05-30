@@ -569,15 +569,16 @@ get all auto tickets
 sub AutoTicketList {
     my ( $Self, %Param ) = @_;
 
-    if ( !defined $Param{Valid} ) {
-        $Param{Valid} = 1;
+    my $SQL = 'SELECT id, name FROM autoticket ';
+    
+    if ( defined $Param{Valid} ) {
+        $SQL .= 'WHERE valid_id = ' . $Param{Valid};
     }
 
     # return data
 
     $Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, name FROM autoticket WHERE valid_id = ?',
-        Bind => [ \$Param{Valid} ]
+        SQL => $SQL
     );
 
     # fetch the result
