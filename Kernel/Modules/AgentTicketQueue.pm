@@ -11,6 +11,9 @@ package Kernel::Modules::AgentTicketQueue;
 use strict;
 use warnings;
 
+use Encode;
+use URI::Escape;
+
 use Kernel::System::VariableCheck qw(:all);
 use Kernel::Language qw(Translatable);
 
@@ -153,6 +156,9 @@ sub Run {
         my $FilterValue = $ParamObject->GetParam(
             Param => 'ColumnFilterDynamicField_' . $DynamicFieldConfig->{Name}
         );
+
+        # Unescape URI strings in query parameters.
+        $FilterValue = Encode::decode('utf8', uri_unescape($FilterValue));
 
         # if no filter from web request, try from user preferences
         if ( !defined $FilterValue || $FilterValue eq '' ) {
