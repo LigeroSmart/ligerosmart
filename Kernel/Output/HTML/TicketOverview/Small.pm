@@ -1607,8 +1607,10 @@ sub Run {
 						$TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 						$DataValue = $TimeObject->SystemTime2TimeStamp(
 							SystemTime => ( $Article{UntilTime} + $TimeObject->SystemTime() ),
-						);
-					}
+						); 
+					} else {
+                        $DataValue = $TimeObject;
+                    };
                     if ( defined $Article{UntilTime} && $Article{UntilTime} < -1 ) {
                         $CSSClass = 'Warning';
                     }
