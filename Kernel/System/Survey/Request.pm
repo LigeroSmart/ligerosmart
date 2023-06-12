@@ -235,16 +235,20 @@ sub RequestSend {
     }
 
     # date timezone conversion
-    my $TimeZoneUser = Kernel::System::DateTime->UserDefaultTimeZoneGet();
+    my $OTRSTimeZone = Kernel::System::DateTime->OTRSTimeZoneGet();
+    my $UserTimeZone = Kernel::System::DateTime->UserDefaultTimeZoneGet();
     for my $Data (qw(Changed)) {
         my $DateObj = $Kernel::OM->Create(
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Ticket{$Data},
-                TimeZone => $TimeZoneUser,
+                TimeZone => $OTRSTimeZone,
             },
         );
-        $Ticket{$Data} = $DateObj->Format( Format => '%d/%m/%Y %H:%M' );
+        $Ticket{$Data} = $DateObj->Format( 
+            Format => '%d/%m/%Y %H:%M', 
+            TimeZone => $UserTimeZone 
+        );
     }
 
     for my $Data ( sort keys %Ticket ) {
