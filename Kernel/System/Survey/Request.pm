@@ -234,6 +234,21 @@ sub RequestSend {
         }
     }
 
+    # date timezone conversion
+    my $OTRSTimeZone = Kernel::System::DateTime->OTRSTimeZoneGet();
+    my $UserTimeZone = Kernel::System::DateTime->UserDefaultTimeZoneGet();
+    for my $Data (qw(Changed)) {
+        my $DateObj = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Ticket{$Data},
+                TimeZone => $OTRSTimeZone,
+            },
+        );
+        my $Success = $DateObj->ToTimeZone( TimeZone => $UserTimeZone );
+        $Ticket{$Data} = $DateObj->Format( Format => '%d/%m/%Y %H:%M' );
+    }
+
     for my $Data ( sort keys %Ticket ) {
         if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
