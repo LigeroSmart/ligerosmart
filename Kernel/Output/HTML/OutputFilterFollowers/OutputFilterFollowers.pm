@@ -63,15 +63,24 @@ sub Run {
 	#Define a class 
 	#
 	my $ClassCollapsed = "Expanded";
-	if(uc $ConfigObject->Get("Followers::Collapsed") eq "NO"){
+	if(uc $ConfigObject->Get("Followers::Collapsed") eq "COLLAPSED"){
 		$ClassCollapsed = "Collapsed";
 	}
+
+	my $IsVisibleForCustomer = $ConfigObject->Get("Followers::IsVisibleForCustomerDefault");
 	#
 
 	$Kernel::OM->Get('Kernel::Output::HTML::Layout')->Block(
 		Name => 'BeginsFollowers',
     	Data => {
 			Class_collapsed => $ClassCollapsed,
+	    }
+  	);
+
+	$Kernel::OM->Get('Kernel::Output::HTML::Layout')->Block(
+		Name => 'IsVisibleForCustomer',
+    	Data => {
+			IsVisibleForCustomer => $IsVisibleForCustomer,
 	    }
   	);
 
