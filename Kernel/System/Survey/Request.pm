@@ -245,10 +245,8 @@ sub RequestSend {
                 TimeZone => $OTRSTimeZone,
             },
         );
-        $Ticket{$Data} = $DateObj->Format( 
-            Format => '%d/%m/%Y %H:%M', 
-            TimeZone => $UserTimeZone 
-        );
+        my $Success = $DateObj->ToTimeZone( TimeZone => $UserTimeZone );
+        $Ticket{$Data} = $DateObj->Format( Format => '%d/%m/%Y %H:%M' );
     }
 
     for my $Data ( sort keys %Ticket ) {
