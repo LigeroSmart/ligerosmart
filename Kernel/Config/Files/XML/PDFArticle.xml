@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Framework">
+    <Setting Name="PDF::Article###MaxLength" Required="1" Valid="1">
+        <Description Translatable="1">Defines the maximum number Length characters per Article in PDF file.</Description>
+        <Navigation>Core::PDF</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="100">
+                <Item ValueType="Option" Value="50">50</Item>
+                <Item ValueType="Option" Value="100">100</Item>
+                <Item ValueType="Option" Value="150">150</Item>
+                <Item ValueType="Option" Value="200">200</Item>
+                <Item ValueType="Option" Value="250">250</Item>
+                <Item ValueType="Option" Value="300">300</Item>
+                <Item ValueType="Option" Value="350">350</Item>
+                <Item ValueType="Option" Value="400">400</Item>
+                <Item ValueType="Option" Value="450">450</Item>
+                <Item ValueType="Option" Value="500">500</Item>
+                <Item ValueType="Option" Value="550">550</Item>
+                <Item ValueType="Option" Value="600">600</Item>
+                <Item ValueType="Option" Value="650">650</Item>
+                <Item ValueType="Option" Value="700">700</Item>
+                <Item ValueType="Option" Value="750">750</Item>
+                <Item ValueType="Option" Value="800">800</Item>
+                <Item ValueType="Option" Value="850">850</Item>
+                <Item ValueType="Option" Value="900">900</Item>
+                <Item ValueType="Option" Value="950">950</Item>
+                <Item ValueType="Option" Value="1000">1000</Item>
+                <Item ValueType="Option" Value="2000">2000</Item>
+                <Item ValueType="Option" Value="3000">3000</Item>
+                <Item ValueType="Option" Value="4000">4000</Item>
+                <Item ValueType="Option" Value="5000">5000</Item>
+                <Item ValueType="Option" Value="6000">6000</Item>
+                <Item ValueType="Option" Value="7000">7000</Item>
+                <Item ValueType="Option" Value="8000">8000</Item>
+                <Item ValueType="Option" Value="9000">9000</Item>
+                <Item ValueType="Option" Value="10000">10000</Item>
+            </Item>
+        </Value>
+    </Setting>
+</otrs_config>

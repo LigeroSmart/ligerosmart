@@ -1218,6 +1218,13 @@ sub _PDFOutputArticles {
             }
         }
 
+        my %PDFArticle = %{ $ConfigObject->Get('PDF::Article') };
+
+        $Article{MaxLength} = $PDFArticle{MaxLength};
+        if ( !$Article{MaxLength} || $Article{MaxLength} < 1 || $Article{MaxLength} > 10_000 ) {
+            $Article{MaxLength} = 100;
+        }        
+
         my $ArticlePreview = $LayoutObject->ArticlePreview(
             %Article,
             ResultType => 'plain',
