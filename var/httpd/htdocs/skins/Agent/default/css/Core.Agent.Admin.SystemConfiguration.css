@@ -1302,6 +1302,7 @@ h2.SearchResults {
     color: #bbb;
     float: left;
     font-family: FontAwesome;
+    font-weight: 600;
     font-size: 12px;
     line-height: 23px;
     margin-right: 5px;
@@ -1445,6 +1446,7 @@ h2.SearchResults {
     content: "\f178";
     color: #bbb;
     font-family: FontAwesome;
+    font-weight: 600;
     font-size: 12px;
     line-height: 23px;
     margin-right: -8px;
