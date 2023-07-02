@@ -1,0 +1,58 @@
+{
+    "name": "DynamicFieldRemoteDB",
+    "version": "6.0.3",
+    "framework": [
+        "6.0.x"
+    ],
+    "vendor": {
+        "name": "Perl-Services.de",
+        "url": "http://www.perl-services.de"
+    },
+    "license": "GNU GENERAL PUBLIC LICENSE Version 2, June 1991",
+    "description" : {
+        "en": "DynamicField backend to provide access to RemoteDB for OTRS",
+        "de": "DynamicField-Backend zur Bereitstellung des Zugangs zu Datenbanken fuer OTRS"
+    },
+    "intro" : [
+        {
+            "type": "Install",
+            "version": 0,
+            "lang": "en",
+            "title": "Install Information",
+            "text": [
+                "<strong>WELCOME</strong>",
+                "",
+                "You are about to install the OTRS module DynamicFieldITSMConfigItem.",
+                "",
+                "<strong>Important Advice:</strong>",
+                "",
+                "It is recommended to delete the OTRS-cache and perform a configuration rebuild before you continue the use of this OTRS installation."
+            ]
+        },
+        {
+            "type": "Upgrade",
+            "version": 0,
+            "lang": "en",
+            "title": "Install Information",
+            "text": [
+                "<strong>WELCOME</strong>",
+                "",
+                "You are about to install the OTRS module DynamicFieldITSMConfigItem.",
+                "",
+                "<strong>Important Advice:</strong>",
+                "",
+                "",
+                "It is recommended to delete the OTRS-cache and perform a configuration rebuild before you continue the use of this OTRS installation."
+            ]
+        }
+
+    ],
+    "code": [
+        { "type": "Install", "version": 0 },
+        { "type": "Uninstall", "version": 0 },
+        { "type": "Reinstall", "version": 0 },
+        { "type": "Upgrade", "version": 0 },
+        { "type": "Upgrade", "version": "4.99.80", "function" : "CodeUpgrade_5" },
+        { "type": "Upgrade", "version": "5.0.1", "function" : "CodeUpgrade_5_0_1" }
+    ]
+}
