@@ -596,6 +596,7 @@ END
                 <tbody>
 END
     my $ValueCounter = 0;
+    my $ScriptItems = "";
     for my $Key ( @{ $SelectedValuesArrayRef } ) {
         next if (!$Key);
         $ValueCounter++;
@@ -656,7 +657,7 @@ END
             <div class="Clear"></div>
         </div>
 END
-        $Param{LayoutObject}->AddJSOnDocumentComplete( Code => <<"END");
+$ScriptItems.= <<"END";
             \$('#$ContainerFieldName').hide();
             // var table = document.getElementById('table_$FieldName');
             // Obtém a referência para o elemento
@@ -722,7 +723,10 @@ END
     </div>
 END
 
-    $Param{LayoutObject}->AddJSOnDocumentComplete( Code => <<"END");
+    $HTMLString .= <<"END";
+        <script>
+            function initScript$AutoCompleteFieldName(){
+                $ScriptItems
     var $IDCounterName = $ValueCounter;
     \$('#$AutoCompleteFieldName').autocomplete({
         delay: $FieldConfig->{QueryDelay},
@@ -734,6 +738,21 @@ END
             Data.Search         = Request.term;
             Data.DynamicFieldID = $FieldID;
 
+            var additionalFilter = '$Param{DynamicFieldConfig}->{Config}->{AdditionalFilters}';
+
+            if(additionalFilter !== ""){
+
+                var addFilterList = additionalFilter.split(",");
+
+                Data.AdditionalFilters = "";
+
+                for(var item of addFilterList){
+                    var columnName = item.split("=")[0];
+                    var fieldName = item.split("=")[1];
+                    var fieldValue = \$('[name ="'+fieldName+'"]').val();
+                    Data.AdditionalFilters += " AND "+columnName+"='"+fieldValue+"'";
+                }
+            }
             var QueryString = Core.AJAX.SerializeForm(\$('#$AutoCompleteFieldName'), Data);
             \$.each(Data, function (Key, Value) {
                 QueryString += ';' + encodeURIComponent(Key) + '=' + encodeURIComponent(Value);
@@ -755,8 +774,10 @@ END
                 });
                 \$('#$AutoCompleteFieldName').data('AutoCompleteData', Data);
                 \$('#$AutoCompleteFieldName').removeData('AutoCompleteXHR');
+                \$('#AJAXLoader$AutoCompleteFieldName').hide();
                 Response(Data);
             }).fail(function() {
+                \$('#AJAXLoader$AutoCompleteFieldName').hide();
                 Response(\$('#$AutoCompleteFieldName').data('AutoCompleteData'));
             }));
         },
@@ -842,7 +863,8 @@ END
                 if (\$('.InputField_Selection > input[name=$FieldName]').length < $MaxArraySize) {
                     \$('#$AutoCompleteFieldName').show();
                 }
-                \$('#$FieldName').trigger('change');             
+                if(UI.item.saveDescription == 0)
+                    \$('#$FieldName').trigger('change');             
                 event.preventDefault(); // Impede o comportamento padrão do link (navegação)
                 // Aqui você pode escrever o código para excluir a linha da tabela
                 var linha = \$(this).closest('tr'); // Obtém a referência para a linha pai do link
@@ -864,7 +886,8 @@ END
             if (\$('.InputField_Selection > input[name=$FieldName]').length >= $MaxArraySize) {
                 \$('#$AutoCompleteFieldName').hide();
             }
-            \$('#$FieldName').trigger('change');
+            if(UI.item.saveDescription == 0)
+                \$('#$FieldName').trigger('change');
             Event.preventDefault();
             return false;
         },
@@ -1019,6 +1042,14 @@ END
             }, undefined, false);
         }
     });
+            }
+            if(document.readyState === 'complete')
+                initScript$AutoCompleteFieldName();
+        </script>
+END
+
+    $Param{LayoutObject}->AddJSOnDocumentComplete( Code => <<"END");
+    initScript$AutoCompleteFieldName();    
 END
 
     if ( $Param{Mandatory} ) {
