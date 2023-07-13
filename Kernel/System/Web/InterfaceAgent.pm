@@ -901,6 +901,13 @@ sub Run {
         my %UserData = $SessionObject->GetSessionIDData(
             SessionID => $Param{SessionID},
         );
+            if ( $Param{Action} =~ /^Admin/ ) {
+                print STDERR  "User $UserData{UserLogin} tried to access Admin area $Param{Action} e $Param{Subaction}\n\n";
+            }
+
+            if ( $Param{Action} =~ /^Admin/ && $Param{Subaction} =~ /Save/ ) {
+                print STDERR  "User $UserData{UserLogin} tried to access Admin area $Param{Action} e  $Param{Subaction}\n\n";
+            }
 
         $UserData{UserTimeZone} = $Self->_UserTimeZoneGet(%UserData);
 
