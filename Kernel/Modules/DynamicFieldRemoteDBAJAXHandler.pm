@@ -16,7 +16,6 @@ use strict;
 use warnings;
 
 use URI::Escape;
-use Data::Dumper;
 
 use Kernel::System::DFRemoteDB;
 
@@ -276,13 +275,7 @@ sub Run {
                         @PossibleValues = @{$PossibleValues} if $PossibleValues;
                     }
 
-                    if (!scalar(@PossibleValues)) {
-
-
-                        $Kernel::OM->Get('Kernel::System::Log')->Log(
-                            Priority => 'error',
-                            Message  => "SQL: '$SQL'",
-                        );                              
+                    if (!scalar(@PossibleValues)) {                          
 
                         my $Success = $DFRemoteDBObject->Prepare(
                             SQL   => $SQL,
@@ -303,7 +296,6 @@ sub Run {
                             if ( $DynamicFieldConfig->{Config}->{ShowKeyInTitle} ) {
                                 $Title .= ' (' . $Key . ')';
                             }
-#ALder
 
                             my $numColunas = scalar @Row;
                             push my @TableValues, $Row[2];
@@ -322,11 +314,6 @@ sub Run {
                             last RESULT if ($MaxCount == ($DynamicFieldConfig->{Config}->{MaxQueryResult} || 10));
                             $MaxCount++;
                         }
-
-                        $Kernel::OM->Get('Kernel::System::Log')->Log(
-                            Priority => 'error',
-                            Message  => Dumper(@PossibleValues),
-                        );                         
 
                         # cache request
                         if ( $DynamicFieldConfig->{Config}->{CacheTTL} ) {
