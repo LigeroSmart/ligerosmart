@@ -177,6 +177,8 @@ sub EditFieldRender {
         Text => $FieldLabel,
     );
 
+    $Value = '' if ref $Value eq 'HASH';
+
     my $HTMLString = <<"EOF";
 <input type="file" class="$FieldClass" id="$FieldName" name="$FieldName" title="$FieldLabelEscaped" size='40'/><br/>
 $Value
@@ -329,7 +331,7 @@ sub EditFieldValueValidate {
 
             if ( !$ExtensionAllowed ) {
                 $ServerError  = 1;
-                $ErrorMessage = "Extensão não permitida: '$Extension'.";
+                $ErrorMessage = "Extension not allowed";
             }
         }
     }
@@ -347,7 +349,7 @@ sub EditFieldValueValidate {
 
         if ( $MaxSize && $FileSize > $MaxSize ) {
             $ServerError  = 1;
-            $ErrorMessage = "O Arquivo é muito grande: $FileSize bytes.";
+            $ErrorMessage = "File size too big";
         }
     }
 
