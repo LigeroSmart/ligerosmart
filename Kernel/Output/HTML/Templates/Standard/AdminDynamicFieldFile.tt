@@ -169,6 +169,20 @@
                         </div>
                         <div class="Clear"></div>
 
+
+                        <label for="MaxSize">[% Translate("Max Size") | html %]:</label>
+                        <div class="Field">
+                            <input id="MaxSize" class="W50pc" type="text" maxlength="500" value="[% Data.MaxSize | html %]" name="MaxSize"/>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="AllowedExtensions">[% Translate("Allowed Extensions") | html %]:</label>
+                        <div class="Field">
+                            <input id="AllowedExtensions" class="W50pc" type="text" maxlength="500" value="[% Data.AllowedExtensions | html %]" name="AllowedExtensions"/>
+                        </div>
+                        <div class="Clear"></div>
+
+
                         <label for="ShowImageAsLinkOnly">[% Translate("Show Image as Link") | html %]:</label>
                         <div class="Field">
                             <select id="ShowImageAsLinkOnly" class="W50pc" name="ShowImageAsLinkOnly">

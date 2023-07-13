@@ -306,8 +306,50 @@ sub EditFieldValueValidate {
         ReturnValueStructure => 1,
     );
 
+    my $AllowedExtensions = $Param{DynamicFieldConfig}->{Config}->{AllowedExtensions} || '';
+
     my $ServerError;
     my $ErrorMessage;
+
+    # check if the file extension is allowed
+    if ($Param{ParamObject} && $Param{ParamObject}->{Query}
+            && $Param{ParamObject}->{Query}->{'.tmpfiles'}) {
+        my @FileNames = keys %{$Param{ParamObject}->{Query}->{'.tmpfiles'}};
+        my $Extension = $FileNames[0];
+        $Extension =~ s/.*\.//;
+        if ( $AllowedExtensions && $Extension ) {
+            my @AllowedExtensions = split( /,/, $AllowedExtensions );
+            my $ExtensionAllowed = 0;
+            for my $AllowedExtension (@AllowedExtensions) {
+                if ( lc($Extension) eq lc($AllowedExtension) ) {
+                    $ExtensionAllowed = 1;
+                    last;
+                }
+            }
+
+            if ( !$ExtensionAllowed ) {
+                $ServerError  = 1;
+                $ErrorMessage = "Extensão não permitida: '$Extension'.";
+            }
+        }
+    }
+
+    # check if the file size is allowed
+    if ( $Param{ParamObject} && $Param{ParamObject}->{Query}
+        && $Param{ParamObject}->{Query}->{'.tmpfiles'} && $Param{DynamicFieldConfig}->{Config}->{MaxSize} )
+    {
+        my @FileNames = keys %{ $Param{ParamObject}->{Query}->{'.tmpfiles'} };
+        my $FileName = $FileNames[0];
+        my $FilePath = $Param{ParamObject}->{Query}->{'.tmpfiles'}->{$FileName}->{name};
+        my $MaxSize = $Param{DynamicFieldConfig}->{Config}->{MaxSize} || 0;
+
+        my $FileSize = -s $FilePath;
+
+        if ( $MaxSize && $FileSize > $MaxSize ) {
+            $ServerError  = 1;
+            $ErrorMessage = "O Arquivo é muito grande: $FileSize bytes.";
+        }
+    }
 
     # perform necessary validations
     if ( $Param{Mandatory} && $Value eq '' ) {

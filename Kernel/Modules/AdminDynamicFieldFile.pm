@@ -169,7 +169,7 @@ sub _AddAction {
 
     for my $ConfigParam (
         qw(ObjectType ObjectTypeName FieldType FieldTypeName DefaultValue ValidID 
-          ShowDeleteOnCustomer ShowImageAsLinkOnly Rows Cols Link)
+          ShowDeleteOnCustomer MaxSize AllowedExtensions ShowImageAsLinkOnly Rows Cols Link)
         )
     {
         $GetParam{$ConfigParam} = $ParamObject->GetParam( Param => $ConfigParam );
@@ -198,7 +198,9 @@ sub _AddAction {
 
         #Complemento Ronaldo 24/05/18
         ShowDeleteOnCustomer => $GetParam{ShowDeleteOnCustomer},
-        ShowImageAsLinkOnly  => $GetParam{ShowImageAsLinkOnly}
+        ShowImageAsLinkOnly  => $GetParam{ShowImageAsLinkOnly},
+        MaxSize              => $GetParam{MaxSize},
+        AllowedExtensions    => $GetParam{AllowedExtensions},
     };
 
     if ( $GetParam{FieldType} eq 'Text' ) {
@@ -388,7 +390,7 @@ sub _ChangeAction {
     }
     # Complemento Here goes field configuration
     for my $ConfigParam (
-        qw(ObjectType ObjectTypeName FieldType FieldTypeName 
+        qw(ObjectType ObjectTypeName FieldType FieldTypeName MaxSize AllowedExtensions
             DefaultValue ValidID Rows Cols Link ShowDeleteOnCustomer ShowImageAsLinkOnly)
         )
     {
@@ -442,7 +444,9 @@ sub _ChangeAction {
     my $FieldConfig = {
         DefaultValue => $GetParam{DefaultValue},
         ShowDeleteOnCustomer => $GetParam{ShowDeleteOnCustomer},
-        ShowImageAsLinkOnly  => $GetParam{ShowImageAsLinkOnly}
+        ShowImageAsLinkOnly  => $GetParam{ShowImageAsLinkOnly},
+        MaxSize              => $GetParam{MaxSize},
+        AllowedExtensions    => $GetParam{AllowedExtensions},
 
     };
 
@@ -614,6 +618,8 @@ sub _ShowScreen {
             Link                  => $Link,
             ShowDeleteOnCustomer  => $Param{ShowDeleteOnCustomer},
             ShowImageAsLinkOnly   => $Param{ShowImageAsLinkOnly},
+            MaxSize               => $Param{MaxSize},
+            AllowedExtensions     => $Param{AllowedExtensions},
             }
     );
 
