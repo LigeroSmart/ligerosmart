@@ -11,6 +11,7 @@
     <meta id="viewport" name="viewport" content="">
     <meta name="robots" content="noindex,nofollow" />
 # set viewport for mobile mode, do not set viewport for DesktopMode
+    <script type="module" src="[% Config("Frontend::WebPath") %]js/thirdparty/morphdom/morphdom-umd.min.js"></script>
     <script>
         (function(doc, win) {
             var viewport = doc.getElementById('viewport'),

@@ -7,6 +7,7 @@
 # --
 ## nofilter(TidyAll::Plugin::OTRS::TT::ScriptUsage)
 <head>
+    <script type="module" src="[% Config("Frontend::WebPath") %]js/thirdparty/morphdom/morphdom-umd.min.js"></script>
     <meta http-equiv="Content-type" content="text/html;charset=utf-8" />
 [% IF Env('CGIHandle').substr(-9) == 'public.pl' %]
     <meta name="robots" content="index,follow" />
