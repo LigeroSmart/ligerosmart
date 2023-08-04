@@ -279,8 +279,8 @@
 [% RenderBlockEnd("BccMultipleCustomerCounter") %]
                     </div>
                     <div class="Clear"></div>
-
-
+                    <div id="ligerosmartforms"></div>
+                    <div class="Clear"></div>
                     <label class="Mandatory" for="Subject"><span class="Marker">*</span>[% Translate("Subject") | html %]:</label>
                     <div class="Field">
                         <input type="text" name="Subject" id="Subject" value="[% Data.Subject | html %]" class="Validate_Required [% Data.SubjectInvalid %] W75pc"/>

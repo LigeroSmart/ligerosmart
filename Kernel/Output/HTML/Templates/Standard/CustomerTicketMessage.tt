@@ -76,6 +76,7 @@
                     <div class="Clear"></div>
                 </div>
 [% RenderBlockEnd("TicketSLA") %]
+                <div id="ligerosmartforms"></div>
                 <div>
                     <label for="Subject" class="Mandatory">
                         <span class="Marker">*</span>

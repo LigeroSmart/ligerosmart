@@ -197,7 +197,8 @@
                     </div>
                     <div class="Clear"></div>
 [% RenderBlockEnd("ResponsibleSelection") %]
-
+                    <div id="ligerosmartforms"></div>
+                    <div class="Clear"></div>
                     <label class="Mandatory" for="Subject"><span class="Marker">*</span> [% Translate("Subject") | html %]:</label>
                     <div class="Field">
                         <input class="W75pc Validate_Required [% Data.SubjectInvalid | html %]" type="text" name="Subject" id="Subject" value="[% Data.Subject | html %]"/>

@@ -7,16 +7,16 @@ did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 */
 
 /**
- * @package     Skin "Default"
- * @section     Forms
- */
+* @package     Skin "Default"
+* @section     Forms
+*/
 
 @media screen,projection,tv,handheld {
 
 /**
- * @subsection  Input focus
- * @note        Does not work in IE6, only partially in IE7 (no focus)
- */
+    * @subsection  Input focus
+    * @note        Does not work in IE6, only partially in IE7 (no focus)
+    */
 
 input[type=text],
 input[type=password],
@@ -81,25 +81,25 @@ textarea:focus {
 }
 
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color: #555;
-   transition: color ease 0.3s;
-   opacity: 1;
+    color: #555;
+    transition: color ease 0.3s;
+    opacity: 1;
 }
 
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color: #555;
-   transition: color ease 0.3s;
-   opacity: 1;
+    color: #555;
+    transition: color ease 0.3s;
+    opacity: 1;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: #555;
-   transition: color ease 0.3s;
+    color: #555;
+    transition: color ease 0.3s;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-   color: #555;
-   transition: color ease 0.3s;
+    color: #555;
+    transition: color ease 0.3s;
 }
 
 :focus::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -107,35 +107,35 @@ textarea:focus {
 }
 
 :focus:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color: #ccc;
-   opacity: 1;
+    color: #ccc;
+    opacity: 1;
 }
 
 :focus::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color: #ccc;
-   opacity: 1;
+    color: #ccc;
+    opacity: 1;
 }
 
 :focus:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: #ccc;
+    color: #ccc;
 }
 
 :focus::-ms-input-placeholder { /* Microsoft Edge */
-   color: #ccc;
+    color: #ccc;
 }
 
 /**
- * @subsection  Textarea
- * @note        Fixed font needed in textareas because otherwise the line wrapping is incorrect.
- */
+    * @subsection  Textarea
+    * @note        Fixed font needed in textareas because otherwise the line wrapping is incorrect.
+    */
 textarea {
     font-family: monospace,fixed;
 }
 
 
 /**
- * @subsection  Input Readonly
- */
+    * @subsection  Input Readonly
+    */
 input[type=text][readonly],
 input[type=password][readonly],
 input[type=email][readonly],
@@ -144,8 +144,8 @@ textarea[readonly] {
 }
 
 /**
- * @subsection  Buttons
- */
+    * @subsection  Buttons
+    */
 button.Primary {
     font-weight: bold;
 }
@@ -233,8 +233,8 @@ a.Reset{
 }
 
 /**
- * @note    Push-lookalike for active state
- */
+    * @note    Push-lookalike for active state
+    */
 button.Add:active,
 a.Add:active,
 button.Remove:active,
@@ -284,8 +284,8 @@ button.Reset:active {
 }
 
 /**
- * @subsection    GenericAgent ClearSelect
- */
+    * @subsection    GenericAgent ClearSelect
+    */
 
 .GenericAgentClearSelect {
     width: 16px;
@@ -301,8 +301,8 @@ button.Reset:active {
 }
 
 /**
- * @subsection    Tree selection icon and overlay for select boxes
- */
+    * @subsection    Tree selection icon and overlay for select boxes
+    */
 
 .ShowTreeSelection {
     width: 16px;
@@ -430,8 +430,8 @@ button.Reset:active {
 }
 
 /**
- * @subsection  Form
- */
+    * @subsection  Form
+    */
 
 form fieldset {
     display: block;
@@ -571,9 +571,9 @@ form label.LabelError {
 }
 
 /**
- * @note        Give the user a hint about linked label elements (they are clickable and
- *                  give focus to the linked element.
- */
+    * @note        Give the user a hint about linked label elements (they are clickable and
+    *                  give focus to the linked element.
+    */
 
 form label[for] {
     cursor: pointer;
@@ -587,19 +587,21 @@ form textarea.Error:focus {
 }
 
 /*
- * This will be displayed by Core.UI.Tooltips
- */
+    * This will be displayed by Core.UI.Tooltips
+    */
 div.TooltipErrorMessage {
     display: none;
 }
 
 /**
- * @subsection  TableLike
- * @description Provides a table-like, aligned label-value structure
- */
+    * @subsection  TableLike
+    * @description Provides a table-like, aligned label-value structure
+    */
 
 fieldset.TableLike > label,
-fieldset.TableLike > .Row > label {
+fieldset.TableLike > .Row > label,
+#ligerosmartforms  > .Row > label
+{
     display: block;
     float: left;
     line-height: 1.9em;
@@ -618,6 +620,8 @@ fieldset.TableLike > .Row > label {
     text-align: left;
 }
 
+#ligerosmartforms > .Field,
+#ligerosmartforms > .Row > .Field,
 fieldset.TableLike > .Field,
 fieldset.TableLike > .Row > .Field {
     line-height: 1.9em;
@@ -638,19 +642,25 @@ fieldset.TableLike > .Row > .Field {
     padding-right: 10px;
 }
 
+#ligerosmartforms select,
 fieldset.TableLike select {
     margin-top: 3px;
 }
 
 /**
- * @note     Also make labels grey which occur inside of a field,
- *          for example for complex input elements.
- */
+    * @note     Also make labels grey which occur inside of a field,
+    *          for example for complex input elements.
+    */
 fieldset.TableLike > .Field label,
 fieldset.TableLike > .Row > .Field label {
     color: #929292;
 }
 
+#ligerosmartforms select,
+#ligerosmartforms > .Field > select,
+#ligerosmartforms > .Row > .Field > select,
+#ligerosmartforms > .Field > input,
+#ligerosmartforms > .Row > .Field > input,
 fieldset.TableLike > .Field > select,
 fieldset.TableLike > .Row > .Field > select,
 fieldset.TableLike > .Field > input,
@@ -659,11 +669,11 @@ fieldset.TableLike > .Row > .Field > input {
 }
 
 /**
- * @note    The RichText field needs to float, otherwise it breaks
- *          in small screens.
- *          Additionally we have a generic FloatingField class,
- *          RichTextField is for backwards compatibility.
- */
+    * @note    The RichText field needs to float, otherwise it breaks
+    *          in small screens.
+    *          Additionally we have a generic FloatingField class,
+    *          RichTextField is for backwards compatibility.
+    */
 fieldset.TableLike > .Row > .RichTextField,
 fieldset.TableLike > .FloatingField,
 fieldset.TableLike > .Row > .FloatingField {
@@ -744,9 +754,9 @@ fieldset.TableLike > .Row > .Value img {
 }
 
 /**
- * @note        FixedLabel - this additional class for TableLike
- *              makes the labels have a fixed size
- */
+    * @note        FixedLabel - this additional class for TableLike
+    *              makes the labels have a fixed size
+    */
 fieldset.TableLike.FixedLabel > label,
 fieldset.TableLike.FixedLabel > .Row > label {
     width: 170px;
@@ -773,9 +783,9 @@ fieldset.TableLike.FixedLabel > .Row > .Value {
 }
 
 /**
- * @note        FixedLabelSmall - this additional class for TableLike
- *              makes the labels have a small fixed size
- */
+    * @note        FixedLabelSmall - this additional class for TableLike
+    *              makes the labels have a small fixed size
+    */
 fieldset.TableLike.FixedLabelSmall > label,
 fieldset.TableLike.FixedLabelSmall > .Row > label {
     width: 100px;
@@ -815,6 +825,7 @@ fieldset.TableLike.Narrow > .Row > .Value {
     line-height: 1.3em;
 }
 
+$ligerosmartforms > .Row >label,
 fieldset.TableLike.Narrow > label,
 fieldset.TableLike.Narrow > .Row > label,
 fieldset.TableLike.Narrow > .Value,
@@ -830,8 +841,8 @@ iframe.Signature {
 }
 
 /**
- * @subsection freetext fields
- */
+    * @subsection freetext fields
+    */
 
 input[type=text].TicketFreeText,
 input[type=text].ArticleFreeText {

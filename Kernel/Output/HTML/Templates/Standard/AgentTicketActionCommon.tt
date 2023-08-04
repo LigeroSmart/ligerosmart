@@ -342,7 +342,7 @@
                             <div class="Clear"></div>
                         </fieldset>
 [% RenderBlockEnd("InformAgentsWithoutSelection") %]
-
+                        <div id="ligerosmartforms"></div>
                         <fieldset class="TableLike FixedLabel">
 [% RenderBlockStart("SubjectLabel") %]
                             <label for="Subject">[% Translate("Subject") | html %]:</label>
