@@ -93,7 +93,7 @@ sub LoadDefaults {
     # ScriptAlias
     # Prefix to index.pl used as ScriptAlias in web config
     # (Used when emailing links to agents).
-    $Self->{ScriptAlias} = 'otrs/';
+    $Self->{ScriptAlias} = 'ligerosmart/';
 
     # AdminEmail
     # (Email of the system admin.)
@@ -117,15 +117,15 @@ sub LoadDefaults {
 
     # Database
     # (The database name.)
-    $Self->{Database} = 'otrs';
+    $Self->{Database} = 'ligerosmart';
 
     # DatabaseUser
     # (The database user.)
-    $Self->{DatabaseUser} = 'otrs';
+    $Self->{DatabaseUser} = 'ligerosmart';
 
     # DatabasePw
     # (The password of database user.)
-    $Self->{DatabasePw} = 'some-pass';
+    $Self->{DatabasePw} = 'ligerosmart';
 
     # DatabaseDSN
     # The database DSN for MySQL ==> more: "perldoc DBD::mysql"
