@@ -22,14 +22,3 @@
 #
 # source /opt/otrs/.bash_completion
 
-# Get path to current file, follow symlinks
-THIS_FILE=$BASH_SOURCE
-if [ -L $THIS_FILE ]; then
-    THIS_FILE=`readlink $THIS_FILE`;
-fi
-
-# Remove : from wordbreak delimiter because OTRS uses it in the command names
-COMP_WORDBREAKS=${COMP_WORDBREAKS//:/}
-
-# Configure bash completion
-complete -f -d -C "$(dirname $THIS_FILE)/bin/otrs.Console.pl" otrs.Console.pl
