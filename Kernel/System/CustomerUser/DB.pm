@@ -425,10 +425,10 @@ sub CustomerSearch {
         if ( IsHashRefWithData( \%{$Self->{ConfiguredCustomerIDs}} ) ) {
 
             if ( $Self->{CaseSensitive} ) {
-                $SQL .= " OR customer_ids LIKE '%" . $Param{CustomerIDRaw} . "%'";
+                $SQL .= " OR (customer_ids LIKE '%" . $Param{CustomerIDRaw} . "%' and valid_id = 1) ";
             }
             else {
-                $SQL .= "OR LOWER(customer_ids) LIKE LOWER('%" . $Param{CustomerIDRaw} . "%') ";
+                $SQL .= "OR (LOWER(customer_ids) LIKE LOWER('%" . $Param{CustomerIDRaw} . "%') and valid_id = 1) ";
             }            
 
         }              
