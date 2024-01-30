@@ -418,7 +418,7 @@ sub CustomerSearch {
             $SQL .= "$Self->{CustomerID} = ? ";
         }
         else {
-            $SQL .= "LOWER($Self->{CustomerID}) = LOWER(?) ";
+            $SQL .= "(LOWER($Self->{CustomerID}) = LOWER(?) and valid_id = 1)";
         }
 
         # create example installation string for module
@@ -456,6 +456,10 @@ sub CustomerSearch {
 
     my @CustomerUserListFieldsDynamicFields
         = grep { exists $Self->{ConfiguredDynamicFieldNames}->{$_} } @{$CustomerUserListFields};
+
+
+
+		#die Dumper(\@Bind);
 
     # get data from customer user table
     return if !$Self->{DBObject}->Prepare(
