@@ -391,11 +391,6 @@ sub Run {
 						HistoryComment => 'Pesquisa de Satisfação',
 						ContentType    => 'text/plain; charset=utf8',
 					);
-
-					$Kernel::OM->Get('Kernel::System::Log')->Log(
-						Message  => "OpenTicketQuestionsText: $OpenTicketQuestionsText - Return: $Return",
-						Priority => 'error',
-					);
 				}
 
                 # print the main table.
