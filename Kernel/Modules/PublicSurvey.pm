@@ -82,9 +82,7 @@ sub Run {
                         Param => "PublicSurveyVote2[$Question->{QuestionID}]"
                     );
 
-					my $SurveyRequestObject = $Kernel::OM->Get('Kernel::System::Survey::Request');
-
-					my %RequestData = $SurveyRequestObject->RequestGet(
+					my %RequestData = $SurveyObject->RequestGet(
 						PublicSurveyKey => $PublicSurveyKey,
 					);
 
