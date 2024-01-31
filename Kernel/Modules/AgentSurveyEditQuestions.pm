@@ -289,7 +289,7 @@ sub Run {
                 QuestionID => $GetParam{QuestionID},
                 Answer     => $Answer,
                 UserID     => $Self->{UserID},
-				OpenTicket => $OpenTicket,
+				OpenTicket => $OpenTicket eq 'on' ? 1 : 0,
 				QueueID    => $QueueID,
             );
 
