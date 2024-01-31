@@ -86,14 +86,18 @@ sub Run {
 						AnswerID => $PublicSurveyVote2,
 					);
 
-					my %RequestData = $SurveyObject->RequestGet(
-						PublicSurveyKey => $PublicSurveyKey,
-					);
+					if($AnswerData{OpenTicket} eq 1){
+						my %RequestData = $SurveyObject->RequestGet(
+							PublicSurveyKey => $PublicSurveyKey,
+						);
 
-					$Kernel::OM->Get('Kernel::System::Log')->Log(
-						Message  => "RequestData here ".Dumper(\%RequestData). "AnswerData here ".Dumper(\%AnswerData). " PublicSurveyVote2: $PublicSurveyVote2",
-						Priority => 'error',
-					);
+						$Kernel::OM->Get('Kernel::System::Log')->Log(
+							Message  => "RequestData here ".Dumper(\%RequestData). "AnswerData here ".Dumper(\%AnswerData). " PublicSurveyVote2: $PublicSurveyVote2",
+							Priority => 'error',
+						);
+					}
+
+					
 
                     if (
                         $Question->{AnswerRequired}
