@@ -1,0 +1,13 @@
+<Migrations>
+    <DatabaseInstall Type="post">
+        <TableAlter Type="post" Name="survey_answer">
+            <ColumnAdd Default="0" Name="open_ticket" Required="false" Size="1" Type="SMALLINT"></ColumnAdd>
+        </TableAlter>
+    </DatabaseInstall>
+
+    <DatabaseUninstall Type="pre">
+        <TableAlter Type="pre" Name="survey_answer">
+            <ColumnDrop Name="open_ticket"></ColumnDrop>
+        </TableAlter>
+    </DatabaseUninstall>
+</Migrations>
