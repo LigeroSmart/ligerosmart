@@ -56,11 +56,6 @@ sub Run {
             PublicSurveyKey => $PublicSurveyKey,
         );
 
-		$Kernel::OM->Get('Kernel::System::Log')->Log(
-			Message  => "Survey here ".Dumper(\%Survey),
-			Priority => 'error',
-		);
-		
         if ( $Survey{SurveyID} ) {
             @QuestionList = $SurveyObject->QuestionList(
                 SurveyID => $Survey{SurveyID},
@@ -86,6 +81,11 @@ sub Run {
                     my $PublicSurveyVote2 = $ParamObject->GetParam(
                         Param => "PublicSurveyVote2[$Question->{QuestionID}]"
                     );
+
+					$Kernel::OM->Get('Kernel::System::Log')->Log(
+						Message  => "Question here ".Dumper($Question). " PublicSurveyVote2: $PublicSurveyVote2",
+						Priority => 'error',
+					);
 
                     if (
                         $Question->{AnswerRequired}
