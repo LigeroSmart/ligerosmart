@@ -363,6 +363,7 @@ sub Run {
 					my $Return = $Kernel::OM->Get('Kernel::System::Ticket')->TicketCreate(
 						Title     => 'Pesquisa de Satisfação - '.$Ticket{TicketNumber},
 						QueueID   => $OpenTicketQueueID,
+						UserID    => 1,
 						PriorityID => 3,
 						StateID   => 1,
 						CustomerID => $Ticket{CustomerID},
