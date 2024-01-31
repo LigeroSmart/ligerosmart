@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_config version="2.0" init="Application">
-     <Setting Name="Frontend::Output::FilterElementPost###060-OutputDynamicFieldRemoteDBTable" Required="0" Valid="1">
+     <Setting Name="Frontend::Output::FilterElementPost###060-OutputDynamicFieldRemoteDBTable" Required="0" Valid="0">
         <Description Translatable="1">Alerts Agent about not classified tickets and suggest smart classification based on ticket content and past tickets.</Description>
         <Navigation>Frontend::Base</Navigation>
         <Value>
