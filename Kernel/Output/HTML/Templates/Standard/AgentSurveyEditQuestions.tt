@@ -266,7 +266,6 @@
                         <label for="Answer" class="Mandatory"><span class="Marker">*</span> [% Translate("Add Answer") | html %]:</label>
                         <div class="Field">
                             <input type="text" id="Answer" name="Answer" size="60" class="Validate_Required [% Data.AnswerServerError | html %] "/>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]"> <span><i class="fa fa-plus-square"></i> [% Translate("Add") | html %]</button>
                         </div>
 
                         <div id="AnswerError" class="TooltipErrorMessage">
@@ -277,6 +276,19 @@
                             <p>[% Translate("This field is required.") | html %]</p>
                         </div>
 
+                    </fieldset>
+					<fieldset class="TableLike FixedLabel">
+                        <label for="OpenTicket"> [% Translate("Open Ticket") | html %]:</label>
+                        <div class="Field">
+                            <input type="checkbox" id="OpenTicket" name="OpenTicket"/>
+                        </div>
+                    </fieldset>
+					<fieldset class="TableLike FixedLabel">
+                        <label for="QueueID"> [% Translate("Queue ID") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="QueueID" name="QueueID" size="60"/>
+                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]"> <span><i class="fa fa-plus-square"></i> [% Translate("Add") | html %]</button>
+                        </div>
                     </fieldset>
                 </form>
 [% RenderBlockEnd("QuestionEditAddAnswer") %]
@@ -293,6 +305,8 @@
                     <thead>
                         <tr>
                             <th> [% Translate("Description") | html %] </th>
+							<th> [% Translate("Generate Ticket") | html %] </th>
+							<th> [% Translate("Ticket Queue ID") | html %] </th>
                             <th> [% Translate("Up") | html %] </th>
                             <th> [% Translate("Down") | html %] </th>
 [% RenderBlockStart("QuestionEditTableDelete") %]
