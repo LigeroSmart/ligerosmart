@@ -287,6 +287,8 @@ sub Run {
                 QuestionID => $GetParam{QuestionID},
                 Answer     => $Answer,
                 UserID     => $Self->{UserID},
+				OpenTicket => $GetParam{SurveyID},
+				QueueID    => $GetParam{QueueID},
             );
 
             return $Self->_MaskQuestionEdit(
