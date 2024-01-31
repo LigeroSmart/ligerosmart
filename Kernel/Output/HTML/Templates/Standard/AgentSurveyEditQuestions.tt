@@ -326,7 +326,7 @@
                                 <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerEdit;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]"> [% Data.Answer | truncate(90) | html %] </a>
                             </td>
 							<td>
-                                [% Data.GenerateTicket | truncate(90) | html %]
+                                [% Data.OpenTicket | truncate(90) | html %]
                             </td>
 							<td>
                                 [% Data.QueueID | truncate(90) | html %]

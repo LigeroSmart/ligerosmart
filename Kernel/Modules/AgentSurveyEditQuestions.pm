@@ -287,7 +287,7 @@ sub Run {
                 QuestionID => $GetParam{QuestionID},
                 Answer     => $Answer,
                 UserID     => $Self->{UserID},
-				OpenTicket => $GetParam{SurveyID},
+				OpenTicket => $GetParam{OpenTicket},
 				QueueID    => $GetParam{QueueID},
             );
 
