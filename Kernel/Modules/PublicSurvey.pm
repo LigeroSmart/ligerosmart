@@ -94,12 +94,9 @@ sub Run {
 							PublicSurveyKey => $PublicSurveyKey,
 						);
 
-						$Kernel::OM->Get('Kernel::System::Log')->Log(
-							Message  => "Question here ".Dumper($Question). "AnswerData here ".Dumper(\%AnswerData). " PublicSurveyVote2: $PublicSurveyVote2",
-							Priority => 'error',
-						);
-					}
+						$OpenTicketQuestionsText = 'Pergunta: '.$Question->{Question}.' - Resposta: '.$AnswerData{Answer}. "\n";
 
+					}
 					
 
                     if (
@@ -353,6 +350,13 @@ sub Run {
                 $Output = $LayoutObject->CustomerHeader(
                     Title => 'Survey',
                 );
+
+				if($OpenTicketQuestionsText){
+					$Kernel::OM->Get('Kernel::System::Log')->Log(
+						Message  => "OpenTicketQuestionsText: $OpenTicketQuestionsText",
+						Priority => 'error',
+					);
+				}
 
                 # print the main table.
                 $LayoutObject->Block(
