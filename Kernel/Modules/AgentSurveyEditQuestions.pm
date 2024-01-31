@@ -290,7 +290,7 @@ sub Run {
                 Answer     => $Answer,
                 UserID     => $Self->{UserID},
 				OpenTicket => $OpenTicket eq 'on' ? 1 : 0,
-				QueueID    => $QueueID,
+				QueueID    => $QueueID || 0,
             );
 
             return $Self->_MaskQuestionEdit(
