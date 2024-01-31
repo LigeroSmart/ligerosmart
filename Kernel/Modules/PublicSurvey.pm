@@ -51,6 +51,9 @@ sub Run {
     if ( $Self->{Subaction} eq 'PublicSurveyVote' ) {
         my $PublicSurveyKey = $ParamObject->GetParam( Param => 'PublicSurveyKey' );
 
+		my $OpenTicketQuestionsText = undef;
+		my $OpenTicketQueueID = 0;
+
         # get survey from public key
         my %Survey = $SurveyObject->PublicSurveyGet(
             PublicSurveyKey => $PublicSurveyKey,
@@ -92,7 +95,7 @@ sub Run {
 						);
 
 						$Kernel::OM->Get('Kernel::System::Log')->Log(
-							Message  => "RequestData here ".Dumper(\%RequestData). "AnswerData here ".Dumper(\%AnswerData). " PublicSurveyVote2: $PublicSurveyVote2",
+							Message  => "Question here ".Dumper($Question). "AnswerData here ".Dumper(\%AnswerData). " PublicSurveyVote2: $PublicSurveyVote2",
 							Priority => 'error',
 						);
 					}
