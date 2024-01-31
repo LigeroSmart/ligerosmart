@@ -352,8 +352,45 @@ sub Run {
                 );
 
 				if($OpenTicketQuestionsText){
+					my $RequestData = $SurveyObject->RequestGet(
+						PublicSurveyKey => $PublicSurveyKey,
+					);
+
+					my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
+						TicketID => $RequestData{TicketID},
+					);
+
+					my $Return = $Kernel::OM->Get('Kernel::System::Ticket')->TicketCreate(
+						Title     => 'Pesquisa de Satisfação - '.$Ticket{TicketNumber},
+						QueueID   => $OpenTicketQueueID,
+						PriorityID => 3,
+						StateID   => 1,
+						CustomerID => $Ticket{CustomerID},
+						CustomerUser => $Ticket{CustomerUser},
+						OwnerID   => 1,
+						TypeID    => 1,
+						ServiceID => $Ticket{ServiceID},
+						Lock      => 'unlock',
+						Body      => $OpenTicketQuestionsText,
+					);
+
+					my $ArticleObject       = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+					my $ArticleBackendObject= $ArticleObject->BackendForChannel(ChannelName => 'Phone');
+
+					my $ArticleID = $ArticleBackendObject->ArticleCreate(
+						TicketID  =>  $Return,
+						SenderType => 'agent',
+						IsVisibleForCustomer => 1,
+						UserID => 1,
+						Subject => 'Pesquisa de Satisfação - '.$Ticket{TicketNumber},
+						Body => $OpenTicketQuestionsText,
+						HistoryType => 'OwnerUpdate',
+						HistoryComment => 'Pesquisa de Satisfação',
+						ContentType    => 'text/plain; charset=utf8',
+					);
+
 					$Kernel::OM->Get('Kernel::System::Log')->Log(
-						Message  => "OpenTicketQuestionsText: $OpenTicketQuestionsText",
+						Message  => "OpenTicketQuestionsText: $OpenTicketQuestionsText - Return: $Return",
 						Priority => 'error',
 					);
 				}
