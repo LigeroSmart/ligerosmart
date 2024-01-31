@@ -270,6 +270,8 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AnswerAdd' ) {
 
         my $Answer = $ParamObject->GetParam( Param => "Answer" );
+		my $OpenTicket = $ParamObject->GetParam( Param => "OpenTicket" );
+		my $QueueID = $ParamObject->GetParam( Param => "QueueID" );
 
         # check if survey and question exists
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' ) {
@@ -287,8 +289,8 @@ sub Run {
                 QuestionID => $GetParam{QuestionID},
                 Answer     => $Answer,
                 UserID     => $Self->{UserID},
-				OpenTicket => $GetParam{OpenTicket},
-				QueueID    => $GetParam{QueueID},
+				OpenTicket => $OpenTicket,
+				QueueID    => $QueueID,
             );
 
             return $Self->_MaskQuestionEdit(
