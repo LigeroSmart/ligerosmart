@@ -43,6 +43,11 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+	$Kernel::OM->Get('Kernel::System::Log')->Log(
+		Message  => "Subaction ".Dumper($Self->{Subaction}),
+		Priority => 'error',
+	);
+
     # ------------------------------------------------------------ #
     # public survey vote
     # ------------------------------------------------------------ #
