@@ -82,8 +82,14 @@ sub Run {
                         Param => "PublicSurveyVote2[$Question->{QuestionID}]"
                     );
 
+					my $SurveyRequestObject = $Kernel::OM->Get('Kernel::System::Survey::Request');
+
+					my %RequestData = $SurveyRequestObject->RequestGet(
+						PublicSurveyKey => $PublicSurveyKey,
+					);
+
 					$Kernel::OM->Get('Kernel::System::Log')->Log(
-						Message  => "Question here ".Dumper($Question). " PublicSurveyVote2: $PublicSurveyVote2",
+						Message  => "RequestData here ".Dumper(\%RequestData). " PublicSurveyVote2: $PublicSurveyVote2",
 						Priority => 'error',
 					);
 
