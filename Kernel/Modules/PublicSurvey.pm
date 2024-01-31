@@ -94,6 +94,8 @@ sub Run {
 							PublicSurveyKey => $PublicSurveyKey,
 						);
 
+						$OpenTicketQueueID = $AnswerData{QueueID};
+
 						$OpenTicketQuestionsText = 'Pergunta: '.$Question->{Question}.' - Resposta: '.$AnswerData{Answer}. "\n";
 
 					}
