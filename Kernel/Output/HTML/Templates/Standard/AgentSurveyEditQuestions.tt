@@ -287,6 +287,10 @@
                         <label for="QueueID"> [% Translate("Queue ID") | html %]:</label>
                         <div class="Field">
                             <input type="text" id="QueueID" name="QueueID" size="60"/>
+                        </div>
+                    </fieldset>
+					<fieldset class="TableLike FixedLabel">
+                        <div class="Field">
                             <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]"> <span><i class="fa fa-plus-square"></i> [% Translate("Add") | html %]</button>
                         </div>
                     </fieldset>
@@ -320,6 +324,12 @@
                         <tr>
                             <td>
                                 <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerEdit;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]"> [% Data.Answer | truncate(90) | html %] </a>
+                            </td>
+							<td>
+                                [% Data.GenerateTicket | truncate(90) | html %]
+                            </td>
+							<td>
+                                [% Data.QueueID | truncate(90) | html %]
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowUp[% Data.ClassUp | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerUp;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
