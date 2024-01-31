@@ -43,10 +43,7 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-	$Kernel::OM->Get('Kernel::System::Log')->Log(
-		Message  => "Subaction ".Dumper($Self->{Subaction}),
-		Priority => 'error',
-	);
+	
 
     # ------------------------------------------------------------ #
     # public survey vote
@@ -58,6 +55,12 @@ sub Run {
         my %Survey = $SurveyObject->PublicSurveyGet(
             PublicSurveyKey => $PublicSurveyKey,
         );
+
+		$Kernel::OM->Get('Kernel::System::Log')->Log(
+			Message  => "Survey here ".Dumper(\%Survey),
+			Priority => 'error',
+		);
+		
         if ( $Survey{SurveyID} ) {
             @QuestionList = $SurveyObject->QuestionList(
                 SurveyID => $Survey{SurveyID},
