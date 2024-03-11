@@ -266,7 +266,6 @@
                         <label for="Answer" class="Mandatory"><span class="Marker">*</span> [% Translate("Add Answer") | html %]:</label>
                         <div class="Field">
                             <input type="text" id="Answer" name="Answer" size="60" class="Validate_Required [% Data.AnswerServerError | html %] "/>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]"> <span><i class="fa fa-plus-square"></i> [% Translate("Add") | html %]</button>
                         </div>
 
                         <div id="AnswerError" class="TooltipErrorMessage">
@@ -277,6 +276,23 @@
                             <p>[% Translate("This field is required.") | html %]</p>
                         </div>
 
+                    </fieldset>
+					<fieldset class="TableLike FixedLabel">
+                        <label for="OpenTicket"> [% Translate("Open Ticket") | html %]:</label>
+                        <div class="Field">
+                            <input type="checkbox" id="OpenTicket" name="OpenTicket"/>
+                        </div>
+                    </fieldset>
+					<fieldset class="TableLike FixedLabel">
+                        <label for="QueueID"> [% Translate("Queue ID") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="QueueID" name="QueueID" size="60"/>
+                        </div>
+                    </fieldset>
+					<fieldset class="TableLike FixedLabel">
+                        <div class="Field">
+                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]"> <span><i class="fa fa-plus-square"></i> [% Translate("Add") | html %]</button>
+                        </div>
                     </fieldset>
                 </form>
 [% RenderBlockEnd("QuestionEditAddAnswer") %]
@@ -293,6 +309,8 @@
                     <thead>
                         <tr>
                             <th> [% Translate("Description") | html %] </th>
+							<th> [% Translate("Generate Ticket") | html %] </th>
+							<th> [% Translate("Ticket Queue ID") | html %] </th>
                             <th> [% Translate("Up") | html %] </th>
                             <th> [% Translate("Down") | html %] </th>
 [% RenderBlockStart("QuestionEditTableDelete") %]
@@ -306,6 +324,12 @@
                         <tr>
                             <td>
                                 <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerEdit;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]"> [% Data.Answer | truncate(90) | html %] </a>
+                            </td>
+							<td>
+                                [% Data.OpenTicket | truncate(90) | html %]
+                            </td>
+							<td>
+                                [% Data.QueueID | truncate(90) | html %]
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowUp[% Data.ClassUp | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerUp;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
