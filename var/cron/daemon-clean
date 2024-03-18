@@ -1,0 +1,1 @@
+@reboot   $HOME/bin/otrs.Console.pl Maint::Daemon::Clean
