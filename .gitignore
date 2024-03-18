@@ -58,3 +58,6 @@ bin/DatabaseInstall.pl
 .cache
 .viminfo
 .bash*
+
+backups/
+var/httpd/htdocs/profiles/
