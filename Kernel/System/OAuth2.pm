@@ -254,7 +254,7 @@ sub _RequestAccessToken {
         # delete old data
         return if !$DBObject->Do(
             SQL => "DELETE FROM $Self->{TokenTable} WHERE "
-                . "account_type = LOWER(?) AND account_id = ? AND token_type = 'refresh'",
+                . "LOWER(account_type) = LOWER(?) AND account_id = ? AND token_type = 'refresh'",
             Bind => [ \$Param{AccountType}, \$Param{AccountID} ],
         );
 
