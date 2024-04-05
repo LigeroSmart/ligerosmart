@@ -1438,6 +1438,9 @@ sub CronTaskToExecute {
 
         next CRONJOBKEY if !$PreviousEventTimestamp;
 
+        # Run job in especific node
+        next CRONJOBKEY if $JobConfig->{NodeID} && $JobConfig->{NodeID} != $Param{NodeID};
+        
         # execute recurrent tasks
         $Self->RecurrentTaskExecute(
             NodeID                   => $Param{NodeID},
