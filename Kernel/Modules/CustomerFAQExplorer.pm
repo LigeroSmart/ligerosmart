@@ -143,6 +143,8 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
+	my $DataAdded = undef;
+
     # check if there are subcategories
     if ( $CategoryIDsRef && ref $CategoryIDsRef eq 'ARRAY' && @{$CategoryIDsRef} ) {
 
@@ -169,11 +171,15 @@ sub Run {
                 UserID       => $Self->{UserID},
             );
 
-            # output the category data
-            $LayoutObject->Block(
-                Name => 'OverviewResultRow',
-                Data => {%SubCategoryData},
-            );
+            if($SubCategoryData{ArticleCount} > 0 || $SubCategoryData{SubCategoryCount} > 0) {
+				# output the category data
+				$LayoutObject->Block(
+					Name => 'OverviewResultRow',
+					Data => {%SubCategoryData},
+				);
+
+				$DataAdded = 1;
+			}
         }
     }
 
@@ -183,6 +189,12 @@ sub Run {
             Name => 'NoCategoryDataFoundMsg',
         );
     }
+
+	if (!$DataAdded) {
+		$LayoutObject->Block(
+            Name => 'NoCategoryDataFoundMsg',
+        );
+	}
 
     # set default interface settings
     my $Interface = $FAQObject->StateTypeGet(
