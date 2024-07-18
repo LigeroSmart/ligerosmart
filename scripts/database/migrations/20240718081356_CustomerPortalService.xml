@@ -1,0 +1,26 @@
+<Migrations>
+    <DatabaseInstall>
+        <Table Name="service_customer_portal">
+            <Column Name="service_id" Required="true" Type="INTEGER"/>
+            <Column Name="customer_portal_id" Required="true" Type="SMALLINT"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <ForeignKey ForeignTable="customer_portal">
+                <Reference Local="customer_portal_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="service">
+                <Reference Local="service_id" Foreign="id"/>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="change_by" Foreign="id"/>
+            </ForeignKey>
+        </Table>
+    </DatabaseInstall>
+    <DatabaseUninstall>
+        <TableDrop Type="pre" Name="service_customer_portal">
+        </TableDrop>
+    </DatabaseUninstall>
+</Migrations>

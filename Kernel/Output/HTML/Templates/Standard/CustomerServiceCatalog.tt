@@ -17,6 +17,11 @@
 
 <div class="Content">
 
+[% RenderBlockStart("PortalName") %]
+	<h1 class="CategoryTitle">[% Data.Name %]</h1>
+	<h1 class="CategoryTitle" style="margin-top: -30px;font-weight: normal;font-size: 13pt;line-height: 13pt;color: black;">[% Data.CategoryDescription %]</h1>
+[% RenderBlockEnd("PortalName") %]
+
 [% RenderBlockStart("FirstLvl") %]
 <input id="LigeroServiceSearch" type="text" class="form-control input-sm" placeholder="[% Translate("What are you looking for?") %]" /> 
 

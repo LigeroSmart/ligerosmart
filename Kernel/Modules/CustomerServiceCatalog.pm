@@ -31,7 +31,8 @@ sub Run {
 	my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 	my $LayoutObject  = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 	my $Config  = $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ServiceCatalog")||{};
-	my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');	
+	my $LigeroSmartObject = $Kernel::OM->Get('Kernel::System::LigeroSmart');
+	my $CustomerPortalObject = $Kernel::OM->Get('Kernel::System::CustomerPortal');	
 	my %TypesColor = %{$Config->{TypeColors}};
 	for my $Key (qw(KeyPrimary FAQID ServiceID Service StateID State CustomParam0 CustomParam1 CustomParam2 CustomParam3 CustomParam4 CustomParam5 CustomParam6 CustomParam7 CustomParam8 CustomParam9)) {
 		$GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
@@ -52,6 +53,30 @@ sub Run {
 		} catch {
 			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};		
 		};
+	}
+
+	if( $Self->{CustomerPortalID} ) {
+
+		my %CustomerPortalData = $CustomerPortalObject->CustomerPortalGet( ID => $Self->{CustomerPortalID} );
+
+		my %ServicesMember = $Kernel::OM->Get('Kernel::System::Service')->ServiceCustomerPortalMemberList(
+            CustomerPortalID => $Self->{CustomerPortalID},
+        );
+
+		my %intersected_hash;
+
+		foreach (keys %Services){
+			$intersected_hash{$_} = $Services{$_} if exists $ServicesMember{$_}; 
+		}
+
+		%Services = %intersected_hash;
+
+		$LayoutObject->Block(
+                Name => 'PortalName',
+                Data => {
+                    Name => $CustomerPortalData{Name}
+                },
+            );
 	}
 	
 	my %DataParam = (

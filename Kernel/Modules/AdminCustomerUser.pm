@@ -1216,6 +1216,29 @@ sub _Edit {
                 Disabled   => $UpdateOnlyPreferences ? 1 : 0,
             );
         }
+		elsif ( $Entry->[0] =~ /^CustomerPortalID/i ) {
+
+            # Change the validation class
+            if ( $Param{RequiredClass} ) {
+                $Param{RequiredClass} = 'Validate_Required';
+            }
+
+			my $CustomerPortalObject = $Kernel::OM->Get('Kernel::System::CustomerPortal');
+            my %CustomerPortalList           = (
+                $CustomerPortalObject->CustomerPortalList( Valid => 1 ),
+                '' => '-',
+            );
+
+            # build ValidID string
+            $Block = 'Option';
+            $Param{Option} = $LayoutObject->BuildSelection(
+                Data       => \%CustomerPortalList,
+                Name       => $Entry->[0],
+                SelectedID => defined( $Param{ $Entry->[0] } ) ? $Param{ $Entry->[0] } : 0,
+                Class      => "$Param{RequiredClass} Modernize " . $Param{Errors}->{ $Entry->[0] . 'Invalid' },
+                Disabled   => $UpdateOnlyPreferences ? 1 : 0,
+            );
+        }
         elsif (
             $Entry->[0] =~ /^UserCustomerID$/i
             && $ConfigObject->Get( $Param{Source} )->{CustomerCompanySupport}

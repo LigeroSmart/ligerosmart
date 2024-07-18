@@ -1,0 +1,12 @@
+<Migrations>
+    <DatabaseInstall>
+        <TableAlter Type="post" Name="customer_user">
+            <ColumnAdd Name="customer_portal_id" Required="false" Type="SMALLINT"></ColumnAdd>
+        </TableAlter>
+    </DatabaseInstall>
+    <DatabaseUninstall>
+        <TableAlter Type="pre" Name="customer_user">
+            <ColumnDrop Name="customer_portal_id"></ColumnDrop>
+        </TableAlter>
+    </DatabaseUninstall>
+</Migrations>

@@ -1908,6 +1908,200 @@ sub _ServiceGetCurrentIncidentState {
     return %ServiceData;
 }
 
+=head2 ServiceCustomerPortalMemberAdd()
+
+to add a customer portal to a service
+
+    my $Success = $ServiceObject->ServiceCustomerPortalMemberAdd(
+        ServiceID          => 123,
+        CustomerPortalID   => 123,
+        Active             => 1,        # to set/confirm (1) or remove (0) the relation
+        UserID             => 123,
+    );
+
+=cut
+
+sub ServiceCustomerPortalMemberAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ServiceID CustomerPortalID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # delete existing relation
+    return if !$DBObject->Do(
+        SQL => 'DELETE FROM service_customer_portal
+            WHERE service_id = ?
+            AND customer_portal_id = ?',
+        Bind => [ \$Param{ServiceID}, \$Param{CustomerPortalID} ],
+    );
+
+    # return if relation is not active
+    if ( !$Param{Active} ) {
+        $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+            Type => $Self->{CacheType},
+        );
+        return 1;
+    }
+
+    # insert new relation
+    my $Success = $DBObject->Do(
+        SQL => '
+            INSERT INTO service_customer_portal (service_id, customer_portal_id, create_time,
+                create_by, change_time, change_by)
+            VALUES (?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [ \$Param{ServiceID}, \$Param{CustomerPortalID}, \$Param{UserID}, \$Param{UserID} ],
+    );
+
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => $Self->{CacheType},
+    );
+    return $Success;
+}
+
+=head2 ServiceCustomerPortalMemberList()
+
+get customer portals of a service
+
+    my %CustomerPortals = $ServiceObject->ServiceCustomerPortalMemberList( ServiceID => 123 );
+
+Returns:
+    %CustomerPortals = (
+        1 => 'Some Name',
+        2 => 'Some Name',
+    );
+
+    my %Responses = $ServiceObject->ServiceCustomerPortalMemberList(
+        ServiceID       => 123,
+    );
+
+Returns:
+    %Responses = (
+        Answer => {
+            1 => 'Some Name',
+            2 => 'Some Name',
+        },
+        # ...
+    );
+
+    my %Services = $ServiceObject->ServiceCustomerPortalMemberList( CustomerPortalID => 123 );
+
+Returns:
+    %Services = (
+        1 => 'Some Name',
+        2 => 'Some Name',
+    );
+
+=cut
+
+sub ServiceCustomerPortalMemberList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ServiceID} && !$Param{CustomerPortalID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Got no CustomerPortalID or ServiceID!',
+        );
+        return;
+    }
+
+    # get needed objects
+    my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
+    my $DBObject    = $Kernel::OM->Get('Kernel::System::DB');
+
+    my $CacheKey;
+
+    if ( $Param{ServiceID} ) {
+
+        # check if this result is present (in cache)
+        $CacheKey = "CustomerPortals::$Param{ServiceID}";
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
+            Key  => $CacheKey,
+        );
+        return %{$Cache} if ref $Cache eq 'HASH';
+
+        # get std. templates
+        my $SQL = "SELECT cp.id, cp.name "
+            . " FROM customer_portal cp, service_customer_portal scp WHERE "
+            . " scp.service_id IN ("
+            . $DBObject->Quote( $Param{ServiceID}, 'Integer' )
+            . ") AND "
+            . " scp.customer_portal_id = cp.id AND "
+            . " cp.valid_id IN ( ${\(join ', ', $ValidObject->ValidIDsGet())} )"
+            . " ORDER BY cp.name";
+
+        return if !$DBObject->Prepare( SQL => $SQL );
+
+        # fetch the result
+        my %CustomerPortals;
+        while ( my @Row = $DBObject->FetchrowArray() ) {
+
+            $CustomerPortals{ $Row[0] } = $Row[1];
+        }
+
+        # store std templates (in cache)
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
+            Type  => $Self->{CacheType},
+            TTL   => $Self->{CacheTTL},
+            Key   => $CacheKey,
+            Value => \%CustomerPortals,
+
+        );
+        return %CustomerPortals;
+    }
+
+    else {
+
+        # check if this result is present (in cache)
+        $CacheKey = "Services::$Param{CustomerPortalID}";
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
+            Key  => $CacheKey,
+        );
+        return %{$Cache} if ref $Cache eq 'HASH';
+
+        # get queues
+        my $SQL = "SELECT s.id, s.name "
+            . " FROM service s, service_customer_portal scp WHERE "
+            . " scp.customer_portal_id IN ("
+            . $DBObject->Quote( $Param{CustomerPortalID}, 'Integer' )
+            . ") AND "
+            . " scp.service_id = s.id AND "
+            . " s.valid_id IN ( ${\(join ', ', $ValidObject->ValidIDsGet())} )"
+            . " ORDER BY s.name";
+
+        return if !$DBObject->Prepare( SQL => $SQL );
+
+        # fetch the result
+        my %Services;
+        while ( my @Row = $DBObject->FetchrowArray() ) {
+            $Services{ $Row[0] } = $Row[1];
+        }
+
+        # store queues (in cache)
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
+            Type  => $Self->{CacheType},
+            TTL   => $Self->{CacheTTL},
+            Key   => $CacheKey,
+            Value => \%Services,
+        );
+
+        return %Services;
+    }
+}
+
 # ---
 
 1;
