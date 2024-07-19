@@ -89,9 +89,9 @@
                             <div class="Clear"></div>
 
                             <label for="DescriptionLong">[% Translate("Description (long)") | html %]:</label>
-                            <div class="Field">
-                                <textarea name="DescriptionLong" id="DescriptionLong" class="W50pc" rows="10" cols="20">[% Data.DescriptionLong | html %]</textarea>
-                            </div>
+							<div id="RichTextField" class="RichTextField">
+								<textarea name="DescriptionLong" id="DescriptionLong" class="RichText" rows="10" cols="20">[% Data.DescriptionLong | html %]</textarea>
+							</div>
                             <div class="Clear"></div>
 
                             <label for="Permission">[% Translate("Permission") | html %]:</label>

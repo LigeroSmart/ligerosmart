@@ -45,7 +45,7 @@
                 <h2>[% Translate("Description") | html %]</h2>
             </div>
             <div class="Content">
-                <p class="Value FixedValueSmall DescriptionLong">[% Translate(Data.Description) | html %]</p>
+                <p class="Value FixedValueSmall DescriptionLong">[% Translate(Data.Description) %]</p>
                 <div class="Clear"></div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                     </h1>
 [% RenderBlockStart("DescriptionLong") %]
                     <p class="DescriptionLong">
-                        [% Data.DescriptionLong | html %]
+                        [% Data.DescriptionLong %]
                     </p>
 [% RenderBlockEnd("DescriptionLong") %]
 [% RenderBlockStart("CancelLink") %]
