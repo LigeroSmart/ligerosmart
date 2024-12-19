@@ -778,14 +778,24 @@ sub _MaskQueueView {
             || $Self->{CompFilters}->{$Filter}->{Type} eq 'CustomerCompany'
             || $Self->{CompFilters}->{$Filter}->{Type} eq 'DynamicField' )
         {
+            my @ordered_values;
+            for my $filter_key ( keys %{$Param{Counters}->{$Filter}} ) {
+                my %filter_value = (
+                    'Key'   => $filter_key,
+                    'Value' => $Param{Counters}->{$Filter}->{$filter_key},
+                    'Selected' => ($Self->{$Filter} && grep { $_ eq $filter_key } @{ $Self->{$Filter} }) ? 1 : 0,
+                );
+                push @ordered_values, \%filter_value;
+            }
+            @ordered_values = sort { $b->{'Selected'} <=> $a->{'Selected'} || lc($a->{'Value'}) cmp lc($b->{'Value'}) } @ordered_values;
+
             $Param{QueueStrg} .= $LayoutObject->BuildSelection(
-                Data         => \%{ $Param{Counters}->{$Filter} },
+                Data         => \@ordered_values,
                 Multiple     => $Self->{CompFilters}->{$Filter}->{Multiple},
                 Size         => 4,
                 Name         => $Filter,
                 ID           => $Filter,
                 PossibleNone => $possibleNone,
-                SelectedID   => $Self->{$Filter},
                 Class        => 'FilterSelect',
                 OnChange     => $onChange,
             );
