@@ -527,6 +527,19 @@ DYNAMICFIELD:
 
 # COMPLEMENTO: TRANSLATE VALUES AND ADD THE COUNT AT THE END. FOR EXAMPLE: Pending (5)
     for my $Filter ( keys %{ $Self->{CompFilters} } ) {
+        # If Filter TicketKey is State, get the list of states and populate if it is not there yet
+        if ( $Self->{CompFilters}->{$Filter}->{TicketKey} eq 'State' ) {
+            my %States = $Self->{StateObject}->StateList(
+                UserID => $Self->{UserID},
+                Valid  => 1,
+            );
+            for my $State ( keys %States ) {
+                if ( !$Counters{$Filter}->{$States{$State}} ) {
+                    $Counters{$Filter}->{$States{$State}} = 0;
+                }
+            }
+        }
+
         for my $Value ( keys %{ $Counters{$Filter} } ) {
             if ( $Self->{CompFilters}->{$Filter}->{Type} eq 'Agent' ) {
 
