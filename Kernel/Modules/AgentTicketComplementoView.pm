@@ -226,7 +226,7 @@ DYNAMICFIELD:
     $Self->{OrderBy} = $OrderBy;
 
     # build NavigationBar
-    my $Refresh = '';
+    $Refresh = '';
     if ( $Self->{UserRefreshTime} ) {
         $Refresh = 60 * $Self->{UserRefreshTime};
     }
@@ -528,7 +528,7 @@ DYNAMICFIELD:
 # COMPLEMENTO: TRANSLATE VALUES AND ADD THE COUNT AT THE END. FOR EXAMPLE: Pending (5)
     for my $Filter ( keys %{ $Self->{CompFilters} } ) {
         # If Filter TicketKey is State, get the list of states and populate if it is not there yet
-        if ( $Self->{CompFilters}->{$Filter}->{TicketKey} eq 'State' ) {
+        if ( ($Self->{CompFilters}->{$Filter}->{TicketKey} // '') eq 'State' ) {
             my %States = $Self->{StateObject}->StateList(
                 UserID => $Self->{UserID},
                 Valid  => 1,
@@ -805,69 +805,69 @@ sub _MaskQueueView {
             $Escalations{1}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Escalated Tickets') . ' ('
-                . $Param{EscalationFilters}->{1}->{Count} . ')';
+                . ($Param{EscalationFilters}->{1}->{Count} // '0') . ')';
             $Escalations{2}
                 = $LayoutObject->{LanguageObject}->Translate('Today') . ' ('
-                . $Param{EscalationFilters}->{2}->{Count} . ')';
+                . ($Param{EscalationFilters}->{2}->{Count} // '0') . ')';
             $Escalations{3}
                 = $LayoutObject->{LanguageObject}->Translate('Tomorrow')
                 . ' ('
-                . $Param{EscalationFilters}->{3}->{Count} . ')';
+                . ($Param{EscalationFilters}->{3}->{Count} // '0') . ')';
             $Escalations{4}
                 = $LayoutObject->{LanguageObject}->Translate('Next Week')
                 . ' ('
-                . $Param{EscalationFilters}->{4}->{Count} . ')';
+                . ($Param{EscalationFilters}->{4}->{Count} // '0') . ')';
 
             $Escalations{5}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Solution Expired') . ' ('
-                . $Param{EscalationFilters}->{5}->{Count} . ')';
+                . ($Param{EscalationFilters}->{5}->{Count} // '0') . ')';
             $Escalations{6}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Solution Expires Today') . ' ('
-                . $Param{EscalationFilters}->{6}->{Count} . ')';
+                . ($Param{EscalationFilters}->{6}->{Count} // '0') . ')';
             $Escalations{7}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Solution Expires Tomorrow') . ' ('
-                . $Param{EscalationFilters}->{7}->{Count} . ')';
+                . ($Param{EscalationFilters}->{7}->{Count} // '0') . ')';
             $Escalations{8}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Solution Expires Next Week') . ' ('
-                . $Param{EscalationFilters}->{8}->{Count} . ')';
+                . ($Param{EscalationFilters}->{8}->{Count} // '0') . ')';
 
             $Escalations{9}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('First Response Expired') . ' ('
-                . $Param{EscalationFilters}->{9}->{Count} . ')';
+                . ($Param{EscalationFilters}->{9}->{Count} // '0') . ')';
             $Escalations{10}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('First Response Expires Today') . ' ('
-                . $Param{EscalationFilters}->{10}->{Count} . ')';
+                . ($Param{EscalationFilters}->{10}->{Count} // '0') . ')';
             $Escalations{11}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('First Response Expires Tomorrow') . ' ('
-                . $Param{EscalationFilters}->{11}->{Count} . ')';
+                . ($Param{EscalationFilters}->{11}->{Count} // '0') . ')';
             $Escalations{12}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('First Response Expires Next Week') . ' ('
-                . $Param{EscalationFilters}->{12}->{Count} . ')';
+                . ($Param{EscalationFilters}->{12}->{Count} // '0') . ')';
 
             $Escalations{13}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Follow Up Expired') . ' ('
-                . $Param{EscalationFilters}->{13}->{Count} . ')';
+                . ($Param{EscalationFilters}->{13}->{Count} // '0') . ')';
             $Escalations{14}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Follow Up Expires Today') . ' ('
-                . $Param{EscalationFilters}->{14}->{Count} . ')';
+                . ($Param{EscalationFilters}->{14}->{Count} // '0') . ')';
             $Escalations{15}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Follow Up Expires Tomorrow') . ' ('
-                . $Param{EscalationFilters}->{15}->{Count} . ')';
+                . ($Param{EscalationFilters}->{15}->{Count} // '0') . ')';
             $Escalations{16}
                 = $LayoutObject->{LanguageObject}
                 ->Translate('Follow Up Expires Next Week') . ' ('
-                . $Param{EscalationFilters}->{16}->{Count} . ')';
+                . ($Param{EscalationFilters}->{16}->{Count} // '0') . ')';
 
             $Param{QueueStrg} .= $LayoutObject->BuildSelection(
                 Data         => \%Escalations,
