@@ -892,6 +892,9 @@ sub _MaskQueueView {
 $('.ColumnSettingsTrigger').remove();
 $('.OverviewBox h1').remove();
 $('.WidgetSimple').css('margin-bottom','0px');
+$(document).on('click', 'a.ui-multiselect-close', function(event) {
+    $('#filters').submit();
+});
 //]]></script>
 };
     $LayoutObject->AddJSOnDocumentComplete( Code => $JS );
