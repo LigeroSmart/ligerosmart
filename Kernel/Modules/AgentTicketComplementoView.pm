@@ -14,6 +14,7 @@ use warnings;
 
 use Kernel::System::JSON;
 use Kernel::System::State;
+use Kernel::System::Queue;
 use Kernel::System::Lock;
 use Kernel::System::CustomerCompany;
 use URI::Escape;
@@ -49,6 +50,7 @@ sub new {
 
     # instance new objects
     $Self->{StateObject} = Kernel::System::State->new(%Param);
+    $Self->{QueueObject} = Kernel::System::Queue->new(%Param);
     $Self->{LockObject}  = Kernel::System::Lock->new(%Param);
     $Self->{CustomerCompanyObject}
         = Kernel::System::CustomerCompany->new(%Param);
@@ -527,15 +529,17 @@ DYNAMICFIELD:
 
 # COMPLEMENTO: TRANSLATE VALUES AND ADD THE COUNT AT THE END. FOR EXAMPLE: Pending (5)
     for my $Filter ( keys %{ $Self->{CompFilters} } ) {
-        # If Filter TicketKey is State, get the list of states and populate if it is not there yet
-        if ( ($Self->{CompFilters}->{$Filter}->{TicketKey} // '') eq 'State' ) {
-            my %States = $Self->{StateObject}->StateList(
-                UserID => $Self->{UserID},
-                Valid  => 1,
-            );
-            for my $State ( keys %States ) {
-                if ( !$Counters{$Filter}->{$States{$State}} ) {
-                    $Counters{$Filter}->{$States{$State}} = 0;
+        for my $Object ( qw(State Queue) ) {
+            if ( ($Self->{CompFilters}->{$Filter}->{TicketKey} // '') eq $Object ) {
+                my $method = $Object . 'List';
+                my %Options = $Self->{$Object."Object"}->$method(
+                    UserID => $Self->{UserID},
+                    Valid  => 1,
+                );
+                for my $Option ( keys %Options ) {
+                    if ( !$Counters{$Filter}->{$Options{$Option}} ) {
+                        $Counters{$Filter}->{$Options{$Option}} = 0;
+                    }
                 }
             }
         }
