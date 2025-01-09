@@ -28,10 +28,17 @@ sub Configure {
     $Self->Description('Migrate article files from one storage backend to another on the fly.');
     $Self->AddOption(
         Name        => 'target',
-        Description => "Specify the target backend to migrate to (ArticleStorageDB|ArticleStorageFS).",
+        Description => "Specify the target backend to migrate to (ArticleStorageDB|ArticleStorageFS|ArticleStorageS3).",
         Required    => 1,
         HasValue    => 1,
-        ValueRegex  => qr/^(?:ArticleStorageDB|ArticleStorageFS)$/smx,
+        ValueRegex  => qr/^(?:ArticleStorageDB|ArticleStorageFS|ArticleStorageS3)$/smx,
+    );
+    $Self->AddOption(
+        Name        => 'source',
+        Description => "Specify the target backend to migrate from (ArticleStorageDB|ArticleStorageFS|ArticleStorageS3).",
+        Required    => 0,
+        HasValue    => 1,
+        ValueRegex  => qr/^(?:ArticleStorageDB|ArticleStorageFS|ArticleStorageS3)$/smx,
     );
     $Self->AddOption(
         Name        => 'tickets-closed-before-date',
@@ -150,6 +157,7 @@ sub Run {
     my $Target        = $Self->GetOption('target');
     my %Target2Source = (
         ArticleStorageFS => 'ArticleStorageDB',
+        ArticleStorageS3 => 'ArticleStorageDB',
         ArticleStorageDB => 'ArticleStorageFS',
     );
 
@@ -165,7 +173,7 @@ sub Run {
 
         my $Success = $TicketObject->TicketArticleStorageSwitch(
             TicketID    => $TicketID,
-            Source      => $Target2Source{$Target},
+            Source      => $Self->GetOption('source') // $Target2Source{$Target},
             Destination => $Target,
             UserID      => 1,
         );
