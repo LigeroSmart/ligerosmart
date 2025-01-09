@@ -93,34 +93,25 @@ sub Load {
     # Node ID from ENV
     $Self->{'NodeID'} = defined($ENV{APP_NodeID}) ? $ENV{APP_NodeID} : 1;
 
-$Self->{'Ticket::Article::Backend::MIMEBase::ArticleStorage'} = 'Kernel::System::Ticket::Article::Backend::MIMEBase::ArticleStorageS3';
+# Ativar no SysConf 
+#$Self->{'Ticket::Article::Backend::MIMEBase::ArticleStorage'} = 'Kernel::System::Ticket::Article::Backend::MIMEBase::ArticleStorageS3';
 # ---------------------------------------------------- #
 # These settings are for the S3 backend                #
 # ---------------------------------------------------- #
-$Self->{'Storage::S3::Active'}         = defined($ENV{APP_STORAGE_S3_Active}) ? $ENV{APP_STORAGE_S3_Active} : 0;
-$Self->{'Storage::S3::Region'}         = defined($ENV{APP_STORAGE_S3_Region}) ? $ENV{APP_STORAGE_S3_Region} : '';
-$Self->{'Storage::S3::Bucket'}         = defined($ENV{APP_STORAGE_S3_Bucket}) ? $ENV{APP_STORAGE_S3_Bucket} : 'ligerosmart';
-$Self->{'Storage::S3::HomePrefix'}     = defined($ENV{APP_STORAGE_S3_HomePrefix}) ? $ENV{APP_STORAGE_S3_HomePrefix} : 'ligerosmart';
-$Self->{'Storage::S3::AccessKey'}      = defined($ENV{APP_STORAGE_S3_HomePrefix}) ? $ENV{APP_STORAGE_S3_HomePrefix} : 'ak1234567890';
-$Self->{'Storage::S3::SecretKey'}      = defined($ENV{APP_STORAGE_S3_HomePrefix}) ? $ENV{APP_STORAGE_S3_HomePrefix} : 'sk1234567890';
+$Self->{'Storage::S3::Active'}         = defined($ENV{APP_Storage_S3_Active}) ? $ENV{APP_Storage_S3_Active} : 0;
+$Self->{'Storage::S3::Region'}         = defined($ENV{APP_Storage_S3_Region}) ? $ENV{APP_Storage_S3_Region} : '';
+$Self->{'Storage::S3::Bucket'}         = defined($ENV{APP_Storage_S3_Bucket}) ? $ENV{APP_Storage_S3_Bucket} : 'ligerosmart';
+$Self->{'Storage::S3::HomePrefix'}     = defined($ENV{APP_Storage_S3_HomePrefix}) ? $ENV{APP_Storage_S3_HomePrefix} : 'ligerosmart';
+$Self->{'Storage::S3::AccessKey'}      = defined($ENV{APP_Storage_S3_AccessKey}) ? $ENV{APP_Storage_S3_AccessKey} : 'ak1234567890';
+$Self->{'Storage::S3::SecretKey'}      = defined($ENV{APP_Storage_S3_SecretKey}) ? $ENV{APP_Storage_S3_SecretKey} : 'sk1234567890';
 $Self->{'Storage::S3::MetadataPrefix'} = 'x-amz-meta-'; 
 $Self->{'Storage::S3::Delimiter'}      = '/'; # do not change this, as LIGERO relies on the delimiter being '/'
 
-## Some settings are specific for localstack and MinIO.
-#if ( 1 ) {
+    # MinIO
+    $Self->{'Storage::S3::Scheme'}                          = defined($ENV{APP_Storage_S3_Scheme}) ? $ENV{APP_Storage_S3_Scheme} : 'https';
+    $Self->{'Storage::S3::Host'}                            = defined($ENV{APP_Storage_S3_Host}) ? $ENV{APP_Storage_S3_Host} : 's3.ligerosmart.ai';
+    $Self->{'Storage::S3::DeleteMultipleObjectIsSupported'} = 0;
 
-   # MinIO
-   $Self->{'Storage::S3::Scheme'}                          = 'https';
-   $Self->{'Storage::S3::Host'}                            = 's3.ligerosmart.ai';
-   $Self->{'Storage::S3::DeleteMultipleObjectIsSupported'} = 0;
-#}
-#else {
-
-#    # localstack
-#    $Self->{'Storage::S3::Scheme'}                          = 'https';
-#    $Self->{'Storage::S3::Host'}                            = 'localstack:4566';
-#    $Self->{'Storage::S3::DeleteMultipleObjectIsSupported'} = 1;
-#}
 
 # ---------------------------------------------------- #
     # ---------------------------------------------------- #
