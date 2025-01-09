@@ -182,23 +182,24 @@ sub FilenameCleanUp {
             Priority => 'error',
             Message  => 'Need Filename!',
         );
+
         return;
     }
 
-    # escape if cleanup is not needed
-    if ( $Param{NoFilenameClean} ) {
-        return $Param{Filename};
-    }
+    # Escape if cleaning up is not wanted.
+    # This is used in FileWrite() when the exact filenname should be used.
+    return $Param{Filename} if $Param{NoFilenameClean};
 
     my $Type = lc( $Param{Type} || 'local' );
 
     if ( $Type eq 'md5' ) {
         $Kernel::OM->Get('Kernel::System::Encode')->EncodeOutput( \$Param{Filename} );
-        $Param{Filename} = md5_hex( $Param{Filename} );
+
+        return md5_hex( $Param{Filename} );
     }
 
     # replace invalid token for attachment file names
-    elsif ( $Type eq 'attachment' ) {
+    if ( $Type eq 'attachment' ) {
 
         # trim whitespace
         $Param{Filename} =~ s/^\s+|\r|\n|\s+$//g;
@@ -210,6 +211,8 @@ sub FilenameCleanUp {
         $Param{Filename} =~ s/[^\w\-+.#_]/_/g;
 
         # Enclosed alphanumerics are kept on older Perl versions, make sure to replace them too.
+        # ① - U+02460 - CIRCLED DIGIT ONE
+        # ⓿ - U+024FF - NEGATIVE CIRCLED DIGIT ZERO
         $Param{Filename} =~ s/[\x{2460}-\x{24FF}]/_/g;
 
         # replace utf8 and iso
@@ -250,52 +253,63 @@ sub FilenameCleanUp {
             }
             $Param{Filename} = $ModifiedName;
         }
+
+        return $Param{Filename};
     }
-    else {
 
-        # trim whitespace
-        $Param{Filename} =~ s/^\s+|\r|\n|\s+$//g;
+    # 'Local' or 'S3' or fallback for missing or unknown types
 
-        # strip leading dots
-        $Param{Filename} =~ s/^\.+//;
+    # trim whitespace
+    $Param{Filename} =~ s/^\s+|\r|\n|\s+$//g;
 
-        # only whitelisted characters allowed in filename for security
-        if ( !$Param{NoReplace} ) {
-            $Param{Filename} =~ s/[^\w\-+.#_]/_/g;
+    # strip leading dots
+    $Param{Filename} =~ s/^\.+//;
 
-            # Enclosed alphanumerics are kept on older Perl versions, make sure to replace them too.
-            $Param{Filename} =~ s/[\x{2460}-\x{24FF}]/_/g;
-        }
+    # only whitelisted characters allowed in filename for security
+    if ( $Type eq 's3' ) {
 
-        # separate filename and extension
-        my $FileName = $Param{Filename};
-        my $FileExt  = '';
-        if ( $Param{Filename} =~ /(.*)\.+([^.]+)$/ ) {
-            $FileName = $1;
-            $FileExt  = '.' . $2;
-        }
+        # not that '+' and '#' are also replaced by '_'
+        # no need to have '_' explicitly in the character class, as that case is covered by \w
+        $Param{Filename} =~ s/[^\w\-.]/_/g;
+    }
+    elsif ( !$Param{NoReplace} ) {
 
-        if ( length $FileName ) {
-            my $ModifiedName = $FileName . $FileExt;
+        # 'Local' or fallback for missing or unknown types
+        $Param{Filename} =~ s/[^\w\-+.#_]/_/g;
 
-            while ( length encode( 'UTF-8', $ModifiedName ) > 220 ) {
+        # Enclosed alphanumerics are kept on older Perl versions, make sure to replace them too.
+        # TODO: find out when the behavior has changed
+        $Param{Filename} =~ s/[\x{2460}-\x{24FF}]/_/g;
+    }
 
-                # Remove character by character starting from the end of the filename string
-                #   until we get acceptable 220 byte long filename size including extension.
-                if ( length $FileName > 1 ) {
-                    chop $FileName;
-                }
+    # separate filename and extension
+    my $FileName = $Param{Filename};
+    my $FileExt  = '';
+    if ( $Param{Filename} =~ /(.*)\.+([^.]+)$/ ) {
+        $FileName = $1;
+        $FileExt  = '.' . $2;
+    }
 
-                # If we reached minimum filename length, remove characters from the end of the extension string.
-                else {
-                    chop $FileExt;
-                }
+    if ( length $FileName ) {
+        my $ModifiedName = $FileName . $FileExt;
 
-                $ModifiedName = $FileName . $FileExt;
+        while ( length encode( 'UTF-8', $ModifiedName ) > 220 ) {
+
+            # Remove character by character starting from the end of the filename string
+            #   until we get acceptable 220 byte long filename size including extension.
+            if ( length $FileName > 1 ) {
+                chop $FileName;
             }
 
-            $Param{Filename} = $ModifiedName;
+            # If we reached minimum filename length, remove characters from the end of the extension string.
+            else {
+                chop $FileExt;
+            }
+
+            $ModifiedName = $FileName . $FileExt;
         }
+
+        $Param{Filename} = $ModifiedName;
     }
 
     return $Param{Filename};

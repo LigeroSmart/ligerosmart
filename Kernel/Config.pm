@@ -93,7 +93,36 @@ sub Load {
     # Node ID from ENV
     $Self->{'NodeID'} = defined($ENV{APP_NodeID}) ? $ENV{APP_NodeID} : 1;
 
-    # ---------------------------------------------------- #
+$Self->{'Ticket::Article::Backend::MIMEBase::ArticleStorage'} = 'Kernel::System::Ticket::Article::Backend::MIMEBase::ArticleStorageS3';
+# ---------------------------------------------------- #
+# These settings are for the S3 backend                #
+# ---------------------------------------------------- #
+$Self->{'Storage::S3::Active'}         = 1;
+$Self->{'Storage::S3::Region'}         = ''; # Put blank if none to avoid uninitialized value warnings
+$Self->{'Storage::S3::Bucket'}         = 'ligerosmart-dev01';
+$Self->{'Storage::S3::HomePrefix'}     = 'LIGERO';
+$Self->{'Storage::S3::AccessKey'}      = '8Y69U0SaFyrSRI9S1CXI';
+$Self->{'Storage::S3::SecretKey'}      = 'n763NOVXshMeWpCrXekQBAg5Wam9Vo3pvRvp8pmG'; # more than 8 chars
+$Self->{'Storage::S3::MetadataPrefix'} = 'x-amz-meta-';
+$Self->{'Storage::S3::Delimiter'}      = '/'; # do not change this, as LIGERO relies on the delimiter being '/'
+
+## Some settings are specific for localstack and MinIO.
+#if ( 1 ) {
+
+   # MinIO
+   $Self->{'Storage::S3::Scheme'}                          = 'https';
+   $Self->{'Storage::S3::Host'}                            = 's3.ligerosmart.ai';
+   $Self->{'Storage::S3::DeleteMultipleObjectIsSupported'} = 0;
+#}
+#else {
+
+#    # localstack
+#    $Self->{'Storage::S3::Scheme'}                          = 'https';
+#    $Self->{'Storage::S3::Host'}                            = 'localstack:4566';
+#    $Self->{'Storage::S3::DeleteMultipleObjectIsSupported'} = 1;
+#}
+
+# ---------------------------------------------------- #
     # ---------------------------------------------------- #
     #                                                      #
     # end of your own config options!!!                    #
