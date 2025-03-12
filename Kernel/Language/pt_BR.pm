@@ -28,6 +28,17 @@ sub Data {
     $Self->{DateFormatLong}      = '%A %D %B %T %Y';
     $Self->{DateFormatShort}     = '%D/%M/%Y';
     $Self->{DateInputFormat}     = '%D/%M/%Y';
+    
+    # ConfigItem Access Justification translations
+    $Self->{Translation}->{'Configuration Item Access Request'} = 'Solicitação de Acesso a Item de Configuração';
+    $Self->{Translation}->{'Please provide a reason for accessing this Configuration Item'} = 'Por favor, forneça um motivo para acessar este Item de Configuração';
+    $Self->{Translation}->{'Reason for access'} = 'Motivo do acesso';
+    $Self->{Translation}->{'No reason provided!'} = 'Nenhum motivo fornecido!';
+    $Self->{Translation}->{'Please provide a reason for accessing the ConfigItem.'} = 'Por favor, forneça um motivo para acessar o Item de Configuração.';
+    $Self->{Translation}->{'Could not create tracking ticket!'} = 'Não foi possível criar o chamado de rastreamento!';
+    $Self->{Translation}->{'Could not create article in tracking ticket!'} = 'Não foi possível criar artigo no chamado de rastreamento!';
+    $Self->{Translation}->{'For security and tracking purposes, you must provide a reason for accessing configuration items.'} = 'Por motivos de segurança e rastreamento, você deve fornecer um motivo para acessar itens de configuração.';
+    $Self->{Translation}->{'Your request will be logged for audit purposes.'} = 'Sua solicitação será registrada para fins de auditoria.';
     $Self->{DateInputFormatLong} = '%D/%M/%Y - %T';
     $Self->{Completeness}        = 0.938367761598375;
 

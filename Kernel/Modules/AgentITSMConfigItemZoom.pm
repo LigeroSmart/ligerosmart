@@ -36,7 +36,9 @@ sub Run {
     # get params
     my $ConfigItemID = $ParamObject->GetParam( Param => 'ConfigItemID' ) || 0;
     my $VersionID    = $ParamObject->GetParam( Param => 'VersionID' )    || 0;
-
+    my $Subaction    = $ParamObject->GetParam( Param => 'Subaction' )    || '';
+    my $ShowVersions = $ParamObject->GetParam( Param => 'ShowVersions' ) || 0;
+    
     # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
@@ -68,6 +70,125 @@ sub Run {
             Comment => Translatable('Please contact the administrator.'),
         );
     }
+    
+    # Create a session tag to track access authorization for each ConfigItem
+    my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
+    my $AuthSessionKey = "ConfigItemAccessAuthorized::$ConfigItemID";
+    
+    # Get session data and check if this ConfigItem is already authorized
+    my %SessionData = $SessionObject->GetSessionIDData(
+        SessionID => $Self->{SessionID},
+    );
+    my $IsAuthorized = $SessionData{$AuthSessionKey} || 0;
+    
+    # If the Subaction is SubmitReason, create a ticket with the provided reason
+    if ( $Subaction eq 'SubmitReason' ) {
+        my $Reason = $ParamObject->GetParam( Param => 'Reason' );
+        
+        # Check if a reason was provided
+        if ( !$Reason ) {
+            return $LayoutObject->ErrorScreen(
+                Message => Translatable('No reason provided!'),
+                Comment => Translatable('Please provide a reason for accessing the ConfigItem.'),
+            );
+        }
+        
+        # Get the ConfigItem information for the ticket creation
+        my $ConfigItem = $ConfigItemObject->ConfigItemGet(
+            ConfigItemID => $ConfigItemID,
+        );
+        
+        if ( !$ConfigItem->{ConfigItemID} ) {
+            return $LayoutObject->ErrorScreen(
+                Message => $LayoutObject->{LanguageObject}->Translate( 'ConfigItemID %s not found in database!', $ConfigItemID ),
+                Comment => Translatable('Please contact the administrator.'),
+            );
+        }
+        
+        # Create ticket in the Misc queue to track the access
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+        my $UserFullname = $Kernel::OM->Get('Kernel::System::User')->UserName(
+            UserID => $Self->{UserID},
+        );
+        
+        my $TicketID = $TicketObject->TicketCreate(
+            Title        => "ConfigItem Access: $ConfigItem->{Number}",
+            Queue        => 'Misc',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'new',
+            CustomerID   => 'internal',
+            CustomerUser => 'internal@localhost',
+            OwnerID      => 1,
+            UserID       => $Self->{UserID},
+        );
+        
+        if ( !$TicketID ) {
+            return $LayoutObject->ErrorScreen(
+                Message => Translatable('Could not create tracking ticket!'),
+                Comment => Translatable('Please contact the administrator.'),
+            );
+        }
+        
+        # Add an article to the ticket with the reason
+        my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel( ChannelName => 'Internal' );
+        my $ArticleID = $ArticleBackendObject->ArticleCreate(
+            TicketID             => $TicketID,
+            SenderType           => 'agent',
+            IsVisibleForCustomer => 0,
+            From                 => $UserFullname,
+            Subject              => "Access reason for ConfigItem: $ConfigItem->{Number}",
+            Body                 => "User: $UserFullname\nAccessedItem: $ConfigItem->{Number} - $ConfigItem->{Name}\n\nReason:\n$Reason",
+            ContentType          => 'text/plain; charset=utf-8',
+            HistoryType          => 'AddNote',
+            HistoryComment       => 'ConfigItem access justification added',
+            UserID               => $Self->{UserID},
+        );
+        
+        if ( !$ArticleID ) {
+            return $LayoutObject->ErrorScreen(
+                Message => Translatable('Could not create article in tracking ticket!'),
+                Comment => Translatable('Please contact the administrator.'),
+            );
+        }
+        
+        # Link the ticket to the ConfigItem
+        $Kernel::OM->Get('Kernel::System::LinkObject')->LinkAdd(
+            SourceObject => 'Ticket',
+            SourceKey    => $TicketID,
+            TargetObject => 'ITSMConfigItem',
+            TargetKey    => $ConfigItemID,
+            Type         => 'Normal',
+            State        => 'Valid',
+            UserID       => $Self->{UserID},
+        );
+        
+        # Store authorization in session
+        $SessionObject->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => $AuthSessionKey,
+            Value     => 1,
+        );
+    }
+    # Show pre-screen if no Subaction is provided and not yet authorized
+    elsif ( !$Subaction && !$IsAuthorized ) {
+        my $Output = $LayoutObject->Header( Value => Translatable('Configuration Item Access Request') );
+        $Output .= $LayoutObject->NavigationBar();
+        
+        $Output .= $LayoutObject->Output(
+            TemplateFile => 'AgentITSMConfigItemAccessJustification',
+            Data         => {
+                ConfigItemID => $ConfigItemID,
+                VersionID    => $VersionID,
+                ShowVersions => $ShowVersions,
+            },
+        );
+        $Output .= $LayoutObject->Footer();
+        return $Output;
+    }
+    
+    # If we reach here, either the user has been authorized via the pre-screen
+    # or is viewing the config item after submitting a reason
 
     # set show versions
     $Param{ShowVersions} = 0;

@@ -1,0 +1,60 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<div class="MainBox ARIARoleMain">
+    <div class="ClearLeft"></div>
+    <div class="Headline">
+        <h1>[% Translate("Configuration Item Access Request") | html %]</h1>
+    </div>
+    <div class="LayoutFixedSidebar SidebarLast">
+        <div class="ContentColumn">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Please provide a reason for accessing this Configuration Item") | html %]</h2>
+                </div>
+                <div class="Content">
+                    <p class="Center">
+                        [% Translate("For security and tracking purposes, you must provide a reason for accessing configuration items.") | html %]
+                    </p>
+                    <p class="Center">
+                        [% Translate("Your request will be logged for audit purposes.") | html %]
+                    </p>
+                    <form action="[% Env("CGIHandle") %]" method="post" name="AccessRequestForm" id="AccessRequestForm" class="Validate">
+                        <input type="hidden" name="Action" value="[% Env("Action") %]" />
+                        <input type="hidden" name="Subaction" value="SubmitReason" />
+                        <input type="hidden" name="ConfigItemID" value="[% Data.ConfigItemID | html %]" />
+                        <input type="hidden" name="VersionID" value="[% Data.VersionID | html %]" />
+                        <input type="hidden" name="ShowVersions" value="[% Data.ShowVersions | html %]" />
+
+                        <fieldset class="TableLike">
+                            <label class="Mandatory" for="Reason">
+                                <span class="Marker">*</span>
+                                [% Translate("Reason for access") | html %]:
+                            </label>
+                            <div class="Field">
+                                <textarea name="Reason" id="Reason" class="Validate_Required" rows="10" cols="60" required="required"></textarea>
+                                <div id="ReasonError" class="TooltipErrorMessage">
+                                    <p>[% Translate("This field is required.") | html %]</p>
+                                </div>
+                                <div id="ReasonServerError" class="TooltipErrorMessage">
+                                    <p>[% Translate("This field is required.") | html %]</p>
+                                </div>
+                            </div>
+                            <div class="Clear"></div>
+
+                            <div class="Field">
+                                <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="Clear"></div>
+    </div>
+</div>
