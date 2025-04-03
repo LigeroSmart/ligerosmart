@@ -219,9 +219,6 @@ sub Run {
             #    UserID   => 1,
             #);
             my $WorkingTime = ($Escalation{SolutionTime}||0)-($Ticket{SolutionDiffInMin}||0);
-            $WorkingTime = $WorkingTime * 60;
-            $WorkingTime = $WorkingTime -$PendSumTime;
-            $WorkingTime = $WorkingTime / 60;
             $Success = $DynamicFieldValueObject->ValueSet(
                 FieldID => $DynamicFieldTotalTime->{ID},
                 ObjectID => $Param{TicketID},
