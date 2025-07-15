@@ -22,7 +22,7 @@
             </Item>
         </Value>
     </Setting>
-    <Setting Name="NotificationEvent::Transport###RestNotify" Required="0" Valid="1">
+    <Setting Name="Notification::Transport###RestNotify" Required="0" Valid="1">
         <Description Translatable="1">Defines all the parameters for the REST API notification transport.</Description>
         <Navigation>Core::Event::Notification</Navigation>
         <Value>
