@@ -1,0 +1,15 @@
+form#CustomerIDSelection {
+    max-width: 800px;
+    text-align: center;
+    margin:40px auto;
+}
+
+form#CustomerIDSelection table label {
+    width: 100%;
+    text-align: left;
+    background: unset;
+}
+
+form#CustomerIDSelection .Content {
+    border-top: 0px;
+}

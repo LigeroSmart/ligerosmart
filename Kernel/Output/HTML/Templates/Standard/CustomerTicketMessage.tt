@@ -17,6 +17,24 @@
 
             <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
 
+# KIX4OTRS-capeIT
+
+[% RenderBlockStart("SelectedCustomer") %]
+
+                <div>
+
+                    <label>[% Translate("Selected customer ID") | html %]</label>
+
+                    <input type="text" name="SelectedCustomerID" readonly="true" value="[% Data.SelectedCustomerID | html %]" />
+
+                    <div class="Clear"></div>
+
+                </div>
+
+[% RenderBlockEnd("SelectedCustomer") %]
+
+# EO KIX4OTRS-capeIT
+
 [% RenderBlockStart("TicketType") %]
                 <div>
 <!--

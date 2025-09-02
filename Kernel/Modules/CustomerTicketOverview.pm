@@ -37,6 +37,12 @@ sub Run {
     # disable output of customer company tickets
     my $DisableCompanyTickets = $ConfigObject->Get('Ticket::Frontend::CustomerDisableCompanyTicketAccess');
 
+    #COMPLEMENTO
+
+    $Self->{CustomerID}  = $ParamObject->GetParam( Param => 'CustomerID' );
+
+	# EO COMPLEMENTO
+
     my $CustomerCompanyEnabledForProfile = $ConfigObject->Get('Ticket::Frontend::CustomerCompanyEnabledForProfile');
 
     if($CustomerCompanyEnabledForProfile) {
@@ -430,8 +436,77 @@ sub Run {
                 Data => {
                     %Param,
                     %{ $NavBarFilter{$Key} },
+                    CustomerID=>$Self->{CustomerID}, 
                 },
             );
+        }
+
+        # build customerIDs string
+
+        if($Self->{Subaction} eq "CompanyTickets"){
+
+            my %CustomerIDsTemp = $UserObject->CustomerIDs( User => $Self->{UserLogin} );
+
+            my %CustomerIDs;
+
+            $CustomerIDs{'0'}="All";
+
+            for my $Key ( sort %CustomerIDsTemp ) {
+
+                $CustomerIDs{$Key}=$Key;
+
+            }
+
+
+
+            my %CustomerIDSelected;
+
+            
+
+            if ( $Self->{CustomerID} ) {
+
+                $CustomerIDSelected{SelectedID} = $Self->{CustomerID};
+
+            }
+
+            else {
+
+                $CustomerIDSelected{SelectedID} = '0';
+
+            }
+
+            $Param{CustomerIDsStrg} = $LayoutObject->BuildSelection(
+
+                Data => \%CustomerIDs,
+
+                Name => 'CustomerID',
+
+                Sort => 'AlphanumericKey',
+
+                %CustomerIDSelected,
+
+                # KIX4OTRS-capeIT
+
+                Translation => 1,
+
+                # EO KIX4OTRS-capeIT
+
+
+
+            );
+
+            
+
+            $Param{"SelectorLabel"}=$ConfigObject->Get("MultiCustomerCompany::Selector::Label");
+
+            $LayoutObject->Block(
+
+                Name => 'CustomerID',
+
+                Data => \%Param,
+
+            );
+
         }
 
         # show footer filter - show only if more the one page is available

@@ -1,0 +1,50 @@
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+Core.App.Subscribe('Event.MultiCustomerCompany.CompanySelected',function(e){
+    BlockMultiCustomerCompany();
+});
+
+[% RenderBlockStart("AgentTicketZoom") %]
+BlockMultiCustomerCompany();
+[% RenderBlockEnd("AgentTicketZoom") %]
+
+//]]></script>
+[% END %]
+
+<script type="text/javascript">//<![CDATA[
+
+function BlockMultiCustomerCompany(){
+    var CustomerID = $('#CustomerID').val();
+    var CustomerUserID = $('#SelectedCustomerUser').val();
+
+[% RenderBlockStart("AgentTicketZoomCustomerInfo") %]
+    CustomerID = '[% Data.CustomerID | html %]';
+    CustomerUserID = '[% Data.CustomerUserID | html %]';
+[% RenderBlockEnd("AgentTicketZoomCustomerInfo") %]
+
+    var Data = {
+            Action: 'AgentMultiCustomerCompany',
+            Subaction: 'CompanyInfo',
+            CustomerID: CustomerID,
+            CustomerUserID: CustomerUserID
+        };
+
+    Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function (Response) {
+        // Remove informações antigas
+        $('.MulticustomerCompanyInfo').remove();
+[% RenderBlockStart("Title") %]
+        var mctitle='[% Translate(Data.Title) %]';
+[% RenderBlockEnd("Title") %]
+        var mccontent=Response.CustomerTableHTMLString;
+
+        var content='<div id="MulticustomerCompanyInfo" class="MulticustomerCompanyInfo WidgetSimple"><div class="Header"><h2>'+mctitle+'</h2></div><div class="Content">'+mccontent+'</div></div>';
+        
+        // Agent Ticket Phone and email
+        $(content).insertAfter('#CustomerInfo');
+[% RenderBlockStart("AgentTicketZoomCustomerInfoPre") %]
+        // Agent Ticket Zoom
+        $('.SidebarColumn').prepend(content);
+[% RenderBlockEnd("AgentTicketZoomCustomerInfoPre") %]
+    });
+}
+//]]></script>

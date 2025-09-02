@@ -59,6 +59,20 @@
     <div class="Clear"></div>
 [% RenderBlockEnd("CustomerRow") %]
 
+# KIX4OTRS-capeIT - COMPLEMENTO
+
+[% RenderBlockStart("CustomerIDsSelection") %]
+
+    <div class="SpacingTop">
+
+        [% Data.CustomerIDsStrg %]
+
+    </div>
+
+[% RenderBlockEnd("CustomerIDsSelection") %]
+
+# EO KIX4OTRS-capeIT - COMPLEMENTO
+
 [% RenderBlockStart("CustomerItem") %]
     <ul class="ItemRow">
 [% RenderBlockStart("CustomerItemRow") %]

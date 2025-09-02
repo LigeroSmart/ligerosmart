@@ -309,6 +309,20 @@ sub Run {
                 }
             }
 
+             # 	COMPLEMENTO
+
+            if ( $Entry->[5] eq 'array' ) {
+
+                $GetParam{ $Entry->[0] }
+
+                    = join( ';', $ParamObject->GetArray( Param => $Entry->[0] ) );
+
+            }
+
+
+
+            # EO COMPLEMENTO
+
             # check remaining non-dynamic-field mandatory fields
             else {
                 $GetParam{ $Entry->[0] } = $ParamObject->GetParam( Param => $Entry->[0] ) || '';
@@ -1042,6 +1056,15 @@ sub _Edit {
     # Get layout object.
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
+
+# COMPLEMENTO
+
+    my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
+    my $CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
+
+# EO COMPLEMENTO
+
     my $Output = '';
 
     $LayoutObject->Block(
@@ -1199,6 +1222,81 @@ sub _Edit {
                 Disabled    => $UpdateOnlyPreferences ? 1 : 0,
             );
         }
+        # COMPLEMENTO
+
+        # build multiple selections
+
+        elsif (
+
+            $Entry->[5] eq 'array'
+
+            && $ConfigObject->Get( $Param{Source} )->{SelectionsMultiple}
+
+            && $ConfigObject->Get( $Param{Source} )->{SelectionsMultiple}->{ $Entry->[0] }
+
+            )
+
+        {
+
+            $Block = 'Option';
+
+
+
+            # Change the validation class
+
+            if ( $Param{RequiredClass} ) {
+
+                $Param{RequiredClass} = 'Validate_Required';
+
+            }
+
+
+
+            # get the data of the current selection
+
+            my $SelectionsData
+
+                = $ConfigObject->Get( $Param{Source} )->{SelectionsMultiple}
+
+                ->{ $Entry->[0] };
+
+
+
+            # make sure the encoding stamp is set
+
+            for my $Key ( keys %{$SelectionsData} ) {
+
+                $SelectionsData->{$Key} = $Self->{EncodeObject}->Encode( $SelectionsData->{$Key} );
+
+            }
+
+
+
+            my @SelectedArray = split( ';', $Param{ $Entry->[0] } || '' );
+
+            $Param{Option} = $LayoutObject->BuildSelection(
+
+                Data                => $SelectionsData,
+
+                Name                => $Entry->[0],
+
+                Multiple            => 1,
+
+                LanguageTranslation => 0,
+
+                SelectedID          => \@SelectedArray,
+
+                Class               => $Param{RequiredClass} . ' '
+
+                    . ( $Param{Errors}->{ $Entry->[0] . 'Invalid' } || '' ),
+
+            );
+
+        }
+
+
+
+        # EO COMPLEMENTO
         elsif ( $Entry->[0] =~ /^ValidID/i ) {
 
             # Change the validation class
@@ -1268,6 +1366,103 @@ sub _Edit {
             # Use CustomerID param if called from CIC.
             $Param{Value} = $Param{ $Entry->[0] } || $Param{CustomerID} || '';
         }
+        # COMPLEMENTO
+
+        elsif (
+
+            $Entry->[0] =~ /^UserCustomerIDs$/i
+
+            && $Entry->[5] eq 'array'
+
+            && $ConfigObject->Get( $Param{Source} )->{CustomerCompanySupport}
+
+            )
+
+        {
+
+            my @CustomerIDsArray;
+
+            
+
+            my %user= $CustomerUserObject->CustomerUserDataGet(
+
+                    User => $Param{ID},
+
+                );
+
+            
+
+            my $CustomerID = $user{UserCustomerID};
+
+            
+
+            if ($Param{ID}) {
+
+                @CustomerIDsArray = $CustomerUserObject->CustomerIDs(
+
+                    User => $Param{ID},
+
+                );
+
+            }
+
+            
+
+            my $index = 0;
+
+            $index++ until $CustomerIDsArray[$index] eq $CustomerID;
+
+            splice(@CustomerIDsArray, $index, 1);
+
+
+
+
+
+            
+
+            my %Company;
+
+            my %CompanyList = (
+
+                $CustomerCompanyObject->CustomerCompanyList(Limit=>0),
+
+            );
+
+            $Block = 'Option';
+
+
+
+            # Change the validation class
+
+            if ( $Param{RequiredClass} ) {
+
+                $Param{RequiredClass} = 'Validate_Required';
+
+            }
+
+
+
+            $Param{Option} = $LayoutObject->BuildSelection(
+
+                Data       => \%CompanyList,
+
+                Name       => $Entry->[0],
+
+                Max        => 80,
+
+                SelectedID => \@CustomerIDsArray,
+
+                Multiple   => 1,
+
+                Class      => 'Modernize',
+
+            );
+
+        }
+
+
+
+        # EO COMPLEMENTO
         else {
             $Param{Value} = $Param{ $Entry->[0] } || '';
         }

@@ -13,8 +13,8 @@
     <div class="ActionRow">
         <ul class="Filter Tabs">
 [% RenderBlockStart("FilterHeader") %]
-            <li>
-                <a class="[% Data.ClassA | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];Filter=[% Data.Filter | uri %];SortBy=[% Data.SortBy | uri %];OrderBy=[% Data.OrderBy | uri %][% Data.CustomerIDs %];">
+            <li class="[% Data.ClassLI | html %]">
+                <a class="[% Data.ClassA | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];Filter=[% Data.Filter | uri %];SortBy=[% Data.SortBy | uri %];OrderBy=[% Data.OrderBy | uri %][% Data.CustomerIDs %];CustomerID=[% Data.CustomerID | uri %];">
                     [% Translate(Data.Name) | html %] ([% Data.Count | html %])
                 </a>
             </li>
@@ -24,7 +24,37 @@
                 [% Data.CustomerIDStrg %]
             </li>
         [% END %]
+            <li class="Clear"></li>
         </ul>
+
+[% RenderBlockStart("CustomerID") %]
+
+        <div style="float:left">
+
+            <label for="CustomerID">[% Translate(Data.SelectorLabel) %]</label>
+
+            [% Data.CustomerIDsStrg %]        
+
+        </div>
+
+[% WRAPPER JSOnDocumentComplete %]
+
+<script type="text/javascript">//<![CDATA[
+
+    $('#CustomerID').bind('change', function (Event) {
+
+            window.location = "[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Env("Subaction") %];CustomerID="+$(this).val();
+
+            return false;
+
+    });
+
+//]]></script>
+
+[% END %]
+
+[% RenderBlockEnd("CustomerID") %]
+
         <div class="Tabs Pagination">
             [% Data.SiteNavBar %]
         </div>

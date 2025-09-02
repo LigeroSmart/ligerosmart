@@ -168,11 +168,27 @@ sub Run {
     # get customer info
     elsif ( $Self->{Subaction} eq 'CustomerInfo' ) {
 
+        # KIX4OTRS-capeIT
+
+        my $CallingAction = $ParamObject->GetParam( Param => 'CallingAction' ) || '';
+
+
+
+        # EO KIX4OTRS-capeIT
+
         # get params
         my $CustomerUserID = $ParamObject->GetParam( Param => 'CustomerUserID' ) || '';
 
         my $CustomerID              = '';
         my $CustomerTableHTMLString = '';
+
+        # KIX4OTRS-capeIT
+
+        my $CustomerDetailsTableHTMLString = '';
+
+
+
+        # EO KIX4OTRS-capeIT
 
         # get customer data
         my %CustomerData = $CustomerUserObject->CustomerUserDataGet(
@@ -203,6 +219,18 @@ sub Run {
                 Data => {%CustomerData},
                 Max  => $ConfigObject->Get('Ticket::Frontend::CustomerInfoComposeMaxSize'),
             );
+
+             # KIX4OTRS-capeIT
+
+            $CustomerDetailsTableHTMLString = $LayoutObject->AgentCustomerDetailsViewTable(
+
+                Data => { %CustomerData, CallingAction => $CallingAction, AJAX => 1 },
+
+            );
+
+
+
+            # EO KIX4OTRS-capeIT
         }
 
         # build JSON output
@@ -211,6 +239,13 @@ sub Run {
                 CustomerID              => $CustomerID,
                 CustomerTableHTMLString => $CustomerTableHTMLString,
                 CustomerIDs             => \@CustomerIDs,
+                # KIX4OTRS-capeIT
+
+                CustomerDetailsTableHTMLString => $CustomerDetailsTableHTMLString,
+
+
+
+                # EO KIX4OTRS-capeIT
             },
         );
     }

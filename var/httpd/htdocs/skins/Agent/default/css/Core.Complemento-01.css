@@ -1,0 +1,9 @@
+#CustomerTickets {
+    clear: both;
+}
+#Empresas{
+    max-height:220px;
+    overflow-x:none;
+    overflow-y:auto;
+    display:block;
+}

@@ -1,0 +1,62 @@
+# --
+# CustomerAssignedConfigItemList.tt - provides HTML for customer ID selection
+# Copyright (C) 2006-2011 c.a.p.e. IT GmbH, http://www.cape-it.de
+#
+# written/edited by:
+# * Martin(dot)Balzarek(at)cape(dash)it(dot)de
+#
+# --
+# $Id: CustomerAssignedCustomerIDsList.dtl,v 1.2 2011-08-24 14:02:43 maba Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<h3>[% Translate("Assigned customer IDs") | html %]:</h3>
+<input id="FilterEmpresas" name="FilterEmpresas" type="text" style="width: 250px;" />
+<table class="DataTable" id="Empresas">
+   <thead>
+       <tr>
+           <th></th>
+           <th>[% Translate("Customer ID") | html %]</th>
+       </tr>
+   </thead>
+   <tbody>
+[% RenderBlockStart("CustomerIDRow") %]
+       <tr title="[% Translate("Select customer ID for this ticket: %s", Data.ID) | html %]">
+           <td>
+               <input type="radio" class="SelectedCustomerIDRadio" name="SelectedCustomerIDRadio" id="SelectedCustomerIDRadio[% Data.ID | html %]" value="[% Data.ID | html %]" />
+           </td>
+           <td>
+               <label for="SelectedCustomerIDRadio[% Data.ID | html %]">[% Data.ID | truncate(25) | html %]</label>
+           </td>
+[% RenderBlockEnd("CustomerIDRow") %]
+       </tr>
+   </tbody>
+</table>
+# [% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+
+companyInformation();
+Core.UI.Table.InitTableFilter($('#FilterEmpresas'), $('#Empresas'));
+$("#SelectedCustomerIDRadio"+$('#CustomerID').val()).attr("checked","checked");
+$('.SelectedCustomerIDRadio').bind('change', function (Event) {
+    $('#CustomerID').val( $(this).val());
+    setTimeout(function(){ 
+      if($('#NewPhoneTicket').length>0){
+        companyInformation();
+        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'CustomerID', ['Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', [% Data.DynamicFieldNamesStrg %], 'To', 'Cc', 'Bcc']);
+      }
+      if($('#NewEmailTicket').length>0){
+           Core.AJAX.FormUpdate($('#NewEmailTicket'), 'AJAXUpdate', 'CustomerID', ['Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', [% Data.DynamicFieldNamesStrg %], 'To', 'Cc', 'Bcc']);
+      }
+    },300);
+});
+
+function companyInformation(){
+    Core.App.Publish('Event.MultiCustomerCompany.CompanySelected');
+}
+
+//]]></script>
+# [% END %]

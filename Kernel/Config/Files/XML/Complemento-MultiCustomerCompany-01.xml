@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="Frontend::Module###AgentMultiCustomerCompany" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">AgentMultiCustomerCompany.</Item>
+                    <Item Key="Title" Translatable="1">AgentMultiCustomerCompany</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentMultiCustomerCompany###003-Complemento-MultiCustomerCompany-01" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+     <Setting Name="Frontend::Output::FilterElementPost###MultiCustomerCompanyInfo" Required="0" Valid="1">
+        <Description Translatable="1">Loader the module in the currents interfaces.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::MultiCustomerCompanyInfo</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentTicketZoom">1</Item>
+                        <Item Key="AgentTicketPhone">1</Item>
+                        <Item Key="AgentTicketEmail">1</Item>
+                        <Item Key="AgentTicketCustomer">1</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Customer::CommonJS###302-CoreUITable" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the Customer interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Core.UI.Table.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+<!--  REGISTER pre-application module for checkup for multiple customer ids before ticket creation -->
+    <Setting Name="CustomerPanelPreApplicationModule###CustomerTicketCustomerIDSelection" Required="0" Valid="1">
+        <Description Translatable="1">This module and its PreRun() function will be executed, if defined, for every request. This module checks if customer user has multiple customer ids and presents selection of one of them for a new ticket creation.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::CustomerTicketCustomerIDSelection</Item>
+        </Value>
+    </Setting>
+    <Setting Name="MultiCustomerCompany::Selector::Label" Required="1" Valid="1">
+        <Description Translatable="1">Label for the Selector</Description>
+        <Navigation>Configuration</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Company</Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###CustomerTicketCustomerIDSelection" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Create tickets</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                    <Item Key="Title">New Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###CustomerTicketCustomerIDSelection###003-Complemento-MultiCustomerCompany-01" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    
+    <Setting Name="Frontend::CustomerUser::Item###0-CustomerIDsSelection" Required="0" Valid="1">
+        <Description Translatable="1">A customer info block, which shows all customer IDs assigned to this customer. Depending on the calling action it allows you to select the relevant customer ID for the ticket, which will be created.</Description>
+        <Navigation>Frontend::Customer</Navigation>
+            <Value>
+                <Hash>
+                    <Item Key="Module">Kernel::Output::HTML::CustomerUserCustomerIDs</Item>
+                    <Item Key="ShowSelectBoxActionRegExp">(AgentTicketPhone|AgentTicketEmail|AgentCustomerSearch|AgentTicketCustomer)</Item>
+                </Hash>
+            </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonJS###120-KIX4OTRSCustomerIDsSelection" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Core.KIX4OTRS.CustomerIDsSelection.js</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Customer::CommonCSS###120-ComplementoCustomerMultComp-01" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the customer interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Core.Complemento-01.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Agent::CommonCSS###120-ComplementoAgentMultComp-01" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Array>
+                <Item>Core.Complemento-01.css</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="MultiCustomerCompany::CompanyWidget::Fields" Required="1" Valid="1">
+        <Description Translatable="1">List of Fields should be shown on ticket creation screens.</Description>
+        <Navigation>Configuration</Navigation>
+        <Value>
+            <Array>
+                <Item>CustomerID</Item>
+                <Item>CustomerCompanyName</Item>
+                <Item>CustomerCompanyStreet</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="MultiCustomerCompany::CompanyWidget::Title" Required="1" Valid="1">
+        <Description Translatable="1">Widget Title.</Description>
+        <Navigation>Configuration</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Company</Item>
+        </Value>
+    </Setting>
+</otrs_config>
