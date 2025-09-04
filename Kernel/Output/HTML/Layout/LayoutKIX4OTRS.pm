@@ -1586,7 +1586,7 @@ sub AgentCustomerDetailsViewTable {
             $Self->FatalError( Message => 'Need Hash ref in Data param' );
         }
         elsif ( ref $Param{Data} eq 'HASH' && !%{ $Param{Data} } ) {
-            return $Self->{LanguageObject}->Get('none');
+            return $Self->{LanguageObject}->Translate('none');
         }
 
         # add ticket params if given
