@@ -1,0 +1,22 @@
+<Migrations>
+    <DatabaseInstall Type="post">
+        <TableCreate Name="audit_log" Type="post">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Size="20" Type="BIGINT" />
+            <Column Name="user_id" Required="true" Size="11" Type="INTEGER" />
+            <Column Name="module" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="action" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="payload" Required="true" Type="LONGBLOB" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Index Name="audit_log_user_id">
+                <IndexColumn Name="user_id" />
+            </Index>
+            <ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="user_id" />
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseInstall>
+
+    <DatabaseUninstall>
+        <TableDrop Name="audit_log" />
+    </DatabaseUninstall>
+</Migrations>
