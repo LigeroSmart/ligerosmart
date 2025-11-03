@@ -6,6 +6,7 @@ use warnings;
 
 use Kernel::System::DateTime;
 use Kernel::System::VariableCheck qw( IsArrayRefWithData IsHashRefWithData );
+use Scalar::Util qw(blessed);
 
 our @ObjectDependencies = (
     'Kernel::System::DB',
@@ -20,6 +21,46 @@ sub new {
     bless( $Self, $Type );
 
     return $Self;
+}
+
+sub _SanitizeForJSON {
+    my ( $Self, $Data ) = @_;
+    
+    return $Data if !ref $Data;
+    
+    # Se for objeto blessed, converte para string
+    if ( blessed($Data) ) {
+        # Para filehandles de upload, tenta extrair o nome do arquivo
+        if ( $Data->isa('CGI::File::Temp') || ref($Data) =~ /File::Temp/ ) {
+            return "$Data";  # Retorna o nome do arquivo como string
+        }
+        return "$Data";  # Força stringificação
+    }
+    
+    # Se for HASH, sanitiza recursivamente
+    if ( ref $Data eq 'HASH' ) {
+        my %Sanitized;
+        for my $Key ( keys %{$Data} ) {
+            $Sanitized{$Key} = $Self->_SanitizeForJSON( $Data->{$Key} );
+        }
+        return \%Sanitized;
+    }
+    
+    # Se for ARRAY, sanitiza recursivamente
+    if ( ref $Data eq 'ARRAY' ) {
+        my @Sanitized;
+        for my $Item ( @{$Data} ) {
+            push @Sanitized, $Self->_SanitizeForJSON($Item);
+        }
+        return \@Sanitized;
+    }
+    
+    # Para referências escalares, dereferencia
+    if ( ref $Data eq 'SCALAR' || ref $Data eq 'REF' ) {
+        return $Self->_SanitizeForJSON($$Data);
+    }
+    
+    return $Data;
 }
 
 sub Store {
@@ -53,6 +94,10 @@ sub Store {
     # json data
     my $Action     = $Data->{Action}; delete $Data->{Action};
     my $SubAction  = $Data->{Subaction}; delete $Data->{Subaction};
+    
+    # Sanitize data to remove blessed objects before JSON encoding
+    $Data = $Self->_SanitizeForJSON($Data);
+    
     my $Payload    = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
         Data => $Data,
         SortKeys => 1,
