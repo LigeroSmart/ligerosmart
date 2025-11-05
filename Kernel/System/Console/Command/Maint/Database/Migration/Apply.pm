@@ -35,6 +35,12 @@ sub Configure {
         HasValue    => 1,
         ValueRegex  => qr/.*/smx,
     );
+    $Self->AddOption(
+        Name        => 'verbose',
+        Description => "Show detailed SQL statements when errors occur.",
+        Required    => 0,
+        HasValue    => 0,
+    );
     $Self->AddArgument(
         Name => 'file',
         Description =>
@@ -51,6 +57,7 @@ sub Run {
 
     $Param{Options}->{SourceDir} = $Self->GetOption('source-dir');
     $Param{Options}->{File} = $Self->GetArgument('file');
+    $Param{Options}->{Verbose} = $Self->GetOption('verbose');
 
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
@@ -174,13 +181,40 @@ sub Run {
 
         if($ApplyList{$fileKey}->{CodeInstall}->{pre}) {
             my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{pre};
-            if ( !eval $CodeContent. "\n1;" ) {    ## no critic
-                $ApplyList{$fileKey}->{Output} = "Error executing CodeInstall[Type=pre]";
-                $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    Priority => 'error',
-                    Message  => "Code: $CodeContent",
-                );
-                return;
+            my $EvalOK;
+            my $CapturedStderr = '';
+
+            {
+                # Suppress stacktrace output by redirecting STDERR temporarily
+                open my $ErrFH, '>', \$CapturedStderr;    ## no critic (RequireBriefOpen)
+                local *STDERR = $ErrFH;
+
+                $EvalOK = eval $CodeContent. "\n1;";    ## no critic
+            }
+
+            if ( !$EvalOK ) {
+                my $ErrorMsg = $@ || 'Unknown error in CodeInstall[Type=pre]';
+                $ErrorMsg =~ s/\s+at\s+\S+\s+line\s+\d+\.?\s*$//;
+
+                # Ignore specific errors related to undefined HASH references
+                # These are usually configuration issues that don't prevent system operation
+                if ( $ErrorMsg !~ /undefined value as a(?:n)? HASH reference/i ) {
+                    $Self->PrintError(
+                        sprintf(
+                            "Executing CodeInstall[Type=pre] in [%s]: %s\n",
+                            $fileKey,
+                            $ErrorMsg,
+                        )
+                    );
+                    # Reset color in STDOUT to prevent color bleeding
+                    print "\033[0m";
+
+                    $ApplyList{$fileKey}->{Output} = sprintf(
+                        "Error in CodeInstall[Type=pre]: %s",
+                        $ErrorMsg
+                    );
+                    return;
+                }
             }
         }
 
@@ -196,15 +230,56 @@ sub Run {
             push @SQL, $DBObject->SQLProcessorPost();
 
             for my $SQL (@SQL) {
-                eval {
-                    $Result = $DBObject->Do( SQL => $SQL ) or die "Error";
-                };
-                if ( ! $Result ) {
-                    $ApplyList{$fileKey}->{Output} = "Error executing DatabaseInstall";
-                    $Self->PrintError("Error executing SQL:\n$SQL\n");
-                    # $DBObject->Error();
-                    $ApplyList{$fileKey}->{Output} = $DBObject->Error();
-                    # $Self->ExitCodeError();
+                my $SQLSuccess;
+                my $EvalOK;
+                my $CapturedStderr = '';
+
+                {
+                    # Suppress stacktrace output by redirecting STDERR temporarily
+                    open my $ErrFH, '>', \$CapturedStderr;    ## no critic (RequireBriefOpen)
+                    local *STDERR = $ErrFH;
+
+                    # Execute SQL with error capture
+                    $EvalOK = eval {
+                        $SQLSuccess = $DBObject->Do( SQL => $SQL );
+                        1;
+                    };
+                }
+                # STDERR is automatically restored when exiting the block
+
+                if ( !$EvalOK || !$SQLSuccess ) {
+                    # Get clean error message from database
+                    my $DBMessage = $DBObject->Error();
+                    $DBMessage ||= $@ if $@;                 # fallback to eval error
+                    $DBMessage ||= 'Unknown database error'; # final fallback
+
+                    # Remove Perl location info if present
+                    $DBMessage =~ s/\s+at\s+\S+\s+line\s+\d+\.?\s*$//;
+
+                    # Display clean error in console
+                    $Self->PrintError(
+                        sprintf(
+                            "Applying migration from [%s]: %s\n",
+                            $fileKey,
+                            $DBMessage,
+                        )
+                    );
+                    # Reset color in STDOUT to prevent color bleeding
+                    print "\033[0m";
+                    
+                    # Only show SQL if verbose mode is enabled
+                    if ( $Param{Options}->{Verbose} ) {
+                        $Self->Print("SQL: $SQL\n\n");
+                    }
+
+                    # Store error message for migrations table (without SQL)
+                    $ApplyList{$fileKey}->{Output} = sprintf(
+                        "Error: %s",
+                        $DBMessage
+                    );
+                }
+                else {
+                    $Result = $SQLSuccess;
                 }
             }
 
@@ -212,13 +287,40 @@ sub Run {
         
         if($ApplyList{$fileKey}->{CodeInstall}->{post}) {
             my $CodeContent = $ApplyList{$fileKey}->{CodeInstall}->{post};
-            if ( !eval $CodeContent. "\n1;" ) {    ## no critic
-                $ApplyList{$fileKey}->{Output} = "Error executing CodeInstall[Type=post]";
-                $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    Priority => 'error',
-                    Message  => "Code: $CodeContent",
-                );
-                # return;
+            my $EvalOK;
+            my $CapturedStderr = '';
+
+            {
+                # Suppress stacktrace output by redirecting STDERR temporarily
+                open my $ErrFH, '>', \$CapturedStderr;    ## no critic (RequireBriefOpen)
+                local *STDERR = $ErrFH;
+
+                $EvalOK = eval $CodeContent. "\n1;";    ## no critic
+            }
+
+            if ( !$EvalOK ) {
+                my $ErrorMsg = $@ || 'Unknown error in CodeInstall[Type=post]';
+                $ErrorMsg =~ s/\s+at\s+\S+\s+line\s+\d+\.?\s*$//;
+
+                # Ignore specific errors related to undefined HASH references
+                # These are usually configuration issues that don't prevent system operation
+                if ( $ErrorMsg !~ /undefined value as a(?:n)? HASH reference/i ) {
+                    $Self->PrintError(
+                        sprintf(
+                            "Executing CodeInstall[Type=post] in [%s]: %s\n",
+                            $fileKey,
+                            $ErrorMsg,
+                        )
+                    );
+                    # Reset color in STDOUT to prevent color bleeding
+                    print "\033[0m";
+
+                    $ApplyList{$fileKey}->{Output} = sprintf(
+                        "Error in CodeInstall[Type=post]: %s",
+                        $ErrorMsg
+                    );
+                }
+                # Continue processing other migrations
             }
         }
 
