@@ -258,7 +258,14 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             Calendar  => $Escalation{Calendar},
         );
 
-        $Data{FirstResponseInMin} = int( $WorkingTime / 60 );
+        # COMPLEMENTO - SUBTRAI O TEMPO QUE NÃO CONTA SLA (estados paused)
+        # FirstResponseInMin deve representar apenas o tempo real gasto em estados que contabilizam SLA
+        my $FirstResponseNaoContaSLA = $Self->GetTotalNonEscalationRelevantBusinessTime(
+            TicketID => $Param{TicketID},
+            Type     => 'Response',
+        ) || 0;
+
+        $Data{FirstResponseInMin} = int( ( $WorkingTime - $FirstResponseNaoContaSLA ) / 60 );
 
         if ( $Escalation{FirstResponseTime} ) {
 
@@ -267,8 +274,9 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             # 
 
             my $EscalationFirstResponseTime = $Escalation{FirstResponseTime} * 60;
+            # COMPLEMENTO - ADICIONA AS HORAS QUE NÃO CONTA SLA NO CALCULO DO DIFF
             $Data{FirstResponseDiffInMin}
-                = int( ( $EscalationFirstResponseTime - $WorkingTime ) / 60 );
+                = int( ( $EscalationFirstResponseTime - $WorkingTime + $FirstResponseNaoContaSLA ) / 60 );
         }
         return %Data;
     }
@@ -358,12 +366,14 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             Calendar  => $Escalation{Calendar},
         );
 
-        $Data{SolutionInMin} = int( $WorkingTime / 60 );
-
-        # COMPLEMENTO - ADICIONA AS HORAS QUE NÃO CONTA SLA NO CALCULO
+        # COMPLEMENTO - SUBTRAI O TEMPO QUE NÃO CONTA SLA (estados paused)
+        # SolutionInMin deve representar apenas o tempo real gasto em estados que contabilizam SLA
         my $NaoContaSLA = $Self->GetTotalNonEscalationRelevantBusinessTime(
                 TicketID       => $Param{TicketID},
+                Type           => 'Solution',
             ) || 0;
+
+        $Data{SolutionInMin} = int( ( $WorkingTime - $NaoContaSLA ) / 60 );
 
         
         if ( $Escalation{SolutionTime} ) {
@@ -449,8 +459,13 @@ sub GetTotalNonEscalationRelevantBusinessTime {
         my $StatePend   = 0;
 
         if ( $RelevantStateNamesArrStrg =~ /(^|.*,)$Ticket{State}(,.*|$)/ ) {
-            #$PendSumTime = 1767139200;
-            $PendSumTime = 1767139200;
+            # Ticket is in paused state - calculate paused time in seconds
+            # instead of using hardcoded timestamp which causes dates in 2025/2026
+            $PendSumTime = $Self->GetTotalNonEscalationRelevantBusinessTime(
+                TicketID       => $Param{TicketID},
+# comentado em 10/6/15 complemento
+#                RelevantStates => \%RelevantStateHash,
+            ) || 0;
             $StatePend   = 1;
         }
         else {
@@ -539,11 +554,20 @@ sub GetTotalNonEscalationRelevantBusinessTime {
 
             # update first response time to expected escalation destination time
             else {
+                # Calculate paused time for First Response Time if in paused state
+                my $FirstResponsePendSumTime = 0;
+                if ( $StatePend ) {
+                    $FirstResponsePendSumTime = $Self->GetTotalNonEscalationRelevantBusinessTime(
+                        TicketID => $Param{TicketID},
+                        Type     => 'Response',
+                    ) || 0;
+                }
+                
                 my $DestinationTime = $Kernel::OM->Get('Kernel::System::Time')->DestinationTime(
                     StartTime => $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                         String => $Ticket{Created}
                     ),
-                    Time     => $Escalation{FirstResponseTime} * 60,
+                    Time     => $Escalation{FirstResponseTime} * 60 + $FirstResponsePendSumTime,
                     Calendar => $Escalation{Calendar},
                 );
 
@@ -711,31 +735,26 @@ sub GetTotalNonEscalationRelevantBusinessTime {
             }
             else {
             	
-                # 
-            	my $DestinationTime;
-                if ( $StatePend && $PendSumTime ) {
-                   $DestinationTime = $PendSumTime;
-                }
-                else {
-                # 
+            	# 
+            	# Calculate destination time for solution escalation
+            	# Note: PendSumTime is already calculated in seconds (not a timestamp)
+            	# so we add it to the escalation time instead of using it directly
+                my $DestinationTime = $Kernel::OM->Get('Kernel::System::Time')->DestinationTime(
+                    StartTime => $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
 
-	                $DestinationTime = $Kernel::OM->Get('Kernel::System::Time')->DestinationTime(
-	                    StartTime => $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-	
-	                        # 
-	                        # String => $Ticket{Created}
-	                        String => $Ticket{SLAStartTime} || $Ticket{Created},
-	
-	                        # 
-	
-	                    ),
+                        # 
+                        # String => $Ticket{Created}
+                        String => $Ticket{SLAStartTime} || $Ticket{Created},
+
+                        # 
+
+                    ),
                         # 
                         # Time     => $Escalation{SolutionTime} * 60,
-	                    Time     => $Escalation{SolutionTime} * 60 + $PendSumTime,
+                    Time     => $Escalation{SolutionTime} * 60 + $PendSumTime,
                         # 
-	                    Calendar => $Escalation{Calendar},
-	                );
-                }
+                    Calendar => $Escalation{Calendar},
+                );
                 
                 # update solution time to $DestinationTime
                 $Kernel::OM->Get('Kernel::System::DB')->Do(
@@ -861,19 +880,24 @@ sub GetTotalNonEscalationRelevantBusinessTime {
 		#####################################################################################################
 		
 		
+		# Track if any SLA type is paused to set EscalationTimeWorkingTime correctly
+		my $AnySLAStopped = 0;
+		
 		TIME:
 		for my $Key ( sort keys %Map ) {
 
 			next TIME if !$Ticket{$Key};
 
-			# if it's a paused SLA state and it's Solution Escalation key
-			if ($RelevantStates{ $Ticket{StateID} } && $Key =~ /Solution/ ){
+			# if it's a paused SLA state, freeze the escalation time calculation
+			# This applies to Solution and FirstResponse escalation types
+			if ($RelevantStates{ $Ticket{StateID} } && ($Key =~ /Solution/ || $Key =~ /Response/)){
 				$Data{ $Map{$Key} . 'TimeDestinationTime' } = $Ticket{$Key};
 				$Data{ $Map{$Key} . 'TimeDestinationDate' } = $TimeObject->SystemTime2TimeStamp(
 					SystemTime => $Ticket{$Key},
 					);
 				$Data{ $Map{$Key} . 'TimeWorkingTime' }     = 100000000000000;
 				$Data{ $Map{$Key} . 'Time' }                = 100000000000000;
+				$AnySLAStopped = 1;  # Mark that we have a paused SLA
 				next TIME;
 			}
 
@@ -933,6 +957,7 @@ sub GetTotalNonEscalationRelevantBusinessTime {
 			{
 				$Data{EscalationDestinationTime} = $Ticket{$Key};
 				$Data{EscalationDestinationDate} = $DestinationDate;
+				# Store the WorkingTime, but we'll check if any SLA is stopped after the loop
 				$Data{EscalationTimeWorkingTime} = $WorkingTime;
 				$Data{EscalationTime}            = $TimeTillEscalation;
 
@@ -947,6 +972,23 @@ sub GetTotalNonEscalationRelevantBusinessTime {
 				if ( $WorkingTime <= 3600 || int( $WorkingTime / 60 ) ) {
 					$Data{EscalationDestinationIn} .= int( $WorkingTime / 60 ) . 'm';
 				}
+			}
+		}
+		
+		# After processing all escalation types, if any SLA is stopped,
+		# ensure EscalationTimeWorkingTime is also marked as stopped
+		if ($AnySLAStopped && defined $Data{EscalationTimeWorkingTime}) {
+			# Check if any of the individual SLA WorkingTimes is paused
+			my $hasPausedWorkingTime = 0;
+			for my $Key (keys %Map) {
+				if (defined $Data{ $Map{$Key} . 'TimeWorkingTime' } && 
+				    $Data{ $Map{$Key} . 'TimeWorkingTime' } == 100000000000000) {
+					$hasPausedWorkingTime = 1;
+					last;
+				}
+			}
+			if ($hasPausedWorkingTime) {
+				$Data{EscalationTimeWorkingTime} = 100000000000000;
 			}
 		}
 

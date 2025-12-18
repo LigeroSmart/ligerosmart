@@ -321,9 +321,26 @@ sub Run {
         }
         else{
             #If the ticket is open yet verify if it is in SLA stop
-            my $notIsSLAStopped = ($TimeObject->TimeStamp2SystemTime(
-                String => $Ticket{SolutionTimeDestinationDate},
-            ) != 1767139200) && $Ticket{SolutionTime} != 100000000000000;
+            # Check if current state is in the paused SLA states list
+            my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+            my $RelevantStateNamesArrRef = $ConfigObject->Get('Ticket::EscalationDisabled::RelevantStates');
+            my $isSLAStopped = 0;
+            
+            if ( $RelevantStateNamesArrRef && ref($RelevantStateNamesArrRef) eq 'ARRAY' ) {
+                my $StateObject = $Kernel::OM->Get('Kernel::System::State');
+                my %StateListHash = $StateObject->StateList( UserID => 1 );
+                my $RelevantStateNamesArrStrg = join( ',', @{$RelevantStateNamesArrRef} );
+                if ( $RelevantStateNamesArrStrg =~ /(^|.*,)$Ticket{State}(,.*|$)/ ) {
+                    $isSLAStopped = 1;
+                }
+            }
+            
+            # Also check if SolutionTime indicates paused state (backwards compatibility)
+            if ( $Ticket{SolutionTime} == 100000000000000 ) {
+                $isSLAStopped = 1;
+            }
+            
+            my $notIsSLAStopped = !$isSLAStopped;
 
             #Get the time that the ticket was paused by SLA
             my $PendSumTime = $TicketObject->GetTotalNonEscalationRelevantBusinessTime(
