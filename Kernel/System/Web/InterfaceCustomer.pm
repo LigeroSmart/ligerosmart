@@ -120,9 +120,18 @@ sub Run {
             )
         {
             my $Host = $ENV{HTTP_HOST} || $ConfigObject->Get('FQDN');
+            
+            # Sanitize REQUEST_URI to prevent XSS attacks
+            my $RequestURI = $ENV{REQUEST_URI} || '/';
+            # Remove HTML/script injection characters
+            $RequestURI =~ s/[<>"'`]//g;
+            # Remove control characters
+            $RequestURI =~ s/[\x00-\x1F\x7F]//g;
+            # If URI becomes empty or invalid after sanitization, use default
+            $RequestURI = '/' if $RequestURI !~ m{^/};
 
             # Redirect with 301 code. Add two new lines at the end, so HTTP headers are validated correctly.
-            print "Status: 301 Moved Permanently\nLocation: https://$Host$ENV{REQUEST_URI}\n\n";
+            print "Status: 301 Moved Permanently\nLocation: https://$Host$RequestURI\n\n";
             return;
         }
     }
