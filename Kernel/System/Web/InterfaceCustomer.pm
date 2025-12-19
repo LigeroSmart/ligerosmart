@@ -225,6 +225,10 @@ sub Run {
     # check request type
     if ( $Param{Action} eq 'PreLogin' ) {
         my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+        
+        # Sanitize RequestedURL to prevent XSS attacks
+        $Param{RequestedURL} =~ s/[<>"'`]//g;
+        $Param{RequestedURL} =~ s/[\x00-\x1F\x7F]//g;
 
         # login screen
         $LayoutObject->Print(
@@ -267,6 +271,11 @@ sub Run {
 
         # login is invalid
         if ( !$User ) {
+            
+            # Sanitize RequestedURL to prevent XSS attacks
+            $Param{RequestedURL} =~ s/[<>"'`]//g;
+            $Param{RequestedURL} =~ s/[\x00-\x1F\x7F]//g;
+            
             $Kernel::OM->ObjectParamAdd(
                 'Kernel::Output::HTML::Layout' => {
                     SetCookies => {
@@ -329,6 +338,10 @@ sub Run {
 
         # check needed data
         if ( !$UserData{UserID} || !$UserData{UserLogin} ) {
+            
+            # Sanitize RequestedURL to prevent XSS attacks
+            $Param{RequestedURL} =~ s/[<>"'`]//g;
+            $Param{RequestedURL} =~ s/[\x00-\x1F\x7F]//g;
 
             my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
@@ -373,6 +386,10 @@ sub Run {
 
         # show error message if no session id has been created
         if ( !$NewSessionID ) {
+            
+            # Sanitize RequestedURL to prevent XSS attacks
+            $Param{RequestedURL} =~ s/[<>"'`]//g;
+            $Param{RequestedURL} =~ s/[\x00-\x1F\x7F]//g;
 
             # get error message
             my $Error = $SessionObject->SessionIDErrorMessage() || '';
