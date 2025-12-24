@@ -74,7 +74,11 @@ sub Store {
     my $SessionID = $Param{SessionID}; delete $Param{SessionID};
     my $Data;
     foreach (sort keys %Param) {
-        $Data->{ $_ } = ${ $Param{$_} }[0];
+        if ( ref $Param{$_} eq 'ARRAY' ) {
+            $Data->{ $_ } = $Param{$_}[0];
+        } else {
+            $Data->{ $_ } = $Param{$_};
+        }
     }
 
     # ignore incomplete requests
