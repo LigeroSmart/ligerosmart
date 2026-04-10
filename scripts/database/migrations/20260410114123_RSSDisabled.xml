@@ -3,8 +3,7 @@
         my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
         my %Setting = $SysConfigObject->SettingGet(
-            Name    => 'DashboardBackend###0410-RSS',
-            Default => 1,
+            Name => 'DashboardBackend###0410-RSS',
         );
 
         my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
@@ -15,7 +14,8 @@
 
         $SysConfigObject->SettingUpdate(
             Name              => 'DashboardBackend###0410-RSS',
-            EffectiveValue    => '0',
+            IsValid           => 0,
+            EffectiveValue    => $Setting{EffectiveValue},
             ExclusiveLockGUID => $ExclusiveLockGUID,
             UserID            => 1,
         );
