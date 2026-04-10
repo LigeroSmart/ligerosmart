@@ -1,0 +1,30 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+        my %Setting = $SysConfigObject->SettingGet(
+            Name    => 'DashboardBackend###0410-RSS',
+            Default => 1,
+        );
+
+        my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+            UserID    => 1,
+            Force     => 1,
+            DefaultID => $Setting{DefaultID},
+        );
+
+        $SysConfigObject->SettingUpdate(
+            Name              => 'DashboardBackend###0410-RSS',
+            EffectiveValue    => '0',
+            ExclusiveLockGUID => $ExclusiveLockGUID,
+            UserID            => 1,
+        );
+
+        $SysConfigObject->SettingUnlock(
+            UserID    => 1,
+            DefaultID => $Setting{DefaultID},
+        );
+
+        $Kernel::OM->Get('Kernel::System::Console::Command::Maint::Config::Rebuild')->Execute();
+    ]]></CodeInstall>
+</Migrations>
