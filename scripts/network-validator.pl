@@ -294,22 +294,26 @@ sub ParseURL {
     }
 }
 
-# --- HTTP/HTTPS: package repositories, cloud services, dashboard RSS ---------
+# --- HTTP/HTTPS: LigeroSmart services, package repositories, dashboard RSS ---
 {
+    my %SeenHTTP;
+
+    my $AddHTTPCheck = sub {
+        my ( $Name, $URL ) = @_;
+        my ( $Host, $Port ) = ParseURL($URL);
+        return if !$Host || $SeenHTTP{"$Host:$Port"}++;
+        AddURLCheck( 'http', $Name, $URL );
+    };
+
     my $RepositoryList = $ConfigObject->Get('Package::RepositoryList') || {};
-    my %SeenRepo;
     for my $URL ( sort keys %{$RepositoryList} ) {
         my ( $Host, $Port ) = ParseURL($URL);
-        next if !$Host || $SeenRepo{"$Host:$Port"}++;
-        AddURLCheck( 'http', "Package repository ($Host)", $URL );
+        next if !$Host;
+        $AddHTTPCheck->( "Package repository ($Host)", $URL );
     }
     my $RepositoryRoot = $ConfigObject->Get('Package::RepositoryRoot') || [];
     for my $URL ( @{$RepositoryRoot} ) {
-        AddURLCheck( 'http', 'Package repository root', $URL );
-    }
-
-    if ( !$ConfigObject->Get('CloudServices::Disabled') ) {
-        AddURLCheck( 'http', 'OTRS cloud services', 'https://cloud.otrs.com/otrs/public.pl' );
+        $AddHTTPCheck->( 'Package repository root', $URL );
     }
 
     # Dashboard RSS backends (any enabled backend with a URL).
@@ -318,8 +322,13 @@ sub ParseURL {
         my $Backend = $Backends->{$Key};
         next if ref $Backend ne 'HASH' || !$Backend->{URL};
         next if ( $Backend->{Module} || '' ) !~ m{RSS}i;
-        AddURLCheck( 'http', "Dashboard RSS ($Key)", $Backend->{URL} );
+        $AddHTTPCheck->( "Dashboard RSS ($Key)", $Backend->{URL} );
     }
+
+    # LigeroSmart online services - always checked, even when not present in
+    # the deployed configuration (package repository and dashboard news).
+    $AddHTTPCheck->( 'LigeroSmart add-ons repository', 'https://addons.ligerosmart.org/6' );
+    $AddHTTPCheck->( 'LigeroSmart news (RSS)',         'https://news.ligerosmart.org/rss/en_US' );
 }
 
 # --- GenericInterface web services (requester endpoints) ---------------------

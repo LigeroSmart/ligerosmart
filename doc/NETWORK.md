@@ -94,17 +94,16 @@ the Docker service name in containerized deployments).
 |-------------|------|---------|
 | Elasticsearch node(s) | 9200/TCP | Ticket/FAQ/Service indexing and search (Ligero Portal, LigeroSmart search) |
 
-### 2.7 Package repositories and LigeroSmart/OTRS online services
+### 2.7 Package repositories and LigeroSmart online services
 
-Used by the package manager (Admin → Package Manager), cloud services and the
-dashboard news widget. Configured in SysConfig `Package::RepositoryList`,
-`Package::RepositoryRoot`, `CloudServices::Disabled`, `DashboardBackend###0410-RSS`.
+Used by the package manager (Admin → Package Manager) and the dashboard news
+widget. Configured in SysConfig `Package::RepositoryList`,
+`Package::RepositoryRoot`, `DashboardBackend###0410-RSS`.
 
 | Destination | Port | Purpose |
 |-------------|------|---------|
 | `addons.ligerosmart.org` | 443/TCP | LigeroSmart add-on package repository |
 | `news.ligerosmart.org` | 443/TCP | Dashboard RSS news widget |
-| `cloud.otrs.com` | 443/TCP | OTRS cloud services / support data (skip if `CloudServices::Disabled` is set) |
 
 ### 2.8 GenericInterface web services (outbound integrations)
 
@@ -135,7 +134,7 @@ endpoints currently configured.
 | 4 | login.microsoftonline.com, accounts.google.com | 443/TCP | OAuth2 (if used) |
 | 5 | LDAP/AD servers | 389, 636/TCP | Authentication (if used) |
 | 6 | Elasticsearch node(s) | 9200/TCP | Search engine |
-| 7 | addons.ligerosmart.org, news.ligerosmart.org, cloud.otrs.com | 443/TCP | Packages, news, cloud services |
+| 7 | addons.ligerosmart.org, news.ligerosmart.org | 443/TCP | Packages, news |
 | 8 | Integration endpoints (per web service) | 443/TCP (typ.) | GenericInterface requester |
 | 9 | DNS resolvers | 53/UDP+TCP | Name resolution |
 
