@@ -417,6 +417,12 @@ sub CheckHTTP {
     return ( 1, "HTTP $Status" );
 }
 
+# ANSI colors (only when writing to a terminal, so piped output stays clean).
+my ( $Green, $Red, $Reset ) = ( '', '', '' );
+if ( -t STDOUT ) {
+    ( $Green, $Red, $Reset ) = ( "\e[32m", "\e[31m", "\e[0m" );
+}
+
 my $NameWidth = 20;
 for my $Check (@Checks) {
     my $Length = length $Check->{Name};
@@ -437,8 +443,10 @@ for my $Check (@Checks) {
     }
     ( $OK, $Detail ) = CheckTCP($Check) if !defined $OK;
 
-    printf "  %-6s %-${NameWidth}s  %s:%s  (%s)\n",
+    printf "  %s%-6s%s %-${NameWidth}s  %s:%s  (%s)\n",
+        $OK ? $Green : $Red,
         $OK ? 'OK' : 'FAIL',
+        $Reset,
         $Check->{Name},
         $Check->{Host},
         $Check->{Port},
