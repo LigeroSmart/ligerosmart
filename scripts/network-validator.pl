@@ -80,6 +80,11 @@ my @Checks;
 sub AddCheck {
     my %Check = @_;
     return if %OnlyCategory && !$OnlyCategory{ lc $Check{Category} };
+
+    # OTRS domains (e.g. ftp.otrs.org left in default framework settings) are
+    # not used by LigeroSmart and must not be tested.
+    return if $Check{Host} && $Check{Host} =~ m{(?:^|\.)otrs\.(?:org|com)$}i;
+
     push @Checks, \%Check;
     return;
 }
