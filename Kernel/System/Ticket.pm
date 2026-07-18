@@ -2182,6 +2182,28 @@ sub TicketServiceList {
         %Services = %AllServices;
     }
 
+    my $AllowAccessServiceSlaByCustomer
+        = $Kernel::OM->Get('Kernel::Config')->Get('AllowAccessServiceSlaByCustomer');
+
+    if ($Param{CustomerID} && $AllowAccessServiceSlaByCustomer){
+        my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
+            CustomerID  =>  $Param{CustomerID},
+        );
+
+        my @SelectedServiceIDs;
+
+        foreach my $Item ( @{$CustomerServiceList} ) {
+            push @SelectedServiceIDs, $Item->{ServiceID};
+        }
+
+        foreach my $key (keys %Services)
+        {
+            if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
+                delete $Services{$key};
+            }
+        }
+    }
+
     # workflow
     my $ACL = $Self->TicketAcl(
         %Param,
@@ -2957,6 +2979,27 @@ sub TicketSLAList {
         ServiceID => $Param{ServiceID},
         UserID    => 1,
     );
+
+    my $AllowAccessServiceSlaByCustomer = $Kernel::OM->Get('Kernel::Config')->Get('AllowAccessServiceSlaByCustomer');
+
+    if ($Param{CustomerID} && $AllowAccessServiceSlaByCustomer == 1){
+        my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerCompanySLA')->CustomerSLAListGet(
+            CustomerID  =>  $Param{CustomerID},
+        );
+
+        my @SelectedSLAIDs;
+
+        foreach my $Item ( @{$CustomerSLAList} ) {
+            push @SelectedSLAIDs, $Item->{SLAID};
+        }
+
+        foreach my $key (keys %SLAs)
+        {
+            if ( !grep( /^$key$/, @SelectedSLAIDs ) ) {
+                delete $SLAs{$key};
+            }
+        }                                                                     
+    }
 
     # workflow
     my $ACL = $Self->TicketAcl(

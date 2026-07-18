@@ -2681,6 +2681,34 @@ sub _GetServices {
             UserID => $Self->{UserID},
         );
     }
+
+    my $AllowAccessServiceSlaByCustomer
+        = $Kernel::OM->Get('Kernel::Config')->Get('AllowAccessServiceSlaByCustomer');
+
+
+    if ($AllowAccessServiceSlaByCustomer) {
+        my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
+
+        my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
+            CustomerID  =>  $CustomerID,
+        );
+
+        my @SelectedServiceIDs;
+
+        foreach my $Item ( @{$CustomerServiceList} ) {
+            push @SelectedServiceIDs, $Item->{ServiceID};
+        }
+
+        if (@SelectedServiceIDs > 0) {
+            foreach my $key (keys %Service)
+            {
+                if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
+                    delete $Service{$key};
+                }
+            }
+        }
+    }
+
     return \%Service;
 }
 

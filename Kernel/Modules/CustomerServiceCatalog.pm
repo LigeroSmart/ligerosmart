@@ -53,6 +53,34 @@ sub Run {
 			%Services = %{$Self->_GetServices(CustomerUserID => $Self->{UserID})};		
 		};
 	}
+
+  my $AllowAccessServiceSlaByCustomer
+        = $Kernel::OM->Get('Kernel::Config')->Get('AllowAccessServiceSlaByCustomer');
+
+
+    if ($AllowAccessServiceSlaByCustomer) {
+        my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
+                User => $Self->{UserID},
+        );
+        my $CustomerID = $CustomerIDs[0];
+
+        my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerCompanyService')->CustomerServiceListGet(
+            CustomerID  =>  $CustomerID,
+        );
+
+        my @SelectedServiceIDs;
+
+        foreach my $Item ( @{$CustomerServiceList} ) {
+            push @SelectedServiceIDs, $Item->{ServiceID};
+        }
+
+        foreach my $key (keys %Services)
+        {
+            if ( !grep( /^$key$/, @SelectedServiceIDs ) ) {
+                delete $Services{$key};
+            }
+        }
+    }
 	
 	my %DataParam = (
 		Name         => 'Service',

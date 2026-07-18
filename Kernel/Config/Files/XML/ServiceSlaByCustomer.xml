@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+    <Setting Name="AllowAccessServiceSlaByCustomer" Required="0" Valid="1" ConfigLevel="200">
+        <Description Translatable="1">Defines if the access of Services and SLAs is controlled by customer.</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+</otrs_config>
