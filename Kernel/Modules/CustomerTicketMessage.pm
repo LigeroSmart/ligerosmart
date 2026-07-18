@@ -957,6 +957,40 @@ sub _GetServices {
             CustomerUserID => $Self->{UserID},
         );
     }
+
+    my $ShowServiceSLAByContract
+        = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
+
+
+    if ($ShowServiceSLAByContract) {
+
+        my $CustomerID = $Param{CustomerID}||$Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
+
+        if(!$CustomerID){
+                my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
+                        User => $Param{CustomerUserID},
+                );
+                $CustomerID = $CustomerIDs[0];
+        }
+
+        my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerServiceListGet(
+            CustomerID  =>  $CustomerID,
+        );
+
+        my @SelectedServiceIDs;
+
+        foreach my $Item ( @{$CustomerServiceList} ) {
+            push @SelectedServiceIDs, $Item->{ServiceID};
+        }
+
+        foreach my $key (keys %Service)
+        {
+            if ( !grep( /^$Service{$key}$/, @SelectedServiceIDs ) && !grep(/^$key$/, @SelectedServiceIDs) ) {
+                delete $Service{$key};
+            }
+        }
+    }
+
     return \%Service;
 }
 
@@ -974,6 +1008,42 @@ sub _GetSLAs {
             );
         }
     }
+
+    my $ShowServiceSLAByContract
+        = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
+
+
+    if ($ShowServiceSLAByContract) {
+
+        my $CustomerID = $Param{CustomerID} || $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'CustomerID' );
+
+        if(!$CustomerID){
+                my @CustomerIDs = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
+                        User => $Param{CustomerUserID},
+                );
+                $CustomerID = $CustomerIDs[0];
+        }
+
+	%SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAList( UserID => 1 );
+        my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerSLAListGet(
+            CustomerID  =>  $CustomerID,
+	    %Param
+        );
+
+        my @SelectedSLAIDs;
+
+        foreach my $Item ( @{$CustomerSLAList} ) {
+            push @SelectedSLAIDs, $Item->{SLAID};
+        }
+
+        foreach my $key (keys %SLA)
+        {
+            if ( !grep( /^$SLA{$key}$/, @SelectedSLAIDs ) && !grep( /^$key$/, @SelectedSLAIDs ) ) {
+                delete $SLA{$key};
+            }
+        }
+    }
+
     return \%SLA;
 }
 

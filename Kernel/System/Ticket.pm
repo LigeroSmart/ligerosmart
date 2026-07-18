@@ -2182,6 +2182,28 @@ sub TicketServiceList {
         %Services = %AllServices;
     }
 
+    my $ShowServiceSLAByContract
+        = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
+
+    if ($Param{CustomerID} && $ShowServiceSLAByContract){
+        my $CustomerServiceList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerServiceListGet(
+            CustomerID  =>  $Param{CustomerID},
+        );
+
+        my @SelectedServiceIDs;
+
+        foreach my $Item ( @{$CustomerServiceList} ) {
+            push @SelectedServiceIDs, $Item->{ServiceID};
+        }
+
+        foreach my $key (keys %Services)
+        {
+            if ( !grep( /^$Services{$key}$/, @SelectedServiceIDs ) && !grep(/^$key$/, @SelectedServiceIDs) ) {
+                delete $Services{$key};
+            }
+        }
+    }
+
     # workflow
     my $ACL = $Self->TicketAcl(
         %Param,
@@ -2957,6 +2979,30 @@ sub TicketSLAList {
         ServiceID => $Param{ServiceID},
         UserID    => 1,
     );
+
+    my $ShowServiceSLAByContract
+        = $Kernel::OM->Get('Kernel::Config')->Get('ShowServiceSLAByContract');
+
+    if ($Param{CustomerID} && $ShowServiceSLAByContract == 1){
+	%SLAs = $Kernel::OM->Get('Kernel::System::SLA')->SLAList( UserID => 1 );
+        my $CustomerSLAList = $Kernel::OM->Get('Kernel::System::CustomerContract')->CustomerSLAListGet(
+            CustomerID  =>  $Param{CustomerID},
+	    %Param
+        );
+
+        my @SelectedSLAIDs;
+
+        foreach my $Item ( @{$CustomerSLAList} ) {
+            push @SelectedSLAIDs, $Item->{SLAID};
+        }
+
+        foreach my $key (keys %SLAs)
+        {
+            if ( !grep( /^$SLAs{$key}$/, @SelectedSLAIDs ) && !grep( /^$key$/, @SelectedSLAIDs ) ) {
+                delete $SLAs{$key};
+            }
+        }                                                                     
+    }
 
     # workflow
     my $ACL = $Self->TicketAcl(
