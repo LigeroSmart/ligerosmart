@@ -90,6 +90,8 @@ sub LinkListWithData {
                     UserID       => $Param{UserID},
                 );
 
+                $VersionData->{LinkCreatedDate} = $Param{LinkList}->{$LinkType}->{$Direction}->{$ConfigItemID};
+
                 # remove id from hash if config item can not get
                 if ( !$VersionData || ref $VersionData ne 'HASH' || !%{$VersionData} ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$ConfigItemID};

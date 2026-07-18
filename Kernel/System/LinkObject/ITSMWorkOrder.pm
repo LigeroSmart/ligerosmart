@@ -91,6 +91,8 @@ sub LinkListWithData {
                     UserID      => $Param{UserID},
                 );
 
+                $WorkOrderData->{LinkCreatedDate} = $Param{LinkList}->{$LinkType}->{$Direction}->{$WorkOrderID};
+
                 # remove id from hash if WorkOrderGet() returns no results
                 if ( !$WorkOrderData ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$WorkOrderID};

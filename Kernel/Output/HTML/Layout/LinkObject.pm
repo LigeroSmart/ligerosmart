@@ -53,7 +53,6 @@ sub LinkObjectTableCreate {
     }
 
     if ( $Param{ViewMode} =~ m{ \A Simple }xms ) {
-
         return $Self->LinkObjectTableCreateSimple(
             LinkListWithData               => $Param{LinkListWithData},
             ViewMode                       => $Param{ViewMode},
@@ -61,7 +60,6 @@ sub LinkObjectTableCreate {
         );
     }
     else {
-
         return $Self->LinkObjectTableCreateComplex(
             LinkListWithData               => $Param{LinkListWithData},
             ViewMode                       => $Param{ViewMode},

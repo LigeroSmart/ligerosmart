@@ -2440,14 +2440,14 @@ sub _LinkListRaw {
         my $SQL;
         if ( $Param{Direction} eq 'Source' ) {
             $SQL =
-                'SELECT target_object_id, target_key, type_id, source_key'
+                'SELECT target_object_id, target_key, type_id, source_key, create_time'
                 . ' FROM link_relation'
                 . ' WHERE source_object_id = ?'
                 . ' and source_key = ? ';
         }
         else {
             $SQL =
-                'SELECT source_object_id, source_key, type_id, target_key'
+                'SELECT source_object_id, source_key, type_id, target_key, create_time'
                 . ' FROM link_relation'
                 . ' WHERE target_object_id = ?'
                 . ' and target_key = ? ';
@@ -2469,6 +2469,7 @@ sub _LinkListRaw {
                 ResponseKey => $Row[1],
                 TypeID      => $Row[2],
                 RequestKey  => $Row[3],
+                CreateTime  => $Row[4],
             };
         }
 
@@ -2491,9 +2492,9 @@ sub _LinkListRaw {
 #Complemento
         next LINK if defined($Param{TypeID}) && $Link->{TypeID} ne $Param{TypeID};
 # EO COmplemento
-        $List{ $Link->{ObjectID} }->{ $Link->{TypeID} }->{ $Link->{ResponseKey} } = 1;
+        $List{ $Link->{ObjectID} }->{ $Link->{TypeID} }->{ $Link->{ResponseKey} } = $Link->{CreateTime};
     }
-
+    
     return \%List;
 }
 

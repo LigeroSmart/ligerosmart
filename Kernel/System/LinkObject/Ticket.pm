@@ -108,6 +108,8 @@ sub LinkListWithData {
                     DynamicFields => 0,
                 );
 
+                $TicketData{LinkCreatedDate} = $Param{LinkList}->{$LinkType}->{$Direction}->{$TicketID};
+
                 # remove id from hash if ticket can not get
                 if ( !%TicketData ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$TicketID};
