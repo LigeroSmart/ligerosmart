@@ -43,16 +43,22 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+	
+
     # ------------------------------------------------------------ #
     # public survey vote
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'PublicSurveyVote' ) {
         my $PublicSurveyKey = $ParamObject->GetParam( Param => 'PublicSurveyKey' );
 
+		my $OpenTicketQuestionsText = undef;
+		my $OpenTicketQueueID = 0;
+
         # get survey from public key
         my %Survey = $SurveyObject->PublicSurveyGet(
             PublicSurveyKey => $PublicSurveyKey,
         );
+
         if ( $Survey{SurveyID} ) {
             @QuestionList = $SurveyObject->QuestionList(
                 SurveyID => $Survey{SurveyID},
@@ -78,6 +84,22 @@ sub Run {
                     my $PublicSurveyVote2 = $ParamObject->GetParam(
                         Param => "PublicSurveyVote2[$Question->{QuestionID}]"
                     );
+
+					my %AnswerData = $SurveyObject->AnswerGet(
+						AnswerID => $PublicSurveyVote2,
+					);
+
+					if($AnswerData{OpenTicket} eq 1){
+						my %RequestData = $SurveyObject->RequestGet(
+							PublicSurveyKey => $PublicSurveyKey,
+						);
+
+						$OpenTicketQueueID = $AnswerData{QueueID};
+
+						$OpenTicketQuestionsText = 'Pergunta: '.$Question->{Question}.' - Resposta: '.$AnswerData{Answer}. "\n";
+
+					}
+					
 
                     if (
                         $Question->{AnswerRequired}
@@ -330,6 +352,46 @@ sub Run {
                 $Output = $LayoutObject->CustomerHeader(
                     Title => 'Survey',
                 );
+
+				if($OpenTicketQuestionsText){
+					my $RequestData = $SurveyObject->RequestGet(
+						PublicSurveyKey => $PublicSurveyKey,
+					);
+
+					my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
+						TicketID => $RequestData{TicketID},
+					);
+
+					my $Return = $Kernel::OM->Get('Kernel::System::Ticket')->TicketCreate(
+						Title     => 'Pesquisa de Satisfação - '.$Ticket{TicketNumber},
+						QueueID   => $OpenTicketQueueID,
+						UserID    => 1,
+						PriorityID => 3,
+						StateID   => 1,
+						CustomerID => $Ticket{CustomerID},
+						CustomerUser => $Ticket{CustomerUser},
+						OwnerID   => 1,
+						TypeID    => 1,
+						ServiceID => $Ticket{ServiceID},
+						Lock      => 'unlock',
+						Body      => $OpenTicketQuestionsText,
+					);
+
+					my $ArticleObject       = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+					my $ArticleBackendObject= $ArticleObject->BackendForChannel(ChannelName => 'Phone');
+
+					my $ArticleID = $ArticleBackendObject->ArticleCreate(
+						TicketID  =>  $Return,
+						SenderType => 'agent',
+						IsVisibleForCustomer => 1,
+						UserID => 1,
+						Subject => 'Pesquisa de Satisfação - '.$Ticket{TicketNumber},
+						Body => $OpenTicketQuestionsText,
+						HistoryType => 'OwnerUpdate',
+						HistoryComment => 'Pesquisa de Satisfação',
+						ContentType    => 'text/plain; charset=utf8',
+					);
+				}
 
                 # print the main table.
                 $LayoutObject->Block(

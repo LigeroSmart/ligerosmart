@@ -54,9 +54,9 @@ sub AnswerAdd {
     return $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             INSERT INTO survey_answer (question_id, answer, position, create_time, create_by,
-                change_time, change_by)
-            VALUES ( ?, ?, 255, current_timestamp, ?, current_timestamp, ?)',
-        Bind => [ \$Param{QuestionID}, \$Param{Answer}, \$Param{UserID}, \$Param{UserID}, ],
+                change_time, change_by, open_ticket, queue_id)
+            VALUES ( ?, ?, 255, current_timestamp, ?, current_timestamp, ?, ?, ?)',
+        Bind => [ \$Param{QuestionID}, \$Param{Answer}, \$Param{UserID}, \$Param{UserID}, \$Param{OpenTicket}, \$Param{QueueID}, ],
     );
 }
 
@@ -138,7 +138,7 @@ sub AnswerGet {
     # get answer
     return if !$DBObject->Prepare(
         SQL => '
-            SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by
+            SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by, open_ticket, queue_id
             FROM survey_answer
             WHERE id = ?',
         Bind  => [ \$Param{AnswerID} ],
@@ -156,6 +156,8 @@ sub AnswerGet {
         $Data{CreateBy}   = $Row[5];
         $Data{ChangeTime} = $Row[6];
         $Data{ChangeBy}   = $Row[7];
+		$Data{OpenTicket} = $Row[8];
+		$Data{QueueID}    = $Row[9];
     }
 
     return %Data;
@@ -240,7 +242,7 @@ sub AnswerList {
     # get answer list
     return if !$DBObject->Prepare(
         SQL => '
-            SELECT id, question_id, answer
+            SELECT id, question_id, answer, open_ticket, queue_id
             FROM survey_answer
             WHERE question_id = ?
             ORDER BY position',
@@ -254,6 +256,8 @@ sub AnswerList {
         $Data{AnswerID}   = $Row[0];
         $Data{QuestionID} = $Row[1];
         $Data{Answer}     = $Row[2];
+		$Data{OpenTicket} = $Row[3];
+		$Data{QueueID}    = $Row[4];
 
         push @List, \%Data;
     }
