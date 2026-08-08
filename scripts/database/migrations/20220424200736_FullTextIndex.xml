@@ -1,0 +1,17 @@
+<Migrations>
+    <CodeInstall Type="post"><![CDATA[
+        if($Self->{'DB::Type'} == 'mysql') {
+            my $DBObject  = $Kernel::OM->Get('Kernel::System::DB');
+            $DBObject->Do( SQL => "ALTER TABLE article_search_index ADD FULLTEXT article_search_index_article_value_fulltext(article_value)");
+            $DBObject->Do( SQL => "ALTER TABLE ticket ADD FULLTEXT ticket_title_fulltext(title)");
+        }
+    ]]></CodeInstall>  
+    <DatabaseUninstall>
+        <TableAlter Name="article_search_index">
+            <IndexDrop Name="article_search_index_article_value_fulltext" />
+        </TableAlter>
+        <TableAlter Name="ticket">
+            <IndexDrop Name="ticket_title_fulltext" />
+        </TableAlter>
+    </DatabaseUninstall>
+</Migrations>
