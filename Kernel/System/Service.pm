@@ -9,7 +9,7 @@ package Kernel::System::Service;
 use strict;
 use warnings;
 # COMPLEMENTO
-use Data::Dumper;
+#use Data::Dumper;
 # EO COMPLEMENTO
 use Kernel::System::VariableCheck (qw(:all));
 
@@ -1824,15 +1824,18 @@ sub _ServiceGetCurrentIncidentState {
         );
         my $Name = '';
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $Name = $Row[0];
+            #$Name = $Row[0];
+            $Name = $Self->{DBObject}->Quote( $Row[0], 'Like' ) . '::%';
         }
         #$Name = $Self->{DBObject}->Quote( $Name, 'Like' );
         # EO COMPLEMENTO
         # get list of all valid childs
         $Self->{DBObject}->Prepare(
             SQL => "SELECT id, name FROM service "
-                . "WHERE name LIKE '" . $Name . "::%' "
-                . "AND valid_id IN (" . $ValidIDString . ")",
+                . "WHERE name LIKE ? "
+                . "AND valid_id IN (?)",
+            Bind  => [ \$Name, \$ValidIDString ],
+            Limit => 1,                
         );
 
         # find length of childs prefix
