@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="2.0" init="Config">
+    <Setting Name="Frontend::Module###AdminNotificationEventTransportRestNotify" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">This module is part of the notification REST API transport.</Item>
+                    <Item Key="Title" Translatable="1">REST API Notification Transport</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Notification::Transport###RestNotify" Required="0" Valid="1">
+        <Description Translatable="1">Defines all the parameters for the REST API notification transport.</Description>
+        <Navigation>Core::Event::Notification</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::NotificationEvent::Transport::RestNotify</Item>
+                <Item Key="Name">REST API</Item>
+                <Item Key="Icon">fa fa-globe</Item>
+                <Item Key="Prio">100</Item>
+                <Item Key="IsOTRSBusinessTransport">0</Item>
+                <Item Key="AgentEnabledByDefault">0</Item>
+                <Item Key="Fields">
+                    <Hash>
+                        <Item Key="RecipientEndpoint">
+                            <Hash>
+                                <Item Key="Label">REST API Endpoint</Item>
+                                <Item Key="Desc">The URL where the notification will be sent</Item>
+                                <Item Key="CountMax">1</Item>
+                                <Item Key="Default"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="RecipientMethod">
+                            <Hash>
+                                <Item Key="Label">HTTP Method</Item>
+                                <Item Key="Desc">The HTTP method to use for the request</Item>
+                                <Item Key="CountMax">1</Item>
+                                <Item Key="Default">POST</Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="RecipientHeaders">
+                            <Hash>
+                                <Item Key="Label">Headers</Item>
+                                <Item Key="Desc">JSON object with headers</Item>
+                                <Item Key="CountMax">1</Item>
+                                <Item Key="Default">{}</Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="RecipientPayload">
+                            <Hash>
+                                <Item Key="Label">Payload</Item>
+                                <Item Key="Desc">JSON object with the payload to be sent</Item>
+                                <Item Key="CountMax">1</Item>
+                                <Item Key="Default">{}</Item>
+                            </Hash>
+                        </Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>

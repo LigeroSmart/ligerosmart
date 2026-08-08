@@ -1,0 +1,35 @@
+<p class="FieldExplanation">[% Translate("This method sends notifications via REST API!") | html %]</p>
+
+<label for="RecipientEndpoint">[% Translate("REST API Endpoint") | html %]: </label>
+<div class="Field">
+    <input type="text" name="RecipientEndpoint" id="RecipientEndpoint" class="W50pc" value="[% Data.RecipientEndpoint | html %]"/>
+    <p class="FieldExplanation">[% Translate("The URL where the notification will be sent (supports OTRS tags)") | html %]</p>
+</div>
+<div class="Clear"></div>
+
+<label for="RecipientMethod">[% Translate("HTTP Method") | html %]: </label>
+<div class="Field">
+    <select name="RecipientMethod" id="RecipientMethod" class="W50pc">
+        <option value="POST" [% IF Data.RecipientMethod == 'POST' %]selected="selected"[% END %]>POST</option>
+        <option value="PUT" [% IF Data.RecipientMethod == 'PUT' %]selected="selected"[% END %]>PUT</option>
+        <option value="GET" [% IF Data.RecipientMethod == 'GET' %]selected="selected"[% END %]>GET</option>
+        <option value="PATCH" [% IF Data.RecipientMethod == 'PATCH' %]selected="selected"[% END %]>PATCH</option>
+        <option value="DELETE" [% IF Data.RecipientMethod == 'DELETE' %]selected="selected"[% END %]>DELETE</option>
+    </select>
+    <p class="FieldExplanation">[% Translate("The HTTP method to use for the request") | html %]</p>
+</div>
+<div class="Clear"></div>
+
+<label for="RecipientHeaders">[% Translate("Headers") | html %]: </label>
+<div class="Field">
+    <textarea name="RecipientHeaders" id="RecipientHeaders" class="W50pc" rows="5">[% Data.RecipientHeaders | html %]</textarea>
+    <p class="FieldExplanation">[% Translate("JSON object with headers (supports OTRS tags)") | html %]</p>
+</div>
+<div class="Clear"></div>
+
+<label for="RecipientPayload">[% Translate("Payload") | html %]: </label>
+<div class="Field">
+    <textarea name="RecipientPayload" id="RecipientPayload" class="W50pc" rows="10">[% Data.RecipientPayload | html %]</textarea>
+    <p class="FieldExplanation">[% Translate("JSON object with the payload to be sent (supports OTRS tags)") | html %]</p>
+</div>
+<div class="Clear"></div> 
